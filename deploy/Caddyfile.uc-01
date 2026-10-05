@@ -1,0 +1,38 @@
+{
+	auto_https disable_redirects
+	email baonguyencoder97@gmail.com
+}
+
+meduc.duckdns.org {
+	tls {
+		issuer acme {
+			disable_http_challenge
+		}
+	}
+
+	reverse_proxy 127.0.0.1:3000
+}
+
+
+http://meduc.duckdns.org {
+    reverse_proxy 127.0.0.1:3000
+}
+
+meducnew.duckdns.org {
+    tls {
+        issuer acme {
+            disable_http_challenge
+        }
+    }
+
+    @private path /.git* /.env* /scripts/* /design-references/* /config_database.php /google-service-account.json /*.sql /*.sql.gz
+    respond @private 404
+
+    @home path /
+    redir @home /masterclass 302
+    reverse_proxy 127.0.0.1:8081
+}
+
+http://meducnew.duckdns.org {
+    redir https://meducnew.duckdns.org{uri} 308
+}
