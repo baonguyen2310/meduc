@@ -1,4 +1,11 @@
 <?php
+// Caddy terminates HTTPS before forwarding requests to the private Apache port.
+if (getenv('MEDUC_TRUST_PROXY_HTTPS') === 'true'
+    && strtolower(trim(explode(',', $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')[0])) === 'https') {
+    $_SERVER['HTTPS'] = 'on';
+    $_SERVER['REQUEST_SCHEME'] = 'https';
+}
+
 header('User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.1 Safari/537.36');
 //------------------------------------ cấu hình riêng cho mỗi website
 require __DIR__ . '/config.php';

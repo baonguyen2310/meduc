@@ -39,6 +39,7 @@ services:
       SLACK_FEEDBACK_WEBHOOK_URL: ${SLACK_FEEDBACK_WEBHOOK_URL:-}
       GOOGLE_SERVICE_ACCOUNT_FILE: /run/secrets/google-service-account.json
       APP_DEBUG: "false"
+      MEDUC_TRUST_PROXY_HTTPS: "true"
     volumes:
       - ./:/var/www/html
       - /opt/meduc-php/secrets/google-service-account.json:/run/secrets/google-service-account.json:ro
