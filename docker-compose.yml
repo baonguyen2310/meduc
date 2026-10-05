@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: meduc_web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${MEDUC_DB_NAME:?Set MEDUC_DB_NAME}
+      DB_USERNAME: ${MEDUC_DB_USER:?Set MEDUC_DB_USER}
+      DB_PASSWORD: ${MEDUC_DB_PASSWORD:?Set MEDUC_DB_PASSWORD}
+      SECURITY_SALT: ${MEDUC_SECURITY_SALT:?Set MEDUC_SECURITY_SALT}
+      MEDUC_UPLOAD_KEY: ${MEDUC_UPLOAD_KEY:?Set MEDUC_UPLOAD_KEY}
+      AZURE_TRANSLATOR_KEYS: ${AZURE_TRANSLATOR_KEYS:-}
+      SLACK_FEEDBACK_WEBHOOK_URL: ${SLACK_FEEDBACK_WEBHOOK_URL:-}
+      APP_DEBUG: "true"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    container_name: meduc_db
+    restart: unless-stopped
+    command: --max_allowed_packet=512M --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-strict-mode=0 --innodb-default-row-format=DYNAMIC
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MEDUC_DB_ROOT_PASSWORD:?Set MEDUC_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MEDUC_DB_NAME:?Set MEDUC_DB_NAME}
+      MYSQL_USER: ${MEDUC_DB_USER:?Set MEDUC_DB_USER}
+      MYSQL_PASSWORD: ${MEDUC_DB_PASSWORD:?Set MEDUC_DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./full_database.sql:/docker-entrypoint-initdb.d/01_full_database.sql:ro
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 30s
+
+volumes:
+  db_data:

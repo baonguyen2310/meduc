@@ -1,0 +1,13 @@
+{assign var = plugins value = $this->Setting->getListPlugins()}
+
+{$this->element('../Member/login_modal')}
+{$this->element('../block/comment/info_modal')}
+
+{if !empty($plugins.product)}
+	{$this->element('../Product/quick_view_modal')}
+	{$this->element('../Product/compare_modal')}
+{/if}
+
+{if !empty($plugins.notification)}
+	{$this->element('../Notification/sidebar')}
+{/if}

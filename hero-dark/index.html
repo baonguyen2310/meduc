@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Học từ người giỏi. Vững bước nghề Y. Bản xem trước hero mới của Meduc."
+    />
+    <title>Meduc — Học từ người giỏi. Vững bước nghề Y.</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link
+      rel="preload"
+      href="assets/fonts/anton-regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/Inter-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/hero.css" />
+    <script src="assets/hero.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg
+      class="svg-definitions"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="7" />
+        <path d="m16 16 5 5" />
+      </symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24">
+        <path d="m5 9 7 7 7-7" />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M4 12h16m-6-6 6 6-6 6" />
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M6 18 18 6" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24">
+        <path d="M8 5v14M16 5v14" stroke-width="4" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <path d="m8 5 11 7-11 7z" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="i-book" viewBox="0 0 24 24">
+        <path
+          d="M12 5v16M12 5C8 3 5 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-3-1-6-1-10 1Z"
+        />
+      </symbol>
+      <symbol id="i-pulse" viewBox="0 0 24 24">
+        <path d="M2 12h5l3-8 4 16 3-8h5" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="7" r="3" />
+        <path
+          d="M2 21v-3a7 7 0 0 1 14 0v3M17 4a3 3 0 0 1 0 6m2 4a5 5 0 0 1 3 5v2"
+        />
+      </symbol>
+    </svg>
+
+    <header class="site-header">
+      <div class="network-bar">
+        <nav class="shell network-nav" aria-label="Hệ sinh thái Meduc">
+          <a href="index.html" aria-current="page">Meduc</a>
+          <a href="../studio-bright/courses.html" data-demo="courses.html"
+            >Khóa học</a
+          >
+          <a href="../studio-bright/exams.html" data-demo="exams.html"
+            >Luyện thi</a
+          >
+          <a
+            href="../studio-bright/article_detail.html"
+            data-demo="article_detail.html"
+            >Góc học tập</a
+          >
+          <a
+            href="../studio-bright/leaderboard.html"
+            data-demo="leaderboard.html"
+            >Bảng xếp hạng</a
+          >
+        </nav>
+      </div>
+
+      <div class="shell main-header">
+        <a class="brand" href="index.html" aria-label="Meduc — Trang chủ">
+          <svg
+            class="brand-mark"
+            viewBox="0 0 30 28"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 24V4l12 14L27 4v20"
+              stroke="currentColor"
+              stroke-width="4.5"
+            />
+          </svg>
+          <span>meduc<span class="brand-dot">.</span></span>
+        </a>
+
+        <div class="browse-wrap">
+          <button
+            class="browse-button"
+            id="browse-button"
+            aria-expanded="false"
+            aria-controls="browse-menu"
+          >
+            <span>Khám phá</span
+            ><svg class="icon"><use href="#i-chevron" /></svg>
+          </button>
+          <nav
+            class="browse-menu"
+            id="browse-menu"
+            aria-label="Khám phá Meduc"
+            hidden
+          >
+            <p>Học điều bạn cần. Theo cách của bạn.</p>
+            <a
+              href="../studio-bright/courses.html?category=Y%20khoa%20c%C6%A1%20s%E1%BB%9F"
+              data-demo="courses.html?category=Y%20khoa%20c%C6%A1%20s%E1%BB%9F"
+              ><svg class="icon"><use href="#i-book" /></svg>Y khoa cơ sở<svg
+                class="icon arrow"
+              >
+                <use href="#i-arrow" /></svg
+            ></a>
+            <a
+              href="../studio-bright/courses.html?category=N%E1%BB%99i%20khoa"
+              data-demo="courses.html?category=N%E1%BB%99i%20khoa"
+              ><svg class="icon"><use href="#i-pulse" /></svg>Nội khoa &amp; lâm
+              sàng<svg class="icon arrow"><use href="#i-arrow" /></svg
+            ></a>
+            <a
+              href="../studio-bright/courses.html?category=Ngo%E1%BA%A1i%20khoa"
+              data-demo="courses.html?category=Ngo%E1%BA%A1i%20khoa"
+              ><svg class="icon"><use href="#i-book" /></svg>Ngoại khoa<svg
+                class="icon arrow"
+              >
+                <use href="#i-arrow" /></svg
+            ></a>
+            <a href="../studio-bright/exams.html" data-demo="exams.html"
+              ><svg class="icon"><use href="#i-pulse" /></svg>Ngân hàng đề
+              thi<svg class="icon arrow"><use href="#i-arrow" /></svg
+            ></a>
+            <a
+              href="../studio-bright/instructors.html"
+              data-demo="instructors.html"
+              ><svg class="icon"><use href="#i-users" /></svg>Gặp gỡ giảng
+              viên<svg class="icon arrow"><use href="#i-arrow" /></svg
+            ></a>
+            <a
+              class="browse-all"
+              href="../studio-bright/courses.html"
+              data-demo="courses.html"
+              >Xem tất cả khóa học<svg class="icon"><use href="#i-arrow" /></svg
+            ></a>
+          </nav>
+        </div>
+
+        <div class="search-wrap" id="search-wrap">
+          <form class="search-form" role="search" id="search-form">
+            <button type="submit" aria-label="Tìm kiếm khóa học">
+              <svg class="icon"><use href="#i-search" /></svg>
+            </button>
+            <label class="sr-only" for="course-search"
+              >Tìm kiếm khóa học Meduc</label
+            >
+            <input
+              id="course-search"
+              type="search"
+              placeholder="Hôm nay bạn muốn học gì?"
+              autocomplete="off"
+              aria-controls="search-results"
+            />
+            <button
+              type="button"
+              class="close-search"
+              id="close-search"
+              aria-label="Đóng tìm kiếm"
+            >
+              <svg class="icon"><use href="#i-close" /></svg>
+            </button>
+          </form>
+          <section
+            class="search-results"
+            id="search-results"
+            aria-label="Kết quả tìm kiếm"
+            hidden
+          >
+            <p id="search-status" role="status"></p>
+            <div id="search-list"></div>
+          </section>
+        </div>
+
+        <nav class="utility-nav" aria-label="Tiện ích">
+          <a
+            href="../studio-bright/instructors.html"
+            data-demo="instructors.html"
+            >Giảng viên</a
+          >
+          <a href="../studio-bright/courses.html" data-demo="courses.html"
+            >Gói học</a
+          >
+          <button type="button" id="login-button">Đăng nhập</button>
+        </nav>
+        <button
+          class="mobile-search icon-button"
+          id="mobile-search"
+          aria-label="Mở tìm kiếm"
+        >
+          <svg class="icon"><use href="#i-search" /></svg>
+        </button>
+        <a class="button header-cta" href="#learning-goals">Bắt đầu học</a>
+        <button
+          class="mobile-menu icon-button"
+          id="mobile-menu"
+          aria-label="Mở menu"
+          aria-expanded="false"
+          aria-controls="browse-menu"
+        >
+          <svg class="icon"><use href="#i-menu" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="shell hero" id="main">
+      <div class="hero-copy">
+        <h1><span>HỌC TỪ NGƯỜI GIỎI,</span><span>VỮNG BƯỚC NGHỀ Y.</span></h1>
+        <p class="hero-subtitle">
+          Học sâu, hiểu đúng. Vững vàng trên hành trình nghề Y.
+        </p>
+        <div class="red-rule" aria-hidden="true"></div>
+
+        <form id="goal-form" novalidate>
+          <fieldset id="learning-goals" aria-describedby="goal-hint goal-error">
+            <legend>Điều gì đưa bạn đến với Meduc hôm nay?</legend>
+            <div class="goal-options">
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="foundation" /><span
+                  >Củng cố kiến thức Y khoa cơ sở</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="clinical" /><span
+                  >Nâng cao tư duy và kỹ năng lâm sàng</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="semester" /><span
+                  >Ôn thi học phần, tự tin qua môn</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="residency" /><span
+                  >Chinh phục kỳ thi bác sĩ nội trú</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="practice" /><span
+                  >Luyện đề và hiểu sâu từng đáp án</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="mentors" /><span
+                  >Học từ kinh nghiệm của giảng viên</span
+                ></label
+              >
+              <label class="goal-option"
+                ><input type="checkbox" name="goal" value="habits" /><span
+                  >Tìm lại cảm hứng và nhịp học mỗi ngày</span
+                ></label
+              >
+            </div>
+          </fieldset>
+          <p class="goal-error" id="goal-error" role="alert" hidden>
+            Chọn ít nhất một mục tiêu để Meduc gợi ý cho bạn nhé.
+          </p>
+          <button class="button goal-submit" type="submit">
+            Tìm lộ trình của tôi<svg class="icon"><use href="#i-arrow" /></svg>
+          </button>
+          <p class="goal-hint" id="goal-hint" role="status">
+            Bạn có thể chọn nhiều mục tiêu.
+          </p>
+        </form>
+        <p class="preview-note">
+          Bản xem trước giao diện · Hình ảnh và nội dung minh họa.
+        </p>
+      </div>
+
+      <div class="portrait-wall" id="portrait-wall">
+        <div class="portrait-window" aria-hidden="true">
+          <div class="portrait-track track-one">
+            <div class="portrait-set">
+              <div class="portrait">
+                <img
+                  src="assets/images/doctor-linh.jpg"
+                  alt=""
+                  width="1086"
+                  height="1448"
+                  fetchpriority="high"
+                />
+              </div>
+              <div class="portrait">
+                <img
+                  src="assets/images/professor.jpg"
+                  alt=""
+                  width="1086"
+                  height="1448"
+                  fetchpriority="high"
+                />
+              </div>
+              <div class="portrait">
+                <img
+                  src="assets/images/meduc-doctor-04.jpg"
+                  alt=""
+                  width="600"
+                  height="750"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="portrait-track track-two">
+            <div class="portrait-set">
+              <div class="portrait landscape">
+                <img
+                  src="assets/images/meduc-doctor-01.jpg"
+                  alt=""
+                  width="600"
+                  height="400"
+                />
+              </div>
+              <div class="portrait">
+                <img
+                  src="assets/images/doctor-minh.jpg"
+                  alt=""
+                  width="1086"
+                  height="1448"
+                  fetchpriority="high"
+                />
+              </div>
+              <div class="portrait landscape">
+                <img
+                  src="assets/images/meduc-doctor-02.jpg"
+                  alt=""
+                  width="600"
+                  height="400"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="motion-toggle"
+          id="motion-toggle"
+          aria-label="Tạm dừng chuyển động ảnh"
+          aria-pressed="false"
+          title="Tạm dừng chuyển động ảnh"
+        >
+          <svg class="icon"><use href="#i-pause" /></svg>
+        </button>
+      </div>
+    </main>
+
+    <dialog class="demo-dialog" id="path-dialog" aria-labelledby="path-title">
+      <button
+        class="dialog-close icon-button"
+        type="button"
+        data-close
+        aria-label="Đóng gợi ý"
+      >
+        <svg class="icon"><use href="#i-close" /></svg>
+      </button>
+      <span class="dialog-eyebrow">GỢI Ý DÀNH CHO BẠN</span>
+      <h2 id="path-title">Lộ trình bắt đầu từ bạn.</h2>
+      <p id="path-description"></p>
+      <div class="path-links" id="path-links"></div>
+      <p class="dialog-note">
+        Các liên kết mở bản demo Meduc đã có. Không tạo tài khoản hay đăng ký
+        khóa học.
+      </p>
+    </dialog>
+
+    <dialog class="demo-dialog" id="login-dialog" aria-labelledby="login-title">
+      <button
+        class="dialog-close icon-button"
+        type="button"
+        data-close
+        aria-label="Đóng thông báo"
+      >
+        <svg class="icon"><use href="#i-close" /></svg>
+      </button>
+      <span class="dialog-eyebrow">MEDUC · BẢN XEM TRƯỚC</span>
+      <h2 id="login-title">Bắt đầu từ một điều mới.</h2>
+      <p>
+        Đây là bản demo giao diện hero. Chức năng đăng nhập chưa được kết nối;
+        bạn vẫn có thể khám phá các lớp học và thử luyện đề.
+      </p>
+      <a
+        class="button dialog-cta"
+        href="../studio-bright/courses.html"
+        data-demo="courses.html"
+        >Khám phá lớp học<svg class="icon"><use href="#i-arrow" /></svg
+      ></a>
+    </dialog>
+    <noscript
+      ><p class="noscript-note">
+        Bật JavaScript để chọn mục tiêu và xem gợi ý. Các liên kết khóa học vẫn
+        có thể truy cập từ thanh điều hướng.
+      </p></noscript
+    >
+  </body>
+</html>

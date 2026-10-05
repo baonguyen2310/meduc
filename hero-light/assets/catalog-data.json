@@ -1,0 +1,411 @@
+{
+  "exported": "2026-10-05",
+  "count": 33,
+  "courses": [
+    {
+      "id": 48,
+      "name": "[Sinh Lý 1, 2] Cơ Bản -> Chuyên Sâu",
+      "url": "/sinh-ly-1-2-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/SINH%20L%C3%9D%20C%C6%A0%20B%E1%BA%A2N%20(3).png",
+      "categories": [
+        50,
+        67,
+        102
+      ],
+      "chapters": 13,
+      "lessons": 44
+    },
+    {
+      "id": 51,
+      "name": "[Lâm Sàng - Nội Khoa] Cơ Bản -> Chuyên Sâu",
+      "url": "/lam-sang-noi-khoa-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/L%C3%82M%20S%C3%80NG%20N%E1%BB%98I%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(1).png",
+      "categories": [
+        50,
+        70,
+        72
+      ],
+      "chapters": 7,
+      "lessons": 30
+    },
+    {
+      "id": 52,
+      "name": "[Lâm Sàng - Ngoại Khoa] Cơ Bản -> Chuyên Sâu",
+      "url": "/lam-sang-ngoai-khoa-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/L%C3%82M%20S%C3%80NG%20NGO%E1%BA%A0I%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20%20(2).png",
+      "categories": [
+        50,
+        71,
+        72
+      ],
+      "chapters": 4,
+      "lessons": 37
+    },
+    {
+      "id": 53,
+      "name": "[Lâm Sàng Sản Khoa] Cơ Bản -> Chuyên Sâu",
+      "url": "/lam-sang-san-khoa-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/S%E1%BA%A2N%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(6).png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 8,
+      "lessons": 30
+    },
+    {
+      "id": 96,
+      "name": "[Nội Khoa Cô Ý Nhi] Cơ Bản -> Chuyên Sâu",
+      "url": "/noi-khoa-co-y-nhi-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/N%E1%BB%98I%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20Y%20HU%E1%BA%BE.png",
+      "categories": [
+        50,
+        70,
+        103
+      ],
+      "chapters": 8,
+      "lessons": 34
+    },
+    {
+      "id": 99,
+      "name": "[Giải Phẫu 1, 2] Cơ Bản -> Chuyên Sâu",
+      "url": "/giai-phau-1-2-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/GI%E1%BA%A2I%20PH%E1%BA%AAU%20C%C6%A0%20B%E1%BA%A2N%20(2).png",
+      "categories": [
+        50,
+        69,
+        102
+      ],
+      "chapters": 9,
+      "lessons": 47
+    },
+    {
+      "id": 101,
+      "name": "[Tiếng Anh Y Khoa 1,2] Cơ Bản -> Chuyên Sâu",
+      "url": "/tieng-anh-y-khoa-12-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/ti%E1%BA%BFng%20anh%20y%20khoa%20c%C6%A1%20b%E1%BA%A3n.png",
+      "categories": [
+        50,
+        72,
+        102,
+        105
+      ],
+      "chapters": 12,
+      "lessons": 40
+    },
+    {
+      "id": 103,
+      "name": "[Xét Nghiệm] Cơ Bản -> Chuyên Sâu",
+      "url": "/xet-nghiem-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/xet-nghiem-1.png",
+      "categories": [
+        50,
+        68,
+        72
+      ],
+      "chapters": 3,
+      "lessons": 28
+    },
+    {
+      "id": 106,
+      "name": "[Sản Khoa - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/san-khoa-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/san-khoa-noi-tru.png",
+      "categories": [
+        50,
+        103,
+        106
+      ],
+      "chapters": 2,
+      "lessons": 22
+    },
+    {
+      "id": 107,
+      "name": "[Lâm Sàng Nhi Khoa] Cơ Bản -> Chuyên Sâu",
+      "url": "/lam-sang-nhi-khoa-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/L%C3%82M%20S%C3%80NG%20NHI%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(1).png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 11,
+      "lessons": 42
+    },
+    {
+      "id": 112,
+      "name": "[Lý Thuyết + Lâm Sàng ECG] Cơ Bản -> Chuyên Sâu",
+      "url": "/ly-thuyet-lam-sang-ecg-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/ECG%20C%C6%A0%20B%E1%BA%A2N%20-%20CHUY%C3%8AN%20S%C3%82U.png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 6,
+      "lessons": 35
+    },
+    {
+      "id": 157,
+      "name": "[Nội Khoa - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/noi-khoa-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/noi-tru-noi-khoa.png",
+      "categories": [
+        50,
+        70,
+        103
+      ],
+      "chapters": 9,
+      "lessons": 64
+    },
+    {
+      "id": 158,
+      "name": "[Nhi Khoa - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/nhi-khoa-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/nhi-khoa-nt.png",
+      "categories": [
+        50,
+        103
+      ],
+      "chapters": 7,
+      "lessons": 55
+    },
+    {
+      "id": 161,
+      "name": "Sinh Học [ Cơ Bản -> Chuyên Sâu]",
+      "url": "/sinh-hoc-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/sinh-hoc.png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 4,
+      "lessons": 12
+    },
+    {
+      "id": 174,
+      "name": "[Ngoại Khoa - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/ngoai-khoa-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/ngoai-khoa.png",
+      "categories": [
+        71,
+        103
+      ],
+      "chapters": 19,
+      "lessons": 31
+    },
+    {
+      "id": 176,
+      "name": "[Sinh Lý - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/sinh-ly-noi-tru-co-ban-chuyen",
+      "image": "https://cdn.meduc.vn/media/sinh-ly-noi-tru.png",
+      "categories": [
+        67,
+        103
+      ],
+      "chapters": 18,
+      "lessons": 32
+    },
+    {
+      "id": 177,
+      "name": "[Mô Phôi] Cơ Bản -> Chuyên Sâu",
+      "url": "/mo-phoi-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/H%C3%93A%20SINH%20CHUY%C3%8AN%20S%C3%82U%20(4).png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 3,
+      "lessons": 33
+    },
+    {
+      "id": 180,
+      "name": "[Hóa Sinh - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/hoa-sinh-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/hoa-sinh-noi-tru.png",
+      "categories": [
+        50,
+        68,
+        103
+      ],
+      "chapters": 13,
+      "lessons": 19
+    },
+    {
+      "id": 191,
+      "name": "[Dược Lý Lý Thuyết] Cơ Bản -> Chuyên Sâu",
+      "url": "/duoc-ly-ly-thuyet-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/S%E1%BA%A2N%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(5).png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 9,
+      "lessons": 37
+    },
+    {
+      "id": 192,
+      "name": "Tiếng Anh Giao Tiếp Y Khoa Trong Bệnh Viện (cơ bản -> chuyên sâu)",
+      "url": "/tieng-anh-giao-tiep-y-khoa-trong-benh-vien-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/TI%E1%BA%BENG%20ANH%20Y%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(3).png",
+      "categories": [
+        72,
+        102,
+        105
+      ],
+      "chapters": 0,
+      "lessons": 25
+    },
+    {
+      "id": 193,
+      "name": "[Sinh Lý Bệnh MD] Cơ Bản -> Chuyên Sâu",
+      "url": "/sinh-ly-benh-md-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/SINH%20L%C3%9D%20CHUY%C3%8AN%20S%C3%82U%20(7).png",
+      "categories": [
+        67,
+        102
+      ],
+      "chapters": 4,
+      "lessons": 37
+    },
+    {
+      "id": 194,
+      "name": "[Ký Sinh Trùng Y Học] Cơ Bản -> Chuyên Sâu",
+      "url": "/ky-sinh-trung-y-hoc-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/SINH%20L%C3%9D%20CHUY%C3%8AN%20S%C3%82U%20(6).png",
+      "categories": [
+        102
+      ],
+      "chapters": 3,
+      "lessons": 32
+    },
+    {
+      "id": 195,
+      "name": "[Hóa Sinh] Cơ Bản -> Chuyên Sâu",
+      "url": "/hoa-sinh-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/H%C3%93A%20SINH%20C%C6%A0%20B%E1%BA%A2N%20(2).png",
+      "categories": [
+        68
+      ],
+      "chapters": 10,
+      "lessons": 45
+    },
+    {
+      "id": 196,
+      "name": "Thống Kê Y Học [Cơ Bản -> Chuyên Sâu]",
+      "url": "/thong-ke-y-hoc-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/spss%20(1).png",
+      "categories": [
+        50,
+        72,
+        102
+      ],
+      "chapters": 0,
+      "lessons": 16
+    },
+    {
+      "id": 199,
+      "name": "[Lý Sinh] Cơ Bản -> Chuyên Sâu",
+      "url": "/ly-sinh-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/TI%E1%BA%BENG%20ANH%20Y%20KHOA%20CHUY%C3%8AN%20S%C3%82U%20(7).png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 9,
+      "lessons": 40
+    },
+    {
+      "id": 200,
+      "name": "[Dược Lý Lâm Sàng] Cơ Bản -> Chuyên Sâu",
+      "url": "/duoc-ly-lam-sang-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/duoc-lam-sang.png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 11,
+      "lessons": 41
+    },
+    {
+      "id": 201,
+      "name": "[Giải Phẫu - Nội Trú] Cơ Bản -> Chuyên Sâu",
+      "url": "/giai-phau-noi-tru-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/giai-phau.png",
+      "categories": [
+        103
+      ],
+      "chapters": 0,
+      "lessons": 0
+    },
+    {
+      "id": 203,
+      "name": "Giải Phẫu Bệnh(Cơ Bản -> Chuyên Sâu)",
+      "url": "/giai-phau-benhco-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/gia%CC%89i%20pha%CC%82%CC%83u%20be%CC%A3%CC%82nh%20chuye%CC%82n%20sa%CC%82u.png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 2,
+      "lessons": 25
+    },
+    {
+      "id": 204,
+      "name": "Vi Sinh (Cơ Bản -> Chuyên Sâu)",
+      "url": "/vi-sinh-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/vi%20sinh.png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 3,
+      "lessons": 20
+    },
+    {
+      "id": 206,
+      "name": "[Nội Cơ Sở] Cơ Bản -> Chuyên Sâu",
+      "url": "/noi-co-so-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/h%C3%B3a%20sinh%20chuy%C3%AAn%20s%C3%A2u%20(3).png",
+      "categories": [
+        72
+      ],
+      "chapters": 6,
+      "lessons": 38
+    },
+    {
+      "id": 215,
+      "name": "Hoá Học [Cơ Bản -> Chuyên Sâu]",
+      "url": "/hoa-hoc-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/hoa-hoc.png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 0,
+      "lessons": 24
+    },
+    {
+      "id": 219,
+      "name": "Tiền Lâm Sàng [ Cơ Bản -> Chuyên Sâu]",
+      "url": "/tien-lam-sang-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/tien-lam-sang.png",
+      "categories": [
+        50,
+        102
+      ],
+      "chapters": 0,
+      "lessons": 24
+    },
+    {
+      "id": 220,
+      "name": "Ngoại Cơ Sở - Ngoại Triệu Chứng [Cơ Bản -> Chuyên Sâu]",
+      "url": "/ngoai-co-so-ngoai-trieu-chung-co-ban-chuyen-sau",
+      "image": "https://cdn.meduc.vn/media/ngoai-co-so.png",
+      "categories": [
+        50,
+        72
+      ],
+      "chapters": 5,
+      "lessons": 25
+    }
+  ]
+}

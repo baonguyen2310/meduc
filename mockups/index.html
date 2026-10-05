@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedUC - Cổng Luyện Thi Y Khoa & Đề Thi Module Tích Hợp</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            medred: {
+              50: '#fef2f2',
+              100: '#fee2e2',
+              200: '#fecaca',
+              300: '#fca5a5',
+              400: '#f87171',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+              800: '#991b1b',
+              900: '#7f1d1d',
+              950: '#450a0a',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'card-hover': '0 20px 25px -5px rgba(220, 38, 38, 0.08), 0 8px 10px -6px rgba(220, 38, 38, 0.06)',
+            'glow-red': '0 0 20px rgba(220, 38, 38, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fbfbfd;
+    }
+    
+    /* Custom Red Gradient */
+    .bg-med-gradient {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+    }
+
+    .bg-hero-pattern {
+      background-color: #ffffff;
+      background-image: radial-gradient(#fee2e2 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #fca5a5;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ef4444;
+    }
+
+    /* Pulse red dot */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulse-effect {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col selection:bg-medred-100 selection:text-medred-700">
+
+  <!-- ================= TOP TICKER BANNER ================= -->
+  <div class="bg-medred-900 text-white text-xs sm:text-sm py-1.5 px-4 font-medium border-b border-medred-800">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2 overflow-hidden truncate">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-medred-600 text-white uppercase tracking-wider">Mới</span>
+        <span class="truncate">🔥 Đã cập nhật 120+ bộ đề thi trắc nghiệm theo Module & Ca lâm sàng chuẩn ĐH Y Hà Nội, ĐH Y Dược TP.HCM 2024-2025!</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-4 text-xs shrink-0 text-medred-200">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap"></i> 8 Trường ĐH Y</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-medical"></i> 1,450+ Đề thi</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-users"></i> 32,000+ Sinh viên</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="resetAllFilters()">
+          <div class="w-11 h-11 rounded-2xl bg-medred-600 flex items-center justify-center text-white shadow-md shadow-medred-500/30 transform transition hover:scale-105">
+            <i class="fa-solid fa-notes-medical text-2xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-extrabold tracking-tight text-slate-900">Med<span class="text-medred-600">UC</span></span>
+              <span class="text-[10px] bg-medred-100 text-medred-700 font-bold px-1.5 py-0.5 rounded uppercase">Exam Portal</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium leading-none mt-0.5">Khảo Thí & Ôn Thi Y Khoa Phân Cấp</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm text-slate-600">
+          <a href="#" class="px-3.5 py-2 rounded-lg text-medred-600 bg-medred-50 font-semibold transition">
+            <i class="fa-solid fa-layer-group mr-1.5"></i>Kho Đề Phân Cấp
+          </a>
+          <a href="#quick-filter-tabs" class="px-3.5 py-2 rounded-lg hover:text-medred-600 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-stethoscope mr-1.5 text-slate-400"></i>Case Lâm Sàng
+          </a>
+          <a href="#quick-filter-tabs" class="px-3.5 py-2 rounded-lg hover:text-medred-600 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-user-doctor mr-1.5 text-slate-400"></i>Ôn Thi Nội Trú
+          </a>
+          <a href="#stats-section" class="px-3.5 py-2 rounded-lg hover:text-medred-600 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-award mr-1.5 text-slate-400"></i>Chuẩn Năng Lực
+          </a>
+          <a href="student.html" class="px-3 py-1.5 rounded-xl bg-duored-50 text-duored-700 hover:bg-duored-100 font-bold text-xs transition flex items-center gap-1.5">
+            <span>Demo 2 (Ngang)</span>
+          </a>
+          <a href="demo3.html" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-duored-500 to-medred-600 text-white font-bold text-xs shadow-sm hover:opacity-95 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-table-columns"></i>
+            <span>Demo 3 (Cột Trái)</span>
+          </a>
+        </nav>
+
+        <!-- Right Action Items -->
+        <div class="flex items-center gap-3">
+          <!-- Bookmarks button with badge -->
+          <button id="btn-bookmarks" onclick="openFavoritesModal()" class="relative p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-medred-600 hover:border-medred-200 hover:bg-medred-50/50 transition">
+            <i class="fa-regular fa-bookmark text-lg"></i>
+            <span id="fav-count" class="absolute -top-1.5 -right-1.5 bg-medred-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+          </button>
+
+          <button onclick="openSimulationModal(1)" class="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-xl bg-medred-600 hover:bg-medred-700 text-white text-sm font-semibold shadow-md shadow-medred-500/25 transition-all hover:shadow-lg active:scale-95">
+            <i class="fa-solid fa-bolt-lightning text-amber-300"></i>
+            <span>Thi Thử Ngay</span>
+          </button>
+
+          <!-- Mobile Hamburger -->
+          <button id="btn-mobile-menu" class="lg:hidden p-2 text-slate-600 rounded-lg hover:bg-slate-100" onclick="toggleMobileNav()">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Nav Collapse -->
+    <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2">
+      <a href="#" class="block px-3 py-2 rounded-lg text-medred-600 bg-medred-50 font-semibold">Kho Đề Phân Cấp</a>
+      <a href="#quick-filter-tabs" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Case Lâm Sàng</a>
+      <a href="#quick-filter-tabs" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Ôn Thi Bác Sĩ Nội Trú</a>
+      <a href="#stats-section" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Chuẩn Năng Lực & Đổi Mới</a>
+      <button onclick="openSimulationModal(1)" class="w-full mt-2 py-2.5 rounded-xl bg-medred-600 text-white font-semibold">
+        <i class="fa-solid fa-bolt-lightning text-amber-300 mr-2"></i>Làm Thử Đề Mẫu
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO & SEARCH HEADER ================= -->
+  <section class="bg-hero-pattern border-b border-slate-200/80 pt-10 pb-8 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Headline & Introduction -->
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-medred-50 border border-medred-200/80 text-medred-700 text-xs font-semibold mb-4 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-medred-600 pulse-effect"></span>
+          <span>Nền tảng khảo thí chuẩn chương trình đổi mới Y khoa</span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+          Luyện Đề Y Khoa Theo <span class="text-transparent bg-clip-text bg-gradient-to-r from-medred-600 to-medred-700 underline decoration-medred-300 decoration-wavy underline-offset-8">Phân Cấp</span>
+        </h1>
+        
+        <p class="mt-4 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          Tìm kiếm & Lọc đề chính xác từ cấp cao xuống thấp: 
+          <strong class="text-slate-800">Trường ĐH Y</strong> 
+          <i class="fa-solid fa-angle-right text-xs text-medred-500 mx-1"></i> 
+          <strong class="text-slate-800">Năm học (Y1-Y6)</strong> 
+          <i class="fa-solid fa-angle-right text-xs text-medred-500 mx-1"></i> 
+          <strong class="text-slate-800">Môn học</strong> 
+          <i class="fa-solid fa-angle-right text-xs text-medred-500 mx-1"></i> 
+          <strong class="text-slate-800">Module hệ cơ quan</strong>.
+        </p>
+      </div>
+
+      <!-- MAIN SEARCH BAR (Instant Keyword Search) -->
+      <div class="max-w-4xl mx-auto mb-6">
+        <div class="relative bg-white rounded-2xl p-2 shadow-lg shadow-slate-200/70 border-2 border-slate-200 focus-within:border-medred-500 focus-within:ring-4 focus-within:ring-medred-100 transition-all flex items-center">
+          <div class="pl-3 pr-2 text-medred-600 text-xl">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <input 
+            type="text" 
+            id="main-search-input"
+            oninput="handleSearchInput()" 
+            placeholder="Tìm theo tên đề thi, từ khóa (ví dụ: 'Module Tim mạch', 'Giải phẫu chi trên', 'Nội trú 2024', 'ECG', 'Nhi khoa')..." 
+            class="w-full py-2.5 px-2 text-sm sm:text-base text-slate-800 placeholder-slate-400 bg-transparent focus:outline-none"
+          />
+          <button 
+            id="btn-clear-search" 
+            onclick="clearSearchInput()" 
+            class="hidden px-3 text-slate-400 hover:text-slate-600 transition"
+            title="Xóa tìm kiếm">
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+          <button 
+            onclick="applyFilters()" 
+            class="shrink-0 bg-medred-600 hover:bg-medred-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>Tìm kiếm</span>
+          </button>
+        </div>
+        
+        <!-- Popular quick tags -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs text-slate-500">
+          <span class="font-medium text-slate-600">Gợi ý tìm nhanh:</span>
+          <button onclick="setSearchKeyword('Module Tim Mạch')" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 hover:border-medred-400 hover:text-medred-600 hover:bg-medred-50 transition">Module Tim Mạch</button>
+          <button onclick="setSearchKeyword('Giải Phẫu')" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 hover:border-medred-400 hover:text-medred-600 hover:bg-medred-50 transition">Giải Phẫu</button>
+          <button onclick="setSearchKeyword('Nội trú HMU')" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 hover:border-medred-400 hover:text-medred-600 hover:bg-medred-50 transition">Nội trú HMU</button>
+          <button onclick="setSearchKeyword('Case Lâm Sàng')" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 hover:border-medred-400 hover:text-medred-600 hover:bg-medred-50 transition">Case Lâm Sàng</button>
+          <button onclick="setSearchKeyword('Dược Lý')" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 hover:border-medred-400 hover:text-medred-600 hover:bg-medred-50 transition">Dược Lý</button>
+        </div>
+      </div>
+
+      <!-- ================= 4-TIER HIERARCHICAL FILTER CARD ================= -->
+      <div class="max-w-6xl mx-auto bg-white rounded-3xl p-5 sm:p-7 shadow-xl shadow-slate-200/60 border border-slate-200/90 relative">
+        
+        <!-- Filter Header with Reset -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-medred-100 text-medred-700 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-filter"></i>
+            </span>
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-slate-900">Bộ Lọc Phân Cấp Y Khoa</h2>
+              <p class="text-xs text-slate-500">Lọc tuần tự từ cấp vĩ mô (Trường) xuống vi mô (Module môn học)</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button 
+              onclick="resetAllFilters()" 
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-medred-600 bg-slate-100 hover:bg-medred-50 rounded-lg transition">
+              <i class="fa-solid fa-arrows-rotate text-[11px]"></i>
+              <span>Đặt lại bộ lọc</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- The 4 Hierarchical Cascading Dropdowns -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- LEVEL 1: TRƯỜNG ĐẠI HỌC -->
+          <div class="relative group">
+            <label for="filter-school" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-medred-600 text-white text-[10px] flex items-center justify-center font-bold">1</span>
+                <span>Trường Đại Học Y</span>
+              </span>
+              <span id="badge-school-count" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-medium">8 trường</span>
+            </label>
+            <div class="relative">
+              <select 
+                id="filter-school" 
+                onchange="onSchoolChange()"
+                class="w-full pl-9 pr-8 py-2.5 bg-slate-50 hover:bg-white focus:bg-white text-slate-800 text-sm rounded-xl border border-slate-200 focus:border-medred-500 focus:ring-2 focus:ring-medred-100 outline-none transition cursor-pointer appearance-none font-medium">
+                <option value="all">Tất cả các Trường Y Dược</option>
+                <option value="HMU">ĐH Y Hà Nội (HMU)</option>
+                <option value="UMP">ĐH Y Dược TP.HCM (UMP)</option>
+                <option value="VMMU">Học viện Quân Y (VMMU)</option>
+                <option value="HueUMP">ĐH Y Dược - ĐH Huế</option>
+                <option value="CTUMP">ĐH Y Dược Cần Thơ</option>
+                <option value="PNTU">ĐH Y Khoa Phạm Ngọc Thạch</option>
+                <option value="TBMU">ĐH Y Dược Thái Bình</option>
+                <option value="HPMU">ĐH Y Dược Hải Phòng</option>
+              </select>
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-medred-600 pointer-events-none text-sm">
+                <i class="fa-solid fa-hospital-user"></i>
+              </div>
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 2: NĂM HỌC / KHỐI LỚP (Y1 - Y6) -->
+          <div class="relative group">
+            <label for="filter-year" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-medred-600 text-white text-[10px] flex items-center justify-center font-bold">2</span>
+                <span>Năm Học / Khối Lớp</span>
+              </span>
+              <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-medium">Y1 - Y6</span>
+            </label>
+            <div class="relative">
+              <select 
+                id="filter-year" 
+                onchange="onYearChange()"
+                class="w-full pl-9 pr-8 py-2.5 bg-slate-50 hover:bg-white focus:bg-white text-slate-800 text-sm rounded-xl border border-slate-200 focus:border-medred-500 focus:ring-2 focus:ring-medred-100 outline-none transition cursor-pointer appearance-none font-medium">
+                <option value="all">Tất cả năm học (Y1 ➜ Y6)</option>
+                <option value="Y1">Y1 - Năm 1 (Khoa học cơ bản)</option>
+                <option value="Y2">Y2 - Năm 2 (Y học cơ sở)</option>
+                <option value="Y3">Y3 - Năm 3 (Triệu chứng lâm sàng)</option>
+                <option value="Y4">Y4 - Năm 4 (Bệnh học ngoại - sản - nhi)</option>
+                <option value="Y5">Y5 - Năm 5 (Chuyên khoa lẻ)</option>
+                <option value="Y6">Y6 - Năm 6 (Tốt nghiệp & Bác sĩ nội trú)</option>
+              </select>
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-medred-600 pointer-events-none text-sm">
+                <i class="fa-solid fa-user-graduate"></i>
+              </div>
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 3: MÔN HỌC (SUBJECT) -->
+          <div class="relative group">
+            <label for="filter-subject" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-medred-600 text-white text-[10px] flex items-center justify-center font-bold">3</span>
+                <span>Môn Học Y Khoa</span>
+              </span>
+              <span id="subject-count-tag" class="text-[10px] bg-medred-50 text-medred-700 px-1.5 py-0.5 rounded font-semibold">Tự động thích ứng</span>
+            </label>
+            <div class="relative">
+              <select 
+                id="filter-subject" 
+                onchange="onSubjectChange()"
+                class="w-full pl-9 pr-8 py-2.5 bg-slate-50 hover:bg-white focus:bg-white text-slate-800 text-sm rounded-xl border border-slate-200 focus:border-medred-500 focus:ring-2 focus:ring-medred-100 outline-none transition cursor-pointer appearance-none font-medium">
+                <option value="all">Tất cả môn học</option>
+                <!-- Populated dynamically based on Year selection -->
+              </select>
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-medred-600 pointer-events-none text-sm">
+                <i class="fa-solid fa-book-medical"></i>
+              </div>
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEVEL 4: MODULE HỆ CƠ QUAN / CHUYÊN ĐỀ -->
+          <div class="relative group">
+            <label for="filter-module" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-medred-600 text-white text-[10px] flex items-center justify-center font-bold">4</span>
+                <span>Module Tích Hợp</span>
+              </span>
+              <span class="text-[10px] bg-medred-100 text-medred-800 px-1.5 py-0.5 rounded font-bold">Hệ Cơ Quan</span>
+            </label>
+            <div class="relative">
+              <select 
+                id="filter-module" 
+                onchange="onModuleChange()"
+                class="w-full pl-9 pr-8 py-2.5 bg-slate-50 hover:bg-white focus:bg-white text-slate-800 text-sm rounded-xl border border-slate-200 focus:border-medred-500 focus:ring-2 focus:ring-medred-100 outline-none transition cursor-pointer appearance-none font-medium">
+                <option value="all">Tất cả module hệ cơ quan</option>
+                <!-- Populated dynamically based on Subject -->
+              </select>
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-medred-600 pointer-events-none text-sm">
+                <i class="fa-solid fa-dna"></i>
+              </div>
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Breadcrumb & Active Filters Trail -->
+        <div id="filter-breadcrumbs" class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
+          <span class="text-slate-400 font-medium">Đang lọc theo:</span>
+          <div id="breadcrumb-tags" class="flex flex-wrap items-center gap-1.5">
+            <!-- Dynamically injected active filter chips -->
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">
+              <span>Toàn bộ đề thi</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MAIN CONTENT: EXAM LIST & CONTROLS ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- Secondary Quick Filter Tabs (Loại đề thi & Chuyên mục) -->
+    <div id="quick-filter-tabs" class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      
+      <!-- Pills for exam category -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 w-full md:w-auto scrollbar-none">
+        <button onclick="setExamType('all')" data-type="all" class="filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-medred-600 text-white transition shrink-0 shadow-sm">
+          Tất cả đề (<span id="type-count-all">0</span>)
+        </button>
+        <button onclick="setExamType('het_mon')" data-type="het_mon" class="filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-medred-300 hover:text-medred-600 transition shrink-0">
+          <i class="fa-solid fa-file-signature text-medred-500 mr-1"></i>Đề Thi Hết Môn
+        </button>
+        <button onclick="setExamType('noi_tru')" data-type="noi_tru" class="filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-medred-300 hover:text-medred-600 transition shrink-0">
+          <i class="fa-solid fa-user-doctor text-medred-500 mr-1"></i>Ôn Thi Bác Sĩ Nội Trú
+        </button>
+        <button onclick="setExamType('case_lam_sang')" data-type="case_lam_sang" class="filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-medred-300 hover:text-medred-600 transition shrink-0">
+          <i class="fa-solid fa-stethoscope text-medred-500 mr-1"></i>Ca Bệnh Lâm Sàng (CBL)
+        </button>
+        <button onclick="setExamType('thi_thu_quoc_gia')" data-type="thi_thu_quoc_gia" class="filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-medred-300 hover:text-medred-600 transition shrink-0">
+          <i class="fa-solid fa-shield-heart text-medred-500 mr-1"></i>Chứng Chỉ Hành Nghề (CCHN)
+        </button>
+      </div>
+
+      <!-- Sorting & Display Options -->
+      <div class="flex items-center gap-2.5 shrink-0 ml-auto">
+        <label for="sort-select" class="text-xs font-semibold text-slate-500 flex items-center gap-1">
+          <i class="fa-solid fa-arrow-down-short-wide"></i> Sắp xếp:
+        </label>
+        <select 
+          id="sort-select" 
+          onchange="onSortChange()"
+          class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-2 outline-none focus:border-medred-500">
+          <option value="popular">Phổ biến & Lượt thi nhiều nhất</option>
+          <option value="newest">Mới cập nhật gần đây</option>
+          <option value="rating">Đánh giá cao nhất (⭐ 5.0)</option>
+          <option value="questions_asc">Số câu ít ➜ nhiều</option>
+          <option value="questions_desc">Số câu nhiều ➜ ít</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Results Status Bar -->
+    <div class="flex items-center justify-between mb-5 bg-white px-4 py-3 rounded-xl border border-slate-200/80 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-medred-600"></span>
+        <span class="font-medium text-slate-700">Kết quả tìm kiếm:</span>
+        <span id="results-count" class="font-extrabold text-medred-600 text-base">0</span>
+        <span class="text-slate-500 text-xs sm:text-sm">bộ đề y khoa phù hợp</span>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs text-slate-500">
+        <span class="hidden sm:inline-flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Đáp án chuẩn</span>
+        <span class="hidden sm:inline-flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Giải thích chi tiết</span>
+      </div>
+    </div>
+
+    <!-- EXAMS GRID CONTAINER -->
+    <div id="exams-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Exam Cards will be dynamically rendered here via JavaScript -->
+    </div>
+
+    <!-- Empty State (When no exams match filter) -->
+    <div id="empty-state" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-dashed border-slate-300">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-medred-50 text-medred-600 flex items-center justify-center text-3xl">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-800">Không tìm thấy bộ đề phù hợp</h3>
+      <p class="text-sm text-slate-500 max-w-md mx-auto mt-1 mb-6">
+        Hãy thử nới lỏng bộ lọc phân cấp (chọn "Tất cả module" hoặc "Tất cả môn học") hoặc đổi từ khóa tìm kiếm.
+      </p>
+      <button onclick="resetAllFilters()" class="px-5 py-2.5 bg-medred-600 hover:bg-medred-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-medred-500/20 transition">
+        <i class="fa-solid fa-rotate-left mr-1.5"></i>Đặt lại toàn bộ lọc
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ================= HIGHLIGHT / STATS SECTION ================= -->
+  <section id="stats-section" class="bg-white border-y border-slate-200 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl lg:text-4xl font-extrabold text-medred-600">8+</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-800 mt-1">Trường ĐH Y Trọng Điểm</div>
+          <div class="text-xs text-slate-500 mt-0.5">HMU, UMP, VMMU, CTUMP...</div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl lg:text-4xl font-extrabold text-medred-600">1,450+</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-800 mt-1">Bộ Đề Thi Theo Module</div>
+          <div class="text-xs text-slate-500 mt-0.5">Tích hợp cơ quan & CBL</div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl lg:text-4xl font-extrabold text-medred-600">55,000+</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-800 mt-1">Câu Hỏi Có Giải Thích</div>
+          <div class="text-xs text-slate-500 mt-0.5">Tham khảo Harrison, UpToDate</div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="text-3xl lg:text-4xl font-extrabold text-medred-600">98.6%</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-800 mt-1">Hài Lòng & Đạt Điểm Cao</div>
+          <div class="text-xs text-slate-500 mt-0.5">Khảo sát sinh viên Y1 - Y6</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEDICAL STUDY GUIDE BANNER ================= -->
+  <section class="bg-med-gradient text-white py-12 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-2xl">
+        <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mb-3">
+          Phương pháp học Y khoa hiện đại
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Ôn thi theo chuỗi ca bệnh & Module tích hợp</h2>
+        <p class="mt-2 text-medred-100 text-sm sm:text-base leading-relaxed">
+          Không còn học vẹt máy móc. Mỗi bộ đề trắc nghiệm đều được xây dựng gắn liền với lâm sàng thực tiễn, phân tích cơ chế sinh lý bệnh và hướng dẫn điều trị chuẩn theo Bộ Y Tế.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <button onclick="openSimulationModal(2)" class="px-6 py-3 rounded-xl bg-white text-medred-700 hover:bg-medred-50 font-bold text-sm shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-play text-medred-600"></i>Làm Đề Cấp Cứu Mẫu
+        </button>
+        <button onclick="resetAllFilters()" class="px-6 py-3 rounded-xl bg-medred-800 hover:bg-medred-900 text-white font-bold text-sm border border-medred-700 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-compass"></i>Khám Phá Toàn Bộ
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-900 text-slate-400 text-sm py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        
+        <div class="col-span-1 md:col-span-1">
+          <div class="flex items-center gap-2.5 mb-3">
+            <div class="w-9 h-9 rounded-xl bg-medred-600 flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-notes-medical"></i>
+            </div>
+            <span class="text-xl font-bold text-white tracking-tight">Med<span class="text-medred-500">UC</span></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Hệ thống ngân hàng đề thi và khảo thí trắc nghiệm y khoa thông minh theo module đổi mới giáo dục y khoa Việt Nam.
+          </p>
+          <div class="flex space-x-3 text-slate-400">
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-medred-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f text-xs"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-medred-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube text-xs"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-medred-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-telegram text-xs"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">Trường Y Trọng Điểm</h3>
+          <ul class="space-y-2 text-xs">
+            <li><button onclick="setSchoolQuick('HMU')" class="hover:text-white transition">Đại học Y Hà Nội (HMU)</button></li>
+            <li><button onclick="setSchoolQuick('UMP')" class="hover:text-white transition">ĐH Y Dược TP.HCM (UMP)</button></li>
+            <li><button onclick="setSchoolQuick('VMMU')" class="hover:text-white transition">Học viện Quân Y (VMMU)</button></li>
+            <li><button onclick="setSchoolQuick('HueUMP')" class="hover:text-white transition">ĐH Y Dược - ĐH Huế</button></li>
+            <li><button onclick="setSchoolQuick('CTUMP')" class="hover:text-white transition">ĐH Y Dược Cần Thơ</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">Phân Cấp Khối Lớp</h3>
+          <ul class="space-y-2 text-xs">
+            <li><button onclick="setYearQuick('Y1')" class="hover:text-white transition">Y1: Giải phẫu, Sinh lý cơ bản</button></li>
+            <li><button onclick="setYearQuick('Y2')" class="hover:text-white transition">Y2: Dược lý, Hóa sinh, Vi sinh</button></li>
+            <li><button onclick="setYearQuick('Y3')" class="hover:text-white transition">Y3: Triệu chứng học Nội & Ngoại</button></li>
+            <li><button onclick="setYearQuick('Y4')" class="hover:text-white transition">Y4: Bệnh học chuyên sâu & Sản Nhi</button></li>
+            <li><button onclick="setYearQuick('Y6')" class="hover:text-white transition">Y6: Ôn thi Bác sĩ Nội trú</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">Thông Tin & Hỗ Trợ</h3>
+          <p class="text-xs text-slate-400 mb-2 leading-relaxed">Dành cho sinh viên Y khoa học tập & khảo thí.</p>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs">
+            <span class="text-medred-400 font-bold block mb-1">Quy định bản quyền:</span>
+            Tất cả tài liệu và ca lâm sàng phục vụ mục đích học tập, tham khảo và rèn luyện kỹ năng biện luận y khoa.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+        © 2024-2025 MedUC Vietnam - Medical Exam Practice Platform. Thiết kế tông màu Đỏ & Trắng Y Tế.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= INTERACTIVE TEST SIMULATION MODAL ================= -->
+  <div id="simulation-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+    <div class="bg-white rounded-3xl w-full max-w-3xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[90vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="bg-slate-900 text-white p-4 sm:p-5 flex items-center justify-between border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-medred-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+            <i class="fa-solid fa-stethoscope"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="modal-exam-school-tag" class="text-[11px] bg-medred-700 text-white font-semibold px-2 py-0.5 rounded">HMU</span>
+              <span id="modal-exam-year-tag" class="text-[11px] bg-slate-800 text-slate-300 font-medium px-2 py-0.5 rounded">Y3</span>
+              <span class="text-[11px] text-emerald-400 flex items-center gap-1 font-semibold">
+                <i class="fa-solid fa-circle text-[8px] animate-pulse"></i> Đang thi thử
+              </span>
+            </div>
+            <h3 id="modal-exam-title" class="font-bold text-sm sm:text-base text-white mt-0.5 line-clamp-1">
+              Đề thi mẫu trắc nghiệm y khoa
+            </h3>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Countdown Timer Mock -->
+          <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-amber-300 font-mono text-sm font-bold">
+            <i class="fa-regular fa-clock"></i>
+            <span id="modal-timer">44:32</span>
+          </div>
+
+          <button onclick="closeSimulationModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Question & Options) -->
+      <div class="p-5 sm:p-7 overflow-y-auto space-y-6 flex-1 text-slate-800">
+        
+        <!-- Question Stem -->
+        <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+          <div class="flex items-center justify-between text-xs text-slate-500 font-semibold mb-2">
+            <span class="text-medred-600 font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-question-circle mr-1"></i> Câu hỏi số <span id="modal-q-index">1</span> / <span id="modal-q-total">1</span>
+            </span>
+            <span id="modal-q-type" class="bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-600">Case Lâm Sàng (CBL)</span>
+          </div>
+          <p id="modal-q-content" class="text-sm sm:text-base font-semibold text-slate-900 leading-relaxed">
+            Nội dung câu hỏi lâm sàng...
+          </p>
+        </div>
+
+        <!-- Options Form -->
+        <div id="modal-options-container" class="space-y-3">
+          <!-- Dynamically populated options A, B, C, D -->
+        </div>
+
+        <!-- Feedback & Explanation (Shown after check answer) -->
+        <div id="modal-explanation-box" class="hidden p-4 sm:p-5 rounded-2xl border transition-all">
+          <div class="flex items-center gap-2 mb-2 font-bold text-sm">
+            <span id="explanation-status-icon"></span>
+            <span id="explanation-status-title"></span>
+          </div>
+          <div class="text-xs sm:text-sm leading-relaxed" id="explanation-content">
+            <!-- Detailed explanation -->
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-200/60 text-xs text-slate-500 flex items-center gap-1.5">
+            <i class="fa-solid fa-bookmark text-medred-600"></i>
+            <span>Nguồn tài liệu: <strong id="explanation-reference">Giáo trình ĐH Y Hà Nội & Harrison's Internal Medicine</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Controls -->
+      <div class="bg-slate-50 p-4 sm:px-6 sm:py-4 border-t border-slate-200 flex items-center justify-between">
+        <button 
+          id="btn-bookmark-modal"
+          onclick="toggleCurrentModalBookmark()"
+          class="px-3 py-2 rounded-xl border border-slate-200 hover:border-medred-300 text-slate-600 hover:text-medred-600 text-xs font-semibold transition flex items-center gap-1.5">
+          <i class="fa-regular fa-bookmark"></i>
+          <span>Lưu câu này</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button 
+            id="btn-check-answer" 
+            onclick="checkModalAnswer()" 
+            class="px-5 py-2.5 rounded-xl bg-medred-600 hover:bg-medred-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-medred-500/25 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-check"></i>
+            <span>Kiểm Tra Đáp Án</span>
+          </button>
+          <button 
+            onclick="closeSimulationModal()" 
+            class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs sm:text-sm font-semibold transition">
+            Đóng
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SAVED EXAMS (BOOKMARKS) MODAL ================= -->
+  <div id="favorites-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl w-full max-w-xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[85vh] flex flex-col">
+      <div class="bg-medred-600 text-white p-4 sm:p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-bookmark text-xl"></i>
+          <h3 class="font-bold text-base sm:text-lg">Bộ Đề Đã Lưu Của Bạn</h3>
+        </div>
+        <button onclick="closeFavoritesModal()" class="w-8 h-8 rounded-lg bg-medred-700 hover:bg-medred-800 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="favorites-list" class="p-4 sm:p-6 overflow-y-auto space-y-3 flex-1 text-sm">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-between items-center text-xs">
+        <span class="text-slate-500">Được lưu trên trình duyệt của bạn</span>
+        <button onclick="closeFavoritesModal()" class="px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 font-semibold text-slate-700">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // ================= 1. HIERARCHICAL DATA DICTIONARY =================
+    // Cấu trúc phân cấp:
+    // Trường -> Năm học (Y1-Y6) -> Môn học -> Module
+    
+    const HIERARCHY_DATA = {
+      // Danh sách môn theo năm học (chuẩn Y khoa)
+      subjectsByYear: {
+        'Y1': [
+          { id: 'giai_phau_1', name: 'Giải Phẫu Học I (Chi & Thân mình)' },
+          { id: 'sinh_hoc_dt', name: 'Sinh Học Đại Cương & Di Truyền Y Học' },
+          { id: 'hoa_sinh_dc', name: 'Hóa Sinh Đại Cương' },
+          { id: 'ly_sinh_yh', name: 'Lý Sinh Y Học' },
+          { id: 'tam_ly_yk', name: 'Tâm Lý Y Học & Y Đức' }
+        ],
+        'Y2': [
+          { id: 'giai_phau_2', name: 'Giải Phẫu Học II (Đầu - Mặt - Cổ & Não)' },
+          { id: 'sinh_ly_hoc', name: 'Sinh Lý Học' },
+          { id: 'hoa_sinh_yh', name: 'Hóa Sinh Y Học' },
+          { id: 'mo_phoi_hoc', name: 'Mô Phôi Học' },
+          { id: 'vi_sinh_kstr', name: 'Vi Sinh - Ký Sinh Trùng' },
+          { id: 'duoc_ly_cb', name: 'Dược Lý Học Đại Cương' },
+          { id: 'giai_phau_benh', name: 'Giải Phẫu Bệnh Cơ Bản' }
+        ],
+        'Y3': [
+          { id: 'trieu_chung_noi', name: 'Triệu Chứng Học Nội Khoa' },
+          { id: 'trieu_chung_ngoai', name: 'Triệu Chứng Học Ngoại Khoa' },
+          { id: 'chan_doan_ha', name: 'Chẩn Đoán Hình Ảnh & Thăm Dò Chức Năng' },
+          { id: 'duoc_ly_ls', name: 'Dược Lý Lâm Sàng' },
+          { id: 'phau_thuat_th', name: 'Phẫu Thuật Thực Hành' }
+        ],
+        'Y4': [
+          { id: 'benh_hoc_noi', name: 'Bệnh Học Nội Khoa' },
+          { id: 'benh_hoc_ngoai', name: 'Bệnh Học Ngoại Khoa' },
+          { id: 'san_phu_khoa_1', name: 'Sản Phụ Khoa Cơ Bản' },
+          { id: 'nhi_khoa_1', name: 'Nhi Khoa Cơ Bản' },
+          { id: 'gay_me_hs', name: 'Gây Mê Hồi Sức' }
+        ],
+        'Y5': [
+          { id: 'chuyen_khoa_tmh', name: 'Tai Mũi Họng' },
+          { id: 'chuyen_khoa_mat', name: 'Mắt (Nhãn Khoa)' },
+          { id: 'chuyen_khoa_rhm', name: 'Răng Hàm Mặt' },
+          { id: 'than_kinh_tt', name: 'Thần Kinh - Tâm Thần' },
+          { id: 'da_lieu', name: 'Da Liễu & Bệnh Lây Qua Đường Tình Dục' },
+          { id: 'ung_thu_hoc', name: 'Ung Thư Học' }
+        ],
+        'Y6': [
+          { id: 'noi_tru_noi', name: 'Ôn Thi Nội Trú - Nội Khoa' },
+          { id: 'noi_tru_ngoai', name: 'Ôn Thi Nội Trú - Ngoại Khoa' },
+          { id: 'noi_tru_san', name: 'Ôn Thi Nội Trú - Sản Phụ Khoa' },
+          { id: 'noi_tru_nhi', name: 'Ôn Thi Nội Trú - Nhi Khoa' },
+          { id: 'hoi_suc_cap_cuu', name: 'Hồi Sức Cấp Cứu & Chống Độc' }
+        ]
+      },
+
+      // Danh sách Module theo Môn học (hoặc hệ cơ quan tích hợp)
+      modulesBySubject: {
+        'giai_phau_1': [
+          { id: 'mod_chi_tren', name: 'Module Chi Trên & Đám Rối Thần Kinh' },
+          { id: 'mod_chi_duoi', name: 'Module Chi Dưới & Mạch Máu Đùi' },
+          { id: 'mod_nguc_bung', name: 'Module Thành Ngực & Thành Bụng' }
+        ],
+        'giai_phau_2': [
+          { id: 'mod_dau_mat_co', name: 'Module Đầu - Mặt - Cổ' },
+          { id: 'mod_than_kinh_tw', name: 'Module Hệ Thần Kinh Trung Ương & Não Bộ' },
+          { id: 'mod_giac_quan', name: 'Module Các Giác Quan (Mắt, Tai)' }
+        ],
+        'sinh_ly_hoc': [
+          { id: 'mod_tim_mach', name: 'Module Tim Mạch & Tuần Hoàn' },
+          { id: 'mod_ho_hap', name: 'Module Hệ Hô Hấp' },
+          { id: 'mod_tieu_hoa', name: 'Module Hệ Tiêu Hóa & Hấp Thu' },
+          { id: 'mod_than_tiet_nieu', name: 'Module Thận & Thăng Bằng Nội Môi' },
+          { id: 'mod_noi_tiet', name: 'Module Tuyến Nội Tiết & Chuyển Hóa' }
+        ],
+        'duoc_ly_cb': [
+          { id: 'mod_duoc_khang_sinh', name: 'Module Kháng Sinh & Kháng Nấm' },
+          { id: 'mod_duoc_tim_mach', name: 'Module Thuốc Tim Mạch & Hạ Áp' },
+          { id: 'mod_duoc_than_kinh', name: 'Module Thuốc An Thần & Giảm Đau' }
+        ],
+        'trieu_chung_noi': [
+          { id: 'mod_tc_tim_mach', name: 'Module Khám & Triệu Chứng Tim Mạch (Điện Tâm Đồ ECG)' },
+          { id: 'mod_tc_ho_hap', name: 'Module Khám Hô Hấp & X-Quang Phổi' },
+          { id: 'mod_tc_tieu_hoa', name: 'Module Khám Bụng & Hội Chứng Vàng Da' },
+          { id: 'mod_tc_than', name: 'Module Hội Chứng Thận Hư & Viêm Cầu Thận' }
+        ],
+        'trieu_chung_ngoai': [
+          { id: 'mod_bung_ngoai_khoa', name: 'Module Hội Chứng Bụng Ngoại Khoa (Viêm Ruột Thừa, Tắc Ruột)' },
+          { id: 'mod_chan_thuong_chinh_hinh', name: 'Module Gãy Xương & Chấn Thương Cơ Xương Khớp' },
+          { id: 'mod_chan_thuong_so_nao', name: 'Module Chấn Thương Sọ Não & Cột Sống' }
+        ],
+        'benh_hoc_noi': [
+          { id: 'mod_mach_vanh_suy_tim', name: 'Module Hội Chứng Vành Cấp & Suy Tim Cấp/Mạn' },
+          { id: 'mod_copd_hen', name: 'Module Đợt Cấp COPD & Cơn Hen Phế Quản Ác Tính' },
+          { id: 'mod_xuat_huyet_th', name: 'Module Xuất Huyết Tiêu Hóa & Xơ Gan Mất Bù' },
+          { id: 'mod_suy_than', name: 'Module Tổn Thương Thận Cấp (AKI) & Bệnh Thận Mạn (CKD)' }
+        ],
+        'benh_hoc_ngoai': [
+          { id: 'mod_ngoai_tieu_hoa', name: 'Module Ung Thư Dạ Dày & Trĩ - Hậu Môn Trực Tràng' },
+          { id: 'mod_ngoai_tiet_nieu', name: 'Module Sỏi Tiết Niệu & Tăng Sinh Tuyến Tiền Liệt' }
+        ],
+        'nhi_khoa_1': [
+          { id: 'mod_nhi_ho_hap', name: 'Module Viêm Phế Quản Phổi & Hen Trẻ Em' },
+          { id: 'mod_nhi_tieu_hoa', name: 'Module Tiêu Chảy Cấp & Mất Nước Ở Trẻ Nhỏ' },
+          { id: 'mod_nhi_so_sinh', name: 'Module Vàng Da Sơ Sinh & Ngạt Chu Sinh' }
+        ],
+        'san_phu_khoa_1': [
+          { id: 'mod_san_khoa_cb', name: 'Module Chẩn Đoán Thai Nghén & Đẻ Khó' },
+          { id: 'mod_cap_cuu_san', name: 'Module Tiền Sản Giật - Sản Giật & Băng Huyết Sau Sinh' }
+        ],
+        'hoi_suc_cap_cuu': [
+          { id: 'mod_ngung_tuan_hoan', name: 'Module Cấp Cứu Ngừng Tuần Hoàn Hô Hấp (ACLS)' },
+          { id: 'mod_soc_cap_cuu', name: 'Module Sốc Nhiễm Khuẩn & Sốc Phản Vệ' }
+        ],
+        'noi_tru_noi': [
+          { id: 'mod_noi_tru_tong_hop', name: 'Module Tổng Hợp Chẩn Đoán Phân Biệt & Phác Đồ Bộ Y Tế' },
+          { id: 'mod_noi_tru_ecg', name: 'Module Biện Luận ECG Nâng Cao & Khí Máu Động Mạch ABG' }
+        ]
+      }
+    };
+
+    // Tất cả các module dùng chung cho fallback khi chưa chọn môn
+    const ALL_GENERIC_MODULES = [
+      { id: 'mod_tim_mach', name: 'Module Tim Mạch & Tuần Hoàn' },
+      { id: 'mod_ho_hap', name: 'Module Hệ Hô Hấp' },
+      { id: 'mod_tieu_hoa', name: 'Module Tiêu Hóa & Gan Mật' },
+      { id: 'mod_than_tiet_nieu', name: 'Module Thận & Tiết Niệu' },
+      { id: 'mod_than_kinh_tw', name: 'Module Thần Kinh & Não Bộ' },
+      { id: 'mod_co_xuong_khop', name: 'Module Cơ - Xương - Khớp' },
+      { id: 'mod_noi_tiet', name: 'Module Nội Tiết & Chuyển Hóa' },
+      { id: 'mod_cap_cuu_soc', name: 'Module Hồi Sức & Cấp Cứu Ban Đầu' }
+    ];
+
+    // ================= 2. EXAM DATABASE (MOCK DATASET) =================
+    const EXAMS_DATABASE = [
+      {
+        id: 1,
+        title: "Đề Thi Hết Môn Module Tim Mạch & Tuần Hoàn - Y3 HMU 2024",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y3",
+        yearName: "Y3 (Lâm sàng)",
+        subjectId: "trieu_chung_noi",
+        subjectName: "Triệu Chứng Học Nội Khoa",
+        moduleId: "mod_tc_tim_mach",
+        moduleName: "Module Khám Tim Mạch & ECG",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "60 phút",
+        questionsCount: 60,
+        attempts: 3420,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Đề thi thật 2024", "Có ECG minh họa", "Giải thích chi tiết"],
+        description: "Bộ đề trắc nghiệm chuẩn module đổi mới ĐH Y Hà Nội, bao gồm 20 câu triệu chứng cơ năng/thực thể, 20 câu đọc bản ghi ECG và 20 câu ca bệnh lâm sàng hội chứng vành cấp.",
+        sampleQuestion: {
+          q: "Bệnh nhân nam 58 tuổi vào viện vì đau ngực sau xương ức lan lên vai trái kéo dài 45 phút không đỡ bằng Nitroglycerin ngậm dưới lưỡi. Tiền sử tăng huyết áp, đái tháo đường type 2. Khám thấy HA 150/90 mmHg, nhịp tim 95 ck/phút. Điện tâm đồ ghi nhận ST chênh lên 3mm ở các chuyển đạo V1-V4. Xét nghiệm Troponin I tăng cao. Bước xử trí ưu tiên hàng đầu là gì?",
+          options: [
+            "A. Chụp X-quang tim phổi thẳng và chờ kết quả xét nghiệm đông máu",
+            "B. Kích hoạt phòng Can thiệp mạch vành (Cathlab) để tái tưới máu khẩn cấp trong vòng 120 phút",
+            "C. Cho bệnh nhân dùng thuốc ức chế men chuyển và theo dõi tại phòng lưu bệnh",
+            "D. Tiêm bắp Morphine và cho về khám chuyên khoa tim mạch ngoại trú ngày hôm sau"
+          ],
+          correct: 1, // index B
+          explanation: "Chẩn đoán xác định: Nhồi máu cơ tim cấp có ST chênh lên (STEMI) thành trước (V1-V4) giờ thứ 1. Theo khuyến cáo của Hội Tim Mạch Châu Âu (ESC) và Bộ Y Tế, can thiệp mạch vành qua da thì đầu (PCI) là chiến lược tái tưới máu ưu tiên hàng đầu nếu thời gian từ lúc chẩn đoán đến khi mở bóng nong mạch dưới 120 phút. Chậm trễ chụp mạch vành sẽ làm tăng diện hoại tử cơ tim và nguy cơ tử vong.",
+          reference: "Khuyến cáo ESC 2023 về STEMI & Phác đồ Cấp cứu Tim Mạch ĐH Y Hà Nội."
+        }
+      },
+      {
+        id: 2,
+        title: "Đề Ôn Thi Bác Sĩ Nội Trú: Hồi Sức Cấp Cứu & Khí Máu Động Mạch (ABG)",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y6",
+        yearName: "Y6 (Nội trú)",
+        subjectId: "noi_tru_noi",
+        subjectName: "Ôn Thi Nội Trú - Nội Khoa",
+        moduleId: "mod_noi_tru_ecg",
+        moduleName: "Module Biện Luận ECG & Khí Máu",
+        type: "noi_tru",
+        typeName: "Ôn Thi Bác Sĩ Nội Trú",
+        duration: "90 phút",
+        questionsCount: 100,
+        attempts: 5890,
+        rating: 5.0,
+        difficulty: "Rất khó",
+        badges: ["Trọng điểm Nội trú", "Biện luận toan kiềm", "Phác đồ Bộ Y Tế"],
+        description: "Bộ đề đặc sắc chuyên đề toan kiềm phức tạp, sốc nhiễm khuẩn và hỗ trợ thở máy cho các thí sinh dự thi Bác sĩ Nội trú HMU, UMP và Học viện Quân Y.",
+        sampleQuestion: {
+          q: "Một bệnh nhân đái tháo đường type 1 bỏ tiêm insulin 3 ngày nay, vào viện lơ mơ, thở nhanh sâu kiểu Kussmaul. Khí máu động mạch: pH = 7.15, PaCO2 = 20 mmHg, HCO3- = 7 mEq/L. Ion đồ: Na+ = 135 mEq/L, K+ = 5.2 mEq/L, Cl- = 98 mEq/L. Rối loạn toan kiềm của bệnh nhân này là gì?",
+          options: [
+            "A. Toan hô hấp cấp bù trừ bằng kiềm chuyển hóa",
+            "B. Toan chuyển hóa tăng Anion Gap có đáp ứng bù trừ hô hấp thích hợp",
+            "C. Kiềm hô hấp tiên phát kết hợp toan chuyển hóa bình thường Anion Gap",
+            "D. Rối loạn toan kiềm hỗn hợp toan hô hấp và toan chuyển hóa"
+          ],
+          correct: 1, // B
+          explanation: "Công thức Anion Gap = Na+ - (Cl- + HCO3-) = 135 - (98 + 7) = 30 mEq/L (Bình thường 8-12 mEq/L) ➜ Toan chuyển hóa tăng Anion Gap (do thể ceton). Công thức Winter dự đoán PaCO2 bù trừ = 1.5 * HCO3- + 8 ± 2 = 1.5 * 7 + 8 = 18.5 ± 2 mmHg (khoảng 16.5 - 20.5 mmHg). PaCO2 đo được là 20 mmHg ➜ Bù trừ hô hấp hoàn toàn thích hợp.",
+          reference: "Harrison's Principles of Internal Medicine - Rối loạn toan kiềm."
+        }
+      },
+      {
+        id: 3,
+        title: "Bộ Đề Giải Phẫu Module Chi Trên & Đám Rối Cánh Tay - UMP",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y1",
+        yearName: "Y1 (Cơ bản)",
+        subjectId: "giai_phau_1",
+        subjectName: "Giải Phẫu Học I",
+        moduleId: "mod_chi_tren",
+        moduleName: "Module Chi Trên & Đám Rối Thần Kinh",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "45 phút",
+        questionsCount: 50,
+        attempts: 4120,
+        rating: 4.8,
+        difficulty: "Trung bình",
+        badges: ["Giải phẫu học chuẩn", "Hình vẽ Frank Netter", "Có đáp án"],
+        description: "Tổng hợp các câu hỏi giải phẫu định khu nách, cánh tay, cẳng tay và bàn tay. Tập trung vào các mốc định vị phẫu thuật và tổn thương các dây thần kinh trụ, giữa, quay.",
+        sampleQuestion: {
+          q: "Bệnh nhân bị gãy kín ở vị trí 1/3 giữa xương cánh tay sau tai nạn ngã chống tay. Khi khám thực thể, dấu hiệu nào sau đây cho thấy có tổn thương dây thần kinh quay kèm theo?",
+          options: [
+            "A. Mất phản xạ gân cơ nhị đầu cánh tay",
+            "B. Bàn tay rủ cổ cò (không duỗi được cổ tay và các khớp bàn ngón tay)",
+            "C. Mất cảm giác toàn bộ mô cái và ngón tay cái",
+            "D. Teo cơ ô mô út tạo hình ảnh bàn tay vuốt khỉ"
+          ],
+          correct: 1, // B
+          explanation: "Dây thần kinh quay chạy trong rãnh thần kinh quay áp sát mặt sau 1/3 giữa xương cánh tay. Gãy vị trí này rất dễ làm dập hoặc đứt thần kinh quay, dẫn đến liệt các cơ khu cẳng tay sau (cơ duỗi), gây ra triệu chứng điển hình là 'Bàn tay rủ cổ cò'.",
+          reference: "Giải phẫu học Y Dược TP.HCM - GS. Nguyễn Quang Quyền."
+        }
+      },
+      {
+        id: 4,
+        title: "Case Lâm Sàng CBL: Module Tiêu Hóa & Xuất Huyết Đường Tiêu Hóa",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y4",
+        yearName: "Y4 (Bệnh học)",
+        subjectId: "benh_hoc_noi",
+        subjectName: "Bệnh Học Nội Khoa",
+        moduleId: "mod_xuat_huyet_th",
+        moduleName: "Module Xuất Huyết Tiêu Hóa & Xơ Gan",
+        type: "case_lam_sang",
+        typeName: "Ca Bệnh Lâm Sàng (CBL)",
+        duration: "60 phút",
+        questionsCount: 40,
+        attempts: 2980,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Nội soi tiêu hóa", "Thang điểm Rockall/Glasgow", "CBL đổi mới"],
+        description: "Bộ ca bệnh tương tác theo chuẩn tiếp cận lâm sàng UMP: Xử trí ban đầu, hồi sức thể tích tuần hoàn, sử dụng thuốc co mạch tạng (Terlipressin) và nội soi can thiệp thắt tĩnh mạch thực quản.",
+        sampleQuestion: {
+          q: "Bệnh nhân nam 46 tuổi tiền sử xơ gan do rượu Child-Pugh B, nôn ra máu đỏ tươi lượng nhiều khoảng 500ml kèm đi cầu phân đen. Mạch 115 l/ph, HA 85/50 mmHg. Bước hồi sức tuần hoàn đầu tiên quan trọng nhất là gì?",
+          options: [
+            "A. Chuyển ngay đến phòng nội soi để can thiệp cầm máu trong 15 phút đầu",
+            "B. Thiết lập 2 đường truyền tĩnh mạch lớn (16-18G) và truyền nhanh dung dịch tinh thể đẳng trương (NaCl 0.9%)",
+            "C. Cho uống bột than hoạt và truyền dung dịch acid amin phân nhánh",
+            "D. Đặt sonde dạ dày hút sạch máu trước khi làm bất kỳ can thiệp nào khác"
+          ],
+          correct: 1, // B
+          explanation: "Ở bệnh nhân xuất huyết tiêu hóa ồ ạt kèm tụt huyết áp (sốc mất máu), nguyên tắc sống còn theo ABC là hồi sức huyết động trước tiên. Cần đặt 2 đường truyền ngoại biên kim lớn (16G hoặc 18G) để truyền dịch tinh thể đẳng trương nhanh chóng nhằm duy trì tưới máu tạng, đồng thời thử nhóm máu và chuẩn bị truyền hồng cầu lắng. Chỉ nội soi can thiệp khi huyết động tương đối ổn định.",
+          reference: "Hướng dẫn chẩn đoán và điều trị xuất huyết tiêu hóa do giãn vỡ TMTQ - Hội Gan Mật Việt Nam."
+        }
+      },
+      {
+        id: 5,
+        title: "Đề Thi Trắc Nghiệm Dược Lý Học: Kháng Sinh Liệu Pháp & Đề Kháng Kháng Sinh",
+        schoolId: "VMMU",
+        schoolName: "Học viện Quân Y",
+        year: "Y2",
+        yearName: "Y2 (Cơ sở)",
+        subjectId: "duoc_ly_cb",
+        subjectName: "Dược Lý Học Đại Cương",
+        moduleId: "mod_duoc_khang_sinh",
+        moduleName: "Module Kháng Sinh & Kháng Nấm",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "50 phút",
+        questionsCount: 60,
+        attempts: 3100,
+        rating: 4.7,
+        difficulty: "Trung bình",
+        badges: ["Kháng sinh Beta-lactam", "Độc tính Aminoglycoside", "Học viện Quân Y"],
+        description: "Tổng hợp 60 câu hỏi phân loại nhóm kháng sinh, cơ chế tác dụng diệt khuẩn/hãm khuẩn, phối hợp kháng sinh hiệp đồng và quản lý độc tính trên thận, thính giác.",
+        sampleQuestion: {
+          q: "Kháng sinh nhóm Aminoglycosid (như Gentamicin, Amikacin) có đặc điểm dược động học và dược lực học (PK/PD) nổi bật nào sau đây?",
+          options: [
+            "A. Tác dụng diệt khuẩn phụ thuộc thời gian (T > MIC), cần chia nhỏ liều uống nhiều lần trong ngày",
+            "B. Tác dụng diệt khuẩn phụ thuộc nồng độ (Cmax/MIC) và có hiệu ứng hậu kháng sinh (PAE) kéo dài",
+            "C. Hấp thu rất tốt qua đường uống và phân bố qua hàng rào máu não với nồng độ cao",
+            "D. Không có độc tính trên thận và cơ quan thính giác khi dùng liều cao kéo dài"
+          ],
+          correct: 1, // B
+          explanation: "Aminoglycosid là nhóm kháng sinh diệt khuẩn phụ thuộc nồng độ đỉnh (Cmax/MIC > 8-10) và có hiệu ứng hậu kháng sinh (PAE) rất rõ rệt. Do đó, khuyến cáo hiện đại ưu tiên phác đồ dùng 1 liều duy nhất trong ngày (Once daily dosing) để tối ưu hiệu quả diệt khuẩn và giảm thiểu tích lũy độc tính trên thận và ốc tai.",
+          reference: "Dược lý học - Học viện Quân Y & Goodman & Gilman's Pharmacological Basis of Therapeutics."
+        }
+      },
+      {
+        id: 6,
+        title: "Bộ Đề Thi Thử Chứng Chỉ Hành Nghề (CCHN) Y Khoa Quốc Gia - Phần Nhi Khoa",
+        schoolId: "HueUMP",
+        schoolName: "ĐH Y Dược Huế",
+        year: "Y6",
+        yearName: "Y6 (Tốt nghiệp)",
+        subjectId: "noi_tru_nhi",
+        subjectName: "Ôn Thi Nội Trú - Nhi Khoa",
+        moduleId: "mod_nhi_ho_hap",
+        moduleName: "Module Viêm Phế Quản & Hen Trẻ Em",
+        type: "thi_thu_quoc_gia",
+        typeName: "Thi Thử CCHN Quốc Gia",
+        duration: "75 phút",
+        questionsCount: 80,
+        attempts: 4670,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Chuẩn năng lực CCHN", "Phác đồ Nhi khoa", "Xử trí phân tầng"],
+        description: "Bộ đề chuẩn hóa theo khung đánh giá năng lực hành nghề khám chữa bệnh bác sĩ y khoa của Hội đồng Y khoa Quốc gia, chuyên sâu về phân độ suy hô hấp và điều trị hen phế quản trẻ nhỏ.",
+        sampleQuestion: {
+          q: "Trẻ trai 24 tháng tuổi, nặng 12 kg, vào viện vì khó thở ngày thứ 2 của đợt cảm sốt. Khám: Trẻ tỉnh nhưng quấy khóc, nhịp thở 52 lần/phút, có rút lõm lồng ngực rõ, nghe phổi có tiếng thở rít thì hít vào khi nằm yên (stridor) và tiếng ran rít thì thở ra. SpO2 93% khí phòng. Đánh giá và xử trí cấp cứu ban đầu phù hợp nhất là:",
+          options: [
+            "A. Cho trẻ về nhà dùng siro ho thảo dược và kháng sinh Cefixime đường uống",
+            "B. Thở oxy qua gọng mũi, phun khí dung Adrenaline 1/1000 kết hợp tiêm Dexamethasone tĩnh mạch/uống",
+            "C. Đặt nội khí quản thở máy xâm nhập ngay lập tức không cần dùng thuốc",
+            "D. Cho trẻ bú sữa mẹ và chờ kết quả xét nghiệm cấy đờm tìm vi khuẩn"
+          ],
+          correct: 1, // B
+          explanation: "Trẻ có biểu hiện viêm thanh khí phế quản cấp (Croup) mức độ nặng (thở rít thì hít vào khi nằm yên + rút lõm ngực + SpO2 < 94%). Xử trí cấp cứu bao gồm: Thở oxy hỗ trợ, phun khí dung Adrenaline 1:1000 liều 0.5ml/kg (tối đa 5ml) để làm co mạch giảm phù nề thanh quản nhanh chóng, đồng thời dùng Dexamethasone (0.15 - 0.6 mg/kg) để chống viêm kéo dài.",
+          reference: "Phác đồ điều trị Nhi khoa - Bệnh viện Nhi Đồng 1 & ĐH Y Dược Huế."
+        }
+      },
+      {
+        id: 7,
+        title: "Đề Thi Hết Môn Module Hô Hấp: Khám Lâm Sàng & Phân Tích Khí Máu - Y3",
+        schoolId: "PNTU",
+        schoolName: "ĐH Y Khoa Phạm Ngọc Thạch",
+        year: "Y3",
+        yearName: "Y3 (Lâm sàng)",
+        subjectId: "trieu_chung_noi",
+        subjectName: "Triệu Chứng Học Nội Khoa",
+        moduleId: "mod_tc_ho_hap",
+        moduleName: "Module Khám Hô Hấp & X-Quang Phổi",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "60 phút",
+        questionsCount: 50,
+        attempts: 2150,
+        rating: 4.8,
+        difficulty: "Trung bình",
+        badges: ["X-Quang lồng ngực", "Hội chứng 3 giảm", "Tiếng ran phổi"],
+        description: "Trọng tâm phân tích hội chứng đông đặc phổi, tràn dịch màng phổi, tràn khí màng phổi và các bẫy thường gặp khi đọc phim X-quang ngực thẳng.",
+        sampleQuestion: {
+          q: "Khi thăm khám hệ hô hấp ở một bệnh nhân nghi ngờ có tràn dịch màng phổi tự do mức độ trung bình, kết quả thăm khám thực thể kinh điển (Hội chứng ba giảm) bao gồm các dấu hiệu nào?",
+          options: [
+            "A. Rung thanh tăng, gõ đục, rì rào phế nang giảm",
+            "B. Rung thanh giảm hoặc mất, gõ đục, rì rào phế nang giảm hoặc mất",
+            "C. Rung thanh giảm, gõ vang, rì rào phế nang tăng",
+            "D. Rung thanh tăng, gõ trong, có tiếng cọ màng phổi liên tục"
+          ],
+          correct: 1, // B
+          explanation: "Hội chứng 3 giảm kinh điển trong tràn dịch màng phổi gồm có: Rung thanh giảm (dịch cản trở rung động truyền từ thanh quản ra thành ngực), Gõ đục (dịch làm mất tính chất vang của nhu mô phổi chứa khí), Rì rào phế nang giảm hoặc mất (dịch ép nhu mô phổi và cản trở âm thở).",
+          reference: "Triệu chứng học Nội khoa - ĐH Y Khoa Phạm Ngọc Thạch."
+        }
+      },
+      {
+        id: 8,
+        title: "Bộ Đề Bệnh Học Sản Phụ Khoa: Cấp Cứu Sản Khoa & Tiền Sản Giật",
+        schoolId: "CTUMP",
+        schoolName: "ĐH Y Dược Cần Thơ",
+        year: "Y4",
+        yearName: "Y4 (Bệnh học)",
+        subjectId: "san_phu_khoa_1",
+        subjectName: "Sản Phụ Khoa Cơ Bản",
+        moduleId: "mod_cap_cuu_san",
+        moduleName: "Module Tiền Sản Giật & Băng Huyết",
+        type: "case_lam_sang",
+        typeName: "Ca Bệnh Lâm Sàng (CBL)",
+        duration: "60 phút",
+        questionsCount: 60,
+        attempts: 2840,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Magnesium Sulfate", "Xử trí băng huyết", "Theo dõi CTG"],
+        description: "Bộ câu hỏi tình huống cấp cứu sản khoa trọng điểm: Điều trị dự phòng co giật trong tiền sản giật nặng bằng MgSO4, theo dõi phản xạ gân xương và xử trí băng huyết sau sinh theo bậc thang.",
+        sampleQuestion: {
+          q: "Sản phụ 30 tuổi mang thai 36 tuần vào viện vì đau đầu, nhìn mờ, HA đo được 170/110 mmHg, protein niệu 3+. Đang được truyền tĩnh mạch Magnesium Sulfate (MgSO4) để phòng ngừa cơn giật. Dấu hiệu lâm sàng đầu tiên báo hiệu ngộ độc Magnesium Sulfate cần ngừng truyền ngay là gì?",
+          options: [
+            "A. Mất phản xạ gân xương bánh chè",
+            "B. Tần số thở giảm dưới 10 lần/phút",
+            "C. Lượng nước tiểu giảm dưới 15 ml/giờ",
+            "D. Bệnh nhân than phiền cảm giác nóng bừng mặt"
+          ],
+          correct: 0, // A
+          explanation: "Nồng độ magie huyết thanh tăng cao sẽ gây ức chế dẫn truyền thần kinh cơ. Thứ tự dấu hiệu ngộ độc: Nồng độ 4-5 mmol/L gây mất phản xạ gân xương bánh chè (dấu hiệu sớm nhất và nhạy nhất để phát hiện trên lâm sàng); tiếp tục tăng lên > 5 mmol/L gây ức chế hô hấp (thở chậm < 12 l/p); > 7 mmol/L gây ngừng tim. Thuốc giải độc đặc hiệu là Calcium Gluconate 10% tiêm TM chậm.",
+          reference: "Giáo trình Sản Phụ Khoa - ĐH Y Dược Cần Thơ & Hướng dẫn Quốc gia về Chăm sóc Sức khỏe Sinh sản."
+        }
+      },
+      {
+        id: 9,
+        title: "Đề Thi Hết Môn Sinh Lý Học: Module Hệ Thần Kinh & Dẫn Truyền Synapse",
+        schoolId: "TBMU",
+        schoolName: "ĐH Y Dược Thái Bình",
+        year: "Y2",
+        yearName: "Y2 (Cơ sở)",
+        subjectId: "sinh_ly_hoc",
+        subjectName: "Sinh Lý Học",
+        moduleId: "mod_than_kinh_tw",
+        moduleName: "Module Thần Kinh & Não Bộ",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "50 phút",
+        questionsCount: 50,
+        attempts: 1890,
+        rating: 4.7,
+        difficulty: "Trung bình",
+        badges: ["Điện thế hoạt động", "Chất dẫn truyền", "Tủy sống"],
+        description: "Đề thi sinh lý học hệ thần kinh trung ương và thần kinh tự chủ, cung phản xạ tủy, vai trò của chất dẫn truyền GABA, Dopamine, Acetylcholine.",
+        sampleQuestion: {
+          q: "Trong quá trình hình thành điện thế hoạt động của tế bào thần kinh, pha khử cực nhanh xảy ra chủ yếu do hiện tượng nào sau đây?",
+          options: [
+            "A. Dòng ion Kali (K+) ồ ạt đi từ trong tế bào ra ngoài",
+            "B. Kênh Natri (Na+) phụ thuộc điện thế mở ra, làm dòng ion Na+ ồ ạt tràn vào trong tế bào",
+            "C. Bơm Na+-K+-ATPase hoạt động với công suất tối đa",
+            "D. Kênh Canxi (Ca2+) bị khóa hoàn toàn bởi điện thế màng âm tính"
+          ],
+          correct: 1, // B
+          explanation: "Khi màng tế bào thần kinh bị kích thích đạt đến điện thế ngưỡng (khoảng -55mV), các kênh Natri phụ thuộc điện thế (voltage-gated Na+ channels) sẽ đồng loạt mở nhanh, dẫn tới luồng ion Na+ tích điện dương ồ ạt tràn vào nội bào theo gradien nồng độ và điện thế, làm đảo cực màng từ -70mV lên khoảng +30mV (pha khử cực).",
+          reference: "Guyton and Hall Textbook of Medical Physiology & Sinh lý học Y Thái Bình."
+        }
+      },
+      {
+        id: 10,
+        title: "Đề Ôn Thi Bác Sĩ Nội Trú 2024: Bệnh Học Ngoại Khoa Cấp Cứu Bụng",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y6",
+        yearName: "Y6 (Nội trú)",
+        subjectId: "noi_tru_ngoai",
+        subjectName: "Ôn Thi Nội Trú - Ngoại Khoa",
+        moduleId: "mod_bung_ngoai_khoa",
+        moduleName: "Module Hội Chứng Bụng Ngoại Khoa",
+        type: "noi_tru",
+        typeName: "Ôn Thi Bác Sĩ Nội Trú",
+        duration: "90 phút",
+        questionsCount: 100,
+        attempts: 6420,
+        rating: 5.0,
+        difficulty: "Rất khó",
+        badges: ["Nội trú Y Hà Nội", "Viêm tụy cấp", "Thủng tạng rỗng"],
+        description: "Bộ 100 câu hỏi tuyển chọn cho kỳ thi BSNT trường ĐH Y Hà Nội môn Ngoại khoa. Đề cập sâu đến thang điểm Alvarado, chỉ định can thiệp phẫu thuật nội soi ổ bụng và hồi sức sốc nhiễm trùng đường mật.",
+        sampleQuestion: {
+          q: "Bệnh nhân nam 40 tuổi vào viện vì đau bụng thượng vị dữ dội đột ngột như dao đâm sau khi ăn nhậu, đau lan ra sau lưng. Khám thấy bụng co cứng như gỗ, gõ mất vùng đục trước gan. X-quang bụng đứng không chuẩn bị thấy hình ảnh liềm hơi dưới vòm hoành phải. Chẩn đoán xác định phù hợp nhất là gì?",
+          options: [
+            "A. Viêm tụy cấp thể hoại tử nặng",
+            "B. Thủng ổ loét dạ dày - tá tràng gây viêm phúc mạc toàn thể",
+            "C. Tắc ruột cơ học do xoắn đại tràng sigma",
+            "D. Vỡ phình động mạch chủ bụng thể rò tiêu hóa"
+          ],
+          correct: 1, // B
+          explanation: "Bệnh cảnh kinh điển: Đau thượng vị đột ngột dữ dội kiểu dao đâm, bụng co cứng như gỗ (phản ứng phúc mạc mạnh nhất) và dấu hiệu mất vùng đục trước gan + liềm hơi dưới hoành trên phim X-quang bụng đứng là bằng chứng chắc chắn của thủng tạng rỗng (thường gặp nhất là thủng ổ loét hành tá tràng hoặc dạ dày). Đây là cấp cứu ngoại khoa tuyệt đối cần phẫu thuật khâu lỗ thủng sớm.",
+          reference: "Bệnh học Ngoại khoa Sau Đại học - ĐH Y Hà Nội."
+        }
+      },
+      {
+        id: 11,
+        title: "Đề Thi Hết Môn Vi Sinh - Ký Sinh Trùng Y Học: Cơ Chế Gây Bệnh & Chẩn Đoán",
+        schoolId: "HPMU",
+        schoolName: "ĐH Y Dược Hải Phòng",
+        year: "Y2",
+        yearName: "Y2 (Cơ sở)",
+        subjectId: "vi_sinh_kstr",
+        subjectName: "Vi Sinh - Ký Sinh Trùng",
+        moduleId: "mod_duoc_khang_sinh",
+        moduleName: "Module Nhiễm Trùng & Kháng Sinh",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "45 phút",
+        questionsCount: 50,
+        attempts: 1720,
+        rating: 4.7,
+        difficulty: "Dễ",
+        badges: ["Kỹ thuật nhuộm Gram", "Ký sinh trùng sốt rét", "ĐH Y Hải Phòng"],
+        description: "Bộ đề bao quát trực khuẩn Gram âm đường ruột, tụ cầu vàng MRSA, xoắn khuẩn Giang mai và chu trình sinh học của các loại đơn bào, giun sán lây nhiễm ở Việt Nam.",
+        sampleQuestion: {
+          q: "Đặc điểm hình thể và bắt màu khi nhuộm soi bằng phương pháp Gram của vi khuẩn Staphylococcus aureus (Tụ cầu vàng) là gì?",
+          options: [
+            "A. Trực khuẩn Gram âm xếp thành từng chuỗi dài",
+            "B. Cầu khuẩn Gram dương bắt màu tím, kích thước khoảng 1 µm, đứng tụ lại thành từng đám như chùm nho",
+            "C. Phẩy khuẩn Gram âm có khả năng di động rất mạnh",
+            "D. Cầu khuẩn Gram âm hình hạt cà phê đứng đôi trong tế bào bạch cầu"
+          ],
+          correct: 1, // B
+          explanation: "Staphylococcus aureus là cầu khuẩn Gram dương (bắt màu tím đậm khi nhuộm Gram), phân chia theo nhiều mặt phẳng không gian nên tế bào có xu hướng tụ lại thành từng cụm giống chùm nho ('staphylo' trong tiếng Hy Lạp nghĩa là chùm nho). Khác với Streptococcus (liên cầu) phân chia theo 1 mặt phẳng tạo chuỗi dài.",
+          reference: "Vi sinh vật Y học - ĐH Y Dược Hải Phòng & Bộ Y Tế."
+        }
+      },
+      {
+        id: 12,
+        title: "Bộ Đề Bệnh Học Module Thần Kinh - Đột Quỵ Não Cấp (Stroke Code) - Y5",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y5",
+        yearName: "Y5 (Chuyên khoa)",
+        subjectId: "than_kinh_tt",
+        subjectName: "Thần Kinh - Tâm Thần",
+        moduleId: "mod_than_kinh_tw",
+        moduleName: "Module Đột Quỵ Não & Thần Kinh",
+        type: "case_lam_sang",
+        typeName: "Ca Bệnh Lâm Sàng (CBL)",
+        duration: "60 phút",
+        questionsCount: 50,
+        attempts: 3240,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Cửa sổ tiêu sợi huyết", "Thang điểm NIHSS", "Đột quỵ UMP"],
+        description: "Ca bệnh đột quỵ nhồi máu não cấp: Quy trình kích hoạt Stroke Code, chụp CT sọ não loại trừ xuất huyết, chỉ định thuốc tiêu sợi huyết Alteplase (r-tPA) trong cửa sổ 4.5 giờ.",
+        sampleQuestion: {
+          q: "Bệnh nhân nữ 65 tuổi vào viện lúc 8h30 sáng vì yếu nửa người phải và nói khó đột ngột khởi phát lúc 7h00 cùng ngày (giờ khởi phát rõ ràng cách 1.5 giờ). CT sọ não không cản quang không thấy ổ xuất huyết nội sọ, điểm NIHSS = 12. Huyết áp 165/95 mmHg, đường huyết mao mạch 6.8 mmol/L, không có tiền sử chấn thương hay phẫu thuật gần đây. Hướng xử trí tối ưu nhất hiện tại là gì?",
+          options: [
+            "A. Điều trị tiêu sợi huyết đường tĩnh mạch bằng Alteplase (r-tPA) 0.9 mg/kg ngay trong cửa sổ vàng",
+            "B. Cho bệnh nhân uống Aspirin 300mg và Clopidogrel 75mg ngay lập tức rồi chờ 24h sau chụp lại MRI",
+            "C. Hạ huyết áp khẩn cấp xuống dưới 120/70 mmHg bằng Nicardipine trước khi quyết định điều trị",
+            "D. Chuyển bệnh nhân lên phòng tập phục hồi chức năng vận động"
+          ],
+          correct: 0, // A
+          explanation: "Bệnh nhân bị nhồi máu não cấp trong 'cửa sổ vàng' (1.5 giờ < 4.5 giờ tính từ khi khởi phát), không có chống chỉ định trên CT sọ não (không có xuất huyết), huyết áp < 185/110 mmHg. Chỉ định hàng đầu theo hướng dẫn của AHA/ASA và Bộ Y Tế là dùng thuốc tiêu sợi huyết đường tĩnh mạch Alteplase (r-tPA) liều 0.9 mg/kg (10% bolus, 90% truyền trong 60 phút) để tái thông mạch máu não.",
+          reference: "Khuyến cáo Xử trí Đột Quỵ Nhồi Máu Não Cấp - Hội Đột Quỵ Việt Nam & ĐH Y Dược TP.HCM."
+        }
+      },
+      {
+        id: 13,
+        title: "Đề Thi Thực Hành Ngoại Khoa: Chấn Thương Chỉnh Hình & Gãy Xương Hở - Y3 VMMU",
+        schoolId: "VMMU",
+        schoolName: "Học viện Quân Y",
+        year: "Y3",
+        yearName: "Y3 (Lâm sàng)",
+        subjectId: "trieu_chung_ngoai",
+        subjectName: "Triệu Chứng Học Ngoại Khoa",
+        moduleId: "mod_chan_thuong_chinh_hinh",
+        moduleName: "Module Gãy Xương & Khớp",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "50 phút",
+        questionsCount: 60,
+        attempts: 2540,
+        rating: 4.8,
+        difficulty: "Trung bình",
+        badges: ["Phân loại Gustilo", "Cố định ngoài", "Chấn thương chiến tranh"],
+        description: "Tập trung vào phân loại gãy xương hở theo Gustilo-Anderson, nguyên tắc cấp cứu xử trí bất động ban đầu và phòng ngừa hội chứng chèn ép khoang.",
+        sampleQuestion: {
+          q: "Theo phân loại gãy hở Gustilo-Anderson, một ổ gãy xương cẳng chân có vết rách da kích thước 4cm, mép vết thương dập nát vừa phải, không có tổn thương mạch máu thần kinh chính, phần mềm che phủ ổ gãy còn tốt sau khi cắt lọc, được xếp vào độ nào?",
+          options: [
+            "A. Độ I",
+            "B. Độ II",
+            "C. Độ IIIA",
+            "D. Độ IIIB"
+          ],
+          correct: 1, // B
+          explanation: "Theo bảng phân loại Gustilo: Độ I: Vết thương rách da < 1cm, vết thương sạch; Độ II: Vết thương từ 1-10cm, không tổn thương mô mềm diện rộng; Độ III: Vết thương > 10cm hoặc do cơ chế năng lượng cao (IIIA còn đủ mô mềm che phủ, IIIB mất mô mềm cần vạt che phủ, IIIC có tổn thương mạch máu cần phục hồi). Với kích thước 4cm và phần mềm còn tốt, tổn thương thuộc Độ II.",
+          reference: "Ngoại khoa Chấn thương Chỉnh hình - Học viện Quân Y."
+        }
+      },
+      {
+        id: 14,
+        title: "Đề Thi Hết Môn Di Truyền Y Học: Đột Biến Nhiễm Sắc Thể & Phả Hệ - Y1 HueUMP",
+        schoolId: "HueUMP",
+        schoolName: "ĐH Y Dược Huế",
+        year: "Y1",
+        yearName: "Y1 (Cơ bản)",
+        subjectId: "sinh_hoc_dt",
+        subjectName: "Sinh Học & Di Truyền",
+        moduleId: "mod_nguc_bung",
+        moduleName: "Module Di Truyền Phân Tử",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "45 phút",
+        questionsCount: 50,
+        attempts: 1980,
+        rating: 4.7,
+        difficulty: "Dễ",
+        badges: ["Hội chứng Down", "Karyotype", "Phả hệ Mendel"],
+        description: "Bộ câu hỏi di truyền y học: Đột biến dị bội thể, chuyển đoạn Robertson, các bệnh di truyền lặn/trội trên NST thường và NST giới tính X.",
+        sampleQuestion: {
+          q: "Cơ chế di truyền tế bào phổ biến nhất (chiếm khoảng 95% các trường hợp) dẫn đến hội chứng Down (Trisomy 21) ở trẻ sơ sinh là gì?",
+          options: [
+            "A. Chuyển đoạn Robertson không cân bằng giữa NST 14 và NST 21",
+            "B. Hiện tượng không phân ly cặp NST 21 trong quá trình giảm phân tạo giao tử của bố hoặc mẹ",
+            "C. Đột biến thể khảm (mosaicism) sau khi thụ tinh ở phôi nang",
+            "D. Mất đoạn nhánh dài NST 21"
+          ],
+          correct: 1, // B
+          explanation: "Khoảng 95% trường hợp hội chứng Down sinh ra do hiện tượng không phân ly (nondisjunction) của cặp nhiễm sắc thể 21 trong quá trình giảm phân (chủ yếu là giảm phân I ở noãn bào mẹ, liên quan chặt chẽ với tuổi mẹ cao khi mang thai). Khoảng 4% do chuyển đoạn Robertson và 1% do thể khảm.",
+          reference: "Di truyền Y học - ĐH Y Dược Huế & Bộ Y Tế."
+        }
+      },
+      {
+        id: 15,
+        title: "Bộ Đề Bệnh Học Chuyên Khoa: Chẩn Đoán & Điều Trị Viêm Tai Giữa - Y5 CTUMP",
+        schoolId: "CTUMP",
+        schoolName: "ĐH Y Dược Cần Thơ",
+        year: "Y5",
+        yearName: "Y5 (Chuyên khoa)",
+        subjectId: "chuyen_khoa_tmh",
+        subjectName: "Tai Mũi Họng",
+        moduleId: "mod_giac_quan",
+        moduleName: "Module Giác Quan & Thính Giác",
+        type: "het_mon",
+        typeName: "Thi Hết Môn",
+        duration: "45 phút",
+        questionsCount: 50,
+        attempts: 2110,
+        rating: 4.6,
+        difficulty: "Trung bình",
+        badges: ["Soi màng nhĩ", "Viêm tai giữa cấp", "Biến chứng nội sọ"],
+        description: "Các giai đoạn viêm tai giữa cấp ở trẻ em: Giai đoạn xung huyết, ứ mủ, vỡ mủ; chỉ định trích rạch màng nhĩ và phòng ngừa biến chứng viêm xương chũm.",
+        sampleQuestion: {
+          q: "Khi nội soi tai ở trẻ 3 tuổi nghi ngờ viêm tai giữa cấp giai đoạn ứ mủ, hình ảnh tổn thương màng nhĩ đặc trưng nhất là gì?",
+          options: [
+            "A. Màng nhĩ lõm sâu, tam giác sáng rộng ra bất thường",
+            "B. Màng nhĩ phồng lên như mặt kính đồng hồ, mất tam giác sáng, màu đỏ rực hoặc vàng nhạt",
+            "C. Màng nhĩ có lỗ thủng tròn đều ở góc phần tư trước dưới, bờ nhẵn",
+            "D. Màng nhĩ màu trắng bóng bình thường, nhìn rõ cán xương búa"
+          ],
+          correct: 1, // B
+          explanation: "Ở giai đoạn ứ mủ của viêm tai giữa cấp, dịch mủ tích tụ nhiều trong hòm nhĩ đẩy màng nhĩ phồng lên ra phía ngoài (giống mặt kính đồng hồ), che lấp các mốc giải phẫu bình thường (mất tam giác sáng, không thấy cán búa) và có màu đỏ rực hoặc đục vàng do mủ bên trong.",
+          reference: "Bệnh học Tai Mũi Họng - ĐH Y Dược Cần Thơ."
+        }
+      },
+      {
+        id: 16,
+        title: "Bộ Đề Thi Ngoại Tiêu Hóa: Ung Thư Dạ Dày & Biến Chứng Bụng Ngoại Khoa - Y4 PNTU",
+        schoolId: "PNTU",
+        schoolName: "ĐH Y Khoa Phạm Ngọc Thạch",
+        year: "Y4",
+        yearName: "Y4 (Bệnh học)",
+        subjectId: "benh_hoc_ngoai",
+        subjectName: "Bệnh Học Ngoại Khoa",
+        moduleId: "mod_ngoai_tieu_hoa",
+        moduleName: "Module Ung Thư Tiêu Hóa",
+        type: "case_lam_sang",
+        typeName: "Ca Bệnh Lâm Sàng (CBL)",
+        duration: "60 phút",
+        questionsCount: 60,
+        attempts: 2890,
+        rating: 4.8,
+        difficulty: "Khó",
+        badges: ["Phân loại Bormann", "Nạo vét hạch D2", "Cắt dạ dày"],
+        description: "Đánh giá giai đoạn ung thư dạ dày theo TNM, phân loại đại thể Bormann, chỉ định phẫu thuật nạo vét hạch D2 và hóa trị bổ trợ theo phác đồ Nhật Bản - Châu Âu.",
+        sampleQuestion: {
+          q: "Bệnh nhân nam 62 tuổi được chẩn đoán ung thư biểu mô tuyến dạ dày vùng hang vị, khối u thâm nhiễm chưa xâm lấn cuống mạch lớn, hạch vùng nghi ngờ di căn nhưng chưa có di căn xa (cT3N1M0). Phẫu thuật triệt căn tiêu chuẩn được khuyến cáo là gì?",
+          options: [
+            "A. Nối vị tràng đơn thuần để phòng hẹp môn vị",
+            "B. Cắt bán phần dưới dạ dày kèm nạo vét hạch mức độ D2",
+            "C. Cắt toàn bộ dạ dày kèm cắt toàn bộ lách và đuôi tụy",
+            "D. Mở dạ dày nuôi dưỡng và hóa xạ trị đồng thời"
+          ],
+          correct: 1, // B
+          explanation: "Đối với ung thư dạ dày 1/3 dưới (hang vị) giai đoạn tiến triển tại chỗ (T3N1) còn khả năng phẫu thuật triệt căn, phẫu thuật tiêu chuẩn vàng theo Hiệp hội Ung thư Dạ dày Nhật Bản (JGCA) là cắt bán phần dưới dạ dày (đảm bảo diện cắt an toàn > 5cm) kết hợp nạo vét hạch chuẩn D2 (gồm nhóm hạch quanh bờ cong và các cuống mạch thân tạng).",
+          reference: "Ngoại khoa Tiêu hóa - ĐH Y Khoa Phạm Ngọc Thạch & Hướng dẫn JGCA."
+        }
+      },
+      {
+        id: 17,
+        title: "Đề Thi Ca Lâm Sàng Da Liễu: Hội Chứng Stevens-Johnson & Hoại Tử Thượng Bì (TEN) - Y5 HMU",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y5",
+        yearName: "Y5 (Chuyên khoa)",
+        subjectId: "da_lieu",
+        subjectName: "Da Liễu & Bệnh Lây Qua Đường Tình Dục",
+        moduleId: "mod_giac_quan",
+        moduleName: "Module Da Liễu Nâng Cao",
+        type: "case_lam_sang",
+        typeName: "Ca Bệnh Lâm Sàng (CBL)",
+        duration: "50 phút",
+        questionsCount: 50,
+        attempts: 2310,
+        rating: 4.9,
+        difficulty: "Khó",
+        badges: ["Dấu hiệu Nikolsky", "Dị ứng Allopurinol", "Thang điểm SCORTEN"],
+        description: "Nhận diện phản ứng có hại nặng của thuốc trên da (SCARs): Hội chứng Stevens-Johnson (SJS) và hoại tử thượng bì nhiễm độc (TEN). Đánh giá tiên lượng bằng thang điểm SCORTEN.",
+        sampleQuestion: {
+          q: "Bệnh nhân nam 55 tuổi điều trị gút bằng Allopurinol cách đây 2 tuần, xuất hiện sốt cao, trợt loét đau đớn niêm mạc miệng, kết mạc mắt và tổn thương dát đỏ bóng nước bong vảy da chiếm 25% diện tích bề mặt cơ thể. Dấu hiệu Nikolsky (+). Chẩn đoán xác định là:",
+          options: [
+            "A. Hội chứng Stevens-Johnson (SJS)",
+            "B. Thể chồng lấp SJS / TEN (SJS/TEN overlap syndrome)",
+            "C. Hoại tử thượng bì nhiễm độc toàn thể (TEN)",
+            "D. Hồng ban đa dạng thể nhẹ (Erythema multiforme minor)"
+          ],
+          correct: 1, // B
+          explanation: "Phân loại theo tỷ lệ diện tích da bị bong tróc (Detached surface area): SJS: Bong da < 10% diện tích bề mặt cơ thể (BSA); Thể chồng lấp SJS/TEN: Bong da từ 10% đến 30% BSA; Hội chứng Lyell (TEN): Bong da > 30% BSA. Với diện tích 25% BSA kèm tổn thương nhiều niêm mạc và dấu Nikolsky (+), bệnh nhân thuộc thể chồng lấp SJS/TEN.",
+          reference: "Bệnh học Da Liễu - ĐH Y Hà Nội & Bệnh viện Da Liễu Trung Ương."
+        }
+      },
+      {
+        id: 18,
+        title: "Đề Thi Mô Phỏng Cấp Cứu: Ngừng Tuần Hoàn Hô Hấp Nâng Cao (ACLS 2024) - Y6 UMP",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y6",
+        yearName: "Y6 (Tốt nghiệp)",
+        subjectId: "hoi_suc_cap_cuu",
+        subjectName: "Hồi Sức Cấp Cứu & Chống Độc",
+        moduleId: "mod_ngung_tuan_hoan",
+        moduleName: "Module Cấp Cứu Ngừng Tuần Hoàn (ACLS)",
+        type: "thi_thu_quoc_gia",
+        typeName: "Thi Thử CCHN Quốc Gia",
+        duration: "90 phút",
+        questionsCount: 100,
+        attempts: 7120,
+        rating: 5.0,
+        difficulty: "Rất khó",
+        badges: ["ACLS Guidelines", "Sốc điện phá rung", "Tìm nguyên nhân 5H-5T"],
+        description: "Mô phỏng ca bệnh ngừng tim: Phân biệt nhịp sốc điện được (Rung thất VF / Nhịp nhanh thất vô mạch pVT) và không sốc điện được (Vô tâm thu Asystole / Phân ly điện cơ PEA); Liều Adrenaline, Amiodarone và tìm kiếm nguyên nhân có thể đảo ngược.",
+        sampleQuestion: {
+          q: "Trong quá trình hồi sức ngừng tuần hoàn nâng cao (ACLS), máy khử rung tim ghi nhận đường đẳng điện (Vô tâm thu - Asystole). Sau khi kiểm tra lại dây cáp và chuyển đạo, hành động tiếp theo đúng theo phác đồ là gì?",
+          options: [
+            "A. Sốc điện khử rung không đồng bộ mức năng lượng 200J ngay lập tức",
+            "B. Tiếp tục ép tim - thông khí với tỷ lệ 30:2, tiêm Adrenaline 1mg tĩnh mạch càng sớm càng tốt và tìm nguyên nhân (5H & 5T)",
+            "C. Tiêm bolus tĩnh mạch Amiodarone 300mg",
+            "D. Tiêm Atropine 3mg tĩnh mạch và ngừng ép tim để chờ nhịp tim tự đập lại"
+          ],
+          correct: 1, // B
+          explanation: "Vô tâm thu (Asystole) và Phân ly điện cơ (PEA) là hai dạng nhịp KHÔNG có chỉ định sốc điện (sốc điện không có tác dụng và làm tổn thương thêm cơ tim). Phác đồ xử trí là: Tiếp tục ép tim chất lượng cao ngay lập tức, tiêm Adrenaline 1mg TM/TIO càng sớm càng tốt (lặp lại mỗi 3-5 phút), thiết lập đường thở nâng cao và tích cực tìm kiếm nguyên nhân có thể hồi phục theo quy tắc 5H và 5T (Giảm oxy, Giảm thể tích, Toan chuyển hóa, Hạ/tăng kali, Hạ thân nhiệt; Tràn khí màng phổi áp lực, Chèn ép tim cấp, Ngộ độc, Huyết khối phổi, Huyết khối vành).",
+          reference: "AHA Guidelines for CPR and ECC & Hồi sức cấp cứu UMP."
+        }
+      }
+    ];
+
+    // ================= 3. STATE MANAGEMENT =================
+    let currentFilters = {
+      keyword: '',
+      school: 'all',
+      year: 'all',
+      subject: 'all',
+      module: 'all',
+      examType: 'all',
+      sort: 'popular'
+    };
+
+    let userFavorites = JSON.parse(localStorage.getItem('meduc_favorites') || '[]');
+    let currentModalExam = null;
+    let modalTimerInterval = null;
+
+    // ================= 4. INITIALIZATION =================
+    window.addEventListener('DOMContentLoaded', () => {
+      populateSubjectsDropdown();
+      populateModulesDropdown();
+      renderExamsList();
+      updateFavoritesBadge();
+    });
+
+    // ================= 5. CASCADE FILTER HANDLERS =================
+
+    // When School changes (Level 1)
+    function onSchoolChange() {
+      currentFilters.school = document.getElementById('filter-school').value;
+      applyFilters();
+    }
+
+    // When Year changes (Level 2) -> update Subjects (Level 3)
+    function onYearChange() {
+      const selectedYear = document.getElementById('filter-year').value;
+      currentFilters.year = selectedYear;
+
+      // Reset subject & module
+      currentFilters.subject = 'all';
+      currentFilters.module = 'all';
+
+      populateSubjectsDropdown();
+      populateModulesDropdown();
+      applyFilters();
+    }
+
+    // When Subject changes (Level 3) -> update Modules (Level 4)
+    function onSubjectChange() {
+      const selectedSubject = document.getElementById('filter-subject').value;
+      currentFilters.subject = selectedSubject;
+
+      // Reset module
+      currentFilters.module = 'all';
+
+      populateModulesDropdown();
+      applyFilters();
+    }
+
+    // When Module changes (Level 4)
+    function onModuleChange() {
+      currentFilters.module = document.getElementById('filter-module').value;
+      applyFilters();
+    }
+
+    // Populate Subjects dropdown based on chosen Year
+    function populateSubjectsDropdown() {
+      const subjectSelect = document.getElementById('filter-subject');
+      const year = currentFilters.year;
+      
+      let subjects = [];
+      if (year === 'all') {
+        // Collect all subjects from all years
+        Object.keys(HIERARCHY_DATA.subjectsByYear).forEach(y => {
+          subjects = subjects.concat(HIERARCHY_DATA.subjectsByYear[y]);
+        });
+      } else if (HIERARCHY_DATA.subjectsByYear[year]) {
+        subjects = HIERARCHY_DATA.subjectsByYear[year];
+      }
+
+      // Remove duplicates if any
+      const uniqueSubjects = [];
+      const seenIds = new Set();
+      subjects.forEach(s => {
+        if (!seenIds.has(s.id)) {
+          seenIds.add(s.id);
+          uniqueSubjects.push(s);
+        }
+      });
+
+      // Render options
+      let html = `<option value="all">Tất cả môn học (${uniqueSubjects.length} môn)</option>`;
+      uniqueSubjects.forEach(s => {
+        const isSelected = currentFilters.subject === s.id ? 'selected' : '';
+        html += `<option value="${s.id}" ${isSelected}>${s.name}</option>`;
+      });
+
+      subjectSelect.innerHTML = html;
+      document.getElementById('subject-count-tag').textContent = `${uniqueSubjects.length} môn học`;
+    }
+
+    // Populate Modules dropdown based on chosen Subject
+    function populateModulesDropdown() {
+      const moduleSelect = document.getElementById('filter-module');
+      const subject = currentFilters.subject;
+
+      let modules = [];
+      if (subject !== 'all' && HIERARCHY_DATA.modulesBySubject[subject]) {
+        modules = HIERARCHY_DATA.modulesBySubject[subject];
+      } else {
+        // Generic / all organ-system modules
+        modules = ALL_GENERIC_MODULES;
+      }
+
+      let html = `<option value="all">Tất cả module hệ cơ quan (${modules.length} module)</option>`;
+      modules.forEach(m => {
+        const isSelected = currentFilters.module === m.id ? 'selected' : '';
+        html += `<option value="${m.id}" ${isSelected}>${m.name}</option>`;
+      });
+
+      moduleSelect.innerHTML = html;
+    }
+
+    // Quick set helpers
+    function setSchoolQuick(schoolId) {
+      document.getElementById('filter-school').value = schoolId;
+      onSchoolChange();
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
+
+    function setYearQuick(yearId) {
+      document.getElementById('filter-year').value = yearId;
+      onYearChange();
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
+
+    // Reset all filters to default
+    function resetAllFilters() {
+      currentFilters = {
+        keyword: '',
+        school: 'all',
+        year: 'all',
+        subject: 'all',
+        module: 'all',
+        examType: 'all',
+        sort: 'popular'
+      };
+
+      document.getElementById('main-search-input').value = '';
+      document.getElementById('btn-clear-search').classList.add('hidden');
+      document.getElementById('filter-school').value = 'all';
+      document.getElementById('filter-year').value = 'all';
+      document.getElementById('sort-select').value = 'popular';
+
+      populateSubjectsDropdown();
+      populateModulesDropdown();
+      updateExamTypeButtons();
+      renderExamsList();
+    }
+
+    // Search input handlers
+    function handleSearchInput() {
+      const query = document.getElementById('main-search-input').value.trim();
+      currentFilters.keyword = query;
+      
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      renderExamsList();
+    }
+
+    function clearSearchInput() {
+      document.getElementById('main-search-input').value = '';
+      currentFilters.keyword = '';
+      document.getElementById('btn-clear-search').classList.add('hidden');
+      renderExamsList();
+    }
+
+    function setSearchKeyword(kw) {
+      document.getElementById('main-search-input').value = kw;
+      handleSearchInput();
+      window.scrollTo({ top: 400, behavior: 'smooth' });
+    }
+
+    // Exam Type tabs
+    function setExamType(type) {
+      currentFilters.examType = type;
+      updateExamTypeButtons();
+      renderExamsList();
+    }
+
+    function updateExamTypeButtons() {
+      document.querySelectorAll('.filter-type-btn').forEach(btn => {
+        const type = btn.getAttribute('data-type');
+        if (type === currentFilters.examType) {
+          btn.className = 'filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-medred-600 text-white transition shrink-0 shadow-sm';
+        } else {
+          btn.className = 'filter-type-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-medred-300 hover:text-medred-600 transition shrink-0';
+        }
+      });
+    }
+
+    // Sort order change
+    function onSortChange() {
+      currentFilters.sort = document.getElementById('sort-select').value;
+      renderExamsList();
+    }
+
+    function applyFilters() {
+      renderExamsList();
+    }
+
+    // Update active filter breadcrumb chips
+    function updateBreadcrumbTrail(filteredCount) {
+      const container = document.getElementById('breadcrumb-tags');
+      const tags = [];
+
+      // School Tag
+      if (currentFilters.school !== 'all') {
+        const schoolName = document.querySelector(`#filter-school option[value="${currentFilters.school}"]`)?.textContent || currentFilters.school;
+        tags.push(`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-medred-100 text-medred-800 font-semibold">
+          <i class="fa-solid fa-hospital-user text-[10px]"></i> ${schoolName}
+          <button onclick="setSchoolQuick('all')" class="ml-1 hover:text-medred-950"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </span>`);
+      }
+
+      // Year Tag
+      if (currentFilters.year !== 'all') {
+        tags.push(`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 font-semibold">
+          <i class="fa-solid fa-user-graduate text-[10px]"></i> ${currentFilters.year}
+          <button onclick="setYearQuick('all')" class="ml-1 hover:text-amber-950"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </span>`);
+      }
+
+      // Subject Tag
+      if (currentFilters.subject !== 'all') {
+        const subjName = document.querySelector(`#filter-subject option[value="${currentFilters.subject}"]`)?.textContent || currentFilters.subject;
+        tags.push(`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-100 text-blue-900 font-semibold">
+          <i class="fa-solid fa-book-medical text-[10px]"></i> ${subjName}
+          <button onclick="removeSubjectFilter()" class="ml-1 hover:text-blue-950"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </span>`);
+      }
+
+      // Module Tag
+      if (currentFilters.module !== 'all') {
+        const modName = document.querySelector(`#filter-module option[value="${currentFilters.module}"]`)?.textContent || currentFilters.module;
+        tags.push(`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 font-semibold">
+          <i class="fa-solid fa-dna text-[10px]"></i> ${modName}
+          <button onclick="removeModuleFilter()" class="ml-1 hover:text-emerald-950"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </span>`);
+      }
+
+      // Keyword Tag
+      if (currentFilters.keyword) {
+        tags.push(`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-purple-100 text-purple-900 font-semibold">
+          <i class="fa-solid fa-magnifying-glass text-[10px]"></i> "${currentFilters.keyword}"
+          <button onclick="clearSearchInput()" class="ml-1 hover:text-purple-950"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+        </span>`);
+      }
+
+      if (tags.length === 0) {
+        container.innerHTML = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-medium">Toàn bộ ngân hàng đề thi y khoa (${filteredCount} bộ đề)</span>`;
+      } else {
+        container.innerHTML = tags.join('') + `<button onclick="resetAllFilters()" class="text-medred-600 hover:underline font-bold text-xs ml-2">Xóa tất cả</button>`;
+      }
+    }
+
+    function removeSubjectFilter() {
+      document.getElementById('filter-subject').value = 'all';
+      onSubjectChange();
+    }
+
+    function removeModuleFilter() {
+      document.getElementById('filter-module').value = 'all';
+      onModuleChange();
+    }
+
+    // ================= 6. FILTER & RENDER ENGINE =================
+    function renderExamsList() {
+      const container = document.getElementById('exams-container');
+      const emptyState = document.getElementById('empty-state');
+      const countEl = document.getElementById('results-count');
+
+      // Filter exams
+      let results = EXAMS_DATABASE.filter(exam => {
+        // 1. School check
+        if (currentFilters.school !== 'all' && exam.schoolId !== currentFilters.school) {
+          return false;
+        }
+
+        // 2. Year check
+        if (currentFilters.year !== 'all' && exam.year !== currentFilters.year) {
+          return false;
+        }
+
+        // 3. Subject check
+        if (currentFilters.subject !== 'all' && exam.subjectId !== currentFilters.subject) {
+          return false;
+        }
+
+        // 4. Module check
+        if (currentFilters.module !== 'all' && exam.moduleId !== currentFilters.module) {
+          return false;
+        }
+
+        // 5. Exam Type check
+        if (currentFilters.examType !== 'all' && exam.type !== currentFilters.examType) {
+          return false;
+        }
+
+        // 6. Keyword search (title, school, subject, module, badges, description)
+        if (currentFilters.keyword) {
+          const kw = currentFilters.keyword.toLowerCase();
+          const matchTitle = exam.title.toLowerCase().includes(kw);
+          const matchSchool = exam.schoolName.toLowerCase().includes(kw) || exam.schoolId.toLowerCase().includes(kw);
+          const matchSubject = exam.subjectName.toLowerCase().includes(kw);
+          const matchModule = exam.moduleName.toLowerCase().includes(kw);
+          const matchDesc = exam.description.toLowerCase().includes(kw);
+          const matchBadges = exam.badges.some(b => b.toLowerCase().includes(kw));
+
+          if (!matchTitle && !matchSchool && !matchSubject && !matchModule && !matchDesc && !matchBadges) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      // Sort results
+      if (currentFilters.sort === 'popular') {
+        results.sort((a, b) => b.attempts - a.attempts);
+      } else if (currentFilters.sort === 'rating') {
+        results.sort((a, b) => b.rating - a.rating);
+      } else if (currentFilters.sort === 'questions_asc') {
+        results.sort((a, b) => a.questionsCount - b.questionsCount);
+      } else if (currentFilters.sort === 'questions_desc') {
+        results.sort((a, b) => b.questionsCount - a.questionsCount);
+      } else if (currentFilters.sort === 'newest') {
+        results.sort((a, b) => b.id - a.id);
+      }
+
+      // Update counters
+      countEl.textContent = results.length;
+      document.getElementById('type-count-all').textContent = EXAMS_DATABASE.length;
+      updateBreadcrumbTrail(results.length);
+
+      // Render Cards
+      if (results.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        container.innerHTML = results.map(exam => createExamCardHTML(exam)).join('');
+      }
+    }
+
+    // Helper: Create a single Exam Card HTML
+    function createExamCardHTML(exam) {
+      const isFav = userFavorites.includes(exam.id);
+      const favClass = isFav ? 'fa-solid text-medred-600' : 'fa-regular text-slate-400 hover:text-medred-600';
+
+      // Badge colors according to school / year
+      const schoolBadgeColor = exam.schoolId === 'HMU' ? 'bg-red-50 text-red-700 border-red-200' : 
+                               exam.schoolId === 'UMP' ? 'bg-blue-50 text-blue-700 border-blue-200' : 
+                               exam.schoolId === 'VMMU' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 
+                               'bg-slate-100 text-slate-700 border-slate-200';
+
+      return `
+        <article class="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1">
+          
+          <!-- Card Top Bar: Hierarchy Chips & Bookmark -->
+          <div class="p-5 pb-3">
+            
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg border ${schoolBadgeColor} flex items-center gap-1">
+                  <i class="fa-solid fa-hospital-user text-[10px]"></i>
+                  <span>${exam.schoolName}</span>
+                </span>
+                <span class="text-[11px] font-semibold px-2 py-1 rounded-lg bg-slate-100 text-slate-700">
+                  ${exam.yearName}
+                </span>
+                <span class="text-[11px] font-semibold px-2 py-1 rounded-lg bg-medred-50 text-medred-700 border border-medred-100">
+                  ${exam.typeName}
+                </span>
+              </div>
+
+              <!-- Bookmark button -->
+              <button 
+                onclick="toggleFavorite(${exam.id})" 
+                class="w-8 h-8 rounded-full bg-slate-50 hover:bg-medred-50 flex items-center justify-center transition shrink-0"
+                title="Lưu bộ đề">
+                <i class="${favClass} text-sm"></i>
+              </button>
+            </div>
+
+            <!-- Subject & Module Path Indicator -->
+            <div class="text-[11px] font-semibold text-slate-500 flex items-center gap-1 mb-2 truncate">
+              <span class="text-slate-700 truncate">${exam.subjectName}</span>
+              <i class="fa-solid fa-chevron-right text-[9px] text-medred-400 shrink-0"></i>
+              <span class="text-medred-600 font-bold truncate">${exam.moduleName}</span>
+            </div>
+
+            <!-- Exam Title -->
+            <h3 class="font-bold text-slate-900 text-base leading-snug group-hover:text-medred-600 transition-colors line-clamp-2 min-h-[44px]">
+              ${exam.title}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+              ${exam.description}
+            </p>
+
+            <!-- Feature Badges -->
+            <div class="flex flex-wrap gap-1 mt-3">
+              ${exam.badges.map(b => `<span class="text-[10px] bg-slate-50 text-slate-600 font-medium px-2 py-0.5 rounded border border-slate-200/60">${b}</span>`).join('')}
+            </div>
+
+          </div>
+
+          <!-- Card Metadata & Action Buttons -->
+          <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50">
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-2 py-2 mb-3 text-center border-b border-slate-200/50 text-xs text-slate-600">
+              <div>
+                <span class="block text-slate-400 text-[10px]">Thời gian</span>
+                <span class="font-bold text-slate-800 flex items-center justify-center gap-1">
+                  <i class="fa-regular fa-clock text-medred-500 text-[11px]"></i> ${exam.duration}
+                </span>
+              </div>
+              <div>
+                <span class="block text-slate-400 text-[10px]">Số câu hỏi</span>
+                <span class="font-bold text-slate-800 flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-list-check text-medred-500 text-[11px]"></i> ${exam.questionsCount} câu
+                </span>
+              </div>
+              <div>
+                <span class="block text-slate-400 text-[10px]">Đánh giá</span>
+                <span class="font-bold text-amber-600 flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-star text-amber-400 text-[11px]"></i> ${exam.rating}
+                </span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+              <button 
+                onclick="openSimulationModal(${exam.id})"
+                class="flex-1 py-2.5 px-3 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-bold text-xs sm:text-sm text-center shadow-md shadow-medred-500/20 hover:shadow-lg transition active:scale-95 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-pencil"></i>
+                <span>Vào Thi Ngay</span>
+              </button>
+
+              <button 
+                onclick="openSimulationModal(${exam.id})"
+                class="py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-medred-600 font-semibold text-xs text-center transition"
+                title="Xem trước ca bệnh mẫu">
+                <i class="fa-regular fa-eye mr-1"></i>Xem trước
+              </button>
+            </div>
+
+          </div>
+
+        </article>
+      `;
+    }
+
+    // ================= 7. INTERACTIVE TEST MODAL LOGIC =================
+    function openSimulationModal(examId) {
+      const exam = EXAMS_DATABASE.find(e => e.id === examId) || EXAMS_DATABASE[0];
+      currentModalExam = exam;
+
+      // Populate Modal Headers
+      document.getElementById('modal-exam-school-tag').textContent = exam.schoolName;
+      document.getElementById('modal-exam-year-tag').textContent = exam.yearName;
+      document.getElementById('modal-exam-title').textContent = exam.title;
+      document.getElementById('modal-q-type').textContent = exam.typeName;
+
+      // Question Content
+      const sq = exam.sampleQuestion;
+      document.getElementById('modal-q-content').textContent = sq.q;
+
+      // Render Options
+      const optionsContainer = document.getElementById('modal-options-container');
+      optionsContainer.innerHTML = sq.options.map((opt, idx) => `
+        <label class="flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-medred-300 hover:bg-medred-50/30 transition cursor-pointer group option-item" id="option-label-${idx}">
+          <input type="radio" name="modal_question_option" value="${idx}" class="mt-1 accent-medred-600 text-medred-600 focus:ring-medred-500 w-4 h-4 cursor-pointer">
+          <span class="text-xs sm:text-sm text-slate-700 group-hover:text-slate-900 font-medium leading-relaxed">${opt}</span>
+        </label>
+      `).join('');
+
+      // Reset explanation box
+      const expBox = document.getElementById('modal-explanation-box');
+      expBox.className = 'hidden p-4 sm:p-5 rounded-2xl border transition-all';
+      expBox.innerHTML = `
+        <div class="flex items-center gap-2 mb-2 font-bold text-sm">
+          <span id="explanation-status-icon"></span>
+          <span id="explanation-status-title"></span>
+        </div>
+        <div class="text-xs sm:text-sm leading-relaxed text-slate-700" id="explanation-content">${sq.explanation}</div>
+        <div class="mt-3 pt-3 border-t border-slate-200/60 text-xs text-slate-500 flex items-center gap-1.5">
+          <i class="fa-solid fa-bookmark text-medred-600"></i>
+          <span>Tài liệu tham khảo: <strong>${sq.reference}</strong></span>
+        </div>
+      `;
+
+      // Reset check button
+      const checkBtn = document.getElementById('btn-check-answer');
+      checkBtn.innerHTML = `<i class="fa-solid fa-check"></i><span>Kiểm Tra Đáp Án</span>`;
+      checkBtn.disabled = false;
+
+      // Timer simulator
+      startMockTimer();
+
+      // Show modal
+      document.getElementById('simulation-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSimulationModal() {
+      document.getElementById('simulation-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      if (modalTimerInterval) clearInterval(modalTimerInterval);
+    }
+
+    function startMockTimer() {
+      if (modalTimerInterval) clearInterval(modalTimerInterval);
+      let secondsLeft = 45 * 60; // 45 minutes
+      const timerEl = document.getElementById('modal-timer');
+
+      modalTimerInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(modalTimerInterval);
+          timerEl.textContent = '00:00';
+          return;
+        }
+        const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+        const s = (secondsLeft % 60).toString().padStart(2, '0');
+        timerEl.textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    function checkModalAnswer() {
+      const selected = document.querySelector('input[name="modal_question_option"]:checked');
+      if (!selected) {
+        alert('Vui lòng chọn một đáp án (A, B, C hoặc D) trước khi kiểm tra!');
+        return;
+      }
+
+      const selectedIndex = parseInt(selected.value, 10);
+      const correctIndex = currentModalExam.sampleQuestion.correct;
+      const expBox = document.getElementById('modal-explanation-box');
+      const statusIcon = document.getElementById('explanation-status-icon');
+      const statusTitle = document.getElementById('explanation-status-title');
+
+      // Highlight options
+      for (let i = 0; i < 4; i++) {
+        const label = document.getElementById(`option-label-${i}`);
+        if (label) {
+          if (i === correctIndex) {
+            label.className = 'flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/70 text-emerald-950 font-bold transition';
+          } else if (i === selectedIndex && selectedIndex !== correctIndex) {
+            label.className = 'flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border-2 border-medred-500 bg-medred-50/70 text-medred-950 font-medium transition';
+          } else {
+            label.className = 'flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-slate-200 bg-slate-50 opacity-60 transition';
+          }
+        }
+      }
+
+      expBox.classList.remove('hidden');
+      if (selectedIndex === correctIndex) {
+        expBox.className = 'p-4 sm:p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50 text-emerald-900 transition-all';
+        statusIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+        statusTitle.textContent = 'CHÍNH XÁC! Bạn đã đưa ra quyết định lâm sàng chuẩn xác.';
+      } else {
+        expBox.className = 'p-4 sm:p-5 rounded-2xl border-2 border-medred-300 bg-medred-50 text-medred-900 transition-all';
+        statusIcon.innerHTML = `<i class="fa-solid fa-circle-xmark text-medred-600 text-lg"></i>`;
+        statusTitle.textContent = 'CHƯA CHÍNH XÁC. Hãy cùng xem cơ chế sinh lý bệnh dưới đây:';
+      }
+
+      const checkBtn = document.getElementById('btn-check-answer');
+      checkBtn.innerHTML = `<i class="fa-solid fa-rotate-left"></i><span>Đã Kiểm Tra</span>`;
+      checkBtn.disabled = true;
+    }
+
+    function toggleCurrentModalBookmark() {
+      if (!currentModalExam) return;
+      toggleFavorite(currentModalExam.id);
+      const btn = document.getElementById('btn-bookmark-modal');
+      const isFav = userFavorites.includes(currentModalExam.id);
+      btn.innerHTML = isFav ? `<i class="fa-solid fa-bookmark text-medred-600"></i><span>Đã lưu</span>` : `<i class="fa-regular fa-bookmark"></i><span>Lưu câu này</span>`;
+    }
+
+    // ================= 8. FAVORITES / BOOKMARKS =================
+    function toggleFavorite(id) {
+      if (userFavorites.includes(id)) {
+        userFavorites = userFavorites.filter(favId => favId !== id);
+      } else {
+        userFavorites.push(id);
+      }
+      localStorage.setItem('meduc_favorites', JSON.stringify(userFavorites));
+      updateFavoritesBadge();
+      renderExamsList();
+    }
+
+    function updateFavoritesBadge() {
+      document.getElementById('fav-count').textContent = userFavorites.length;
+    }
+
+    function openFavoritesModal() {
+      const modal = document.getElementById('favorites-modal');
+      const listContainer = document.getElementById('favorites-list');
+
+      const favExams = EXAMS_DATABASE.filter(e => userFavorites.includes(e.id));
+
+      if (favExams.length === 0) {
+        listContainer.innerHTML = `
+          <div class="text-center py-8 text-slate-500">
+            <i class="fa-regular fa-bookmark text-3xl mb-2 text-slate-300"></i>
+            <p>Bạn chưa lưu bộ đề thi nào.</p>
+            <p class="text-xs text-slate-400 mt-1">Nhấn biểu tượng bookmark ở góc mỗi bộ đề để lưu vào danh sách học tập.</p>
+          </div>
+        `;
+      } else {
+        listContainer.innerHTML = favExams.map(e => `
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <span class="text-[10px] font-bold text-medred-600 uppercase tracking-wider">${e.schoolName} • ${e.yearName}</span>
+              <h4 class="font-bold text-slate-800 text-xs sm:text-sm truncate">${e.title}</h4>
+              <p class="text-[11px] text-slate-500">${e.questionsCount} câu hỏi • ${e.duration}</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="closeFavoritesModal(); openSimulationModal(${e.id})" class="px-3 py-1.5 bg-medred-600 text-white rounded-lg text-xs font-bold hover:bg-medred-700">Làm đề</button>
+              <button onclick="toggleFavorite(${e.id}); openFavoritesModal()" class="text-slate-400 hover:text-medred-600 p-1"><i class="fa-solid fa-trash-can text-xs"></i></button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFavoritesModal() {
+      document.getElementById('favorites-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // ================= 9. MOBILE NAV TOGGLE =================
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobile-nav');
+      nav.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

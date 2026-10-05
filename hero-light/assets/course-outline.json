@@ -1,0 +1,2222 @@
+{
+  "source": "danh-sach-63-khoa-hoc-chuong-bai.md",
+  "outlines": {
+    "48": [
+      {
+        "title": "MODULE 1: SINH LÝ ĐẠI CƯƠNG (12 bài)",
+        "lessons": [
+          "Bài 1: Nhập môn sinh lý học, khái niệm nội môi, hằng tính nội môi",
+          "Bài 2: Sinh lý tế bào, trao đổi chất qua màng tế bào",
+          "Bài 3: Sinh lý điện thế màng, điện thế nghỉ và điện thế hoạt động",
+          "Bài 4: : Sinh lý chuyển hoá chất và chuyển hoá năng lượng",
+          "Bài 5: Sinh lý Điều nhiệt"
+        ]
+      },
+      {
+        "title": "Module Sinh Lý Máu",
+        "lessons": [
+          "Bài 6: Sinh lý Máu - Hồng Cầu",
+          "Bài 7: Sinh lý Máu - Bạch cầu",
+          "Bài 8: Sinh lý Máu - Tiểu cầu",
+          "Bài 9: Sinh lý Máu - Huyết tương",
+          "Bài 10: Sinh lý Máu - Nhóm máu",
+          "Bài 11: Sinh lý Máu - Xét nghiệm công thức máu",
+          "Bài 12: Sinh lý dịch cơ thể",
+          "ÔN TẬP SINH LÝ ĐẠI CƯƠNG"
+        ]
+      },
+      {
+        "title": "MODULE 2: CƠ XƯƠNG KHỚP (2 bài)",
+        "lessons": [
+          "Bài 13: Sinh lý cơ p1",
+          "Bài 14: Sinh lý cơ P2"
+        ]
+      },
+      {
+        "title": "MODULE 3: SINH LÝ HÔ HẤP (2 bài)",
+        "lessons": [
+          "Bài 15: Trao đổi khí tại phổi",
+          "Bài 16: Chuyên chở khí trong máu"
+        ]
+      },
+      {
+        "title": "MODULE 4: TIM MẠCH (2 bài)",
+        "lessons": [
+          "Bài 17: Tuần hoàn Tim",
+          "Bài 18: Tuần hoàn Hệ mạch"
+        ]
+      },
+      {
+        "title": "MODULE 5: TIÊU HÓA (2 bài)",
+        "lessons": [
+          "Bài 19: Sinh lý tiêu hóa - dạ dày",
+          "Bài 20: Sinh lý tiêu hoá - ruột non - ruột già"
+        ]
+      },
+      {
+        "title": "MODULE 6: GAN - MẬT (1 bài)",
+        "lessons": [
+          "Bài 21: Sinh lý Gan - Mật"
+        ]
+      },
+      {
+        "title": "ÔN TẬP GIỮA KÌ",
+        "lessons": []
+      },
+      {
+        "title": "MODULE 7: TIẾT NIỆU (2 bài)",
+        "lessons": [
+          "Bài 22: Qúa trình lọc tại cầu thận",
+          "Bài 23: Qúa trình trao đổi tại ống thận"
+        ]
+      },
+      {
+        "title": "MODULE 8: NỘI TIẾT (2 bài)",
+        "lessons": [
+          "Bài 24: Tổng quan sinh lý nội tiết",
+          "Bài 25: Sinh lý nội tiết (tiếp theo)"
+        ]
+      },
+      {
+        "title": "MODULE 9: SINH SẢN (3 bài)",
+        "lessons": [
+          "Bài 26: Sinh sản nam",
+          "Bài 27: Sinh sản nữ",
+          "Bài 28: Sự thụ tinh"
+        ]
+      },
+      {
+        "title": "MODULE 10: THẦN KINH (5 bài)",
+        "lessons": [
+          "Bài 29: Sinh lý thần kinh Nơron - Synap (P1)",
+          "Bài 30-1: Sinh lý thần kinh nơ ron -synap (P2)",
+          "Bài 30-2: Sinh lý hệ thần kinh (cảm giác P3)",
+          "Bài 30-3: Sinh lý hệ thần kinh (vận động P4)",
+          "Bài 30-4: Sinh lý hệ thần kinh (tự chủ P5)"
+        ]
+      },
+      {
+        "title": "Bài 31: Ôn tập Cuối Khoá P1 + P2",
+        "lessons": [
+          "TRẮC NGHIỆM TIM MẠCH (WEBSITE)",
+          "TRẮC NGHIỆM TIÊU HÓA (WEBSITE)",
+          "TRẮC NGHIỆM HÔ HẤP (WEBSITE)",
+          "TRẮC NGHIỆM TIM MẠCH (WEBSITE)",
+          "TRẮC NGHIỆM THẦN KINH (WEBSITE)",
+          "TRẮC NGHIỆM THẦN KINH (WEBSITE)",
+          "TRẮC NGHIỆM GIỮA KÌ (WEBSITE)",
+          "TRẮC NGHIỆM SINH SẢN (WEBSITE)",
+          "TRẮC NGHIỆM LUYỆN ĐỀ (WEBSITE)",
+          "TRẮC NGHIỆM LUYỆN ĐỀ tiếp theo(WEBSITE)"
+        ]
+      }
+    ],
+    "51": [
+      {
+        "title": "Phần 1: Tiêu hóa ( Chào mừng bạn đến với khoá học tại Meduc.vn)",
+        "lessons": [
+          "Buổi 1: Xuất huyết tiêu hóa",
+          "Buổi 2: Viêm gan B",
+          "Buổi 3: Viêm tuỵ cấp",
+          "Buổi 4: Xơ gan và biến chứng"
+        ]
+      },
+      {
+        "title": "Phần 2: Nội tiết (wow, bạn đã vượt qua 4 buổi đầu tiên một cách thật xuất sắc)",
+        "lessons": [
+          "Buổi 5: Đái tháo đường và biến chứng cấp mạn",
+          "Buổi 6: Cường giáp",
+          "Buổi 7: Suy giáp"
+        ]
+      },
+      {
+        "title": "Phần 3: Hô hấp ( Hít thở nào, bạn đang làm rất tốt, tiếp tục tiến lên nha )",
+        "lessons": [
+          "Buổi 8 : Khí máu động mạch và hô hấp ký",
+          "Buổi 9: COPD",
+          "Buổi 10: Hen",
+          "Buổi 11: Viêm phổi",
+          "Buổi 12: Ôn Tập Giữa Kì",
+          "Buổi 13: Kiểm Tra Giữa Kì ( Vấn Đáp )"
+        ]
+      },
+      {
+        "title": "Phần 4: Tim mạch ( Tim bạn đập nhanh không ? chúng ta đã vượt qua 1/2 chặng đường rồi đấy)",
+        "lessons": [
+          "Buổi 14: Tăng huyết áp",
+          "Buổi 15: Bệnh lý van tim",
+          "Buổi 16: Nhồi máu cơ tim cấp",
+          "Buổi 17: Suy tim cấp - mạn"
+        ]
+      },
+      {
+        "title": "Phần 5: Thận nội ( Thận trọng với những quyết định của bạn, đây không phải lúc bỏ cuộc đâu)",
+        "lessons": [
+          "Buổi 18: Tổn Thương Thận Cấp",
+          "Buổi 19: Bệnh Thận Mạn",
+          "Buổi 20: Nhiễm trùng tiểu",
+          "Buổi 21: Bệnh cầu thận"
+        ]
+      },
+      {
+        "title": "Phần 6: Cơ xương khớp (Còn 1 tháng nữa là những kết quả của chúng ta sẽ '' Khớp '' với cố gắng ta đã bỏ ra)",
+        "lessons": [
+          "Buổi 22: Viêm khớp dạng thấp",
+          "Buổi 23: Thoái hóa khớp",
+          "Buổi 24: Loãng xương",
+          "Buổi 25: Gout"
+        ]
+      },
+      {
+        "title": "Phần 7: Hồi sức tích cực và Máu ( Bạn Hãy Nghỉ Ngơi Một Chút Đi, Rồi Quay Lại Và Mạnh Mẽ Hơn Nhé )",
+        "lessons": [
+          "Buổi 26: Hồi sức ngưng tim ngưng thở cơ bản",
+          "Buổi 27: Các rối loạn đông máu, và thuốc",
+          "Buổi 28: Thiếu máu và tiếp cận thiếu máu",
+          "Buổi 29: Ôn tập cuối kì",
+          "Buổi 30: Kiểm Tra Cuối Kì ( Trắc Nghiệm ) (Chúc Mừng Bạn Đã Hoàn Thành Khoá Học Tại Meduc.vn)"
+        ]
+      }
+    ],
+    "52": [
+      {
+        "title": "PHẦN 1: TIÊU HÓA – BỤNG CẤP",
+        "lessons": [
+          "Buổi 1: Viêm ruột thừa cấp",
+          "Buổi 2: Thủng ổ loét dạ dày tá tràng",
+          "Buổi 3: Tắc ruột",
+          "Buổi 4: Hội Chứng Hẹp Môn Vị",
+          "Buổi 5: Lồng Ruột Trẻ Em",
+          "Buổi 6: Chấn thương bụng, Hội Chứng Chảy Máu Trong",
+          "Buổi 7: Viêm Túi Mật Cấp",
+          "Buổi 8: Sỏi Ống Mật Chủ",
+          "Buổi 9: Viêm phúc mạc và các ổ áp xe trong ổ bụng",
+          "Buổi 10: Ung thư dạ dày ( Chẩn Đoán - Phân Loại )",
+          "Buổi 11: Ung Thư Dạ Dày ( Điều Trị )",
+          "Buổi 12: Ung thư đại tràng ( Chẩn Đoán )",
+          "Buổi 13: Điều Trị Ung Thư Đại Tràng",
+          "Buổi 14: Trĩ ( Phẫu Thuật )",
+          "Buổi 15: Thoát Vị Bẹn"
+        ]
+      },
+      {
+        "title": "PHẦN 2: CHẤN THƯƠNG – XƯƠNG",
+        "lessons": [
+          "Buổi 16: Khám Gãy Xương",
+          "Buổi 17: Gãy xương hở",
+          "Buổi 18: Gãy trên lồi cầu xương cánh tay",
+          "Buổi 19: Gãy Thân Xương Cánh Tay",
+          "Buổi 20: Gãy hai xương cẳng tay",
+          "Buổi 21: Gãy thân xương đùi",
+          "Buổi 22: Gãy Cổ Xương Đùi",
+          "Buổi 23: Gãy hai xương cẳng chân",
+          "Buổi 24: Tổng Quan Gãy Xương Chày",
+          "Buổi 25: Thoát Vị Đĩa Đệm - Thắt Lưng",
+          "Buổi 26: Sơ Lược Về Tạo Hình",
+          "Buổi 27: Ôn Tập"
+        ]
+      },
+      {
+        "title": "PHẦN 3: CHẤN THƯƠNG – NIỆU / BỎNG / MỀM",
+        "lessons": [
+          "Buổi 28: Chấn Thuơng Niệu Đạo",
+          "Buổi 29: Chấn thương thận",
+          "Buổi 30: Chấn Thương Bìu - Dương Vật",
+          "Buổi 31: U Xơ tiền Lịệt Tuyến",
+          "Buổi 32: Bỏng + Điều trị khuyết hông phần mềm",
+          "Buổi 33: Nhiễm Trùng Và Vết Thương Bàn Tay",
+          "Buổi 34: Sỏi tiết niệu",
+          "Buổi 35: Chấn Thương Ngực",
+          "Bài 36: Chấn Thương Sọ Não",
+          "Buổi 37: Ôn Tập Chấn Thương"
+        ]
+      },
+      {
+        "title": "Bài 38: Ôn Tập Cuối Kì",
+        "lessons": []
+      }
+    ],
+    "53": [
+      {
+        "title": "Chương 1. Sản Khoa",
+        "lessons": [
+          "Buổi 1: Thay đổi giải phẫu và sinh lý ở phụ nữ mang thai.",
+          "1.2. Sự phát triển của phôi và thai – Tính chất thai nhi của phần phụ đủ tháng.",
+          "1.3. Chẩn đoán có thai.",
+          "1.4. Sinh lý chuyển dạ.",
+          "1.5. Biểu đồ tim thai và cơn co tử cung.",
+          "1.6. Hậu sản thường."
+        ]
+      },
+      {
+        "title": "Ôn Tập",
+        "lessons": [
+          "1.7. Chảy máu âm đạo 3 tháng đầu thai kỳ.",
+          "1.8. Thai lạc chỗ.",
+          "1.9. Thai trứng.",
+          "1.10. Thai chết trong tử cung.",
+          "1.11. Nhau tiền đạo.",
+          "1.12. Nhau bong non.",
+          "1.13. Vỡ tử cung",
+          "1.14. Sinh non."
+        ]
+      },
+      {
+        "title": "Ôn Tập",
+        "lessons": []
+      },
+      {
+        "title": "Kiểm Tra giữa Kì",
+        "lessons": [
+          "1.15. Đái tháo đường thai kỳ.",
+          "1.16. Tăng huyết áp thai kỳ.",
+          "1.17. Đa ối – Thiểu ối",
+          "1.18. Thai chậm tăng trưởng trong tử cung.",
+          "1.19. Thai suy trong chuyển dạ",
+          "1.20. Chảy máu sau sinh"
+        ]
+      },
+      {
+        "title": "Ôn Tập",
+        "lessons": []
+      },
+      {
+        "title": "Chương 2. Phụ Khoa",
+        "lessons": [
+          "2.1. Sinh lý phụ khoa.",
+          "2.2. Các biện pháp tránh thai.",
+          "2.3. Các phương pháp đình chỉ thai.",
+          "2.4. Bệnh lý lành tính âm hộ - âm đạo.",
+          "2.5. Bệnh lây truyền qua đường tình dục.",
+          "2.6. Vai trò của siêu âm trong sản khoa.",
+          "2.7. U xơ tử cung.",
+          "2.8. Khối u buồng trứng.",
+          "2.9. Bệnh lý cổ tử cung, lành tính và ác tính.",
+          "2.10. Khối u vú"
+        ]
+      },
+      {
+        "title": "Ôn Tập",
+        "lessons": []
+      },
+      {
+        "title": "Kiểm Tra Cuối Kì",
+        "lessons": []
+      }
+    ],
+    "96": [
+      {
+        "title": "Chương 1: Hô Hấp",
+        "lessons": [
+          "Buổi 1: Bệnh phổi tắc nghẽn mạn tính",
+          "Buổi 2. Hen phế quản",
+          "Buổi 3. Viêm phổi cộng đồng",
+          "Buổi 4. Ung thư phổi nguyên phát",
+          "Buổi 5. Suy hô hấp"
+        ]
+      },
+      {
+        "title": "Chương 2: Tiêu Hóa",
+        "lessons": [
+          "Buổi 6. Viêm gan mạn",
+          "Buổi 7. Loét dạ dày tá tràng",
+          "Buổi 8. Xơ gan- ung thư gan",
+          "Buổi 9. Viêm ruột mạn",
+          "Buổi 10. Viêm tụy cấp",
+          "Buổi 11. Hội chứng thận hư",
+          "Buổi 12. Viêm cầu thận cấp sau nhiễm liên cầu",
+          "Buổi 13. Suy thận mạn",
+          "Buổi 14. Suy thận cấp",
+          "Buổi 15. Bệnh cầu thận IgA"
+        ]
+      },
+      {
+        "title": "Chương 3: Tim Mạch",
+        "lessons": [
+          "Buổi 16. Tăng huyết áp",
+          "Buổi 17. Nhồi máu cơ tim",
+          "Buổi 18. Suy tim",
+          "Buổi 19. Thấp tim",
+          "Buổi 20. Ngưng thở tắc nghẽn khi ngủ"
+        ]
+      },
+      {
+        "title": "Chương 4: Thần Kinh",
+        "lessons": [
+          "Buổi 21. Parkinson",
+          "Buổi 22. Tai biến mạch máu não",
+          "Buổi 23. Động kinh",
+          "Buổi 24. Tăng áp lực nội sọ",
+          "Buổi 25. Guillain Barre"
+        ]
+      },
+      {
+        "title": "Chương 5: Cơ Xương Khớp",
+        "lessons": [
+          "Buổi 26. Nhược cơ",
+          "Buổi 27. Viêm khớp dạng thấp",
+          "Buổi 28. Thoái khớp",
+          "Buổi 29. Gout",
+          "Buổi 30. Lupus ban đỏ hệ thống"
+        ]
+      },
+      {
+        "title": "Chương 6: Nội Tiết",
+        "lessons": [
+          "Buổi 31. Đái tháo đường",
+          "Buổi 32. Basedow",
+          "Buổi 33. Suy giáp",
+          "Buổi 34. Suy thượng thận"
+        ]
+      },
+      {
+        "title": "Buổi 35. Ôn tập cuối kì",
+        "lessons": []
+      },
+      {
+        "title": "Buổi 36. Kiểm Tra",
+        "lessons": []
+      }
+    ],
+    "99": [
+      {
+        "title": "Đại Cương Giải Phẫu (2 Bài)",
+        "lessons": [
+          "Bài 1: Nhập Môn Giải Phẫu - Thuật Ngữ Giải Phẫu",
+          "Bài 2: Đại Cương Về Xương, Khớp, Cơ"
+        ]
+      },
+      {
+        "title": "MODULE 1: CƠ XƯƠNG KHỚP ( 10 Bài)",
+        "lessons": [
+          "Bài 3: Xương Khớp Chi Trên P1",
+          "Bài 4: Xương Khớp Chi Trên P2",
+          "Bài 5: Cơ Chi Trên",
+          "Bài 6.1: Xương Khớp Chi Dưới P1",
+          "Bài 6.2: Xương Khớp Chi Dưới P2",
+          "Bài 7.1: Cơ Chi Dưới P1",
+          "Bài 7.2: Cơ Chi Dưới P2",
+          "Bài 8: Xương - Khớp Thân Mình",
+          "Bài 9: Cơ Thân Mình",
+          "Bài 10.1: Xương Khớp Đầu Mặt Cổ P1",
+          "Bài 10.2: Xương Khớp Đầu Mặt Cổ P2",
+          "Bài 11.1: Cơ Đầu Mặt Cổ P1",
+          "Bài 11.2: Cơ Đầu Mặt Cổ P2",
+          "Bài 12.1: Ôn Tập Hệ Vận Động (Xương Khớp Cơ Chi Trên)",
+          "Bài 12.2 : Ôn Tập Hệ Vận Động (Xương Khớp Cơ Chi Dưới)",
+          "Bài 12.3: Ôn Tập Hệ Vận Động (Xương, Khớp, Cơ Thân Mình)",
+          "Bài 12.4: Ôn Tập Hệ Vận Động (Xương, Khớp, Đầu Mặt Cổ)"
+        ]
+      },
+      {
+        "title": "MODULE 2: TIM MẠCH (6 Bài)",
+        "lessons": [
+          "Bài 13: Trung Thất",
+          "Bài 14.1 : Giải Phẫu Hình Thể Ngoài Của Tim",
+          "Bài 14.2: Giải Phẫu Hình Thể Trong Của Tim",
+          "Bài 15: Động Mạch Chủ - Tĩnh Mạch Chủ",
+          "Bài 16: Mạch Máu Chi Trên",
+          "Bài 17: Mạch Máu Chi Dưới",
+          "Bài 18: Mạch Máu Đầu Mặt Cổ"
+        ]
+      },
+      {
+        "title": "MODULE 3: HÔ HẤP (4 Bài)",
+        "lessons": [
+          "Bài 19: Giải Phẫu Thành Ngực",
+          "Bài 20: Giải Phẫu Mũi",
+          "Bài 21: Hầu - Thanh Quản",
+          "Bài 22: Khí Quản - Phế Quản - Phổi"
+        ]
+      },
+      {
+        "title": "MODULE 4: TIÊU HÓA (5 Bài)",
+        "lessons": [
+          "Bài 23: GP Ổ Bụng - Thành Bụng - Phúc Mạc - Ống Bẹn",
+          "Bài 24: Ổ Miệng- Thực Quản",
+          "Bài 25: Dạ Dày - Ruột Non - Ruột Già",
+          "Bài 26: Gan - Đường Mật - Lách",
+          "Bài 27: Ôn Luyện Đề Hệ Tiêu Hoá"
+        ]
+      },
+      {
+        "title": "MODULE 5: THẬN - TIẾT NIỆU (1 Bài)",
+        "lessons": [
+          "Bài 28: Thận, Niệu Quản, Bàng Quang, Niệu Đạo"
+        ]
+      },
+      {
+        "title": "MODULE 6: SINH DỤC - SINH SẢN (1 Bài)",
+        "lessons": [
+          "Bài 29: Cơ Quan Sinh Dục Nam - Nữ"
+        ]
+      },
+      {
+        "title": "MODULE 7: GIÁC QUAN (2 Bài)",
+        "lessons": [
+          "Bài 30: Cơ Quan Thị Giác - Tiền Đình Ốc Tai",
+          "Bài 31: Ôn Tập Các Hệ Đã Học",
+          "Ôn Luyện Hệ Tim Mạch",
+          "Ôn Luyện Hệ Hô Hấp",
+          "Ôn Luyện Hệ Tiết Niệu - Sinh Dục"
+        ]
+      },
+      {
+        "title": "MODULE 8: THẦN KINH (5 Bài)",
+        "lessons": [
+          "Bài 32: Thân Não - Tiểu Não - Tủy Gai",
+          "Bài 33: Gian Não- Đoan Não",
+          "Bài 34: Hệ Thần Kinh Tự Chủ- 12 Đôi dây TK Sọ",
+          "Bài 35: TK Chi Trên - TK Chi Dưới",
+          "Bài 36: Ôn Luyện Cuối Khoá"
+        ]
+      }
+    ],
+    "101": [
+      {
+        "title": "Chương 1: Nền Tảng Tiếng Anh Chuyên Ngành",
+        "lessons": [
+          "Buổi 1: Key concepts: cấu trúc từ, root, suffix, prefix",
+          "Buổi 2: Body structure: thuật ngữ cơ thể, ứng dụng phân tích thuật ngữ"
+        ]
+      },
+      {
+        "title": "Chương 2: Hệ Cơ Xương Khớp",
+        "lessons": [
+          "Buổi 3: Skeletal system – cấu trúc xương, thuật ngữ",
+          "Buổi 4: Skeletal system – bệnh lý xương, ứng dụng thuật ngữ",
+          "Buổi 5: Muscular system – cấu trúc cơ, thuật ngữ",
+          "Buổi 6: Muscular system – bệnh lý cơ, ứng dụng thuật ngữ",
+          "Buổi 7: Buổi Ôn Tập Hệ Cơ Xương Khớp"
+        ]
+      },
+      {
+        "title": "Chương 3: Da liễu / Integumentary",
+        "lessons": [
+          "Buổi 8: Integumentary System – Cấu trúc da, thuật ngữ da liễu",
+          "Buổi 9: Integumentary System – Bệnh lý da liễu, ứng dụng thuật ngữ"
+        ]
+      },
+      {
+        "title": "Chương 4: Tim mạch (Cardiovascular)",
+        "lessons": [
+          "Buổi 10: Cardiovascular System: Cấu trúc tim, mạch máu, thuật ngữ cơ bản",
+          "Buổi 11: Cardiovascular System: Bệnh lý tim mạch, thuật ngữ chuyên môn",
+          "Buổi 12: Cardiovascular System: Ứng dụng thuật ngữ tim mạch",
+          "Buổi 13: Ôn Tập Da Liễu - Tim Mạch"
+        ]
+      },
+      {
+        "title": "Chương 5: Hô hấp (Respiratory)",
+        "lessons": [
+          "Buổi 14: Respiratory System: Cấu trúc hệ hô hấp, thuật ngữ",
+          "Buổi 15: Respiratory System: Bệnh lý hô hấp, thuật ngữ chuyên môn",
+          "Buổi 16: Respiratory System: Ứng dụng thuật ngữ hô hấp"
+        ]
+      },
+      {
+        "title": "Chương 6: Tiêu hóa (Gastrointestinal)",
+        "lessons": [
+          "Buổi 17: Gastrointestinal System P1: Cấu trúc hệ tiêu hóa, thuật ngữ",
+          "Buổi 18: Gastrointestinal System P2: Bệnh lý tiêu hóa, thuật ngữ",
+          "Buổi 19: Ôn Tập Lại Các Hệ Cơ Quan Đã Học - Thi Giữa Kì",
+          "Buổi 20: Thi Giữa Kì: Nói, Viết, Đọc"
+        ]
+      },
+      {
+        "title": "Chương 7: Hệ Tiết Niệu (Urinary)",
+        "lessons": [
+          "Buổi 21: Urinary System P1: Cấu trúc & thuật ngữ hệ tiết niệu",
+          "Buổi 22: Urinary System P2: Bệnh lý tiết niệu, ứng dụng thuật ngữ"
+        ]
+      },
+      {
+        "title": "Chương 8: Sinh dục – sức khỏe mẹ & con (Reproductive / Maternal Health)",
+        "lessons": [
+          "Buổi 23: Reproductive System: Cấu trúc, thuật ngữ, Sinh Dục nam",
+          "Buổi 24: Reproductive System: Cấu trúc, thuật ngữ, Sinh Dục nữ",
+          "Buổi 25: Maternal Health: Sức khỏe bà mẹ, chăm sóc thai kỳ",
+          "Buổi 26: Maternal Health P2: Bệnh lý sản khoa, ứng dụng thuật ngữ",
+          "Buổi 27: Ôn Tập Tiết Niệu - Sinh Dục"
+        ]
+      },
+      {
+        "title": "Chương 9: Hệ thần kinh (Neurologic)",
+        "lessons": [
+          "Buổi 28: Neurologic System P1: Hệ thần kinh: cấu trúc, thuật ngữ",
+          "Buổi 29: Neurologic System P2: Bệnh lý thần kinh",
+          "Buổi 30: Neurologic System P3: Ứng dụng thuật ngữ thần kinh"
+        ]
+      },
+      {
+        "title": "Chương 10: Nội tiết (Endocrine)",
+        "lessons": [
+          "Buổi 31: Endocrine System P1: Cấu trúc, chức năng, thuật ngữ tuyến nội tiết",
+          "Buổi 32: Endocrine System P2: Bệnh lý nội tiết",
+          "Buổi 33: Ôn Tập: Thần Kinh - Nội Tiết"
+        ]
+      },
+      {
+        "title": "Chương 11: Máu & bạch huyết (Blood & Lymphatic)",
+        "lessons": [
+          "Buổi 34: Blood And Lymphatic System P1: Cấu trúc, thuật ngữ máu và hệ bạch huyết",
+          "Buổi 35: Blood And Lymphatic System P2: Bệnh lý máu/bạch huyết, ứng dụng thuật ngữ"
+        ]
+      },
+      {
+        "title": "Chương 12: Răng – Hàm – Mặt",
+        "lessons": [
+          "Buổi 36: Răng Hàm Mặt P1: Cấu trúc & thuật ngữ giải phẫu RHM",
+          "Buổi 37: Răng Hàm Mặt P2: Một số bệnh lý & ứng dụng thuật ngữ",
+          "Buổi 38: Răng Hàm Mặt P3",
+          "Buổi 39: Ôn tập Máu/bạch huyết + RHM",
+          "Buổi 40: Kiểm Tra Cuối Kỳ"
+        ]
+      }
+    ],
+    "103": [
+      {
+        "title": "Chuyên Ngành Hoá Sinh Lâm Sàng",
+        "lessons": [
+          "Bài 1: Các Xét Nghiệm Thăm Dò Chức Năng Thận",
+          "Bài 2: Rối Loạn Chuyển Hoá Cacbonhydrat Và Xét Nghiệm Liên Quan",
+          "Bài 3: Xét Nghiệm Đánh Giá Chức Năng Gan",
+          "Bài 4: Các Xét Nghiệm Trong Bệnh Lý Tim Mạch",
+          "Bài 5: Chỉ Dấu Ung Thư",
+          "Bài 10: Rối Loạn Chuyển Hoá Lipid Máu Và Xét Nghiệm Lipid, Máu",
+          "Bài 11: Các Xét Nghiệm Đánh Giá Chức Năng Tuyến Giáp",
+          "Bài 12: Nguyên Lý Đo Quang",
+          "Bài 13: Các Phương Pháp Xét Nghiệm Miễn Dịch",
+          "Bài 14: Các Yếu Tố Gây Nhiễu Giai Đoạn Tiền Phân Tích Ảnh Hưởng Sinh Hoá - Miễn Dịch",
+          "Ôn Tập - Thực Hành Biện Luận Một Số Kết Quả Xét Nghiệm Hoá Sinh"
+        ]
+      },
+      {
+        "title": "Chuyên Ngành Huyết Học",
+        "lessons": [
+          "Bài 15: Sinh Lý Hồng Cầu Và Các Rối Loạn Dòng Hồng Cầu",
+          "Bài 15: Sinh Lý Hồng Cầu Và Các Rối Loạn Dòng Hồng Cầu",
+          "Bài 16: Sinh Lý Bạch Cầu Và Các Rối Loạn Dòng Bạch Cầu",
+          "Bài 17: Kỹ Thuật Xét Nghiệm Huyết Học Tế Bào - Biện Luận Công Thức Máu",
+          "Bài 18: Sinh Lý Đông Cầm Máu",
+          "Bài 19: Kỹ Thuật Xét Nghiệm Khảo Sát Đông Cầm Máu",
+          "Bài 20: Tổng Quan Các Bệnh Lý Liên Quan Đến Rối Loạn Đông máu",
+          "Bài 21: Tổng Quan Hện Thống Nhóm Máu - Hệ Nhóm Máu ABO Và Hệ Nhóm Máu RHESUS",
+          "Bài 22: Kỹ Thuật Định Nhóm Máu Hệ ABO Và RHESUS",
+          "Bài 23: Kỹ Thuật Xét Nghiệm Coombs",
+          "Bài 24: Phản Ứng Hoà Hợp Trong Truyền Máu",
+          "Ôn Tập",
+          "Kiểm Tra Cuối Kỳ"
+        ]
+      },
+      {
+        "title": "Hóa Sinh Lý Thuyết",
+        "lessons": [
+          "Bài 1: Hóa Sinh Glucid",
+          "Bài 2: Hóa Sinh Protid",
+          "Bài 3: Hóa Sinh Lipid",
+          "Bài 4: Hóa Sinh enzym"
+        ]
+      }
+    ],
+    "106": [
+      {
+        "title": "Phần 1: Sản Khoa",
+        "lessons": [
+          "1.2. Sự phát triển của phôi và thai – Tính chất thai nhi của phần phụ đủ tháng.",
+          "1.3. Chẩn đoán có thai.",
+          "1.4. Sinh lý chuyển dạ.",
+          "1.6. Hậu sản thường.",
+          "1.7. Chảy máu âm đạo 3 tháng đầu thai kỳ.",
+          "1.8. Thai lạc chỗ.",
+          "1.10. Thai chết trong tử cung.",
+          "1.11. Nhau tiền đạo.",
+          "1.13. Vỡ tử cung",
+          "Ôn Tập Giữa Kì",
+          "1.15. Đái tháo đường thai kỳ.",
+          "1.16. Tăng huyết áp thai kỳ.",
+          "1.17. Đa ối – Thiểu ối",
+          "1.20. Chảy máu sau sinh"
+        ]
+      },
+      {
+        "title": "Phần 2: Phụ Khoa",
+        "lessons": [
+          "2.1. Sinh lý phụ khoa.",
+          "2.2. Các biện pháp tránh thai.",
+          "2.3. Các phương pháp đình chỉ thai.",
+          "2.5. Bệnh lây truyền qua đường tình dục.",
+          "2.6. Vai trò của siêu âm trong sản khoa.",
+          "2.9. Bệnh lý cổ tử cung, lành tính và ác tính.",
+          "2.10. Khối u vú",
+          "Ôn Tập Cuối Kì"
+        ]
+      }
+    ],
+    "107": [
+      {
+        "title": "Phần 1: ĐẠI CƯƠNG",
+        "lessons": [
+          "Buổi 1. Đặc điểm các thời kỳ của trẻ em",
+          "Buổi 2. Quá trình phát triển thể chất – vận động – tinh thần"
+        ]
+      },
+      {
+        "title": "Phần 2: SƠ SINH",
+        "lessons": [
+          "Buổi 3. Đặc điểm và cách chăm sóc trẻ sơ sinh đủ tháng và non tháng",
+          "Buổi 4. Vàng da sơ sinh",
+          "Buổi 5. Nhiễm trùng sơ sinh sớm",
+          "Buổi 6. Hội chứng suy hô hấp ở trẻ sơ sinh"
+        ]
+      },
+      {
+        "title": "Phần 3: TIÊU HÓA – DINH DƯỠNG",
+        "lessons": [
+          "Buổi 7. Đau bụng cấp ở trẻ em",
+          "Buổi 8. Tiêu chảy cấp ở trẻ em",
+          "Buổi 9. Viêm loét dạ dày do HP",
+          "Buổi 10. XHTH ở trẻ em",
+          "Buổi 11. Vàng da ứ mật trẻ em"
+        ]
+      },
+      {
+        "title": "Phần 4: HÔ HẤP",
+        "lessons": [
+          "Buổi 12. Viêm tiểu phế quản cấp ở trẻ em",
+          "Buổi 13. Viêm phổi",
+          "Buổi 14. Hen phế quản"
+        ]
+      },
+      {
+        "title": "Phần 5: TRUYỀN NHIỄM",
+        "lessons": [
+          "Buổi 15. Sốt xuất huyết Dengue",
+          "Buổi 16. Tay chân miệng",
+          "Buổi 17. Bạch hầu – Sởi (đang hot)",
+          "Buổi 18. Viêm màng não mủ",
+          "Buổi 19. Viêm não nhật bản"
+        ]
+      },
+      {
+        "title": "Phần 6: TIM MẠCH",
+        "lessons": [
+          "Buổi 20. Đặc điểm hệ tuần hoàn trẻ em",
+          "Buổi 21. Khái quát bệnh tim bẩm sinh ở trẻ em",
+          "Buổi 22. Kawasaki"
+        ]
+      },
+      {
+        "title": "Phần 7: THẬN - NỘI TIẾT",
+        "lessons": [
+          "Buổi 23. Viêm cầu thận cấp",
+          "Buổi 24. Hội chứng thận hư",
+          "Buổi 25. Nhiễm trùng đường tiểu",
+          "Buổi 26. Suy giáp bẩm sinh trẻ em",
+          "Buổi 27. Cường giáp trẻ em"
+        ]
+      },
+      {
+        "title": "Phần 8: HUYẾT HỌC",
+        "lessons": [
+          "Buổi 28. Thiếu máu trẻ em",
+          "Buổi 29. Thalassemia",
+          "Buổi 30. Xuất huyết giảm tiểu cầu miễn dịch",
+          "Buổi 31. Bệnh Hemophilia"
+        ]
+      },
+      {
+        "title": "Phần 9: THẦN KINH",
+        "lessons": [
+          "Buổi 32. Hội chứng co giật",
+          "Buổi 33. Động kinh"
+        ]
+      },
+      {
+        "title": "Phần 10: CẤP CỨU",
+        "lessons": [
+          "Buổi 34. Dấu hiệu nhận biết trẻ bị bệnh nặng",
+          "Buổi 35. Suy hô hấp cấp trẻ em",
+          "Buổi 36. Sốc trẻ em, tiếp cận chẩn đoán và xử trí"
+        ]
+      },
+      {
+        "title": "Chương 11: Chữa Case Lâm Sàng",
+        "lessons": [
+          "Chữa Case Lâm Sàng P1",
+          "Chữa Case Lâm Sàng P2",
+          "Chữa Case Lâm Sàng P3",
+          "Chữa Case Lâm Sàng P4",
+          "Chữa Case Lâm Sàng P5",
+          "Chữa Case Lâm Sàng P6"
+        ]
+      }
+    ],
+    "112": [
+      {
+        "title": "PHẦN 1 – NỀN TẢNG ECG VÀ NHỊP TIM",
+        "lessons": [
+          "Buổi 1: Giới Thiệu Về Ecg: Nguyên Lý Ghi, Điện Cực, Các Chuyển Đạo",
+          "Buổi 2: Nhịp Xoang Bình Thường – Tiêu Chuẩn Ecg Bình Thường",
+          "Buổi 3: Ngoại Tâm Thu Nhĩ (Pac) – Ngoại Tâm Thu Thất (Pvc)",
+          "Buổi 4: Nhịp Nhanh Trên Thất (Svt)",
+          "Buổi 5: Rung Nhĩ (Af)",
+          "Buổi 6: Cuồng Nhĩ (Atrial Flutter)",
+          "Buổi 7: Ôn Tập Nền Tảng ECG Và Nhịp Tim"
+        ]
+      },
+      {
+        "title": "PHẦN 2 – RỐI LOẠN NHỊP NGUY HIỂM: NHỊP THẤT - BLOCK - RL DẪN TRUYỀN",
+        "lessons": [
+          "Buổi 8: Nhịp Nhanh Thất (Vt)",
+          "Buổi 9: Rung Thất (Vf)",
+          "Buổi 10: Block Nhĩ Thất (Av Block I, Ii, Iii)",
+          "Buổi 11: Block Nhánh Phải (Rbbb)",
+          "Buổi 12: Block Nhánh Trái (Lbbb)",
+          "Buổi 13: Hội Chứng Tiền Kích Thích (Wpw)",
+          "Buổi 14: Ôn Tập Rối Loạn Nhịp Nguy Hiểm"
+        ]
+      },
+      {
+        "title": "PHẦN 3 – THIẾU MÁU CƠ TIM – NHỒI MÁU CƠ TIM – BỆNH TIM MẠCH CẤP",
+        "lessons": [
+          "Buổi 15: Thiếu Máu Cơ Tim Cục Bộ – Biến Đổi St Và Sóng T",
+          "Buổi 16: Nhồi Máu Cơ Tim Cấp Có St Chênh Lên (Stemi)",
+          "Buổi 17: Nhồi Máu Cơ Tim Cấp Không St Chênh (Nstemi, Ua)",
+          "Buổi 18: Nhồi Máu Cơ Tim Thành Đặc Biệt",
+          "Buổi 19: Viêm Màng Ngoài Tim, Viêm Cơ Tim",
+          "Buổi 20: Ôn Tập Thiếu Máu Cơ Tim - Nhồi Máu Cơ Tim"
+        ]
+      },
+      {
+        "title": "PHẦN 4 – BỆNH LÝ MẠN – ĐIỆN GIẢI – VAN TIM – TIM BẨM SINH",
+        "lessons": [
+          "Buổi 21: Dày Thất Trái (Lvh) Và Dày Thất Phải (Rvh)",
+          "Buổi 22: Rối Loạn Điện Giải (K+, Ca++, Digoxin)",
+          "Buổi 23: Bệnh Tim Phổi Mạn Và Suy Tim",
+          "Buổi 24: Bệnh Tim Bẩm Sinh & Bệnh Van Tim Cơ Bản",
+          "Buổi 25: Thực Hành Tổng Hợp Bệnh Lý Tim Mạch Cơ Bản",
+          "Buổi 26: Ôn Tập Bệnh Lý Mạn - Điện Giải - Van Tim - Tim Bẩm Sinh"
+        ]
+      },
+      {
+        "title": "PHẦN 5 – CẤP CỨU TIM MẠCH – ECG TRONG HỒI SỨC",
+        "lessons": [
+          "Buổi 27: Ngừng Tuần Hoàn – Các Thể Ecg Trong Ngừng Tim",
+          "Buổi 28: Rung Thất (Vf) & Nhịp Nhanh Thất Vô Mạch",
+          "Buổi 29: Nhịp Nhanh Thất Có Mạch",
+          "Buổi 30: Nhịp Chậm Nguy Hiểm – Block Nhĩ Thất Hoàn Toàn",
+          "Buổi 31: Hội Chứng Brugada & Qt Dài",
+          "Buổi 32: Thuyên Tắc Phổi Cấp & Tăng Áp Phổi Cấp",
+          "Buổi 33: Chèn Ép Tim Cấp (Cardiac Tamponade)",
+          "Buổi 34: Tổng Hợp Cấp Cứu Tim Mạch – Case Lâm Sàng Tích Hợp",
+          "Buổi 35: Ôn Tập Cấp Cứu Tim Mạch - ECG Trong Hồi Sức"
+        ]
+      },
+      {
+        "title": "Buổi 36: Ôn Kết Thúc Khoá Học",
+        "lessons": []
+      }
+    ],
+    "157": [
+      {
+        "title": "Chương I: Hô Hấp",
+        "lessons": [
+          "Bài 1: Viêm Phổi",
+          "Bài 2: Áp xe Phổi",
+          "Bài 3: Ung Thư Phổi",
+          "Bài 4: COPD",
+          "Bài 5: Giãn Phế Quản - Hen Phế Quản",
+          "Bài 6: Tràn Dịch, Tràn Khí Màng Phổi",
+          "Bài 7: Tâm Phế Mạn",
+          "Bài 8: Chữa Chuyên Sâu Bộ Đề 1",
+          "Bài 9: Chữa Chuyên Sâu Bộ Đề 2"
+        ]
+      },
+      {
+        "title": "Chương II: Tim Mạch",
+        "lessons": [
+          "Bài 10: Tăng Huyết Áp",
+          "Bài 11: Suy Tim",
+          "Bài 12: Hẹp Van Hai Lá",
+          "Bài 13: Hội Chứng Vành Cấp",
+          "Bài 14: Viêm Màng Ngoài Tim",
+          "Bài 15: Viêm Nội Tâm Mạc",
+          "Bài 16: Rối Loạn Nhịp Tim",
+          "Bài 17: Chữa Chuyên Sâu Bộ Đề 3",
+          "Bài 18: Chữa Chuyên Sâu Bộ Đề 4",
+          "Bài 19: Chữa Chuyên Sâu Bộ Đề 5"
+        ]
+      },
+      {
+        "title": "Chương III: Tiết Niệu",
+        "lessons": [
+          "Bài 20: Nhiễm Khuẩn Tiết Niệu",
+          "Bài 21: Phì Đại Tiền Liệt Tuyến",
+          "Bài 22: Viêm Cầu Cấp Thận",
+          "Bài 23: Hội Chứng Thận Hư",
+          "Bài 24: Tổn Thương Thận Cấp",
+          "Bài 25: Bệnh Thận Mạn",
+          "Bài 26: Chữa Chuyên Sâu Bộ Đề 6",
+          "Bài 27: Chữa Chuyên Sâu Bộ Đề 7",
+          "Bài 28: Chữa Chuyên Sâu Bộ Đề 8"
+        ]
+      },
+      {
+        "title": "Chương IV: Tiêu Hóa",
+        "lessons": [
+          "Bài 29: Viêm Gan",
+          "Bài 30: Xơ Gan",
+          "Bài 31: Ung Thư Gan",
+          "Bài 32: Viêm Loét Dạ Dày Tá Tràng",
+          "Bài 33: Viêm Tụy",
+          "Bài 34: Xuất Huyết Tiêu Hóa",
+          "Bài 35: Viêm Đại Tràng",
+          "Bài 36: Chữa Chuyên Sâu Bộ Đề 9",
+          "Bài 37: Chữa Chuyên Sâu Bộ Đề 10",
+          "Bài 38: Chữa Chuyên Sâu Bộ Đề 11"
+        ]
+      },
+      {
+        "title": "Chương V: Nội Tiết",
+        "lessons": [
+          "Bài 39: Đái Tháo Đường",
+          "Bài 40: Basedow",
+          "Bài 41: Hội Chứng Cushing - Addison - Rối Loạn Mỡ Máu.",
+          "Bài 42: Lubus Ban Đỏ Hệ Thống",
+          "Bài 43: Chữa Chuyên Sâu Bộ Đề 12"
+        ]
+      },
+      {
+        "title": "Chương VI: Cơ Xương Khớp",
+        "lessons": [
+          "Bài 44: Viêm Khớp Dạng Thấp",
+          "Bài 46: Gout",
+          "Bài 47: Loãng Xương",
+          "Bài 48: Thoái Hóa Khớp",
+          "Bài 49: Đau Cột Sống Thắt Lưng",
+          "Bài 50: Chữa Chuyên Sâu Bộ Đề 13",
+          "Bài 51: Chữa Chuyên Sâu Bộ Đề 14"
+        ]
+      },
+      {
+        "title": "Chương VII: Huyết Học",
+        "lessons": [
+          "Bài 52: Hội Chứng Thiếu Máu",
+          "Bài 53: Hội Chứng Xuất Huyết",
+          "Bài 54: An Toàn Truyền Máu",
+          "Bài 55: Ung Thư Huyết Học p1",
+          "Bài 56: Ung Thư Huyết Học p2",
+          "Bài 57: Chữa Chuyên Sâu Bộ Đề 15",
+          "Bài 58: Chữa Chuyên Sâu Bộ Đề 16"
+        ]
+      },
+      {
+        "title": "Chương VIII: Hồi Sức",
+        "lessons": [
+          "Bài 59: Shock",
+          "Bài 60: Rối Loạn Kiềm Toan",
+          "Bài 61: Chữa Chuyên Sâu Bộ Đề 17",
+          "Bài 62: Chữa Chuyên Sâu Bộ Đề 18"
+        ]
+      },
+      {
+        "title": "Chương IX: Thần Kinh",
+        "lessons": [
+          "Bài 63: Đau Đầu",
+          "Bài 64: Lão Khoa",
+          "Bài 65: Chữa Chuyên Sâu Bộ Đề 19"
+        ]
+      }
+    ],
+    "158": [
+      {
+        "title": "Chương I: Đại Cương - Các Bệnh Học Sơ Sinh",
+        "lessons": [
+          "Bài 1: Bệnh Vàng Da",
+          "Bài 2: Nhiễm Khuẩn Sơ Sinh",
+          "Bài 3: Suy Hô Hấp Sơ Sinh",
+          "Bài 4: Thời Kì Tăng Trưởng - Phát Triển Thể Chất",
+          "Bài 5: Phát Triển Tâm Thần Vận Động",
+          "Bài 6: Chữa Chuyên Sâu Bộ Đề 1",
+          "Bài 7: Chữa Chuyên Sâu Bộ Đề 2",
+          "Bài 8: Chữa Chuyên Sâu Bộ Đề 3"
+        ]
+      },
+      {
+        "title": "Chương II: Hồi Sức - Huyết Học",
+        "lessons": [
+          "Bài 9: Tiếp Cận Trẻ Em Bệnh Nặng",
+          "Bài 10: Ngộ Độc Cấp",
+          "Bài 11: Huyết Học Trẻ Em",
+          "Bài 12: Thiếu Máu - Thiếu Sắt",
+          "Bài 13: Hội Chứng Xuất Huyết",
+          "Bài 14: Bạch Cầu Cấp Trẻ Em",
+          "Bài 15: Chữa Chuyên Sâu Bộ Đề 4",
+          "Bài 16: Chữa Chuyên Sâu Bộ Đề 5",
+          "Bài 17: Chữa Chuyên Sâu Bộ Đề 6"
+        ]
+      },
+      {
+        "title": "Chương III: Hô Hấp",
+        "lessons": [
+          "Bài 18: Giải Phẫu - Sinh Lý Hô Hấp",
+          "Bài 19: Nhiễm Khuẩn - Hô Hấp Cấp Tính Ở Trẻ Em",
+          "Bài 20: Viêm Phế Quản Phổi",
+          "Bài 21: Viêm Tiểu Phế Quản Phổi",
+          "Bài 22: Hen Phế Quản Trẻ Em",
+          "Bài 23: Chữa Chuyên Sâu Bộ Đề 7",
+          "Bài 24: Chữa Chuyên Sâu Bộ Đề 8",
+          "Bài 25: Chữa Chuyên Sâu Bộ Đề 9"
+        ]
+      },
+      {
+        "title": "Chương IV: Thận - Tiết Niệu",
+        "lessons": [
+          "Bài 26: Nhiễm Khuẩn Tiết Niệu",
+          "Bài 27: Viêm Cầu Thận Cấp Sau Nhiễm Liên Cầu",
+          "Bài 28: Hội Chứng Thận Hư",
+          "Bài 29: Chữa Chuyên Sâu Bộ Đề 10",
+          "Bài 30: Chữa Chuyên Sâu Bộ Đề 11"
+        ]
+      },
+      {
+        "title": "Chương V: Tuần Hoàn - Tim Mạch",
+        "lessons": [
+          "Bài 31: Đặc Điểm Hệ Tuần Hoàn Trẻ Em p1",
+          "Bài 32: Đặc Điểm Hệ Tuần Hoàn Trẻ Em p2",
+          "Bài 33: Suy Tim",
+          "Bài 34: Thấp Tim",
+          "Bài 35: Chữa Chuyên Sâu Bộ Đề 12",
+          "Bài 36: Chữa Chuyên Sâu Bộ Đề 13",
+          "Bài 37: Chữa Chuyên Sâu Bộ Đề 14"
+        ]
+      },
+      {
+        "title": "Chương VI: Nội Tiết - Thần Kinh - Truyền Nhiễm",
+        "lessons": [
+          "Bài 38: Suy Giáp Bẩm Sinh Trẻ Em",
+          "Bài 39: Tăng Sản Thượng Thận Bẩm Sinh",
+          "Bài 40: Viêm Màng Não Trẻ Em",
+          "Bài 41: Viêm Não",
+          "Bài 42: Chữa Chuyên Sâu Bộ Đề 15",
+          "Bài 43: Chữa Chuyên Sâu Bộ Đề 16",
+          "Bài 44: Chữa Chuyên Sâu Bộ Đề 17",
+          "Bài 45: Chữa Chuyên Sâu Bộ Đề 18"
+        ]
+      },
+      {
+        "title": "Chương VII: Tiêu Hóa - Dinh Dưỡng",
+        "lessons": [
+          "Bài 46: Đặc Điểm Hệ Tiêu Hóa Trẻ Em",
+          "Bài 47: Thiếu Vitamin D",
+          "Bài 48: Thiếu Vitamin A",
+          "Bài 49: Đau Bụng Trẻ Em",
+          "Bài 50: Hội Chứng Nôn Trớ Táo Bón",
+          "Bài 51: Tiêu Chảy Cấp",
+          "Bài 52: Tiêu Chảy Kéo Dài",
+          "Bài 53: Chữa Chuyên Sâu Bộ Đề 19",
+          "Bài 54: Chữa Chuyên Sâu Bộ Đề 20",
+          "Bài 55: Chữa Chuyên Sâu Bộ Đề 21"
+        ]
+      }
+    ],
+    "161": [
+      {
+        "title": "Chương I: Sinh Học Di Truyền",
+        "lessons": [
+          "Bài 1: Đại Cương Di Truyền",
+          "Bài 2: Axit Nucleic",
+          "Bài 3: Di Truyền - Dịch Mã",
+          "Bài 4: Điều Hòa Gen",
+          "Bài 5: Di Truyền Đột Biến",
+          "Bài 6: Chữa Chuyên Sâu Bộ Đề 1"
+        ]
+      },
+      {
+        "title": "Chương II: Sinh Học Phát Triển",
+        "lessons": [
+          "Bài 7: Sinh Học Phát Triển phần 1",
+          "Bài 8: Sinh Học Phát Triển Phần 2"
+        ]
+      },
+      {
+        "title": "Chương III: Sinh Học Tế Bào",
+        "lessons": [
+          "Bài 9: Màng Tế Bào và Các Bào Quan",
+          "Bài 10: Nhân Tế Bào",
+          "Bài 11: Chữa Chuyên Sâu Bộ Đề 2"
+        ]
+      },
+      {
+        "title": "Chương IV: Sinh Thái - Tiến Hóa",
+        "lessons": [
+          "Bài 12: Sinh Thái - Tiến Hóa"
+        ]
+      }
+    ],
+    "174": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Chương I: Tiêu Hóa",
+          "Bài 1: Tắc Ruột",
+          "Bài 2: Tắc Ruột Ở Trẻ Em"
+        ]
+      },
+      {
+        "title": "Bài 3: Chữa Chuyên Sâu Bộ Đề 1",
+        "lessons": []
+      },
+      {
+        "title": "Bài 4: Chữa Chuyên Sâu Bộ Đề 2",
+        "lessons": [
+          "Bài 5: MEGACOLON: Giãn Đại Tràng Bẩm Sinh",
+          "Bài 6: Ung Thư Dạ Dày"
+        ]
+      },
+      {
+        "title": "Bài 7: Chữa Chuyên Sâu Bộ Đề 3",
+        "lessons": []
+      },
+      {
+        "title": "Bài 8: Chữa Chuyên Sâu Bộ Đề 4",
+        "lessons": [
+          "Bài 9: Ung Thư Thực Quản",
+          "Bài 10: Sỏi Mật",
+          "Bài 11: Ung Thư Đại Trực Tràng"
+        ]
+      },
+      {
+        "title": "Bài 12: Chữa Chuyên Sâu Bộ Đề 5",
+        "lessons": []
+      },
+      {
+        "title": "Bài 13: Chữa Chuyên Sâu Bộ Đề 6",
+        "lessons": [
+          "Bài 14: Trĩ",
+          "Bài 15: Chấn Thương Bụng",
+          "Bài 16: Vết Thương Bụng",
+          "Bài 17: Viêm Ruột Thừa Cấp"
+        ]
+      },
+      {
+        "title": "Bài 18: Chữa Chuyên Sâu Bộ Đề 7",
+        "lessons": []
+      },
+      {
+        "title": "Bài 19: Chữa Chuyên Sâu Bộ Đề 8",
+        "lessons": [
+          "Chương II: Tiết Niệu",
+          "Bài 20: Thoát Vị Bẹn Đùi",
+          "Bài 21: Bệnh Lý Còn Ống Phúc Tinh Mạc Ở Trẻ Em",
+          "Bài 22: Chấn Thương Thận",
+          "Bài 23: Sỏi Tiết Niệu"
+        ]
+      },
+      {
+        "title": "Bài 24: Chữa Chuyên Sâu Bộ Đề 9",
+        "lessons": []
+      },
+      {
+        "title": "Bài 25: Chữa Chuyên Sâu Bộ Đề 10",
+        "lessons": [
+          "Chương III: Thần Kinh",
+          "Bài 26: U Não"
+        ]
+      },
+      {
+        "title": "Bài 27: Chữa Chuyên Sâu Bộ Đề 11",
+        "lessons": [
+          "Chương IV: Lồng Ngực - Mạch Máu",
+          "Bài 28: Chấn Thương - Vết Thương Ngực",
+          "Bài 29: Chấn Thương Vết Thương Động Mạch"
+        ]
+      },
+      {
+        "title": "Bài 30: Chữa Chuyên Sâu Bộ Đề 12",
+        "lessons": []
+      },
+      {
+        "title": "Bài 31: Chữa Chuyên Sâu Bộ Đề 13",
+        "lessons": [
+          "Chương V: Chấn Thương Chi Trên",
+          "Bài 32: Vết Thương Bàn Tay",
+          "Bài 33: Nhiễm Khuẩn Tay",
+          "Bài 34: Trật Khớp",
+          "Bài 35: Gãy Xương"
+        ]
+      },
+      {
+        "title": "Bài 36: Chữa Chuyên Sâu Bộ Đề 14",
+        "lessons": []
+      },
+      {
+        "title": "Bài 37: Chữa Chuyên Sâu Bộ Đề 15",
+        "lessons": [
+          "Chương VI : Chấn Thương Chi Dưới",
+          "Bài 38: Bỏng"
+        ]
+      },
+      {
+        "title": "Bài 39: Chữa Chuyên Sâu Bộ Đề 16",
+        "lessons": []
+      },
+      {
+        "title": "Bài 40: Chữa Chuyên Sâu Bộ Đề 17",
+        "lessons": [
+          "Bài 41: Chèn Ép Khoang - Gãy Xương Hở",
+          "Bài 42: Hoại Thư Sinh Hơi - Gãy Xương Chậu"
+        ]
+      },
+      {
+        "title": "Bài 43: Chữa Chuyên Sâu Bộ Đề 18",
+        "lessons": []
+      },
+      {
+        "title": "Bài 44: Chữa Chuyên Sâu Bộ Đề 19",
+        "lessons": []
+      }
+    ],
+    "176": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Chương I: SL Đại Cương Chuyển Hóa - Điều Nhiệt",
+          "Bài 1: Đại Cương Cơ Thể Sống",
+          "Bài 2: Chuyển Hóa Năng Lượng",
+          "Bài 3: Sinh Lý Điều Nhiệt"
+        ]
+      },
+      {
+        "title": "Bài 4: Chữa Chuyên Sâu Bộ Đề 1",
+        "lessons": []
+      },
+      {
+        "title": "Bài 5: Chữa Chuyên Sâu Bộ Đề 2",
+        "lessons": [
+          "Chương II: Sinh Lý Tế Bào",
+          "Bài 6: Sinh Lý Trao Đổi Chất Qua Màng",
+          "Bài 7: Điện Thế Màn"
+        ]
+      },
+      {
+        "title": "Bài 8: Chữa Chuyên Sâu Bộ Đề 3",
+        "lessons": []
+      },
+      {
+        "title": "Bài 9: Chữa Chuyên Sâu Bộ Đề 4",
+        "lessons": [
+          "Chương III: Sinh Lý Máu Và Dịch Cơ Thể",
+          "Bài 10: Sinh Lý Máu - Dịch Cơ Thể"
+        ]
+      },
+      {
+        "title": "Bài 11: Chữa Chuyên Sâu Bộ Đề 5",
+        "lessons": []
+      },
+      {
+        "title": "Bài 12: Chữa Chuyên Sâu Bộ Đề 6",
+        "lessons": [
+          "Chương IV: Sinh Lý Tuần Hoàn",
+          "Bài 13: Sinh Lý Tim",
+          "Bài 14: Sinh Lý Mạch Máu"
+        ]
+      },
+      {
+        "title": "Bài 15: Chữa Chuyên Sâu Bộ Đề 7",
+        "lessons": [
+          "Chương V: Sinh Lý Hô Hấp",
+          "Bài 16: Sinh Lý Hô Hấp P1",
+          "Bài 17: Sinh Lý Hô Hấp P2"
+        ]
+      },
+      {
+        "title": "Bài 18: Chữa Chuyên Sâu Bộ Đề 8",
+        "lessons": []
+      },
+      {
+        "title": "Bài 19: Chữa Chuyên Sâu Bộ Đề 9",
+        "lessons": [
+          "Chương VI: Sinh Lý Thận - Tiết Niệu",
+          "Bài 20: Sinh Lý Thận - Tiết Niệu"
+        ]
+      },
+      {
+        "title": "Bài 21: Chữa Chuyên Sâu Bộ Đề 10",
+        "lessons": [
+          "Chương VII: Sinh Lý Nội Tiết",
+          "Bài 22: Sinh Lý Nội Tiết",
+          "Bài 23: Ứng Dụng Lâm Sàng"
+        ]
+      },
+      {
+        "title": "Bài 24: Chữa Chuyên Sâu Bộ Đề 11",
+        "lessons": []
+      },
+      {
+        "title": "Bài 25: Chữa Chuyên Sâu Bộ Đề 12",
+        "lessons": []
+      },
+      {
+        "title": "Bài 26: Chữa Chuyên Sâu Bộ Đề 13",
+        "lessons": [
+          "Chương VIII: Sinh Lý Sinh Sản",
+          "Bài 27: Sinh Lý Sinh Sản Nam",
+          "Bài 28: Sinh Lý Sinh Sản Nữ"
+        ]
+      },
+      {
+        "title": "Bài 29: Chữa Chuyên Sâu Bộ Đề 14",
+        "lessons": [
+          "Chương IX: Sinh Lý Tiêu Hóa",
+          "Bài 30: Đường Tiêu Hóa Trên",
+          "Bài 31: Đường Tiêu Hóa Dưới"
+        ]
+      },
+      {
+        "title": "Bài 32: Chữa Chuyên Sâu Bộ Đề 15",
+        "lessons": []
+      },
+      {
+        "title": "Bài 33: Chữa Chuyên Sâu Bộ Đề 16",
+        "lessons": [
+          "Chương X: Sinh Lý Thần Kinh - Cơ",
+          "Bài 34: Thần Kinh Cơ P1",
+          "Bài 35: Thần Kinh Cơ P2",
+          "Bài 36: Sinh Lý Cảm Giác Tự Chủ",
+          "Bài 37: Sinh Lý Thần Kinh Vận Động",
+          "Bài 38: Sinh Lý Thần Kinh Cấp Cao"
+        ]
+      },
+      {
+        "title": "Bài 39: Chữa Chuyên Sâu Bộ Đề 17",
+        "lessons": []
+      },
+      {
+        "title": "Bài 40: Chữa Chuyên Sâu Bộ Đề 18",
+        "lessons": []
+      }
+    ],
+    "177": [
+      {
+        "title": "PHẦN 1 – MÔ HỌC CƠ BẢN (11 bài)",
+        "lessons": [
+          "Bài 1: Biểu Mô",
+          "Bài 2: Mô Liên Kết P1",
+          "Bài 3: Mô Liên Kết P2",
+          "Bài 4: Mô Cơ",
+          "Bài 5: Mô Thần Kinh Và Hệ Thần Kinh"
+        ]
+      },
+      {
+        "title": "PHẦN 2 – MÔ HỌC CÁC HỆ CƠ QUAN (17 bài)",
+        "lessons": [
+          "Bài 14: Hệ Hô Hấp P1",
+          "Bài 15: Hệ Hô Hấp P2",
+          "Bài 8: Hệ Tiêu Hóa P1",
+          "Bài 9: Hệ Tiêu Hóa P2",
+          "Bài 18: Hệ Tiết Niệu P1",
+          "Bài 16: Da Và Cấu Trúc Phụ P1",
+          "Bài 17: Da Và Cấu Trúc Phụ P2",
+          "Bài 20: Hệ Sinh Dục P1",
+          "Bài 21: Hệ Sinh Dục P2",
+          "Bài 22: Hệ Nội Tiết P1",
+          "Bài 23: Hệ Nội Tiết P2",
+          "Bài 24: Hệ Tim Mạch P1",
+          "Bài 25: Hệ Tim Mạch P2",
+          "Bài 26: Cơ Quan Tạo Máu Và Miễn Dịch P1",
+          "Bài 27: Cơ Quan Tạo Máu Và Miễn Dịch P2"
+        ]
+      },
+      {
+        "title": "PHẦN 3 – PHÔI THAI HỌC CƠ BẢN & PHÁT TRIỂN HỆ CƠ QUAN (17 bài)",
+        "lessons": [
+          "Bài 28: Sự Tạo Và Phát Triển Của Phôi 3 Lá P1",
+          "Bài 29: Sự Tạo Và Phát Triển Của Phôi 3 Lá P2",
+          "Bài 30: Sự Tạo Nhanh Và Phát Triển Của Phần Phụ Phôi Thai",
+          "Bài 31: Sự Phát Triển Của Hệ Hô Hấp P1",
+          "Bài 32: Sự Phát Triển Của Hệ Hô Hấp P2",
+          "Bài 33: Sự Tạo Và Phát Triển Của Hệ Tiêu Hóa P1",
+          "Bài 34: Sự Tạo Và Phát Triển Của Hệ Tiêu Hóa P2",
+          "Bài 35: Sự Tạo Và Phát Triển Của Hệ Tiết Niệu Sinh Dục P1",
+          "Bài 36: Sự Tạo Và Phát Triển Của Hệ Tiết Niệu Sinh Dục P2",
+          "Bài 37: Ôn Luyện Đề Mô Phôi Cuối Kì",
+          "Bài 38: Ôn Luyện Đề Mô Phôi Cuối Kì P2",
+          "Bài 5: Mô Sụn Và Mô Xương P1",
+          "Bài 6: Mô Sụn Và Mô Xương P2"
+        ]
+      }
+    ],
+    "180": [
+      {
+        "title": "Chương I: Cấu Tạo Và Chuyển Hóa Chất",
+        "lessons": [
+          "Bài 1: Chuyển Hóa Acid amin"
+        ]
+      },
+      {
+        "title": "Bài 2: Chữa Chuyên Sâu Bộ Đề 1",
+        "lessons": [
+          "Bài 3: Chuyển Hóa Glucid p1",
+          "Bài 4: Chuyển Hóa Glucid p2"
+        ]
+      },
+      {
+        "title": "Bài 5: Chữa Chuyên Sâu Bộ Đề 2",
+        "lessons": [
+          "Bài 6: Thoái Hóa Lipid",
+          "Bài 7: Sinh Tổng Hợp Lipid"
+        ]
+      },
+      {
+        "title": "Bài 8: Chữa Chuyên Sâu Bộ Đề 3",
+        "lessons": [
+          "Bài 9: Enzyme p1",
+          "Bài 10: Enzyme p2",
+          "Bài 11: Enzyme p3"
+        ]
+      },
+      {
+        "title": "Bài 12: Chữa Chuyên Sâu Bộ Đề 4",
+        "lessons": [
+          "Bài 13: Hóa Học Acid Amin"
+        ]
+      },
+      {
+        "title": "Bài 14: Chữa Chuyên Sâu Bộ Đề 5",
+        "lessons": [
+          "Bài 15: Hóa Học Glucid"
+        ]
+      },
+      {
+        "title": "Bài 16: Chữa Chuyên Sâu Bộ Đề 6",
+        "lessons": [
+          "Bài 17: Hóa Học Lipid"
+        ]
+      },
+      {
+        "title": "Bài 18: Chữa Chuyên Sâu Bộ Đề 7",
+        "lessons": []
+      },
+      {
+        "title": "Chương II: Hóa Sinh Tế Bào, Mô, Cơ Quan",
+        "lessons": [
+          "Bài 19: Hóa Sinh Thần Kinh",
+          "Bài 20: Hóa Sinh Cơ",
+          "Bài 21: Hóa Sinh Dịch Cơ Thể",
+          "Bài 22: Hóa Sinh Gan",
+          "Bài 23: Hóa Sinh Hormon p1"
+        ]
+      },
+      {
+        "title": "Bài 24: Chữa Chuyên Sâu Bộ Đề 8",
+        "lessons": [
+          "Bài 25: Hóa Sinh Máu"
+        ]
+      },
+      {
+        "title": "Bài 26: Chữa Chuyên Sâu Bộ Đề 9",
+        "lessons": [
+          "Bài 27: Hóa Sinh Thận - Muối Nước"
+        ]
+      },
+      {
+        "title": "Bài 28: Chữa Chuyên Sâu Bộ Đề 10",
+        "lessons": [
+          "Bài 29: Hóa Sinh Năng Lượng"
+        ]
+      },
+      {
+        "title": "Bài 30: Chữa Chuyên Sâu Bộ Đề 11",
+        "lessons": []
+      }
+    ],
+    "191": [
+      {
+        "title": "PHẦN I: ĐẠI CƯƠNG DƯỢC LÝ",
+        "lessons": [
+          "Buổi 1: Dược động học",
+          "Buổi 2: Dược lực học, Tương tác thuốc",
+          "Buổi 3: Bài tập chuyên đề 1: Dược lý đại cương",
+          "Buổi 4: BTCĐ 1: Dược Lý Đại Cương"
+        ]
+      },
+      {
+        "title": "PHẦN II: THUỐC TÁC ĐỘNG TRÊN HỆ TKTW",
+        "lessons": [
+          "Buổi 5: Các Chất Dẫn Truyền Thần Kinh, Thuốc An Thần Gây Ngủ",
+          "Buổi 6: Thuốc gây mê, Thuốc gây tê",
+          "Buổi 7: Thuốc giảm đau TKTW",
+          "Buổi 8: Thuốc chống động kinh, Thuốc chống trầm cảm",
+          "Buổi 9: Bài tập chuyên đề 2: Thuốc tác động trên hệ TKTW"
+        ]
+      },
+      {
+        "title": "PHẦN III: THUỐC TÁC ĐỘNG TRÊN HỆ MIỄN DỊCH",
+        "lessons": [
+          "Buổi 10: Thuốc kháng viêm không steroid (NSAID)",
+          "Buổi 11: Thuốc kháng histamine H1, Thuốc điều trị gout",
+          "Buổi 12: Bài tập chuyên đề 3: Thuốc tác động trên hệ miễn dịch"
+        ]
+      },
+      {
+        "title": "PHẦN IV: ĐẠI CƯƠNG KHÁNG SINH",
+        "lessons": [
+          "Buổi 13: Beta-lactam",
+          "Buổi 14: Kháng Sinh Beta-Lactam",
+          "Buổi 15: Sulfamide kháng khuẩn, Quinolon",
+          "Buổi 16: Thuốc điều trị lao, Thuốc điều trị phong",
+          "Buổi 17: BTCĐ 4: Kháng Sinh"
+        ]
+      },
+      {
+        "title": "PHẦN V: KHÁNG SINH",
+        "lessons": [
+          "Buổi 18: Aminoglycoside, Cycline",
+          "Buổi 19: Macrolide và lincosamide, Phenicol",
+          "Buổi 20: Kháng sinh peptid, Thuốc kháng nấm",
+          "Buổi 21: Thuốc kháng virus, Thuốc kháng ký sinh trùng P1",
+          "Buổi 22: Thuốc kháng virus, Thuốc kháng ký sinh trùng P2",
+          "Buổi 23: Bài tập chuyên đề 5: Kháng sinh (tiếp theo)"
+        ]
+      },
+      {
+        "title": "PHẦN VI: TÁC ĐỘNG TRÊN HỆ TIM MẠCH",
+        "lessons": [
+          "Buổi 24: Thuốc điều trị tăng huyết áp, Thuốc lợi tiểu",
+          "Buổi 25: Thuốc làm tăng sức co bóp cơ tim, Thuốc điều trị rối loạn nhịp tim, Thuốc chống đau thắt ngực",
+          "Buổi 26: Thuốc Hạ Lipid Máu, Tác Động Qúa Trình Đông Máu",
+          "Buổi 27: Bài tập chuyên đề 6: Thuốc tác động trên hệ tim mạch"
+        ]
+      },
+      {
+        "title": "PHẦN VII: THUỐC TÁC ĐỘNG TRÊN HỆ TIÊU HÓA",
+        "lessons": [
+          "Buổi 28: Thuốc điều trị loét đường tiêu hoá",
+          "Buổi 29: Thuốc điều trị tiêu chảy, Thuốc điều trị táo bón",
+          "Buổi 30: Thuốc Chống Nôn, ĐTrị Thừa Cân - Béo Phì",
+          "Buổi 31: Bài tập chuyên đề 7: Thuốc tác động trên hệ tiêu hóa"
+        ]
+      },
+      {
+        "title": "PHẦN VIII: THUỐC TÁC ĐỘNG TRÊN HỆ HÔ HẤP",
+        "lessons": [
+          "Buổi 32: Thuốc điều trị hen phế quản",
+          "Buổi 33: Thuốc giảm ho, Thuốc điều chỉnh dịch tiết phế quản",
+          "Buổi 34: Bài tập chuyên đề 8: Thuốc tác động trên hệ hô hấp"
+        ]
+      },
+      {
+        "title": "PHẦN IX: THUỐC TÁC ĐỘNG TRÊN HỆ THỐNG HORMONE",
+        "lessons": [
+          "Buổi 35: Insulin và thuốc điều trị đái tháo đường, Thuốc điều trị bệnh lý tuyến giáp",
+          "Buổi 36: Hormone vỏ thượng thận và các thuốc corticoid, Hormone sinh dục và các thuốc liên quan",
+          "Buổi 37: Bài tập chuyên đề 9: Thuốc tác động trên hệ thống hormone"
+        ]
+      }
+    ],
+    "192": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Phần 1: Kiến Thức Nền Tảng và Chào Hỏi",
+          "Buổi 1: Giới Thiệu Chung Về Bệnh Viện Và Các Khoa",
+          "Buổi 2: Chào Hỏi Và Giới Thiệu Bản Thân",
+          "Buổi 3: Hỏi Thông Tin Cá Nhân Cơ Bản",
+          "Buổi 4: Lịch Sử Y Tế Cơ Bản",
+          "Buổi 5: Mô Tả Đau",
+          "Buổi 6: Các Triệu Chứng Thường Gặp Khác",
+          "Buổi 7: Hỏi Về Các Hệ Cơ Quan",
+          "Buổi 8: Giải Thích Quy Trình Khám Bệnh",
+          "Buổi 9: Thông Báo Chẩn Đoán Đơn Giản",
+          "Buổi 10: Giải Thích Các Phương Pháp Điều Trị",
+          "Buổi 11: Kê Đơn Thuốc và Hướng Dẫn Sử Dụng",
+          "Buổi 12: Thảo Luận Về Kết Quả Xét Nghiệm",
+          "Buổi 13: Giao Tiếp Trong Tình Huống Cấp Cứu",
+          "Buổi 14: Tại Khoa Cấp Cứu",
+          "Buổi 15: Chăm Sóc Trước và Sau Phẫu Thuật",
+          "Buổi 16: Giao Tiếp Tại Phòng Sinh/Sản Khoa",
+          "Buổi 17: Giải Thích Thủ Thuật Y Tế",
+          "Buổi 18: Giao Tiếp Với Người Nhà Bệnh Nhân",
+          "Buổi 19: Xử Lý Tình Huống Khó Khăn",
+          "Buổi 20: Thông Báo Tin Xấu",
+          "Buổi 21: Hướng Dẫn Ra Viện",
+          "Buổi 22: Chăm Sóc Tại Nhà và Phục Hồi",
+          "Buổi 23: Giao Tiếp Giữa Các Đồng Nghiệp và Chuyển Giao Ca",
+          "Buổi 24: Tổng Kết & Thực Hành Tổng Hợp"
+        ]
+      }
+    ],
+    "193": [
+      {
+        "title": "Phần 1: Đại Cương Sinh Lý Bệnh",
+        "lessons": [
+          "Bài 1: Đại Cương Sinh Lý Bệnh",
+          "Bài 2: Các Khái Niệm Cơ Bản Sinh Lý Bệnh",
+          "Bài 3: Rối Loạn Chuyển Hóa Glucid P1",
+          "Bài 4: Rối Loạn Chuyển Hóa Glucid P2",
+          "Bài 5: Rối Loạn Chuyển Hóa Lipid",
+          "Bài 6: Rối Loạn Chuyển Hóa Protid",
+          "Bài 7: Rối Loạn Thân Nhiệt - Sốt",
+          "Bài 8: Sinh Lý Bệnh Hệ Nội Tiết",
+          "Bài 9: Ôn Tập"
+        ]
+      },
+      {
+        "title": "Phần 2: Rối Loạn Chuyển Hóa",
+        "lessons": [
+          "Bài 10: Viêm",
+          "Bài 11: Rối Loạn Chuyển Hóa Nước Và Điện Giải P1",
+          "Bài 12: Rối Loạn Chuyển Hóa Nước Và Điện Giải P2",
+          "Bài 13: Rối Loạn Chuyển Hóa Nước Và Điện Giải P3",
+          "Bài 14: Rối Loạn Cân Bằng Acid - Base P1",
+          "Bài 15: Rối Loạn Cân Bằng Acid - Base P2",
+          "Bài 16: Rối Loạn Cấu Tạo Máu P1",
+          "Bài 17: Rối Loạn Cấu Tạo Máu P2",
+          "Bài 18: Rối Loạn Cấu Tạo Máu P3",
+          "Bài 19: Ôn Tập"
+        ]
+      },
+      {
+        "title": "Phần 3: Sinh Lý Bệnh Chức Năng",
+        "lessons": [
+          "Bài 20: Sinh Lý Bệnh Chức Năng Tuần Hoàn P1",
+          "Bài 21: Sinh Lý Bệnh Chức Năng Tuần Hoàn P2",
+          "Bài 22: Sinh Lý Bệnh Chức Năng Hô Hấp P1",
+          "Bài 23: Sinh Lý Bệnh Chức Năng Hô Hấp P2",
+          "Bài 24: Sinh Lý Bệnh Chức Năng Tiêu Hóa",
+          "Bài 25: Sinh Lý Bệnh Chức Năng Gan P1",
+          "Bài 26: Sinh Lý Bệnh Chức Năng Gan P2",
+          "Bài 27: Sinh Lý Bệnh Chức Năng Tiết Niệu P1",
+          "Bài 28: Sinh Lý Bệnh Chức Năng Tiết Niệu P2",
+          "Bài 29: Ôn Tập"
+        ]
+      },
+      {
+        "title": "Phần 4: Miễn Dịch",
+        "lessons": [
+          "Bài 30: Đại Cương Về Miễn Dịch Học",
+          "Bài 31: Hệ Thống Tổ Chức Các Cơ Quan Miễn Dịch",
+          "Bài 32: Kháng Nguyên",
+          "Bài 33: Kháng Thể",
+          "Bài 34: Bổ Thể",
+          "Bài 35: Sự kết hợp kháng nguyên-kháng thể và ứng dụng",
+          "Bài 36: Ôn Tập",
+          "Bài 37: Thi Thử"
+        ]
+      }
+    ],
+    "194": [
+      {
+        "title": "PHẦN 1 – ĐẠI CƯƠNG & GIUN SÁN",
+        "lessons": [
+          "Bài 1: Đại Cương Về Ký Sinh Trùng Y Học",
+          "Bài 2: Đại Cương Về Giun Sán",
+          "Bài 3: Đại Cương Về Đơn Bào Ký Sinh",
+          "Bài 4: Giun Đũa Người",
+          "Bài 5: Giun Móc",
+          "Bài 6: Giun Tóc",
+          "Bài 7: Giun Kim",
+          "Bài 8: Giun Đũa Chó Mèo",
+          "Bài 9: Giun Lươn",
+          "Bài 10: Giun Xoắn",
+          "Bài 11: Giun Chỉ",
+          "Bài 12: Ôn Tập & Kiểm Tra Giữa Phần Giun",
+          "Bài 13: Sán Lá Gan Lớn, Nhỏ, Sán Lá Ruột",
+          "Bài 14: Sán Lá Phổi",
+          "Bài 15: Sán Máng",
+          "Bài 16: Sán Dây Lợn",
+          "Bài 17: Sán Dây Bò",
+          "Bài 18: Ôn Tập & Kiểm Tra Giữa Phần Sán"
+        ]
+      },
+      {
+        "title": "PHẦN 2 – ĐƠN BÀO & SỐT RÉT",
+        "lessons": [
+          "Bài 19: Amip Ký Sinh Ở Người",
+          "Bài 20: Trùng Roi",
+          "Bài 21: Trùng Lông",
+          "Bài 22: Ký Sinh Trùng Sốt Rét – Phần 1",
+          "Bài 23: Ký Sinh Trùng Sốt Rét – Phần 2",
+          "Bài 24: Dịch Tễ Học Sốt Rét",
+          "Bài 25: Phòng Chống Bệnh Sốt Rét",
+          "Bài 26: Ôn Tập & KT Giữa Phần Đơn Bào & Sốt Rét"
+        ]
+      },
+      {
+        "title": "PHẦN 3 – TIẾT TÚC Y HỌC - VI NẤM",
+        "lessons": [
+          "Bài 27: Tiết Túc Y Học – Đại Cương",
+          "Bài 28: Tiết Túc Thuộc Lớp Nhện",
+          "Bài 29: Tiết Túc Thuộc Lớp Côn Trùng",
+          "Bài 30: Vi Nấm Ký Sinh Y Học",
+          "Bài 31: Ôn Tập Cuối Kỳ + Kiểm Tra Tổng Hợp",
+          "Bài 32: Luyện Thi Cuối Kì"
+        ]
+      }
+    ],
+    "195": [
+      {
+        "title": "PHẦN A: NỀN TẢNG HÓA SINH",
+        "lessons": []
+      },
+      {
+        "title": "CHƯƠNG 1: ENZYME",
+        "lessons": [
+          "Buổi 1: Đại Cương Enzyme",
+          "Buổi 2: Cách Gọi Tên, Phân Loại, Cơ Chế Xúc Tác",
+          "Buổi 3: Coenzym",
+          "Buổi 4: Đề Thi, Chữa Đề Thi Enzym"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 2: ACID AMIN",
+        "lessons": [
+          "Bài 5: Hóa Học Acid Amin",
+          "Bài 6: Đề Thi, Chữa Đề Hóa Học Acid Amin",
+          "Bài 7: Chuyển Hóa Acid Amin, Chu Trình Ure",
+          "Bài 8: Đề Thi, Chữa Chuyển Hóa Acid Amin"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 3: PROTEIN",
+        "lessons": [
+          "Bài 9: Hóa Học Protein Phân Loại, Cấu Tạo",
+          "Bài 10: Chuyển Hóa Hemoglobin",
+          "Bài 11: Đề, Chữa Đề Chuyển Hóa Hemoglobin"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 4: GLUCID",
+        "lessons": [
+          "Bài 12: Hóa Học Glucid",
+          "Bài 13: Đề, Chữa Đề Hóa Học Glucid",
+          "Bài 14.1: Chuyển Hóa Glucid p1",
+          "Bài 14.3: Đề, Chữa Đề Chuyển Hóa Glucid",
+          "Bài 14.2: Chuyển Hóa Glucid p2"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 5: LIPID",
+        "lessons": [
+          "Bài 15: Hóa Học Lipid Phân Loại, Cấu Tạo",
+          "Bài 16: Đề, Chữa Đề Hóa Học Lipid",
+          "Bài 17.1: Chuyển Hóa Lipid",
+          "Bài 17.2: Sinh Tổng Hợp Lipid",
+          "Bài 17.3: Thoái Hóa Lipid",
+          "Bài 18: Đề, Chữa Đề Chuyển Hóa Lipid"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 6: ACID NUCLEIC",
+        "lessons": [
+          "Bài 19.1: Hóa Học Acid Nucleic p1",
+          "BàI 19.2: Hóa Học Acid Nucleic p2",
+          "Bài 20: Đề, Chữa Đề Acid Nucleic",
+          "Bài 21.1: Chuyển Hóa Acid Nucleic",
+          "Bài 21.2: Thoái Hóa Acid Nucleic",
+          "Bài 21.3: Tổng Hợp Acid Nucleic"
+        ]
+      },
+      {
+        "title": "PHẦN B: NĂNG LƯỢNG SINH HỌC",
+        "lessons": [
+          "Bài 22: Hóa Sinh Năng Lượng",
+          "Bài 23: Đề, Chữa Đề Hóa Sinh Năng Lượng"
+        ]
+      },
+      {
+        "title": "PHẦN C: HÓA SINH TẠNG VÀ LÂM SÀNG",
+        "lessons": [
+          "Bài 24.1: Hóa Sinh Hormon p1",
+          "Bài 24.2: Hóa Sinh Hormon p2",
+          "Bài 25: Đề, Chữa Đề Hóa Sinh Hormon",
+          "Bài 26: Hóa Sinh Máu",
+          "Bài 27: Hóa Sinh Khí Máu Động Mạch",
+          "Bài 28: Đề, Chữa Đề Hóa Sinh Máu - Khí Máu ĐM",
+          "Bài 29: Hóa Sinh Muối Nước",
+          "Bài 30: Đề, Chữa Đề Hóa Sinh Muối Nước",
+          "Bài 31: Hóa Sinh Gan",
+          "Bài 32: Hóa Sinh Thận Và Nước Tiểu",
+          "Bài 33.1: Hóa Sinh Dịch Cơ Thể",
+          "Bài 33.2: Hóa Sinh Thần Kinh",
+          "Bài 33.3: Hóa Sinh Cơ"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 7: SINH TỔNG HỢP PROTEIN (DỊCH MÃ)",
+        "lessons": [
+          "Bài 34: Sinh Tổng Hợp Protein",
+          "Làm Đề Hóa Sinh số 1 (bài tập làm thêm website)"
+        ]
+      }
+    ],
+    "196": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Bài 1. Lý Thuyết Giới Thiệu Chung SPSS - Biến Dữ Liệu Trên SPSS",
+          "Bài 2. Thực Hành Giới Thiệu Chung SPSS - Biến Dữ Liệu Trên SPSS",
+          "Bài 3. Lý Thuyết Quản Lý Và Biên Tập Dữ Liệu",
+          "Bài 4. Thực Hành Quản Lý Và Biên Tập Dữ Liệu",
+          "Bài 5. Lý Thuyết Tổ Chức Và Tạo Biến Mới - Thống Kê Mô Tả",
+          "Bài 6. Thực Hành Tổ Chức Và Tạo Biến Mới - Thống Kê Mô Tả",
+          "Bài 7. Lý Thuyết Thống Kê Mô Tả: Phân Phối Chuẩn Và Các Loại Biểu Đồ",
+          "Bài 8. Thực Hành Thống Kê Mô Tả: Phân Phối Chuẩn Và Các Loại Biểu Đồ",
+          "Bài 9. Lý Thuyết Thống Kê Suy Diễn: Kiểm Định Giả Thuyết Và Phân Tích Biến Liên Tục",
+          "Bài 10. Thực Hành Thống Kê Suy Diễn: Kiểm Định Giả Thuyết Và Phân Tích Biến Liên Tục",
+          "Bài 11. Lý Thuyết Phân Tích Biến Phân Loại",
+          "Bài 12. Thực Hành Phân Tích Biến Phân Loại",
+          "Bài 13. Lý Thuyết Phân Tích Phương Sai ANOVA",
+          "Bài 14. Thực Hành Phân Tích Phương Sai ANOVA",
+          "Bài 15. Lý Thuyết Tương Quan Và Hồi Quy",
+          "Bài 16. Thực Hành Tương Quan Và Hồi Quy"
+        ]
+      }
+    ],
+    "199": [
+      {
+        "title": "Chương 1: Đơn Vị Đo Lường",
+        "lessons": [
+          "Bài 1: Các Hệ Thống Đơn Vị Đo Lường",
+          "Bài 2: MQH Giữa Đại Lượng Và Đơn Vị Đo",
+          "Bài 3: Cách Biểu Diễn Và Đọc Kết Quả Đo",
+          "Bài 4: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 2: Vận Động Cơ Học",
+        "lessons": [
+          "Bài 5: Chuyển Động Của Chất Điểm",
+          "Bài 6: Chuyển Động Của Vật Rắn",
+          "Bài 7: Công Và Năng Lượng Trong Cơ Thể Sống",
+          "Bài 8: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 3: Dao Động Và Sóng Cơ Sóng Âm Và Siêu Âm",
+        "lessons": [
+          "Bài 9: Dao Động Cơ Học",
+          "Bài 10: Sóng Cơ",
+          "Bài 11: Sóng Âm",
+          "Bài 12: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 4: Cơ Học Chất Lưu",
+        "lessons": [
+          "Bài 13: Các Khái Niệm Cơ Bản",
+          "Bài 14: Tĩnh Học Chất Lưu",
+          "Bài 15: Động Học Chất Lưu",
+          "Bài 16: Chuyển Động Của Máu Trong HTH",
+          "Bài 17: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 5: Thuyết Động Học Phân Từ - Hiện Tượng Vận Chuyển Trao Đổi Chất",
+        "lessons": [
+          "Bài 18: Một Số Khái Niệm Về Khí Lý Tưởng",
+          "Bài 19: Thuyết Động Học Phân Từ Các Chất Khí",
+          "Bài 20: Các Hiện Tượng VCVC Cơ Bản Trong CT",
+          "Bài 21: Vận Chuyển Vật Chất Qua Màng Tế Bào",
+          "Bài 22: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 6: NĐLH Và Hệ Thống Sống",
+        "lessons": [
+          "Bài 23: Phát Biểu NL, BD Đại Lượng Đặc Trưng",
+          "Bài 24: Áp Dụng NL I, Ii Cho Hệ Thống Sống",
+          "Bài 25: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 7: Điện Sinh Học",
+        "lessons": [
+          "Bài 26: Các Loại Điện Thế Sinh Vật",
+          "Bài 27: Các Loại Điện Thế Sinh Vật",
+          "Bài 28: Các Hiện Tượng Điện Động",
+          "Bài 29: Tác Dụng Của DĐ Lên Cơ Thể Sống",
+          "Bài 30: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 8: Quang Sinh Học",
+        "lessons": [
+          "Bài 31: Các Định Luật Quang Hình Cơ Bản",
+          "Bài 32: TD Của Ánh Sáng Lên Cơ Thể Sống",
+          "Bài 33: Thấu Kính Mắt",
+          "Bài 34: Bài Tập Áp Dụng"
+        ]
+      },
+      {
+        "title": "Chương 9: Thần Kinh - Cấp Cứu",
+        "lessons": [
+          "Bài 35: KN Và Nguồn Gốc Của Bức Xạ Ion Hoá",
+          "Bài 36: Tương Tác Của Bức Xạ Ion Với Vật Chất",
+          "Bài 37: Sự Hấp Thụ NL Bức Xạ. Liều Lượng BX",
+          "Bài 38: TD Của BX Ion Hoá Lên Vật Chất Sống",
+          "Bài 39: Các Phương Áp Y Học Hạt Nhân",
+          "Bài 40: Bài Tập Áp Dụng"
+        ]
+      }
+    ],
+    "200": [
+      {
+        "title": "Phần 1: DƯỢC LÂM SÀNG ĐẠI CƯƠNG",
+        "lessons": [
+          "Bài 1: Giới thiệu về dược lâm sàng - Số phận của thuốc trong cơ thể",
+          "Bài 2: Các đường đưa thuốc và cách sử dụng",
+          "Bài 3: Thông tin thuốc",
+          "Bài 4: Phản ứng có hại của thuốc",
+          "Bài 5: Dị ứng thuốc",
+          "Bài 6: Tương tác thuốc",
+          "Bài 7: Tương tác thuốc (tiếp theo) + Tương kỵ thuốc",
+          "Bài 8: Độc chất học lâm sàng",
+          "Bài 9: Sử thuốc trên đối tượng đặc biệt: Sử dụng thuốc cho phụ nữ có thai, cho con bú, trẻ em",
+          "Bài 10: Sử thuốc trên đối tượng đặc biệt: Sử dụng thuốc cho người cao tuổi, suy gan, suy thận"
+        ]
+      },
+      {
+        "title": "Phần 2: DƯỢC LÂM SÀNG VÀ ĐIỀU TRỊ",
+        "lessons": []
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị bệnh tiêu hoá (4 bài)",
+        "lessons": [
+          "Bài 11: Sử dụng thuốc trong điều trị loét dạ dày tá tràng",
+          "Bài 12: Sử dụng thuốc trong điều trị loét dạ dày tá tràng (tiếp theo)",
+          "Bài 13: Sử dụng thuốc trong điều trị táo bón",
+          "Bài 14: Sử dụng thuốc trong điều trị tiêu chảy"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị các bệnh lý tim mạch (6 bài)",
+        "lessons": [
+          "Bài 15: Sử dụng thuốc trong điều trị tăng huyết áp",
+          "Bài 16: Sử dụng thuốc trong điều trị tăng huyết áp (tiếp theo)",
+          "Bài 17: Sử dụng thuốc trong điều trị rối loạn lipid huyết",
+          "Bài 18: Sử dụng thuốc trong điều trị rối loạn lipid huyết (tiếp theo)",
+          "Bài 19: Sử dụng thuốc trong điều trị suy tim mạn tính",
+          "Bài 20: Sử dụng thuốc trong điều trị suy tim mạn tính (tiếp theo)"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị các bệnh huyết học (2 bài)",
+        "lessons": [
+          "Bài 21: Xét nghiệm huyết học",
+          "Bài 22: Sử dụng thuốc trong điều trị thiếu máu"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị bệnh lý nội tiết (4 bài)",
+        "lessons": [
+          "Bài 23: Sử dụng thuốc trong điều trị đái tháo đường",
+          "Bài 24: Sử dụng thuốc trong điều trị đái tháo đường (tiếp theo)",
+          "Bài 25: Sử dụng thuốc trong điều trị đái tháo đường (tiếp theo)",
+          "Bài 26: Sử dụng thuốc trong điều trị bệnh thận mạn"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị bệnh lý hô hấp (2 bài)",
+        "lessons": [
+          "Bài 27: Sử dụng thuốc trong điều trị hen phế quản",
+          "Bài 28: Sử dụng thuốc trong điều trị COPD"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị bệnh lý thần kinh – tâm thần (4 bài)",
+        "lessons": [
+          "Bài 29: Sử dụng thuốc trong điều trị Parkinson",
+          "Bài 30: Sử dụng thuốc trong điều trị Parkinson (tiếp theo)",
+          "Bài 31: Sử dụng thuốc trong điều trị trầm cảm",
+          "Bài 32: Sử dụng thuốc trong điều trị mất ngủ"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị bệnh lý xương khớp (2 bài)",
+        "lessons": [
+          "Bài 33: Sử dụng thuốc trong điều trị gout và tăng acid uric máu",
+          "Bài 34: Sử dụng thuốc trong điều trị loãng xương"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong quản lý đau",
+        "lessons": [
+          "Bài 35: Sử dụng thuốc trong điều trị đau"
+        ]
+      },
+      {
+        "title": "Sử dụng thuốc trong điều trị các bệnh lý nhiễm khuẩn (6 bài)",
+        "lessons": [
+          "Bài 36: Nguyên tắc SD KS hợp lý - Tối ưu hoá thông số PK/PD trong điều trị KS",
+          "Bài 37: Sử dụng kháng sinh trong điều trị viêm phổi",
+          "Bài 38: Sử dụng kháng sinh trong điều trị nhiễm khuẩn tiết niệu",
+          "Bài 39: Sử dụng KS trong điều trị các chủng vi khuẩn kháng thuốc",
+          "Bài 40: Sử dụng KS trong điều trị các chủng vi khuẩn kháng thuốc (tiếp theo)",
+          "Bài 41: Thi thử"
+        ]
+      }
+    ],
+    "201": [],
+    "203": [
+      {
+        "title": "Chương 1: Bệnh Học Đại Cương",
+        "lessons": [
+          "Bài 1: Giới Thiệu Môn Học Giải Phẫu Bệnh",
+          "Bài 2: Tổn Thương Cơ Bản Của Tế Bào - Mô",
+          "Bài 3: Giải Phẫu Bệnh Về Viêm Và Sửa Chữa",
+          "Bài 4: Tổn thương do rối loạn tuần hoàn (Huyết Quản - Huyết)",
+          "Bài 5: Bệnh Lý U",
+          "Bài 6: Ung Thư"
+        ]
+      },
+      {
+        "title": "Chương 2: Bệnh Học Tạng Và Hệ Thống",
+        "lessons": [
+          "Bài 7: Bệnh Lý Phổi - Màng Phổi P1",
+          "Bài 8: Bệnh Lý Phổi - Màng Phổi P2",
+          "Bài 9: Bệnh Lý Ống Tiêu Hóa P1",
+          "Bài 10 : Bệnh Lý Ống Tiêu Hóa P2",
+          "Bài 11: Bệnh Lý Gan",
+          "Bài 12: Bệnh Lý Thận P1",
+          "Bài 13: Bệnh Lý Thận P2",
+          "Bài 14: Bệnh Lý Tuyến Vú",
+          "Bài 15: Bệnh Lý Hệ Sinh Dục Nữ - Khoang P1",
+          "Bài 16: Bệnh Lý Hệ Sinh Dục Nữ - Khoang P2",
+          "Bài 17: Bệnh Lý Xương Và Mô Mềm P1",
+          "Bài 18: Bệnh Lý Xương Và Mô Mềm P2",
+          "BT Bệnh Hạch Và Lympho website",
+          "BT Bệnh Hệ Thần Kinh website",
+          "BT Viêm website",
+          "BT Bệnh Mật website",
+          "BT Bệnh Bàng Quang website",
+          "BT Bệnh Tuyến Giáp website",
+          "BT Ôn Tập Cuối Khoá website"
+        ]
+      }
+    ],
+    "204": [
+      {
+        "title": "CHƯƠNG 1 — Đại cương Vi sinh & Nền tảng",
+        "lessons": [
+          "Bài 1: Lịch sử ngành Vi sinh",
+          "Bài 2: Di truyền vi khuẩn, Kháng sinh và đề kháng kháng sinh",
+          "Bài 3: Đại Cương virus",
+          "Bài 4: Đại Cương Vi Khuẩn"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 2 — Vi khuẩn điển hình gây bệnh (Gram +, Gram −, không điển hình)",
+        "lessons": [
+          "Bài 5: Các cầu khuẩn gây bệnh",
+          "Bài 6: Vi khuẩn đường ruột",
+          "Bài 7: Vi khuẩn dịch hạch",
+          "Bài 8: Bạch hầu",
+          "Bài 9: Trực Khuẩn",
+          "Bài 10: Xoắn khuẩn",
+          "Bài 11: Rickettsia – Mycoplasma – Chlamydia"
+        ]
+      },
+      {
+        "title": "CHƯƠNG 3 — Virus",
+        "lessons": [
+          "Bài 12: Enterovirus – Cúm",
+          "Bài 13: Dengue, Zika, viêm não Nhật Bản",
+          "Bài 14: Các virus viêm gan– huyết thanh học chẩn đoán",
+          "Bài 15: SARS-CoV-2 và các coronavirus khác",
+          "Bài 16: Các nhiễm trùng mới nổi và tái nổi",
+          "Bài 17: Virus HIV/AIDS và các retrovirus khác",
+          "Bài 18: Tổng ôn tập đại cương",
+          "Bài 19: Tổng ôn tập các khuẩn",
+          "Bài 20: Ôn Tập Cuối Khoá"
+        ]
+      }
+    ],
+    "206": [
+      {
+        "title": "CHƯƠNG I: TIM MẠCH (8 Buổi)",
+        "lessons": [
+          "Bài 1: Bệnh án nội khoa",
+          "Bài 2: Triệu chứng cơ năng tim mạch 1",
+          "Bài 3: Triệu chứng cơ năng tim mạch 2",
+          "Bài 4: Khám tim 1",
+          "Bài 5: Khám tim 2",
+          "Bài 6: Hội chứng suy tim",
+          "Bài 7: Cận lâm sàng tim mạch",
+          "Bài 8: Ôn tập chương tim mạch"
+        ]
+      },
+      {
+        "title": "CHƯƠNG II: HÔ HẤP (7 buổi)",
+        "lessons": [
+          "Bài 9: Triệu chứng cơ năng hô hấp 1",
+          "Bài 10: Triệu chứng cơ năng hô hấp 2",
+          "Bài 11: Khám phổi 1",
+          "Bài 12: Khám phổi 2",
+          "Bài 13: Các hội chứng lâm sàng hô hấp",
+          "Bài 14: Xét nghiệm cận lâm sàng hô hấp",
+          "Bài 15: Ôn tập chương hô hấp"
+        ]
+      },
+      {
+        "title": "CHƯƠNG III: TIÊU HOÁ (8 buổi)",
+        "lessons": [
+          "Bài 16: Triệu chứng cơ năng tiêu hoá 1",
+          "Bài 17: Triệu chứng cơ năng tiêu hoá 2",
+          "Bài 18: Khám bụng",
+          "Bài 19: Hội chứng vàng da",
+          "Bài 20: Cổ trướng",
+          "Bài 21: Xuất huyết tiêu hoá",
+          "Bài 22: Xét nghiệm chức năng gan",
+          "Bài 23: Ôn tập chương tiêu hoá"
+        ]
+      },
+      {
+        "title": "CHƯƠNG IV: TIẾT NIỆU (5 buổi)",
+        "lessons": [
+          "Bài 24: Triệu chứng cơ năng tiết niệu",
+          "Bài 25: Khám thận tiết niệu",
+          "Bài 26: Một số hội chứng trong bệnh thận",
+          "Bài 27: Các xét nghiệm chẩn đoán bệnh thận",
+          "Bài 28: Ôn tập chương tiết niệu"
+        ]
+      },
+      {
+        "title": "CHƯƠNG V: THẦN KINH HỌC (5 buổi)",
+        "lessons": [
+          "Bài 29: Khám các dây thần kinh sọ não",
+          "Bài 30: Khám chức năng vận động",
+          "Bài 31: Khám cảm giác, phản xạ",
+          "Bài 32: Một số hội chứng thần kinh thường gặp",
+          "Bài 33: Ôn tập chương thần kinh"
+        ]
+      },
+      {
+        "title": "CHƯƠNG VI: MÁU VÀ CƠ QUAN TẠO MÁU (5 buổi)",
+        "lessons": [
+          "Bài 34: Triệu chứng cơ năng bệnh máu và cơ quan tạo máu",
+          "Bài 35: Hội chứng thiếu máu, xuất huyết",
+          "Bài 36: Hội chứng lách to, hạch to",
+          "Bài 37: Các xét nghiệm thường dùng trong huyết học",
+          "Bài 38: Ôn tập chương máu và cơ quan tạo máu"
+        ]
+      }
+    ],
+    "215": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Bài 1: Cấu Tạo Nguyên Tử Và Liên Kết hoá Học",
+          "Bài 2: Chữa Đề Trắc Nghiệm Cấu Tạo - Liên Kết",
+          "Bài 3: Protid",
+          "Bài 4: Chữa Đề Trắc Nghiệm Protid",
+          "Bài 5: Lipid",
+          "Bài 6: Chữa Đề Trắc Nghiệm Lipid",
+          "Bài 7: Glucid",
+          "Bài 8: Chữa Đề Trắc Nghiệm Glucid",
+          "Bài 9: Ôn Tập Cấu Tạo - P - L - G",
+          "Bài 10: Đại cương dung dịch và dung dịch keo",
+          "Bài 11: Chữa Đề Trắc Nghiệm Dung Dịch",
+          "Bài 12: Dị Vòng Và Vitamin",
+          "Bài 13: Chữa Đề Trắc Nghiệm Dị Vòng - Vitamin",
+          "Bài 14: Dung dịch chất điện ly và dung dịch đệm",
+          "Bài 15: Chữa Đề Trắc Nghiệm Dung Dịch Chất Điện Ly - Đệm",
+          "Bài 16: Ôn Tập Giữa Kì",
+          "Bài 17: Nhiệt động học và động hoá học",
+          "Bài 18: Chữa Đề Trắc Nghiệm Nhiệt Động Học và Động Hóa Học",
+          "Bài 19: Điện Hoá Học",
+          "Bài 20: Chữa Đề Trắc Nghiệm Điện Hoá Học",
+          "Bài 21: Chữa Đề Trắc Nghiệm Điện Hoá Học",
+          "Bài 22: Nguyên Tố Vi Lượng - Kim Loại Nặng",
+          "Bài 23: Chữa Đề Trắc Nghiệm Nguyên Tố Vi Lượng - Kim Loại Nặng",
+          "Bài 24: Ôn Tập Cuối kì"
+        ]
+      }
+    ],
+    "219": [
+      {
+        "title": "Nội dung khóa học",
+        "lessons": [
+          "Kỹ năng giao tiếp giữa thầy thuốc và người bệnh",
+          "Khai thác tiền sử và bệnh sử",
+          "Khám tổng quát",
+          "Kỹ thuật trình bày bệnh án cơ bản và bệnh án điện tử",
+          "Kỹ năng làm việc nhóm",
+          "Khám phổi",
+          "Khám tim",
+          "Khám bụng tổng quát, khám gan, khám lách, khám thận",
+          "Khám hạch và tuyến giáp",
+          "Khám mạch máu ngoại biên",
+          "Thăm khám hậu môn - trực tràng",
+          "Khám thận tiết niệu - dục nam",
+          "Khám sọ não trong chấn thương sọ não",
+          "Khám trương lực cơ và phản xạ gân xương và khám cột sống",
+          "Khám vận động khớp gối",
+          "Khám vận động khớp vai",
+          "Kỹ thuật đo dấu hiệu sinh tồn",
+          "Kỹ thuật tiêm",
+          "Kỹ thuật đặt ống thông dạ dày",
+          "Kỹ thuật đặt ống thông tiểu",
+          "Kỹ thuật thay băng rửa vết thương",
+          "Kỹ thuật truyền dịch",
+          "Hồi sức tim phổi cơ bản",
+          "Chọc dịch màng phổi - màng bụng"
+        ]
+      }
+    ],
+    "220": [
+      {
+        "title": "Chương 1: Ngoại tiêu hóa",
+        "lessons": [
+          "Khám bụng ngoại khoa",
+          "Hội chứng tắc ruột",
+          "Hội chứng viêm phúc mạc",
+          "Khám hậu môn trực tràng",
+          "Hội chứng vàng da tắc mật",
+          "Hội chứng chảy máu trong"
+        ]
+      },
+      {
+        "title": "Chương 2: Ngoại thần kinh",
+        "lessons": [
+          "Hội chứng chèn ép tủy",
+          "Khám dây thần kinh ngoại biên",
+          "Hội chứng chèn ép rễ thần kinh thắt lưng cùng",
+          "Khám bệnh nhân chấn thương sọ não",
+          "Hội chứng tăng áp lực nội sọ",
+          "Khám cột sống"
+        ]
+      },
+      {
+        "title": "chương 3: Ngoại chấn thương chỉnh hình",
+        "lessons": [
+          "Triệu chứng học nhọt, áp xe, hậu bối, chín mé",
+          "Triệu chứng học về bỏng",
+          "Triệu chứng trật khớp",
+          "Biến chứng của gãy xương",
+          "Triệu chứng gãy xương"
+        ]
+      },
+      {
+        "title": "Chương 4: Ngoại lồng ngực mạch máu",
+        "lessons": [
+          "Thăm khám triệu chứng học chấn thương vết thương ngực",
+          "Thăm khám triệu chứng học chấn thương mạch máu ngoại biên",
+          "Khám tuyến giáp",
+          "Hội chứng tắc mạch chi"
+        ]
+      },
+      {
+        "title": "Chương 5: Ngoại tiết niệu",
+        "lessons": [
+          "Triệu chứng lâm sàng hệ tiết niệu",
+          "Khám lâm sàng hệ tiết niệu sinh dục",
+          "Hội chứng đường tiểu dưới",
+          "Ôn Tâp Cuối Kì"
+        ]
+      }
+    ]
+  }
+}

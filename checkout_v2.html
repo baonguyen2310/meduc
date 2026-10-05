@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán Đơn Hàng & Kích Hoạt Khóa Học - MedUC</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            medred: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans">
+
+  <!-- ================= MINIMAL CHECKOUT HEADER ================= -->
+  <header class="bg-white border-b border-slate-200/80 py-3.5 shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center group py-1" title="MedUC.vn - Học Y Bứt Phá Cùng Th.S - BSNT">
+          <img 
+            src="https://cdn.meduc.vn/media/core/logo/logo-meduc.png" 
+            alt="MedUC.vn - Học Y Bứt Phá Cùng Th.S - BSNT" 
+            class="h-10 sm:h-11 w-auto object-contain transition-transform group-hover:scale-102"
+            onerror="this.onerror=null; this.src='/templates/app01/assets/img/logo-w500.png';"
+          />
+        </a>
+        <span class="hidden sm:inline text-xs font-black text-slate-400 pl-3 border-l border-slate-200 uppercase tracking-wider">Cổng Thanh Toán An Toàn</span>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs font-bold text-slate-600">
+         <span class="flex items-center gap-1.5 text-emerald-600"><i class="fa-solid fa-shield-halved text-sm"></i> Mã Hóa SSL 256-Bit</span>
+        <span class="hidden sm:inline text-slate-300">•</span>
+        <a href="/course-detail" class="hidden sm:inline-flex items-center gap-1 text-slate-500 hover:text-medred-600 transition">
+          <i class="fa-solid fa-arrow-left text-[11px]"></i> Quay lại khóa học
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= CHECKOUT MAIN BODY ================= -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT COLUMN: STUDENT INFORMATION FORM (7 Cols) -->
+      <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6">
+        
+        <div>
+          <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
+            <span class="w-7 h-7 rounded-xl bg-medred-100 text-medred-700 text-xs font-black flex items-center justify-center">1</span>
+            <span>Thông Tin Người Học & Kích Hoạt</span>
+          </h2>
+          <p class="text-xs text-slate-500 font-medium mt-1">
+            Khóa học sẽ được kích hoạt tự động theo số điện thoại và email của bạn.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Họ và tên học viên *</label>
+            <input 
+              type="text" 
+              placeholder="Nguyễn Văn A" 
+              class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              value="Bác sĩ Tương Lai"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Số điện thoại (Zalo) *</label>
+            <input 
+              type="tel" 
+              placeholder="0988xxxxxx" 
+              class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              value="0988123456"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Email nhận tài khoản *</label>
+            <input 
+              type="email" 
+              placeholder="doctor@gmail.com" 
+              class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              value="doctor@meduc.vn"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Trường Y / Bệnh viện</label>
+            <input 
+              type="text" 
+              placeholder="ĐH Y Hà Nội / UMP / Huế..." 
+              class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              value="Đại Học Y Hà Nội"
+            />
+          </div>
+        </div>
+
+        <!-- Section 2: Book Delivery Address -->
+        <div class="pt-6 border-t border-slate-100">
+          <h2 class="text-xl font-black text-slate-900 flex items-center gap-2 mb-1">
+            <span class="w-7 h-7 rounded-xl bg-medred-100 text-medred-700 text-xs font-black flex items-center justify-center">2</span>
+            <span>Địa Chỉ Nhận Sách In Màu Tận Nơi</span>
+          </h2>
+          <p class="text-xs text-slate-500 font-medium mb-4">
+            Giáo trình A5 in màu độc quyền sẽ được chuyển phát nhanh miễn phí tới địa chỉ này.
+          </p>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Địa chỉ cụ thể (Ký túc xá / Số nhà / Đường) *</label>
+              <input 
+                type="text" 
+                placeholder="Số 1 Tôn Thất Tùng, Kim Liên, Đống Đa, Hà Nội" 
+                class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Ghi chú giao hàng (nếu có)</label>
+              <input 
+                type="text" 
+                placeholder="Gọi trước khi giao hàng vào giờ trực..." 
+                class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-medred-600 focus:outline-none text-xs font-bold text-slate-900 transition"
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: ORDER SUMMARY & VIETQR PAYMENT (5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <!-- Order Summary Card -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+          <h3 class="text-base font-black text-slate-900 pb-3 border-b border-slate-100 flex items-center justify-between">
+            <span>Đơn Hàng Của Bạn</span>
+            <span class="text-xs text-medred-600 font-bold">1 Khóa học</span>
+          </h3>
+
+          <div class="flex items-start gap-3.5">
+            <img 
+              src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=300&auto=format&fit=crop&q=80" 
+              alt="Ngoại Cơ Sở" 
+              class="w-16 h-16 rounded-2xl object-cover shrink-0 border border-slate-100"
+            />
+            <div class="flex-1 min-w-0">
+              <h4 class="text-xs font-black text-slate-900 leading-snug line-clamp-2">
+                Ngoại Cơ Sở & Khám Bệnh Ngoại Khoa Thực Chiến
+              </h4>
+              <p class="text-[11px] font-bold text-medred-600 mt-1">3.000.000đ <span class="text-slate-400 line-through text-[10px]">4.500.000đ</span></p>
+            </div>
+          </div>
+
+          <!-- Gift Inclusions -->
+          <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-800 space-y-1">
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-gift text-emerald-600"></i> Tặng Sách In Màu A5 (180 trang) (0đ)</div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-truck-fast text-emerald-600"></i> Miễn phí vận chuyển toàn quốc (0đ)</div>
+            <div class="flex items-center gap-1.5"><i class="fa-solid fa-fire text-orange-500"></i> Tặng 300 câu trắc nghiệm MedDuo (0đ)</div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 space-y-2 text-xs font-bold text-slate-600">
+            <div class="flex justify-between">
+              <span>Học phí gốc:</span>
+              <span class="line-through text-slate-400">4.500.000đ</span>
+            </div>
+            <div class="flex justify-between text-emerald-600">
+              <span>Ưu đãi sinh viên Y:</span>
+              <span>-1.500.000đ</span>
+            </div>
+            <div class="flex justify-between text-sm font-black text-slate-900 pt-2 border-t border-slate-100">
+              <span>Tổng thanh toán:</span>
+              <span class="text-xl text-medred-600">3.000.000đ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- VietQR Payment Instant Box -->
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-xl border border-slate-800 text-center space-y-4">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-medred-600/30 text-medred-400 border border-medred-500/30 text-[11px] font-black uppercase">
+            <i class="fa-solid fa-qrcode"></i> Quét Mã VietQR Tự Động Khớp Đơn
+          </div>
+
+          <p class="text-xs text-slate-300 font-medium">
+            Mở App ngân hàng bất kỳ (MB, VCB, Techcom, BIDV...) quét mã để kích hoạt khóa học trong 30 giây:
+          </p>
+
+          <!-- Mock Dynamic QR Code -->
+          <div class="bg-white p-4 rounded-2xl inline-block shadow-2xl mx-auto">
+            <!-- Simulated VietQR with logo -->
+            <img 
+              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=2|99|0988123456|MEDUC+NGOAICOSO|3000000" 
+              alt="VietQR MedUC" 
+              class="w-44 h-44 rounded-xl mx-auto"
+            />
+            <div class="mt-2 text-[10px] font-black text-slate-800 uppercase tracking-widest flex items-center justify-center gap-1">
+              <span class="text-blue-600">VIET</span><span class="text-red-600">QR</span> • AUTO CHECK
+            </div>
+          </div>
+
+          <!-- Bank Details Table -->
+          <div class="bg-slate-800/80 rounded-2xl p-4 text-xs font-bold text-slate-200 text-left space-y-2 border border-slate-700/60">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Ngân hàng:</span>
+              <span class="text-white font-black">MBBank (Quân Đội)</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Số tài khoản:</span>
+              <span class="text-amber-400 font-mono font-black text-sm">8888 6688 9999</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Chủ tài khoản:</span>
+              <span class="text-white">CTY CP Y KHOA MEDUC</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Nội dung CK:</span>
+              <span class="text-emerald-400 font-mono font-black">MEDUC 220 0988123456</span>
+            </div>
+          </div>
+
+          <!-- Live Checking Status Simulation -->
+          <div class="flex items-center justify-center gap-2 text-xs font-bold text-slate-400 pt-1">
+            <i class="fa-solid fa-spinner fa-spin text-medred-500"></i>
+            <span>Hệ thống đang tự động chờ tín hiệu chuyển khoản...</span>
+          </div>
+
+          <button onclick="alert('Đã ghi nhận chuyển khoản! Khóa học của bạn đang được kích hoạt và gửi email xác nhận ngay bây giờ.')" class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-lg transition">
+            <i class="fa-solid fa-check-circle mr-1"></i> TÔI ĐÃ CHUYỂN KHOẢN THÀNH CÔNG
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="bg-white border-t border-slate-200/80 py-6 text-center text-xs font-bold text-slate-400 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span>© 2026 MedUC Education. Hotline hỗ trợ 24/7: 0988.xxx.xxx</span>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-slate-600">Chính sách bảo mật</a>
+        <span>•</span>
+        <a href="#" class="hover:text-slate-600">Điều khoản hoàn tiền</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

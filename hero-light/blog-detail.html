@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Đọc bài viết Y khoa của Meduc." />
+    <title>Chi tiết blog — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/hero.css" />
+    <link rel="stylesheet" href="assets/light.css" />
+    <link rel="stylesheet" href="assets/about.css" />
+    <link rel="stylesheet" href="assets/blog-detail.css" />
+    <script src="assets/blog-detail.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 .3l2.5-2.5a5 5 0 0 0-7-7L11 5.3M14 11a5 5 0 0 0-7-.3l-2.5 2.5a5 5 0 0 0 7 7l1.5-1.5" /></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></symbol>
+    </svg>
+
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+    <header class="site-header about-header"><div class="shell about-header-inner">
+      <a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+      <span class="header-page-name">Góc học tập Meduc</span>
+      <div class="header-actions"><a class="header-home" href="courses.html">Khóa học</a><a class="button header-course" href="blog.html">Xem các bài viết <svg class="icon"><use href="#i-arrow" /></svg></a></div>
+    </div></header>
+
+    <main id="main">
+      <nav class="blog-detail-crumb shell" aria-label="Đường dẫn trang"><a href="index.html">Trang chủ</a><span aria-hidden="true">/</span><a href="blog.html">Blog</a><span aria-hidden="true">/</span><span id="crumb-title">Bài viết</span></nav>
+
+      <article id="blog-article" class="blog-detail-article" aria-labelledby="article-title">
+        <header class="blog-detail-intro shell"><div class="article-reading-width"><span class="blog-detail-topic" id="article-topic">BLOG MEDUC</span><h1 id="article-title">ĐANG TẢI BÀI VIẾT.</h1><p class="blog-detail-lead" id="article-lead">Khám phá bài viết Y khoa và kinh nghiệm học tập từ Meduc.</p><div class="blog-detail-meta"><span>Biên tập bởi Meduc</span><span aria-hidden="true">·</span><time id="article-date"></time><span aria-hidden="true">·</span><span class="reading-time"><svg class="icon" aria-hidden="true"><use href="#i-clock" /></svg><span id="article-minutes"></span></span></div></div></header>
+        <div class="shell blog-detail-hero-shell"><figure class="blog-detail-hero"><img id="article-hero-image" alt="Ảnh minh họa bài viết Meduc" /><div class="blog-detail-hero-fallback" id="article-hero-fallback" hidden>MEDUC<br />JOURNAL</div><figcaption>Ảnh từ bài viết Meduc</figcaption></figure></div>
+
+        <div class="shell blog-detail-body-layout"><aside class="blog-detail-aside" aria-label="Điều hướng bài viết"><div class="blog-aside-sticky"><span class="blog-aside-label">TRONG BÀI VIẾT NÀY</span><nav id="article-toc" aria-label="Mục lục bài viết"></nav><div class="blog-aside-progress"><span>TIẾN ĐỘ ĐỌC</span><strong id="reading-progress-number">0%</strong></div><button type="button" id="copy-article-link" class="copy-article-link"><svg class="icon"><use href="#i-link" /></svg><span>Sao chép liên kết</span></button></div></aside><div class="article-reading-width"><div id="article-content" class="blog-detail-prose"><p>Đang tải nội dung bài viết...</p></div><div class="blog-article-end"><span>HẾT BÀI VIẾT</span><h2>ĐỌC THÊM.<br /><em>HIỂU SÂU HƠN.</em></h2><p>Tiếp tục khám phá các góc nhìn Y khoa và cách học trên Meduc.</p><div class="blog-end-actions"><a class="button" href="blog.html">Xem tất cả bài viết <svg class="icon"><use href="#i-arrow" /></svg></a><a id="original-article-link" href="https://meduc.vn/blog" target="_blank" rel="noopener noreferrer">Trang gốc trên Meduc ↗</a></div></div></div></div>
+      </article>
+
+      <section class="blog-related" id="bai-viet-lien-quan" aria-labelledby="related-title"><div class="shell"><div class="blog-related-head"><div><span class="eyebrow">CÙNG CHỦ ĐỀ</span><h2 id="related-title">BÀI VIẾT<br /><span>BẠN CÓ THỂ THÍCH.</span></h2></div><a href="blog.html">Xem toàn bộ blog <svg class="icon"><use href="#i-arrow" /></svg></a></div><div class="blog-related-grid" id="related-grid"></div></div></section>
+      <section class="blog-learning-next"><div class="shell blog-learning-inner"><div><span class="eyebrow">HỌC TIẾP CÙNG MEDUC</span><h2>TỪ GÓC NHÌN<br /><span>ĐẾN THỰC HÀNH.</span></h2><p>Chọn môn học phù hợp để nối điều vừa đọc với bài giảng và luyện tập.</p></div><a class="button" href="courses.html">Khám phá khóa học <svg class="icon"><use href="#i-arrow" /></svg></a></div></section>
+      <section class="blog-detail-error shell" id="article-error" hidden><h2>Không tìm thấy bài viết này.</h2><p>Bài viết có thể đã đổi đường dẫn hoặc không còn trong danh mục đang mở.</p><a class="button" href="blog.html">Quay về danh sách blog <svg class="icon"><use href="#i-arrow" /></svg></a></section>
+      <noscript><p class="shell blog-noscript">Bật JavaScript để đọc bài viết, hoặc mở <a href="https://meduc.vn/blog">blog Meduc</a>.</p></noscript>
+    </main>
+
+    <footer class="about-footer"><div class="shell footer-top"><div><a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><p>Học sâu, hiểu đúng.<br />Vững bước nghề Y.</p></div><nav aria-label="Liên kết cuối trang"><a href="index.html">Trang chủ</a><a href="blog.html">Blog</a><a href="courses.html">Khóa học</a><a href="documents.html">Tài liệu</a></nav></div><div class="shell footer-bottom"><span>© 2026 Meduc · Bản xem trước giao diện chi tiết blog</span><a href="#main">Lên đầu trang ↑</a></div></footer>
+  </body>
+</html>

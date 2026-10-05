@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fbfaf8" />
+    <meta name="description" content="Chọn môn quan tâm và mục tiêu học để khám phá khóa học Meduc phù hợp với bạn." />
+    <title>Khóa học dành cho bạn — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preload" href="assets/fonts/anton-regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/hero.css" />
+    <link rel="stylesheet" href="assets/light.css" />
+    <link rel="stylesheet" href="assets/recommendations.css" />
+    <script src="assets/recommendations.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" /></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H4m6 6-6-6 6-6" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C8 4.4 4.8 4.2 2 5v13c3-.8 6.3-.6 10 1.5 3.7-2.1 7-2.3 10-1.5V5c-2.8-.8-6-.6-10 1.5ZM12 6.5v13" /></symbol>
+    </svg>
+
+    <header class="recommend-header">
+      <div class="recommend-shell recommend-header-inner">
+        <a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+        <span class="recommend-header-label">LỘ TRÌNH CỦA BẠN</span>
+        <a class="recommend-header-link" href="courses.html">Tất cả khóa học <svg class="icon"><use href="#i-arrow" /></svg></a>
+      </div>
+    </header>
+
+    <main id="main">
+      <nav class="recommend-progress" aria-label="Các bước tìm khóa học">
+        <div class="recommend-shell recommend-progress-inner">
+          <span class="recommend-progress-item is-current" data-step-marker="1" aria-current="step"><b>01</b><span>Môn quan tâm</span></span>
+          <span class="recommend-progress-item" data-step-marker="2"><b>02</b><span>Mục tiêu học</span></span>
+          <span class="recommend-progress-item" data-step-marker="3"><b>03</b><span>Khóa dành cho bạn</span></span>
+        </div>
+      </nav>
+
+      <section class="recommend-step recommend-shell" id="interest-step" aria-labelledby="interest-title">
+        <div class="recommend-question">
+          <span class="recommend-eyebrow"><span></span> BƯỚC 01 / MÔN QUAN TÂM</span>
+          <h1 id="interest-title">BẠN MUỐN<br /><em>HỌC SÂU MÔN NÀO?</em></h1>
+          <p>Chọn một hoặc nhiều môn bạn đang muốn củng cố. Meduc sẽ tìm trong các khóa học đang mở.</p>
+          <div class="recommend-choice-grid" role="group" aria-label="Chọn môn quan tâm">
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="anatomy" /><span class="choice-number">01</span><strong>Giải phẫu</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="physiology" /><span class="choice-number">02</span><strong>Sinh lý</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="biochemistry" /><span class="choice-number">03</span><strong>Hóa sinh</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="internal" /><span class="choice-number">04</span><strong>Nội khoa</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="surgery" /><span class="choice-number">05</span><strong>Ngoại khoa</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="pediatrics" /><span class="choice-number">06</span><strong>Nhi khoa</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="obstetrics" /><span class="choice-number">07</span><strong>Sản khoa</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+            <label class="recommend-choice"><input type="checkbox" name="interest" value="english" /><span class="choice-number">08</span><strong>Tiếng Anh Y khoa</strong><span class="choice-check"><svg class="icon"><use href="#i-check" /></svg></span></label>
+          </div>
+          <div class="recommend-actions"><button class="recommend-skip" id="skip-interest" type="button">Chưa có môn cụ thể</button><button class="recommend-next" id="next-interest" type="button" disabled>Tiếp tục <svg class="icon"><use href="#i-arrow" /></svg></button></div>
+        </div>
+        <aside class="recommend-editorial" aria-label="Học tập cùng Meduc"><img src="assets/images/study-editorial.jpg" alt="Nhóm sinh viên Y cùng học và ghi chép" /><div class="recommend-editorial-copy"><span>MEDUC / CÙNG BẠN HỌC Y</span><strong>BẮT ĐẦU TỪ ĐIỀU<br />BẠN MUỐN HIỂU RÕ.</strong><small id="course-count">Đang tải danh mục khóa học...</small></div></aside>
+      </section>
+
+      <section class="recommend-step recommend-shell" id="goal-step" aria-labelledby="goal-title" hidden>
+        <div class="recommend-goal-inner">
+          <span class="recommend-eyebrow"><span></span> BƯỚC 02 / MỤC TIÊU HỌC</span>
+          <h1 id="goal-title">ĐIỂM ĐẾN<br /><em>CỦA BẠN LÀ GÌ?</em></h1>
+          <p>Chọn mục tiêu gần nhất với bạn lúc này. Bạn có thể thay đổi lựa chọn trước khi xem khóa học.</p>
+          <div class="recommend-goal-grid" role="radiogroup" aria-label="Chọn mục tiêu học">
+            <label class="recommend-goal"><input type="radio" name="goal" value="foundation" /><span class="goal-number">01 / NỀN TẢNG</span><strong>Nắm vững Y khoa cơ sở</strong><span>Học chắc khái niệm, cấu trúc và cơ chế trước khi đi vào ca bệnh.</span><span class="goal-radio"></span></label>
+            <label class="recommend-goal"><input type="radio" name="goal" value="clinical" /><span class="goal-number">02 / ỨNG DỤNG</span><strong>Tự tin trong lâm sàng</strong><span>Liên hệ kiến thức với triệu chứng, xét nghiệm và xử trí.</span><span class="goal-radio"></span></label>
+            <label class="recommend-goal"><input type="radio" name="goal" value="residency" /><span class="goal-number">03 / CHINH PHỤC</span><strong>Chuẩn bị thi nội trú</strong><span>Ôn tập theo môn và đào sâu các chuyên đề trọng tâm.</span><span class="goal-radio"></span></label>
+            <label class="recommend-goal"><input type="radio" name="goal" value="english" /><span class="goal-number">04 / MỞ RỘNG</span><strong>Học và giao tiếp bằng tiếng Anh Y khoa</strong><span>Đọc tài liệu, hiểu thuật ngữ và sử dụng trong môi trường bệnh viện.</span><span class="goal-radio"></span></label>
+          </div>
+          <div class="recommend-actions"><button class="recommend-back" id="back-goal" type="button"><svg class="icon"><use href="#i-back" /></svg> Quay lại</button><button class="recommend-skip" id="skip-goal" type="button">Để Meduc gợi ý</button><button class="recommend-next" id="next-goal" type="button" disabled>Xem khóa phù hợp <svg class="icon"><use href="#i-arrow" /></svg></button></div>
+        </div>
+      </section>
+
+      <section class="recommend-results" id="result-step" aria-labelledby="result-title" hidden>
+        <div class="recommend-shell">
+          <div class="recommend-results-intro"><div><span class="recommend-eyebrow"><span></span> BƯỚC 03 / KHÓA DÀNH CHO BẠN</span><h1 id="result-title">BẮT ĐẦU TỪ<br /><em>KHÓA HỌC PHÙ HỢP.</em></h1><p id="result-lead">Dựa trên môn quan tâm và mục tiêu bạn vừa chọn, đây là những khóa học nên khám phá trước.</p></div><div class="recommend-selection"><span>LỰA CHỌN CỦA BẠN</span><div id="selection-summary"></div><button id="edit-selection" type="button">Thay đổi lựa chọn ↗</button></div></div>
+          <div class="recommend-result-status" id="result-status" role="status">Đang chuẩn bị gợi ý...</div>
+          <div id="primary-result"></div>
+          <div class="recommend-more-heading"><div><span class="recommend-eyebrow">TIẾP TỤC KHÁM PHÁ</span><h2>NHỮNG KHÓA HỌC<br /><em>BẠN CÓ THỂ THÍCH.</em></h2></div><p>Đọc đề cương từng khóa để chọn lộ trình học phù hợp với thời gian và nhu cầu của bạn.</p></div>
+          <div class="recommend-result-grid" id="result-grid"></div>
+          <div class="recommend-results-bottom"><p>Gợi ý dựa trên môn và mục tiêu bạn chọn. Hãy xem nội dung và học phí trước khi quyết định.</p><a href="courses.html">Xem tất cả khóa học <svg class="icon"><use href="#i-arrow" /></svg></a></div>
+        </div>
+      </section>
+      <noscript><p class="recommend-shell recommend-noscript">Bật JavaScript để nhận gợi ý, hoặc <a href="courses.html">xem tất cả khóa học Meduc</a>.</p></noscript>
+    </main>
+
+    <footer class="recommend-footer"><div class="recommend-shell recommend-footer-inner"><a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><span>© 2026 Meduc · Gợi ý khóa học</span><a href="courses.html">Khám phá khóa học ↗</a></div></footer>
+  </body>
+</html>

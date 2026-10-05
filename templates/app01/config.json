@@ -1,0 +1,8 @@
+{
+    "name": "Giao diện app01",
+    "code": "app01",
+    "author": "Đặng Phương Nam",
+    "plugins": "article, product",
+    "version": "v1.0",
+    "description": "Giao diện app01"
+}

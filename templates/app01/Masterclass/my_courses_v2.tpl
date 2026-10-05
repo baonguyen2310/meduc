@@ -1,0 +1,50 @@
+<!-- Generated from hero-light/my-courses.html by scripts/sync_my_courses_template.py. -->
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Bản xem trước giao diện khóa học đang tham gia của Meduc." />
+    <title>Khóa học đang tham gia — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="/hero-light/assets/favicon.svg" />
+    <link rel="preload" href="/hero-light/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/hero-light/assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/hero-light/assets/hero.css" />
+    <link rel="stylesheet" href="/hero-light/assets/light.css" />
+    <link rel="stylesheet" href="/hero-light/assets/about.css" />
+    <link rel="stylesheet" href="/hero-light/assets/my-courses.css" />
+    <script src="/hero-light/assets/my-courses.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C9 4.6 5.7 4.4 2 5v13c3.7-.6 7-.4 10 1.5 3-1.9 6.3-2.1 10-1.5V5c-3.7-.6-7-.4-10 1.5Zm0 0v13" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></symbol>
+    </svg>
+
+    <header class="site-header about-header learning-header"><div class="shell about-header-inner">
+      <a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+      <span class="header-page-name">Không gian học tập</span>
+      <div class="header-actions"><a class="header-home" href="/khoa-hoc-v2">Khám phá khóa học</a><a class="button header-course" href="/member/login">Đăng nhập Meduc <svg class="icon"><use href="#i-arrow" /></svg></a></div>
+    </div></header>
+
+    <main id="main">
+      <section class="learning-hero" aria-labelledby="learning-title"><div class="shell learning-hero-grid"><div class="learning-hero-copy"><span class="learning-kicker"><span></span> KHÔNG GIAN HỌC TẬP MEDUC</span><h1 id="learning-title">HỌC TIẾP TỪ<br /><em>NƠI BẠN DỪNG.</em></h1><p>Mỗi môn học là một hành trình. Xem lại bài đang học, theo dõi chặng đường và chọn bước tiếp theo trong cùng một nơi.</p><div class="learning-hero-actions"><a class="button" href="#tiep-tuc-hoc">Xem bài đang học <svg class="icon"><use href="#i-arrow" /></svg></a><a class="learning-text-link" href="#tat-ca-khoa-hoc">Các khóa trong thư viện ↓</a></div></div><div class="learning-hero-visual" aria-hidden="true"><div class="learning-hero-image"><img src="/hero-light/assets/images/study-editorial.jpg" alt="" /></div><div class="learning-visual-note"><strong>MEDUC.</strong><span>HỌC SÂU<br />TỪNG BÀI MỘT.</span></div></div></div></section>
+
+      <div class="shell"><div class="learning-preview-note" role="note"><span class="learning-preview-dot"></span><p><strong>Bản xem trước giao diện.</strong> Các khóa và bài học lấy từ danh mục Meduc; số bài hoàn thành bên dưới chỉ minh họa cách hiển thị tiến độ, chưa phải dữ liệu tài khoản.</p><a href="/member/login">Đến trang đăng nhập ↗</a></div></div>
+
+      <section class="learning-feature shell" id="tiep-tuc-hoc" aria-labelledby="feature-title"><div class="learning-section-heading"><div><span class="learning-eyebrow">TIẾP TỤC HÀNH TRÌNH</span><h2 id="feature-title">BÀI HỌC <em>TIẾP THEO.</em></h2></div><span class="learning-section-index">01 / KHÓA ĐANG HỌC</span></div><div class="learning-feature-card" id="featured-course"><div class="learning-feature-loading">Đang tải khóa học Meduc...</div></div></section>
+
+      <section class="learning-library" id="tat-ca-khoa-hoc" aria-labelledby="library-title"><div class="shell"><div class="learning-section-heading"><div><span class="learning-eyebrow">THƯ VIỆN HỌC TẬP</span><h2 id="library-title">CÁC KHÓA <em>ĐANG THEO.</em></h2><p>Chọn một khóa để xem đề cương và tiếp tục từ bài phù hợp.</p></div><span class="learning-section-index">02 / DANH MỤC CỦA BẠN</span></div><div class="learning-controls"><div class="learning-tabs" role="group" aria-label="Lọc trạng thái khóa học"><button type="button" class="is-active" data-filter="all" aria-pressed="true">Tất cả <span id="count-all">—</span></button><button type="button" data-filter="active" aria-pressed="false">Đang học <span id="count-active">—</span></button><button type="button" data-filter="complete" aria-pressed="false">Hoàn thành <span id="count-complete">—</span></button></div><label class="learning-search"><svg class="icon" aria-hidden="true"><use href="#i-search" /></svg><span class="sr-only">Tìm trong các khóa minh họa</span><input id="course-search" type="search" placeholder="Tìm môn học..." autocomplete="off" /></label></div><div class="learning-card-grid" id="course-grid" aria-live="polite"></div><div class="learning-empty" id="course-empty" hidden><h3>Chưa tìm thấy khóa phù hợp.</h3><p>Thử tên môn khác hoặc chọn lại tất cả khóa học.</p><button type="button" id="reset-filters">Xem tất cả khóa</button></div></div></section>
+
+      <section class="learning-next" aria-labelledby="next-title"><div class="shell learning-next-grid"><div><span class="learning-eyebrow">GIỮ NHỊP HỌC MỖI NGÀY</span><h2 id="next-title">MỘT BÀI HÔM NAY.<br /><em>VỮNG VÀNG NGÀY MAI.</em></h2><p>Bắt đầu bằng một chủ đề vừa sức. Nội dung học của các khóa được sắp theo chương để bạn biết mình đang ở đâu.</p><a href="/khoa-hoc-v2" class="button">Khám phá thêm khóa học <svg class="icon"><use href="#i-arrow" /></svg></a></div><div class="learning-next-panel"><span>GỢI Ý HỌC TẬP</span><strong id="next-lesson-title">Đang tải bài học...</strong><p id="next-lesson-course"></p><a id="next-lesson-link" href="/khoa-hoc-v2">Xem đề cương <svg class="icon"><use href="#i-arrow" /></svg></a></div></div></section>
+    </main>
+
+    <footer class="about-footer"><div class="shell footer-top"><div><a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><p>Học sâu, hiểu đúng.<br />Vững bước nghề Y.</p></div><nav aria-label="Liên kết cuối trang"><a href="/masterclass">Trang chủ</a><a href="/khoa-hoc-v2">Khóa học</a><a href="/tai-lieu-hoc-tap-v2">Tài liệu</a><a href="/blog-v2">Blog</a></nav></div><div class="shell footer-bottom"><span>© 2026 Meduc</span><a href="#main">Lên đầu trang ↑</a></div></footer>
+    <noscript><p class="shell learning-noscript">Bật JavaScript để xem mẫu các khóa học và bài học Meduc.</p></noscript>
+  </body>
+</html>

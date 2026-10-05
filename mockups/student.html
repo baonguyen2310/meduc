@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedUC Student - Luyện Đề Y Khoa Thân Thiện & Dễ Học</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            duored: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+            }
+          },
+          fontFamily: {
+            nunito: ['"Nunito"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts (Nunito - Duolingo signature font) & Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f8fafc;
+    }
+
+    /* Duolingo style 3D buttons */
+    .btn-3d-red {
+      background-color: #e11d48;
+      box-shadow: 0 4px 0 #be123c;
+      transition: all 0.1s ease;
+    }
+    .btn-3d-red:hover {
+      background-color: #f43f5e;
+      box-shadow: 0 4px 0 #be123c;
+    }
+    .btn-3d-red:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #be123c;
+    }
+
+    .btn-3d-white {
+      background-color: #ffffff;
+      box-shadow: 0 3px 0 #e2e8f0;
+      border: 2px solid #e2e8f0;
+      transition: all 0.1s ease;
+    }
+    .btn-3d-white:hover {
+      border-color: #cbd5e1;
+      background-color: #f8fafc;
+    }
+    .btn-3d-white:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #cbd5e1;
+    }
+
+    .btn-3d-active {
+      background-color: #fff1f2 !important;
+      border-color: #e11d48 !important;
+      color: #e11d48 !important;
+      box-shadow: 0 3px 0 #be123c !important;
+    }
+
+    /* Custom card border style */
+    .duo-card {
+      border: 2px solid #e2e8f0;
+      border-bottom: 4px solid #cbd5e1;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .duo-card:hover {
+      border-color: #fecdd3;
+      border-bottom-color: #e11d48;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -8px rgba(225, 29, 72, 0.12);
+    }
+
+    /* Option button in quiz */
+    .quiz-option {
+      border: 2px solid #e2e8f0;
+      border-bottom: 4px solid #cbd5e1;
+      transition: all 0.15s ease;
+    }
+    .quiz-option:hover {
+      background-color: #fff1f2;
+      border-color: #fecdd3;
+    }
+    .quiz-option.selected {
+      border-color: #e11d48;
+      border-bottom-color: #be123c;
+      background-color: #fff1f2;
+      color: #9f1239;
+    }
+    .quiz-option.correct {
+      border-color: #10b981 !important;
+      border-bottom-color: #047857 !important;
+      background-color: #ecfdf5 !important;
+      color: #065f46 !important;
+    }
+    .quiz-option.incorrect {
+      border-color: #ef4444 !important;
+      border-bottom-color: #b91c1c !important;
+      background-color: #fef2f2 !important;
+      color: #991b1b !important;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col selection:bg-duored-100 selection:text-duored-700">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-30 bg-white border-b-2 border-slate-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="resetAllFilters()">
+        <div class="w-10 h-10 rounded-2xl bg-duored-600 flex items-center justify-center text-white text-xl font-black shadow-sm transform hover:scale-105 transition">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <div>
+          <span class="text-2xl font-black tracking-tight text-slate-900">Med<span class="text-duored-600">Duo</span></span>
+          <span class="hidden sm:inline-block ml-1.5 px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-duored-100 text-duored-700 uppercase">
+            Bản Sinh Viên
+          </span>
+        </div>
+      </div>
+
+      <!-- Gamified Student Counters (Duolingo Vibe) -->
+      <div class="flex items-center gap-2 sm:gap-4 font-extrabold text-xs sm:text-sm">
+        
+        <!-- Streak -->
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 text-orange-600 border border-orange-200/70" title="Chuỗi ngày luyện đề">
+          <i class="fa-solid fa-fire text-base animate-bounce"></i>
+          <span>7 Ngày</span>
+        </div>
+
+        <!-- Hearts -->
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-duored-50 text-duored-600 border border-duored-200/70" title="Tim còn lại">
+          <i class="fa-solid fa-heart text-base text-duored-500"></i>
+          <span>5/5</span>
+        </div>
+
+        <!-- XP Points -->
+        <div class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-200/70" title="Điểm kinh nghiệm">
+          <i class="fa-solid fa-bolt text-base text-amber-500"></i>
+          <span id="user-xp">320 XP</span>
+        </div>
+
+        <!-- Switch links -->
+        <div class="hidden lg:flex items-center gap-1 border-l pl-3 border-slate-200">
+          <a href="demo3.html" class="px-2.5 py-1.5 rounded-xl bg-duored-600 text-white text-xs font-black shadow-sm hover:bg-duored-500 transition">
+            Demo 3 (Cột Trái)
+          </a>
+          <a href="index.html" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-500 hover:text-duored-600 hover:bg-slate-100 transition">
+            Bản Chuyên Sâu
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= GENTLE HERO HEADER ================= -->
+  <section class="bg-white border-b-2 border-slate-100 py-6 sm:py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="text-center md:text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-duored-50 text-duored-600 text-xs font-black uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-sparkles"></i> Ôn thi không còn áp lực
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-tight">
+            Hôm nay bạn muốn luyện <span class="text-duored-600 underline decoration-duored-300 decoration-wavy underline-offset-4">môn gì nào</span>? 🩺
+          </h1>
+          <p class="mt-1.5 text-slate-500 text-sm sm:text-base font-semibold">
+            Mỗi đề chỉ từ 5 - 10 câu, có hình ảnh minh họa và giải thích nhẹ nhàng, dễ nhớ!
+          </p>
+        </div>
+
+        <!-- Friendly Quick Search Bar -->
+        <div class="w-full md:w-80 shrink-0">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="student-search-input"
+              oninput="handleStudentSearch()"
+              placeholder="🔍 Tìm nhanh: Tim mạch, ECG..."
+              class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-100 focus:bg-white text-slate-800 text-sm font-bold border-2 border-slate-200 focus:border-duored-500 focus:outline-none transition"
+            />
+            <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4-STEP HIERARCHY FILTER BAR ================= -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-2 w-full">
+    <div class="bg-white rounded-3xl p-5 border-2 border-slate-200/80 shadow-sm space-y-4">
+      
+      <!-- CẤP 1: CHỌN TRƯỜNG ĐẠI HỌC -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-duored-600 text-white flex items-center justify-center text-[10px]">1</span>
+            <span>Trường Đại Học Y</span>
+          </span>
+          <span class="text-xs text-slate-400 font-bold" id="school-status-text">Tất cả trường</span>
+        </div>
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" id="school-pill-container">
+          <button onclick="selectSchool('all')" data-school="all" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white btn-3d-active shrink-0">
+            🏥 Tất cả các trường
+          </button>
+          <button onclick="selectSchool('HMU')" data-school="HMU" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            🏛️ ĐH Y Hà Nội (HMU)
+          </button>
+          <button onclick="selectSchool('UMP')" data-school="UMP" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            🌴 ĐH Y Dược TP.HCM (UMP)
+          </button>
+          <button onclick="selectSchool('VMMU')" data-school="VMMU" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            ⭐ Học viện Quân Y
+          </button>
+          <button onclick="selectSchool('HueUMP')" data-school="HueUMP" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            🌊 ĐH Y Dược Huế
+          </button>
+          <button onclick="selectSchool('CTUMP')" data-school="CTUMP" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            🌾 ĐH Y Dược Cần Thơ
+          </button>
+          <button onclick="selectSchool('PNTU')" data-school="PNTU" class="school-pill px-4 py-2 rounded-xl text-xs font-black btn-3d-white shrink-0">
+            🏙️ ĐH Y Khoa PNT
+          </button>
+        </div>
+      </div>
+
+      <!-- CẤP 2: CHỌN NĂM HỌC (Y1 - Y6) -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-duored-600 text-white flex items-center justify-center text-[10px]">2</span>
+            <span>Khối Lớp Của Bạn</span>
+          </span>
+          <span class="text-xs text-slate-400 font-bold" id="year-status-text">Tất cả năm học</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2" id="year-btn-container">
+          <button onclick="selectYear('all')" data-year="all" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white btn-3d-active flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">🎓</span>
+            <span>Tất cả Y</span>
+          </button>
+          <button onclick="selectYear('Y1')" data-year="Y1" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">🌱</span>
+            <span>Y1: Nhập môn</span>
+          </button>
+          <button onclick="selectYear('Y2')" data-year="Y2" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">🔬</span>
+            <span>Y2: Y Cơ Sở</span>
+          </button>
+          <button onclick="selectYear('Y3')" data-year="Y3" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">🩺</span>
+            <span>Y3: Đi Viện</span>
+          </button>
+          <button onclick="selectYear('Y4')" data-year="Y4" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">💉</span>
+            <span>Y4: Bệnh Học</span>
+          </button>
+          <button onclick="selectYear('Y6')" data-year="Y6" class="year-btn py-2.5 px-2 rounded-2xl text-xs font-black btn-3d-white flex flex-col items-center justify-center gap-0.5">
+            <span class="text-base">🏆</span>
+            <span>Y6: Tốt Nghiệp</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CẤP 3 & 4: MÔN & MODULE (TỰ ĐỘNG THÍCH ỨNG DƯỚI DẠNG CHIPS THÂN THIỆN) -->
+      <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2 overflow-x-auto w-full pb-1 scrollbar-none" id="module-chips-bar">
+          <span class="text-xs font-black text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+            <span class="w-5 h-5 rounded-full bg-duored-600 text-white flex items-center justify-center text-[10px]">3-4</span>
+            <span>Module:</span>
+          </span>
+          <!-- Populated by JS -->
+        </div>
+
+        <button onclick="resetAllFilters()" class="text-xs font-extrabold text-slate-400 hover:text-duored-600 transition shrink-0 self-end sm:self-center">
+          <i class="fa-solid fa-arrow-rotate-left mr-1"></i>Đặt lại
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FRIENDLY CARD LISTING ================= -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex-1 w-full">
+    
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-duored-600"></span>
+        <h2 class="text-lg font-black text-slate-900">Các Bộ Đề Phù Hợp Cho Bạn</h2>
+        <span id="cards-count-badge" class="px-2 py-0.5 rounded-full text-xs font-black bg-duored-100 text-duored-700">0 bộ</span>
+      </div>
+
+      <div class="text-xs font-bold text-slate-400">
+        ✨ Thiết kế ngắn gọn • Không gây nản
+      </div>
+    </div>
+
+    <!-- Student Cards Grid -->
+    <div id="student-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="student-empty" class="hidden text-center py-12 bg-white rounded-3xl border-2 border-dashed border-slate-200 p-6">
+      <div class="text-5xl mb-3">🧐</div>
+      <h3 class="text-base font-black text-slate-800">Chưa tìm thấy đề phù hợp</h3>
+      <p class="text-xs text-slate-500 font-semibold mt-1 mb-4">Bạn thử chọn lại "Tất cả các trường" hoặc "Tất cả khối lớp" nhé!</p>
+      <button onclick="resetAllFilters()" class="px-5 py-2.5 rounded-xl text-xs font-black text-white btn-3d-red">
+        Xem tất cả bộ đề
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white border-t-2 border-slate-100 py-6 text-center text-xs font-bold text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-duored-600 flex items-center justify-center text-white text-xs font-black">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <span class="text-slate-700 font-black">MedDuo Student</span>
+        <span>• Ôn thi nhẹ nhàng từng ngày</span>
+      </div>
+      <div>
+        <a href="index.html" class="text-duored-600 hover:underline font-black">Chuyển sang giao diện đầy đủ (Bản chuyên sâu) ➔</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= DUOLINGO-STYLE QUIZ MODAL ================= -->
+  <div id="duo-quiz-modal" class="fixed inset-0 z-50 hidden flex flex-col bg-white">
+    
+    <!-- Top Quiz Header (Progress bar & Hearts) -->
+    <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-3 flex items-center gap-4 border-b border-slate-100">
+      <button onclick="closeDuoModal()" class="text-slate-400 hover:text-slate-600 text-lg font-black p-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Progress Bar -->
+      <div class="flex-1 bg-slate-100 h-3.5 rounded-full overflow-hidden p-0.5">
+        <div id="quiz-progress-bar" class="bg-duored-500 h-full rounded-full transition-all duration-300 w-1/3"></div>
+      </div>
+
+      <!-- Hearts Counter -->
+      <div class="flex items-center gap-1 text-duored-600 font-black text-sm">
+        <i class="fa-solid fa-heart text-base"></i>
+        <span id="quiz-hearts">5</span>
+      </div>
+    </div>
+
+    <!-- Quiz Content Body -->
+    <div class="max-w-2xl mx-auto w-full px-4 py-6 flex-1 overflow-y-auto flex flex-col justify-center">
+      
+      <!-- Module Tag & Prompt -->
+      <div class="mb-4">
+        <span id="modal-tag" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-duored-50 text-duored-700 border border-duored-100">
+          Module Tim Mạch
+        </span>
+        <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-snug" id="modal-question-text">
+          Nội dung câu hỏi ở đây...
+        </h3>
+      </div>
+
+      <!-- Options Container -->
+      <div class="space-y-3 mt-4" id="modal-options-list">
+        <!-- Injected options -->
+      </div>
+
+    </div>
+
+    <!-- Bottom Action Drawer (Duolingo Style!) -->
+    <div id="bottom-drawer" class="border-t-2 border-slate-100 p-4 sm:py-5 bg-white transition-all">
+      <div class="max-w-2xl mx-auto flex items-center justify-between gap-4">
+        
+        <!-- Feedback message area -->
+        <div id="drawer-feedback" class="hidden flex items-center gap-3">
+          <div id="drawer-icon" class="w-10 h-10 rounded-2xl flex items-center justify-center text-xl font-black shrink-0"></div>
+          <div>
+            <h4 id="drawer-title" class="font-black text-sm sm:text-base"></h4>
+            <p id="drawer-desc" class="text-xs sm:text-sm font-semibold text-slate-600 max-w-md line-clamp-2"></p>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <button 
+          id="btn-quiz-action"
+          onclick="handleQuizAction()"
+          class="ml-auto px-8 py-3 rounded-2xl text-white font-black text-sm sm:text-base btn-3d-red">
+          KIỂM TRA
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // ================= 1. FRIENDLY STUDENT DATASET =================
+    // Tuyển tập các bộ đề vừa phải, có ảnh minh họa rõ ràng, thời lượng ngắn, thiết kế bắt mắt
+    const STUDENT_EXAMS = [
+      {
+        id: 101,
+        title: "5 Ca Bệnh Khám Tim Mạch & Đọc Nhanh ECG",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y3",
+        yearLabel: "Y3 Đi viện",
+        subject: "Triệu chứng Nội",
+        module: "tim_mach",
+        moduleName: "Tim Mạch",
+        moduleIcon: "🫀",
+        image: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 8,
+        rating: 4.9,
+        badgeColor: "bg-red-50 text-red-700",
+        summary: "Phân biệt cơn đau thắt ngực ổn định và nhồi máu cơ tim cấp qua các sóng ST trên điện tim.",
+        q: "Bệnh nhân nam 58 tuổi đau tức ngực sau xương ức lan lên cằm, điện tâm đồ thấy ST chênh lên 3mm ở V1-V4. Hướng xử trí quan trọng nhất là gì?",
+        options: [
+          "Cho bệnh nhân uống thuốc an thần và về nghỉ ngơi",
+          "Kích hoạt can thiệp mạch vành (Cathlab) để nong thông mạch khẩn cấp",
+          "Chờ 24 giờ sau xét nghiệm lại men tim",
+          "Chỉ định tập chạy bộ gắng sức"
+        ],
+        correct: 1,
+        explanation: "ST chênh lên ở V1-V4 là dấu hiệu của nhồi máu cơ tim cấp vùng trước rộng. Cần can thiệp mạch vành khẩn cấp để cứu sống cơ tim!"
+      },
+      {
+        id: 102,
+        title: "Nhận Diện Dây Thần Kinh & Cử Động Bàn Tay",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y1",
+        yearLabel: "Y1 Cơ bản",
+        subject: "Giải Phẫu",
+        module: "giai_phau",
+        moduleName: "Giải Phẫu Chi",
+        moduleIcon: "🦴",
+        image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 6,
+        rating: 4.8,
+        badgeColor: "bg-blue-50 text-blue-700",
+        summary: "Mẹo nhớ 3 dây thần kinh chi trên: Thần kinh Quay (rủ cổ cò), Thần kinh Trụ (vuốt khỉ), Thần kinh Giữa (bàn tay khỉ).",
+        q: "Khi bị gãy 1/3 giữa xương cánh tay, tổn thương dây thần kinh nào thường gây dấu hiệu 'bàn tay rủ cổ cò'?",
+        options: [
+          "Dây thần kinh cơ bì",
+          "Dây thần kinh quay",
+          "Dây thần kinh giữa",
+          "Dây thần kinh nách"
+        ],
+        correct: 1,
+        explanation: "Thần kinh quay chạy sát trong rãnh xoắn xương cánh tay. Tổn thương làm liệt các cơ duỗi cẳng tay dẫn tới bàn tay rủ cổ cò!"
+      },
+      {
+        id: 103,
+        title: "Bí Kíp Nhớ Nhanh Các Nhóm Kháng Sinh",
+        schoolId: "VMMU",
+        schoolName: "Học viện Quân Y",
+        year: "Y2",
+        yearLabel: "Y2 Cơ sở",
+        subject: "Dược Lý",
+        module: "duoc_ly",
+        moduleName: "Dược Lý Kháng Sinh",
+        moduleIcon: "💊",
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 6,
+        timeMin: 7,
+        rating: 4.9,
+        badgeColor: "bg-emerald-50 text-emerald-700",
+        summary: "Phân biệt nhóm diệt khuẩn phụ thuộc thời gian (Beta-lactam) và phụ thuộc nồng độ (Aminoglycoside).",
+        q: "Kháng sinh nhóm Aminoglycosid (như Gentamicin, Amikacin) phát huy hiệu quả diệt khuẩn tốt nhất theo cơ chế nào?",
+        options: [
+          "Phụ thuộc nồng độ đỉnh (Cmax/MIC) và nên dùng 1 liều duy nhất trong ngày",
+          "Phụ thuộc thời gian nồng độ trên MIC và phải chia 4 lần uống",
+          "Chỉ có tác dụng kìm khuẩn nhẹ",
+          "Không hấp thu qua đường tiêm"
+        ],
+        correct: 0,
+        explanation: "Aminoglycosid diệt khuẩn phụ thuộc nồng độ đỉnh và có hiệu ứng hậu kháng sinh (PAE) kéo dài, nên dùng 1 liều/ngày vừa hiệu quả vừa đỡ hại thận."
+      },
+      {
+        id: 104,
+        title: "Cấp Cứu Xuất Huyết Tiêu Hóa Nôn Ra Máu",
+        schoolId: "UMP",
+        schoolName: "ĐH Y Dược TP.HCM",
+        year: "Y4",
+        yearLabel: "Y4 Bệnh học",
+        subject: "Bệnh học Nội",
+        module: "tieu_hoa",
+        moduleName: "Tiêu Hóa & Gan",
+        moduleIcon: "🍱",
+        image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 8,
+        rating: 5.0,
+        badgeColor: "bg-amber-50 text-amber-800",
+        summary: "Xử trí bước đầu khi bệnh nhân xơ gan nôn ra máu: Hồi sức dịch truyền, thuốc co mạch tạng và thắt búi giãn tĩnh mạch.",
+        q: "Bệnh nhân xơ gan nôn ra máu đỏ tươi, huyết áp tụt còn 80/50 mmHg. Bước cấp cứu đầu tiên quan trọng nhất là:",
+        options: [
+          "Chuyển ngay đi nội soi dạ dày không cần truyền dịch",
+          "Lập 2 đường truyền tĩnh mạch lớn và truyền dịch đẳng trương bù khối lượng tuần hoàn",
+          "Cho uống nước đường ấm",
+          "Chờ xét nghiệm đông máu 2 tiếng sau"
+        ],
+        correct: 1,
+        explanation: "Quy tắc sống còn ABC trong cấp cứu mất máu: Phải bù dịch và nâng huyết áp ngay để giữ tính mạng trước khi đưa đi nội soi!"
+      },
+      {
+        id: 105,
+        title: "Khám Phổi & Đọc X-Quang Ngực Thẳng Cơ Bản",
+        schoolId: "PNTU",
+        schoolName: "ĐH Y Khoa PNT",
+        year: "Y3",
+        yearLabel: "Y3 Đi viện",
+        subject: "Triệu chứng Nội",
+        module: "ho_hap",
+        moduleName: "Hô Hấp",
+        moduleIcon: "🫁",
+        image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 6,
+        rating: 4.7,
+        badgeColor: "bg-cyan-50 text-cyan-800",
+        summary: "Phân biệt hội chứng đông đặc, hội chứng tràn dịch màng phổi (3 giảm) và các tiếng thở bệnh lý.",
+        q: "Hội chứng ba giảm kinh điển khi khám phổi trong tràn dịch màng phổi gồm có:",
+        options: [
+          "Rung thanh tăng, gõ trong, rì rào phế nang tăng",
+          "Rung thanh giảm, gõ đục, rì rào phế nang giảm",
+          "Rung thanh bình thường, gõ vang, có tiếng ran nổ",
+          "Rung thanh giảm, gõ trong, thở rít"
+        ],
+        correct: 1,
+        explanation: "Nước trong màng phổi cản âm thanh (rung thanh giảm, rì rào phế nang giảm) và làm mất tính vang của phổi (gõ đục)."
+      },
+      {
+        id: 106,
+        title: "Cấp Cứu Sốt Co Giật & Suy Hô Hấp Ở Trẻ Em",
+        schoolId: "HueUMP",
+        schoolName: "ĐH Y Dược Huế",
+        year: "Y6",
+        yearLabel: "Y6 Tốt nghiệp",
+        subject: "Nhi Khoa",
+        module: "nhi_khoa",
+        moduleName: "Nhi Khoa",
+        moduleIcon: "👶",
+        image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 7,
+        rating: 4.9,
+        badgeColor: "bg-purple-50 text-purple-700",
+        summary: "Kỹ năng sơ cứu trẻ sốt cao co giật an toàn: Đặt nghiêng, thông thoáng đường thở và dùng thuốc hạ sốt qua đường hậu môn.",
+        q: "Hành động nào sau đây là SAI và NGUY HIỂM khi sơ cứu trẻ đang lên cơn co giật do sốt cao?",
+        options: [
+          "Đặt trẻ nằm nghiêng sang một bên nơi an toàn",
+          "Cố nhét thìa hoặc ngón tay vào miệng trẻ để cản cắn lưỡi",
+          "Nới lỏng quần áo cho trẻ thoáng khí",
+          "Lau mát bằng khăn ấm ở nách và bẹn"
+        ],
+        correct: 1,
+        explanation: "Tuyệt đối không nhét vật cứng vào miệng trẻ đang co giật vì có thể làm gãy răng, tổn thương niêm mạc và gây tắc đường thở!"
+      },
+      {
+        id: 107,
+        title: "Nhận Diện Đột Quỵ Sớm & Cửa Sổ Vàng 4.5 Giờ",
+        schoolId: "HMU",
+        schoolName: "ĐH Y Hà Nội",
+        year: "Y4",
+        yearLabel: "Y4 Bệnh học",
+        subject: "Thần Kinh",
+        module: "than_kinh",
+        moduleName: "Thần Kinh",
+        moduleIcon: "🧠",
+        image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 6,
+        rating: 4.9,
+        badgeColor: "bg-rose-50 text-rose-700",
+        summary: "Quy tắc FAST nhận diện đột quỵ và chỉ định dùng thuốc tiêu sợi huyết r-tPA trong 4.5 giờ đầu.",
+        q: "Thời gian 'cửa sổ vàng' tiêu chuẩn để điều trị tiêu sợi huyết đường tĩnh mạch (r-tPA) cho bệnh nhân nhồi máu não cấp là:",
+        options: [
+          "Trong vòng 4.5 giờ tính từ lúc khởi phát triệu chứng",
+          "Trong vòng 24 giờ sau khi ngủ dậy",
+          "Chỉ được dùng sau 72 giờ theo dõi",
+          "Bất kỳ thời điểm nào sau 1 tuần"
+        ],
+        correct: 0,
+        explanation: "Thời gian là não! Thuốc tiêu sợi huyết đạt hiệu quả cao nhất và ít biến chứng xuất huyết nhất khi dùng trong 4.5 giờ đầu."
+      },
+      {
+        id: 108,
+        title: "Quy Trình Cấp Cứu Ép Tim Ngừng Tuần Hoàn (CPR)",
+        schoolId: "VMMU",
+        schoolName: "Học viện Quân Y",
+        year: "Y6",
+        yearLabel: "Y6 Tốt nghiệp",
+        subject: "Hồi Sức Cấp Cứu",
+        module: "cap_cuu",
+        moduleName: "Cấp Cứu CPR",
+        moduleIcon: "⚡",
+        image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80",
+        questionsCount: 5,
+        timeMin: 5,
+        rating: 5.0,
+        badgeColor: "bg-red-50 text-red-700",
+        summary: "Chuẩn ép tim hồi sinh tim phổi: Tần số 100-120 lần/phút, độ sâu 5cm, để ngực nở hoàn toàn sau mỗi lần ép.",
+        q: "Tần số ép tim ngoài lồng ngực chuẩn cho người lớn khi cấp cứu ngừng tim theo khuyến cáo là bao nhiêu?",
+        options: [
+          "60 - 80 lần/phút",
+          "100 - 120 lần/phút",
+          "150 - 180 lần/phút",
+          "Càng nhanh càng tốt không cần đếm"
+        ],
+        correct: 1,
+        explanation: "Tần số chuẩn 100 - 120 lần/phút (nhịp bài hát Stayin' Alive) giúp tống máu đi nuôi não và tim tối ưu nhất."
+      }
+    ];
+
+    // ================= 2. ACTIVE FILTER STATE =================
+    let studentFilters = {
+      school: 'all',
+      year: 'all',
+      module: 'all',
+      keyword: ''
+    };
+
+    let activeQuizExam = null;
+    let selectedOptionIndex = null;
+    let isAnswerChecked = false;
+    let userXP = 320;
+
+    // ================= 3. INITIALIZATION =================
+    window.addEventListener('DOMContentLoaded', () => {
+      buildModuleChips();
+      renderStudentCards();
+    });
+
+    // ================= 4. FILTER CONTROLLERS =================
+    function selectSchool(schoolId) {
+      studentFilters.school = schoolId;
+      document.querySelectorAll('.school-pill').forEach(btn => {
+        if (btn.getAttribute('data-school') === schoolId) {
+          btn.classList.add('btn-3d-active');
+        } else {
+          btn.classList.remove('btn-3d-active');
+        }
+      });
+      document.getElementById('school-status-text').textContent = schoolId === 'all' ? 'Tất cả trường' : `Trường: ${schoolId}`;
+      renderStudentCards();
+    }
+
+    function selectYear(yearId) {
+      studentFilters.year = yearId;
+      document.querySelectorAll('.year-btn').forEach(btn => {
+        if (btn.getAttribute('data-year') === yearId) {
+          btn.classList.add('btn-3d-active');
+        } else {
+          btn.classList.remove('btn-3d-active');
+        }
+      });
+      document.getElementById('year-status-text').textContent = yearId === 'all' ? 'Tất cả năm học' : `Khối: ${yearId}`;
+      renderStudentCards();
+    }
+
+    function selectModule(moduleId) {
+      studentFilters.module = moduleId;
+      document.querySelectorAll('.module-chip').forEach(btn => {
+        if (btn.getAttribute('data-module') === moduleId) {
+          btn.className = 'module-chip px-3 py-1.5 rounded-xl text-xs font-black btn-3d-white btn-3d-active shrink-0';
+        } else {
+          btn.className = 'module-chip px-3 py-1.5 rounded-xl text-xs font-black btn-3d-white shrink-0';
+        }
+      });
+      renderStudentCards();
+    }
+
+    function handleStudentSearch() {
+      const val = document.getElementById('student-search-input').value.trim();
+      studentFilters.keyword = val;
+      renderStudentCards();
+    }
+
+    function resetAllFilters() {
+      studentFilters = {
+        school: 'all',
+        year: 'all',
+        module: 'all',
+        keyword: ''
+      };
+      document.getElementById('student-search-input').value = '';
+      selectSchool('all');
+      selectYear('all');
+      selectModule('all');
+    }
+
+    // Build the horizontal module chips
+    function buildModuleChips() {
+      const container = document.getElementById('module-chips-bar');
+      const modules = [
+        { id: 'all', name: 'Tất cả module', icon: '✨' },
+        { id: 'tim_mach', name: 'Tim Mạch', icon: '🫀' },
+        { id: 'ho_hap', name: 'Hô Hấp', icon: '🫁' },
+        { id: 'giai_phau', name: 'Giải Phẫu', icon: '🦴' },
+        { id: 'tieu_hoa', name: 'Tiêu Hóa', icon: '🍱' },
+        { id: 'duoc_ly', name: 'Dược Lý', icon: '💊' },
+        { id: 'than_kinh', name: 'Thần Kinh', icon: '🧠' },
+        { id: 'nhi_khoa', name: 'Nhi Khoa', icon: '👶' },
+        { id: 'cap_cuu', name: 'Cấp Cứu', icon: '⚡' }
+      ];
+
+      const html = modules.map(m => `
+        <button 
+          onclick="selectModule('${m.id}')" 
+          data-module="${m.id}" 
+          class="module-chip px-3 py-1.5 rounded-xl text-xs font-black btn-3d-white shrink-0 ${m.id === 'all' ? 'btn-3d-active' : ''}">
+          ${m.icon} ${m.name}
+        </button>
+      `).join('');
+
+      container.innerHTML = `<span class="text-xs font-black text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+        <span class="w-5 h-5 rounded-full bg-duored-600 text-white flex items-center justify-center text-[10px]">3-4</span>
+        <span>Module:</span>
+      </span>` + html;
+    }
+
+    // ================= 5. RENDER CARDS =================
+    function renderStudentCards() {
+      const grid = document.getElementById('student-cards-grid');
+      const emptyState = document.getElementById('student-empty');
+      const countBadge = document.getElementById('cards-count-badge');
+
+      const filtered = STUDENT_EXAMS.filter(item => {
+        if (studentFilters.school !== 'all' && item.schoolId !== studentFilters.school) return false;
+        if (studentFilters.year !== 'all' && item.year !== studentFilters.year) return false;
+        if (studentFilters.module !== 'all' && item.module !== studentFilters.module) return false;
+        if (studentFilters.keyword) {
+          const kw = studentFilters.keyword.toLowerCase();
+          const matchTitle = item.title.toLowerCase().includes(kw);
+          const matchSubj = item.subject.toLowerCase().includes(kw);
+          const matchMod = item.moduleName.toLowerCase().includes(kw);
+          if (!matchTitle && !matchSubj && !matchMod) return false;
+        }
+        return true;
+      });
+
+      countBadge.textContent = `${filtered.length} bộ đề`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = filtered.map(exam => `
+        <article class="bg-white rounded-3xl p-4 duo-card flex flex-col justify-between group">
+          
+          <div>
+            <!-- Card Image with friendly overlay badge -->
+            <div class="relative h-40 rounded-2xl overflow-hidden mb-3.5 bg-slate-100">
+              <img 
+                src="${exam.image}" 
+                alt="${exam.title}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                loading="lazy"
+              />
+              <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span class="px-2.5 py-1 rounded-xl text-[11px] font-black bg-white/95 backdrop-blur text-slate-800 shadow-sm">
+                  ${exam.schoolName}
+                </span>
+                <span class="px-2 py-1 rounded-xl text-[11px] font-black bg-duored-600 text-white shadow-sm">
+                  ${exam.yearLabel}
+                </span>
+              </div>
+              <div class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-xl text-[11px] font-black bg-slate-900/80 backdrop-blur text-white flex items-center gap-1">
+                <span>${exam.moduleIcon}</span>
+                <span>${exam.moduleName}</span>
+              </div>
+            </div>
+
+            <!-- Title & Brief Friendly Info -->
+            <h3 class="font-black text-slate-900 text-base leading-snug group-hover:text-duored-600 transition">
+              ${exam.title}
+            </h3>
+            <p class="text-xs font-semibold text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+              ${exam.summary}
+            </p>
+          </div>
+
+          <!-- Bottom Stats & Duolingo 3D Button -->
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-extrabold text-slate-400 mb-3">
+              <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-duored-500"></i> ${exam.timeMin} phút</span>
+              <span class="flex items-center gap-1"><i class="fa-solid fa-list-check text-duored-500"></i> ${exam.questionsCount} câu</span>
+              <span class="flex items-center gap-1 text-amber-500"><i class="fa-solid fa-star"></i> ${exam.rating}</span>
+            </div>
+
+            <button 
+              onclick="startDuoQuiz(${exam.id})"
+              class="w-full py-2.5 rounded-2xl text-white font-black text-xs sm:text-sm btn-3d-red flex items-center justify-center gap-2">
+              <i class="fa-solid fa-play text-xs"></i>
+              <span>BẮT ĐẦU HỌC</span>
+            </button>
+          </div>
+
+        </article>
+      `).join('');
+    }
+
+    // ================= 6. DUOLINGO STYLE QUIZ MODAL =================
+    function startDuoQuiz(examId) {
+      activeQuizExam = STUDENT_EXAMS.find(e => e.id === examId);
+      if (!activeQuizExam) return;
+
+      selectedOptionIndex = null;
+      isAnswerChecked = false;
+
+      // Populate elements
+      document.getElementById('modal-tag').textContent = `${activeQuizExam.moduleIcon} ${activeQuizExam.moduleName} • ${activeQuizExam.schoolName}`;
+      document.getElementById('modal-question-text').textContent = activeQuizExam.q;
+
+      // Render options
+      const optionsContainer = document.getElementById('modal-options-list');
+      optionsContainer.innerHTML = activeQuizExam.options.map((opt, idx) => `
+        <button 
+          onclick="selectQuizOption(${idx})" 
+          id="quiz-opt-${idx}" 
+          class="quiz-option w-full text-left p-3.5 sm:p-4 rounded-2xl font-bold text-sm sm:text-base text-slate-700 flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-slate-100 font-black text-xs flex items-center justify-center text-slate-500 shrink-0 option-badge">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="flex-1">${opt}</span>
+        </button>
+      `).join('');
+
+      // Reset Bottom Drawer
+      resetBottomDrawer();
+
+      // Show Modal
+      document.getElementById('duo-quiz-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDuoModal() {
+      document.getElementById('duo-quiz-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function selectQuizOption(index) {
+      if (isAnswerChecked) return;
+      selectedOptionIndex = index;
+
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`quiz-opt-${i}`);
+        if (btn) {
+          if (i === index) {
+            btn.classList.add('selected');
+          } else {
+            btn.classList.remove('selected');
+          }
+        }
+      }
+    }
+
+    function resetBottomDrawer() {
+      const drawer = document.getElementById('bottom-drawer');
+      const feedback = document.getElementById('drawer-feedback');
+      const actionBtn = document.getElementById('btn-quiz-action');
+
+      drawer.className = 'border-t-2 border-slate-100 p-4 sm:py-5 bg-white transition-all';
+      feedback.classList.add('hidden');
+      actionBtn.textContent = 'KIỂM TRA';
+      actionBtn.className = 'ml-auto px-8 py-3 rounded-2xl text-white font-black text-sm sm:text-base btn-3d-red';
+    }
+
+    function handleQuizAction() {
+      if (!isAnswerChecked) {
+        // Step 1: Validate check
+        if (selectedOptionIndex === null) {
+          alert('Hãy bấm chọn 1 đáp án A, B, C hoặc D trước bạn nhé! 😊');
+          return;
+        }
+
+        isAnswerChecked = true;
+        const isCorrect = selectedOptionIndex === activeQuizExam.correct;
+
+        // Visual feedback on options
+        const correctBtn = document.getElementById(`quiz-opt-${activeQuizExam.correct}`);
+        if (correctBtn) correctBtn.classList.add('correct');
+
+        if (!isCorrect) {
+          const wrongBtn = document.getElementById(`quiz-opt-${selectedOptionIndex}`);
+          if (wrongBtn) wrongBtn.classList.add('incorrect');
+        }
+
+        // Show bottom feedback like Duolingo
+        const drawer = document.getElementById('bottom-drawer');
+        const feedback = document.getElementById('drawer-feedback');
+        const icon = document.getElementById('drawer-icon');
+        const title = document.getElementById('drawer-title');
+        const desc = document.getElementById('drawer-desc');
+        const actionBtn = document.getElementById('btn-quiz-action');
+
+        feedback.classList.remove('hidden');
+
+        if (isCorrect) {
+          drawer.className = 'border-t-2 border-emerald-200 p-4 sm:py-5 bg-emerald-50 text-emerald-950 transition-all';
+          icon.className = 'w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl font-black shrink-0';
+          icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+          title.textContent = 'CHÍNH XÁC! Xuất sắc lắm! 🎉 (+20 XP)';
+          title.className = 'font-black text-emerald-700 text-sm sm:text-base';
+          desc.textContent = activeQuizExam.explanation;
+          actionBtn.className = 'ml-auto px-8 py-3 rounded-2xl text-white font-black text-sm sm:text-base bg-emerald-600 hover:bg-emerald-500 shadow-sm';
+          actionBtn.textContent = 'TIẾP TỤC ➔';
+
+          // Add XP
+          userXP += 20;
+          document.getElementById('user-xp').textContent = `${userXP} XP`;
+        } else {
+          drawer.className = 'border-t-2 border-duored-200 p-4 sm:py-5 bg-duored-50 text-duored-950 transition-all';
+          icon.className = 'w-10 h-10 rounded-2xl bg-duored-600 text-white flex items-center justify-center text-xl font-black shrink-0';
+          icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+          title.textContent = 'CHƯA ĐÚNG RỒI! Không sao, xem giải thích nhé:';
+          title.className = 'font-black text-duored-700 text-sm sm:text-base';
+          desc.textContent = activeQuizExam.explanation;
+          actionBtn.className = 'ml-auto px-8 py-3 rounded-2xl text-white font-black text-sm sm:text-base bg-duored-600 hover:bg-duored-500 shadow-sm';
+          actionBtn.textContent = 'ĐÃ HIỂU ➔';
+        }
+
+      } else {
+        // Step 2: Next or close
+        closeDuoModal();
+      }
+    }
+  </script>
+</body>
+</html>

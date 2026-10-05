@@ -1,0 +1,8 @@
+full_database.sql
+kbbcutgf_meduc.sql
+*.sql
+*.gz
+*.zip
+mariadb_data/
+tmp/
+.git/

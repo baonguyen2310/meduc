@@ -1,0 +1,8 @@
+{
+    "name": "Giao diện đồ điện tử",
+    "code": "app02",
+    "author": "Đặng Phương Nam",
+    "plugins": "article, product",
+    "version": "v1.0",
+    "description": "Giao diện đồ điện tử"
+}

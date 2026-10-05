@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Mục Khóa Học Y Khoa Toàn Diện - MedUC MasterClass</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  {literal}
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            medred: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+            },
+            medorange: {
+              500: '#f97316',
+              600: '#ea580c',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  {/literal}
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  {literal}
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .course-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(225, 29, 72, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      border-color: #fecdd3;
+    }
+    .play-btn-overlay {
+      opacity: 0;
+      transition: all 0.25s ease;
+      background: rgba(15, 23, 42, 0.55);
+    }
+    .course-card:hover .play-btn-overlay {
+      opacity: 1;
+    }
+    .active-pill {
+      background-color: #e11d48 !important;
+      color: #ffffff !important;
+      border-color: #e11d48 !important;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    }
+  </style>
+  {/literal}
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-medred-100 selection:text-medred-700 bg-slate-50">
+
+  <!-- ================= MEDUC OFFICIAL HEADER ================= -->
+  {$this->element('layout/header_meduc')}
+
+  <!-- ================= HERO CATALOG HEADER ================= -->
+  <section class="bg-gradient-to-b from-white via-rose-50/30 to-slate-50 border-b border-slate-200/80 pt-12 pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-medred-200 text-xs font-black text-medred-700 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-medred-600 animate-ping"></span>
+          <span>150+ KHÓA HỌC Y KHOA ĐÃ ĐƯỢC CHUẨN HÓA LÂM SÀNG</span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+          Làm Chủ Kiến Thức Y Khoa Cùng <br />
+          <span class="bg-gradient-to-r from-medred-600 via-rose-600 to-medorange-500 bg-clip-text text-transparent">
+            Bác Sĩ - Giảng Viên Đầu Ngành
+          </span>
+        </h1>
+        
+        <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+          Từ kiến thức cơ sở (Giải phẫu, Sinh lý, Hóa sinh) đến lâm sàng thực chiến (Nội, Ngoại, Sản, Nhi, ECG). Video 4K trực quan sinh động, tặng kèm sách in màu A5 gửi tận nhà.
+        </p>
+
+        <!-- Live Instant Search Bar -->
+        <div class="pt-4 max-w-2xl mx-auto">
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+            <input 
+              id="course-search" 
+              type="text" 
+              oninput="handleSearch()"
+              placeholder="Tìm kiếm khóa học theo tên (Ngoại cơ sở, ECG...), chuyên khoa hoặc giảng viên..." 
+              class="w-full pl-12 pr-28 py-4 rounded-2xl bg-white border-2 border-slate-200/90 focus:border-medred-600 focus:outline-none text-sm font-bold text-slate-900 shadow-sm transition"
+            />
+            <button 
+              onclick="resetFilter()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-extrabold transition">
+              Đặt lại
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Specialty Category Pills -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-2 max-w-5xl mx-auto">
+        <button onclick="filterCategory('all', this)" class="category-pill active-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          Tất Cả (12)
+        </button>
+        <button onclick="filterCategory('surgery', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          🩺 Ngoại Khoa
+        </button>
+        <button onclick="filterCategory('internal', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          🫀 Nội Khoa & Tim Mạch
+        </button>
+        <button onclick="filterCategory('ecg', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          ⚡ Đọc ECG & CĐHA
+        </button>
+        <button onclick="filterCategory('basic', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          🔬 Y1 - Y2 (Cơ Sở)
+        </button>
+        <button onclick="filterCategory('obgyn-peds', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          👶 Sản & Nhi Khoa
+        </button>
+        <button onclick="filterCategory('residency', this)" class="category-pill px-4 py-2 rounded-full text-xs font-extrabold border border-slate-200 bg-white text-slate-700 hover:border-medred-300 transition">
+          🎓 Bác Sĩ Nội Trú
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= COURSE CATALOG CONTENT ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
+    
+    <!-- Results Header / Filter Stats -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-200/80 mb-8">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
+          <span>Danh Sách Khóa Học Lâm Sàng</span>
+          <span id="course-count-badge" class="px-2.5 py-0.5 rounded-full bg-medred-100 text-medred-700 text-xs font-black">9 Khóa Học</span>
+        </h2>
+        <p class="text-xs text-slate-500 font-medium mt-0.5">Hiển thị các khóa học kèm video thực chứng và giáo trình in màu A5.</p>
+      </div>
+
+      <!-- Sorting Selector -->
+      <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+        <label>Sắp xếp theo:</label>
+        <select id="course-sort" onchange="sortCourses()" class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold focus:outline-none focus:border-medred-600">
+          <option value="featured">Nổi bật nhất (Flagship)</option>
+          <option value="rating">Đánh giá cao nhất (4.9★)</option>
+          <option value="popular">Nhiều học viên nhất</option>
+          <option value="price-asc">Học phí: Thấp đến Cao</option>
+          <option value="price-desc">Học phí: Cao đến Thấp</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Courses Grid (3 Columns) -->
+    <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Course 1: Ngoại Cơ Sở -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="surgery" data-price="1500000" data-rating="4.98" data-popular="4850" data-title="ngoại cơ sở khám bệnh ngoại khoa">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&auto=format&fit=crop&q=80" alt="Ngoại Cơ Sở" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-medred-600 text-white shadow-sm">FLAGSHIP 4K</span>
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900/80 backdrop-blur-sm text-amber-300">TẶNG SÁCH IN A5</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('ngoai-co-so')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-medred-600 flex items-center gap-1"><i class="fa-solid fa-stethoscope"></i> Ngoại Khoa</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.98</span>
+              <span class="text-slate-400 font-normal">(3.420)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">Ngoại Cơ Sở & Kỹ Năng Khám Ngoại Khoa Thực Chiến</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Thành thạo khám bụng cấp cứu, chẩn đoán viêm ruột thừa, tắc ruột, thoát vị bẹn và trọn bộ trạm thi chạy trạm OSCE 9+.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="BS. Nguyễn Văn Hùng" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">ThS. BSNT Nguyễn Văn Hùng</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">BV Hữu Nghị Việt Đức</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 24 Bài học • 12h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 4.850 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">3.000.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">1.500.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 2: The ECG in Practice -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="ecg" data-price="1200000" data-rating="4.96" data-popular="5100" data-title="the ecg in practice đọc điện tâm đồ tim mạch">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=80" alt="ECG in Practice" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-emerald-600 text-white shadow-sm">BEST SELLER</span>
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900/80 backdrop-blur-sm text-amber-300">100+ BẢN GHI ECG</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('ecg-practice')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-heart-pulse"></i> Điện Tâm Đồ</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.96</span>
+              <span class="text-slate-400 font-normal">(2.890)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">The ECG in Practice: Đọc Điện Tâm Đồ Từ Cơ Bản Đến Nâng Cao</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Nhận diện tức thì nhồi máu cơ tim ST chênh, loạn nhịp thất nguy hiểm, hội chứng WPW, block nhánh và phì đại buồng tim.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100&auto=format&fit=crop&q=80" alt="BSNT Trần Quang Minh" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">BSNT Trần Quang Minh</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">Viện Tim Mạch Quốc Gia</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 32 Bài học • 16h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 5.100 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">2.400.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">1.200.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 3: Sinh Lý Guyton -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="basic" data-price="990000" data-rating="4.95" data-popular="3200" data-title="sinh lý học y khoa guyton hall cơ sở">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=80" alt="Sinh Lý Học" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-indigo-600 text-white shadow-sm">NỀN TẢNG Y1-Y2</span>
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900/80 backdrop-blur-sm text-amber-300">TẶNG FLASHCARD</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('sinh-ly-guyton')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-indigo-600 flex items-center gap-1"><i class="fa-solid fa-dna"></i> Y Cơ Sở</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.95</span>
+              <span class="text-slate-400 font-normal">(1.940)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">[Sinh Lý 1, 2] Guyton & Hall: Cơ Bản Đến Chuyên Sâu</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Hiểu bản chất cơ chế sinh lý tim mạch, hô hấp, thận - thăng bằng kiềm toan, thần kinh và nội tiết chuyển hóa.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1594824813576-a07fb0b9a89c?w=100&auto=format&fit=crop&q=80" alt="ThS. BS Lê Hoàng Mai" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">ThS. BS Lê Hoàng Mai</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">Đại Học Y Hà Nội</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 18 Chương • 14h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 3.200 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">1.800.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">990.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 4: Lâm Sàng Nội Khoa -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="internal" data-price="1600000" data-rating="4.97" data-popular="3900" data-title="lâm sàng nội khoa bệnh học cấp cứu">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&auto=format&fit=crop&q=80" alt="Nội Khoa" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-cyan-600 text-white shadow-sm">LÂM SÀNG Y3-Y4</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('noi-khoa')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-cyan-600 flex items-center gap-1"><i class="fa-solid fa-hospital"></i> Nội Khoa</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.97</span>
+              <span class="text-slate-400 font-normal">(2.150)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">[Lâm Sàng - Nội Khoa] Tiếp Cận Triệu Chứng Đến Bệnh Học Cấp Cứu</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Khám tim, phổi, bụng, thần kinh chuẩn quốc tế và phác đồ xử trí suy hô hấp, hôn mê, sốc nhiễm khuẩn, xuất huyết tiêu hóa.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80" alt="BSNT Phan Thanh Tùng" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">BSNT Phan Thanh Tùng</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">Cấp Cứu A9 • BV Bạch Mai</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 28 Ca lâm sàng • 15h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 3.900 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">3.200.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">1.600.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 5: Sản Khoa Thực Hành -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="obgyn-peds" data-price="1350000" data-rating="4.93" data-popular="2600" data-title="sản khoa thực hành đỡ đẻ thai kỳ">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" alt="Sản Khoa" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-pink-600 text-white shadow-sm">SẢN KHOA 4K</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('san-khoa')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-pink-600 flex items-center gap-1"><i class="fa-solid fa-person-pregnant"></i> Sản Phụ Khoa</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.93</span>
+              <span class="text-slate-400 font-normal">(1.420)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">[Lâm Sàng Sản Khoa] Cơ Chế Đỡ Đẻ & Xử Trí Tai Biến Sản Khoa</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Theo dõi chuyển dạ, đọc biểu đồ Monitoring sản khoa, cơ chế đẻ ngôi chỏm và cấp cứu băng huyết sau sinh.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1594824813576-a07fb0b9a89c?w=100&auto=format&fit=crop&q=80" alt="ThS. BSNT Vũ Thu Trang" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">ThS. BSNT Vũ Thu Trang</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">BV Phụ Sản Trung Ương</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 20 Video • 10h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 2.600 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">2.700.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">1.350.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 6: CĐHA & X-Quang -->
+      <div class="course-card bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col" data-category="ecg" data-price="1400000" data-rating="4.99" data-popular="6200" data-title="chẩn đoán hình ảnh x-quang ngực ct scanner">
+        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 group">
+          <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80" alt="Chẩn đoán hình ảnh" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-violet-600 text-white shadow-sm">TOP RATED</span>
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900/80 backdrop-blur-sm text-amber-300">200+ CA DICOM</span>
+          </div>
+          <div class="play-btn-overlay absolute inset-0 flex items-center justify-center cursor-pointer" onclick="openPreviewModal('xquang-ct')">
+            <div class="w-14 h-14 rounded-full bg-medred-600 text-white flex items-center justify-center text-xl shadow-xl transform hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center justify-between text-xs font-extrabold text-slate-500 mb-2.5">
+            <span class="text-violet-600 flex items-center gap-1"><i class="fa-solid fa-x-ray"></i> Chẩn Đoán Hình Ảnh</span>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-slate-900">4.99</span>
+              <span class="text-slate-400 font-normal">(3.650)</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-black text-slate-900 leading-snug hover:text-medred-600 transition mb-2">
+            <a href="/course-detail">Kỹ Năng Đọc X-Quang Ngực & Cắt Lớp Vi Tính (CT) Thực Hành</a>
+          </h3>
+
+          <p class="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mb-4">
+            Quy trình 7 bước đọc phim X-Quang không bỏ sót tổn thương: tràn khí, tràn dịch, đông đặc phổi, u trung thất và chấn thương sọ não.
+          </p>
+
+          <div class="flex items-center gap-2 pb-4 border-b border-slate-100 mb-4 text-xs">
+            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=100&auto=format&fit=crop&q=80" alt="ThS. BSNT Lê Văn Bảo" class="w-7 h-7 rounded-full object-cover border border-slate-200" />
+            <div>
+              <span class="font-extrabold text-slate-800">ThS. BSNT Lê Văn Bảo</span>
+              <span class="text-[10px] text-slate-400 block font-semibold">CĐHA • BV Hữu Nghị Việt Đức</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-5 font-semibold">
+            <span><i class="fa-solid fa-circle-play text-medred-500 mr-1"></i> 26 Bài học • 13h</span>
+            <span><i class="fa-solid fa-users text-medred-500 mr-1"></i> 6.200 Học viên</span>
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-slate-400 line-through font-bold">2.800.000đ</div>
+              <div class="text-lg font-black text-medred-600 leading-none">1.400.000đ</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/course-detail" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
+                Chi tiết
+              </a>
+              <a href="/checkout-v2" class="px-4 py-2 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shadow-sm shadow-medred-600/20 transition">
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty search result alert -->
+    <div id="no-courses" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200 mt-6">
+      <div class="w-16 h-16 rounded-full bg-rose-50 text-medred-600 flex items-center justify-center text-2xl mx-auto mb-4">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <h3 class="text-lg font-black text-slate-900">Không tìm thấy khóa học phù hợp</h3>
+      <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Vui lòng thử tìm kiếm với từ khóa khác (ví dụ: Ngoại, ECG, Sinh lý, Nội khoa...) hoặc nhấn "Đặt lại".</p>
+      <button onclick="resetFilter()" class="mt-4 px-5 py-2.5 rounded-xl bg-medred-600 text-white font-extrabold text-xs hover:bg-medred-700 transition">
+        Xem tất cả khóa học
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ================= ALL-ACCESS VIP PASS BANNER ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 w-full">
+    <div class="rounded-3xl bg-gradient-to-r from-slate-950 via-slate-900 to-medred-900 p-8 sm:p-12 text-white relative overflow-hidden shadow-xl border border-slate-800">
+      <div class="relative z-10 max-w-2xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-medred-600/30 text-medred-400 border border-medred-500/40 text-xs font-black uppercase">
+          <i class="fa-solid fa-crown text-amber-400"></i> MEDUC ALL-ACCESS PASS
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
+          Học Không Giới Hạn Toàn Bộ Khóa Học Y Khoa Trong 1 Năm
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+          Tiết kiệm hơn 70% chi phí. Truy cập không giới hạn hơn 150+ khóa học MasterClass, tặng kèm trọn bộ 10 cuốn sách in màu A5, 713 bộ đề MedDuo và được hỏi đáp trực tiếp cùng ThS - BSNT qua Group Zalo VIP.
+        </p>
+        <div class="pt-2 flex flex-wrap items-center gap-4">
+          <a href="/checkout-v2" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-medred-600 to-rose-600 hover:opacity-95 text-white font-black text-sm shadow-lg shadow-medred-600/30 transition flex items-center gap-2">
+            <span>ĐĂNG KÝ GÓI HỘI VIÊN (3.990.000đ/NĂM)</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <span class="text-xs text-slate-400 font-bold">Chỉ 10.900đ / ngày</span>
+        </div>
+      </div>
+      <div class="absolute -right-12 -bottom-12 w-96 h-96 rounded-full bg-medred-600/10 blur-3xl pointer-events-none"></div>
+    </div>
+  </section>
+
+  <!-- ================= PREVIEW VIDEO MODAL ================= -->
+  <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl overflow-hidden max-w-3xl w-full shadow-2xl border border-slate-200">
+      <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+        <h4 id="preview-modal-title" class="text-sm font-black text-slate-900 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-medred-600 animate-ping"></span>
+          <span>Xem Thử Video Bài Giảng</span>
+        </h4>
+        <button onclick="closePreviewModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="relative aspect-video bg-slate-950">
+        <iframe id="preview-iframe" class="w-full h-full" src="https://www.youtube.com/embed/mvoFlFPB-rE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="p-5 flex items-center justify-between bg-slate-50 gap-4">
+        <div>
+          <p class="text-xs font-black text-slate-800">Khóa Học Đã Bao Gồm Đầy Đủ Video 4K & Sách In Màu</p>
+          <p class="text-[11px] text-slate-500">Đăng ký học ngay để kích hoạt toàn bộ giáo trình và nhận sách tận nhà.</p>
+        </div>
+        <a href="/checkout-v2" class="px-5 py-2.5 rounded-xl bg-medred-600 hover:bg-medred-700 text-white font-extrabold text-xs shrink-0 transition">
+          Đăng ký học ngay
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-950 text-slate-400 py-12 text-xs font-semibold border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
+        <div class="space-y-3">
+          <img src="https://cdn.meduc.vn/media/core/logo/logo-meduc.png" alt="MedUC" class="h-10 w-auto brightness-200" />
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Học Y Bứt Phá Cùng ThS - BSNT. Nền tảng đào tạo y khoa trực tuyến tiên phong ứng dụng mô hình thực chứng và công nghệ cao tại Việt Nam.
+          </p>
+        </div>
+        <div>
+          <h5 class="text-white font-black text-xs uppercase mb-3 tracking-wider">Khóa Học Trọng Điểm</h5>
+          <ul class="space-y-2 text-[11px]">
+            <li><a href="/course-detail" class="hover:text-white transition">Ngoại Cơ Sở 4K</a></li>
+            <li><a href="/courses" class="hover:text-white transition">The ECG in Practice</a></li>
+            <li><a href="/courses" class="hover:text-white transition">Sinh Lý Học Guyton</a></li>
+            <li><a href="/courses" class="hover:text-white transition">Lâm Sàng Nội Khoa A9</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-white font-black text-xs uppercase mb-3 tracking-wider">Hệ Sinh Thái MedUC</h5>
+          <ul class="space-y-2 text-[11px]">
+            <li><a href="/medduo" class="hover:text-white transition">Luyện Đề MedDuo (713 Đề)</a></li>
+            <li><a href="/article-detail" class="hover:text-white transition">Tạp Chí Ca Lâm Sàng</a></li>
+            <li><a href="/portal" class="hover:text-white transition">Cổng Học Viên MedUC</a></li>
+            <li><a href="/masterclass" class="hover:text-white transition">Trang Chủ MasterClass</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-white font-black text-xs uppercase mb-3 tracking-wider">Hỗ Trợ & Liên Hệ</h5>
+          <p class="text-[11px] text-slate-400">Hotline: <span class="text-white font-bold">0339.308.997</span></p>
+          <p class="text-[11px] text-slate-400 mt-1">Email: <span class="text-white font-bold">MedUC.vn@gmail.com</span></p>
+          <p class="text-[11px] text-slate-400 mt-1">Văn phòng: Tầng 2, 11 Phong Châu, TP. Huế</p>
+        </div>
+      </div>
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
+        <p>© 2026 MedUC.vn. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="/" class="hover:text-white transition">Về Web Gốc</a>
+          <span>•</span>
+          <a href="/portal" class="hover:text-white transition">Đăng Nhập</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {literal}
+  <script>
+    let currentCategory = 'all';
+
+    function filterCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.category-pill').forEach(el => el.classList.remove('active-pill'));
+      if (btn) btn.classList.add('active-pill');
+      handleFilterAndSearch();
+    }
+
+    function handleSearch() {
+      handleFilterAndSearch();
+    }
+
+    function handleFilterAndSearch() {
+      const q = document.getElementById('course-search').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.course-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const title = card.getAttribute('data-title') || '';
+        const matchCat = (currentCategory === 'all' || cat === currentCategory);
+        const matchQuery = (!q || title.includes(q) || card.textContent.toLowerCase().includes(q));
+
+        if (matchCat && matchQuery) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('course-count-badge').textContent = `${visibleCount} Khóa Học`;
+      const emptyAlert = document.getElementById('no-courses');
+      if (visibleCount === 0) {
+        emptyAlert.classList.remove('hidden');
+      } else {
+        emptyAlert.classList.add('hidden');
+      }
+    }
+
+    function sortCourses() {
+      const sortVal = document.getElementById('course-sort').value;
+      const grid = document.getElementById('course-grid');
+      const cards = Array.from(document.querySelectorAll('.course-card'));
+
+      cards.sort((a, b) => {
+        if (sortVal === 'rating') {
+          return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+        } else if (sortVal === 'popular') {
+          return parseInt(b.dataset.popular) - parseInt(a.dataset.popular);
+        } else if (sortVal === 'price-asc') {
+          return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+        } else if (sortVal === 'price-desc') {
+          return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+        }
+        return 0;
+      });
+
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    function resetFilter() {
+      document.getElementById('course-search').value = '';
+      currentCategory = 'all';
+      document.querySelectorAll('.category-pill').forEach(el => el.classList.remove('active-pill'));
+      document.querySelector('.category-pill').classList.add('active-pill');
+      handleFilterAndSearch();
+    }
+
+    function openPreviewModal(courseKey) {
+      document.getElementById('preview-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePreviewModal() {
+      document.getElementById('preview-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function toggleHeaderSearch() {
+      const el = document.getElementById('header-search-bar');
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function toggleMobileNav() {
+      const el = document.getElementById('mobile-nav-drawer');
+      if (el) el.classList.toggle('hidden');
+    }
+  </script>
+  {/literal}
+
+</body>
+</html>

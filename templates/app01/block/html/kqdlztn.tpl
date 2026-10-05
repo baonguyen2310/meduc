@@ -1,0 +1,1 @@
+{strip}<div id="pdf_container" class="pdf-container"></div>{/strip}

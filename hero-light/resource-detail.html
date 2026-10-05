@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Đọc giới thiệu và xem tài liệu học tập Y khoa từ thư viện Meduc." />
+    <title>Chi tiết tài liệu — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/hero.css" />
+    <link rel="stylesheet" href="assets/light.css" />
+    <link rel="stylesheet" href="assets/about.css" />
+    <link rel="stylesheet" href="assets/resource-detail.css" />
+    <script src="assets/resource-detail.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M5 2h9l5 5v15H5zM14 2v6h5M8 13h8M8 17h8" /></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" /><circle cx="12" cy="12" r="2.7" /></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" /></symbol>
+    </svg>
+
+    <header class="site-header about-header">
+      <div class="shell about-header-inner">
+        <a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+        <span class="header-page-name">Thư viện học tập</span>
+        <div class="header-actions"><a class="header-home" href="courses.html">Khóa học</a><a class="button header-course" id="header-list-link" href="documents.html">Xem tất cả tài liệu <svg class="icon"><use href="#i-arrow" /></svg></a></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <nav class="resource-crumb shell" aria-label="Đường dẫn trang"><a href="index.html">Trang chủ</a><span aria-hidden="true">/</span><a id="crumb-list-link" href="documents.html">Tài liệu học tập</a><span aria-hidden="true">/</span><span id="resource-crumb-name">Chi tiết tài liệu</span></nav>
+
+      <section class="resource-hero" aria-labelledby="resource-title"><div class="shell">
+        <div class="resource-intro"><span class="eyebrow"><span class="eyebrow-line"></span> TÀI LIỆU HỌC TẬP <span id="resource-topic"></span></span><h1 id="resource-title">ĐANG TẢI TÀI LIỆU.</h1><p id="resource-lead">Khám phá nội dung và tệp đính kèm trong thư viện học tập Meduc.</p><div class="resource-meta" id="resource-meta"></div><div class="resource-hero-actions"><a class="button" id="resource-read-link" href="#xem-tai-lieu">Xem tài liệu <svg class="icon"><use href="#i-arrow" /></svg></a><a class="resource-plain-link" id="resource-original-link" href="https://meduc.vn/tai-lieu-hoc-tap" target="_blank" rel="noopener noreferrer">Trang gốc trên Meduc ↗</a></div></div>
+        <div class="resource-cover"><div class="resource-cover-inner"><img id="resource-cover-image" alt="Ảnh minh họa tài liệu Meduc" /><span class="resource-cover-fallback" id="resource-cover-fallback" hidden><svg class="icon"><use href="#i-file" /></svg> MEDUC LIBRARY</span></div><div class="cover-caption"><span>MEDUC · STUDY RESOURCES</span><span id="cover-index">TÀI LIỆU Y KHOA</span></div></div>
+      </div></section>
+
+      <nav class="resource-section-nav" aria-label="Nội dung trang"><div class="shell"><a href="#gioi-thieu">Giới thiệu</a><a href="#xem-tai-lieu">Xem tài liệu</a><a href="#tai-lieu-lien-quan">Tài liệu liên quan</a></div></nav>
+
+      <section class="resource-body" id="gioi-thieu" aria-labelledby="resource-about-title"><div class="shell resource-body-layout"><div class="resource-article"><span class="eyebrow">01 / TỔNG QUAN</span><h2 id="resource-about-title">ĐỌC TRƯỚC KHI<br /><span>BẮT ĐẦU HỌC.</span></h2><div class="resource-prose" id="resource-content"><p>Đang tải nội dung tài liệu...</p></div></div><aside class="resource-sidebar" aria-label="Thông tin tài liệu"><div class="sidebar-card"><span class="sidebar-kicker">TRONG TÀI LIỆU NÀY</span><nav id="resource-toc" aria-label="Mục lục nội dung"></nav></div><div class="sidebar-card sidebar-files"><span class="sidebar-kicker">TỆP ĐÍNH KÈM</span><div id="resource-file-list"></div></div></aside></div></section>
+
+      <section class="resource-viewer-section" id="xem-tai-lieu" aria-labelledby="resource-viewer-title"><div class="shell"><div class="resource-section-heading"><div><span class="eyebrow">02 / XEM TÀI LIỆU</span><h2 id="resource-viewer-title">MỞ TỆP.<br /><span>ĐỌC SÂU HƠN.</span></h2></div><p>Chọn tệp đính kèm và mở trong tab mới bằng trình xem của trình duyệt.</p></div><div class="resource-file-tabs" id="resource-file-tabs" role="group" aria-label="Chọn tệp đính kèm"></div><div class="resource-preview" id="resource-preview"><div class="preview-placeholder" id="preview-placeholder"><div class="preview-art"><img id="preview-cover-image" alt="Ảnh minh họa tài liệu" /><span id="preview-art-fallback" hidden>MEDUC<br />FILE</span></div><div class="preview-details"><svg class="icon"><use href="#i-file" /></svg><span id="preview-file-kind">TỆP ĐÍNH KÈM</span><h3 id="preview-file-name">Chọn một tệp để bắt đầu đọc.</h3><p>Tệp được lưu trong thư viện Meduc và sẽ mở ở tab mới.</p><a id="preview-button" href="https://meduc.vn/tai-lieu-hoc-tap" target="_blank" rel="noopener noreferrer">Mở tệp <svg class="icon"><use href="#i-arrow" /></svg></a></div></div></div><div class="resource-viewer-bottom"><span>Nguồn tệp: Meduc</span><a id="preview-open-link" href="https://meduc.vn/tai-lieu-hoc-tap" target="_blank" rel="noopener noreferrer">Trang tài liệu gốc trên Meduc <svg class="icon"><use href="#i-arrow" /></svg></a></div></div></section>
+
+      <section class="resource-related" id="tai-lieu-lien-quan" aria-labelledby="resource-related-title"><div class="shell"><div class="resource-section-heading"><div><span class="eyebrow">03 / ĐỌC TIẾP</span><h2 id="resource-related-title">THÊM TÀI LIỆU<br /><span>CÙNG CHỦ ĐỀ.</span></h2></div><a class="resource-plain-link" id="related-list-link" href="documents.html">Xem tất cả tài liệu ↗</a></div><div class="resource-related-grid" id="resource-related-grid"></div></div></section>
+      <noscript><p class="resource-noscript">Bật JavaScript để xem tài liệu, hoặc mở <a href="https://meduc.vn/tai-lieu-hoc-tap">thư viện Meduc</a>.</p></noscript>
+    </main>
+
+    <footer class="about-footer"><div class="shell footer-top"><div><a class="brand" href="index.html" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><p>Học sâu, hiểu đúng.<br />Vững bước nghề Y.</p></div><nav aria-label="Liên kết cuối trang"><a href="index.html">Trang chủ</a><a href="courses.html">Khóa học</a><a href="documents.html">Tài liệu</a></nav></div><div class="shell footer-bottom"><span>© 2026 Meduc · Bản xem trước giao diện chi tiết tài liệu</span><a href="#main">Lên đầu trang ↑</a></div></footer>
+  </body>
+</html>

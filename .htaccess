@@ -1,0 +1,21 @@
+RewriteEngine On
+RewriteBase /
+<FilesMatch "^\..*">
+    Require all denied
+</FilesMatch>
+RewriteCond %{HTTP_HOST} ^www.meduc.vn [NC]
+RewriteRule ^(.*)$ https://meduc.vn/$1 [L,R=301]
+
+<IfModule mod_security.c>
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+RewriteOptions inherit
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>

@@ -1,0 +1,39 @@
+# Database dumps & large archives
+full_database.sql
+*.sql
+*.sql.gz
+*.zip
+*.tar.gz
+
+# Cache, sessions, temporary files & logs
+/tmp/
+coredaca/tmp/
+*.log
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# IDE & editor configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+meduc_2033_de_thi_moi_draft.sql
+
+# Deployment secrets and generated previews
+.env
+.env.*
+!.env.example
+google-service-account.json
+scripts/__pycache__/
+*.pyc
+hero-light/previews/
+design-references/
+HUONG_DAN_NAP_DE_THI_MEDUC_HOSTING.md

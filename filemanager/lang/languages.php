@@ -1,0 +1,42 @@
+<?php
+
+return array(
+
+    'az' => 'Azərbaycan dili',
+    'bg' => 'български език',
+    'ca' => 'Català, valencià',
+    'cs' => 'čeština, český jazyk',
+    'da' => 'Dansk',
+    'de' => 'Deutsch',
+    'el' => 'ελληνικά',
+    'en' => 'English',
+    'es' => 'Español',
+    'fa' => 'فارسی',
+    'fr' => 'Français',
+    'he' => 'Hebrew (Israel)',
+    'hr' => 'Hrvatski jezik',
+    'hu' => 'Magyar',
+    'id' => 'Bahasa Indonesia',
+    'it' => 'Italiano',
+    'ja' => '日本',
+    'lt' => 'Lietuvių kalba',
+    'mn' => 'монгол',
+    'nb' => 'Norsk bokmål',
+    'nn' => 'Norsk nynorsk',
+    'nl' => 'Nederlands, Vlaams',
+    'pl' => 'Język polski, polszczyzna',
+    'pt_BR' => 'Português(Brazil)',
+    'pt_PT' => 'Português',
+    'ro' => 'Română',
+    'ru' => 'Pусский язык',
+    'sk' => 'Slovenčina',
+    'sl' => 'Slovenski jezik',
+    'sv' => 'Svenska',
+    'th' => 'ไทย',
+    'tr' => 'Türkçe',
+    'uk' => 'Yкраїнська мова',
+    'vi' => 'Tiếng Việt',
+    'zh' => '中文 (Zhōngwén), 汉语, 漢語',
+
+    // source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+);

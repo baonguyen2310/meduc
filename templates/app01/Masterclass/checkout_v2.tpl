@@ -1,0 +1,56 @@
+<!-- Generated from hero-light/checkout.html by scripts/sync_checkout_template.py. -->
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Xem trước bước thanh toán khóa học và sách Y khoa Meduc." />
+    <title>Thanh toán — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="/hero-light/assets/favicon.svg" />
+    <link rel="preload" href="/hero-light/assets/fonts/anton-regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/hero-light/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/hero-light/assets/hero.css" />
+    <link rel="stylesheet" href="/hero-light/assets/light.css" />
+    <link rel="stylesheet" href="/hero-light/assets/checkout.css" />
+    <script src="/hero-light/assets/checkout.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" /></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></symbol>
+    </svg>
+
+    <header class="checkout-header"><div class="checkout-shell checkout-header-inner">
+      <a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+      <nav class="checkout-progress" aria-label="Các bước thanh toán"><span class="is-complete" data-progress="1"><b>01</b> Sản phẩm</span><span class="is-current" data-progress="2" aria-current="step"><b>02</b> Thông tin</span><span data-progress="3"><b>03</b> Xác nhận</span></nav>
+      <a class="checkout-header-back" id="header-back" href="/khoa-hoc-v2">Tiếp tục khám phá <svg class="icon"><use href="#i-arrow" /></svg></a>
+    </div></header>
+
+    <main id="main"><div class="checkout-shell">
+      <div class="checkout-intro"><div><span class="checkout-eyebrow"><span></span> THANH TOÁN / MEDUC</span><h1>THÊM MỘT BƯỚC.<br /><em>GẦN HƠN VỚI TRI THỨC.</em></h1><p>Kiểm tra sản phẩm và thông tin trước khi chuyển sang Meduc để hoàn tất đặt hàng.</p></div><span class="checkout-preview-tag">BẢN XEM TRƯỚC GIAO DIỆN</span></div>
+
+      <div class="checkout-layout" id="checkout-layout">
+        <div class="checkout-main-column">
+          <section class="checkout-panel product-panel" aria-labelledby="product-title"><div class="panel-heading"><span class="panel-index">01</span><div><span class="panel-kicker">LỰA CHỌN CỦA BẠN</span><h2 id="product-title">Sản phẩm đã chọn</h2></div><a class="panel-change" id="change-product" href="/khoa-hoc-v2">Đổi sản phẩm ↗</a></div><div class="chosen-product" id="chosen-product"><div class="chosen-cover"></div><div><span>ĐANG TẢI</span><h3>Đang tải sản phẩm Meduc...</h3></div></div></section>
+
+          <form class="checkout-panel buyer-panel" id="buyer-form" novalidate><div class="panel-heading"><span class="panel-index">02</span><div><span class="panel-kicker">THÔNG TIN LIÊN HỆ</span><h2>Thông tin người mua</h2></div></div><p class="form-intro">Điền thông tin để xem trước bước xác nhận. Bản giao diện này không gửi dữ liệu và chưa tạo đơn hàng.</p>
+            <div class="checkout-fields"><label class="checkout-field checkout-field-full">Họ và tên <span>*</span><input id="buyer-name" name="name" type="text" autocomplete="name" placeholder="Nhập họ và tên" required maxlength="100" /></label><label class="checkout-field">Số điện thoại <span>*</span><input id="buyer-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Nhập số điện thoại" required minlength="9" maxlength="18" pattern="[0-9+(). -]+" /></label><label class="checkout-field">Email <span>*</span><input id="buyer-email" name="email" type="email" autocomplete="email" placeholder="Nhập email" required /></label><label class="checkout-field checkout-field-full" id="delivery-field" hidden>Địa chỉ nhận sách <span>*</span><textarea id="buyer-address" name="address" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố" rows="3"></textarea></label></div>
+            <div class="checkout-form-bottom"><p><svg class="icon"><use href="#i-lock" /></svg> Thông tin chỉ hiển thị trong bản xem trước này.</p><button type="submit" class="button checkout-primary" id="review-button" disabled>Xem lại thông tin <svg class="icon"><use href="#i-arrow" /></svg></button></div>
+          </form>
+
+          <section class="checkout-panel review-panel" id="review-panel" aria-labelledby="review-title" hidden><div class="panel-heading"><span class="panel-index">03</span><div><span class="panel-kicker">XÁC NHẬN</span><h2 id="review-title">Kiểm tra lần cuối</h2></div></div><div class="review-details" id="review-details"></div><p class="review-note">Chưa có đơn hàng hoặc khoản thanh toán nào được tạo. Trang Meduc sẽ hiển thị giá, tình trạng sản phẩm và phương thức thanh toán chính thức.</p><div class="review-actions"><button type="button" class="review-edit" id="review-edit">Sửa thông tin</button><a class="button checkout-primary" id="live-checkout-link" href="https://meduc.vn" target="_blank" rel="noopener noreferrer">Mở trang sản phẩm Meduc <svg class="icon"><use href="#i-arrow" /></svg></a></div></section>
+        </div>
+
+        <aside class="checkout-summary" aria-labelledby="summary-title"><div class="summary-top"><span class="summary-eyebrow">MEDUC / ĐƠN HÀNG</span><h2 id="summary-title">Tóm tắt lựa chọn</h2><p>Sản phẩm và giá tham khảo từ dữ liệu Meduc ngày <span id="price-date">—</span>.</p></div><div class="summary-product"><div class="summary-image"><img id="summary-cover" alt="Ảnh sản phẩm đã chọn" /></div><div><span id="summary-kind">KHÓA HỌC</span><h3 id="summary-name">Đang tải sản phẩm...</h3><small id="summary-detail"></small></div></div><div class="summary-lines"><div><span>Giá niêm yết</span><strong id="summary-price">—</strong></div><div id="summary-discount-row" hidden><span>Mức giảm</span><strong id="summary-discount">—</strong></div><div class="summary-total"><span>Giá tham khảo</span><strong id="summary-total">—</strong></div></div><p class="summary-shipping" id="summary-shipping">Giá cuối cùng được xác nhận trên Meduc.</p><div class="summary-trust"><svg class="icon"><use href="#i-check" /></svg><span>Chỉ tiếp tục trên website Meduc khi bạn đã kiểm tra thông tin sản phẩm.</span></div></aside>
+      </div>
+
+      <section class="checkout-help" aria-labelledby="help-title"><div><span class="checkout-eyebrow"><span></span> CẦN BIẾT TRƯỚC KHI ĐẶT HÀNG</span><h2 id="help-title">RÕ RÀNG<br />TỪ ĐẦU.</h2></div><div class="help-list"><details><summary>Giá hiển thị ở đây đã là giá cuối cùng chưa?</summary><p>Đây là giá trong bản dữ liệu dùng để thiết kế giao diện. Hãy xác nhận giá và ưu đãi hiện hành trên trang sản phẩm Meduc trước khi đặt hàng.</p></details><details><summary>Điền biểu mẫu này có tạo đơn hàng không?</summary><p>Không. Biểu mẫu chỉ giúp xem trước cách trình bày bước xác nhận; thông tin không được gửi tới máy chủ.</p></details><details><summary>Tôi thanh toán ở đâu?</summary><p>Sau khi xem lại thông tin, mở trang sản phẩm Meduc và làm theo quy trình đặt hàng, thanh toán đang hoạt động tại đó.</p></details></div></section>
+    </div><div class="checkout-status" id="checkout-status" role="status" hidden></div></main>
+
+    <footer class="checkout-footer"><div class="checkout-shell checkout-footer-inner"><a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><span>© 2026 Meduc</span><a id="footer-browse-link" href="/khoa-hoc-v2">Khám phá khóa học ↗</a></div></footer>
+    <noscript><p class="checkout-noscript">Bật JavaScript để chọn sản phẩm, hoặc <a href="https://meduc.vn">mở Meduc</a>.</p></noscript>
+  </body>
+</html>

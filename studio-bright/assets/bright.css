@@ -1,0 +1,788 @@
+/* Meduc Bright: color-only foundation with a more energetic leaderboard.
+   Loaded after the untouched layout stylesheet. The original studio is independent. */
+:root {
+  --paper: #ffffff;
+  --white: #ffffff;
+  --ink: #15171d;
+  --muted: #626672;
+  --red: #de2334;
+  --red-dark: #be1728;
+  --line: #e5e7ee;
+  --sage: #edf5ff;
+  --green: #16704b;
+  --rose: #fff0f2;
+  --sand: #fff4e7;
+  --blue: #eaf1ff;
+  --lilac: #f0edff;
+  --red-soft: #fff5f6;
+  --blue-ink: #345cd0;
+  --surface: #f7f8fc;
+}
+
+::selection {
+  background: #ffd4da;
+  color: var(--ink);
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline-color: #de233480;
+}
+.site-header {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: var(--line);
+}
+.site-footer,
+.main-nav.open,
+dialog {
+  background: #fff;
+}
+.site-footer {
+  border-color: var(--line);
+}
+.footer-col a {
+  color: #545967;
+}
+.footer-bottom {
+  color: #666b76;
+}
+.eyebrow {
+  color: #525867;
+}
+.eyebrow::before {
+  background: var(--red);
+}
+.hero h1 span,
+.study-intro h1 .muted,
+.instructor-intro h1 .muted,
+.leaderboard-heading h1 .muted {
+  color: var(--red);
+}
+.hero-copy > p,
+.subhead {
+  color: #5b606d;
+}
+.hero-note {
+  color: #676d79;
+}
+.hero-note::before {
+  background: #e897a0;
+}
+.hero-person img,
+.course-cover img,
+.mentor-visual img,
+.catalog-feature-img img,
+.detail-cover img,
+.instructor-poster img {
+  filter: none;
+}
+.hero-person {
+  background: #343740;
+}
+.hero-person::after {
+  background: linear-gradient(transparent, #11131edb);
+}
+.course-cover::after {
+  background: linear-gradient(transparent, #10131de8);
+}
+.mentor-visual::after,
+.detail-cover::after,
+.instructor-poster::after,
+.lesson-preview-visual::after {
+  background: linear-gradient(transparent, #10131de8);
+}
+.course-cover,
+.catalog-feature-img,
+.detail-cover,
+.instructor-poster,
+.lesson-preview-visual {
+  background: #343740;
+}
+.hero-person-copy small,
+.hero-person-copy p,
+.cover-teacher small,
+.cover-teacher span,
+.mentor-caption p,
+.poster-info small,
+.poster-info p {
+  color: #ffffffda;
+}
+.poster-top span:last-child {
+  color: #ffffffcf;
+}
+.cover-play {
+  background: #ffffff14;
+  border-color: #ffffffb3;
+}
+.social-proof p {
+  color: #606573;
+}
+.stars,
+.course-bottom .rating .icon,
+.course-rating .icon {
+  color: #a46d06;
+}
+.course-bottom .rating .icon,
+.course-rating .icon {
+  fill: #a46d06;
+}
+.proof-band {
+  border-color: var(--line);
+  background: #fff;
+}
+.proof-stat strong > .red {
+  color: var(--red);
+}
+.proof-stat > span {
+  color: #5c626f;
+}
+.discipline-bar .icon {
+  color: var(--red);
+}
+.discipline-bar a:hover {
+  color: var(--red);
+  background: var(--red-soft);
+}
+
+/* Red is concentrated on invitations, active controls and important moments. */
+.btn-red {
+  background: var(--red);
+  box-shadow: 0 5px 15px #de233418;
+}
+.btn-red:hover {
+  background: var(--red-dark);
+  box-shadow: 0 7px 22px #de233425;
+}
+.btn-dark {
+  background: var(--ink);
+}
+.btn-dark:hover {
+  background: #292d39;
+}
+.header-actions .btn-dark,
+.practice-feature-copy .btn-dark,
+.catalog-feature-copy .btn-dark,
+.ranking-aside .btn-dark {
+  background: var(--red);
+  color: #fff;
+}
+.header-actions .btn-dark:hover,
+.practice-feature-copy .btn-dark:hover,
+.catalog-feature-copy .btn-dark:hover,
+.ranking-aside .btn-dark:hover {
+  background: var(--red-dark);
+}
+.btn-outline {
+  border-color: #d5d9e3;
+  color: var(--ink);
+  background: #fff;
+}
+.btn-outline:hover {
+  background: var(--red-soft);
+  border-color: #efb1b8;
+}
+.text-link .icon {
+  color: var(--red);
+}
+.icon-btn {
+  border-color: var(--line);
+}
+.icon-btn:hover {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.icon-btn.saved,
+.save-btn.saved {
+  color: var(--red);
+  background: var(--rose);
+}
+.save-btn {
+  color: #414652;
+}
+.tag {
+  background: #f0f2f7;
+  color: #525968;
+}
+.tag.rose {
+  background: var(--rose);
+  color: #b8192a;
+}
+.tag.sage {
+  background: #edf3ff;
+  color: #345cd0;
+}
+.tag.blue {
+  background: #edf0ff;
+  color: #5345b8;
+}
+.tag.light {
+  background: #fff;
+  color: var(--ink);
+}
+.pill {
+  border-color: var(--line);
+  color: #626672;
+  background: #fff;
+}
+.pill:hover {
+  border-color: #ed9ba6;
+  color: var(--red);
+  background: var(--red-soft);
+}
+.pill.active,
+.pill[aria-pressed="true"] {
+  color: #fff;
+  background: var(--red);
+  border-color: var(--red);
+}
+.search-field {
+  border-color: #dce0e9;
+  background: #fff;
+}
+.search-field:focus-within {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px #de23340c;
+}
+.search-field input::placeholder {
+  color: #767d8b;
+}
+.toast {
+  background: #191c28;
+  box-shadow: 0 8px 30px #11162824;
+}
+
+/* Pure white pages, with a few clean-tinted surfaces for grouping. */
+.mentor-feature {
+  background: var(--red-soft);
+  border: 1px solid #f2dce0;
+}
+.mentor-story .eyebrow,
+.quote-mark {
+  color: var(--red);
+}
+.mentor-story p {
+  color: #60636f;
+}
+.pathway-card {
+  background: #fff;
+  border-color: var(--line);
+}
+.pathway-card:nth-child(2) {
+  background: #fff6f7;
+  border-color: #f4d9dd;
+}
+.pathway-card:nth-child(3) {
+  background: #f5f7ff;
+  border-color: #e0e6fa;
+}
+.pathway-top span {
+  color: #da7f8b;
+}
+.pathway-top .icon {
+  color: var(--red);
+}
+.pathway-card:nth-child(3) .pathway-top .icon,
+.pathway-card:nth-child(3) .pathway-top span {
+  color: #5574d4;
+}
+.check-list .icon {
+  color: var(--green);
+}
+.mini-quiz {
+  border-color: #e4e6ee;
+  box-shadow: 0 14px 48px #2029400c;
+}
+.mini-quiz-top {
+  border-color: var(--line);
+}
+.mini-options button {
+  border-color: #dce1eb;
+}
+.mini-options button:hover {
+  background: var(--red-soft);
+  border-color: #eb7281;
+}
+.mini-progress {
+  background: #fff0f2;
+  border-color: #f7cdd3;
+  color: #b71d2f;
+}
+.mini-feedback {
+  color: var(--green);
+}
+.community-quote {
+  border-color: #e7cbd0;
+}
+.initial-avatar,
+.initial-avatar.sage {
+  background: #e9efff;
+  color: #3457c6;
+}
+.initial-avatar.blue {
+  background: #e5f3ff;
+  color: #16679b;
+}
+.initial-avatar.rose {
+  background: #ffe4e9;
+  color: #be2743;
+}
+.initial-avatar.sand {
+  background: #fff0d5;
+  color: #996309;
+}
+.initial-avatar.lilac {
+  background: #eee8ff;
+  color: #734ac1;
+}
+.catalog-feature {
+  background: #fff2f4;
+  border: 1px solid #f8dfe3;
+}
+.catalog-feature .eyebrow {
+  color: var(--red);
+}
+.sidebar-note {
+  background: #f2f5ff;
+  border: 1px solid #e5eaff;
+}
+.sidebar-note .icon {
+  color: var(--blue-ink);
+}
+.outcomes,
+.enrollment-note {
+  background: #f2f6ff;
+}
+.enroll-card {
+  box-shadow: 0 10px 36px #14204007;
+  border-color: #e2e5ed;
+}
+.enroll-card .price {
+  color: var(--red);
+}
+.lesson-row {
+  border-color: var(--line);
+}
+.lesson-row.preview {
+  color: #b7192c;
+  background: #fff4f6;
+}
+.course-facts .icon {
+  color: var(--red);
+}
+.lesson-slide {
+  background: #f2f5ff;
+}
+.lesson-progress {
+  background: #f4e4e7;
+}
+.lesson-progress > span {
+  background: var(--red);
+}
+.article-body p {
+  color: #4b5260;
+}
+.article-body .lead {
+  color: var(--ink);
+}
+.article-callout {
+  background: #fff3f5;
+}
+.article-side-note {
+  color: #7b8392;
+}
+.article-toc > a:hover {
+  color: var(--red);
+}
+dialog {
+  box-shadow: 0 30px 120px #11152232;
+}
+dialog::backdrop {
+  background: #161a2b73;
+}
+
+/* A single confident red closing panel anchors the brand. */
+.closing-cta {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.closing-cta h2 {
+  color: #fff;
+}
+.closing-cta p,
+.closing-cta .eyebrow {
+  color: #fff;
+}
+.closing-cta .eyebrow::before {
+  background: #fff;
+}
+.closing-cta .btn-red {
+  background: #fff;
+  border-color: #fff;
+  color: var(--red-dark);
+  box-shadow: 0 5px 18px #8d112621;
+}
+.closing-cta .btn-red:hover {
+  background: #fff1f3;
+}
+.closing-cta .btn-outline {
+  color: #fff;
+  background: transparent;
+  border-color: #ffffff9c;
+}
+.closing-cta .btn-outline:hover {
+  background: #ffffff18;
+  border-color: #fff;
+}
+
+/* Practice stays focused: blue is selection, green is correct, red is incorrect. */
+.streak-widget {
+  background: #fff5eb;
+  border-color: #ffe0c0;
+}
+.streak-widget > .icon {
+  color: #c75e0b;
+}
+.streak-widget strong {
+  color: #9e4310;
+}
+.learning-path {
+  background: #fff;
+  border-color: var(--line);
+}
+.learning-step.active > span {
+  background: var(--red);
+  border-color: var(--red);
+}
+.tree-line {
+  background: #d5dce9;
+}
+.tree-topic {
+  background: #fff1f4;
+  color: #be1f3a;
+}
+.exam-card {
+  border-color: #e4e7ef;
+  box-shadow: 0 3px 12px #1d2a4003;
+}
+.exam-card:hover {
+  box-shadow: 0 10px 30px #23314f0d;
+  border-color: #e9adb6;
+}
+.exam-art {
+  background: #ffe9ed;
+}
+.exam-art.sage {
+  background: #eaf0ff;
+}
+.exam-art.blue {
+  background: #efeaff;
+}
+.exam-art.sand {
+  background: #fff1e2;
+}
+.exam-art > .icon {
+  color: #d93653;
+  opacity: 0.62;
+}
+.exam-art.sage > .icon {
+  color: #416ed9;
+}
+.exam-art.blue > .icon {
+  color: #7855ce;
+}
+.exam-art.sand > .icon {
+  color: #b96e31;
+}
+.exam-art .exam-code {
+  color: #4e5362;
+}
+.exam-art .tag {
+  background: #fffffff0;
+  color: #555b6b;
+}
+.exam-art .save-btn {
+  background: #ffffffc9;
+}
+.library-note {
+  background: #f5f7fc;
+}
+.question-card {
+  border-color: #e0e4ee;
+  box-shadow: 0 5px 28px #162c4905;
+}
+.question-progress {
+  background: #ffe8ec;
+}
+.question-progress > span {
+  background: var(--red);
+}
+.question-toolbar,
+.question-prompt {
+  color: #626977;
+}
+.answer-option {
+  border-color: #d8deea;
+  color: var(--ink);
+}
+.answer-option:hover {
+  border-color: #8ba4ea;
+  background: #f5f8ff;
+}
+.answer-option > span {
+  border-color: #d9dfec;
+}
+.answer-option.selected {
+  background: #eef3ff;
+  border-color: #4a6fd6;
+  box-shadow: 0 0 0 1px #4a6fd6;
+}
+.answer-option.selected > span {
+  background: #4a6fd6;
+  border-color: #4a6fd6;
+  color: #fff;
+}
+.answer-option:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.answer-option.correct {
+  background: #ecfaf2;
+  color: #126d45;
+  border-color: #8fd2b0;
+  box-shadow: none;
+}
+.answer-option.correct > span {
+  background: #17814f;
+  border-color: #17814f;
+}
+.answer-option.wrong {
+  background: #fff0f2;
+  color: #b31f35;
+  border-color: #ef9aaa;
+  box-shadow: none;
+}
+.answer-option.wrong > span {
+  background: #c82f46;
+  border-color: #c82f46;
+}
+.feedback-status {
+  color: #157347;
+}
+.feedback-status.wrong {
+  color: #b31f35;
+}
+.memory-key {
+  color: #355ac2;
+  background: #edf3ff;
+}
+.session-card {
+  background: #fff;
+  border-color: #e0e5f0;
+}
+.session-card:first-child {
+  background: #fff6f7;
+  border-color: #f7dce1;
+}
+.question-dot {
+  color: #626b7b;
+  border-color: #d8deea;
+  background: #fff;
+}
+.question-dot.current {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.question-dot.right {
+  background: #dcf4e8;
+  color: #146c44;
+  border-color: #a6d9bf;
+}
+.question-dot.wrong {
+  background: #ffe4ea;
+  color: #a92037;
+  border-color: #f2b7c3;
+}
+.scratchpad {
+  background: #fafbfe;
+  border-color: #dfe5ef;
+}
+kbd {
+  border-color: #dbe0eb;
+  background: #f4f6fa;
+}
+.result-icon {
+  background: #fff0f3;
+  color: var(--red);
+}
+.result-stats > div:first-child strong {
+  color: var(--red);
+}
+.review-question strong .icon {
+  color: #157347;
+}
+.review-question.wrong strong .icon {
+  color: #b31f35;
+}
+.review-question .tag.sage {
+  background: #e8f8ef;
+  color: #176c47;
+}
+
+/* Leaderboard: a vivid winner, crisp white runners-up and an obvious personal rank. */
+.leaderboard-heading .eyebrow {
+  color: var(--red);
+}
+.segmented {
+  background: #f1f3f8;
+}
+.segmented button {
+  color: #5c6374;
+}
+.segmented button.active {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 3px 10px #de23341b;
+}
+.podium-card {
+  border-color: #e3e7f1;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px #27395708;
+}
+.podium-card:first-child {
+  background: linear-gradient(180deg, #f0f5ff 0%, #fff 48%);
+  border-top: 3px solid #b4c9f4;
+}
+.podium-card:last-child {
+  background: linear-gradient(180deg, #fff3eb 0%, #fff 48%);
+  border-top: 3px solid #f2c6ab;
+}
+.podium-card.winner {
+  background: linear-gradient(145deg, #da2139, #d11b32 75%);
+  border-color: #d9253d;
+  color: #fff;
+  box-shadow: 0 12px 32px #ce213723;
+}
+.podium-card .crown {
+  color: #7f4d00;
+  background: #ffe29a;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 14px #6b133622;
+}
+.podium-card .crown .icon {
+  fill: #ffcf64;
+}
+.podium-card.winner .initial-avatar {
+  background: #fff;
+  color: #c21e34;
+  border-color: #ffffff94;
+  box-shadow: 0 0 0 5px #ffffff20;
+}
+.podium-card.winner .podium-rank {
+  background: #ffe29a;
+  color: #734400;
+  border-color: #fff;
+}
+.podium-card.winner h3 {
+  color: #fff;
+}
+.podium-card.winner p,
+.podium-card.winner .podium-points small,
+.podium-card.winner .podium-streak {
+  color: #fff2f4;
+}
+.podium-card.winner .podium-streak .icon {
+  color: #ffe39c;
+}
+.podium-rank {
+  background: #445577;
+}
+.podium-card:last-child .podium-rank {
+  background: #a5623f;
+}
+.podium-streak .icon {
+  color: #bc5a0d;
+}
+.podium-points {
+  font-weight: 800;
+}
+.ranking-table {
+  border-radius: 12px;
+  border-color: #e2e6f0;
+  box-shadow: 0 6px 26px #20365805;
+}
+.ranking-table-head {
+  border-color: var(--line);
+}
+.ranking-table-head h2 {
+  color: #1a2334;
+}
+.ranking-row {
+  border-color: #edf0f6;
+}
+.ranking-row.labels {
+  background: #f6f8fc;
+  color: #576275;
+}
+.ranking-row:not(.labels):hover {
+  background: #fafbfe;
+}
+.ranking-row.me,
+.ranking-row.me:hover {
+  background: #fff0f3;
+  box-shadow: inset 3px 0 var(--red);
+}
+.ranking-row.me .rank-number,
+.ranking-row.me .rank-score,
+.ranking-row.me .ranking-person strong {
+  color: #bd1c32;
+}
+.ranking-row .rank-streak {
+  color: #ab500b;
+}
+.ranking-row .rank-score {
+  color: #202d45;
+}
+.ranking-aside {
+  border-radius: 12px;
+  background: #fff;
+  border-color: #f2d0d8;
+  box-shadow: 0 6px 24px #b4264106;
+}
+.ranking-aside .eyebrow {
+  color: #c2233a;
+}
+.week-day > span {
+  background: #ffe3e9;
+  color: #c31e3c;
+}
+.week-day:last-child > span {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 0 3px #ffe3e9;
+}
+
+@media (max-width: 760px) {
+  .main-nav {
+    background: #fff;
+    box-shadow: 0 15px 25px #1720390a;
+  }
+  .discipline-bar a {
+    background: #fff;
+    border-color: #e7e9f0;
+  }
+  .article-toc > a {
+    background: #fff0f3;
+    color: #9c2335;
+  }
+  .podium-card {
+    border-radius: 10px;
+  }
+  .podium-card.winner {
+    box-shadow: 0 8px 18px #ce21371b;
+  }
+}

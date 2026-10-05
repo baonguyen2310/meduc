@@ -1,0 +1,53 @@
+<!-- Generated from hero-light/quiz-history.html by scripts/sync_quiz_history_template.py. -->
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#faf9f7" />
+    <meta name="description" content="Xem lịch sử làm bài, kết quả và tiến độ luyện tập Y khoa tại Meduc." />
+    <title>Lịch sử làm bài — Meduc</title>
+    <link rel="icon" type="image/svg+xml" href="/hero-light/assets/favicon.svg" />
+    <link rel="preload" href="/hero-light/assets/fonts/anton-regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/hero-light/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/hero-light/assets/hero.css" />
+    <link rel="stylesheet" href="/hero-light/assets/light.css" />
+    <link rel="stylesheet" href="/hero-light/assets/about.css" />
+    <link rel="stylesheet" href="/hero-light/assets/quiz-history.css" />
+    <script src="/hero-light/assets/quiz-history.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.7" cy="10.7" r="6.7" /><path d="m16 16 5 5" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C8 4.4 4.8 4.2 2 5v13c3.7-.6 7-.4 10 1.5 3-1.9 6.3-2.1 10-1.5V5c-3.7-.6-7-.4-10 1.5Zm0 0v13" /></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></symbol>
+    </svg>
+
+    <header class="site-header about-header history-header"><div class="shell about-header-inner">
+      <a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a>
+      <span class="header-page-name">Không gian học tập</span>
+      <div class="header-actions"><a class="header-home" href="/khoa-hoc-dang-tham-gia-v2">Khóa đang học</a><a class="button header-course" id="header-login" href="/member/login">Đăng nhập Meduc <svg class="icon"><use href="#i-arrow" /></svg></a></div>
+    </div></header>
+
+    <main id="main">
+      <section class="history-hero"><div class="shell history-hero-layout"><div class="history-hero-copy"><span class="history-eyebrow"><span></span> HÀNH TRÌNH LUYỆN TẬP / MEDUC</span><h1>MỖI LẦN LÀM BÀI.<br /><em>MỘT BƯỚC TIẾN.</em></h1><p>Nhìn lại từng bài đã làm, nhận ra phần mình nắm chắc và chọn chủ đề cần ôn thêm.</p><div class="history-hero-actions"><a class="button" href="#lich-su">Xem các bài đã làm <svg class="icon"><use href="#i-arrow" /></svg></a><a href="/medduo" class="history-text-link">Luyện tập trên MedDuo ↗</a></div></div><div class="history-visual" aria-label="Biểu đồ điểm gần đây"><div class="history-visual-top"><span>MEDUC / LEARNING RECORD</span><span id="visual-mode">BẢN XEM TRƯỚC</span></div><div class="history-visual-score"><strong id="visual-average">—</strong><span>ĐIỂM TRUNG BÌNH</span></div><div class="history-bars" id="score-bars" aria-label="Điểm các bài gần nhất"></div><div class="history-visual-bottom"><span>NHỮNG LẦN LUYỆN TẬP GẦN NHẤT</span><svg class="icon"><use href="#i-arrow" /></svg></div></div></div></section>
+
+      <div class="shell"><div class="history-notice" id="history-notice" role="note"><span class="history-notice-mark">i</span><p><strong>Đang tải lịch sử làm bài...</strong></p></div></div>
+
+      <section class="history-overview shell" aria-labelledby="overview-title"><div class="history-section-heading"><div><span class="history-kicker">TỔNG QUAN HỌC TẬP</span><h2 id="overview-title">TIẾN ĐỘ <em>CỦA BẠN.</em></h2></div><span class="history-heading-index">01 / THÀNH TÍCH</span></div><div class="history-stat-grid"><article class="history-stat"><span>01 / LƯỢT LÀM BÀI</span><strong id="stat-attempts">—</strong><p>Mỗi lần luyện tập đều được ghi lại.</p></article><article class="history-stat"><span>02 / ĐIỂM TRUNG BÌNH</span><strong id="stat-average">—</strong><p>Trung bình trên các bài đã hoàn thành.</p></article><article class="history-stat"><span>03 / CÂU TRẢ LỜI ĐÚNG</span><strong id="stat-correct">—</strong><p>Tổng số câu làm đúng qua các lượt.</p></article><article class="history-stat"><span>04 / KẾT QUẢ CAO NHẤT</span><strong id="stat-best">—</strong><p>Một cột mốc để tiếp tục vượt qua.</p></article></div></section>
+
+      <section class="history-records" id="lich-su" aria-labelledby="records-title"><div class="shell"><div class="history-section-heading records-heading"><div><span class="history-kicker">NHÌN LẠI TỪNG BÀI</span><h2 id="records-title">LỊCH SỬ <em>LÀM BÀI.</em></h2><p>Lọc theo khóa học, thời gian hoặc kết quả để tìm lại bài cần ôn.</p></div><span class="history-heading-index">02 / CÁC LƯỢT ĐÃ LÀM</span></div>
+        <div class="history-controls"><label class="history-search"><svg class="icon"><use href="#i-search" /></svg><span class="sr-only">Tìm bài làm</span><input id="history-search" type="search" placeholder="Tìm tên bài, khóa học..." autocomplete="off" /></label><label class="history-select"><span>KHÓA HỌC</span><select id="history-course"><option value="all">Tất cả khóa học</option></select></label><label class="history-select"><span>THỜI GIAN</span><select id="history-period"><option value="all">Tất cả thời gian</option><option value="7">7 ngày gần đây</option><option value="30">30 ngày gần đây</option><option value="90">90 ngày gần đây</option></select></label><label class="history-select"><span>KẾT QUẢ</span><select id="history-score"><option value="all">Mọi kết quả</option><option value="high">Từ 80% trở lên</option><option value="middle">Từ 50% đến 79%</option><option value="low">Dưới 50%</option></select></label></div>
+        <div class="history-result-bar"><span id="history-count">Đang tải các bài làm...</span><button type="button" id="history-reset">Xóa bộ lọc</button></div><div class="history-record-list" id="history-list" aria-live="polite"></div><div class="history-empty" id="history-empty" hidden><span>MEDUC / PRACTICE</span><h3 id="history-empty-title">Chưa có bài phù hợp.</h3><p id="history-empty-message">Thử thay đổi bộ lọc hoặc bắt đầu một bài luyện tập mới.</p><a id="history-empty-link" href="/medduo">Luyện tập trên MedDuo <svg class="icon"><use href="#i-arrow" /></svg></a></div><button type="button" class="history-more" id="history-more" hidden>Xem thêm bài làm <svg class="icon"><use href="#i-arrow" /></svg></button>
+      </div></section>
+
+      <section class="history-next"><div class="shell history-next-layout"><div><span class="history-kicker">ÔN LẠI ĐỂ TIẾN XA HƠN</span><h2>SAU MỖI BÀI LÀM,<br /><em>HIỂU MÌNH HƠN.</em></h2><p>Xem lại đề cương môn học và dành thời gian cho những phần còn cần củng cố.</p></div><div class="history-next-card"><span>GỢI Ý TIẾP THEO</span><strong id="next-course">Chọn một môn để học tiếp</strong><p id="next-course-detail">Các bài làm gần đây giúp bạn xác định nội dung nên ôn.</p><a id="next-course-link" href="/khoa-hoc-v2">Khám phá khóa học <svg class="icon"><use href="#i-arrow" /></svg></a></div></div></section>
+      <noscript><p class="shell history-noscript">Bật JavaScript để xem lịch sử làm bài. Bạn có thể <a href="/member/login">đăng nhập Meduc</a> để tiếp tục học.</p></noscript>
+    </main>
+
+    <footer class="about-footer"><div class="shell footer-top"><div><a class="brand" href="/masterclass" aria-label="Meduc — Trang chủ"><svg class="brand-mark" viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg><span>meduc<span class="brand-dot">.</span></span></a><p>Học sâu, hiểu đúng.<br />Vững bước nghề Y.</p></div><nav aria-label="Liên kết cuối trang"><a href="/masterclass">Trang chủ</a><a href="/khoa-hoc-dang-tham-gia-v2">Khóa đang học</a><a href="/khoa-hoc-v2">Khóa học</a><a href="/medduo">MedDuo</a></nav></div><div class="shell footer-bottom"><span>© 2026 Meduc · Lịch sử làm bài</span><a href="#main">Lên đầu trang ↑</a></div></footer>
+  </body>
+</html>

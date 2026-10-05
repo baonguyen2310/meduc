@@ -1,0 +1,596 @@
+{
+  "exported": "2026-10-05",
+  "count": 46,
+  "books": [
+    {
+      "id": 66,
+      "name": "Tiếng Anh Y Khoa Song Ngữ (in Đen trắng, 3 tập) + khóa học theo sách",
+      "url": "/tieng-anh-y-khoa-song-ngu-in-den-trang-3-tap-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/tacnn.png",
+      "price": 550000,
+      "special": 450000,
+      "categories": [
+        79,
+        86,
+        109
+      ]
+    },
+    {
+      "id": 76,
+      "name": "Cẩm nang chẩn đoán và điều trị bệnh nội khoa (in Full màu) + khóa học theo sách",
+      "url": "/cam-nang-chan-doan-va-dieu-tri-benh-noi-khoa-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/n%E1%BB%99ikh.png",
+      "price": 1800000,
+      "special": 1200000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 78,
+      "name": "Tiếp cận chẩn đoán và điều trị nhi khoa NXB + khóa học theo sách",
+      "url": "/tiep-can-chan-doan-va-dieu-tri-nhi-khoa-nxb-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/nhikh.png",
+      "price": 390000,
+      "special": 0,
+      "categories": [
+        79,
+        85,
+        110
+      ]
+    },
+    {
+      "id": 79,
+      "name": "Atlas sinh lý học Netter (bản Tiếng việt, in Full màu) + khóa học theo sách",
+      "url": "/atlas-sinh-ly-hoc-netter-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn.png",
+      "price": 250000,
+      "special": 195000,
+      "categories": [
+        79,
+        81,
+        109
+      ]
+    },
+    {
+      "id": 82,
+      "name": "Thiết đồ Giải phẫu Sinh lý (bản Tiếng việt, in Full màu) + khóa học theo sách",
+      "url": "/thiet-do-giai-phau-sinh-ly-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/thi%E1%BA%BFt%20%C4%91%E1%BB%93%201.png",
+      "price": 500000,
+      "special": 360000,
+      "categories": [
+        79,
+        81,
+        83,
+        109
+      ]
+    },
+    {
+      "id": 83,
+      "name": "Bộ sách sinh lý Guyton (2 tập, bản tiếng việt, in Đen trắng) + khóa học theo sách",
+      "url": "/bo-sach-sinh-ly-guyton-2-tap-ban-tieng-viet-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/guyton%201.png",
+      "price": 350000,
+      "special": 250000,
+      "categories": [
+        79,
+        81,
+        109
+      ]
+    },
+    {
+      "id": 84,
+      "name": "Sơ đồ tư duy Song ngữ (bản Song ngữ, in Full màu) + khóa học theo sách",
+      "url": "/so-do-tu-duy-song-ngu-ban-song-ngu-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/s%C6%A1%20%C4%91%E1%BB%93%20t%C6%B0%20duy.png",
+      "price": 600000,
+      "special": 320000,
+      "categories": [
+        79,
+        84,
+        86,
+        110
+      ]
+    },
+    {
+      "id": 87,
+      "name": "Chỉnh hình răng mặt cơ bản NXB",
+      "url": "/chinh-hinh-rang-mat-co-ban-nxb",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/rhm.png",
+      "price": 235000,
+      "special": 170000,
+      "categories": [
+        79,
+        111
+      ]
+    },
+    {
+      "id": 88,
+      "name": "Thực hành cấp cứu nhi khoa 2023 NXB + khóa học theo sách",
+      "url": "/thuc-hanh-cap-cuu-nhi-khoa-2023-nxb-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/hc%20nhii.png",
+      "price": 295000,
+      "special": 230000,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 89,
+      "name": "Hoá sinh y học nxb + khóa học theo sách",
+      "url": "/hoa-sinh-y-hoc-nxb-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/hs%202.png",
+      "price": 245000,
+      "special": 190000,
+      "categories": [
+        79,
+        82,
+        109
+      ]
+    },
+    {
+      "id": 92,
+      "name": "Kỹ thuật xét nghiệm Huyết học và Truyền máu ứng dụng trong lâm sàng NXB",
+      "url": "/ky-thuat-xet-nghiem-huyet-hoc-va-truyen-mau-ung-dung-trong-lam-sang-nxb",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/huy%E1%BA%BFt%20h%E1%BB%8Dccc.png",
+      "price": 160000,
+      "special": 120000,
+      "categories": [
+        79,
+        84,
+        111
+      ]
+    },
+    {
+      "id": 116,
+      "name": "Cơ chế triệu chứng song ngữ (2 tập, in Đen trắng) + khóa học theo sách",
+      "url": "/co-che-trieu-chung-song-ngu-2-tap-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/cc.png",
+      "price": 250000,
+      "special": 0,
+      "categories": [
+        79,
+        84,
+        86,
+        110
+      ]
+    },
+    {
+      "id": 120,
+      "name": "Combo: Sách Sinh Lý Guyton (2 tập, Tiếng việt, Full Màu) + Sách Trắc Nghiệm + tặng khóa học xây dựng nền tảng",
+      "url": "/combo-sach-sinh-ly-guyton-2-tap-tieng-viet-full-mau-sach-trac-nghiem-tang-khoa-hoc-xay-dung-nen-tang",
+      "image": "https://cdn.meduc.vn/media/1787280380498_7626351546202011999_7626351546202011999_90852eb116f1b157934447c41efb99c1.jpg",
+      "price": 690000,
+      "special": 620000,
+      "categories": [
+        79,
+        81,
+        109
+      ]
+    },
+    {
+      "id": 122,
+      "name": "Trắc nghiệm sinh lý Guyton (bản Tiếng việt, in Đen trắng) + bộ trắc nghiệm + khóa học theo sách",
+      "url": "/trac-nghiem-sinh-ly-guyton-ban-tieng-viet-in-den-trang-bo-trac-nghiem-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(1).png",
+      "price": 100000,
+      "special": 90000,
+      "categories": [
+        79,
+        81,
+        109
+      ]
+    },
+    {
+      "id": 125,
+      "name": "Cơ chế triệu chứng học (bản Tiếng Việt, in Full màu) + khóa học theo sách",
+      "url": "/co-che-trieu-chung-hoc-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/tc%20h1.png",
+      "price": 450000,
+      "special": 350000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 126,
+      "name": "The language of medicine (2 tập, bản Tiếng Anh, in Full màu) + khóa học theo sách",
+      "url": "/the-language-of-medicine-2-tap-ban-tieng-anh-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/tacn3.png",
+      "price": 800000,
+      "special": 700000,
+      "categories": [
+        79,
+        86,
+        109
+      ]
+    },
+    {
+      "id": 127,
+      "name": "Ca lâm sàng nội khoa (bản Tiếng Việt, in full màu) + khóa học theo sách",
+      "url": "/ca-lam-sang-noi-khoa-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/nlsoo.png",
+      "price": 600000,
+      "special": 490000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 128,
+      "name": "Ca giải phẫu (bản Song Ngữ, in Đen trắng) + khóa học theo sách",
+      "url": "/ca-giai-phau-ban-song-ngu-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/sn%20gp.png",
+      "price": 400000,
+      "special": 200000,
+      "categories": [
+        79,
+        83,
+        109
+      ]
+    },
+    {
+      "id": 129,
+      "name": "Hướng dẫn đọc cắt lớp vi tính toàn thân (in Màu) + khóa học theo sách",
+      "url": "/huong-dan-doc-cat-lop-vi-tinh-toan-than-in-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/clvt0.png",
+      "price": 270000,
+      "special": 250000,
+      "categories": [
+        79,
+        111
+      ]
+    },
+    {
+      "id": 130,
+      "name": "Bệnh học Tai Mũi Họng - Đầu Mặt Cổ NXB + khóa học theo sách",
+      "url": "/benh-hoc-tai-mui-hong-dau-mat-co-nxb-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/bh%20tmho.png",
+      "price": 235000,
+      "special": 195000,
+      "categories": [
+        79,
+        111
+      ]
+    },
+    {
+      "id": 133,
+      "name": "Ca lâm sàng nhi khoa cấp cứu (bản Tiếng Việt, in Full màu) + khóa học theo sách",
+      "url": "/ca-lam-sang-nhi-khoa-cap-cuu-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/nkcc0.png",
+      "price": 200000,
+      "special": 0,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 134,
+      "name": "THE ECG MADE EASY (in Full Màu A5) + khóa học theo sách",
+      "url": "/the-ecg-made-easy-in-full-mau-a5-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/ecg00.png",
+      "price": 150000,
+      "special": 110000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 135,
+      "name": "ECG cho người mới bắt đầu (in Màu A5) + khóa học theo sách",
+      "url": "/ecg-cho-nguoi-moi-bat-dau-in-mau-a5-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/ecg%20ng%20m%E1%BB%9Bi0.png",
+      "price": 170000,
+      "special": 140000,
+      "categories": [
+        79,
+        84,
+        111
+      ]
+    },
+    {
+      "id": 138,
+      "name": "Bài tập điện tâm đồ (in Full màu) + khóa học theo sách",
+      "url": "/bai-tap-dien-tam-do-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/btecg0.png",
+      "price": 190000,
+      "special": 0,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 140,
+      "name": "Phân tích hình ảnh XQuang Ngực từ A-Z (in Màu) + khóa học theo sách",
+      "url": "/phan-tich-hinh-anh-xquang-nguc-tu-a-z-in-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/xqazo.png",
+      "price": 250000,
+      "special": 170000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 141,
+      "name": "Atlas siêu âm tim trong hồi sức (in Full màu) + khóa học theo sách",
+      "url": "/atlas-sieu-am-tim-trong-hoi-suc-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/sa0.png",
+      "price": 250000,
+      "special": 0,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 142,
+      "name": "Hướng dẫn đọc CT Sọ - Cắt lớp Sọ Não  - Phần 1 + Phần 2 ( in màu)",
+      "url": "/huong-dan-doc-ct-so-cat-lop-so-nao-phan-1-phan-2-in-mau",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/ct%20s%E1%BB%8D0.png",
+      "price": 250000,
+      "special": 0,
+      "categories": [
+        79,
+        83,
+        110
+      ]
+    },
+    {
+      "id": 144,
+      "name": "Thực hành siêu âm cơ xương khớp cơ bản (in Full màu) + khóa học theo sách",
+      "url": "/thuc-hanh-sieu-am-co-xuong-khop-co-ban-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/sacxk0.png",
+      "price": 300000,
+      "special": 0,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 147,
+      "name": "Giải phẫu cắt lớp CT - MRI (3 tập, in Full màu)",
+      "url": "/giai-phau-cat-lop-ct-mri-3-tap-in-full-mau",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/3xq1.png",
+      "price": 620000,
+      "special": 550000,
+      "categories": [
+        79,
+        83
+      ]
+    },
+    {
+      "id": 151,
+      "name": "Khám lâm sàng & hỏi bệnh sử BATES (2 tập, bản Tiếng việt, in Full màu) + khóa học theo sách",
+      "url": "/kham-lam-sang-hoi-benh-su-bates-2-tap-ban-tieng-viet-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/bates0.png",
+      "price": 950000,
+      "special": 820000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 152,
+      "name": "Siêu âm trong sản khoa và phụ khoa (in Full màu) + khóa học theo sách",
+      "url": "/sieu-am-trong-san-khoa-va-phu-khoa-in-full-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/s%C3%A1ch/sa%20spk0.png",
+      "price": 350000,
+      "special": 285000,
+      "categories": [
+        79,
+        111
+      ]
+    },
+    {
+      "id": 182,
+      "name": "Ca lâm sàng giải phẩu in đen trắng  + khóa học theo sách",
+      "url": "/ca-lam-sang-giai-phau-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/1787365930387_766963780153387053_7626351546202011999_dfffdafa3a98ddb435ca3e8c0418b2b0.jpg",
+      "price": 170000,
+      "special": 120000,
+      "categories": [
+        83,
+        110
+      ]
+    },
+    {
+      "id": 184,
+      "name": "Ca Lâm Sàng Sinh Lý ( In Đen Trắng) + khóa học theo sách",
+      "url": "/ca-lam-sang-sinh-ly-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/chatgpt%20image%20aug%2022%2C%202026%2C%2009_55_41%20am.png",
+      "price": 170000,
+      "special": 120000,
+      "categories": [
+        79,
+        81,
+        109,
+        110
+      ]
+    },
+    {
+      "id": 190,
+      "name": "Tiếng Anh Y Khoa Song Ngữ  (in full màu, 3 tập) + khóa học theo sách + tài liệu miễn phí",
+      "url": "/tieng-anh-y-khoa-song-ngu-in-full-mau-3-tap-khoa-hoc-theo-sach-tai-lieu-mien-phi",
+      "image": "https://cdn.meduc.vn/media/Th%C3%AAm%20ti%C3%AAu%20%C4%91%E1%BB%81%20(9).png",
+      "price": 1650000,
+      "special": 1150000,
+      "categories": [
+        79,
+        86
+      ]
+    },
+    {
+      "id": 209,
+      "name": "Hướng dẫn đọc XQUANG NGỰC (In Màu)",
+      "url": "/huong-dan-doc-xquang-nguc-in-mau",
+      "image": "https://cdn.meduc.vn/media/1781686237113_766963780153387053_7626351546202011999_86e57b8e9a83a085222eea638e221ed8.jpg",
+      "price": 160000,
+      "special": 130000,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 210,
+      "name": "Hướng dẫn đọc XQUANG BỤNG (In Màu Chuẩn Đẹp)",
+      "url": "/huong-dan-doc-xquang-bung-in-mau-chuan-dep",
+      "image": "https://cdn.meduc.vn/media/1781686237226_766963780153387053_7626351546202011999_12cf14ccfd7509a2ea74450b412a0d07.jpg",
+      "price": 150000,
+      "special": 120000,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 212,
+      "name": "Hướng dẫn đọc XQUANG XƯƠNG KHỚP (IN MÀU)",
+      "url": "/huong-dan-doc-xquang-xuong-khop-in-mau",
+      "image": "https://cdn.meduc.vn/media/1781686237217_766963780153387053_7626351546202011999_5dab74bb612089f70c06bd672d14622c.jpg",
+      "price": 190000,
+      "special": 160000,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 213,
+      "name": "Thực Hành Siêu Âm Vú (In Màu)",
+      "url": "/thuc-hanh-sieu-am-vu-in-mau",
+      "image": "https://cdn.meduc.vn/media/images%20(1).jpg",
+      "price": 300000,
+      "special": 250000,
+      "categories": [
+        79,
+        111
+      ]
+    },
+    {
+      "id": 214,
+      "name": "Ca Lâm Sàng Nội Khoa (Bản Tiếng Việt, In Đen Trắng) + khóa học theo sách",
+      "url": "/ca-lam-sang-noi-khoa-ban-tieng-viet-in-den-trang-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/nlsoo.png",
+      "price": 250000,
+      "special": 150000,
+      "categories": [
+        79,
+        84,
+        110,
+        111
+      ]
+    },
+    {
+      "id": 217,
+      "name": "Bộ sách sinh lý Guyton (2 Tập, Bản Tiếng Việt, Full Màu ) + khóa học xây dựng nền tảng",
+      "url": "/bo-sach-sinh-ly-guyton-2-tap-ban-tieng-viet-full-mau-khoa-hoc-xay-dung-nen-tang",
+      "image": "https://cdn.meduc.vn/media/z5223788750115_cdeb0a11c3ca3a41639f658602505104.jpg",
+      "price": 590000,
+      "special": 0,
+      "categories": [
+        79,
+        81,
+        109
+      ]
+    },
+    {
+      "id": 218,
+      "name": "The language of medicine (2 tập, bản Tiếng Anh, in Đen Trắng) + khóa học xây dựng nền tảng",
+      "url": "/the-language-of-medicine-2-tap-ban-tieng-anh-in-den-trang-khoa-hoc-xay-dung-nen-tang",
+      "image": "https://cdn.meduc.vn/media/tacn3.png",
+      "price": 350000,
+      "special": 250000,
+      "categories": [
+        79,
+        86,
+        109,
+        110
+      ]
+    },
+    {
+      "id": 222,
+      "name": "Siêu Âm Tổng Quát Thầy Phạm Minh Thông (B5, In Màu)",
+      "url": "/sieu-am-tong-quat-thay-pham-minh-thong-b5-in-mau",
+      "image": "https://cdn.meduc.vn/media/5cdad22656c1445c16f38ab6283571df.jpg",
+      "price": 450000,
+      "special": 370000,
+      "categories": [
+        79,
+        110,
+        111
+      ]
+    },
+    {
+      "id": 223,
+      "name": "Siêu Âm Bụng Tổng Quát PGS.TS Nguyễn Phước Bảo Quân (B5, In Màu)",
+      "url": "/sieu-am-bung-tong-quat-pgsts-nguyen-phuoc-bao-quan-b5-in-mau",
+      "image": "https://cdn.meduc.vn/media/images%20(2).jpg",
+      "price": 450000,
+      "special": 370000,
+      "categories": [
+        79,
+        110,
+        111
+      ]
+    },
+    {
+      "id": 225,
+      "name": "Tiếp Cận Lâm Sàng Theo Nguyên Lý Nội Khoa Harrison's (A5, In Màu) + Khóa học theo sách",
+      "url": "/tiep-can-lam-sang-theo-nguyen-ly-noi-khoa-harrisons-a5-in-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/1787298728232_766963780153387053_7626351546202011999_056ca5da5dd86f8f658d8cc5e55d23a5.jpg",
+      "price": 150000,
+      "special": 99000,
+      "categories": [
+        79,
+        84,
+        110
+      ]
+    },
+    {
+      "id": 226,
+      "name": "THE ECG IN PRACTICE (In Full Màu, A5) + Khóa học theo sách",
+      "url": "/the-ecg-in-practice-in-full-mau-a5-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/1787302669476_766963780153387053_7626351546202011999_c4ba6e3021f1e1406439fa602fd64338.jpg",
+      "price": 170000,
+      "special": 150000,
+      "categories": [
+        79,
+        110
+      ]
+    },
+    {
+      "id": 227,
+      "name": "THE ECG PROBLEM (A5, In Màu) + Khóa học theo sách",
+      "url": "/the-ecg-problem-a5-in-mau-khoa-hoc-theo-sach",
+      "image": "https://cdn.meduc.vn/media/f3cd2cafa2b8c4f71406240c1bee70c2.jpg",
+      "price": 170000,
+      "special": 150000,
+      "categories": [
+        79,
+        110,
+        111
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2497 @@
+{
+  "exported": "2026-10-05",
+  "count": 198,
+  "documents": [
+    {
+      "id": 494,
+      "name": "[Năm 2 Thống Kê Y Học] Giáo Trình Học Tập",
+      "summary": "Tài liệu “Xác suất thống kê” là nguồn học tập quan trọng dành cho sinh viên khối ngành y sinh. Nội dung bao gồm các kiến thức từ cơ bản đến nâng cao như xác suất, biến ngẫu nhiê…",
+      "url": "/nam-2-thong-ke-y-hoc-giao-trinh-hoc-tap",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-giao-trinh-hoc-tap.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 493,
+      "name": "[Năm 2 Thống Kê Y Học] Câu Trắc Nghiệm Ôn Tập Đại Cương",
+      "summary": "Tài liệu “50 câu trắc nghiệm ôn tập Đại cương Thống kê Y học” cung cấp hệ thống câu hỏi đa dạng, bao quát kiến thức nền tảng trong thống kê y sinh. Nội dung giúp người học củng…",
+      "url": "/nam-2-thong-ke-y-hoc-cau-trac-nghiem-on-tap-dai-cuong",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-cau-trac-nghiem-on-tap-dai-cuong.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 492,
+      "name": "[Năm 2 Thống Kê Y Học] Bài Giảng Xác Suất Thống Kê",
+      "summary": "Tài liệu “Xác suất thống kê y học” cung cấp hệ thống kiến thức từ cơ bản đến nâng cao về xác suất, biến ngẫu nhiên và thống kê trong y học. Nội dung được trình bày logic, dễ hiể…",
+      "url": "/nam-2-thong-ke-y-hoc-bai-giang-xac-suat-thong-ke",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-bai-giang-xac-suat-thong-ke.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 491,
+      "name": "[Năm 2 Thống Kê Y Học] Bộ Đề Trắc Nghiệm Ôn Tập",
+      "summary": "Tài liệu “Bộ đề trắc nghiệm ôn tập thống kê y học 2023” là nguồn học liệu hữu ích dành cho sinh viên y khoa. Với hệ thống câu hỏi đa dạng, bao phủ các kiến thức trọng tâm như bi…",
+      "url": "/nam-2-thong-ke-y-hoc-bo-de-trac-nghiem-on-tap",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-bo-de-trac-nghiem-on-tap.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 490,
+      "name": "[Năm 2 Thống Kê Y Học] Ứng Dụng Nghiên Cứu Lâm Sàng",
+      "summary": "Tài liệu thống kê y học này cung cấp nền tảng quan trọng về xác suất, phân tích dữ liệu và các phương pháp kiểm định trong nghiên cứu y khoa. Nội dung được xây dựng logic, dễ hi…",
+      "url": "/nam-2-thong-ke-y-hoc-ung-dung-nghien-cuu-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-ung-dung-nghien-cuu-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 489,
+      "name": "[Năm 2 Thống Kê Y Học] Tài Liệu Học Tập Toàn Diện",
+      "summary": "Tài liệu Xác suất thống kê Y Dược là nguồn học tập quan trọng dành cho sinh viên ngành y, giúp nắm vững kiến thức toán học ứng dụng trong nghiên cứu và thực hành. Nội dung được…",
+      "url": "/nam-2-thong-ke-y-hoc-tai-lieu-hoc-tap-toan-dien",
+      "image": "https://cdn.meduc.vn/media/nam-2-thong-ke-y-hoc-tai-lieu-hoc-tap-toan-dien.png",
+      "fileCount": 1,
+      "date": "2026-03-31",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 488,
+      "name": "[Năm 2 Điều Dưỡng] Giáo Trình Điều Dưỡng Cơ Bản",
+      "summary": "Giáo trình Điều dưỡng cơ bản là tài liệu quan trọng dành cho sinh viên y khoa, cung cấp kiến thức nền tảng và kỹ năng thực hành thiết yếu trong chăm sóc người bệnh. Nội dung bao…",
+      "url": "/nam-2-dieu-duong-giao-trinh-dieu-duong-co-ban",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-giao-trinh-dieu-duong-co-ban.png",
+      "fileCount": 1,
+      "date": "2026-03-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 487,
+      "name": "[Năm 2 Điều Dưỡng] Bộ Trắc Nghiệm Kèm Đáp Án Chuẩn",
+      "summary": "Tài liệu tổng hợp bộ câu hỏi trắc nghiệm điều dưỡng cơ bản bao gồm nhiều chủ đề quan trọng như chăm sóc bệnh nhân, kỹ thuật điều dưỡng và xử trí lâm sàng. Nội dung được xây dựng…",
+      "url": "/nam-2-dieu-duong-bo-trac-nghiem-kem-dap-an-chuan",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-bo-trac-nghiem-kem-dap-an-chuan.png",
+      "fileCount": 1,
+      "date": "2026-03-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 486,
+      "name": "[Năm 2 Điều Dưỡng] Giáo Trình Học Cơ Sở",
+      "summary": "Giáo trình Điều dưỡng cơ sở là tài liệu quan trọng dành cho sinh viên ngành y, giúp xây dựng nền tảng kiến thức vững chắc về chăm sóc sức khỏe. Nội dung bao gồm các nguyên lý đi…",
+      "url": "/nam-2-dieu-duong-giao-trinh-hoc-co-so",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-giao-trinh-hoc-co-so.png",
+      "fileCount": 1,
+      "date": "2026-03-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 485,
+      "name": "[Năm 2 Điều Dưỡng] Đào Tạo Thực Hành Lâm Sàng",
+      "summary": "Tài liệu đào tạo thực hành lâm sàng cho điều dưỡng viên mới là nguồn học liệu quan trọng giúp nâng cao năng lực chuyên môn trong môi trường y tế. Nội dung bao gồm quy trình điều…",
+      "url": "/nam-2-dieu-duong-dao-tao-thuc-hanh-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-dao-tao-thuc-hanh-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-27",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 484,
+      "name": "[Năm 2 Điều Dưỡng] Trắc Nghiệm Cơ Bản 1",
+      "summary": "Tài liệu Trắc nghiệm điều dưỡng cơ bản 1 là nguồn học tập hữu ích dành cho sinh viên ngành y và điều dưỡng. Nội dung bao gồm hàng trăm câu hỏi trắc nghiệm bao phủ kiến thức nền…",
+      "url": "/nam-2-dieu-duong-trac-nghiem-co-ban-1",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-trac-nghiem-co-ban-1.png",
+      "fileCount": 1,
+      "date": "2026-03-27",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 483,
+      "name": "[Năm 2 Điều Dưỡng] Quy Trình Kỹ Thuật Cơ Bản",
+      "summary": "Tài liệu Quy Trình Kỹ Thuật Điều Dưỡng Cơ Bản 1 là nguồn học liệu quan trọng dành cho sinh viên và nhân viên y tế. Nội dung bao gồm các quy trình kỹ thuật từ cơ bản đến nâng cao…",
+      "url": "/nam-2-dieu-duong-quy-trinh-ky-thuat-co-ban",
+      "image": "https://cdn.meduc.vn/media/nam-2-dieu-duong-quy-trinh-ky-thuat-co-ban.png",
+      "fileCount": 1,
+      "date": "2026-03-27",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 482,
+      "name": "[Năm 2 Vi Sinh Học] Câu Hỏi Trắc Nghiệm Y Huế",
+      "summary": "Bộ câu hỏi trắc nghiệm Vi sinh Y học của Đại học Y Huế là tài liệu hữu ích dành cho sinh viên y khoa trong quá trình học và ôn thi. Tài liệu cung cấp hệ thống câu hỏi đa dạng nh…",
+      "url": "/nam-2-vi-sinh-hoc-cau-hoi-trac-nghiem-y-hue",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-cau-hoi-trac-nghiem-y-hue.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 481,
+      "name": "[Năm 2 Vi Sinh Học] Câu Hỏi Và Bài Tập",
+      "summary": "Tài liệu câu hỏi và bài tập vi sinh y học là nguồn học liệu quan trọng giúp sinh viên luyện tập và củng cố kiến thức. Nội dung bao gồm nhiều dạng câu hỏi đa dạng, bám sát chương…",
+      "url": "/nam-2-vi-sinh-hoc-cau-hoi-va-bai-tap",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-cau-hoi-va-bai-tap.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 480,
+      "name": "[Năm 2 Vi Sinh Học] Trắc Nghiệm Chi Tiết Có Đáp Án",
+      "summary": "Tài liệu Đáp án trắc nghiệm vi sinh học là nguồn tổng hợp kiến thức quan trọng, bao gồm câu hỏi và đáp án chi tiết từ cơ bản đến nâng cao. Nội dung được trình bày khoa học, giúp…",
+      "url": "/nam-2-vi-sinh-hoc-trac-nghiem-chi-tiet-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-trac-nghiem-chi-tiet-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 479,
+      "name": "[Năm 2 Vi Sinh Học] Đề Cương Tổng Hợp Trắc Nghiệm",
+      "summary": "Tài liệu “Đề cương vi sinh” là bộ câu hỏi trắc nghiệm tổng hợp đầy đủ các nội dung quan trọng trong vi sinh y học. Với cách trình bày logic, bám sát chương trình học, tài liệu g…",
+      "url": "/nam-2-vi-sinh-hoc-de-cuong-tong-hop-trac-nghiem",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-de-cuong-tong-hop-trac-nghiem.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 478,
+      "name": "[Năm 2 Vi Sinh Học] Tài Liệu Tóm Tắt Đầy Đủ Kiến Thức",
+      "summary": "Tài liệu vi sinh tóm tắt là nguồn học liệu cô đọng, giúp sinh viên y khoa nhanh chóng nắm bắt các kiến thức quan trọng về vi khuẩn, virus và cơ chế gây bệnh. Nội dung được trình…",
+      "url": "/nam-2-vi-sinh-hoc-tai-lieu-tom-tat-day-du-kien-thuc",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-tong-hop-kien-thuc.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 477,
+      "name": "[Năm 2 Vi Sinh Học] Tổng Hợp Kiến Thức",
+      "summary": "Tài liệu Tổng hợp vi sinh là nguồn học liệu toàn diện dành cho sinh viên y khoa, bao gồm kiến thức từ đại cương đến chuyên sâu về vi sinh vật, vi khuẩn và virus. Nội dung được t…",
+      "url": "/nam-2-vi-sinh-hoc-tong-hop-kien-thuc",
+      "image": "https://cdn.meduc.vn/media/nam-2-vi-sinh-hoc-tai-lieu-tom-tat-day-du-kien-thuc.png",
+      "fileCount": 1,
+      "date": "2026-03-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 476,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Tài Liệu Sinh Học Di Truyền",
+      "summary": "Tài liệu ôn tập sinh học di truyền được MedUC sưu tầm cung cấp hệ thống kiến thức trọng tâm và câu hỏi ôn luyện. Nội dung bao gồm DNA, RNA, protein, quy luật di truyền và nhiễm…",
+      "url": "/nam-1-sinh-hoc-di-truyen-tai-lieu-sinh-hoc-di-truyen",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-tai-lieu-sinh-hoc-di-truyen.png",
+      "fileCount": 1,
+      "date": "2026-03-20",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 475,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Tổng Hợp Câu Hỏi Ôn Tập Hiệu Quả",
+      "summary": "Tài liệu đề thi sinh học di truyền được MedUC sưu tầm cung cấp hệ thống câu hỏi giúp người học luyện tập và ôn thi hiệu quả. Nội dung bao gồm các dạng bài tập và câu hỏi lý thuy…",
+      "url": "/nam-1-sinh-hoc-di-truyen-tong-hop-cau-hoi-on-tap-hieu-qua",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-tong-hop-cau-hoi-on-tap-hieu-qua.png",
+      "fileCount": 1,
+      "date": "2026-03-20",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 474,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Đề Thi Kết Thúc Môn Học",
+      "summary": "Tài liệu đề thi kết thúc môn sinh học di truyền được MedUC sưu tầm giúp người học làm quen với cấu trúc đề thi thực tế. Nội dung bao gồm các câu hỏi trọng tâm về DNA, RNA, prote…",
+      "url": "/nam-1-sinh-hoc-di-truyen-de-thi-ket-thuc-mon-hoc",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-de-thi-ket-thuc-mon-hoc.png",
+      "fileCount": 1,
+      "date": "2026-03-20",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 473,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Lý Thuyết Kiến Thức Trọng Tâm",
+      "summary": "Tài liệu lý thuyết sinh học và di truyền được MedUC sưu tầm cung cấp kiến thức nền tảng và chuyên sâu về DNA, RNA, protein và các quy luật di truyền. Nội dung được trình bày kho…",
+      "url": "/nam-1-sinh-hoc-di-truyen-ly-thuyet-kien-thuc-trong-tam",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-de-thi-ket-thuc-mon-hoc%20(1).png",
+      "fileCount": 1,
+      "date": "2026-03-20",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 472,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Đề Cương Tổng Hợp Câu Hỏi Ôn Thi",
+      "summary": "Tài liệu sinh học di truyền được MedUC sưu tầm dưới dạng đề cương câu hỏi giúp người học ôn tập nhanh và hiệu quả. Nội dung bao gồm các kiến thức trọng tâm như DNA, RNA, protein…",
+      "url": "/nam-1-sinh-hoc-di-truyen-de-cuong-tong-hop-cau-hoi-on-thi",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-de-cuong-tong-hop-cau-hoi-on-thi.png",
+      "fileCount": 1,
+      "date": "2026-03-20",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 471,
+      "name": "[Năm 1 - Sinh Học Di Truyền] Bộ Câu Hỏi Trắc Nghiệm Và Lý Thuyết",
+      "summary": "Tài liệu sinh học di truyền được MedUC sưu tầm cung cấp hệ thống câu hỏi trắc nghiệm đa dạng, bao phủ các chủ đề quan trọng như tế bào, di truyền và sinh học phân tử. Nội dung đ…",
+      "url": "/nam-1-sinh-hoc-di-truyen-bo-cau-hoi-trac-nghiem-va-ly-thuyet",
+      "image": "https://cdn.meduc.vn/media/nam-1-sinh-hoc-di-truyen-bo-cau-hoi-trac-nghiem-va-ly-thuyet.png",
+      "fileCount": 1,
+      "date": "2026-03-19",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 470,
+      "name": "[Năm 2 Dịch Tễ Học] Tài Liệu Đầy Đủ Lý Thuyết & Bài Tập",
+      "summary": "Tài liệu Dịch tễ học PDF là nguồn học tập quan trọng dành cho sinh viên y khoa, được MedUC sưu tầm và tổng hợp đầy đủ. Nội dung bao gồm các kiến thức nền tảng về dịch tễ học, ph…",
+      "url": "/nam-2-dich-te-hoc-tai-lieu-day-du-ly-thuyet-bai-tap",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-trac-nghiem-day-du-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-03-19",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 469,
+      "name": "[Năm 2 Dịch Tễ Học] Trắc Nghiệm Đầy Đủ Có Đáp Án",
+      "summary": "Tài liệu trắc nghiệm dịch tễ học được MedUC sưu tầm, bao gồm hệ thống câu hỏi từ cơ bản đến nâng cao theo từng chương. Nội dung giúp sinh viên y khoa ôn tập nhanh các khái niệm…",
+      "url": "/nam-2-dich-te-hoc-trac-nghiem-day-du-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-trac-nghiem-day-du-co-dap-an%20(1).png",
+      "fileCount": 1,
+      "date": "2026-03-17",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 468,
+      "name": "[Năm 2 Dịch Tễ Học] Tài liệu Ôn Thi",
+      "summary": "Tài liệu Đề cương Dịch tễ học K10 tổng hợp các câu hỏi ôn thi trọng tâm, giúp sinh viên hệ thống hóa kiến thức nhanh chóng. Nội dung bám sát chương trình học, bao gồm lý thuyết,…",
+      "url": "/nam-2-dich-te-hoc-tai-lieu-on-thi",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-tai-lieu-on-thi.png",
+      "fileCount": 1,
+      "date": "2026-03-17",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 467,
+      "name": "[Năm 2 Dịch Tễ Học] Tổng Hợp Trắc Nghiệm",
+      "summary": "Tổng hợp trắc nghiệm Dịch tễ học Đại học Y khoa Vinh cung cấp hệ thống câu hỏi đa dạng, bám sát nội dung chương trình đào tạo. Đây là nguồn tài liệu hữu ích giúp sinh viên ôn tậ…",
+      "url": "/nam-2-dich-te-hoc-tong-hop-trac-nghiem",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-tong-hop-trac-nghiem.png",
+      "fileCount": 1,
+      "date": "2026-03-17",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 466,
+      "name": "[Năm 2 Dịch Tễ Học] Giáo Trình Y Huế",
+      "summary": "Trước đây, Dịch tễ học là môn học của các vụ đại dịch, nghĩa là khoa học về các bệnh truyền nhiễm quan trọng. Tuy nhiên với những biến đổi sâu sắc gần đây, Dịch tễ học đã có một…",
+      "url": "/nam-2-dich-te-hoc-giao-trinh-y-hue",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-giao-trinh-y-hue.png",
+      "fileCount": 1,
+      "date": "2026-03-17",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 463,
+      "name": "[Năm 4 Dược Lâm Sàng] 1000 Câu Trắc Nghiệm Có Đáp Án Full",
+      "summary": "Tài liệu 1000 câu trắc nghiệm Dược lâm sàng 1 và đáp án là bộ câu hỏi ôn tập quan trọng dành cho sinh viên ngành Dược. Nội dung bao gồm nhiều câu hỏi trắc nghiệm liên quan đến d…",
+      "url": "/nam-4-duoc-lam-sang-1000-cau-trac-nghiem-co-dap-an-full",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-1000-cau-trac-nghiem-co-dap-an-full.png",
+      "fileCount": 1,
+      "date": "2026-03-14",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 462,
+      "name": "[Năm 4 Dược Lâm Sàng] Bộ Câu Hỏi Và Trả Lời Ôn Thi",
+      "summary": "Tài liệu Đề thi Dược lâm sàng – Câu hỏi và trả lời là bộ câu hỏi trắc nghiệm giúp sinh viên ngành Dược ôn tập kiến thức quan trọng trước các kỳ thi. Nội dung bao gồm nhiều câu h…",
+      "url": "/nam-4-duoc-lam-sang-bo-cau-hoi-va-tra-loi-on-thi",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-bo-cau-hoi-va-tra-loi-on-thi.png",
+      "fileCount": 1,
+      "date": "2026-03-14",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 461,
+      "name": "[Năm 4 Dược Lâm Sàng] Giáo Trình Dược Sử Dụng Thuốc Hợp Lý Và An Toàn",
+      "summary": "Tài liệu Dược lâm sàng – sử dụng thuốc hợp lý và an toàn cung cấp các kiến thức quan trọng về nguyên tắc sử dụng thuốc trong điều trị, dược động học, phản ứng có hại của thuốc (…",
+      "url": "/nam-4-duoc-lam-sang-giao-trinh-duoc-su-dung-thuoc-hop-ly-va-an-toan",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-giao-trinh-duoc-su-dung-thuoc-hop-ly-va-an-toan.png",
+      "fileCount": 1,
+      "date": "2026-03-13",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 460,
+      "name": "[Năm 4 Dược Lâm Sàng] Báo Cáo Thực Tập",
+      "summary": "Báo cáo thực tập Dược lâm sàng tại Bệnh viện Xanh Pôn là tài liệu tổng hợp kinh nghiệm thực tập bệnh viện dành cho sinh viên ngành Dược. Nội dung trình bày các hoạt động của dượ…",
+      "url": "/nam-4-duoc-lam-sang-bao-cao-thuc-tap",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-bao-cao-thuc-tap.png",
+      "fileCount": 1,
+      "date": "2026-03-13",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 459,
+      "name": "[Năm 4 Dược Lâm Sàng] Trắc Nghiệm Câu Hỏi Và Đáp Án Ôn Thi",
+      "summary": "Tài liệu Trắc nghiệm Dược lâm sàng 1 – Các câu hỏi và đáp án là bộ câu hỏi tổng hợp giúp sinh viên ngành Dược ôn tập kiến thức quan trọng trong môn Dược lâm sàng. Nội dung bao g…",
+      "url": "/nam-4-duoc-lam-sang-trac-nghiem-cau-hoi-va-dap-an-on-thi",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-trac-nghiem-cau-hoi-va-dap-an-on-thi.png",
+      "fileCount": 1,
+      "date": "2026-03-13",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 458,
+      "name": "[Năm 4 Dược Lâm Sàng] Đề Cương Ôn Thi",
+      "summary": "Đề cương Dược lâm sàng là tài liệu tổng hợp kiến thức quan trọng giúp sinh viên Dược ôn tập hiệu quả trước kỳ thi. Nội dung bao gồm các nguyên tắc sử dụng thuốc an toàn, thông t…",
+      "url": "/nam-4-duoc-lam-sang-de-cuong-on-thi",
+      "image": "https://cdn.meduc.vn/media/nam-4-duoc-lam-sang-de-cuong-on-thi%20(1).png",
+      "fileCount": 1,
+      "date": "2026-03-13",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 457,
+      "name": "[Năm 3 Dược Lý] Kiến Thức Quan Trọng Ôn Thi Cần Nhớ",
+      "summary": "Tài liệu Ôn thi Dược lý 1 – Tổng hợp kiến thức cần nhớ giúp sinh viên y dược hệ thống lại những nội dung quan trọng trong môn dược lý học. Tài liệu được trình bày dưới dạng tóm…",
+      "url": "/nam-3-duoc-ly-kien-thuc-quan-trong-on-thi-can-nho",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-kien-thuc-quan-trong-on-thi-can-nho.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 456,
+      "name": "[Năm 3 Dược Lý] Giáo Trình Dược Lý",
+      "summary": "Tài liệu Giáo trình Dược lý – Hướng dẫn học tập cao đẳng là nguồn tài liệu hữu ích dành cho sinh viên ngành y và dược. Nội dung trình bày các kiến thức cơ bản về dược lý học như…",
+      "url": "/nam-3-duoc-ly-giao-trinh-duoc-ly",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-giao-trinh-duoc-ly.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 455,
+      "name": "[Năm 3 Dược Lý] Kiểm Tra Dược Lý Test DL01",
+      "summary": "Tài liệu Kiểm tra Dược lý Test DL01 là bộ câu hỏi trắc nghiệm giúp sinh viên ngành y và dược luyện tập kiến thức dược lý học. Nội dung bao gồm nhiều câu hỏi liên quan đến cơ chế…",
+      "url": "/nam-3-duoc-ly-kiem-tra-duoc-ly-test-dl01",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-kiem-tra-duoc-ly-test-dl01.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 454,
+      "name": "[Năm 3 Dược Lý] Tóm Tắt Lý Thuyết Dược Lý",
+      "summary": "Tài liệu Tóm tắt lý thuyết Dược lý là nguồn tài liệu học tập hữu ích dành cho sinh viên ngành y và dược. Nội dung được hệ thống dưới dạng tóm tắt giúp người học dễ ghi nhớ các k…",
+      "url": "/nam-3-duoc-ly-tom-tat-ly-thuyet-duoc-ly",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-tom-tat-ly-thuyet-duoc-ly.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 453,
+      "name": "[Năm 3 Dược Lý] 1500 Câu Trắc Nghiệm Có Đáp Án",
+      "summary": "Tài liệu 1500 câu trắc nghiệm Dược lý tổng hợp là bộ câu hỏi ôn tập quan trọng dành cho sinh viên ngành y và dược. Nội dung gồm nhiều câu hỏi trắc nghiệm được biên soạn theo từn…",
+      "url": "/nam-3-duoc-ly-1500-cau-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-1500-cau-trac-nghiem-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 451,
+      "name": "[Năm 3 Dược Lý] Giáo Trình Tập 1",
+      "summary": "Tài liệu Dược lý học Tập 1 là giáo trình quan trọng dành cho sinh viên y khoa và ngành dược, giúp cung cấp kiến thức cơ bản về tác dụng của thuốc trên cơ thể. Nội dung bao gồm c…",
+      "url": "/nam-3-duoc-ly-giao-trinh-tap-1",
+      "image": "https://cdn.meduc.vn/media/nam-3-duoc-ly-giao-trinh-tap-1.png",
+      "fileCount": 1,
+      "date": "2026-03-12",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 444,
+      "name": "[Năm 4 Nhi Khoa] Câu Hỏi Ôn Tập Trắc Nghiệm",
+      "summary": "Tài liệu Câu hỏi ôn tập Nhi khoa – Trắc nghiệm Nhi khoa (Ấn bản thứ 13) là bộ câu hỏi ôn tập hữu ích dành cho sinh viên y khoa đang học và chuẩn bị thi môn Nhi khoa. Nội dung ba…",
+      "url": "/nam-4-nhi-khoa-cau-hoi-on-tap-trac-nghiem",
+      "image": "https://cdn.meduc.vn/media/nam-4-nhi-khoa-cau-hoi-on-tap-trac-nghiem.png",
+      "fileCount": 1,
+      "date": "2026-03-08",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 443,
+      "name": "[Năm 4 Nhi Khoa] Thực Hành Lâm Sàng",
+      "summary": "Thực hành lâm sàng Nhi khoa là tài liệu hướng dẫn thực hành quan trọng dành cho sinh viên y khoa trong quá trình học lâm sàng tại khoa Nhi. Nội dung bao gồm cách khai thác bệnh…",
+      "url": "/nam-4-nhi-khoa-thuc-hanh-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-4-nhi-khoa-thuc-hanh-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-08",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 442,
+      "name": "[Năm 4 Nhi Khoa] Tổng Hợp Câu Hỏi Nhi Khoa Sơ Sinh",
+      "summary": "Tổng hợp câu hỏi Nhi khoa Sơ sinh (NHI320) là bộ tài liệu ôn tập quan trọng dành cho sinh viên y khoa trong quá trình học và chuẩn bị cho các kỳ thi chuyên ngành Nhi khoa. Nội d…",
+      "url": "/nam-4-nhi-khoa-tong-hop-cau-hoi-nhi-khoa-so-sinh",
+      "image": "https://cdn.meduc.vn/media/nam-4-nhi-khoa-tong-hop-cau-hoi-nhi-khoa-so-sinh.png",
+      "fileCount": 1,
+      "date": "2026-03-08",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 441,
+      "name": "[Năm 4 Nhi Khoa] Tổng Hợp Đề Thi Ôn Tập Cuối Kỳ",
+      "summary": "Tổng hợp đề Nhi khoa ôn tập cuối kỳ là bộ tài liệu hữu ích dành cho sinh viên y khoa trong quá trình ôn tập và chuẩn bị cho các kỳ thi môn Nhi khoa. Nội dung bao gồm nhiều câu h…",
+      "url": "/nam-4-nhi-khoa-tong-hop-de-thi-on-tap-cuoi-ky",
+      "image": "https://cdn.meduc.vn/media/nam-4-nhi-khoa-tong-hop-de-thi-on-tap-cuoi-ky.png",
+      "fileCount": 1,
+      "date": "2026-03-06",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 440,
+      "name": "[Năm 4 Nhi Khoa] Bài Giảng Giáo Trình",
+      "summary": "Tài liệu “Bài giảng Nhi khoa – Giáo trình Đại học và Sau đại học” là nguồn học liệu quan trọng dành cho sinh viên y khoa, bác sĩ nội trú và bác sĩ nhi khoa. Nội dung bao gồm nhi…",
+      "url": "/nam-4-nhi-khoa-bai-giang-giao-trinh",
+      "image": "https://cdn.meduc.vn/media/nam-4-nhi-khoa-bai-giang-giao-trinh.png",
+      "fileCount": 1,
+      "date": "2026-03-06",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 437,
+      "name": "[Năm 4 Sản Khoa] Đề Giữa Kỳ Lâm Sàng",
+      "summary": "Tài liệu Đề Giữa Kỳ Lâm Sàng Sản Phụ Khoa Y18 tổng hợp các câu hỏi trắc nghiệm lâm sàng về sản khoa và phụ khoa thường gặp trong chương trình đào tạo y khoa. Nội dung giúp sinh…",
+      "url": "/nam-4-san-khoa-de-giua-ky-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-4-san-khoa-de-giua-ky-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-04",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 436,
+      "name": "[Năm 4 Sản Khoa] Bài Soạn Lâm Sàng",
+      "summary": "Tài liệu Bài Soạn Lâm Sàng Sản Khoa là tài liệu học tập và thực hành dành cho sinh viên y khoa khi đi lâm sàng sản khoa. Nội dung tổng hợp các bước hỏi bệnh, khám bệnh, theo dõi…",
+      "url": "/nam-4-san-khoa-bai-soan-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-4-san-khoa-bai-soan-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-04",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 435,
+      "name": "[Năm 4 Sản Khoa] Tài liệu Ôn Thi Lâm Sàng",
+      "summary": "Tài liệu ôn thi lâm sàng Sản khoa BCD được MedUC sưu tầm, tổng hợp đầy đủ các khái niệm cơ bản, bệnh lý thường gặp và bộ câu hỏi trắc nghiệm sát thực tế lâm sàng. Nội dung bao g…",
+      "url": "/nam-4-san-khoa-tai-lieu-on-thi-lam-sang",
+      "image": "https://cdn.meduc.vn/media/lam-sang-san-khoa.png",
+      "fileCount": 1,
+      "date": "2026-03-04",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 434,
+      "name": "[Năm 4 Sản Khoa] Sổ Theo Dõi Thực Hành Lâm Sàng",
+      "summary": "Sổ theo dõi thực hành lâm sàng Y4 Sản Phụ khoa năm học 2024–2025 được MedUC sưu tầm là tài liệu nội bộ quan trọng dành cho sinh viên Đại học Y khoa Phạm Ngọc Thạch. Tài liệu cun…",
+      "url": "/nam-4-san-khoa-so-theo-doi-thuc-hanh-lam-sang",
+      "image": "https://cdn.meduc.vn/media/nam-4-san-khoa-so-theo-doi-thuc-hanh-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-03-04",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 433,
+      "name": "[Năm 4 Sản Khoa] Bệnh Án Sản Khoa",
+      "summary": "Tài liệu bệnh án sản khoa mô tả trường hợp sản phụ 27 tuổi, thai 37 tuần, ối vỡ kéo dài 35 giờ, chuyển dạ giai đoạn 2 kéo dài tại Bệnh viện Từ Dũ. Hồ sơ trình bày đầy đủ diễn ti…",
+      "url": "/nam-4-san-khoa-benh-an-san-khoa",
+      "image": "https://cdn.meduc.vn/media/nam-4-san-khoa-benh-an-san-khoa.png",
+      "fileCount": 1,
+      "date": "2026-03-03",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 432,
+      "name": "[Năm 4 Sản Khoa] Hướng Dẫn Thực Hành",
+      "summary": "Hướng dẫn thực hành Sản Phụ khoa được MedUC sưu tầm là giáo trình thiết thực dành cho sinh viên y khoa trước khi bước vào thực tập bệnh viện. Nội dung bao gồm kỹ năng giao tiếp,…",
+      "url": "/nam-4-san-khoa-huong-dan-thuc-hanh",
+      "image": "https://cdn.meduc.vn/media/nam-4-san-khoa-huong-dan-thuc-hanh.png",
+      "fileCount": 1,
+      "date": "2026-03-03",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 431,
+      "name": "[Năm 3 Ngoại Khoa] Giáo trình Bệnh Ngoại Khoa",
+      "summary": "Giáo trình Bệnh Ngoại khoa là tài liệu học tập quan trọng dành cho y sĩ đa khoa hệ cao đẳng, cung cấp kiến thức nền tảng và thực hành về các bệnh ngoại khoa thường gặp. Tài liệu…",
+      "url": "/nam-3-ngoai-khoa-giao-trinh-benh-ngoai-khoa",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-benh-ngoai-khoa.png",
+      "fileCount": 1,
+      "date": "2026-02-09",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 430,
+      "name": "[Năm 3 Ngoại Khoa] Atlas Giải Phẫu Ngoại Khoa",
+      "summary": "Atlas Giải Phẫu Ngoại Khoa là tài liệu y khoa trực quan, trình bày giải phẫu ứng dụng trong phẫu thuật qua hình vẽ chi tiết và chú thích rõ ràng. Tài liệu giúp người học dễ dàng…",
+      "url": "/nam-3-ngoai-khoa-atlas-giai-phau-ngoai-khoa",
+      "image": "https://cdn.meduc.vn/media/atlas-ngoai-khoa.png",
+      "fileCount": 1,
+      "date": "2026-02-09",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 429,
+      "name": "[Năm 3 Ngoại Khoa] 500 Câu Trắc Nghiệm Ngoại Bệnh Lý",
+      "summary": "Tài liệu 500 câu trắc nghiệm Ngoại bệnh lý 3 được MedUC sưu tầm là nguồn ôn tập quan trọng cho sinh viên y khoa. Nội dung bao phủ đầy đủ các chuyên đề ngoại khoa thường gặp như…",
+      "url": "/nam-3-ngoai-khoa-500-cau-trac-nghiem-ngoai-benh-ly",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-ngoai-khoa.png",
+      "fileCount": 1,
+      "date": "2026-02-09",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 428,
+      "name": "[Năm 3 ECG] Ứng Dụng Trong Lâm Sàng Học",
+      "summary": "Tài liệu Điện tâm đồ Ứng dụng trong thực hành lâm sàng là nguồn học liệu chuyên sâu về ECG, giúp người học nắm vững nguyên lý ghi điện tim, cách đọc sóng, trục tim và nhận diện…",
+      "url": "/nam-3-ecg-ung-dung-trong-lam-sang-hoc",
+      "image": "https://cdn.meduc.vn/media/dien-tam-do-ung-dung-trong-th-lam-sang-y-hoc.png",
+      "fileCount": 1,
+      "date": "2026-02-03",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 427,
+      "name": "[Năm 3 ECG] Hướng Dẫn Học Chi Tiết",
+      "summary": "Tài liệu Đọc điện tâm đồ dễ hơn là cẩm nang học tập và thực hành ECG dành cho sinh viên y khoa và nhân viên y tế. Nội dung trình bày khoa học, dễ hiểu, nhiều hình minh họa màu,…",
+      "url": "/nam-3-ecg-huong-dan-hoc-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/huong-dan-doc-ecg.png",
+      "fileCount": 1,
+      "date": "2026-02-03",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 426,
+      "name": "[Năm 3 ECG] Sổ Tay Lâm Sàng",
+      "summary": "Sổ tay lâm sàng ECG là tài liệu tổng hợp kiến thức điện tâm đồ từ cơ bản đến nâng cao, được MedUC sưu tầm và biên soạn chọn lọc. Tài liệu giúp người học hiểu rõ nguyên lý điện t…",
+      "url": "/nam-3-ecg-so-tay-lam-sang",
+      "image": "https://cdn.meduc.vn/media/so-tay-lam-sang-ecg.png",
+      "fileCount": 1,
+      "date": "2026-02-03",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 424,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Trắc nghiệm Có Đáp Án",
+      "summary": "Tài liệu trắc nghiệm Sinh lý bệnh Miễn dịch có đáp án là nguồn ôn tập thiết yếu dành cho sinh viên Y – Dược. Nội dung gồm các câu hỏi trắc nghiệm bám sát chương trình học, đề th…",
+      "url": "/nam-2-sinh-ly-benh-md-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/sinh-ly-benh-mien-dich-trac-nghiem-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-02-01",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 423,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Giáo Trình Bài Học",
+      "summary": "Đề thi Sinh lý bệnh Miễn dịch học gồm hệ thống câu hỏi trắc nghiệm và tự luận, có đáp án đầy đủ. Nội dung bám sát chương trình đào tạo y – điều dưỡng, giúp sinh viên ôn tập hiệu…",
+      "url": "/nam-2-sinh-ly-benh-md-giao-trinh-bai-hoc",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-sinh-ly-benh-mien-dich.png",
+      "fileCount": 1,
+      "date": "2026-01-30",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 422,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Đề Thi Có Đáp Án",
+      "summary": "Đề thi Sinh lý bệnh Miễn dịch học gồm hệ thống câu hỏi trắc nghiệm và tự luận, có đáp án đầy đủ. Nội dung bám sát chương trình đào tạo y – điều dưỡng, giúp sinh viên ôn tập hiệu…",
+      "url": "/nam-2-sinh-ly-benh-md-de-thi-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/sinh-ly-benh-mien-dich-de-thi-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-01-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 421,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Trắc Nghiệm Có Đáp Án Chi Tiết",
+      "summary": "Tài liệu Trắc nghiệm Sinh lý bệnh Miễn dịch là nguồn ôn tập quan trọng cho sinh viên y khoa. Nội dung bao gồm hệ thống câu hỏi trắc nghiệm có đáp án, bao phủ từ sinh lý bệnh đại…",
+      "url": "/nam-2-sinh-ly-benh-md-trac-nghiem-co-dap-an-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-sinh-ly-benh-co-dap-an.png",
+      "fileCount": 1,
+      "date": "2026-01-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 420,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Bài Giảng Cơ Bản",
+      "summary": "Tài liệu Sinh lý bệnh Miễn dịch học cung cấp nền tảng kiến thức quan trọng về cơ chế bệnh sinh, phản ứng viêm, rối loạn miễn dịch và các quá trình bệnh lý thường gặp. Nội dung đ…",
+      "url": "/nam-2-sinh-ly-benh-md-bai-giang-co-ban",
+      "image": "https://cdn.meduc.vn/media/bai-giang-sinh-ly-benh-mien-dich.png",
+      "fileCount": 1,
+      "date": "2026-01-29",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 419,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Hình Ảnh Và Tiêu Chuẩn Chẩn Đoán",
+      "summary": "Tài liệu giải phẫu bệnh học này tổng hợp hệ thống hình ảnh vi thể, tiêu chuẩn chẩn đoán và ghi chú học tập các bệnh lý thường gặp trong lâm sàng. Nội dung được trình bày trực qu…",
+      "url": "/nam-2-giai-phau-benh-hinh-anh-va-tieu-chuan-chan-doan",
+      "image": "https://cdn.meduc.vn/media/note-giai-phau-benh.png",
+      "fileCount": 1,
+      "date": "2026-01-28",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 418,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Câu Hỏi Trắc Nghiệm Có Đáp Án",
+      "summary": "Trắc nghiệm Giải phẫu bệnh có đáp án chi tiết là tài liệu ôn tập quan trọng dành cho sinh viên y khoa. Nội dung bao quát kiến thức từ cơ bản đến nâng cao, bám sát cấu trúc đề th…",
+      "url": "/nam-2-giai-phau-benh-cau-hoi-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-giai-phau-benh.png",
+      "fileCount": 1,
+      "date": "2026-01-28",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 417,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Giáo Trình Thực Tập",
+      "summary": "Tài liệu Thực tập Giải phẫu bệnh là học liệu quan trọng dành cho sinh viên Y đa khoa, giúp hệ thống hóa kiến thức về tổn thương tế bào, viêm, u và ung thư. Nội dung bám sát chươ…",
+      "url": "/nam-2-giai-phau-benh-giao-trinh-thuc-tap",
+      "image": "https://cdn.meduc.vn/media/thuc-tap-giai-phau-benh.png",
+      "fileCount": 1,
+      "date": "2026-01-27",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 416,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Tóm Tắt Lý Thuyết",
+      "summary": "Tài liệu Giải phẫu bệnh được MedUC sưu tầm là nguồn tổng hợp kiến thức nền tảng và chuyên sâu về tổn thương tế bào, mô, viêm, u và bệnh lý đặc hiệu. Nội dung trình bày logic, có…",
+      "url": "/nam-2-giai-phau-benh-tom-tat-ly-thuyet",
+      "image": "https://cdn.meduc.vn/media/tom-tat-giai-phau-benh.png",
+      "fileCount": 1,
+      "date": "2026-01-27",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 415,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Trắc Nghiệm Theo Hệ Cơ Quan",
+      "summary": "Tài liệu Trắc nghiệm Giải Phẫu Bệnh theo cơ quan gồm 589 câu được chia theo nhiều chủ đề như tổn thương cơ bản, viêm, lao, giang mai, phong, rối loạn tuần hoàn, ung thư và các c…",
+      "url": "/nam-2-giai-phau-benh-trac-nghiem-theo-he-co-quan",
+      "image": "https://cdn.meduc.vn/media/giai-phau-benh-theo-co-quan.png",
+      "fileCount": 1,
+      "date": "2026-01-26",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 414,
+      "name": "[Năm 2 Giải Phẫu Bệnh] Giáo Trình Học",
+      "summary": "Tài liệu Giải Phẫu Bệnh Học – Bộ Y Tế là giáo trình nền tảng dành cho sinh viên y khoa, cung cấp kiến thức từ giải phẫu bệnh đại cương đến giải phẫu bệnh từng cơ quan . Nội dung…",
+      "url": "/nam-2-giai-phau-benh-giao-trinh-hoc",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-giai-phau-benh.png",
+      "fileCount": 1,
+      "date": "2026-01-26",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 413,
+      "name": "[Năm 2 Lý Sinh] Tổng Hợp Lý Thuyết Đầy Đủ Theo Chương",
+      "summary": "Tài liệu ôn tập Lý Sinh là bộ tổng hợp kiến thức trọng tâm theo từng chương, giúp người học hệ thống nhanh lý thuyết và công thức quan trọng. Nội dung gồm cơ học, dao động – són…",
+      "url": "/nam-2-ly-sinh-tong-hop-ly-thuyet-day-du-theo-chuong",
+      "image": "https://cdn.meduc.vn/media/on-tap-ly-thuyet-ly-sinh.png",
+      "fileCount": 2,
+      "date": "2026-01-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 412,
+      "name": "[Năm 2 Lý Sinh] Câu Hỏi Cuối Kỳ Có Đáp Án",
+      "summary": "Tài liệu Lý Sinh Câu Hỏi Đáp Án Cuối Kỳ là bộ tổng hợp 100 câu hỏi kèm đáp án giúp sinh viên ôn thi nhanh và đúng trọng tâm. Nội dung bao gồm thị giác, quang học, nhiệt động học…",
+      "url": "/nam-2-ly-sinh-cau-hoi-cuoi-ky-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/ly-sinh-cau-hoi-dap-an-cuoi-ky.png",
+      "fileCount": 1,
+      "date": "2026-01-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 411,
+      "name": "[Năm 2 Lý Sinh] Trắc Nghiệm Ôn Tập Có Đáp Án",
+      "summary": "Tài liệu trắc nghiệm Lý Sinh Y khoa được MedUC sưu tầm là bộ câu hỏi chọn lọc theo từng chương, có nội dung bám sát kiến thức nền tảng và ứng dụng y học. Tài liệu giúp người học…",
+      "url": "/nam-2-ly-sinh-trac-nghiem-on-tap-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-ly-sinh.png",
+      "fileCount": 1,
+      "date": "2026-01-25",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 410,
+      "name": "[Năm 2 Lý Sinh] Câu Hỏi Lý Sinh Có Đáp Án",
+      "summary": "Tài liệu “Câu hỏi Vấn đáp Lý Sinh” tổng hợp hệ thống câu hỏi theo từng chương quan trọng như cơ học, nhiệt động, khuếch tán, điện sinh học, siêu âm, quang học, bức xạ… Nội dung…",
+      "url": "/nam-2-ly-sinh-cau-hoi-ly-sinh-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/tong-hop-cau-hoi-kien-thuc-ly-sinh-hay.png",
+      "fileCount": 1,
+      "date": "2026-01-23",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 409,
+      "name": "[Năm 2 Lý Sinh] Bài Giảng Chi Tiết",
+      "summary": "Tài liệu Bài giảng Lý Sinh là nguồn học tập nền tảng dành cho sinh viên khối ngành Y – Sinh học, trình bày các cơ chế vật lý trong hệ sống như nhiệt động học hệ sinh vật, tính t…",
+      "url": "/nam-2-ly-sinh-bai-giang-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/bai-giang-ly-sinh.png",
+      "fileCount": 1,
+      "date": "2026-01-23",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 408,
+      "name": "[Năm 2 Lý Sinh] Tài Liệu Thực Hành Vật Lý - Lý Sinh S1.4",
+      "summary": "Tài liệu thực hành Vật lý - Lý Sinh S1.4 tổng hợp các bài thí nghiệm quan trọng như đo độ nhớt chất lỏng bằng nhớt kế Ostwald, xác định ngưỡng cảm thụ âm thanh và khảo sát trườn…",
+      "url": "/nam-2-ly-sinh-tai-lieu-thuc-hanh-vat-ly-ly-sinh-s14",
+      "image": "https://cdn.meduc.vn/media/thuc-hanh-vat-ly-ly-sinh.png",
+      "fileCount": 1,
+      "date": "2026-01-22",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 407,
+      "name": "[Năm 2 Mô Phôi] Tổng Hợp Kiến Thức Nền Tảng",
+      "summary": "Tài liệu Mô học – Phôi thai học Đại cương là nguồn học tập nền tảng dành cho sinh viên Y khoa. Nội dung trình bày tổng quan về mức độ tổ chức cơ thể, các loại mô cơ bản , phương…",
+      "url": "/nam-2-mo-phoi-tong-hop-kien-thuc-nen-tang",
+      "image": "https://cdn.meduc.vn/media/mo-phoi-hoc-dai-cuong%20(1).png",
+      "fileCount": 1,
+      "date": "2026-01-20",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 406,
+      "name": "[Năm 2 Mô Phôi] Tài Liệu Chạy Trạm - Lam Giải Phẫu Mô Học",
+      "summary": "Tài liệu Chạy trạm mô phôi là bộ tổng hợp hình ảnh lam mô học kèm câu hỏi “cơ quan gì – cấu trúc gì – tế bào gì” giúp người học luyện phản xạ nhận diện mô nhanh. Nội dung bao ph…",
+      "url": "/nam-2-mo-phoi-tai-lieu-chay-tram-lam-giai-phau-mo-hoc",
+      "image": "https://cdn.meduc.vn/media/chay-tram-mo-phoi.png",
+      "fileCount": 1,
+      "date": "2026-01-20",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 405,
+      "name": "[Năm 2 Mô Phôi] Giáo Trình Thực Hành ĐH Y Hà Nội",
+      "summary": "Tài liệu “Thực hành Mô học” (ĐH Y Hà Nội) là giáo trình hướng dẫn sinh viên cách đọc tiêu bản mô học qua kính hiển vi. Sách gồm phần mở đầu về mục đích, kỹ thuật làm tiêu bản, c…",
+      "url": "/nam-2-mo-phoi-giao-trinh-thuc-hanh-dh-y-ha-noi",
+      "image": "https://cdn.meduc.vn/media/thuc-hanh-mo-phoi.png",
+      "fileCount": 1,
+      "date": "2026-01-19",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 404,
+      "name": "[Năm 2 Mô Phôi] 1000 Câu Trắc Nghiệm Có Đáp Án",
+      "summary": "1000 câu trắc nghiệm mô phôi theo bài là bộ câu hỏi ôn tập mô phôi học theo từng chương, gồm nhiều chủ đề như mô bạch huyết, biểu mô, mô liên kết, nội tiết, thần kinh, tuần hoàn…",
+      "url": "/nam-2-mo-phoi-1000-cau-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/1000-cau-trac-nghiem-mo-phoi.png",
+      "fileCount": 1,
+      "date": "2026-01-19",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 403,
+      "name": "[Năm 2 Mô Phôi] Tổng Hợp Hình Ảnh Vi Thể & Nhận Diện Mô Cơ Bản",
+      "summary": "Tài liệu mô phôi sinh học được MedUC sưu tầm là bộ tổng hợp hình ảnh vi thể (H.E và một số nhuộm khác) của nhiều loại mô và cơ quan. Nội dung giúp người học quan sát cấu trúc đặ…",
+      "url": "/nam-2-mo-phoi-tong-hop-hinh-anh-vi-the-nhan-dien-mo-co-ban",
+      "image": "https://cdn.meduc.vn/media/t%C3%B3m%20t%E1%BA%AFt%20t%C3%A0i%20li%E1%BB%87u%20m%C3%B4%20ph%C3%B4i%20sinh%20h%E1%BB%8Dc_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-18",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 402,
+      "name": "[Năm 2 Mô Phôi] Bài Giảng Mô Phôi Học Đầy Đủ",
+      "summary": "Tài liệu Bài giảng Mô phôi là hệ thống kiến thức mô học nền tảng dành cho sinh viên Y – Dược. Nội dung bao quát các khái niệm cơ bản về mô, mô học, phương pháp nghiên cứu và kín…",
+      "url": "/nam-2-mo-phoi-bai-giang-mo-phoi-hoc-day-du",
+      "image": "https://cdn.meduc.vn/media/bai-giang-mo-phoi.png",
+      "fileCount": 1,
+      "date": "2026-01-18",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 400,
+      "name": "[Năm 1 - Hóa Sinh] Thực Hành Hóa Sinh Học",
+      "summary": "Thực Hành Hóa Sinh Học là tài liệu hướng dẫn chi tiết các kỹ thuật và thí nghiệm hóa sinh cơ bản trong phòng thí nghiệm. Nội dung bao gồm sử dụng dụng cụ, pha hóa chất, phân tíc…",
+      "url": "/nam-1-hoa-sinh-thuc-hanh-hoa-sinh-hoc",
+      "image": "https://cdn.meduc.vn/media/thuc-hanh-hoa-sinh-hoc.png",
+      "fileCount": 1,
+      "date": "2026-01-06",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 399,
+      "name": "[Năm 1 - Hóa Sinh] Hóa Sinh Lâm Sàng Trong Thực Hành",
+      "summary": "Hóa Sinh Lâm Sàng trong thực hành là tài liệu chuyên sâu giúp người học hiểu rõ vai trò của xét nghiệm hóa sinh trong chẩn đoán, theo dõi và điều trị bệnh. Tài liệu trình bày mố…",
+      "url": "/nam-1-hoa-sinh-lam-sang-trong-thuc-hanh",
+      "image": "https://cdn.meduc.vn/media/hoa-sinh-lam-sang.png",
+      "fileCount": 1,
+      "date": "2026-01-06",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 398,
+      "name": "[Năm 1 - Hóa Sinh] Đề Cương Ôn Tập Cuối Kỳ",
+      "summary": "Đề cương ôn tập Hóa sinh cuối kỳ là tài liệu tổng hợp các nội dung trọng tâm giúp sinh viên hệ thống kiến thức, chuẩn bị hiệu quả cho kỳ thi. Tài liệu tập trung vào các phần cốt…",
+      "url": "/nam-1-hoa-sinh-de-cuong-on-tap-cuoi-ky",
+      "image": "https://cdn.meduc.vn/media/de-cuong-on-tap-cuoi-ki-hoa-sinh-mon-hoa-sinh-101_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-05",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 397,
+      "name": "[Năm 1 - Hóa Sinh] Giáo Trình Hóa Sinh Cấu Trúc",
+      "summary": "Giáo Trình Hóa Sinh Cấu Trúc là giáo trình chính thống do Bộ Y tế ban hành, cung cấp kiến thức nền tảng về cấu trúc và chuyển hóa các chất sinh học trong cơ thể. Nội dung được b…",
+      "url": "/nam-1-hoa-sinh-giao-trinh-hoa-sinh-cau-truc",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-hoa-sinh.png",
+      "fileCount": 1,
+      "date": "2026-01-05",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 396,
+      "name": "[Năm 1 - Ký Sinh Trùng] Tóm Tắt Đặc Điểm Và Bệnh Lý Ôn Thi",
+      "summary": "Tài liệu Tóm tắt đặc điểm và bệnh lý ký sinh trùng được MedUC sưu tầm là nguồn học liệu cô đọng, giúp sinh viên hệ thống nhanh kiến thức trọng tâm môn ký sinh trùng. Nội dung tậ…",
+      "url": "/nam-1-ky-sinh-trung-tom-tat-dac-diem-va-benh-ly-on-thi",
+      "image": "https://cdn.meduc.vn/media/tai-lieu-on-tap-mon-sinh-hoc-ky-sinh-trung-chuan-bi-thi-kst_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-04",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 395,
+      "name": "[Năm 1 - Ký Sinh Trùng] Phân Tích Chẩn Đoán Sốt Rét",
+      "summary": "Tài liệu Ký sinh trùng – Phân tích và chẩn đoán sốt rét được MedUC sưu tầm là giáo trình thực hành quan trọng dành cho sinh viên y – dược. Nội dung tập trung vào nhận diện hình…",
+      "url": "/nam-1-ky-sinh-trung-phan-tich-chan-doan-sot-ret",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-thuc-tap-ky-sinh-trung-phan-tich-va-chan-doan-sot-ret.png",
+      "fileCount": 1,
+      "date": "2026-01-04",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 394,
+      "name": "[Năm 1 - Ký Sinh Trùng] Ôn Tập Bệnh Học",
+      "summary": "Ôn tập Bệnh học Ký sinh trùng được MedUC sưu tầm cung cấp kiến thức trọng tâm về nguyên nhân, cơ chế gây bệnh và triệu chứng lâm sàng của các bệnh do ký sinh trùng, giun sán và…",
+      "url": "/nam-1-ky-sinh-trung-on-tap-benh-hoc",
+      "image": "https://cdn.meduc.vn/media/tai-lieu-on-tap-benh-hoc-kst-nguyen-nhan-va-trieu-chung-benh-ly_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-03",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 393,
+      "name": "[Năm 1 - Ký Sinh Trùng] Giáo Trình Thực Hành",
+      "summary": "Giáo trình thực hành Ký sinh trùng được MedUC sưu tầm là nguồn học liệu quan trọng dành cho sinh viên Y Dược, giúp nắm vững kiến thức và kỹ năng nhận diện ký sinh trùng, đơn bào…",
+      "url": "/nam-1-ky-sinh-trung-giao-trinh-thuc-hanh",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-thuc-hanh-kst-2023-phan-tich-ky-sinh-trung-va-don-bao_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-03",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 392,
+      "name": "[Năm 1 - Ký Sinh Trùng] 500 Câu Trắc Nghiệm Có Đáp Án",
+      "summary": "Tài liệu 552 câu hỏi trắc nghiệm Ký sinh trùng Y học có đáp án do MedUC sưu tầm là nguồn ôn tập quan trọng dành cho sinh viên Y – Dược. Nội dung bao phủ toàn diện kiến thức từ k…",
+      "url": "/nam-1-ky-sinh-trung-500-cau-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/123doc-552-cau-hoi-trac-nghiem-ve-ky-sinh-trung-va-dap-an_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-02",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 391,
+      "name": "[Năm 1 - Ký Sinh Trùng] Đại Cương Môn Học",
+      "summary": "Giáo trình Ký sinh trùng Y học đại cương do MedUC giới thiệu là tài liệu học tập quan trọng cho sinh viên Y – Dược. Sách cung cấp kiến thức nền tảng về các loại ký sinh trùng gâ…",
+      "url": "/nam-1-ky-sinh-trung-dai-cuong-mon-hoc",
+      "image": "https://cdn.meduc.vn/media/giao-trinh-ky-sinh-trung-y-hoc-dai-cuong-mod-2024_redacted.png",
+      "fileCount": 1,
+      "date": "2026-01-02",
+      "categories": [
+        48,
+        121
+      ]
+    },
+    {
+      "id": 390,
+      "name": "Giải Phẫu Đầu Mặt Cổ Chi Tiết",
+      "summary": "Tài liệu Giải phẫu đầu mặt cổ – MedUC giúp người học nắm vững cấu tạo xương, khớp, cơ, mạch máu và thần kinh vùng đầu mặt cổ. Nội dung được trình bày khoa học, súc tích, có hình…",
+      "url": "/giai-phau-dau-mat-co-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/tom-tat-giai-phau-dau-mat-co-cac-xuong-va-khop-yap302_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-30",
+      "categories": [
+        48,
+        75
+      ]
+    },
+    {
+      "id": 389,
+      "name": "Giải Phẫu Hệ Hô Hấp",
+      "summary": "Tài liệu Giải phẫu hệ hô hấp của MedUC giúp người học nắm vững cấu tạo và chức năng của đường hô hấp trên, dưới và phổi. Nội dung được trình bày ngắn gọn, khoa học, kèm hình ảnh…",
+      "url": "/giai-phau-he-ho-hap",
+      "image": "https://cdn.meduc.vn/media/gpsl-he-ho-hap-giai-phau-va-chuc-nang-cua-cau-khi-va-phoi_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-30",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 388,
+      "name": "Giải Phẫu Cơ Quan & Mạch Máu",
+      "summary": "Bài tập hình ảnh giải phẫu cơ quan và mạch máu là tài liệu trực quan giúp sinh viên Y khoa luyện tập nhận diện cấu trúc giải phẫu trên hình vẽ chi tiết. Tài liệu bao gồm nhiều h…",
+      "url": "/giai-phau-co-quan-va-mach-mau",
+      "image": "https://cdn.meduc.vn/media/bai-tap-hinh-anh-giai-phau-cac-co-quan-va-mach-mau_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-29",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 387,
+      "name": "[Năm 1 - Giải Phẫu] Sổ Tay Thực Hành Chi Tiết",
+      "summary": "Sổ tay Thực hành Giải phẫu là tài liệu học tập trực quan dành cho sinh viên Y khoa, sử dụng hình ảnh mô hình và mẫu thực hành không kèm chú thích. Tài liệu giúp người học chủ độ…",
+      "url": "/so-tay-thuc-hanh-giai-phau-moi-nhat",
+      "image": "https://cdn.meduc.vn/media/so-tay-thuc-hanh-giai-phau-ban-kho-khong-chu-thich_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-29",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 386,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Tiền Tố & Hậu Tố",
+      "summary": "Thuật ngữ y khoa tiếng Anh thường được cấu tạo từ tiền tố (prefix) , từ gốc (root) và hậu tố (suffix) , trong đó tiền tố và hậu tố đóng vai trò then chốt giúp người học suy luận…",
+      "url": "/tien-to-hau-to-tieng-anh-y-khoa",
+      "image": "https://cdn.meduc.vn/media/danh-sach-tien-to-hau-to-trong-tieng-anh-y-khoa-phan-tich-va-vi-du_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-28",
+      "categories": [
+        78,
+        122
+      ]
+    },
+    {
+      "id": 385,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Sổ Tay Thuật Ngữ Y Học Chi Tiết",
+      "summary": "Trong đào tạo Y Dược hiện nay, tiếng Anh y khoa đóng vai trò vô cùng quan trọng, đặc biệt khi sinh viên cần đọc giáo trình nước ngoài, nghiên cứu khoa học hoặc tiếp cận tài liệu…",
+      "url": "/nam-2-tieng-anh-y-khoa-so-tay-thuat-ngu-y-hoc-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/so-tay-thuat-ngu-y-hoc-tieng-anh-dich-va-ung-dung_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-28",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 384,
+      "name": "[Năm 1 - Sinh Lý] Đề Cương Ôn Tập Trọng Tâm",
+      "summary": "Sinh lý học là một trong những môn học nền tảng và có khối lượng kiến thức lớn nhất trong chương trình đào tạo Y khoa. Để đạt kết quả tốt trong kỳ thi cuối học phần, sinh viên k…",
+      "url": "/de-cuong-on-tap-sinh-ly-y-khoa",
+      "image": "https://cdn.meduc.vn/media/de-cuong-on-tap-ky-thi-cuoi-hoc-phan-sinh-ly-khoa-y-ma-93341_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-28",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 383,
+      "name": "[Năm 3 Nội Khoa] Tiếp Cận Chẩn Đoán Bệnh",
+      "summary": "Chẩn đoán bệnh Nội khoa là một quá trình tư duy phức tạp, đòi hỏi người học không chỉ nắm kiến thức lý thuyết mà còn biết cách vận dụng linh hoạt vào từng bệnh cảnh cụ thể. Tài…",
+      "url": "/tiep-can-chan-doan-benh-noi-khoa",
+      "image": "https://cdn.meduc.vn/media/tiep-can-chan-doan-benh-noi-khoa-huong-dan-2020.png",
+      "fileCount": 1,
+      "date": "2025-12-26",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 382,
+      "name": "[Năm 3 Ngoại Khoa] Bệnh Học Ngoại Khoa",
+      "summary": "Bệnh học Ngoại khoa là môn học nền tảng dành cho sinh viên Y khoa khi bước vào giai đoạn lâm sàng. Nội dung tại MedUC hệ thống hóa các bệnh ngoại khoa thường gặp, tập trung vào…",
+      "url": "/benh-hoc-ngoai-khoa-hay",
+      "image": "https://cdn.meduc.vn/media/bai-giang-ngoai-khoa-benh-hoc-pnt-2023.png",
+      "fileCount": 1,
+      "date": "2025-12-25",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 381,
+      "name": "[Năm 3 Ngoại Khoa] Mẫu Bệnh Án Ngoại Khoa Y3 - Y4",
+      "summary": "Mẫu bệnh án Ngoại khoa Y3 – Y4 là tài liệu thiết yếu cho sinh viên Y khoa khi học và thực tập lâm sàng Ngoại. Nội dung tại MedUC hướng dẫn chi tiết cách khai thác bệnh sử, khám…",
+      "url": "/mau-benh-an-ngoai-khoa-y3-y4",
+      "image": "https://cdn.meduc.vn/media/mau-benh-an-ngoai-khoa-huong-dan-va-phan-tich-chi-tiet_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-25",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 380,
+      "name": "Thực Hành Giải Phẫu Hệ Tim Mạch",
+      "summary": "Giải Phẫu Hệ Tim Mạch là một trong những nội dung trọng tâm và khó của giải phẫu học người do cấu trúc phức tạp, nhiều buồng tim, van tim và hệ thống mạch máu liên quan chặt chẽ…",
+      "url": "/thuc-hanh-giai-phau-he-tim-mach",
+      "image": "https://cdn.meduc.vn/media/thuc-hanh-giai-phau-tim-hack-huong-dan-va-chien-luoc.png",
+      "fileCount": 1,
+      "date": "2025-12-24",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 378,
+      "name": "[Năm 1 - Giải Phẫu] Tóm Tắt Đại Cương Chi Tiết",
+      "summary": "Tóm tắt giải phẫu người chi tiết là tài liệu học tập quan trọng dành cho sinh viên Y Dược. Nội dung tại MedUC hệ thống hóa kiến thức giải phẫu theo từng phần rõ ràng, giúp người…",
+      "url": "/tom-tat-giai-phau-nguoi-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/tai-lieu-tom-tat-giai-phau-hoc-nguoi-smp2054-bai-giang-co-xuong-khop%20(1).png",
+      "fileCount": 1,
+      "date": "2025-12-24",
+      "categories": [
+        48,
+        75
+      ]
+    },
+    {
+      "id": 377,
+      "name": "[Năm 3 ECG] Thực Hành Đọc ECG Cơ Bản",
+      "summary": "Điện tâm đồ (ECG) là kỹ năng bắt buộc trong học tập và thực hành lâm sàng tim mạch, tuy nhiên lại là phần kiến thức gây nhiều khó khăn cho sinh viên Y Dược do dễ nhầm lẫn và thi…",
+      "url": "/thuc-hanh-doc-ecg-co-ban",
+      "image": "https://cdn.meduc.vn/media/thuc-hanh-doc-ecg-phan-tich-cac-tinh-huong-ecg-co-ban_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-23",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 376,
+      "name": "[Năm 3 ECG] 150 Vấn Đề Điện Tâm Đồ",
+      "summary": "Điện tâm đồ (ECG) là công cụ chẩn đoán không thể thiếu trong tim mạch, nhưng cũng là phần kiến thức khiến nhiều sinh viên Y Dược gặp khó khăn do số lượng tình huống đa dạng và d…",
+      "url": "/150-van-de-dien-tam-do-ecg",
+      "image": "https://cdn.meduc.vn/media/150-van-de-dien-tam-do-ecg-trong-health-diagnostics_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-23",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 375,
+      "name": "[Năm 3 Nội Khoa] Mẫu Bệnh Án Nội Khoa Y3",
+      "summary": "Mẫu bệnh án Nội khoa Y3 là tài liệu không thể thiếu cho sinh viên Y khoa khi bắt đầu học lâm sàng Nội. Tài liệu tại MedUC cung cấp đầy đủ cấu trúc bệnh án, hướng dẫn cách ghi ch…",
+      "url": "/mau-benh-an-noi-khoa-y3",
+      "image": "https://cdn.meduc.vn/media/mau-benh-an-noi-khoa-danh-cho-sinh-vien-nam-3-ma-01_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-22",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 374,
+      "name": "KST Gây Bệnh Ở Người",
+      "summary": "Tổng hợp các loại ký sinh trùng gây bệnh ở người là tài liệu quan trọng trong môn Ký sinh trùng y học. Nội dung tại MedUC hệ thống hóa các nhóm ký sinh trùng thường gặp, đặc điể…",
+      "url": "/kst-gay-benh-o-nguoi",
+      "image": "https://cdn.meduc.vn/media/kien-thuc-ve-cac-loai-kst-gay-benh-o-nguoi_redacted.png",
+      "fileCount": 1,
+      "date": "2025-12-22",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 373,
+      "name": "[Năm 3 ECG] Đọc Điện Tâm Đồ Cho Người Mới Bắt Đầu",
+      "summary": "ECG cho người mới bắt đầu là tài liệu nhập môn dành cho sinh viên Y Dược và người mới học điện tâm đồ. Tài liệu tại MedUC hướng dẫn cách đọc ECG từng bước, giải thích các khái n…",
+      "url": "/ecg-cho-nguoi-moi-bat-dau",
+      "image": "https://cdn.meduc.vn/media/ecg%20cho%20ngu%CC%9Bo%CC%9B%CC%80i%20mo%CC%9B%CC%81i%20ba%CC%86%CC%81t%20%C4%91a%CC%82%CC%80u.png",
+      "fileCount": 1,
+      "date": "2025-12-21",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 372,
+      "name": "[Năm 3 Nội Khoa] Ca Lâm Sàng Siêu Hay",
+      "summary": "20 ca lâm sàng Nội khoa là tài liệu học tập thực hành quan trọng dành cho sinh viên Y Dược và bác sĩ trẻ. Tài liệu tại MedUC trình bày các ca bệnh nội khoa điển hình theo hướng…",
+      "url": "/ca-lam-sang-noi-khoa-sieu-hay",
+      "image": "https://cdn.meduc.vn/media/20%20ca%20l%C3%A2m%20s%C3%A0ng%20n%E1%BB%99i.png",
+      "fileCount": 1,
+      "date": "2025-12-21",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 371,
+      "name": "Từ Điển Triệu Chứng Hội Chứng Y Khoa",
+      "summary": "Từ điển Triệu chứng Hội chứng Y khoa là tài liệu tra cứu quan trọng dành cho sinh viên Y Dược và nhân viên y tế. Sách tổng hợp, giải thích ngắn gọn hàng trăm triệu chứng và hội…",
+      "url": "/tu-dien-trieu-chung-hoi-chung-y-khoa",
+      "image": "https://cdn.meduc.vn/media/t%E1%BB%AB%20%C4%91i%E1%BB%83n%20tri%E1%BB%87u%20ch%E1%BB%A9ng%2C%20h%E1%BB%99i%20ch%E1%BB%A9ng%20y%20khoa.png",
+      "fileCount": 1,
+      "date": "2025-12-21",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 370,
+      "name": "[Năm 1 - Sinh Lý] Sách Dịch Giải Phẫu Sinh Lý Chi Tiết",
+      "summary": "Sách dịch Giải Phẫu Sinh Lý – Essentials of Anatomy and Physiology là tài liệu nhập môn quan trọng dành cho sinh viên Y Dược, Điều dưỡng và các ngành khoa học sức khỏe. Nội dung…",
+      "url": "/sach-dich-giai-phau-sinh-ly",
+      "image": "https://cdn.meduc.vn/media/gi%E1%BA%A3i%20ph%E1%BA%ABu%20sinh%20l%C3%BD%20ng%C6%B0%E1%BB%9Di%20-%20essentials%20of%20%20anatomy%20and%20physiology.png",
+      "fileCount": 1,
+      "date": "2025-12-20",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 369,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Sách Song Ngữ",
+      "summary": "Tài liệu tiếng Anh trong y khoa song ngữ Anh – Việt , cung cấp thuật ngữ, mẫu câu và cách sử dụng trong giải phẫu, sinh lý và lâm sàng. Nội dung được biên soạn ngắn gọn, dễ hiểu…",
+      "url": "/tai-lieu-tieng-anh-trong-y-khoa-song-ngu",
+      "image": "https://cdn.meduc.vn/media/ti%E1%BA%BFng%20anh%20trong%20y%20khoa.png",
+      "fileCount": 1,
+      "date": "2025-12-19",
+      "categories": [
+        78,
+        122
+      ]
+    },
+    {
+      "id": 368,
+      "name": "Chú Giải Thuật Ngữ Y Khoa",
+      "summary": "Chú giải thuật ngữ y khoa Anh – Việt thông dụng, giải thích ngắn gọn và chính xác các thuật ngữ trong giải phẫu, sinh lý, bệnh học và lâm sàng. Nội dung được biên soạn phù hợp c…",
+      "url": "/chu-giai-thuat-ngu-y-khoa",
+      "image": "https://cdn.meduc.vn/media/chu%20giai%20thuat%20ngu%20y%20hoc%20anh%20viet%20thong%20dung.png",
+      "fileCount": 1,
+      "date": "2025-12-19",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 367,
+      "name": "Slide Giải Phẫu Xương Khớp Chi Trên",
+      "summary": "Slide Giải Phẫu Xương Khớp Chi Trên do MedUC tổng hợp là tài liệu giải phẫu học hữu ích dành cho sinh viên Y Dược. Nội dung trình bày rõ ràng cấu trúc xương và các khớp chi trên…",
+      "url": "/slide-giai-phau-xuong-khop-chi-tren",
+      "image": "https://cdn.meduc.vn/media/xuong%20khop%20chi%20tren.png",
+      "fileCount": 1,
+      "date": "2025-12-18",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 366,
+      "name": "[Năm 1 - Hóa Sinh] Tổng Hợp Bài Soạn Chi Tiết",
+      "summary": "Bài soạn Hóa sinh Y khoa được MedUC tổng hợp nhằm giúp sinh viên nắm vững kiến thức nền tảng và trọng tâm môn Hóa sinh. Tài liệu được trình bày khoa học, dễ hiểu, bám sát chương…",
+      "url": "/tong-hop-bai-soan-hoa-sinh",
+      "image": "https://cdn.meduc.vn/media/b%C3%A0i-so%E1%BA%A1n-h%C3%B3a-sinh-full-2020-m%E1%BB%9Bi.png",
+      "fileCount": 1,
+      "date": "2025-12-18",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 365,
+      "name": "Trắc Nghiệm Sinh Lý Tim Mạch",
+      "summary": "Tổng hợp đề thi trắc nghiệm sinh lý tim mạch có đáp án do MedUC tổng hợp, nội dung bám sát chương trình Y khoa, giúp sinh viên ôn tập hiệu quả và làm quen cấu trúc đề thi thực t…",
+      "url": "/trac-nghiem-sinh-ly-tim-mach",
+      "image": "https://cdn.meduc.vn/media/cau-trac-nghiem-sinh-ly-tim-mach.png",
+      "fileCount": 1,
+      "date": "2025-12-15",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 364,
+      "name": "Trắc Nghiệm Sinh Lý Máu Chi Tiết",
+      "summary": "Tổng hợp đề thi trắc nghiệm sinh lý máu có đáp án do MedUC tổng hợp, nội dung bám sát chương trình Y khoa. Tài liệu hỗ trợ sinh viên hệ thống kiến thức sinh lý máu, rèn luyện kỹ…",
+      "url": "/trac-nghiem-sinh-ly-mau-chi-tiet",
+      "image": "https://cdn.meduc.vn/media/tr%E1%BA%AFc%20nghi%E1%BB%87m%20sinh%20l%C3%BD%20m%C3%A1u.png",
+      "fileCount": 1,
+      "date": "2025-12-15",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 359,
+      "name": "[Năm 1 - Sinh Lý]  Đề Thi Trắc Nghiệm Có Đáp Án",
+      "summary": "Tổng hợp đề thi trắc nghiệm sinh lý có đáp án, bám sát chương trình đào tạo Y khoa. Tài liệu được MedUC tổng hợp nhằm hỗ trợ sinh viên Y ôn tập kiến thức trọng tâm, rèn kỹ năng…",
+      "url": "/nam-1-sinh-ly-de-thi-trac-nghiem-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/18%20%C4%91%E1%BB%81%20thi%20tr%E1%BA%AFc%20nghi%E1%BB%87m%20sinh%20l%C3%BD%202%20c%C3%B3%20%C4%91%C3%A1p%20%C3%A1n.png",
+      "fileCount": 1,
+      "date": "2025-12-14",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 358,
+      "name": "[Năm 1 - Sinh Lý] 555 Câu Trắc Nghiệm Có Đáp Án",
+      "summary": "Bộ 500 câu trắc nghiệm sinh lý có đáp án được MedUC tổng hợp, chia theo từng bài học Sinh lý 1–2–3. Tài liệu giúp sinh viên Y ôn tập có hệ thống, nắm vững kiến thức trọng tâm và…",
+      "url": "/500-cau-trac-nghiem-sinh-ly-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/500-c%C3%A2u-tr%E1%BA%AFc-nghi%E1%BB%87m-sinh-l%C3%BD.png",
+      "fileCount": 1,
+      "date": "2025-12-14",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 357,
+      "name": "[Năm 1 - Giải Phẫu] Bài Thực Hành Có Đáp Án Chi Tiết",
+      "summary": "Tài liệu Thực hành Giải phẫu được MedUC tổng hợp nhằm hỗ trợ sinh viên Y – Dược ôn tập hiệu quả trước kỳ thi thực hành. Nội dung bao gồm kiến thức và đáp án tham khảo các hệ qua…",
+      "url": "/bai-thuc-hanh-giai-phau-1-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/6-bai-thuc-hanh-giai-phau-1%20(1).png",
+      "fileCount": 1,
+      "date": "2025-12-12",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 356,
+      "name": "Thực Hành Giải Phẫu Chi Trên, Chi Dưới",
+      "summary": "Ôn thi Thực hành Giải phẫu Chi trên – Chi dưới được MedUC sưu tầm giúp sinh viên Y – Dược hệ thống lại kiến thức giải phẫu một cách trực quan và dễ nhớ. Nội dung tập trung vào c…",
+      "url": "/thuc-hanh-giai-phau-chi-tren-chi-duoi",
+      "image": "https://cdn.meduc.vn/media/th%E1%BB%B1c%20h%C3%A0nh_chi%20tren%20-%20chi%20duoi.png",
+      "fileCount": 1,
+      "date": "2025-12-12",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 355,
+      "name": "[Năm 1 - Giải Phẫu] Thi Trắc Nghiệm Kết Hợp Chạy Trạm",
+      "summary": "Đề thi Giải Phẫu được MedUC sưu tầm và tổng hợp gồm 40 câu trắc nghiệm lý thuyết và 30 câu chạy trạm có hình minh họa kèm đáp án. Bộ đề giúp sinh viên Y ôn tập nhanh, nắm vững c…",
+      "url": "/thi-giai-phau-trac-nghiem-chay-tram",
+      "image": "https://cdn.meduc.vn/media/de%201%20%C4%91%E1%BB%81%20thi%20th%E1%BB%AD%20gi%E1%BA%A3i%20ph%E1%BA%ABu%20%C4%91%E1%BA%A1i%20c%C6%B0%C6%A1ng.png",
+      "fileCount": 1,
+      "date": "2025-12-11",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 354,
+      "name": "[Năm 1 - Giải Phẫu] Câu Hỏi Trắc Nghiệm Theo Hệ",
+      "summary": "Bộ 577 câu hỏi trắc nghiệm Giải Phẫu Hệ được MedUC tổng hợp theo từng hệ cơ quan và phân chia theo mức độ từ cơ bản đến nâng cao, giúp sinh viên Y dễ dàng ôn tập và ghi nhớ trọn…",
+      "url": "/cau-hoi-trac-nghiem-giai-phau-he",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-giai-phau-he.png",
+      "fileCount": 1,
+      "date": "2025-12-11",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 353,
+      "name": "80 Câu Trắc Nghiệm Giải Phẫu",
+      "summary": "Bộ 80 câu trắc nghiệm Giải Phẫu có đáp án do MedUC sưu tầm và chọn lọc kỹ lưỡng, giúp bạn ôn tập nhanh các kiến thức trọng tâm, củng cố nền tảng giải phẫu vững chắc và tự tin bư…",
+      "url": "/80-cau-trac-nghiem-giai-phau-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/80%20c%C3%A2u%20h%E1%BB%8Fi%20tr%E1%BA%AFc%20nghi%E1%BB%87m%20gi%E1%BA%A3i%20ph%E1%BA%ABu%20h%E1%BB%8Dc.png",
+      "fileCount": 1,
+      "date": "2025-12-11",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 352,
+      "name": "[Năm 1 - Giải Phẫu] Chạy Trạm Có Đáp Án",
+      "summary": "Thi Chạy Trạm Giải Phẫu là một trong những hình thức kiểm tra quan trọng của sinh viên Y khoa (Objective Structured Practical Examination – OSPE). Để hỗ trợ sinh viên ôn tập hiệ…",
+      "url": "/chay-tram-giai-phau-co-dap-an",
+      "image": "https://cdn.meduc.vn/media/chay-tram-giai-phau.png",
+      "fileCount": 1,
+      "date": "2025-12-10",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 351,
+      "name": "Trắc nghiệm Giải Phẫu YCT",
+      "summary": "Giải phẫu học là một trong những môn cơ sở quan trọng nhất của sinh viên Y khoa. Khối lượng kiến thức lớn, trải dài nhiều hệ cơ quan khiến việc ôn tập trở nên khó khăn nếu không…",
+      "url": "/trac-nghiem-giai-phau-yct",
+      "image": "https://cdn.meduc.vn/media/cau-hoi-trac-nghiem-giai-phau-bac-si-da-khoa-yb-khoa-24-dhyd-can-tho.png",
+      "fileCount": 1,
+      "date": "2025-12-09",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 350,
+      "name": "[Năm 1 - Sinh Lý] 1000 Câu Trắc Nghiệm + Đáp Án",
+      "summary": "1000 Câu Trắc Nghiệm Sinh Lý Học gồm 8 chương bao phủ máu, tim mạch, hô hấp, tiêu hóa, thận, nội tiết, sinh dục và thần kinh, kèm đáp án chi tiết. Tài liệu giúp sinh viên Y ôn t…",
+      "url": "/trac-nghiem-sinh-ly-hoc",
+      "image": "https://cdn.meduc.vn/media/1000-cau-trac-nghiem-sinh-ly-hoc.png",
+      "fileCount": 1,
+      "date": "2025-12-08",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 349,
+      "name": "[Năm 3 Nội Khoa] Trắc Nghiệm Nội Khoa Cơ Sở",
+      "summary": "Trắc Nghiệm Nội Khoa cơ sở là tài liệu luyện thi quan trọng dành cho sinh viên Y đa khoa, điều dưỡng và các ngành khoa học sức khỏe. Bộ sách gồm 200 trang câu hỏi trắc nghiệm bá…",
+      "url": "/trac-nghiem-noi-khoa-co-so",
+      "image": "https://cdn.meduc.vn/media/trac-nghiem-noi-khoa-co-so.png",
+      "fileCount": 1,
+      "date": "2025-12-08",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 348,
+      "name": "[Năm 1 - Hóa Sinh] 555+ Câu Trắc Nghiệm Có Đáp Án",
+      "summary": "Trắc Nghiệm Hóa Sinh Lâm Sàng gồm 555 câu hỏi và đáp án, bao quát từ kiến thức hóa sinh cơ bản đến ứng dụng lâm sàng. Tài liệu giúp sinh viên Y Dược và kỹ thuật xét nghiệm ôn th…",
+      "url": "/trac-nghiem-hoa-sinh-lam-sang",
+      "image": "https://cdn.meduc.vn/media/h%C3%B3a%20sinh%20l%C3%A2m%20s%C3%A0ng%20555%20c%C3%A2u%20h%E1%BB%8Fi%20tr%E1%BA%AFc%20nghi%E1%BB%87m%20v%C3%A0%20%C4%91%C3%A1p%20%C3%A1n.png",
+      "fileCount": 1,
+      "date": "2025-12-07",
+      "categories": [
+        74,
+        75
+      ]
+    },
+    {
+      "id": 347,
+      "name": "Câu Hỏi Trắc Nghiệm Giải Phẫu",
+      "summary": "Câu Hỏi Trắc Nghiệm Giải Phẫu Học là bộ sách kinh điển do Bộ môn Giải phẫu – Đại học Y Dược TP.HCM biên soạn, gồm hơn 1000 câu hỏi MCQ bao phủ toàn bộ chương trình Giải phẫu. Đâ…",
+      "url": "/cau-hoi-trac-nghiem-giai-phau",
+      "image": "https://cdn.meduc.vn/media/cau-hoi-trac-nghiem-giai-phau-hoc.png",
+      "fileCount": 1,
+      "date": "2025-12-07",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 346,
+      "name": "Trắc Nghiệm Giải Phẫu YDS",
+      "summary": "Trắc Nghiệm Giải Phẫu YDS từ MedUC gồm hơn 1000 câu MCQ chuẩn hóa, bám sát chương trình Y Dược, phù hợp cho sinh viên Y và bác sĩ nội trú, CKI, CKII ôn luyện hiệu quả.",
+      "url": "/trac-nghiem-giai-phau-yds",
+      "image": "https://cdn.meduc.vn/media/tr%E1%BA%AFc%20nghi%E1%BB%87m%20gi%E1%BA%A3i%20ph%E1%BA%ABu%20yds.png",
+      "fileCount": 1,
+      "date": "2025-12-07",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 345,
+      "name": "Giải Phẫu Cắt Lớp  CT - MRI - T3",
+      "summary": "Giải Phẫu Cắt Lớp CT–MRI – T3 của MedUC mang đến hệ thống hình ảnh giải phẫu rõ nét, trình bày chi tiết các cấu trúc trên mặt cắt CT và MRI, giúp người học dễ dàng đối chiếu, củ…",
+      "url": "/giai-phau-cat-lop-ct-mri-3",
+      "image": "https://cdn.meduc.vn/media/giai%20phau%20cat%20lop%20ct-mri%20-%20t3%20phan%20cot%20song-chan-tay.png",
+      "fileCount": 1,
+      "date": "2025-12-05",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 344,
+      "name": "Giải phẫu cắt lớp CT–MRI – T2",
+      "summary": "Giải phẫu cắt lớp CT–MRI – T2 của MedUC cung cấp hệ thống hình ảnh chi tiết vùng Ngực – Bụng – Chậu, giúp người học dễ dàng nhận diện cấu trúc giải phẫu và nâng cao kỹ năng đọc…",
+      "url": "/giai-phau-cat-lop-ct-mri-2",
+      "image": "https://cdn.meduc.vn/media/giai%20phau%20cat%20lop%20ct-mri%20-%20t2%20phan%20nguc-bung-chau.png",
+      "fileCount": 1,
+      "date": "2025-12-05",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 343,
+      "name": "Giải Phẫu Cắt Lớp  CT - MRI - T1",
+      "summary": "Sách Giải Phẫu Cắt Lớp CT – MRI của Meduc cung cấp hình ảnh minh họa chi tiết, giúp người học dễ dàng nắm bắt cấu trúc giải phẫu qua cắt lớp. Tài liệu phù hợp cho sinh viên y kh…",
+      "url": "/giai-phau-cat-lop-ct-mri-1",
+      "image": "https://cdn.meduc.vn/media/giai%20phau%20cat%20lop%20ct-mri%20-%20t1%20phan%20dau-co.png",
+      "fileCount": 1,
+      "date": "2025-12-05",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 198,
+      "name": "[Năm 3 Nội Khoa] Sổ Tay Lâm Sàng Thần Kinh",
+      "summary": "Sổ tay lâm sàng Thần kinh được MedUC sưu tầm là tài liệu thực hành quan trọng dành cho sinh viên y trong giai đoạn học và thực tập Thần kinh. Tài liệu trình bày có hệ thống từ g…",
+      "url": "/so-tay-lam-sang-than-kinh",
+      "image": "https://cdn.meduc.vn/media/lam-sang-than-kinh.png",
+      "fileCount": 1,
+      "date": "2024-01-28",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 197,
+      "name": "[Năm 3 Nội Khoa] Kỹ Năng Trình Bệnh Cho Sinh Viên Y Khoa",
+      "summary": "Tài liệu Kỹ năng trình bệnh cho sinh viên y khoa được MedUC sưu tầm là nguồn học tập thực tiễn, giúp sinh viên y rèn luyện cách trình bày ca bệnh rõ ràng, logic và đúng trọng tâ…",
+      "url": "/ky-nang-trinh-benh-cho-sinh-vien-y-khoa",
+      "image": "https://cdn.meduc.vn/media/ky-nang-trinh-benh.png",
+      "fileCount": 1,
+      "date": "2024-01-27",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 196,
+      "name": "SỔ TAY LÂM SÀNG CHẨN ĐOÁN VÀ ĐIỀU TRỊ TẬP 2",
+      "summary": "Cuốn sách trình bày một cách có hệ thống về lâm sàng chẩn đoán , các xét nghiệm bổ sung và điều trị, từ đó định hướng cho độc giả về những phương pháp mà trong một số bối cảnh l…",
+      "url": "/so-tay-lam-sang-chan-doan-va-dieu-tri-tap-2",
+      "image": "https://cdn.meduc.vn/media/2%20(1).jpg",
+      "fileCount": 1,
+      "date": "2024-01-27",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 195,
+      "name": "SỔ TAY LÂM SÀNG CHẨN ĐOÁN VÀ ĐIỀU TRỊ TẬP 1",
+      "summary": "Cuốn sách trình bày một cách có hệ thống về lâm sàng chẩn đoán , các xét nghiệm bổ sung và điều trị, từ đó định hướng cho độc giả về những phương pháp mà trong một số bối cảnh l…",
+      "url": "/so-tay-lam-sang-chan-doan-va-dieu-tri-tap-1",
+      "image": "https://cdn.meduc.vn/media/1%20(1).jpg",
+      "fileCount": 1,
+      "date": "2024-01-27",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 188,
+      "name": "The language of medicine",
+      "summary": "",
+      "url": "/the-language-of-medicine",
+      "image": "https://cdn.meduc.vn/media/z5090907341827_303757ee6feee321855220e04586696a.jpg",
+      "fileCount": 1,
+      "date": "2024-01-20",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 187,
+      "name": "THE TEST OF HUMAN REPRODUCTIVE GENETICS",
+      "summary": "",
+      "url": "/the-test-of-human-reproductive-genetics",
+      "image": "https://cdn.meduc.vn/media/z5090907334245_fd112867bfee7e0f5cfbbeea0a0198ae.jpg",
+      "fileCount": 1,
+      "date": "2024-01-20",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 169,
+      "name": "DI TRUYỀN SINH SẢN Ở NGƯỜI - SÁCH Y KHOA BẢN TIẾNG ANH",
+      "summary": "",
+      "url": "/di-truyen-sinh-san-o-nguoi-sach-y-khoa-ban-tieng-anh",
+      "image": "https://cdn.meduc.vn/media/z5004784858715_fe11192c2f376e23c092b895f02169b9.jpg",
+      "fileCount": 1,
+      "date": "2023-12-24",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 168,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Sách Dịch Theo Hệ",
+      "summary": "Là một bác sĩ, sinh viên y khoa, chắc hẳn bạn đều đã nghe nhiều đến khái niệm nay. Thuật ngữ y học là ngôn ngữ được sử dụng để mô tả chính xác cơ thể con người từ cấu trúc, chức…",
+      "url": "/tieng-anh-trong-y-khoa",
+      "image": "https://cdn.meduc.vn/media/tieng-anh-trong-y-khoa.png",
+      "fileCount": 1,
+      "date": "2023-12-24",
+      "categories": [
+        78,
+        122
+      ]
+    },
+    {
+      "id": 167,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Sổ Tay Luyện Dịch Tài Liệu",
+      "summary": "Sổ Tay Luyện Dịch Tài Liệu Y Khoa (PDF). Tác giả: BS Tuyết Minh Cuốn sách được biên soạn nhằm cung cấp kiến thức cơ bản về các thuật ngữ, cụm từ, mẫu câu và đoạn văn có liên qua…",
+      "url": "/so-tay-luyen-dich-tieng-anh-y-khoa",
+      "image": "https://cdn.meduc.vn/media/so-tay-luyen-dich-tieng-anh-y-khoa.png",
+      "fileCount": 1,
+      "date": "2023-12-24",
+      "categories": [
+        78,
+        122
+      ]
+    },
+    {
+      "id": 155,
+      "name": "SỔ TAY LÂM SÀNG CHẨN ĐOÁN VÀ ĐIỀU TRỊ Y KHOA",
+      "summary": "Gồm 17 chương giới thiệu về triệu chứng học và các hội chứng của các bệnh như: bệnh hệ hô hấp, bệnh thấp khớp và các bệnh xương khớp, bệnh hệ tiêu hóa, bệnh của gan, đường mật v…",
+      "url": "/so-tay-lam-sang-chan-doan-va-dieu-tri-y-khoa",
+      "image": "https://cdn.meduc.vn/media/z4970470711150_f24e40ef22a737b6bef8f3a6ac8def4f.jpg",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 150,
+      "name": "[Năm 2 Sinh Lý Bệnh MD] Sách Y Khoa",
+      "summary": "Tài liệu Sinh lý bệnh và Miễn dịch học Phần Miễn dịch học là nguồn học tập quan trọng dành cho sinh viên y khoa và nhân viên y tế. Nội dung trình bày từ khái niệm cơ bản đến cơ…",
+      "url": "/sinh-ly-benh-va-mien-dich-bo-y-te",
+      "image": "https://cdn.meduc.vn/media/sinh-ly-benh-mien-dich.png",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        122
+      ]
+    },
+    {
+      "id": 148,
+      "name": "GIẢI PHẪU BỆNH HỌC",
+      "summary": "Sách Giải Phẫu Bệnh Học được biên soạn dựa vào chương trình giáo dục của Đại học Y—Dược TP. Hồ Chí Minh trên cơ sở chương trình khung đã được phê duyệt. Sách được các giáo sư, t…",
+      "url": "/giai-phau-benh-hoc",
+      "image": "https://cdn.meduc.vn/media/z4970403964681_50b9ed63789b663592a7ef6a02c6f551.jpg",
+      "fileCount": 2,
+      "date": "2023-12-13",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 147,
+      "name": "BỆNH HỌC ĐẠI CƯƠNG (BỘ Y TẾ)",
+      "summary": "Cuốn Bệnh học đại cương được biên soạn dựa vào chương trình đào tạo sau đại học của trường Đại học Y Hà Nội với phương châm: kiến thức cơ bản, hệ thống; nội dung chính xác, khoa…",
+      "url": "/benh-hoc-dai-cuong-bo-y-te",
+      "image": "https://cdn.meduc.vn/media/z4970376678198_d8db8f9ec60c16a1ff6443450285d828.jpg",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 146,
+      "name": "HƯỚNG DẪN CHẨN ĐOÁN VÀ ĐIỀU TRỊ BỆNH HỌC NGOẠI KHOA",
+      "summary": "Chẩn đoán và điều trị bệnh là việc quan trọng và phức tạp, muốn có kết quả điều trị tốt, ngay từ đầu bệnh nhân phải được thăm khám lâm sàng tỉ mỉ, chỉ định các xét nghiệm, thăm…",
+      "url": "/huong-dan-chan-doan-va-dieu-tri-benh-hoc-ngoai-khoa",
+      "image": "https://cdn.meduc.vn/media/z4970347685342_299a29549f699acd0ab1ab0cd522cbc3.jpg",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        77
+      ]
+    },
+    {
+      "id": 144,
+      "name": "Lâm sàng ngoại khoa Y3C",
+      "summary": "Lâm sàng Ngoại cơ sở trình bày nội dung các bài giảng ngoại khoa sau: chấn thương-bông-thần kinh, khoa thận tiết niệu, khoa lồng ngực, tiêu hóa-cấp cứu bụng-ngoại nhi.",
+      "url": "/lam-sang-ngoai-khoa-y3c",
+      "image": "https://cdn.meduc.vn/media/z4970303743620_2c0eb8fc8b0b050cfc1f5f66a5350e6a.jpg",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        77
+      ]
+    },
+    {
+      "id": 143,
+      "name": "[Năm 3 Ngoại Khoa] Lâm Sàng Ngoại Cơ Sở",
+      "summary": "Tài liệu Lâm sàng Ngoại cơ sở Y3 được MedUC sưu tầm là bộ tài liệu tổng hợp kiến thức ngoại khoa nền tảng, bám sát thực hành lâm sàng. Nội dung bao gồm chấn thương chỉnh hình, b…",
+      "url": "/lam-sang-ngoai-co-so-y3c-meducvn",
+      "image": "https://cdn.meduc.vn/media/lam-sang-ngoai-co-so.png",
+      "fileCount": 1,
+      "date": "2023-12-13",
+      "categories": [
+        48,
+        123
+      ]
+    },
+    {
+      "id": 137,
+      "name": "sơ đồ tư duy tiếng việt",
+      "summary": "sách hay, tóm tắt",
+      "url": "/so-do-tu-duy-tieng-viet",
+      "image": "https://cdn.meduc.vn/media/z4955825634918_402edb352f56f6cd07a57bc983f8b818.jpg",
+      "fileCount": 1,
+      "date": "2023-12-08",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 130,
+      "name": "Langman’s Medical Embryology, 14th Edition- MedUC.vn",
+      "summary": "Langman’s Medical Embryology, 14th Edition – 2018 (bản đẹp) Vibrantly illustrated with full-color diagrams and clinical images, Langman’s Medical Embryology, Fourteenth Edition…",
+      "url": "/langman-s-medical-embryology-14th-edition-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4717866259015_6f26c84163de6864f8ff3ef9cfe239da.jpg",
+      "fileCount": 1,
+      "date": "2023-09-22",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 129,
+      "name": "Giải Phẫu Bệnh Học (Đào tạo BS Đa Khoa) – Bộ Y Tế- MedUC.vn",
+      "summary": "Sách Giải Phẫu Bệnh Học được biên soạn dựa vào chương trình giáo dục của Đại học Y – Dược TP. Hồ Chí Minh trên cơ sở chương trình khung đã được phê duyệt. Sách được các giáo sư,…",
+      "url": "/giai-phau-benh-hoc-dao-tao-bs-da-khoa-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4717832808636_438676886f1009b8b06df5f506850495.jpg",
+      "fileCount": 1,
+      "date": "2023-09-22",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 128,
+      "name": "Bài giảng giải phẫu bệnh 2020 – PNT (phần lý thuyết)- MedUC.vn",
+      "summary": "Bài Giảng Giải Phẫu Bệnh 2020 phần lý thuyết – ĐHYK Phạm Ngọc Thạch. Chủ biên: GS.TS.BS Nguyễn Sào Trung Đây là tập tài liệu lý thuyết dành cho việc giảng dạy các bác sĩ y đa kh…",
+      "url": "/bai-giang-giai-phau-benh-2020-pnt-phan-ly-thuyet-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4717814558700_380928c20252f9194397897b63ff3771.jpg",
+      "fileCount": 1,
+      "date": "2023-09-22",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 127,
+      "name": "THỰC TẬP VI SINH Y HỌC - ĐHYD TPHCM - MedUC.vn",
+      "summary": "Tài liệu giảng dạy thực tập bộ môn vi sinh. Bản PDF được scan rõ nét. Nội dung ngắn gọn, trực quan, hình ảnh màu dễ hình dung. Tài liệu bộ môn vi sinh đã giúp đỡ các bạn sinh vi…",
+      "url": "/thuc-tap-vi-sinh-y-hoc-dhyd-tphcm-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4711465928868_3dbf1886ec2fef83694818d95521ea7b.jpg",
+      "fileCount": 1,
+      "date": "2023-09-20",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 126,
+      "name": "VI KHUẨN Y HỌC - ĐHYD TPHCM- MedUC.vn",
+      "summary": "Sách được Khoa Dược Đại học Y Dược thành phố Hồ Chí Minh biên soạn dựa trên chương trình khung đã được Bộ Giáo dục & Đào tạo và Bộ Y tế ban hành. Sách gồm ba phần chia làm 15 bà…",
+      "url": "/vi-khuan-y-hoc-dhyd-tphcm-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4711467102690_62148ff466fdb1b62469333044edf104.jpg",
+      "fileCount": 1,
+      "date": "2023-09-20",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 125,
+      "name": "Vi sinh lâm sàng – sách dịch- MedUC.vn",
+      "summary": "Quyển sách Vi Sinh Lâm Sàng đã được biên dịch từ cuốn Clinical Microbiology made ridiculously simple. Nhận thấy rằng trong các loại sách về y học thì những đầu sách về vi sinh t…",
+      "url": "/vi-sinh-lam-sang-sach-dich-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4711437023956_6623326648d31024b090ed6fe760acc4.jpg",
+      "fileCount": 1,
+      "date": "2023-09-20",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 124,
+      "name": "Robbins Basic Pathology 10th Edition- MedUC.vn",
+      "summary": "Giới thiệu sách GIẢI PHẨU BỆNH tiếng anh nổi tiếng “Robbins Basic Pathology 10th Edition” Part of the trusted Robbins and Cotran family, Robbins Basic Pathology provides a reada…",
+      "url": "/robbins-basic-pathology-10th-edition-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4705296821144_86fe2a714d9d042061c472a7cc55c6f1.jpg",
+      "fileCount": 1,
+      "date": "2023-09-18",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 123,
+      "name": "Bài Giảng Lý Thuyết Và Thực Hành Giải Phẫu Bệnh (Cao Học – Chuyên Khoa) – ĐH YK PNT- MedUC.vn",
+      "summary": "Giới thiệu “Bài Giảng Lý Thuyết Và Thực Hành Giải Phẫu Bệnh (Cao Học – Chuyên Khoa) – ĐH YK PNT” file bản gốc. Giáo trình này được biên soạn năm 2015 bởi các giảng viên tại trườ…",
+      "url": "/bai-giang-ly-thuyet-va-thuc-hanh-giai-phau-benh-cao-hoc-chuyen-khoa-dh-yk-pnt-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4705281061509_99a07c8d7a2f8ebba6d288f6eb2110f9.jpg",
+      "fileCount": 1,
+      "date": "2023-09-18",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 122,
+      "name": "Di Truyền Y Học Chuyên Ngành BSĐK – Bộ Y Tế- MedUC.vn",
+      "summary": "Sách DI TRUYỀN Y HỌC được biên soạn dựa vào chương trình giáo dục của Trường Đại học Y Hà Nội trên cơ sở chương trình khung đã được phê duyệt. Sách được các tác giả GS. Trinh Vă…",
+      "url": "/di-truyen-y-hoc-chuyen-nganh-bsdk-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4705257738700_c41ee9e917ec580a50997f3ed8918273.jpg",
+      "fileCount": 1,
+      "date": "2023-09-18",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 121,
+      "name": "Di Truyền Học – NXB Giáo Dục- MedUC.vn",
+      "summary": "Giới thiệu ebook Di Truyền Học – NXB Giáo Dục Ebook Di Truyền Học trình bày những quan điểm hiện đại, một số kỹ thuật mới, nhiều thành tựu nổi bật và nhiều triển vọng của môn họ…",
+      "url": "/di-truyen-hoc-nxb-giao-duc-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4705238968258_3ca4cc6012070d91bb85c21e76759441.jpg",
+      "fileCount": 1,
+      "date": "2023-09-18",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 120,
+      "name": "Cơ bản về Giải phẫu Và Sinh lý -MedUC.vn",
+      "summary": "Cơ bản về Giải phẫu Và Sinh lý (Sách dịch ) – Bản đẹp Sách tiếng Việt được nhóm dịch Quản Anh Dũng dịch từ cuốn Essentials of Anatomy and Physiology (7 edition) . Đây là quyển s…",
+      "url": "/co-ban-ve-giai-phau-va-sinh-ly-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4697179958671_969a3fb6f0b792773d50175f35aedec1.jpg",
+      "fileCount": 1,
+      "date": "2023-09-15",
+      "categories": [
+        75
+      ]
+    },
+    {
+      "id": 119,
+      "name": "Antibiotic Basics for Clinicians Tiếng Việt-MedUC.vn",
+      "summary": "Antibiotic Basics for Clinicians – THE ABCs OF CHOOSING THE RIGHT ANTIBACTERIAL AGENT 2nd – Alan R. Hauser (2013) – sách được dịch sang tiếng việt Việc dùng kháng sinh không hợp…",
+      "url": "/antibiotic-basics-for-clinicians-tieng-viet-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4697142331960_fc10208503054530aaaaa96e5c5bee9d.jpg",
+      "fileCount": 1,
+      "date": "2023-09-15",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 118,
+      "name": "Bài giảng huấn luyện kỹ năng lâm sàng – ĐH Duy Tân-MedUC.vn",
+      "summary": "Bài giảng huấn luyện kỹ năng lâm sàng – ĐH Duy Tân (Bải giảng tiền lâm sàng về các kỹ năng lâm sàng). Ths. NGUYỄN PHÚC HỌC",
+      "url": "/bai-giang-huan-luyen-ky-nang-lam-sang-dh-duy-tan-meducvn",
+      "image": "https://cdn.meduc.vn/media/bai-giang-tien-lam-san-nguyen-phuc-hoc-dh-duy-tan2-400x432.jpg",
+      "fileCount": 1,
+      "date": "2023-09-15",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 117,
+      "name": "Miễn Dịch Học Cơ Sở – ĐH Quốc Gia Hà Nội- MedUC.vn",
+      "summary": "Sách “Miễn dịch học cơ sở” được biên soạn nhằm đáp ứng yêu cầu dạy và học môn miễn dịch học ớ các trường Đại học Khoa học tự nhiên, Đại học Sư phạm, Đại học Nông nghiệp, Đại học…",
+      "url": "/mien-dich-hoc-co-so-dh-quoc-gia-ha-noi-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4697117008265_a4b659a43b581e21f6333cd6e2907a05.jpg",
+      "fileCount": 1,
+      "date": "2023-09-15",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 116,
+      "name": "Lehninger Principles of Biochemistry, 7th Edition- MedUC.vn",
+      "summary": "Lehninger Principles of Biochemistry is the No.1 bestseller for the introductory biochemistry course because it brings clarity and coherence to an often unwieldy discipline, off…",
+      "url": "/lehninger-principles-of-biochemistry-7th-edition-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4688024975882_d8fd823f58e1349d7d5a085f628c630b.jpg",
+      "fileCount": 1,
+      "date": "2023-09-12",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 115,
+      "name": "Principles of Biochemistry 5th Edition- MedUC.vn",
+      "summary": "Principles of Biochemistry provides a concise introduction to fundamental concepts of biochemistry, striking the right balance of rigor and detail between the encyclopedic volum…",
+      "url": "/principles-of-biochemistry-5th-edition-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4688015905308_7390cb93bd226e2fad9e7c2041a79886.jpg",
+      "fileCount": 1,
+      "date": "2023-09-12",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 114,
+      "name": "Harper’s illustrated Biochemistry, 31st Edition- MedUC.vn",
+      "summary": "Giới thiệu ebook “Harper’s illustrated Biochemistry, 31st Edition” Gain a full understanding of the principles of biochemistry as it relates to clinical medicine The Thirty-Firs…",
+      "url": "/harper-s-illustrated-biochemistry-31st-edition-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4688012445615_5d7dc47b571a7d53524ff8913d35d16f.jpg",
+      "fileCount": 1,
+      "date": "2023-09-12",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 113,
+      "name": "Giải Phẫu Sinh Lý Người – ĐH Quốc Gia Hà Nội- MedUC.vn",
+      "summary": "Giáo trình giải phẫu sinh lý người: Cung cấp một cách hệ thống các kiến thức cơ bản và cập nhật về giải phẫu và chức năng của các mô, các cơ quan và các hệ thống cơ quan trong c…",
+      "url": "/giai-phau-sinh-ly-nguoi-dh-quoc-gia-ha-noi-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4688004377654_7be00a3633d4a9f0643555134e6a5248.jpg",
+      "fileCount": 1,
+      "date": "2023-09-12",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 112,
+      "name": "Guyton and Hall Textbook of Medical Physiology 13e – John E.Hall - MedUC.vn",
+      "summary": "The 13th edition of Guyton and Hall Textbook of Medical Physiology continues this bestselling title’s long tradition as the world’s foremost medical physiology textbook. Unlike…",
+      "url": "/guyton-and-hall-textbook-of-medical-physiology-13e-john-ehall-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4687993797025_a3588c3383a4d88303c79c1e888f8dcf%20(1).jpg",
+      "fileCount": 1,
+      "date": "2023-09-12",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 111,
+      "name": "CẨM NANG LÂM SÀNG NỘI- TRƯỜNG ĐẠI HỌC Y KHOA PHẠM NGỌC THẠCH- MedUC.vn",
+      "summary": "“ Cẩm nang lâm sàng Nội khoa ” do PGS.TS. Phạm Nguyễn Vinh chủ biên, được biên soạn các thầy thuốc giàu kinh nghiệm của bộ môn Nội – Đại học Y khoa Phạm Ngọc Thạch.Cuốn sách khô…",
+      "url": "/cam-nang-lam-sang-noi-truong-dai-hoc-y-khoa-pham-ngoc-thach-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4565218208764_02f3676dbdef988269201172e9043c03.jpg",
+      "fileCount": 1,
+      "date": "2023-08-01",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 110,
+      "name": "BÀI GIẢNG HỆ NỘI KHOA- PHẦN II BỆNH HỌC- MedUC.vn",
+      "summary": "Chúng tôi xin giới thiệu đến các bạn bộ giáo trình, bài giảng hệ nội khoa do GS Nguyễn Huy Dung chủ biên cùng các bác sĩ khác.",
+      "url": "/bai-giang-he-noi-khoa-phan-ii-benh-hoc-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4565230587520_15e4c101e3d8ae0790b9877db9b84677.jpg",
+      "fileCount": 1,
+      "date": "2023-08-01",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 109,
+      "name": "BÀI GIẢNG HỆ NỘI- PHẦN I TRIỆU CHỨNG- MedUC.vn",
+      "summary": "Chúng tôi xin giới thiệu đến các bạn bộ giáo trình, bài giảng hệ nội khoa do GS Nguyễn Huy Dung chủ biên cùng các bác sĩ khác gồm có 3 phần: Triệu chứng học, Bệnh học nội khoa,…",
+      "url": "/bai-giang-he-noi-phan-i-trieu-chung-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4565230591577_c4d168511c360fb799f0b034102b69a9.jpg",
+      "fileCount": 1,
+      "date": "2023-08-01",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 101,
+      "name": "KIẾN THỨC CƠ BẢN TAI MŨI HỌNG-MedUC.vn",
+      "summary": "Kiến Thức Cơ Bản TAI MŨI HỌNG là một trong những quyển sách bán chạy nhất từ trước đến giờ nhằm giúp bạn đọc có thể xử trí hiệu quả các vấn đề thường gặp trong chuyên ngành này.…",
+      "url": "/kien-thuc-co-ban-tai-mui-hong-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4536238753747_251b0962aafc259bec9420b3db4f7adc.jpg",
+      "fileCount": 1,
+      "date": "2023-07-21",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 99,
+      "name": "[Năm 4 Nhi Khoa] Cấp cứu – Tiếp cận Case Lâm Sàng",
+      "summary": "Tài liệu “Cấp cứu Nhi khoa – Tiếp cận Case lâm sàng” là nguồn tham khảo hữu ích dành cho bác sĩ và sinh viên y khoa trong việc học và thực hành cấp cứu nhi khoa. Nội dung tập tr…",
+      "url": "/cap-cuu-nhi-khoa-tiep-can-case-lam-sang-meduc",
+      "image": "https://cdn.meduc.vn/media/cap-cuu-nhi-khoa-tiep-can-case-lam-sang-meduc.png",
+      "fileCount": 1,
+      "date": "2023-07-21",
+      "categories": [
+        48,
+        124
+      ]
+    },
+    {
+      "id": 97,
+      "name": "[Năm 2 Dịch Tễ Học] Đề Cương Ôn Thi Trọng Tâm",
+      "summary": "Tài liệu Đề cương Dịch tễ học là bản tóm tắt hệ thống kiến thức trọng tâm, giúp người học dễ dàng ôn tập và ghi nhớ. Nội dung cô đọng, bám sát chương trình đào tạo, hỗ trợ sinh…",
+      "url": "/nam-2-dich-te-hoc-de-cuong-on-thi-trong-tam",
+      "image": "https://cdn.meduc.vn/media/nam-2-dich-te-hoc-de-cuong-on-thi-trong-tam.png",
+      "fileCount": 1,
+      "date": "2023-07-14",
+      "categories": [
+        48,
+        122
+      ]
+    },
+    {
+      "id": 92,
+      "name": "KÝ SINH TRÙNG - BỘ Y TẾ -MedUC.vn",
+      "summary": "Giáo trình Ký sinh trùng dùng để dạy/học cho đối tượng Cử nhân điều dưỡng, xuất bản lần thứ nhất (Nhà xuất bản Giáo dục Việt Nam) đến nay đã được trên 5 năm. Đây là cuốn giáo tr…",
+      "url": "/ky-sinh-trung-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4504813070203_128f6b3b6000fa22b427d5b8488cbfab.jpg",
+      "fileCount": 1,
+      "date": "2023-07-10",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 90,
+      "name": "DI TRUYỀN Y HỌC- BỘ Y TẾ- MedUC.vn",
+      "summary": "Thực hiện một số điều của Luật Giáo dục, Bộ Giáo dục & Đào tạo và Bộ Y tế đã ban hành chương trình khung đào tạo Bác sĩ đa khoa. Bộ Y tế tổ chức biên soạn tài liệu dạy - học các…",
+      "url": "/di-truyen-y-hoc-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4504813063742_2d0a5e71d141cb3d0385c9c54f129d25.jpg",
+      "fileCount": 1,
+      "date": "2023-07-10",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 87,
+      "name": "NHỮNG VẤN ĐỀ CẦN LƯU Ý TRONG SẢN PHỤ KHOA- Y DƯỢC CẦN THƠ- MedUC.vn",
+      "summary": "Với mục đích giúp các anh (chị) sinh viên có thêm tài liệu để tham khảo và tra cứu nhanh trong quá trình thực hành lâm sàng sản tại bệnh viện, chúng tôi đưa ra tài liệu “ Những…",
+      "url": "/nhung-van-de-can-luu-y-trong-san-phu-khoa-y-duoc-can-tho-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4500785681092_22b55cb7fba27277352c95e6cc1d7e91.jpg",
+      "fileCount": 1,
+      "date": "2023-07-09",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 84,
+      "name": "NỘI TIẾT CƠ BẢN- BỆNH VIỆN BẠCH MAI- MedUC.vn",
+      "summary": "Trong vòng 20 năm trở lại đây, chúng ta đã và đang chứng kiến sự gia tăng với tốc độ đáng lo ngại của bệnh đái tháo đường. Tỷ lệ mắc đái tháo đường ở Việt Nam năm 2012, theo kết…",
+      "url": "/noi-tiet-co-ban-benh-vien-bach-mai-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4500614764474_be6a666ab3bed010bfca8a01b815c22d.jpg",
+      "fileCount": 1,
+      "date": "2023-07-09",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 83,
+      "name": "HƯỚNG DẪN CHẨN ĐOÁN VÀ ĐIỀU TRỊ CÁC BỆNH DA LIỄU- BỘ Y TẾ- Meduc.vn",
+      "summary": "HƯỚNG DẪN CHẨN ĐOÁN VÀ ĐIỀU TRỊ BỆNH DA LIỄU – CẨM NANG CHO BÁC SĨ DA LIỄU Các bệnh da liễu, nhất là bệnh da viêm mạn tính, thường có sinh bệnh học phức tạp, diễn tiến kéo dài,…",
+      "url": "/huong-dan-chan-doan-va-dieu-tri-cac-benh-da-lieu-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4500614770090_4de7b0aef6bc1d88d1063c7f8af98dd8.jpg",
+      "fileCount": 1,
+      "date": "2023-07-09",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 76,
+      "name": "SỔ TAY HỒI SỨC TÍCH CỰC - MedUC.vn",
+      "summary": "Sổ tay Hồi sức tích cực được Nhóm giảng viên Trường Đại học Y Dược Cần Thơ biên dịch và các bác sĩ của tổ chức VietMD đọc hiệu đính, với mong muốn cung cấp một tài liệu tóm lược…",
+      "url": "/so-tay-hoi-suc-tich-cuc-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4495682954032_8a5e9eac414f01f5b3846c3f474e2345.jpg",
+      "fileCount": 1,
+      "date": "2023-07-07",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 74,
+      "name": "HỒI SỨC CẤP CỨU TIẾP CẬN THEO CÁC PHÁC ĐỒ- MedUC.vn",
+      "summary": "Cuốn sách Hồi sức cấp cứu: Tiếp cận theo các phác đồ “ The Washington Mannual of Critical Care Medicine ” tái bản lần thứ 2 (năm 2012). Do các Giáo sư Marin Kolleft và Warren Is…",
+      "url": "/hoi-suc-cap-cuu-tiep-can-theo-cac-phac-do-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4495682957622_46e2e998e76c6e234f72d11c511bdadd.jpg",
+      "fileCount": 1,
+      "date": "2023-07-07",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 72,
+      "name": "GIẢI PHẪU CẮT LỚP CT-MRI (CUỐN 1: PHẦN ĐẦU-CỔ)-MedUC.vn",
+      "summary": "Cuốn sách “Giải phẫu cắt lớp CT-MRI” được biên dịch từ cuốn Pocket Atlas of Sectional Anatomy, 3rd. Cuốn sách ra đời là nhờ sự cố gắng rất lớn của nhóm dịch “Chia sẻ case lâm sà…",
+      "url": "/giai-phau-cat-lop-ct-mri-cuon-1-phan-dau-co-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4492596288013_5df9b623f8eac8436b962583999c3bd9.jpg",
+      "fileCount": 1,
+      "date": "2023-07-06",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 71,
+      "name": "GIẢI PHẪU CẮT LỚP CT-MRI (CUỐN 3: PHẦN CỘT SỐNG- CHÂN- TAY)- MedUC.vn",
+      "summary": "Cuốn sách “Giải phẫu cắt lớp CT-MRI” được biên dịch từ cuốn Pocket Atlas of Sectional Anatomy, 3rd. Cuốn sách ra đời là nhờ sự cố gắng rất lớn của nhóm dịch “Chia sẻ case lâm sà…",
+      "url": "/giai-phau-cat-lop-ct-mri-cuon-3-phan-cot-song-chan-tay-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4492596298938_0f00816d40d3237e50450ff054787588.jpg",
+      "fileCount": 1,
+      "date": "2023-07-06",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 70,
+      "name": "GIẢI PHẪU CẮT LỚP CT-MRI (CUỐN 2: PHẦN NGỰC- BỤNG- CHẬU)- MedUC.vn",
+      "summary": "Cuốn sách “Giải phẫu cắt lớp CT-MRI” được biên dịch từ cuốn Pocket Atlas of Sectional Anatomy, 3rd. Cuốn sách ra đời là nhờ sự cố gắng rất lớn của nhóm dịch “Chia sẻ case lâm sà…",
+      "url": "/giai-phau-cat-lop-ct-mri-cuon-2-phan-nguc-bung-chau-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4492596293754_32b31ab77e852d2f039028e615178a9f.jpg",
+      "fileCount": 1,
+      "date": "2023-07-06",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 68,
+      "name": "HƯỚNG DẪN ĐỌC XQUANG XƯƠNG KHỚP-MedUC.vn",
+      "summary": "Hướng dẫn đọc Xquang xương khớp là quyển sách được biên soạn khá đầy đủ, dịch thuật từ quyển Musculosketetol X rays for Medical Students. Tài liệu đầy đủ full màu, hình ảnh đẹp.…",
+      "url": "/huong-dan-doc-xquang-xuong-khop-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4492596283408_cf5eaa1d3e12e5cd9695d36a8538fe35.jpg",
+      "fileCount": 1,
+      "date": "2023-07-06",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 67,
+      "name": "DƯỢC LÝ HỌC LÂM SÀNG - MedUC.vn",
+      "summary": "Mục đích của bộ sách để phục vụ công tác học tập cho các bạn sinh viên Y khoa là chính, ngoài ra nếu bạn là những đối tượng đang làm việc trong nghành Y cũng có thể sử dụng bộ s…",
+      "url": "/duoc-ly-hoc-lam-sang-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4486983469986_d1d5f326097d9bf01f2d341eeaea4da9.jpg",
+      "fileCount": 1,
+      "date": "2023-07-04",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 66,
+      "name": "DƯỢC LÝ HỌC ĐẠI HỌC Y HÀ NỘI- MedUC.vn",
+      "summary": "Quyển Dược lý học Y Hà Nội là cuốn sách dành cho Bác sĩ đa khoa hệ ̉ năm dùng để đưa ra các phác đồ điều trị thuốc trên lâm sàng",
+      "url": "/duoc-ly-hoc-dai-hoc-y-ha-noi-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4486983465726_4c241050b8abf8b6db09d8aeb1f8c548.jpg",
+      "fileCount": 1,
+      "date": "2023-07-04",
+      "categories": [
+        48
+      ]
+    },
+    {
+      "id": 65,
+      "name": "SÁCH DỊCH GIẢI PHẪU VÀ SINH LÝ-MedUC.vn",
+      "summary": "Quyển \" Sách dịch giải phẫu và sinh lý\" là quyển sách dùng để dịch các cơ quan giải phẫu của cơ thể người cùng với các chức năng sinh lý tương tự của chúng. Mục đích giúp sinh d…",
+      "url": "/sach-dich-giai-phau-va-sinh-ly-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4486928722670_b0f79fa455f26232c735d64ecd5b86d7.jpg",
+      "fileCount": 1,
+      "date": "2023-07-04",
+      "categories": [
+        73
+      ]
+    },
+    {
+      "id": 59,
+      "name": "[Năm 2 - Tiếng Anh Y Khoa] Dành Cho Bác Sĩ Và Y Tá",
+      "summary": "Sách được biên dịch từ cuốn “Practical English for Medical Personnel” bởi các tác giả Nguyễn Trung Tánh, Nguyễn Thành Thư, Phạm Tấn Quyền. Sách Tiếng Anh dành cho giới Bác sĩ &…",
+      "url": "/tieng-anh-danh-cho-bac-si-va-y-ta-meducvn",
+      "image": "https://cdn.meduc.vn/media/tieng-anh-danh-cho-bac-si-va-y-ta-meducvn.png",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        78,
+        122
+      ]
+    },
+    {
+      "id": 57,
+      "name": "SỔ TAY LUYỆN DỊCH Y KHOA-MedUC.vn",
+      "summary": "Sổ tay luyện dịch tài liệu Y khoa được biên soạn nhằm cung cấp kiến thức cơ bản về các thuật ngữ, cụm từ, mẫu câu và đoạn văn có liên quan đến chủ điểm y học, qua đó giúp người…",
+      "url": "/so-tay-luyen-dich-y-khoa-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4467243136512_c34eaa435f61b50bdcb260644a265f7e.jpg",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 56,
+      "name": "Tiếng Anh chuyên ngành Y, Bộ Y tế-MedUC.vn",
+      "summary": "Đây là sách giáo khoa của Bộ Y tế dùng làm tài liệu phục vụ công tác đào tạo khối ngành Khoa học Sức khoẻ cho các đối tượng là sinh viên Y Dược. Mục tiêu của sách nhằm giới thiệ…",
+      "url": "/tieng-anh-chuyen-nganh-y-bo-y-te-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4467243142592_d08a8b529fbf1507d71d987b6752fc62.jpg",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 55,
+      "name": "THUẬT NGỮ Y KHOA-MedUC.vn",
+      "summary": "Sách “Thuật ngữ Y khoa Việt-Anh” tập hợp các thuật ngữ chuyên ngành Y khoa được tác giả dịch từ tiếng Việt sang tiếng Anh, rất thiết thực và hữu ích dành cho tất cả bạn đọc thuộ…",
+      "url": "/thuat-ngu-y-khoa-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4467243120464_7c71dee925eb712b5d8086afd76130a5.jpg",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        78
+      ]
+    },
+    {
+      "id": 54,
+      "name": "MỘT SỐ CHỈ SỐ HOÁ SINH THƯỜNG GẶP-MedUC.vn",
+      "summary": "Xét nghiệm sinh hóa máu là một trong những xét nghiệm phổ biến được bác sĩ chỉ định khi cần chẩn đoán bệnh và theo dõi hiệu quả điều trị.",
+      "url": "/mot-so-chi-so-hoa-sinh-thuong-gap-meducvn",
+      "image": "https://cdn.meduc.vn/media/20200212_xet-nghiem-sinh-hoa-mau-1.jpg",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        74
+      ]
+    },
+    {
+      "id": 51,
+      "name": "[Năm 1 - Sinh Lý] Atlas Sinh Lý Học Netter Chi Tiết",
+      "summary": "Atlas Sinh Lý Học Netter là tài liệu kinh điển với hệ thống hình ảnh minh họa sinh động, giúp sinh viên Y Dược nắm vững cơ chế sinh lý người một cách trực quan và khoa học. Tài…",
+      "url": "/atlas-sinh-ly-hoc-netter-meducvn",
+      "image": "https://cdn.meduc.vn/media/atlas-sinh-ly-hoc-netter-meducvn.png",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        73,
+        75
+      ]
+    },
+    {
+      "id": 46,
+      "name": "TIẾP CẬN LÂM SÀNG THEO VẤN ĐỀ HARISON- MedUC.vn",
+      "summary": "Việc tiếp cận vấn đề lâm sàng là một điều cực kỳ quan trọng cho các sinh viên và bác sĩ thực hành, ngay từ năm thứ 2 và 3 nên có những hiểu biết nhất định để chuẩn bị hành trang…",
+      "url": "/tiep-can-lam-sang-theo-van-de-harison-meducvn",
+      "image": "https://cdn.meduc.vn/media/z4467210358322_cca777710c50f2ee9b5664647231a5e9.jpg",
+      "fileCount": 1,
+      "date": "2023-06-26",
+      "categories": [
+        76
+      ]
+    },
+    {
+      "id": 43,
+      "name": "NỘI CƠ SỞ 200 TRIỆU CHỨNG HỌC Y3_MedUC.vn",
+      "summary": "Cuốn sách này chỉ là do 1 nhóm sinh viên biên soạn, nên chứa nhiều thiếu sót. Những thông tin được tổng hợp từ nhiều sách và chúng tôi đều có chú thích nguồn của những thông tin…",
+      "url": "/noi-co-so-200-trieu-chung-hoc-y3meducvn",
+      "image": "https://cdn.meduc.vn/media/z4467272362367_6ef9cb16fe7cd464c56d752aba46b5da.jpg",
+      "fileCount": 1,
+      "date": "2023-06-25",
+      "categories": [
+        76
+      ]
+    }
+  ]
+}

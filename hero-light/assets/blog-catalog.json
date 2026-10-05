@@ -1,0 +1,1801 @@
+{
+  "exported": "2026-10-05",
+  "count": 162,
+  "articles": [
+    {
+      "id": 363,
+      "name": "[SLTB] Vận chuyển chủ động và bằng túi",
+      "summary": "Bài viết trình bày cơ chế vận chuyển chủ động qua màng tế bào, phân tích các hình thức vận chuyển chủ động nguyên phát, vận chuyển chủ động thứ phát và vận chuyển bằng túi, qua đó làm rõ vai trò của các cơ chế này trong việc duy…",
+      "image": "https://cdn.meduc.vn/media/sinh%20l%C3%AD/van-chuyen-thu-dong-bang-tui.png",
+      "date": "2025-12-14",
+      "url": "/sltb-van-chuyen-chu-dong-va-bang-tui",
+      "categories": [
+        119
+      ]
+    },
+    {
+      "id": 362,
+      "name": "[SLTB] Vận chuyển thụ động qua màng",
+      "summary": "Vận chuyển thụ động qua màng tế bào là cơ chế cơ bản giúp tế bào trao đổi chất với môi trường xung quanh mà không cần tiêu tốn năng lượng. Các hình thức vận chuyển như khuếch tán đơn thuần, khuếch tán được hỗ trợ và thẩm thấu đều…",
+      "image": "https://cdn.meduc.vn/media/sinh%20l%C3%AD/van-chuyen-thu-dong-qua-mang.png",
+      "date": "2025-12-14",
+      "url": "/sltb-van-chuyen-thu-dong-qua-mang",
+      "categories": [
+        119
+      ]
+    },
+    {
+      "id": 361,
+      "name": "[SLTB] Cấu Trúc Tế Bào Và Màng Tế Bào",
+      "summary": "Tế bào là đơn vị cấu trúc và chức năng cơ bản của cơ thể sống, trong đó màng tế bào giữ vai trò trung tâm trong việc đảm bảo hoạt động sinh lý của tế bào. Cấu trúc đặc biệt của màng tế bào với lớp phospholipid kép, protein màng…",
+      "image": "https://cdn.meduc.vn/media/sinh%20l%C3%AD/cau-truc-te-bao-va-man-te-bao.png",
+      "date": "2025-12-14",
+      "url": "/cau-truc-te-bao-va-mang-te-bao",
+      "categories": [
+        119
+      ]
+    },
+    {
+      "id": 342,
+      "name": "[Chi Trên P1] Giải Phẫu Xương Cẳng Tay",
+      "summary": "Xương cẳng tay là hệ xương gồm xương trụ và xương quay, giữ vai trò quyết định trong các động tác sấp – ngửa và định hướng bàn tay. Bài viết giúp bạn nắm vững đặc điểm hình thể, cấu tạo, liên quan giải phẫu và ý nghĩa lâm sàng…",
+      "image": "https://cdn.meduc.vn/media/giai-phau-xuong-cang-tay-xuong-tru.png",
+      "date": "2025-11-26",
+      "url": "/chi-tren-p1-giai-phau-xuong-cang-tay",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 341,
+      "name": "[Chi Trên P1] Xương Cánh Tay",
+      "summary": "Bài học trình bày giải phẫu xương cánh tay theo hệ thống: đại cương, hình thể ngoài, cấu tạo, liên quan giải phẫu, chức năng và ý nghĩa lâm sàng. Cùng MedUC nhận diện mốc xương, hiểu vai trò sinh cơ học và liên hệ tổn thương…",
+      "image": "https://cdn.meduc.vn/media/giai-phau-xuong-canh-tay.png",
+      "date": "2025-11-25",
+      "url": "/chi-tren-p1-xuong-canh-tay",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 340,
+      "name": "[Chi Trên P1] Xương Đòn",
+      "summary": "Xương đòn là xương dài đặc biệt của đai chi trên, đóng vai trò như thanh chống giữ vai ổn định và linh hoạt. Bài viết trình bày đầy đủ cấu tạo, chức năng, liên quan giải phẫu và ý nghĩa lâm sàng của xương đòn, giúp người học nắm…",
+      "image": "https://cdn.meduc.vn/media/giai-phau-xuong-don.png",
+      "date": "2025-11-25",
+      "url": "/chi-tren-p1-xuong-don",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 339,
+      "name": "[Chi Trên P1] Xương Vai",
+      "summary": "Xương vai là xương dẹt hình tam giác giữ vai trò trung tâm trong đai chi trên. Bài viết giúp bạn hiểu rõ cấu tạo, mặt khớp, mỏm xương, liên quan giải phẫu và ý nghĩa lâm sàng của xương vai, hỗ trợ học tập và ứng dụng giải phẫu…",
+      "image": "https://cdn.meduc.vn/media/giai-phau-xuong-vai.png",
+      "date": "2025-11-25",
+      "url": "/chi-tren-p1-xuong-vai",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 337,
+      "name": "[Chi Trên P1] Tổng quan",
+      "summary": "Xương chi trên là hệ thống xương quan trọng giúp cánh tay và bàn tay vận động linh hoạt. Bài viết dưới đây sẽ cung cấp tổng quan đầy đủ về cấu tạo, chức năng, phân loại và ý nghĩa lâm sàng của xương chi trên, giúp sinh viên y…",
+      "image": "https://cdn.meduc.vn/media/tong-quan-chi-tren.png",
+      "date": "2025-11-24",
+      "url": "/chi-tren-p1-tong-quan",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 336,
+      "name": "[Chi Trên P1] Mặt Phẳng Giải Phẫu",
+      "summary": "Mặt phẳng giải phẫu à những mặt cắt tưởng tượng dùng để chia cơ thể thành các phần khác nhau, giúp mô tả vị trí và hướng của cấu trúc giải phẫu một cách chính xác. Trong học tập và thực hành lâm sàng, các mặt phẳng giải phẫu đóng…",
+      "image": "https://cdn.meduc.vn/media/mat-phang-giai-phau.png",
+      "date": "2025-11-20",
+      "url": "/mat-phang-giai-phau",
+      "categories": [
+        117
+      ]
+    },
+    {
+      "id": 335,
+      "name": "[SL] Nội Môi Và Hằng Tính Nội Môi",
+      "summary": "Bài viết trình bày khái niệm nội môi , thành phần của nội môi và hằng tính nội môi, phân tích các cơ chế điều hòa thần kinh – thể dịch và ý nghĩa sinh lý của việc duy trì sự ổn định môi trường trong cơ thể.",
+      "image": "https://cdn.meduc.vn/media/sinh%20l%C3%AD/noi-moi.png",
+      "date": "2025-11-14",
+      "url": "/sl-noi-moi-va-hang-tinh-noi-moi",
+      "categories": [
+        119
+      ]
+    },
+    {
+      "id": 334,
+      "name": "[SLĐC] Đại Cương Cơ Thể Sống",
+      "summary": "Cơ thể sống là một hệ thống sinh học có tổ chức chặt chẽ, hoạt động theo những quy luật sinh lý nhất định. Bài viết giúp bạn nắm vững khái niệm, đặc điểm cơ bản, các mức độ tổ chức và vai trò trung tâm của tế bào trong cơ thể…",
+      "image": "https://cdn.meduc.vn/media/%E1%BA%A3nh%20seo%20blog/sinh%20l%C3%BD/dai-cuong-co-the-song.png",
+      "date": "2025-11-14",
+      "url": "/dai-cuong-co-the-song",
+      "categories": [
+        119
+      ]
+    },
+    {
+      "id": 331,
+      "name": "Cách Học Giải Phẫu Hiệu Quả Qua Cơ Thể Chính Mình: Bí Quyết Cho Sinh Viên Y Khoa",
+      "summary": "Học giải phẫu là một hành trình đầy thách thức nhưng cũng vô cùng thú vị đối với sinh viên y khoa và các chuyên gia y tế. Với khối lượng kiến thức đồ sộ và tính trừu tượng của các cấu trúc cơ thể, việc tìm ra phương pháp học giải…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cover_web%20(9).png",
+      "date": "2025-10-24",
+      "url": "/cach-hoc-giai-phau-hieu-qua-qua-co-the-chinh-minh",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 329,
+      "name": "Hiểu Biết Hệ Thống Dẫn Lưu Màng Phổi Với Ba Chai",
+      "summary": "Tràn khí màng phổi là một tình trạng cấp cứu hô hấp nguy hiểm, đòi hỏi can thiệp nhanh chóng và chính xác. Trong thực hành lâm sàng, hệ thống dẫn lưu màng phổi ba chai là công cụ phổ biến giúp xử lý hiệu quả, đặc biệt trong các…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cover_web%20(8).png",
+      "date": "2025-10-24",
+      "url": "/hieu-biet-he-thong-dan-luu-mang-phoi-voi-ba-chai",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 327,
+      "name": "Ôn Tập Các Hình Thể Vi Khuẩn Dễ Nhớ Nhất",
+      "summary": "Trong thế giới vi sinh vật, vi khuẩn là nhóm sinh vật cổ xưa và đa dạng nhất, đóng vai trò quan trọng trong cả thiên nhiên và y học. Hiểu rõ các hình thể vi khuẩn không chỉ giúp nhận diện và phân loại chúng một cách hiệu quả mà…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cover_web%20(7).png",
+      "date": "2025-10-24",
+      "url": "/on-tap-cac-hinh-the-vi-khuan",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 326,
+      "name": "Giải Phẫu Siêu Âm Mạch Máu Chi Trên: Hướng Dẫn Chi Tiết Và Ứng Dụng Lâm Sàng",
+      "summary": "Trong y học hiện đại, giải phẫu siêu âm mạch máu đóng vai trò quan trọng trong việc hỗ trợ các thủ thuật lâm sàng. Siêu âm tại giường (point-of-care ultrasound – POCUS) đã trở thành công cụ thiết yếu để xác định nhanh vị trí mạch…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cover_web%20(6).png",
+      "date": "2025-10-24",
+      "url": "/giai-phau-sieu-am-mach-mau-chi-tren",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 325,
+      "name": "So Sánh Vi khuẩn Gram Âm và Gram Dương: Sự khác Biệt Và Ý Nghĩa Trong Y Học",
+      "summary": "Vi khuẩn Gram âm và Gram dương là hai nhóm vi khuẩn được phân loại dựa trên đặc điểm cấu trúc thành tế bào, được phát hiện thông qua kỹ thuật nhuộm Gram. Sự phân loại này không chỉ có ý nghĩa trong nghiên cứu vi sinh vật mà còn…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(10).png",
+      "date": "2025-10-24",
+      "url": "/so-sanh-vi-khuan-gram-am-va-gram-duong",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 324,
+      "name": "Ban Lệnh Máu Đông: Bí Kíp Ghi Nhớ Thuốc Chống Đông Máu Cho Sinh Viên Y Khoa",
+      "summary": "Trong y học, việc kiểm soát quá trình đông máu là một kỹ năng quan trọng, đặc biệt khi máu đông không đúng lúc có thể gây nguy hiểm như rung nhĩ, thuyên tắc phổi, hoặc nhồi máu não. Để ban lệnh máu đông , các bác sĩ sử dụng các…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(7).png",
+      "date": "2025-10-19",
+      "url": "/ban-lenh-mau-dong-bi-kip-ghi-nho-thuoc-chong-dong-mau",
+      "categories": [
+        94
+      ]
+    },
+    {
+      "id": 322,
+      "name": "Hiểu Biết Giải Phẫu Trên X-Quang Ngực Thẳng: Chìa Khóa Chẩn Đoán Hình Ảnh Y Khoa",
+      "summary": "Giải phẫu trên X-quang ngực thẳng là một kỹ năng quan trọng đối với sinh viên y khoa và bác sĩ, giúp nhận diện các cấu trúc giải phẫu và phát hiện bất thường trong lồng ngực. Khi quan sát một phim X-quang ngực thẳng, bạn đang…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/5.png",
+      "date": "2025-10-19",
+      "url": "/hieu-biet-giai-phau-tren-x-quang-nguc-thang",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 321,
+      "name": "Review Sách Tiếng Anh Y Khoa The Language Of Medicine",
+      "summary": "Trong hành trình học y khoa, tiếng Anh y khoa không chỉ là một kỹ năng bổ trợ mà còn là chìa khóa mở ra cánh cửa tri thức quốc tế. Từ việc đọc tài liệu, giao tiếp với đồng nghiệp nước ngoài, đến chuẩn bị cho các kỳ thi quốc tế…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/7.png",
+      "date": "2025-10-19",
+      "url": "/review-sach-tieng-anh-y-khoa-the-language-of-medicine",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 319,
+      "name": "Phân Biệt Vết Bầm Qua Dấu Chỉ Lâm Sàng: Hành Trang Cho Sinh Viên Y Khoa",
+      "summary": "Trong y học, việc nhận diện và đánh giá dấu chỉ lâm sàng là kỹ năng quan trọng giúp các bác sĩ chẩn đoán và xử lý các tình trạng bệnh lý một cách chính xác. Một trong những dấu chỉ lâm sàng phổ biến nhưng đầy ý nghĩa là các vết…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/2.png",
+      "date": "2025-10-19",
+      "url": "/phan-biet-vet-bam-qua-dau-chi-lam-sang-hanh-trang-cho-sinh-vien-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 318,
+      "name": "Chinh Phục Môn Hoá Sinh Dễ Dàng Dành Riêng Cho Sinh Viên Y Khoa",
+      "summary": "Môn hóa sinh là môn học nền tảng của y khoa – không chỉ đơn thuần là việc \"học thuộc lòng công thức\" hay ghi nhớ hàng loạt chu trình chuyển hóa phức tạp. Thực tế, khoá hóa sinh chất lượng sẽ giúp bạn đi sâu vào bản chất của các…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(6).png",
+      "date": "2025-10-15",
+      "url": "/chinh-phuc-mon-hoa-sinh-de-dang-danh-rieng-cho-sinh-vien-y-khoa",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 316,
+      "name": "Tại Sao Viêm Tụy Cấp Gây Tràn Dịch Màng Phổi?",
+      "summary": "Tràn dịch màng phổi là một biến chứng nghiêm trọng của viêm tụy cấp, đặc biệt ở những trường hợp nặng. Đây là tình trạng tích tụ dịch trong khoang màng phổi, gây khó thở và ảnh hưởng đến chức năng hô hấp. Vậy tại sao viêm tụy cấp…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(8).png",
+      "date": "2025-10-15",
+      "url": "/tai-sao-viem-tuy-cap-gay-tran-dich-mang-phoi",
+      "categories": [
+        94
+      ]
+    },
+    {
+      "id": 315,
+      "name": "Giải Phẫu Miệng: Sự Phân Bố Các Dây Thần Kinh Cho Miệng",
+      "summary": "Giải phẫu miệng là một lĩnh vực quan trọng trong y học, đặc biệt trong nha khoa và phẫu thuật vùng đầu cổ, giúp chúng ta hiểu rõ cách các dây thần kinh phân bố để đảm bảo chức năng cảm giác và vận động của miệng. Trong bài viết…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(5).png",
+      "date": "2025-10-15",
+      "url": "/giai-phau-mieng-su-phan-bo-cac-day-than-kinh-cho-mieng",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 314,
+      "name": "Kinh nghiệm học y: 5 Bí Mật Chỉ Sinh Viên Y Hiểu",
+      "summary": "Nghề Y là một hành trình đặc biệt, nơi những sinh viên y không chỉ học kiến thức mà còn rèn luyện ý chí và trái tim để phục vụ con người. Với thời gian đào tạo dài và những trải nghiệm độc đáo, sinh viên y thường đối mặt với…",
+      "image": "https://cdn.meduc.vn/media/cover_web%20(4).png",
+      "date": "2025-10-15",
+      "url": "/kinh-nghiem-hoc-y-5-bi-mat-chi-sinh-vien-y-hieu",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 313,
+      "name": "Bí Kíp Đạt Điểm Cao Môn Hoá Sinh Từ Lời Sinh Viên Y Xuất Sắc",
+      "summary": "\" Môn hoá sinh là một trong những môn học đầy thách thức nhưng cũng vô cùng thú vị đối với sinh viên ngành Y và các ngành khoa học liên quan. Với khối lượng kiến thức dày đặc và các quá trình sinh học phức tạp, việc học môn hoá…",
+      "image": "https://cdn.meduc.vn/media/Cover_web%20(3).png",
+      "date": "2025-10-12",
+      "url": "/bi-kip-dat-diem-cao-mon-hoa-sinh-tu-loi-sinh-vien-y-xuat-sac",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 312,
+      "name": "05 Sai Lầm Khi Học Giải Phẫu Khiến Sinh Viên Y Nhanh Nản",
+      "summary": "Học giải phẫu luôn được xem là \"xương sống\" của ngành Y khoa, nhưng với nhiều sinh viên Y năm 1 hoặc năm 2, hành trình chinh phục môn học này lại đầy thử thách. Càng học giải phẫu càng rối, càng cố gắng thuộc lòng càng quên – đó…",
+      "image": "https://cdn.meduc.vn/media/Cover_web%20(2).png",
+      "date": "2025-10-09",
+      "url": "/05-sai-lam-khi-hoc-giai-phau-khien-sinh-vien-y-nhanh-nan",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 311,
+      "name": "Đăng Ký Khóa Ôn Thi Sau Đại Học: Sinh Lý, Hóa Sinh, Nội, Ngoại, Nhi Khoa - Đạt Kết Quả Cao",
+      "summary": "Kỳ thi sau đại học, thường được biết đến là kỳ thi nội trú tại Việt Nam, là một kỳ thi quan trọng dành cho các bác sĩ đã tốt nghiệp đại học y khoa, nhằm đào tạo chuyên sâu để trở thành bác sĩ nội trú",
+      "image": "https://cdn.meduc.vn/media/Livestream%20(1).png",
+      "date": "2025-10-05",
+      "url": "/dang-ky-khoa-on-thi-sau-dai-hoc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 309,
+      "name": "Bí Quyết Học Giải Phẫu Hiệu Quả Để Chinh Phục Kỳ Thi",
+      "summary": "Học giải phẫu là nền móng cho sự hiểu biết về cấu trúc cơ thể người. Đây là bước đệm quan trọng để sinh viên nắm bắt các môn học khác như sinh lý, bệnh học, hay giải phẫu bệnh. Tuy nhiên, giải phẫu cũng được xem là “nỗi ám ảnh”…",
+      "image": "https://cdn.meduc.vn/media/Cover_web%20(1).png",
+      "date": "2025-10-05",
+      "url": "/bi-quyet-hoc-giai-phau-hieu-qua-de-chinh-phuc-ky-thi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 308,
+      "name": "Khóa Học Sản Khoa Thực Chiến Tại MedUC: Bí Quyết Chinh Phục Kiến Thức Lâm Sàng",
+      "summary": "Bạn đang tìm kiếm khóa học sản khoa chất lượng cao để nắm vững kiến thức chuyên sâu và kỹ năng thực hành? Khóa học Sản Khoa Thực Chiến tại MedUC chính là giải pháp hoàn hảo dành cho sinh viên y khoa, bác sĩ trẻ và những ai chuẩn…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20-%202025-10-05T122504-354%20(1).png",
+      "date": "2025-10-05",
+      "url": "/khoa-hoc-san-khoa-thuc-chien-tai-meduc-bi-quyet-chinh-phuc-kien-thuc-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 307,
+      "name": "Y Học Cổ Truyền - Hành Trình 6 Năm Chinh Phục Nền Y Thuật Đông Phương",
+      "summary": "Ngành Y học cổ truyền kết hợp kiến thức y học phương Đông với thảo dược, châm cứu, xoa bóp bấm huyệt để chăm sóc sức khỏe toàn diện. Tìm hiểu cơ hội nghề nghiệp, vai trò và tiềm năng phát triển của Y học cổ truyền trong y tế hiện…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20-%202025-07-04T072808-329%20(1).png",
+      "date": "2025-07-05",
+      "url": "/y-hoc-co-truyen-hanh-trinh-6-nam-chinh-phuc-nen-y-thuat-dong-phuong",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 306,
+      "name": "PHÂN BIỆT NHANH HỘI CHỨNG ADDISON VÀ CUSHING",
+      "summary": "Hội chứng Addison và Cushing là hai rối loạn nội tiết đối lập nhau, liên quan đến hormone tuyến thượng thận. Trong khi Hội chứng Addison gây thiếu hụt cortisol và aldosterone, thì Hội chứng Cushing lại dư thừa cortisol mạn tính…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20-%202025-06-29T212338-135%20(1).png",
+      "date": "2025-06-29",
+      "url": "/phan-biet-nhanh-hoi-chung-addison-va-cushing",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 305,
+      "name": "Điều trị các nhiễm trùng ngoại khoa thường gặp",
+      "summary": "Nhiễm trùng ngoại khoa là một trong những vấn đề phổ biến trong y khoa, đặc biệt là sau các phẫu thuật hoặc chấn thương. Việc điều trị kịp thời và đúng cách giúp giảm nguy cơ biến chứng nguy hiểm. Dưới đây là các dạng nhiễm trùng…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20-%202025-06-29T214410-978%20(1).png",
+      "date": "2025-06-25",
+      "url": "/dieu-tri-cac-nhiem-trung-ngoai-khoa-thuong-gap",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 304,
+      "name": "Vì Sao Con Đường Đông Máu Được Gọi Là Ngoại Sinh Và Nội Sinh?",
+      "summary": "Đông máu là một quá trình sinh lý quan trọng giúp cầm máu khi mạch máu bị tổn thương. Quá trình này được chia thành hai con đường chính: đông máu ngoại sinh và đông máu nội sinh. Vậy tại sao chúng lại có tên gọi như vậy? Bài viết…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(97).png",
+      "date": "2025-06-15",
+      "url": "/vi-sao-con-duong-dong-mau-duoc-goi-la-ngoai-sinh-va-noi-sinh",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 303,
+      "name": "CHẨN ĐOÁN VÀ ĐIỀU TRỊ THUYÊN TẮC PHỔI",
+      "summary": "Thuyên tắc mạch phổi (thuyên tắc phổi - pulmonary embolism - PE) là một bệnh lý nghiêm trọng, xảy ra khi có sự tắc nghẽn các mạch máu trong phổi, ngăn cản dòng máu chảy qua và làm gián đoạn quá trình trao đổi khí. Thuyên tắc phổi…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(58).png",
+      "date": "2025-04-08",
+      "url": "/chan-doan-va-dieu-tri-thuyen-tac-phoi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 302,
+      "name": "BỆNH ADDISON: HIỂU TRIỆU CHỨNG TỪ CƠ CHẾ SINH LÝ",
+      "summary": "Bệnh Addison là một rối loạn nội tiết hiếm gặp nhưng nguy hiểm, xảy ra khi tuyến thượng thận không sản xuất đủ hormone cần thiết, đặc biệt là các hormone thuộc ba lớp vỏ thượng thận: mineralocorticoid, glucocorticoid và androgens…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(57).png",
+      "date": "2025-04-08",
+      "url": "/benh-addison-hieu-trieu-chung-tu-co-che-sinh-ly",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 301,
+      "name": "HƯỚNG DẪN CHI TIẾT VỀ THUỐC LỢI TIỂU: CÔNG DỤNG, PHÂN LOẠI VÀ CÁCH DÙNG",
+      "summary": "Thuốc lợi tiểu là nhóm thuốc có tác dụng làm tăng lượng nước tiểu được đào thải khỏi cơ thể, từ đó giúp loại bỏ lượng muối và nước dư thừa tích tụ trong các mô và mạch máu. Đây là loại thuốc rất phổ biến trong điều trị các bệnh…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(56).png",
+      "date": "2025-04-08",
+      "url": "/huong-dan-chi-tiet-ve-thuoc-loi-tieu-cong-dung-phan-loai-va-cach-dung",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 300,
+      "name": "Trật Khớp Hông: Nguyên nhân, Dấu hiệu, Chẩn đoán và Điều trị Toàn Diện",
+      "summary": "Trật khớp hông là một tình trạng nghiêm trọng ảnh hưởng đến cấu trúc ổn định của khớp hông, xảy ra khi đầu xương đùi trượt ra khỏi vị trí bình thường trong ổ cối. Tình trạng này có thể xảy ra ngay từ lúc sinh (do loạn sản phát…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(55).png",
+      "date": "2025-04-08",
+      "url": "/trat-khop-hong-nguyen-nhan-dau-hieu-chan-doan-va-dieu-tri-toan-dien",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 299,
+      "name": "CƠ CHẾ TĂNG HUYẾT ÁP TRONG BỆNH THẬN MẠN (CKD) – NGUYÊN NHÂN VÀ HẬU QUẢ",
+      "summary": "Tăng huyết áp là một biến chứng phổ biến và nguy hiểm trong bệnh thận mạn (CKD). Không chỉ là hậu quả của tổn thương thận, tăng huyết áp còn là yếu tố thúc đẩy sự tiến triển của suy thận, tạo thành vòng xoắn bệnh lý nghiêm trọng…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(48).png",
+      "date": "2025-03-25",
+      "url": "/co-che-tang-huyet-ap-trong-benh-than-man-ckd-nguyen-nhan-va-hau-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 298,
+      "name": "CƠ CHẾ HÌNH THÀNH SỎI CALCI – NGUYÊN NHÂN VÀ GIẢI PHÁP ĐIỀU TRỊ",
+      "summary": "Sỏi calci là loại sỏi tiết niệu phổ biến nhất, chiếm khoảng 70-80% tổng số ca sỏi thận. Việc hiểu rõ cơ chế hình thành sỏi calci theo từng nguyên nhân giúp đưa ra phương pháp phòng ngừa và điều trị hiệu quả. Hãy cùng tìm hiểu chi…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(41).png",
+      "date": "2025-03-24",
+      "url": "/co-che-hinh-thanh-soi-calci-nguyen-nhan-va-giai-phap-dieu-tri",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 297,
+      "name": "ĐIỀU HOÀ THÂN NHIỆT – CƠ CHẾ KIỂM SOÁT NHIỆT ĐỘ CƠ THỂ",
+      "summary": "Điều hòa thân nhiệt là cơ chế quan trọng giúp cơ thể duy trì nhiệt độ ổn định, bảo vệ các chức năng sống. Tìm hiểu chi tiết về cách cơ thể kiểm soát nhiệt độ thông qua hệ thần kinh, hormone và các phản xạ sinh lý",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(36).png",
+      "date": "2025-03-24",
+      "url": "/dieu-hoa-than-nhiet-co-che-kiem-soat-nhiet-do-co-the",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 296,
+      "name": "GÂY MÊ TUỶ SỐNG – CHỈ ĐỊNH, CHỐNG CHỈ ĐỊNH VÀ BIẾN CHỨNG",
+      "summary": "Gây mê tuỷ sống là một phương pháp vô cảm quan trọng trong y học, giúp giảm đau hiệu quả trong nhiều loại phẫu thuật khác nhau Phương pháp này có ưu điểm là hạn chế mất máu, thời gian hồi phục nhanh hơn và ít ảnh hưởng đến hô hấp…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(30).png",
+      "date": "2025-03-24",
+      "url": "/gay-me-tuy-song-chi-dinh-chong-chi-dinh-va-bien-chung",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 295,
+      "name": "KỸ THUẬT NỘI SOI MẬT TỤY NGƯỢC DÒNG (ERCP) – ỨNG DỤNG NHƯ THẾ NÀO?",
+      "summary": "Tìm hiểu về kỹ thuật nội soi mật tụy ngược dòng (ERCP) – phương pháp chẩn đoán và điều trị hiệu quả các bệnh lý về đường mật và tụy. Khám phá ứng dụng, ưu điểm, nhược điểm và những lưu ý quan trọng khi áp dụng ERCP",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(2).png",
+      "date": "2025-03-18",
+      "url": "/ky-thuat-noi-soi-mat-tuy-nguoc-dong-ercp-ung-dung-nhu-the-nao",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 294,
+      "name": "CÁCH SĂN HỌC BỔNG NGÀNH Y HIỆU QUẢ MÀ BẠN KHÔNG NÊN BỎ LỠ",
+      "summary": "Học phí là vấn đề nhức nhối của bất kì sinh viên y nào trên con đường tri thức, vậy làm sao để săn được học bổng ngành y hiệu quả, tìm kiếm cơ hội phụ giúp vấn đề tài chính cho gia đình. Cùng MedUC tìm hiểu chiến lược này ngay…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(9).png",
+      "date": "2025-03-18",
+      "url": "/cach-san-hoc-bong-nganh-y-hieu-qua-ma-ban-khong-nen-bo-lo",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 293,
+      "name": "Khám phá 7 cách vượt qua môn Hóa Sinh hiệu quả",
+      "summary": "Hóa Sinh là môn học quan trọng trong lĩnh vực Y khoa và Sinh học, nhưng đồng thời là nỗi ám ảnh đối với nhiều sinh viên. Với lượng kiến thức lớn và nhiều phản ứng phức tạp, tìm ra cách vượt qua môn Hóa Sinh hiệu quả là điều cần…",
+      "image": "https://cdn.meduc.vn/media/Cover%20web%20(5).png",
+      "date": "2025-03-18",
+      "url": "/kham-pha-7-cach-vuot-qua-mon-hoa-sinh-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 292,
+      "name": "CÁCH VƯỢT QUA MÔN GIẢI PHẪU: CHIẾN LƯỢC HỌC TẬP HIỆU QUẢ",
+      "summary": "môn giải phẫu học là một trong những môn học quan trọng và đầy thách thức trong ngành Y. Để có thể vượt qua môn giải phẫu, sinh viên không chỉ cần kiến thức vững vàng mà còn cần áp dụng những chiến lược học tập khoa học. Vậy làm…",
+      "image": "https://cdn.meduc.vn/media/cover%20web%20(12).png",
+      "date": "2025-03-18",
+      "url": "/cach-vuot-qua-mon-giai-phau-chien-luoc-hoc-tap-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 291,
+      "name": "TÓM TẮT CHU KỲ TIM THE CARDIAC CYCLE",
+      "summary": "Chu kỳ tim (Cardiac Cycle), một quá trình liên tục và tuần hoàn của các hoạt động cơ học và điện học trong tim, đảm bảo máu được bơm hiệu quả từ tim đến các cơ quan trong cơ thể. Hãy cùng MedUC khám phá sâu hơn về cơ chế hoạt…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/tom-tat-chu-ky-tim-the-cardiac-cycle-meduc.jpg",
+      "date": "2025-02-28",
+      "url": "/tom-tat-chu-ky-tim-the-cardiac-cycle-meduc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 289,
+      "name": "“TUYỆT CHIÊU” CHO SINH VIÊN Y 3 MỚI ĐI LÂM SÀNG",
+      "summary": "Khi bước vào những năm đầu đại học, có thể bạn chưa cảm nhận được áp lực và trải nghiệm mà các anh chị sinh viên Y2, Y3 phải đối mặt khi bước vào kỳ thực tập đầu tiên. Để giúp các bạn chuẩn bị tốt hơn cho hành trình lâm sàng đầy…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/tuyet-chieu-cho-sinh-vien-y-3-moi-di-lam-sang.jpg",
+      "date": "2025-02-27",
+      "url": "/tuyet-chieu-cho-sinh-vien-y-3-moi-di-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 288,
+      "name": "Đánh Bại Trì Hoãn: Bí Quyết Từ MedUC Dành Cho Sinh Viên Y",
+      "summary": "Khi nhắc đến cuộc sống của sinh viên y khoa, nhiều người thường nghĩ đến những đêm dài miệt mài bên sách vở và áp lực từ những kỳ thi căng thẳng. Tuy nhiên, một trong những thách thức lớn nhất mà nhiều sinh viên y gặp phải lại…",
+      "image": "",
+      "date": "2025-02-27",
+      "url": "/danh-bai-tri-hoan-bi-quyet-tu-meduc-danh-cho-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 287,
+      "name": "6 BƯỚC ĐỂ ĐỌC NHANH MỘT BẢN ĐIỆN TÂM ĐỒ",
+      "summary": "Điện tâm đồ (ECG/EKG) là một trong những kỹ năng cơ bản và thiết yếu mà mọi sinh viên y khoa cần thành thạo. Ở bài viết này MedUC sẽ hướng dẫn chi tiết 6 bước đọc ECG nhanh và chính xác, dựa trên phương pháp từ cuốn sách nổi…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/6-buoc-de-doc-nhanh-mot-ban-dien-tam-do.jpg",
+      "date": "2025-02-21",
+      "url": "/6-buoc-de-doc-nhanh-mot-ban-dien-tam-do",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 286,
+      "name": "5 MẸO SỬ DỤNG IPAD KHI ĐI LÂM SÀNG HIỆU QUẢ",
+      "summary": "Việc sử dụng iPad đúng cách có thể giúp sinh viên y khoa và bác sĩ tận dụng tối đa công nghệ trong môi trường lâm sàng. Dưới đây, Meduc sẽ chia sẻ 5 cách hiệu quả để sử dụng iPad giúp việc học và thực hành trên lâm sàng trở nên…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/5-meo-su-dung-ipad-khi-di-lam-sang-hieu-qua.jpg",
+      "date": "2025-02-20",
+      "url": "/5-meo-su-dung-ipad-khi-di-lam-sang-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 284,
+      "name": "ỨNG DỤNG THỰC TẾ CỦA GIẢI PHẪU TRONG LÂM SÀNG HỌC",
+      "summary": "Giải phẫu không chỉ là nền tảng của y học mà còn đóng vai trò quan trọng trong chẩn đoán và điều trị lâm sàng. Dưới góc nhìn chuyên sâu, MeduUC sẽ chia sẻ những kiến thức thực tiễn, kinh nghiệm lâm sàng và những ứng dụng quan…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/ung-dung-thuc-te-cua-giai-phau-trong-lam-sang-hoc%20(2).jpg",
+      "date": "2025-02-20",
+      "url": "/ung-dung-thuc-te-cua-giai-phau-trong-lam-sang-hoc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 283,
+      "name": "MẸO ĐỂ SINH VIÊN Y CÂN BẰNG GIỮA VIỆC HỌC VÀ ĐI LÀM THÊM",
+      "summary": "\"Em đang trong quá trình học tập để trở thành bác sĩ, nhưng điều kiện gia đình không quá dư dả. Có cách nào để em vừa theo đuổi ngành Y vừa kiếm thêm thu nhập để hỗ trợ gia đình trong thời gian còn là sinh viên không ạ?\" Hãy cùng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/meo-de-sinh-vien-y-can-bang-giua-viec-hoc-va-di-lam-them.jpg",
+      "date": "2025-02-18",
+      "url": "/meo-de-sinh-vien-y-can-bang-giua-viec-hoc-va-di-lam-them",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 282,
+      "name": "NHỮNG BỠ NGỠ KHI SINH VIÊN Y LẦN ĐẦU ĐI LÂM SÀNG",
+      "summary": "Đi lâm sàng, trực ngày đêm là “đặc sản” không thể thiếu của sinh viên y. Bệnh viện chẳng khác gì ngôi nhà thứ hai – nơi chúng ta dành phần lớn thời gian để học tập, thực hành, thậm chí là ăn ngủ. Nhưng lần đầu bước vào bệnh viện…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/lan-dau-di-lam-sang.jpg",
+      "date": "2025-02-15",
+      "url": "/nhung-bo-ngo-khi-sinh-vien-y-lan-dau-di-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 281,
+      "name": "ÁP DỤNG QUY TẮC 80/20 VÀO VIỆC ĐỌC SÁCH DÀNH CHO SINH VIÊN Y",
+      "summary": "Bạn đã bao giờ cảm thấy choáng ngợp trước khối lượng sách khổng lồ của ngành Y chưa? Là sinh viên Y, chúng ta phải đọc rất nhiều sách để nắm vững kiến thức từ các môn sơ sở đến môn học chuyên ngành, nhưng không phải lúc nào cũng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/ap-dung-quy-tac-80-20-vao-viec-doc-sach-danh-cho-sinh-vien-y.jpg",
+      "date": "2025-02-14",
+      "url": "/ap-dung-quy-tac-80-20-vao-viec-doc-sach-danh-cho-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 279,
+      "name": "SINH VIÊN Y ĐÃ TỪNG HỐI HẬN KHI THEO NGÀNH MÌNH ĐANG HỌC?",
+      "summary": "Mong muốn bỏ ngành là câu nói đầu tiên người bạn thân nói với tôi sau những tuần có lịch kiểm tra dày đặc. Tôi cùng không rõ mình đã nghe câu nói này bao nhiêu lần trong suốt khoảng thời gian ngồi học tại giảng đường. Đời sinh…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/sinh-vien-y.jpg",
+      "date": "2025-02-12",
+      "url": "/sinh-vien-y-da-tung-hoi-han-khi-theo-nganh-minh-dang-hoc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 278,
+      "name": "NẮM VỮNG HỘI CHỨNG CUSHING CHỈ TRONG 5 PHÚT",
+      "summary": "Hội chứng Cushing – một cái tên quen thuộc, nhưng liệu bạn đã thực sự hiểu rõ về căn bệnh này chưa? Tại sao bệnh này lại xuất hiện ở những bệnh nhân thiếu niên, thanh niên và người lớn tuổi, có nhiều bệnh nền? Nhận biết và hiểu…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/nam-vung-hoi-chung-cushing-chi-trong-5-phut.jpg",
+      "date": "2025-01-24",
+      "url": "/nam-vung-hoi-chung-cushing-chi-trong-5-phut",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 277,
+      "name": "CHINH PHỤC KỸ NĂNG SIÊU ÂM VỚI SÁCH SIÊU ÂM TỔNG QUÁT",
+      "summary": "Siêu âm chẩn đoán là một phần quan trọng trong hình ảnh y khoa, nó là phương pháp thăm khám không chảy máu, không gây nguy hiểm cho bệnh nhân và thầy thuốc, là phương pháp thăm khám rất kinh tế nên được ứng dụng rộng rãi tại các…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/chinh-phuc-ky-nang-sieu-am-voi-sach-sieu-am-tong-quat%20(1).jpg",
+      "date": "2025-01-22",
+      "url": "/chinh-phuc-ky-nang-sieu-am-voi-sach-sieu-am-tong-quat",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 276,
+      "name": "SINH VIÊN Y PHẢI LÀM GÌ ĐỂ CHUẨN BỊ CHO MỘT NĂM MỚI 2025 THẬT HIỆU QUẢ?",
+      "summary": "Một năm mới không chỉ là thời điểm để đặt mục tiêu mà còn là lúc sinh viên Y lên kế hoạch cụ thể để học tập và phát triển bản thân hiệu quả hơn. Ngành Y đầy thách thức nhưng cũng mang lại những trái ngọt xứng đáng, nếu bạn biết…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/sinh-vien-y-phai-lam-gi-de-chuan-bi-cho-mot-nam-moi-hieu-qua.jpg",
+      "date": "2025-01-20",
+      "url": "/sinh-vien-y-phai-lam-gi-de-chuan-bi-cho-mot-nam-moi-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 275,
+      "name": "CON ĐƯỜNG ĐÔNG MÁU NỘI SINH VÀ NGOẠI SINH",
+      "summary": "Con đường đông máu nội sinh và ngoại sinh là hai cơ chế chính trong quá trình đông máu, được kích hoạt bởi những tổn thương khác nhau và cuối cùng hội tụ ở đường chung (common pathway) để hình thành cục máu đông. Cùng MedUC tìm…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/con-duong-dong-mau-noi-sinh-va-ngoai-sinh%20(4).jpg",
+      "date": "2025-01-16",
+      "url": "/con-duong-dong-mau-noi-sinh-va-ngoai-sinh",
+      "categories": [
+        91,
+        100
+      ]
+    },
+    {
+      "id": 274,
+      "name": "QUYỂN SÁCH KINH ĐIỂN - GIẢI PHẪU CẮT LỚP CT & MRI QUA GÓC NHÌN CỦA BÁC SĨ LÂM SÀNG",
+      "summary": "Từ góc nhìn của những bác sĩ đã trải nghiệm và ứng dụng bộ sách \" Giải phẫu cắt lớp CT-MRI \" trong thực tiễn, cuốn sách này được đánh giá cao nhờ sự kết hợp hoàn hảo giữa tính chính xác khoa học và khả năng ứng dụng thực tế. Các…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cover_weeb.jpg",
+      "date": "2025-01-14",
+      "url": "/quyen-sach-kinh-dien-giai-phau-cat-lop-ct-mri-qua-goc-nhin-cua-bac-si-lam-sang",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 273,
+      "name": "TOP 5 ĐIỀU SINH VIÊN Y CẦN LÀM NGAY KHI THI XONG HỌC KỲ",
+      "summary": "Bài viết cung cấp những gợi ý thiết thực giúp sinh viên Y tìm ra hướng đi phù hợp sau kỳ thi học kỳ đầy căng thẳng. Từ việc sửa sai, hệ thống lại kiến thức, đến thư giãn... sẽ giúp bạn cân bằng lại cảm xúc, nâng cao hiệu quả học…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-dieu-sinh-vien-y-can-lam-ngay-khi-thi-xong-hoc-ky.jpg",
+      "date": "2025-01-13",
+      "url": "/top-5-dieu-sinh-vien-y-can-lam-ngay-khi-thi-xong-hoc-ky",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 272,
+      "name": "LẦN ĐẦU ĐI BỆNH VIỆN: CẦN CHÚ Ý NHỮNG GÌ?",
+      "summary": "Lần đầu đi bệnh viện là một cột mốc đáng nhớ với sinh viên Y. Cảm giác lạ lẫm, hồi hộp là điều không thể tránh khỏi, nhưng với vài lời khuyên hữu ích, bạn sẽ tự tin hơn trên hành trình mới mẻ này. Hãy cùng Meduc nắm nhanh các…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/landaudivien.jpg",
+      "date": "2025-01-10",
+      "url": "/lan-dau-di-benh-vien-can-chu-y-nhung-gi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 271,
+      "name": "ÔN TẬP GIẢI PHẪU THÂN NÃO TOÀN DIỆN VÀ CHI TIẾT",
+      "summary": "Bạn có biết thân não gồm ba phần quan trọng nào? Hành não, Cầu não và Trung não – nhưng liệu bạn đã hiểu hết về cấu trúc và chức năng của chúng chưa? Hãy cùng MedUC xem qua bài viết này dưới đây để học giải phẫu thân não toàn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/on-tap-giai-phau-than-nao-toan-dien-va-chi-tiet.jpg",
+      "date": "2025-01-09",
+      "url": "/on-tap-giai-phau-than-nao-toan-dien-va-chi-tiet",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 270,
+      "name": "SINH LÝ GUYTON AND HALL - BÍ KÍP VÀNG CHO Y1 CHINH PHỤC MÔN SINH LÝ",
+      "summary": "Sinh lý học là nền tảng cốt lõi cho mọi sinh viên Y khoa, và để xây dựng một nền tảng vững chắc, Sinh lý học Guyton chắc chắn là lựa chọn không thể bỏ qua. Được đánh giá là giáo trình sinh lý học được yêu thích nhất thế giới…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/sinh-ly-guyton-and-hall-bi-kip-vang-cho-y1-chinh-phuc-mon-sinh-ly%20(4).jpg",
+      "date": "2025-01-07",
+      "url": "/sinh-ly-guyton-and-hall-bi-kip-vang-cho-y1-chinh-phuc-mon-sinh-ly",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 269,
+      "name": "ĐÔNG ĐẶC PHỔI: NHỮNG NGUYÊN NHÂN PHỔ BIẾN TRÊN LÂM SÀNG",
+      "summary": "Đông đặc phổi (Consolidation) là tình trạng trong đó nhu mô phổi trở nên đặc, cứng, mất tính xốp và giàu không khí như bình thường. Trên phim X-quang ngực , đông đặc phổi thường biểu hiện dưới dạng các vùng tăng đậm độ (xuất hiện…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/dong-dac-phoi-nhung-nguyen-nhan-pho-bien-tren-lam-sang.jpg",
+      "date": "2025-01-04",
+      "url": "/dong-dac-phoi-nhung-nguyen-nhan-pho-bien-tren-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 268,
+      "name": "TIẾNG THỔI TIM VÀ NHỮNG KIẾN THỨC CẦN PHẢI GHI NHỚ",
+      "summary": "Tiếng thổi tim là âm thanh bất thường phát sinh do dòng máu hỗn loạn qua tim, phản ánh trạng thái sinh lý hoặc bệnh lý của hệ tim mạch. Việc hiểu rõ tiếng thổi tim là bước đầu tiên để phát hiện và chẩn đoán các rối loạn van tim…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/tieng-thoi-tim-va-nhung-kien-thuc-can-phai-ghi-nho%20(1).jpg",
+      "date": "2025-01-03",
+      "url": "/tieng-thoi-tim-va-nhung-kien-thuc-can-phai-ghi-nho",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 267,
+      "name": "NÊN HỌC TRƯỜNG TƯ HAY TRƯỜNG CÔNG? CHIA SẺ TỪ NGƯỜI ĐI TRƯỚC",
+      "summary": "Lựa chọn trường Y học phù hợp là một quyết định quan trọng, ảnh hưởng lớn đến con đường học tập và sự nghiệp sau này. Trường tư và trường công đều có những ưu, nhược điểm riêng, phù hợp với những nhu cầu khác nhau của từng cá…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/nen-hoc-truong-tu-hay-truong-cong.jpg",
+      "date": "2025-01-02",
+      "url": "/nen-hoc-truong-tu-hay-truong-cong-chia-se-tu-nguoi-di-truoc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 266,
+      "name": "VÌ SAO SINH VIÊN Y CÀNG HỌC CÀNG THẤY MÌNH NGU?",
+      "summary": "“Nhất Y nhì Dược” là câu nói được dùng từ lâu để chỉ sức hút cũng như tầm quan trọng của ngành Y trong xã hội. Trường Y - Dược là nơi hội tụ những người giỏi nhất. Nhưng có một sự thật thú vị rằng, phần lớn sinh viên y dù có Huy…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cover_web%20(1).jpg",
+      "date": "2024-12-28",
+      "url": "/vi-sao-sinh-vien-y-cang-hoc-cang-thay-minh-ngu",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 265,
+      "name": "HỎI BỆNH NGHỆ THUẬT KHI ĐI LÂM SÀNG",
+      "summary": "Việc hỏi bệnh nhân không chỉ là kỹ năng cơ bản trong thực hành lâm sàng mà còn là cơ hội để sinh viên Y củng cố kiến thức và rèn luyện sự tự tin. Tuy nhiên, nhiều bạn vẫn cảm thấy lúng túng khi bắt đầu. Dưới đây là một số kinh…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/hoi-benh-nghe-thuat-khi-di-lam-sang.jpg",
+      "date": "2024-12-27",
+      "url": "/hoi-benh-nghe-thuat-khi-di-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 264,
+      "name": "HỌC Y HIỆU QUẢ VỚI PHƯƠNG PHÁP HỌC: TỰ KIỂM TRA (SELF TESTING)",
+      "summary": "Học Y đòi hỏi bạn phải tiếp cận một lượng lớn kiến thức phức tạp, đồng thời ghi nhớ chi tiết để áp dụng vào thực tế lâm sàng. Trong hành trình học tập này, phương pháp học tự kiểm tra (self-testing) như là một công cụ giúp sinh…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/hoc-y-hieu-qua-voi-phuong-phap-hoc-tu-kiem-tra-self-testing.jpg",
+      "date": "2024-12-25",
+      "url": "/hoc-y-hieu-qua-voi-phuong-phap-hoc-tu-kiem-tra-self-testing",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 263,
+      "name": "TOPIC:  SINH VIÊN Y HỌC CÁC MÔN LÝ THUYẾT Ở ĐẠI HỌC Y - CHIA SẺ TỪ CÁC “CỰU CHIẾN BINH”",
+      "summary": "Học Y là một hành trình đầy thử thách, đặc biệt khi sinh viên Y phải đối mặt với các môn lý thuyết nặng nề trong chương trình đào tạo đại học. Những \"cựu chiến binh\" từng trải qua những môn học này chia sẻ rằng việc học không chỉ…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/topic-sinh-vien-y-hoc-cac-mon-ly-thuyet-o-dai-hoc-y%20(2).jpg",
+      "date": "2024-12-24",
+      "url": "/topic-sinh-vien-y-hoc-cac-mon-ly-thuyet-o-dai-hoc-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 262,
+      "name": "ĐẠI HỌC Y KHÔNG PHẢI CẤP 3: THAY ĐỔI NGAY CÁCH HỌC HIỆU QUẢ CÙNG MEDUC",
+      "summary": "Khi bước vào Đại học Y, nhiều sinh viên gặp phải tình trạng học càng nhiều càng rối, càng cố gắng lại càng quên. Học ngành Y không chỉ là việc học nhiều giờ mà còn quan trọng là học hiệu quả. Mỗi sinh viên y có phong cách học…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/dai-hoc-y-khong-phai-cap-3-thay-doi-ngay-cach-hoc-hieu-qua-cung-meduc.jpg",
+      "date": "2024-12-20",
+      "url": "/dai-hoc-y-khong-phai-cap-3-thay-doi-ngay-cach-hoc-hieu-qua-cung-meduc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 261,
+      "name": "REVIEW SÁCH CÂU HỎI TRẮC NGHIỆM GIẢI PHẪU HỌC - CHÌA KHOÁ VÀNG ĐỂ VƯỢT QUA KỲ THI",
+      "summary": "Cuốn sách \"Câu Hỏi Trắc Nghiệm Giải Phẫu Học\" do TS.BS. Nguyễn Hoàng Vũ biên soạn là một tài liệu học tập thiết thực dành cho sinh viên Y khoa, đặc biệt là những bạn đang theo học tại Đại học Y Dược TP.HCM hoặc các trường y khác…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/review-sach-cau-hoi-trac-nghiem-giai-phau-hoc-chia-khoa-vang-de-vuot-qua-ky-thi%20(2).jpg",
+      "date": "2024-12-19",
+      "url": "/review-sach-cau-hoi-trac-nghiem-giai-phau-hoc-chia-khoa-vang-de-vuot-qua-ky-thi",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 260,
+      "name": "KINH NGHIỆM KHI TIẾP CẬN BỆNH NHÂN KHÓ THỞ CHO SINH VIÊN Y ĐI LÂM SÀNG",
+      "summary": "Khó thở là một tình trạng phổ biến mà chúng ta có thể gặp ở hầu hết các chuyên khoa, từ nội khoa, ngoại khoa, hô hấp, tim mạch cho đến cấp cứu. Tình trạng này không chỉ là triệu chứng thường thấy, mà còn có thể là dấu hiệu cảnh…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/kinh-nghiem-khi-tiep-can-benh-nhan-kho-tho-cho-sinh-vien-y-di-lam-sang.jpg",
+      "date": "2024-12-18",
+      "url": "/kinh-nghiem-khi-tiep-can-benh-nhan-kho-tho-cho-sinh-vien-y-di-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 259,
+      "name": "HỌC Y ĐA KHOA: CÓ NÊN THỬ SỨC VỚI VAI TRÒ LÃNH ĐẠO LỚP?",
+      "summary": "Khi học Y đa khoa đảm nhận vai trò Bí thư/Lớp trưởng . Liệu vai trò này có giúp các bạn rèn luyện kỹ năng lãnh đạo, quản lý thời gian và giải quyết vấn đề không? Làm thế nào để cân bằng giữa trách nhiệm và khối lượng học tập nặng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/hoc-y-da-khoa-co-nen-thu-suc-voi-vai-tro-lanh-dao-lop.jpg",
+      "date": "2024-12-17",
+      "url": "/hoc-y-da-khoa-co-nen-thu-suc-voi-vai-tro-lanh-dao-lop",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 258,
+      "name": "6 NĂM HỌC Y – HÀNH TRÌNH CHƯA BAO GIỜ DỄ DÀNG",
+      "summary": "Hành trình 6 năm học Y là một quá trình đầy thử thách và kiên trì. Từ năm 1 với các môn học cơ bản như Giải phẫu học và Sinh lý học, cho đến năm 6 khi bạn chuẩn bị bước ra nghề bác sĩ, mỗi giai đoạn đều có những bài học và khó…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/h%E1%BB%8Dc-y-6-nam.jpg",
+      "date": "2024-12-14",
+      "url": "/6-nam-hoc-y-hanh-trinh-chua-bao-gio-de-dang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 257,
+      "name": "SINH VIÊN Y VÀ PEER PRESSURE: LÀM SAO ĐỂ BIẾN ÁP LỰC THÀNH ĐỘNG LỰC?",
+      "summary": "Bạn có bao giờ cảm thấy áp lực khi xung quanh là những người bạn đầy thành tích đáng nể, giành giải quốc gia, nói tiếng Anh lưu loát với IELTS trên 8.0, hay thảo luận rôm rả về giải phẫu, bệnh học mà bản thân lại chỉ đang cố gắng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/sinh-vien-y-va-peer-pressure-lam-sao-de-bien-ap-luc-thanh-dong-luc%20(1).jpg",
+      "date": "2024-12-11",
+      "url": "/sinh-vien-y-va-peer-pressure-lam-sao-de-bien-ap-luc-thanh-dong-luc",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 256,
+      "name": "MẢNG XƠ VỮA ĐỘNG MẠCH DƯỚI GÓC NHÌN HOÁ SINH",
+      "summary": "Xơ vữa động mạch đang trở thành vấn đề nóng hổi hơn bao giờ hết bởi khi mà tỉ lệ các bệnh Đái tháo đường, tim mạch đang ngày càng gia tăng trong mô hình bệnh tật ở Việt Nam. Để điều trị xơ vữa động mạch, tất nhiên trước hết chúng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/mang-xo-vua-dong-mach-duoi-goc-nhin-hoa-sinh.jpg",
+      "date": "2024-12-10",
+      "url": "/mang-xo-vua-dong-mach-duoi-goc-nhin-hoa-sinh",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 254,
+      "name": "REVIEW THI CHẠY TRẠM - KỸ NĂNG SINH TỒN CHO TÂN SINH VIÊN Y",
+      "summary": "Chào các bạn tân sinh viên Y , chắc hẳn ai cũng từng nghe đến \" thi chạy trạm \" – một hình thức thi đặc sản của ngành y. Hôm nay, MedUC sẽ cùng các bạn tìm hiểu kỹ hơn về hình thức thi này, đồng thời chia sẻ một vài bí kíp để…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/review-thi-chay-tram-ky-nang-sinh-ton-cho-tan-sinh-vien-y%20(3).jpg",
+      "date": "2024-12-09",
+      "url": "/review-thi-chay-tram-ky-nang-sinh-ton-cho-tan-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 253,
+      "name": "CÁCH TIẾP CẬN BỆNH NHÂN THIẾU MÁU ĐƠN GIẢN CHO SINH VIÊN Y KHI ĐI LÂM SÀNG",
+      "summary": "Có thể nói, thiếu máu là một tình trạng thường gặp trong hầu hết các khoa lâm sàng, khiến việc chẩn đoán và tìm ra nguyên nhân trở thành một kỹ năng thiết yếu đối với sinh viên y. Làm thế nào để tiếp cận bệnh nhân thiếu máu một…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cach-tiep-can-benh-nhan-thieu-mau-don-gian-cho-sinh-vien-y-khi-di-lam-sang%20(1).jpg",
+      "date": "2024-12-06",
+      "url": "/cach-tiep-can-benh-nhan-thieu-mau-don-gian-cho-sinh-vien-y-khi-di-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 252,
+      "name": "GIẢI PHẪU NỀN SỌ - “NÚT GIAO THÔNG” QUAN TRỌNG CỦA NÃO BỘ",
+      "summary": "Khám phá chi tiết về giải phẫu nền sọ , nơi các dây thần kinh và mạch máu quan trọng kết nối não bộ với cơ thể. Bài viết giúp sinh viên y dễ dàng nắm bắt vị trí và chức năng của từng lỗ nền sọ như lỗ thị giác, khe ổ mắt trên, lỗ…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cover_web.jpg",
+      "date": "2024-12-05",
+      "url": "/giai-phau-nen-so-nut-giao-thong-quan-trong-cua-nao-bo",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 251,
+      "name": "KIẾN THỨC SINH VIÊN Y CẦN PHẢI NẮM Ở TỪNG KHOA TRƯỚC KHI ĐI LÂM SÀNG PHẦN 2",
+      "summary": "Ở phần 1, chúng ta đã khám phá các chuyên khoa như Nội tim mạch, Tiêu hóa, Hô hấp và Thận – những nền tảng quan trọng giúp sinh viên Y nắm vững những điểm nhấn quang trọng. Tiếp tục hành trình đi lâm sàng, phần 2 sẽ tập trung vào…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/kien-thuc-sinh-vien-y-o-tung-khoa-truoc-khi-di-lam-sang-2.jpg",
+      "date": "2024-12-04",
+      "url": "/kien-thuc-sinh-vien-y-can-phai-nam-o-tung-khoa-truoc-khi-di-lam-sang-phan-2",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 250,
+      "name": "TOP  5 KÊNH YOUTUBE HỌC TIẾNG ANH HIỆU QUẢ CHO SINH VIÊN Y KHOA",
+      "summary": "Lịch trình bận rộn của sinh viên y khoa thường khiến việc học tiếng Anh trở thành một thử thách lớn. Nhưng đừng lo, ở bài viết này MedUC tổng hợp 5 kênh YouTube giúp bạn rèn luyện, tiếp cận các kỹ năng tiếng Anh như nghe, nói…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-kenh-youtube-hoc-tieng-anh-hieu-qua-cho-sinh-vien-y-khoa%20(4).jpg",
+      "date": "2024-11-29",
+      "url": "/top-5-kenh-youtube-hoc-tieng-anh-hieu-qua-cho-sinh-vien-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 249,
+      "name": "6 LOẠI SỐC THƯỜNG GẶP KHI ĐI LÂM SÀNG Y KHOA",
+      "summary": "Sốc là một tình trạng y khoa nguy kịch , xảy ra khi sự tưới máu không đủ cung cấp oxy cho các mô, dẫn đến rối loạn chuyển hóa và đe dọa trực tiếp đến sự sống còn của cơ thể. Đối với sinh viên y khoa khi đi lâm sàng , việc hiểu rõ…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/6-loai-soc-thuong-gap-khi-di-lam-sang-y-khoa.jpg",
+      "date": "2024-11-27",
+      "url": "/6-loai-soc-thuong-gap-khi-di-lam-sang-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 248,
+      "name": "REVIEW KỲ HỌC LÂM SÀNG TẠI HỌC VIỆN QUÂN Y",
+      "summary": "Học lâm sàng – một cụm từ quen thuộc đối với hầu hết các sinh viên ngành Y. Nhưng bạn đã bao giờ tự hỏi rằng, trải nghiệm học lâm sàng tại Học Viện Quân Y có gì đặc biệt hơn so với các bệnh viện thông thường chưa? Mỗi môi trường…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/review-ky-hoc-lam-sang-tai-hoc-vien-quan-y%20(3).jpg",
+      "date": "2024-11-26",
+      "url": "/review-ky-hoc-lam-sang-tai-hoc-vien-quan-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 247,
+      "name": "LÀM SAO ĐỂ MÔN VI SINH KHÔNG CÒN LÀ THÁCH THỨC TRÊN CON ĐƯỜNG HỌC Y",
+      "summary": "Môn vi sinh luôn là một thử thách lớn đối với sinh viên y , nhưng với một vài phương pháp học hiệu quả, bạn hoàn toàn có thể vượt qua môn học này một cách dễ dàng hơn. Trong bài viết này, MedUC giới thiệu một số tips giúp bạn học…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/lam-sao-de-mon-vi-sinh-khong-con-la-thach-thuc-tren-con-duong-hoc-y%20(5).jpg",
+      "date": "2024-11-25",
+      "url": "/lam-sao-de-mon-vi-sinh-khong-con-la-thach-thuc-tren-con-duong-hoc-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 246,
+      "name": "KIẾN THỨC SINH VIÊN Y CẦN PHẢI NẮM Ở TỪNG KHOA TRƯỚC KHI ĐI LÂM SÀNG PHẦN 1",
+      "summary": "Đi lâm sàng là một cột mốc quan trọng trong con đường học Y, nơi sinh viên sẽ áp dụng lý thuyết đã học vào thực tế để thực hành lâm sàng. Để giúp sinh viên Y tự tin hơn, ở phần này MedUC đã tổng hợp những kiến thức cần thiết cho…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/kien-thuc-sinh-vien-y-can-phai-nam-o-tung-khoa-truoc-khi-di-lam-sang-phan-1%20(1).jpg",
+      "date": "2024-11-22",
+      "url": "/kien-thuc-sinh-vien-y-can-phai-nam-o-tung-khoa-truoc-khi-di-lam-sang-phan-1",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 245,
+      "name": "BÍ KÍP QUẢN LÝ THỜI GIAN HIỆU QUẢ CHO SINH VIÊN Y NĂM 1",
+      "summary": "Bước vào năm đầu tiên của ngành học, sinh viên Y sẽ đối mặt với khối lượng kiến thức khổng lồ từ những môn học “khó nhằn” như Giải phẫu, Sinh lý, Hóa đại cương hay Sinh học Di truyền. Lịch học dày đặc và các buổi thực hành liên…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-quan-ly-thoi-gian-hieu-qua-cho-sinh-vien-y-nam-1%20(1).jpg",
+      "date": "2024-11-20",
+      "url": "/bi-kip-quan-ly-thoi-gian-hieu-qua-cho-sinh-vien-y-nam-1",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 244,
+      "name": "GIẢI MÃ QUÁ TRÌNH TIÊU HÓA DƯỚI GÓC NHÌN SINH LÝ HỌC",
+      "summary": "Người ta đã từng làm một thí nghiệm giả lập nên hệ tiêu hoá của con người trong phòng thí nghiệm. Để hoàn tất 1 chu kì tiêu hoá này trong phòng thí nghiệm, người ta phải mất đến 72h, trong khi quá trình tiêu hoá của chúng ta thực…",
+      "image": "https://cdn.meduc.vn/media/blog%20sinh%20ly/giai-ma-qua-trinh-tieu-hoa-duoi-goc-nhin-sinh-ly-hoc%20(1).jpg",
+      "date": "2024-11-18",
+      "url": "/giai-ma-qua-trinh-tieu-hoa-duoi-goc-nhin-sinh-ly-hoc",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 243,
+      "name": "NÂNG CAO TRÌNH ĐỘ TIẾNG ANH Y KHOA VỚI SÁCH THE LANGUAGE OF MEDICINE",
+      "summary": "Trong lĩnh vực y khoa, tiếng Anh đóng vai trò quan trọng trong việc học tập, nghiên cứu và làm việc. Thành thạo tiếng Anh chuyên ngành giúp bạn đọc hiểu các tài liệu nghiên cứu mới nhất, tham gia hội nghị quốc tế và làm việc…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/nang-cao-trinh-do-tieng-anh-y-khoa-voi-sach-the-language-of-medicine%20(1).jpg",
+      "date": "2024-11-16",
+      "url": "/nang-cao-trinh-do-tieng-anh-y-khoa-voi-sach-the-language-of-medicine",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 242,
+      "name": "BÍ KÍP HỌC TỐT VỚI 5 APPS HỮU ÍCH CHO SINH VIÊN RĂNG HÀM MẶT",
+      "summary": "Sinh viên Răng Hàm Mặt cần không chỉ sách vở mà cả công cụ trực quan và tài liệu tham khảo giúp học sâu hơn về giải phẫu, chẩn đoán và điều trị. Dưới đây là 5 ứng dụng thiết mà bất kỳ sinh viên ngành Răng Hàm Mặt nào cũng nên có…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-hoc-tot-voi-5-apps-huu-ich-cho-sinh-vien-rang-ham-mat%20(2).jpg",
+      "date": "2024-11-13",
+      "url": "/bi-kip-hoc-tot-voi-5-apps-huu-ich-cho-sinh-vien-rang-ham-mat",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 241,
+      "name": "05 BÍ KÍP TAKE NOTE ĐẸP TRÊN IPAD DỄ DÀNG VÀ HIỆU QUẢ",
+      "summary": "Việc take note hiệu quả trên iPad ngày càng trở nên phổ biến, đặc biệt là với sinh viên đại học và học sinh khối ngành y dược. Không chỉ giúp bạn ghi nhớ dễ dàng, take note còn cải thiện hiệu suất học tập. Hãy cùng khám phá các…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/05-bi-kip-take-note-dep-tren-ipad-de-dang-va-hieu-qua%20(3).jpg",
+      "date": "2024-11-12",
+      "url": "/05-bi-kip-take-note-dep-tren-ipad-de-dang-va-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 240,
+      "name": "TIẾT LỘ BÍ KÍP HỌC ĐIỆN TÂM ĐỒ HIỆU QUẢ ĐỂ NÂNG CAO KỸ NĂNG PHÂN TÍCH ECG",
+      "summary": "Học điện tâm đồ (ECG) là một quá trình đòi hỏi kiên trì và phương pháp học đúng đắn. Dưới đây là các bước và phương pháp học ECG hiệu quả mà MedUC tổng hợp từ kinh nghiệm học tập của bản thân và các bạn sinh viên Y. Trước khi bắt…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/tiet-lo-bi-kip-hoc-dien-tam-do-hieu-qua-de-nang-cao-ky-nang-phan-tich-ecg%20(2).jpg",
+      "date": "2024-11-11",
+      "url": "/tiet-lo-bi-kip-hoc-dien-tam-do-hieu-qua-de-nang-cao-ky-nang-phan-tich-ecg",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 239,
+      "name": "CÁC BỆNH LÝ THẬN PHỔ BIẾN MÀ ĐI LÂM SÀNG KHOA NÀO CŨNG GẶP",
+      "summary": "Bệnh lý về thận là vấn đề thường gặp ở mọi chuyên khoa và có thể ảnh hưởng nặng nề đến sức khỏe bệnh nhân. Việc có hiểu biết cơ bản để nhận biết các bệnh thận phổ biến giúp các bác sĩ dễ dàng chẩn đoán và điều trị hiệu quả khi đi…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cac-benh-ly-than-pho-bien-ma-di-lam-sang-khoa-nao-cung-gap%20(1).jpg",
+      "date": "2024-11-07",
+      "url": "/cac-benh-ly-than-pho-bien-ma-di-lam-sang-khoa-nao-cung-gap",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 238,
+      "name": "TOP 5 THÁI ĐỘ KHIẾN LỘ TRÌNH HỌC Y CÀNG HỌC KHÓ KHĂN",
+      "summary": "Để thành công trên lộ trình học y, sinh viên cần tránh những thái độ học tập sai lầm khiến cho việc học y đã khó lại càng thêm khó. Dưới đây là 5 thái độ tiêu biểu mà các bạn sinh viên y nên tránh để đạt hiệu quả cao trong học…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-thai-do-khien-lo-trinh-hoc-y-cang-hoc-kho-khan.jpg",
+      "date": "2024-11-06",
+      "url": "/top-5-thai-do-khien-lo-trinh-hoc-y-cang-hoc-kho-khan",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 237,
+      "name": "MÁ LÚM ĐỒNG TIỀN DƯỚI GÓC NHÌN GIẢI PHẪU HỌC: BÍ ẨN NÉT DUYÊN TỪ CƠ MẶT",
+      "summary": "Má lúm đồng tiền là một nét duyên đặc biệt, tạo nên sự đáng yêu và cuốn hút cho những ai sở hữu. Trong nhân tướng học, má lúm đồng tiền thường được coi là biểu tượng của sự may mắn và thông minh. Đặc biệt, đối với phụ nữ, má lúm…",
+      "image": "https://cdn.meduc.vn/media/bl0g%20gi%E1%BA%A3i%20ph%E1%BA%ABu/ma-lum-dong-tien-duoi-goc-nhin-giai-phau-hoc-bi-an-net-duyen-tu-co-mat%20(2).jpg",
+      "date": "2024-11-05",
+      "url": "/ma-lum-dong-tien-duoi-goc-nhin-giai-phau-hoc-bi-an-net-duyen-tu-co-mat",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 236,
+      "name": "NGÀNH Y HỌC CỔ TRUYỀN: REVIEW TOÀN DIỆN VÀ CẢM NHẬN CHÂN THỰC TỪ SINH VIÊN ĐÃ TỐT NGHIỆP",
+      "summary": "Ngành y học cổ truyền là một trong những ngành nghề đặc biệt, thu hút những ai yêu thích khám phá giá trị của phương pháp chữa bệnh truyền thống. Qua câu chuyện của một sinh viên đã tốt nghiệp ngành y học cổ truyền, bài viết này…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/nganh-y-hoc-co-truyen-review-toan-dien-va-cam-nhan-chan-thuc-tu-sinh-vien-da-tot-nghiep%20(2).jpg",
+      "date": "2024-11-04",
+      "url": "/nganh-y-hoc-co-truyen-review-toan-dien-va-cam-nhan-chan-thuc-tu-sinh-vien-da-tot-nghiep",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 235,
+      "name": "TẠI SAO BẠN NÊN CÂN NHẮC KHI LỰA CHỌN NGÀNH ĐIỀU DƯỠNG?",
+      "summary": "Ngành điều dưỡng là một trong những nghề đặc biệt trong hệ thống y tế, đòi hỏi không chỉ kỹ năng chuyên môn mà còn tinh thần cống hiến cao. Nếu bạn đang cân nhắc theo đuổi ngành điều dưỡng, bài viết này sẽ mang đến cái nhìn chi…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/tai-sao-ban-nen-can-nhac-khi-lua-chon-nganh-dieu-duong%20(2).jpg",
+      "date": "2024-11-01",
+      "url": "/tai-sao-ban-nen-can-nhac-khi-lua-chon-nganh-dieu-duong",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 234,
+      "name": "MÁCH BẠN MẸO NHỚ DỄ DÀNG CÁC NHÁNH CỦA THẦN KINH MẶT(VII)",
+      "summary": "Liệt dây thần kinh mặt hay liệt thần kinh số VII, còn gọi là liệt mặt, là tình trạng phổ biến mà người làm y tế gặp phải. Do đó, nắm vững kiến thức về các nhánh của thần kinh mặt sẽ giúp ích rất nhiều cho quá trình chẩn đoán và…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/mach-ban-meo-nho-de-dang-cac-nhanh-cua-than-kinh-mat-vii%20(3).jpg",
+      "date": "2024-11-01",
+      "url": "/mach-ban-meo-nho-de-dang-cac-nhanh-cua-than-kinh-mat-vii",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 233,
+      "name": "LỘ TRÌNH HỌC Y HIỆU QUẢ VỚI SÁCH CA LÂM SÀNG NỘI KHOA",
+      "summary": "Lâm sàng nội khoa là một phần quan trọng và đầy thách thức đối với sinh viên Y khoa, đặc biệt là khi bước vào năm thứ 3. Để thành công trong việc học lâm sàng, sinh viên không chỉ cần nắm vững kiến thức lý thuyết mà còn phải rèn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/lo-trinh-hoc-y-hieu-qua-voi-sach-ca-lam-sang-noi-khoa%20(3).jpg",
+      "date": "2024-10-29",
+      "url": "/lo-trinh-hoc-y-hieu-qua-voi-sach-ca-lam-sang-noi-khoa",
+      "categories": [
+        94,
+        100
+      ]
+    },
+    {
+      "id": 232,
+      "name": "5 CÁCH TRỊ CĂN BỆNH TRÌ HOÃN CỦA SINH VIÊN Y",
+      "summary": "Là một sinh viên y khoa, việc đối mặt với áp lực học tập và các kỳ thi nặng nề là điều không thể tránh khỏi. Tuy nhiên, có một \"bệnh\" phổ biến trong quá trình học mà nhiều sinh viên y gặp phải, đó là bệnh trì hoãn của sinh viên…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/5-cach-tri-can-benh-tri-hoan-cua-sinh-vien-y%20(5).jpg",
+      "date": "2024-10-25",
+      "url": "/5-cach-tri-can-benh-tri-hoan-cua-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 231,
+      "name": "BÍ KÍP SĂN HỌC BỔNG TRƯỜNG Y: LỘ TRÌNH HỌC Y HIỆU QUẢ",
+      "summary": "Học phí luôn là một trong những vấn đề khiến sinh viên y khoa phải trăn trở. Tuy nhiên, điều may mắn là có rất nhiều cơ hội học bổng trường y dành cho những sinh viên có thành tích học tập xuất sắc. Câu hỏi đặt ra là: “Việc săn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-san-hoc-bong-truong-y-lo-trinh-hoc-y-hieu-qua.jpg",
+      "date": "2024-10-24",
+      "url": "/bi-kip-san-hoc-bong-truong-y-lo-trinh-hoc-y-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 230,
+      "name": "BÍ QUYẾT 3 CÁCH HỌC TỐT MÔN GIẢI PHẪU DÀNH CHO SINH VIÊN Y",
+      "summary": "Giải phẫu là một trong những môn học khó khăn nhất mà sinh viên y khoa phải đối mặt, đặc biệt là đối với những ai mới bắt đầu bước chân vào con đường học y. Được coi là môn học \"đánh trượt\" nhiều sinh viên Y1 nhất, môn giải phẫu…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-quyet-3-cach-hoc-tot-mon-giai-phau-danh-cho-sinh-vien-y-cover.jpg",
+      "date": "2024-10-23",
+      "url": "/bi-quyet-3-cach-hoc-tot-mon-giai-phau-danh-cho-sinh-vien-y",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 229,
+      "name": "LỘ TRÌNH HỌC Y: BÍ QUYẾT THÀNH CÔNG TRONG 6 NĂM HỌC Y KHOA",
+      "summary": "Việc hoàn thành một chương trình y khoa đòi hỏi không chỉ kiến thức mà còn sự kiên trì và chiến lược hợp lý. Để giúp bạn đạt được thành công, dưới đây là lộ trình học y với những lời khuyên cụ thể cho từng năm học. Từ việc chuẩn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/lo-trinh-hoc-y-bi-quyet-thanh-cong-trong-6-nam-hoc-y-khoa1.jpg",
+      "date": "2024-10-22",
+      "url": "/lo-trinh-hoc-y-bi-quyet-thanh-cong-trong-6-nam-hoc-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 228,
+      "name": "CẨM NANG ÔN THI: 5 GIAI ĐOẠN ÔN THI CỦA SINH VIÊN Y",
+      "summary": "Thi cử luôn là một trong những nỗi ám ảnh đối với sinh viên, đặc biệt là sinh viên y khoa khi lượng kiến thức khổng lồ và thời gian ôn tập luôn gấp gáp. Mỗi giai đoạn ôn thi của sinh viên y thường kéo theo không chỉ sự căng thẳng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cam-nang-on-thi-5-giai-doan-on-thi-cua-sinh-vien-y%20(1).jpg",
+      "date": "2024-10-16",
+      "url": "/cam-nang-on-thi-5-giai-doan-on-thi-cua-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 227,
+      "name": "NẮM NGAY CÁC TIPS NÀY NẾU MUỐN ĐIỂM CAO MÔN HÓA SINH",
+      "summary": "Môn Hóa sinh được xem là một trong những môn học \"khó nhằn\" đối với sinh viên y khoa. Tuy nhiên, nếu bạn biết cách sắp xếp và sử dụng những phương pháp học hiệu quả, bạn hoàn toàn có thể đạt được điểm cao môn Hóa sinh. Dưới đây…",
+      "image": "https://cdn.meduc.vn/media/blog%20hoa%20sinh/nam-ngay-cac-tips-nay-neu-muon-diem-cao-mon-hoa-sinh%20(2).jpg",
+      "date": "2024-10-16",
+      "url": "/nam-ngay-cac-tips-nay-neu-muon-diem-cao-mon-hoa-sinh",
+      "categories": [
+        92,
+        100
+      ]
+    },
+    {
+      "id": 226,
+      "name": "SINH VIÊN Y KHOA XÁC ĐỊNH NHÓM MÁU: BÍ KÍP ĐI LÂM SÀNG HIỆU QUẢ",
+      "summary": "Xác định nhóm máu là kỹ năng cơ bản mà mọi sinh viên y khoa xác định nhóm máu cần phải nắm vững, đặc biệt trong các khoa lâm sàng liên quan đến truyền máu. Đây không chỉ là yêu cầu bắt buộc cho các bác sĩ, điều dưỡng mà còn là…",
+      "image": "https://cdn.meduc.vn/media/di%20lam%20sang/sinh-vien-y-khoa-xac-dinh-nhom-mau-bi-kip-di-lam-sang-hieu-qua%20(4).jpg",
+      "date": "2024-10-14",
+      "url": "/sinh-vien-y-khoa-xac-dinh-nhom-mau-bi-kip-di-lam-sang-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 225,
+      "name": "LIPOPROTEIN: CHỨC NĂNG BẢO VỆ TRÁI TIM VÀ VAI TRÒ TRONG ĐIỀU TRỊ TIM MẠCH",
+      "summary": "Lipoprotein đóng vai trò quan trọng trong cơ thể nhờ chức năng đặc biệt của chúng trong việc vận chuyển lipid. Vì vậy, Lipoprotein đã trở thành một trong những mục tiêu quan trọng trong điều trị các bệnh lý như đái tháo đường…",
+      "image": "https://cdn.meduc.vn/media/blog%20hoa%20sinh/lipoprotein-chuc-nang-bao-ve-trai-tim-va-vai-tro-trong-dieu-tri-tim-mach%20(3).jpg",
+      "date": "2024-10-11",
+      "url": "/lipoprotein-chuc-nang-bao-ve-trai-tim-va-vai-tro-trong-dieu-tri-tim-mach",
+      "categories": [
+        92
+      ]
+    },
+    {
+      "id": 224,
+      "name": "5 Kênh TikTok Sinh Viên Y Khoa Không Nên Bỏ Lỡ",
+      "summary": "Ngày nay, TikTok không chỉ là nền tảng giải trí mà còn là nơi cung cấp rất nhiều kiến thức bổ ích, đặc biệt là đối với sinh viên y khoa. Với những ai đang theo học ngành Y, việc cập nhật thông tin, học hỏi từ các chuyên gia qua…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/5-kenh-tiktok-sinh-vien-y-khoa-khong-nen-bo-lo.jpg",
+      "date": "2024-10-09",
+      "url": "/5-kenh-tiktok-sinh-vien-y-khoa-khong-nen-bo-lo",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 223,
+      "name": "5 Suy Nghĩ Sai Lầm Của Sinh Viên Y Khoa Khiến Việc Học Tập Bị Sa Sút",
+      "summary": "Việc học y khoa đòi hỏi sự kiên trì, tập trung và một tư duy đúng đắn. Tuy nhiên, nhiều sinh viên y khoa đã mắc phải những sai lầm trong suy nghĩ khiến cho việc học bị ảnh hưởng nghiêm trọng. Dưới đây là 5 sai lầm của sinh viên y…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/5-suy-nghi-sai-lam-cua-sinh-vien-y-khoa-khien-viec-hoc-tap-bi-sa-sut-1.jpg",
+      "date": "2024-10-08",
+      "url": "/5-suy-nghi-sai-lam-cua-sinh-vien-y-khoa-khien-viec-hoc-tap-bi-sa-sut",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 222,
+      "name": "7 ĐIỀU GIÚP BẠN THÀNH CÔNG TRONG KHÓA THỰC HÀNH LÂM SÀNG",
+      "summary": "Thực hành lâm sàng là giai đoạn cực kỳ quan trọng đối với sinh viên Y và Dược. Nó không chỉ giúp củng cố kiến thức mà còn tạo cơ hội để áp dụng những gì đã học vào thực tế. Rất nhiều sinh viên y hoang mang trước khoá thực hành…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/7-dieu-giup-ban-thanh-cong-trong-khoa-thuc-hanh-lam-sang-1.jpg",
+      "date": "2024-10-04",
+      "url": "/7-dieu-giup-ban-thanh-cong-trong-khoa-thuc-hanh-lam-sang",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 221,
+      "name": "BÍ QUYẾT GIÚP SINH VIÊN Y DƯỢC VƯỢT QUA CÁM DỖ TRƯỚC KỲ THI",
+      "summary": "Cuộc sống của sinh viên Y Dược luôn đối mặt với lượng kiến thức khổng lồ, kèm theo đó là những kỳ thi đầy áp lực. Tuy nhiên, những cám dỗ trong cuộc sống như mạng xã hội hay các hoạt động giải trí dễ dàng khiến sinh viên mất tập…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-quyet-giup-sinh-vien-y-duoc-vuot-qua-cam-do-truoc-ky-thi.jpg",
+      "date": "2024-10-04",
+      "url": "/bi-quyet-giup-sinh-vien-y-duoc-vuot-qua-cam-do-truoc-ky-thi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 220,
+      "name": "5 Kênh YouTube Sinh Viên Y Không Nên Bỏ Qua Để Học Tập Hiệu Quả",
+      "summary": "Hiện nay, kênh YouTube sinh viên Y đã trở thành nguồn tài liệu học tập quan trọng và hữu ích cho các bạn sinh viên Y khoa. Khi gặp khó khăn trong việc nắm bắt kiến thức trên lớp, việc tìm kiếm các video trên YouTube để củng cố và…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/5-kenh-youtube-sinh-vien-y-hoc-tap-hieu-qua.jpg",
+      "date": "2024-10-03",
+      "url": "/5-kenh-youtube-sinh-vien-y-hoc-tap-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 219,
+      "name": "Bí Kíp Sinh Viên Y Đạt Điểm Cao, Xây Dựng Chiến Lược Học Tập Hiệu Quả",
+      "summary": "Việc đạt điểm cao trong ngành Y luôn là mục tiêu lớn của nhiều sinh viên. Để giúp bạn dễ dàng chinh phục các kỳ thi, dưới đây là những bí kíp sinh viên Y đạt điểm cao mà bạn có thể áp dụng ngay. Hãy cùng Meduc tìm hiểu nhé!",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-sinh-vien-y-dat-diem-cao-xay-dung-chien-luoc-hoc-tap-hieu-qua.jpg",
+      "date": "2024-10-02",
+      "url": "/bi-kip-sinh-vien-y-dat-diem-cao-xay-dung-chien-luoc-hoc-tap-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 218,
+      "name": "4 Mẹo Nâng Cao Trình Độ Tiếng Anh Y Khoa Hiệu Quả Cho Sinh Viên Y",
+      "summary": "Trong lĩnh vực y khoa, việc thành thạo tiếng Anh y khoa không chỉ là một kỹ năng bổ sung mà còn là công cụ quan trọng giúp sinh viên y khoa tiếp cận kiến thức quốc tế và nâng cao khả năng chuyên môn. Học tiếng Anh y khoa chưa bao…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/4-meo-nang-cao-trinh-do-tieng-anh-y-khoa-hieu-qua-cho-sinh-vien-y.jpg",
+      "date": "2024-10-02",
+      "url": "/4-meo-nang-cao-trinh-do-tieng-anh-y-khoa-hieu-qua-cho-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 217,
+      "name": "Lời Khuyên Cho Sinh Viên Đi Lâm Sàng: Bí Quyết Học Tập Hiệu Quả Và Đạt Kết Quả Cao",
+      "summary": "Việc thực tập lâm sàng là một phần vô cùng quan trọng trong hành trình học Y khoa. Để có thể học hỏi và tiếp thu kiến thức một cách tốt nhất, hãy tham khảo những lời khuyên cho sinh viên đi lâm sàng dưới đây. Chúng sẽ giúp bạn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/loi-khuyen-cho-sinh-vien-di-lam-sang-hieu-qua-va-dat-ket-qua-cao.jpg",
+      "date": "2024-09-30",
+      "url": "/loi-khuyen-cho-sinh-vien-di-lam-sang-hieu-qua-va-dat-ket-qua-cao",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 216,
+      "name": "07 Lời Khuyên Cho Sinh Viên Y - Bí Quyết Học Tập Hiệu Quả Trong Ngành Y Khoa",
+      "summary": "Ngành Y là một hành trình học tập dài và đầy thách thức, nhưng với các lời khuyên cho sinh viên Y dưới đây, MedUC hy vọng bạn sẽ có thêm những chiến lược học tập thông minh, giúp nâng cao khả năng tiếp thu kiến thức và chuẩn bị…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-sinh-vien-suat-sac-doc-sach-hieu-qua%20(3).jpg",
+      "date": "2024-09-26",
+      "url": "/07-loi-khuyen-cho-sinh-vien-y-hoc-tap-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 215,
+      "name": "Top 5 Cuốn Sách Gối Đầu Của Sinh Viên Y Không Nên Bỏ Lỡ",
+      "summary": "Việc tìm kiếm tài liệu học tập hiệu quả luôn là một trong những thách thức đối với sinh viên Y khoa. Dưới đây là danh sách 5 cuốn sách gối đầu sinh viên Y mà bạn không nên bỏ qua trong quá trình học tập và nghiên cứu. Những cuốn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-cuon-sach-goi-dau-cua-sinh-vien-y.jpg",
+      "date": "2024-09-25",
+      "url": "/top-5-cuon-sach-goi-dau-cua-sinh-vien-y-khong-nen-bo-lo",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 214,
+      "name": "Cách Ứng Dụng AI Vào Học Y Giúp Tối Ưu Thời Gian Và Nâng Cao Hiệu Quả",
+      "summary": "Ngày nay, công nghệ trí tuệ nhân tạo (AI) đang dần thâm nhập vào nhiều lĩnh vực, trong đó có y học. Đối với sinh viên y khoa, việc ứng dụng AI vào học Y không chỉ giúp tiết kiệm thời gian mà còn cải thiện hiệu quả học tập. Cùng…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cach-ung-dung-ai-vao-hoc-y-giup-toi-uu-thoi-gian-va-nang-cao-hieu-qua-4.jpg",
+      "date": "2024-09-20",
+      "url": "/cach-ung-dung-ai-vao-hoc-y-giup-toi-uu-thoi-gian-va-nang-cao-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 213,
+      "name": "Sinh Viên Y Nên Làm Thêm Gì? Top 5 Công Việc Làm Thêm Cho Sinh Viên Y",
+      "summary": "Khi học phí tại các trường Y ngày càng tăng cao, nhu cầu tìm kiếm việc làm thêm cho sinh viên Y để trang trải chi phí trở nên quan trọng hơn bao giờ hết. Dưới dây là tổng hợp của Meduc về top 5 công việc làm thêm cho sinh viên Y…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-cong-viec-lam-them-cho-sinh-vien-y.jpg",
+      "date": "2024-09-19",
+      "url": "/top-5-cong-viec-lam-them-cho-sinh-vien-y",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 211,
+      "name": "HỌC Y NÊN THI TOEIC HAY IELTS",
+      "summary": "Khi bước vào con đường học y, một trong những câu hỏi quan trọng nhất là: \"Học Y nên thi IELTS hay TOEIC?\" Để trả lời câu hỏi này, trước hết bạn cần xác định rõ trước hết bạn cần xác định rõ mục tiêu của mình. Điều này sẽ giúp…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/hoc-y-nen-hoc-toeic-hay-ilets%20(1).jpg",
+      "date": "2024-09-19",
+      "url": "/hoc-y-nen-thi-toeic-hay-ielts",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 210,
+      "name": "Giải Phẫu Các Vòm Của Bàn Chân Đánh Dấu Bước Tiến Hóa Vĩ Đại Của Con Người",
+      "summary": "Bàn chân con người là một kiệt tác kiến trúc sinh học, nơi mỗi cấu trúc nhỏ đều được sắp xếp với sự chính xác cao để đảm bảo sự ổn định và linh hoạt. Điều đáng kinh ngạc là dù nhỏ bé, bàn chân có thể chịu được toàn bộ trọng lượng…",
+      "image": "https://cdn.meduc.vn/media/bl0g%20gi%E1%BA%A3i%20ph%E1%BA%ABu/457742003_488263440687512_5743542205171857430_n.jpg",
+      "date": "2024-09-16",
+      "url": "/giai-phau-cac-vom-cua-ban-chan-danh-dau-buoc-tien-hoa-vi-dai-cua-con-nguoi",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 209,
+      "name": "Giải Phẫu Hệ Tĩnh Mạch Cửa: Khám Phá Cấu Trúc Quan Trọng Của Cơ Thể",
+      "summary": "Giải phẫu hệ tĩnh mạch cửa là một chủ đề không thể bỏ qua khi tìm hiểu về sinh lý học của gan và hệ tuần hoàn. Hệ thống tĩnh mạch cửa đóng vai trò quan trọng trong việc vận chuyển máu từ các cơ quan tiêu hóa đến gan để xử lý chất…",
+      "image": "https://cdn.meduc.vn/media/bl0g%20gi%E1%BA%A3i%20ph%E1%BA%ABu/giai-phau-he%20tinh-mach-cua%20(5).jpg",
+      "date": "2024-09-13",
+      "url": "/giai-phau-he-tinh-mach-cua-kham-pha-cau-truc-quan-trong-cua-co-the",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 208,
+      "name": "Ngành Dược của Đại học Quốc gia Hà Nội: Con Đường Thành Công Cho Sinh Viên Yêu Khoa Học",
+      "summary": "Ngành Dược của Đại học Quốc gia Hà Nội đang ngày càng khẳng định vị thế của mình trong hệ thống giáo dục đại học tại Việt Nam. Với điểm chuẩn đầu vào cạnh tranh và chương trình đào tạo chuyên sâu, sinh viên có thể phát triển mạnh…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/dai-hoc-y-duoc-dai-hoc-quoc-gia-ha-noi%20(3).jpg",
+      "date": "2024-09-12",
+      "url": "/nganh-duoc-cua-dai-hoc-quoc-gia-ha-noi-con-duong-thanh-cong",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 207,
+      "name": "Sinh Viên Y Nên Chọn iPad Hay Laptop? Lựa Chọn Nào Tối Ưu Cho Học Tập?",
+      "summary": "Khi bước chân vào giảng đường đại học, đặc biệt đối với ngành Y thì các bạn thường thắc mắc sinh viên Y nên chọn iPad hay laptop ?. Bởi vì, cả hai thiết bị đều mang lại những lợi ích riêng, nhưng để lựa chọn phù hợp với nhu cầu…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/sinh-vien-y-nen-mua-laptop-hay-ipad%20(1).jpg",
+      "date": "2024-09-12",
+      "url": "/sinh-vien-y-nen-chon-ipad-hay-laptop-lua-chon-nao-toi-uu-cho-hoc-tap",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 206,
+      "name": "Top 5 Bí Kíp Sinh Viên Y Xuất Sắc Đọc Sách Hiệu Quả",
+      "summary": "Những sinh viên y xuất sắc đọc sách như thế nào để tiếp cận với khối lượng kiến thức khổng lồ là câu hỏi được nhiều bạn thắc mắc. Làm sao để học tập hiệu quả mà không phải nghiền ngẫm từng trang sách? Dưới đây là những phương…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/bi-kip-sinh-vien-suat-sac-doc-sach-hieu-qua%20(2).jpg",
+      "date": "2024-09-09",
+      "url": "/top-5-bi-kip-sinh-vien-y-xuat-sac-doc-sach-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 205,
+      "name": "Cách Học Tốt Môn Giải Phẫu Cho Sinh Viên Y Dược Năm Nhất",
+      "summary": "Giải phẫu là môn học gây ám ảnh với bất kì sinh viên y nào khi nhắc tới tên. Đây là môn học có tỉ lệ sinh viên rớt môn cực kì cao. Đặc biệt đối với các bạn mới học năm nhất thì đây thực sự là môn học khó nhằn và khiến nhiều bạn…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/cach-hoc-tot-mon-giai-phau%20(4).jpg",
+      "date": "2024-09-06",
+      "url": "/cach-hoc-tot-mon-giai-phau-cho-sinh-vien-y-duoc-nam-nhat",
+      "categories": [
+        93,
+        100
+      ]
+    },
+    {
+      "id": 204,
+      "name": "Top 5 Bí Mật Sinh Viên Y Giỏi Không Muốn Nói Cho Bạn Biết",
+      "summary": "Trong môi trường đại học, đặc biệt là y khoa để trở thành một sinh viên y giỏi không chỉ dựa vào trí thông minh mà còn đòi hỏi sự kiên trì, kỷ luật và một phương pháp học tập khoa học như học tốt môn giải phẫu, sinh lý,... Dưới…",
+      "image": "https://cdn.meduc.vn/media/blog%20kinh%20nghi%E1%BB%87m/top-5-bi-mat-sinh-vi%C3%AAn-y-gi%E1%BB%8Fi-kh%C3%B4ng-mu%E1%BB%91n-n%C3%B3i-cho-b%E1%BA%A1n-biet%20(1).jpg",
+      "date": "2024-09-04",
+      "url": "/top-5-bi-mat-sinh-vien-y-gioi-khong-muon-noi-cho-ban-biet",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 203,
+      "name": "Giải Phẫu Bàng Quang: Vị Trí, Cấu Tạo Và Chức Năng",
+      "summary": "Bàng quang là một trong những cơ quan quan trọng bậc nhất trong hệ bài tiết của con người. Bộ phận này đóng vai trò chứa nước tiểu do thận tiết ra trước khi thoát khỏi cơ thể theo đường niệu đạo. Với chức năng như vậy, việc hiểu…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-bang-quang.jpg",
+      "date": "2024-01-29",
+      "url": "/giai-phau-bang-quang",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 202,
+      "name": "Giải Phẫu Amidan: Vị trí, Cấu Tạo, Chức Năng Và Bệnh Lý Thường Gặp",
+      "summary": "Nhiều hơn một lần bạn bắt gặp kiến thức về amidan từ vị trí, cấu tạo, chức năng hay bệnh lý thường gặp trong các đề thi? Bạn muốn tìm nguồn học liệu chi tiết, chất lượng, chọn lọc để nắm vững nội dung này? Đây là bài viết dành…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-amidan.jpg",
+      "date": "2024-01-29",
+      "url": "/giai-phau-amidan",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 201,
+      "name": "Giải Phẫu Gan: Đặc Điểm, Vị Trí, Chức Năng Và Phân Chia Thùy Gan",
+      "summary": "Gan đóng vai trò quan trọng trong việc duy trì sức khỏe, đảm bảo sự sống bình thường cho cơ thể con người. Đối với sinh viên Y, giải phẫu gan là kiến thức quan trọng thường xuất hiện trong các bài kiểm tra và đề thi. Vì vậy, việc…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-gan.jpg",
+      "date": "2024-01-29",
+      "url": "/giai-phau-gan",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 200,
+      "name": "Đặc Điểm Giải Phẫu Đốt Sống Cổ: Cấu Tạo, Chức Năng Và Bệnh Lý",
+      "summary": "Cột sống bao gồm nhiều đốt xương nối liền nhau theo chiều uốn cong nhẹ với điểm khởi đầu là xương chẩm và điểm kết thúc là xương cụt. Trong đó, cột sống cổ có 7 đốt sống đầu tiên ghép lại với nhau tạo thành đóng vai trò vô cùng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-dot-song-co.jpg",
+      "date": "2024-01-29",
+      "url": "/giai-phau-dot-song-co",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 199,
+      "name": "Kiến Thức Y Khoa: Tổng Quan Về Giải Phẫu Dạ Dày Cơ Bản Nhất",
+      "summary": "Với chức năng dự trữ, tiêu hóa thức ăn và cũng là đoạn đầu của ruột non, dạ dày đóng vai trò quan trọng đối với cơ thể con người. Đối với chương trình học của sinh viên Y khoa, nội dung giải phẫu dạ dày là một phần quan trọng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-da-day.jpg",
+      "date": "2024-01-29",
+      "url": "/giai-phau-da-day",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 194,
+      "name": "Giải Đáp Thắc Mắc: Sinh Viên Y Năm Nhất Học Gì? Có Khó Không?",
+      "summary": "Với những bạn trẻ có mong muốn được chăm sóc sức khỏe cho cộng đồng, khám chữa bệnh cho người dân thì ngành Y chính là đích đến. Tuy nhiên, khi đã đậu được vào trường Y, những sinh viên năm nhất không thể tránh khỏi áp lực nặng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/sinh-vien-y-nam-nhat-hoc-gi.jpg",
+      "date": "2024-01-24",
+      "url": "/sinh-vien-y-nam-nhat-hoc-gi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 193,
+      "name": "Sách Dành Cho Sinh Viên Y Khoa Kinh Điển, Không Thể Bỏ Qua",
+      "summary": "Để trở thành một y bác sĩ giỏi, bên cạnh năng lực, ý chí và tinh thần thép, người học ngành Y phải luôn giữ trong mình nhiệt huyết muốn được học hỏi, có nhu cầu đọc mọi nơi mọi lúc. Theo đó, học từ những cuốn sách chất lượng là…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/sach-danh-cho-sinh-vien-y-khoa.jpg",
+      "date": "2024-01-24",
+      "url": "/sach-danh-cho-sinh-vien-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 192,
+      "name": "Dược Lâm Sàng Là Gì? Vai Trò Của Dược Sĩ Lâm Sàng Tại Cơ Sở",
+      "summary": "Dược sĩ lâm sàng là một loại nhân viên y tế mà Bộ Y tế đã đưa vào danh sách cấp chứng chỉ hành nghề. Tuy nhiên, tại các cơ sở khám chữa bệnh ở nước ta hiện nay, nhất là ở các bệnh viện, do nhiều lý do khác nhau đội ngũ làm công…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/duoc-lam-sang-la-gi.jpg",
+      "date": "2024-01-22",
+      "url": "/duoc-lam-sang-la-gi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 191,
+      "name": "Chẩn Đoán Lâm Sàng Là Gì? Chi Tiết Về Khám Lâm Sàng Và Cận Lâm Sàng",
+      "summary": "Trong Y khoa, chẩn đoán lâm sàng là quá trình thăm khám bệnh được sử dụng thường xuyên nhất. Sinh viên Y nào cũng nên phân biệt rõ ràng giữa khám lâm sàng và các khái niệm liên quan bởi đây là hoạt động đóng vai trò quan trọng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/chan-doan-lam-sang-la-gi.jpg",
+      "date": "2024-01-22",
+      "url": "/chan-doan-lam-sang-la-gi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 190,
+      "name": "Sinh Lý Giác Quan Và Thần Kinh? Con Người Có Bao Nhiêu Giác Quan",
+      "summary": "Thông qua các giác quan, con người có thể nhận biết và cảm nhận được thế giới xung quanh. Với sinh viên Y, nội dung sinh lý giác quan và thần kinh giữ trọng số điểm rất lớn trong các bài thi và bài thực hành quan trọng. Cùng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/sinh-ly-giac-quan.jpg",
+      "date": "2024-01-22",
+      "url": "/sinh-ly-giac-quan",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 186,
+      "name": "Tất Tần Tật Về Cấu Trúc Và Chức Năng Sinh Lý Gan",
+      "summary": "Gan là cơ quan nội tạng lớn nhất trong cơ thể con người và vai trò vô cùng quan trọng trong đối với sức khỏe. Hơn thế, đối với sinh viên Y, gan không chỉ là một cơ quan mà còn là nội dung lớn thường xuất hiện trong các bài thi…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/sinh-ly-gan.jpg",
+      "date": "2024-01-19",
+      "url": "/sinh-ly-gan",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 185,
+      "name": "Sinh Lý Đông Cầm Máu: Quá Trình Này Diễn Ra Như Thế Nào?",
+      "summary": "Ai trong chúng ta cũng từng chảy máu và sau đó cơ thể sẽ có những thay đổi để ngăn việc này diễn ra. Khi trở thành một sinh viên Y, bạn có bao giờ thắc mắc điều gì khiến cho máu ở những vết thương ngưng chảy máu chưa? Nếu chưa…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/sinh-ly-dong-cam-mau.jpg",
+      "date": "2024-01-18",
+      "url": "/sinh-ly-dong-cam-mau",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 184,
+      "name": "Giải Phẫu Tuyến Tiền Liệt: Cấu Tạo, Vai Trò, Chức Năng Và Bệnh Lý",
+      "summary": "Tuyến tiền liệt là tuyến và xơ cơ có vị trí ở ngay dưới bàng quang của nam giới. Với chức năng tiết ra chất dịch bảo vệ tinh tịch từ đó ngăn chặn được các bệnh lý liên quan đến tinh trùng, tuyến tiền liệt là một bộ phận vô cùng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-tuyen-tien-liet.jpg",
+      "date": "2024-01-15",
+      "url": "/giai-phau-tuyen-tien-liet",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 183,
+      "name": "Từ Vựng Tiếng Anh Chuyên Ngành Y Khoa Thông Dụng, Cần Biết",
+      "summary": "Để học tốt một ngôn ngữ, việc có vốn từ vựng là điều vô cùng quan trọng. Tiếng Anh chuyên ngành Y cũng vậy. Bạn là sinh viên Y là đang cần tìm kiếm nguồn học liệu từ vựng tiếng Anh chuyên ngành Y khoa đủ để đọc các tin tức và văn…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/tu-vung-tieng-anh-chuyen-nganh-y-khoa%20(1).jpg",
+      "date": "2024-01-12",
+      "url": "/tu-vung-tieng-anh-chuyen-nganh-y-khoa",
+      "categories": [
+        96
+      ]
+    },
+    {
+      "id": 182,
+      "name": "Tìm Hiểu Về Cấu Tạo Và Chức Năng Sinh Lý Của Thận Với Cơ Thể",
+      "summary": "Thận là bộ phận có vai trò quan trọng đối với cơ thể con người. Do vậy, việc tìm hiểu về cấu tạo, chức năng cũng như những biện pháp hiệu quả để bảo vệ cơ quan này là vô cùng cần thiết. Sinh viên Y không thể bỏ qua phần nội dung…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/chuc-nang-sinh-ly-cua-than.jpg",
+      "date": "2024-01-10",
+      "url": "/chuc-nang-sinh-ly-cua-than",
+      "categories": [
+        91
+      ]
+    },
+    {
+      "id": 181,
+      "name": "Từ Vựng Tiếng Anh Chuyên Ngành Giải Phẫu Phổ Biến Nhất",
+      "summary": "Có một sự thật rằng: Bất kỳ môn khoa học nào cũng có các từ chuyên ngành riêng đặc trưng cho từng lĩnh vực. Riêng với Y học, các từ chuyên môn phần giải phẫu học có tầm quan trọng đặc biệt vì chiếm tới 2/3 tổng số danh từ của…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/tieng-anh-chuyen-nganh-giai-phau.jpg",
+      "date": "2024-01-05",
+      "url": "/tieng-anh-chuyen-nganh-giai-phau",
+      "categories": [
+        96
+      ]
+    },
+    {
+      "id": 180,
+      "name": "Chia Sẻ Cách Học Tốt Môn Giải Phẫu Dành Cho Sinh Viên Y",
+      "summary": "Giải phẫu là môn học đánh trượt rất nhiều sinh viên Y. Bạn đang gặp khó khăn trong quá trình chinh phục bộ môn này? Bạn muốn tìm một lời khuyên hữu ích để bớt mông lung hơn? Đây là bài viết dành cho những sinh viên Y mong muốn…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cach-hoc-tot-mon-giai-phau.jpg",
+      "date": "2024-01-04",
+      "url": "/cach-hoc-tot-mon-giai-phau",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 179,
+      "name": "Tiền Tố Hậu Tố Trong Tiếng Anh Y Khoa Cần Biết Cho Sinh Viên Y",
+      "summary": "Lượng thông tin và kiến thức Y học không ngừng tăng lên từng ngày. Vì thế, trong ngành Y dược hiện đại, tiếng Anh Y khoa là công cụ hỗ trợ đắc lực giúp sinh viên Y dược và các bác sĩ tiếp cận và nâng cao hiểu biết của mình. Với…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/tien-to-hau-to-trong-tieng-anh-y-khoa.jpg",
+      "date": "2024-01-03",
+      "url": "/tien-to-hau-to-trong-tieng-anh-y-khoa",
+      "categories": [
+        96
+      ]
+    },
+    {
+      "id": 178,
+      "name": "Giải Phẫu Đầu Gối: Cấu Tạo Và Chức Năng Khớp Gối",
+      "summary": "Khớp gối đóng vai trò như một khớp bản lề giúp các hoạt động thường ngày của chúng ta được diễn ra bình thường. Trong bộ môn Giải phẫu, phần nội dung về khớp gối khiến nhiều sinh viên đau đầu vì dài và rất khó ghi nhớ. Thấu hiểu…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-dau-goi.jpg",
+      "date": "2024-01-02",
+      "url": "/giai-phau-dau-goi",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 177,
+      "name": "Giải Phẫu Cơ Hoành: Cơ Hoành Có Tác Dụng Gì? Thoát Vị Khe Hoành",
+      "summary": "Trong môn Giải phẫu học, kiến thức về nội soi thoát vị khe hoành là nội dung vô cùng quan trọng và thường xuất hiện trong bài thi của sinh viên Y. Tuy nhiên, cấu tạo, vị trí, chức năng, giải phẫu cơ hoành và những căn bệnh liên…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-co-hoanh.jpg",
+      "date": "2023-12-28",
+      "url": "/giai-phau-co-hoanh",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 176,
+      "name": "Giải Phẫu Xương Đầu Mặt Cổ: Xương Sọ Não, Xương Sọ Mặt",
+      "summary": "Xương sọ có vai trò định hình cấu trúc cho phần đầu, giúp nâng đỡ khuôn mặt và là khung bảo vệ não bộ tốt nhất. Xương trong hộp sọ được chia ra thành những phần như xương sọ (để tạo nên hộp sọ) và các xương mặt (tạo thành khuôn…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-dau-mat-co.jpg",
+      "date": "2023-12-26",
+      "url": "/giai-phau-xuong-dau-mat-co",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 175,
+      "name": "Giải Phẫu Xương Ức: Cấu Tạo, Chức Năng Và Bệnh Lý Xương Ức",
+      "summary": "Xương ức là một ống xương dài và dẹt nằm ở giữa lồng ngực. Với tác dụng giúp nâng đỡ cơ thể, liên kết với xương sườn cùng xương cột sống để bảo vệ tim, phổi và các mạch máu khỏi bị tổn thương, xương ức có vai trò vô cùng quan…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-xuong-uc.jpg",
+      "date": "2023-12-26",
+      "url": "/giai-phau-xuong-uc",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 166,
+      "name": "Giải Phẫu Xương Gò Má: Gãy Xương Gò Má Có Cần Phẫu Thuật Không?",
+      "summary": "Xương gò má có cấu tạo rất dày và khỏe. Cấu trúc của xương cũng rất phức tạp bởi đây vừa là chỗ bám của cơ mặt lại vừa góp phần tạo nên sàn và thành ngoài ổ mắt. Hình dạng của khuôn mặt do một phần đáng kể của xương gò má tạo…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-xuong-go-ma.jpg",
+      "date": "2023-12-22",
+      "url": "/giai-phau-xuong-go-ma",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 163,
+      "name": "10 App Học Tiếng Anh Chuyên Ngành Y Online Trên Điện Thoại Hiệu Quả",
+      "summary": "Để học giỏi tiếng Anh chuyên ngành Y, đó là quá trình dài đòi hỏi sự kiên nhẫn, chăm chỉ nỗ lực và tìm ra phương pháp học tập hiệu quả của các bạn sinh viên. Để tối ưu việc học, tiết kiệm thời gian và công sức thì sử dụng các…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/app-hoc-tieng-anh-chuyen-nganh-y.jpg",
+      "date": "2023-12-21",
+      "url": "/app-hoc-tieng-anh-chuyen-nganh-y",
+      "categories": [
+        96
+      ]
+    },
+    {
+      "id": 162,
+      "name": "Cách Học Tiếng Anh Chuyên Ngành Y Hiệu Quả, Đơn Giản Và Dễ Nhớ",
+      "summary": "Cứ 72 ngày thì kiến thức về Y học lại tăng lên gấp 2 lần. Lúc này, chỉ có thành thạo tiếng Anh, sinh viên và những người hoạt động trong lĩnh vực này mới có thể nhanh chóng cập nhật thông tin, mở rộng hiểu biết. Vì thế, ngay từ…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cach-hoc-tieng-anh-chuyen-nganh-y.jpg",
+      "date": "2023-12-19",
+      "url": "/cach-hoc-tieng-anh-chuyen-nganh-y",
+      "categories": [
+        45
+      ]
+    },
+    {
+      "id": 161,
+      "name": "Đặc Điểm Giải Phẫu Động Mạch Vành Và Tổng Quan Bệnh Động Mạch Vành",
+      "summary": "Bệnh động mạch vành (CAD) là căn bệnh khá phổ biến hiện nay. Biểu hiện của bệnh gồm thiếu máu cơ tim thầm lặng, đau thắt ngực, hội chứng mạch vành cấp (đau thắt ngực không ổn định, nhồi máu cơ tim), và đột tử do tim. Với mức độ…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-dong-mach-vanh.jpg",
+      "date": "2023-12-18",
+      "url": "/giai-phau-dong-mach-vanh",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 159,
+      "name": "Giải Phẫu Xương Bàn Chân: Giải Phẫu Chức Năng, Cấu Tạo Và Cấu Trúc",
+      "summary": "Bàn chân người có cấu tạo 26 xương khác nhau và chịu trách nhiệm đảm bảo việc di chuyển được diễn ra bình thường. Là bộ phận quan trọng đối với cơ thể và kiến thức phần xương bàn chân trong môn Giải phẫu được nhiều sinh viên quan…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-xuong-ban-chan.jpg",
+      "date": "2023-12-16",
+      "url": "/giai-phau-xuong-ban-chan",
+      "categories": [
+        45,
+        93
+      ]
+    },
+    {
+      "id": 158,
+      "name": "Giải Phẫu Dây Thần Kinh Số 5: Bệnh Đau Dây Thần Kinh V Do Đâu?",
+      "summary": "Bệnh đau dây thần kinh số 5 là cơn đau đặc thù xảy ra một cách đột ngột và nhanh chóng. Cơn đau thường tự phát hoặc bắt đầu từ một điểm đau. Đa phần đau dây thần kinh số 5 sẽ xuất hiện một bên. Cũng sẽ có trường hợp hai bên nhưng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-day-than-kinh-so-5.jpg",
+      "date": "2023-12-14",
+      "url": "/giai-phau-day-than-kinh-so-5",
+      "categories": [
+        45,
+        93
+      ]
+    },
+    {
+      "id": 157,
+      "name": "Cách Học Của Sinh Viên Y Khoa Đem Lại Hiệu Quả, Kinh Nghiệm Học Tập",
+      "summary": "Với lượng kiến thức khổng lồ và áp lực thi cử nặng nề, sinh viên Y cần nhiều hơn là sự chăm chỉ, chịu khó. Ngoài việc tham gia các buổi học đầy đủ, thường xuyên ôn lại kiến thức, cách học của sinh viên Y khoa cũng sẽ ảnh hưởng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cach-hoc-cho-sinh-vien-y.jpg",
+      "date": "2023-12-13",
+      "url": "/cach-hoc-cua-sinh-vien-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 142,
+      "name": "Các Nguồn Tài Liệu Cho Sinh Viên Y Khoa Hữu Ích Và Uy Tín",
+      "summary": "Sinh viên Y - Dược nếu muốn có thành tích học tập cao thì ngoài việc chăm chỉ nghe giảng, đi thực hành nghiêm túc thì tự học cũng rất quan trọng. Do đó, các nguồn tài liệu cho sinh viên y khoa đầy đủ chi tiết và uy tín nên được…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cac-nguon-tai-lieu-cho-sinh-vien-y-khoa.jpg",
+      "date": "2023-12-11",
+      "url": "/cac-nguon-tai-lieu-cho-sinh-vien-y-khoa",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 141,
+      "name": "Cách Học Lâm Sàng Hiệu Quả Cao Dành Cho Sinh Viên Y",
+      "summary": "Y - Dược được đánh giá là vất vả, khó khăn hơn rất nhiều so với những ngành học khác. Khối lượng kiến thức khổng lồ khiến sinh viên Y trước mỗi kỳ thi đều rất áp lực. Rõ ràng, ngoài việc chăm chỉ thì phương pháp học cũng rất quan…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/cach-hoc-lam-sang-hieu-qua.jpg",
+      "date": "2023-12-10",
+      "url": "/cach-hoc-lam-sang-hieu-qua",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 140,
+      "name": "Kinh Nghiệm Thi Chạy Trạm Giải Phẫu Cho Sinh Viên Ngành Y Vượt Ải",
+      "summary": "Với thời gian học chuẩn từ 6 năm trở lên và lượng kiến thức “khổng lồ” cần phải tiếp thu cùng các kỳ thi “khó nhằn”, sinh viên Y - Dược bao giờ cũng sẽ vất vả hơn so với những ngành học khác. Trong số đó, nhắc đến một trong những…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/kinh-nghiem-thi-chay-tram-giai-phau.jpg",
+      "date": "2023-12-10",
+      "url": "/kinh-nghiem-thi-chay-tram-giai-phau",
+      "categories": [
+        93
+      ]
+    },
+    {
+      "id": 139,
+      "name": "Thi Chạy Trạm Là Gì? Những Điều Sinh Viên Y Cần Biết Về Thi Chạy Trạm",
+      "summary": "Thi chạy trạm là bài thi được thiết kế để đánh giá về chuyên môn cũng như các kỹ năng khác như giao tiếp, khám lâm sàng, kê đơn của sinh viên Y - Dược. Nói về độ “căng thẳng” và “khốc liệt” của kỳ thi, chắc chỉ những ai đã từng…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/thi-chay-tram-la-gi.jpg",
+      "date": "2023-12-10",
+      "url": "/thi-chay-tram-la-gi",
+      "categories": [
+        100
+      ]
+    },
+    {
+      "id": 138,
+      "name": "Giải Phẫu Chức Năng Khớp Thái Dương Hàm, Rối Loạn TMJ Phải Làm Sao?",
+      "summary": "Nghiên cứu dịch tễ học cho thấy: “Có 50-75% dân số bị rối loạn khớp thái dương hàm tiềm ẩn và có ít nhất một dấu hiệu của rối loạn chức năng khớp, gần 33% có ít nhất một triệu chứng”. Những con số biết nói báo động một căn bệnh…",
+      "image": "https://cdn.meduc.vn/media/h%C3%ACnh%20%E1%BA%A3nh%20seo/giai-phau-khop-thai-duong-ham.jpg",
+      "date": "2023-12-09",
+      "url": "/giai-phau-chuc-nang-khop-thai-duong-ham",
+      "categories": [
+        45,
+        93
+      ]
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+/* Independent light palette. Layout, portraits and motion match hero-dark. */
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --surface: #f2f3f5;
+  --muted: #626571;
+  --red: #de2334;
+  --ink: #15171c;
+  --line: #e4e6ec;
+  --red-soft: #fff2f4;
+}
+
+body {
+  color: var(--ink);
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline-color: #bb1b31;
+}
+::selection {
+  color: #94162a;
+  background: #ffdce3;
+}
+.skip-link {
+  color: #fff;
+}
+.site-header {
+  background: #fff;
+  box-shadow: 0 1px 0 #20242b0a;
+}
+.network-bar {
+  background: #f7f7f9;
+}
+.network-nav a {
+  color: #4c505b;
+}
+.network-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+.network-nav a:hover {
+  color: var(--red);
+}
+.brand {
+  color: var(--ink);
+}
+.browse-button {
+  box-shadow: inset 0 0 0 1px #e8e9ed;
+}
+.browse-button:hover {
+  background: #e9ebef;
+}
+.search-form {
+  background: #f3f4f6;
+  border-color: #e4e6eb;
+}
+.search-form:focus-within {
+  border-color: #c4263b;
+  box-shadow: 0 0 0 3px #de23340a;
+}
+.search-form input {
+  color: var(--ink);
+}
+.search-form input::placeholder {
+  color: #777c87;
+}
+.search-form > button {
+  color: #363b46;
+}
+.search-wrap.is-open {
+  background: #fff;
+}
+.utility-nav a:hover,
+.utility-nav button:hover {
+  color: var(--red);
+}
+.button:hover {
+  background: #bf1729;
+}
+.header-cta,
+.goal-submit {
+  box-shadow: 0 4px 14px #de233413;
+}
+.mobile-menu:hover,
+.mobile-search:hover {
+  background: #f3f4f6;
+}
+
+.browse-menu,
+.search-results {
+  color: var(--ink);
+  background: #fff;
+  border-color: #dfe2e9;
+  box-shadow: 0 14px 48px #1c24301a;
+}
+.browse-menu > p,
+.search-results > p {
+  color: #636a76;
+}
+.browse-menu > a:hover,
+.search-result:hover {
+  background: #f5f6f9;
+}
+.browse-menu > a > .icon:first-child {
+  color: #656c79;
+}
+.browse-menu > .browse-all {
+  color: #bd1c31;
+  border-color: var(--line);
+}
+.search-result small {
+  color: #69707c;
+}
+.search-result > .icon {
+  color: var(--red);
+}
+
+.hero-subtitle {
+  color: #606570;
+}
+.goal-option {
+  background: #f3f4f6;
+  border-color: #ebecf0;
+}
+.goal-option span {
+  color: #343841;
+}
+.goal-option:hover {
+  background: #eceef2;
+  border-color: #d9dce3;
+}
+.goal-option:has(input:checked) {
+  background: var(--red-soft);
+  border-color: var(--red);
+}
+.goal-option:has(input:checked) span {
+  color: #991d2e;
+}
+.goal-option:has(input:focus-visible) {
+  outline-color: #bb1b31;
+}
+.goal-option input {
+  background: #fff;
+  border-color: #7b8491;
+}
+.goal-option input:checked {
+  background: var(--red);
+  border-color: var(--red);
+}
+.goal-hint {
+  color: #626975;
+}
+.goal-error {
+  color: #b5162e;
+}
+.preview-note {
+  color: #747b88;
+}
+
+/* Existing alpha masks naturally fade the portraits into the white canvas. */
+.portrait {
+  background: #e8e9ed;
+}
+.motion-toggle {
+  color: #20252e;
+  background: #ffffffdf;
+  border-color: #c3c8d0;
+  box-shadow: 0 3px 14px #10192418;
+}
+.motion-toggle:hover {
+  color: var(--red);
+  background: #fff;
+  border-color: #df7180;
+}
+
+.demo-dialog {
+  color: var(--ink);
+  background: #fff;
+  border-color: #e1e4eb;
+  box-shadow: 0 30px 120px #161c3540;
+}
+.demo-dialog::backdrop {
+  background: #121c3457;
+}
+.dialog-close {
+  color: #656b77;
+}
+.dialog-close:hover {
+  color: var(--red);
+  background: var(--red-soft);
+}
+.dialog-eyebrow {
+  color: #c02036;
+}
+.demo-dialog > p {
+  color: #606877;
+}
+.path-link {
+  background: #f6f7f9;
+  border-color: #e2e5ed;
+}
+.path-link:hover {
+  background: var(--red-soft);
+  border-color: #eb9cab;
+}
+.path-link small {
+  color: #626b7b;
+}
+.path-link > .icon {
+  color: var(--red);
+}
+.demo-dialog > .dialog-note {
+  color: #747c8a;
+}
