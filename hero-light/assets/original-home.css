@@ -14,6 +14,8 @@ body.meduc-home-v2 > [nh-row="vd4sx71"],
 body.meduc-home-v2 > [nh-row="r5dwkqz"] { display: none !important; }
 body.meduc-home-v2 { margin-top: 0 !important; }
 body.meduc-home-v2 .pp-login-google { display: none !important; }
+body.meduc-home-v2 .contact-fixed,
+body.meduc-home-v2 .rn-progress-parent { display: none !important; }
 
 .mhi {
   --mhi-bg: #050506;

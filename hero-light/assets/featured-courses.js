@@ -16,18 +16,21 @@
   // The PHP product cards remain the source of truth for names, prices, discounts and links.
   const illustrations = [
     "doctor-linh.jpg",
-    "meduc-doctor-01.jpg",
+    "meduc-doctor-02.jpg",
     "doctor-minh.jpg",
     "professor.jpg",
+    "meduc-doctor-01.jpg",
     "meduc-doctor-04.jpg",
-    "meduc-doctor-02.jpg",
   ];
   cards.forEach((card, index) => {
     const image = card.querySelector(".thumbnail img");
     const thumbnail = card.querySelector(".thumbnail");
     if (!image || !thumbnail) return;
 
-    const title = card.querySelector(".content .title a")?.textContent.trim() || "khóa học";
+    const titleLink = card.querySelector(".content .title a");
+    const fullTitle = card.querySelector(".thumbnail a")?.getAttribute("title");
+    if (titleLink && fullTitle) titleLink.textContent = fullTitle;
+    const title = titleLink?.textContent.trim() || "khóa học";
     image.removeAttribute("nh-lazy");
     image.removeAttribute("data-src");
     image.src = `/hero-light/assets/images/${illustrations[index % illustrations.length]}`;
@@ -35,32 +38,34 @@
     image.loading = index < 3 ? "eager" : "lazy";
     image.decoding = "async";
 
-    const note = document.createElement("span");
-    note.className = "mhi-featured-illustration-note";
-    note.textContent = "Ảnh minh họa";
-    thumbnail.append(note);
+    const trialLink = card.querySelector(".card-bottom a");
+    trialLink?.classList.remove("edu-btn", "btn-small", "btn-ani", "w-100");
+    trialLink?.classList.add("mhi-featured-cta");
   });
 
-  const controls = document.createElement("div");
-  controls.className = "mhi-featured-controls";
-  controls.innerHTML = '<button type="button" aria-label="Khóa học trước" data-direction="previous">←</button><button type="button" aria-label="Khóa học tiếp theo" data-direction="next">→</button>';
-  heading.append(controls);
+  const kicker = document.createElement("p");
+  kicker.className = "mhi-featured-kicker";
+  kicker.textContent = "KHÓA HỌC MEDUC";
+  const description = document.createElement("p");
+  description.className = "mhi-featured-description";
+  description.textContent = "Từ Y khoa cơ sở đến lâm sàng, chọn khóa học phù hợp với bạn.";
+  heading.prepend(kicker);
+  heading.append(description);
+
+  const footer = document.createElement("div");
+  footer.className = "mhi-featured-footer";
+  const note = document.createElement("p");
+  note.textContent = "Hình chân dung chỉ để minh họa; thông tin khóa học lấy từ MedUC.";
+  const allCourses = document.createElement("a");
+  allCourses.href = "/khoa-hoc-v2";
+  allCourses.textContent = "Xem tất cả khóa học →";
+  footer.append(note, allCourses);
+  rail.after(footer);
+
+  for (const attribute of [...heading.attributes]) {
+    if (attribute.name.startsWith("data-sal")) heading.removeAttribute(attribute.name);
+  }
+  row.querySelectorAll(".sal-animate").forEach((element) => element.classList.remove("sal-animate"));
   rail.setAttribute("aria-label", "Các khóa học nổi bật của MedUC");
   row.classList.add("mhi-featured");
-
-  const previous = controls.querySelector('[data-direction="previous"]');
-  const next = controls.querySelector('[data-direction="next"]');
-  const updateControls = () => {
-    previous.disabled = rail.scrollLeft <= 2;
-    next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
-  };
-  controls.addEventListener("click", (event) => {
-    const button = event.target.closest("button[data-direction]");
-    if (!button) return;
-    const distance = cards[0].getBoundingClientRect().width + 20;
-    rail.scrollBy({ left: button === next ? distance : -distance, behavior: "smooth" });
-  });
-  rail.addEventListener("scroll", updateControls, { passive: true });
-  window.addEventListener("resize", updateControls);
-  updateControls();
 })();
