@@ -1,0 +1,73 @@
+/* The PHP homepage product cards supply all course data; only their presentation changes. */
+body.meduc-home-v2 > .mhi-featured {
+  --featured-ink: #fff;
+  --featured-muted: #d8d9dd;
+  --featured-red: #ed204f;
+  margin: 0;
+  padding: clamp(64px, 7vw, 110px) 0 clamp(70px, 7vw, 110px);
+  background: #050506;
+  color: var(--featured-ink);
+  font-family: MHIInter, Arial, sans-serif;
+  overflow: hidden;
+}
+html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-featured {
+  --featured-ink: #15171c;
+  --featured-muted: #666a73;
+  --featured-red: #de2334;
+  background: #f7f7f9;
+}
+.mhi-featured, .mhi-featured * { box-sizing: border-box; }
+.mhi-featured > .container { width: 100%; max-width: none; padding: 0; }
+.mhi-featured > .container > .row { margin: 0; }
+.mhi-featured > .container > .row > .col-12 { min-width: 0; padding: 0; }
+.mhi-featured .section-title { display: flex; align-items: end; justify-content: space-between; gap: 20px; width: min(83.333333%, 1440px); margin: 0 auto 34px !important; text-align: left !important; }
+.mhi-featured .section-title .title { max-width: 840px; margin: 0; color: var(--featured-ink) !important; font-size: clamp(31px, 3.2vw, 52px) !important; font-weight: 700 !important; line-height: 1.12; letter-spacing: -.045em; }
+.mhi-featured .section-title .inner-icon { display: none; }
+.mhi-featured .mhi-featured-controls { display: flex; flex: none; gap: 10px; }
+.mhi-featured-controls button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #ffffff75; border-radius: 50%; background: transparent; color: var(--featured-ink); font: 400 25px/1 MHIInter, Arial, sans-serif; cursor: pointer; }
+html[data-meduc-theme="light"] .mhi-featured-controls button { border-color: #c9cbd1; }
+.mhi-featured-controls button:hover:not(:disabled) { border-color: var(--featured-red); color: var(--featured-red); }
+.mhi-featured-controls button:disabled { opacity: .35; cursor: default; }
+.mhi-featured-controls button:focus-visible, .mhi-featured a:focus-visible { outline: 2px solid var(--featured-red); outline-offset: 4px; }
+
+.mhi-featured .row.g-4.mt--10 { display: flex; flex-wrap: nowrap; gap: 20px; width: 100%; margin: 0 !important; padding: 0 max(8.333333vw, calc((100vw - 1440px) / 2)) 14px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.mhi-featured .row.g-4.mt--10::-webkit-scrollbar { display: none; }
+.mhi-featured .row.g-4.mt--10 > * { flex: 0 0 clamp(260px, 22vw, 375px); width: clamp(260px, 22vw, 375px); max-width: none; min-width: 0; margin: 0 !important; padding: 0 !important; scroll-snap-align: start; }
+.mhi-featured .edu-card { height: 100%; margin: 0; overflow: hidden; border: 0; border-radius: 16px; background: #232427; box-shadow: none !important; transition: transform .2s ease; }
+.mhi-featured .edu-card:hover { transform: translateY(-4px); }
+.mhi-featured .edu-card > .inner { position: relative; display: block; height: 100%; }
+.mhi-featured .thumbnail { position: relative; width: 100%; height: auto !important; aspect-ratio: 0.72; margin: 0 !important; padding: 0 !important; overflow: hidden; border: 0; border-radius: 0; background: #252932; }
+.mhi-featured .thumbnail > a { display: block; width: 100%; height: 100%; }
+.mhi-featured .thumbnail img { display: block; width: 100% !important; height: 100% !important; max-width: none; object-fit: cover; object-position: center top; transition: transform .4s ease; }
+.mhi-featured .edu-card:hover .thumbnail img { transform: scale(1.035); }
+.mhi-featured .thumbnail::after { position: absolute; inset: 38% 0 0; content: ""; background: linear-gradient(transparent, #000b 50%, #000f); pointer-events: none; }
+.mhi-featured .mhi-featured-illustration-note { position: absolute; z-index: 2; top: 15px; right: 15px; padding: 6px 8px; border: 1px solid #ffffff80; border-radius: 4px; background: #0008; color: #fff; font: 600 10px/1 MHIInter, Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.mhi-featured .thumbnail .status-group { z-index: 2; top: 16px; left: 16px; right: auto; bottom: auto; }
+.mhi-featured .thumbnail .eduvibe-status { display: inline-block; padding: 6px 9px; border-radius: 4px; background: var(--featured-red); color: #fff; font: 700 11px/1.2 MHIInter, Arial, sans-serif; }
+.mhi-featured .thumbnail .eduvibe-status i { display: none; }
+.mhi-featured .content { position: absolute; z-index: 3; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: start; padding: 70px 20px 22px !important; border: 0; background: transparent !important; color: #fff; pointer-events: none; }
+.mhi-featured .content a { pointer-events: auto; }
+.mhi-featured .content .title { display: -webkit-box; width: 100%; min-height: 2.6em; margin: 0 0 14px !important; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: #fff !important; font: 700 clamp(18px, 1.55vw, 23px)/1.3 MHIInter, Arial, sans-serif !important; }
+.mhi-featured .content .title a { color: #fff !important; }
+.mhi-featured .content .title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mhi-featured .price-list { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; width: 100%; margin: 0 0 17px !important; padding: 0; }
+.mhi-featured .price-list .price { margin: 0; font-family: MHIInter, Arial, sans-serif; }
+.mhi-featured .price-list .current-price { margin: 0 !important; padding: 0 !important; border: 0 !important; background: transparent !important; color: #fff !important; font-size: 15px; font-weight: 700; box-shadow: none !important; }
+.mhi-featured .price-list .old-price { color: #ddd !important; font-size: 12px; font-weight: 400; text-decoration: line-through; }
+.mhi-featured .card-bottom { width: 100%; margin: 0 !important; padding: 0; }
+.mhi-featured .card-bottom .edu-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 42px; padding: 9px 13px !important; border: 1px solid #fff; border-radius: 6px; background: #fff !important; color: #191b20 !important; font: 700 12px/1.35 MHIInter, Arial, sans-serif; text-align: center; text-transform: none; box-shadow: none !important; }
+.mhi-featured .card-bottom .edu-btn:hover { border-color: var(--featured-red); background: var(--featured-red) !important; color: #fff !important; }
+
+@media (max-width: 767px) {
+  body.meduc-home-v2 > .mhi-featured { padding: 58px 0 66px; }
+  .mhi-featured .section-title { align-items: center; width: auto; margin: 0 16px 25px !important; }
+  .mhi-featured .section-title .title { font-size: clamp(28px, 7.5vw, 36px) !important; }
+  .mhi-featured-controls button { width: 38px; height: 38px; font-size: 20px; }
+  .mhi-featured .row.g-4.mt--10 { gap: 14px; padding-inline: 16px; }
+  .mhi-featured .row.g-4.mt--10 > * { flex-basis: min(76vw, 330px); width: min(76vw, 330px); }
+  .mhi-featured .content { padding-inline: 17px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mhi-featured .edu-card, .mhi-featured .thumbnail img { transition: none; }
+  .mhi-featured .row.g-4.mt--10 { scroll-behavior: auto; }
+}
