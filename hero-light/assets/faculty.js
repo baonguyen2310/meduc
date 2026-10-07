@@ -41,6 +41,7 @@
 
         const card = document.createElement("article");
         card.className = "mhi-faculty-card";
+        if (!courseURL) card.classList.add("mhi-faculty-card--centered");
         const photo = document.createElement("a");
         photo.className = "mhi-faculty-photo";
         photo.href = href;
