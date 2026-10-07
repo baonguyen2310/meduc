@@ -186,7 +186,7 @@
         </div>
     {/if*}
     
-    {assign quizs value = $this->Product->getQuizs(['lesson_list' => $danhsachtiethoc])}
+    {assign quizs value = $this->Product->getQuizs(['lesson_list' => $danhsachtiethoc, 'trial_only' => !$licensed])}
 
     {if !empty($quizs)}
         {*if ($item.trial_vi == "y") || ($licensed==true)*}

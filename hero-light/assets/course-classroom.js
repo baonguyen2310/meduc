@@ -103,7 +103,9 @@
       button.type = 'button';
       button.className = 'mcl-lesson';
       button.dataset.index = String(lesson.index);
-      button.setAttribute('aria-label', lesson.title);
+      const locked = !licensed && !lesson.trial;
+      button.setAttribute('aria-label', locked ? `${lesson.title} · Cần đăng ký` : lesson.title);
+      button.classList.toggle('is-locked', locked);
       const index = document.createElement('span');
       index.className = 'mcl-lesson-index';
       index.textContent = String(lesson.index + 1).padStart(2, '0');
@@ -111,7 +113,11 @@
       label.textContent = lesson.title;
       const state = document.createElement('span');
       state.className = 'mcl-lesson-state';
-      state.textContent = lesson.video || lesson.quiz || lesson.files.length ? '●' : '○';
+      if (locked) {
+        state.innerHTML = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4.5" y="8.5" width="11" height="8" rx="1.5"/><path d="M7 8.5V6a3 3 0 0 1 6 0v2.5"/></svg>';
+      } else {
+        state.textContent = lesson.video || lesson.quiz || lesson.files.length ? '●' : '○';
+      }
       state.setAttribute('aria-hidden', 'true');
       button.append(index, label, state);
       button.addEventListener('click', () => {
@@ -157,10 +163,13 @@
     } catch (_) { return ''; }
   }
 
-  function emptyPanel(heading, message, showEnrollment = false) {
+  function emptyPanel(heading, message, showEnrollment = false, gated = false) {
     const box = document.createElement('div');
-    box.className = 'mcl-empty';
+    box.className = gated ? 'mcl-empty is-gated' : 'mcl-empty';
     box.innerHTML = '<span class="mcl-empty-icon" aria-hidden="true">✦</span><h4></h4><p></p>';
+    if (gated) {
+      box.querySelector('.mcl-empty-icon').innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
+    }
     box.querySelector('h4').textContent = heading;
     box.querySelector('p').textContent = message;
     if (showEnrollment && enrollment) {
@@ -278,6 +287,11 @@
     panel.setAttribute('aria-labelledby', `mcl-tab-${tab}`);
     panel.replaceChildren();
     const lesson = lessons[selected];
+    if (!licensed && !lesson.trial) {
+      emptyPanel('Mở khóa để học bài này', 'Bài học này dành cho học viên đã đăng ký. Tham gia khóa học để truy cập nội dung của bài.', true, true);
+      panel.scrollTop = 0;
+      return;
+    }
     if (tab === 'video') renderVideo(lesson);
     if (tab === 'documents') renderDocuments(lesson);
     if (tab === 'exercise') renderExercise(lesson);
@@ -297,7 +311,7 @@
     section.querySelector('#mcl-location').textContent = `${lesson.chapter.title} · Bài ${index + 1}/${lessons.length}`;
     section.querySelector('#mcl-lesson-title').textContent = lesson.title;
     const badge = section.querySelector('#mcl-access');
-    badge.textContent = licensed ? 'ĐÃ MỞ KHÓA' : lesson.trial ? 'HỌC THỬ' : 'XEM ĐỀ CƯƠNG';
+    badge.textContent = licensed ? 'ĐÃ MỞ KHÓA' : lesson.trial ? 'HỌC THỬ' : 'CẦN ĐĂNG KÝ';
     badge.dataset.state = licensed ? 'open' : lesson.trial ? 'trial' : 'locked';
     section.querySelector('#mcl-position').textContent = `${String(index + 1).padStart(2, '0')} / ${String(lessons.length).padStart(2, '0')} BÀI HỌC`;
     section.querySelector('#mcl-previous').disabled = index === 0;

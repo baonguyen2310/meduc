@@ -164,7 +164,11 @@ class ProductHelper extends Helper
     {
         $quizIds = [];
         if (array_key_exists('lesson_list', $params)) {
+            $trialOnly = !empty($params['trial_only']);
             foreach ((array)$params['lesson_list'] as $lesson) {
+                if ($trialOnly && (!is_array($lesson) || ($lesson['trial_vi'] ?? null) !== 'y')) {
+                    continue;
+                }
                 $quizId = is_array($lesson) ? ($lesson['quiz_id_vi'] ?? null) : null;
                 if (is_scalar($quizId) && ctype_digit((string)$quizId) && (int)$quizId > 0) {
                     $quizIds[] = (int)$quizId;

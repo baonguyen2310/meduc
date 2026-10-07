@@ -56,7 +56,9 @@ body.mcl-enhanced .course-details-card[nh-anchor="noidung"] { display: none !imp
 .mcl-lesson-index { color: #989ba2; font-size: 10px; font-weight: 750; line-height: 1.65; }
 .mcl-lesson.is-active .mcl-lesson-index { color: #c54655; }
 .mcl-lesson-state { color: #b5b8be; font-size: 10px; text-align: right; }
+.mcl-lesson-state svg { width: 14px; height: 14px; stroke: #9aa0a8; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .mcl-lesson.is-active .mcl-lesson-state { color: #c8293b; }
+.mcl-lesson.is-active .mcl-lesson-state svg { stroke: #c8293b; }
 .mcl-chapter-empty { margin: 2px 20px 13px 49px; color: #989ba1; font-size: 12px; }
 .mcl-search-empty { margin: 23px 20px; color: #8d929b; font-size: 12px; line-height: 1.5; }
 .mcl-sidebar-foot { margin: 0; padding: 14px 20px 17px; border-top: 1px solid #e7e8ea; color: #9397a0; font-size: 11px; line-height: 1.4; }
@@ -67,6 +69,7 @@ body.mcl-enhanced .course-details-card[nh-anchor="noidung"] { display: none !imp
 .mcl-access { flex: none; margin-top: 3px; padding: 7px 9px; border-radius: 4px; background: #f0f1f3; color: #717780; font-size: 10px; font-weight: 800; letter-spacing: .055em; line-height: 1; }
 .mcl-access[data-state="trial"] { background: #fff1e4; color: #ad6420; }
 .mcl-access[data-state="open"] { background: #e8f5ec; color: #2d8150; }
+.mcl-access[data-state="locked"] { background: #f5edef; color: #aa5661; }
 .mcl-tabs { display: flex; gap: 25px; padding: 0 29px; border-bottom: 1px solid #e8e9eb; }
 .mcl-tabs button { position: relative; padding: 0 1px 15px; border: 0; background: none; color: #8b909a; font-size: 13px; font-weight: 710; transition: color .18s ease; }
 .mcl-tabs button:hover, .mcl-tabs button[aria-selected="true"] { color: #bd283a; }
@@ -83,9 +86,12 @@ body.mcl-enhanced .course-details-card[nh-anchor="noidung"] { display: none !imp
 .mcl-content-note { margin: 14px 0 0; color: #777c85; font-size: 12px; line-height: 1.5; }
 .mcl-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: min(100%, 360px); padding: 38px 26px; border: 1px dashed #dedfe3; border-radius: 9px; background: #fbfbfc; text-align: center; }
 .mcl-empty-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 20px; border-radius: 50%; background: #fbe7e9; color: #c8293b; font-size: 19px; }
+.mcl-empty-icon svg { width: 21px; height: 21px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mcl-empty h4 { margin: 0 0 9px; color: #282b31; font-size: 18px; font-weight: 770; }
 .mcl-empty p { max-width: 380px; margin: 0; color: #7b8089; font-size: 13px; line-height: 1.6; }
 .mcl-empty a { margin-top: 18px; color: var(--mcl-red); font-size: 13px; font-weight: 760; text-decoration: none; }
+.mcl-empty.is-gated a { padding: 11px 17px; border-radius: 5px; background: var(--mcl-red); color: #fff; }
+.mcl-empty.is-gated a:hover { background: #df3a4c; }
 .mcl-open-link { display: inline-flex; padding: 13px 17px; border-radius: 6px; background: #c8293b; color: #fff; font-size: 13px; font-weight: 750; text-decoration: none; }
 .mcl-files { margin-top: 13px; border: 1px solid #e7e8eb; border-radius: 8px; overflow: hidden; }
 .mcl-file { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 17px; border-bottom: 1px solid #e7e8eb; font-size: 13px; }
