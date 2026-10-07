@@ -52,9 +52,9 @@
     {if !empty(PAGE_TYPE) && PAGE_TYPE == 'home'}
         <script src="/hero-light/assets/original-home-theme-init.js"></script>
         <link href="/hero-light/assets/original-home.css?v=20261007-featured-clean" rel="stylesheet" />
-        <link href="/hero-light/assets/featured-courses.css?v=20261007-featured-clean" rel="stylesheet" />
+        <link href="/hero-light/assets/featured-courses.css?v=20261007-featured-catalog" rel="stylesheet" />
         <script src="/hero-light/assets/original-home.js" defer></script>
-        <script src="/hero-light/assets/featured-courses.js?v=20261007-featured-clean" defer></script>
+        <script src="/hero-light/assets/featured-courses.js?v=20261007-featured-catalog" defer></script>
     {/if}
 
 

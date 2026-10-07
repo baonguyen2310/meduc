@@ -59,9 +59,10 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-featured {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x proximity;
-  scrollbar-color: #71747a transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.mhi-featured .row.g-4.mt--10::-webkit-scrollbar { display: none; }
 .mhi-featured .row.g-4.mt--10 > * {
   flex: 0 0 clamp(215px, 18vw, 250px);
   width: clamp(215px, 18vw, 250px);
@@ -110,15 +111,72 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-featured {
 .mhi-featured-footer a { flex: none; color: var(--featured-red) !important; font: 700 13px/1.4 MHIInter, Arial, sans-serif; text-decoration: none; }
 .mhi-featured-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
+/* A second card treatment uses the original course covers from the MedUC catalog. */
+body.meduc-home-v2 > .mhi-featured-catalog {
+  --catalog-ink: #24272e;
+  --catalog-muted: #818895;
+  --catalog-surface: #fff;
+  --catalog-border: #e3e5e9;
+  --catalog-red: #bb293c;
+  padding: clamp(76px, 7vw, 110px) 0 clamp(86px, 8vw, 124px);
+  background: #f7f7f8;
+  color: var(--catalog-ink);
+  font-family: MHIInter, Arial, sans-serif;
+}
+html[data-meduc-theme="dark"] body.meduc-home-v2 > .mhi-featured-catalog {
+  --catalog-ink: #f4f4f5;
+  --catalog-muted: #a7a9b0;
+  --catalog-surface: #202125;
+  --catalog-border: #3a3c42;
+  --catalog-red: #f05a70;
+  background: #121316;
+}
+.mhi-featured-catalog, .mhi-featured-catalog * { box-sizing: border-box; }
+.mhi-featured-catalog-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mhi-featured-catalog-header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(28px, 3vw, 42px); }
+.mhi-featured-catalog-kicker { margin: 0 0 12px; color: var(--catalog-red); font: 700 12px/1.4 MHIInter, Arial, sans-serif; letter-spacing: .14em; }
+.mhi-featured-catalog-header h2 { margin: 0; color: var(--catalog-ink); font: 700 clamp(30px, 3.1vw, 46px)/1.14 MHIInter, Arial, sans-serif; letter-spacing: -.035em; }
+.mhi-featured-catalog-description { margin: 14px 0 0; color: var(--catalog-muted); font: 400 15px/1.55 MHIInter, Arial, sans-serif; }
+.mhi-featured-catalog-all { flex: none; margin-bottom: 3px; color: var(--catalog-red) !important; font: 700 13px/1.4 MHIInter, Arial, sans-serif; text-decoration: none; }
+.mhi-featured-catalog-all:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mhi-featured-catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 20px; }
+.mhi-featured-catalog-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--catalog-border); border-radius: 12px; background: var(--catalog-surface); box-shadow: 0 12px 32px #1c1c2510; }
+.mhi-featured-catalog-cover { position: relative; display: block; aspect-ratio: 1.25; overflow: hidden; background: #e8e9ec; }
+.mhi-featured-catalog-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.mhi-featured-catalog-badge { position: absolute; left: 16px; bottom: 16px; max-width: calc(100% - 32px); padding: 8px 11px; border-radius: 5px; background: #fff; color: #bb293c; font: 700 11px/1.25 MHIInter, Arial, sans-serif; }
+.mhi-featured-catalog-body { display: flex; flex: 1; flex-direction: column; min-height: 198px; padding: 22px 24px 20px; }
+.mhi-featured-catalog-body h3 { min-height: 62px; margin: 0 0 15px; color: var(--catalog-ink); font: 700 clamp(17px, 1.5vw, 21px)/1.35 MHIInter, Arial, sans-serif; letter-spacing: -.025em; }
+.mhi-featured-catalog-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; min-height: 22px; margin-bottom: 16px; color: var(--catalog-muted); font: 400 13px/1.5 MHIInter, Arial, sans-serif; }
+.mhi-featured-catalog-meta strong { color: var(--catalog-ink); font-weight: 700; }
+.mhi-featured-catalog-meta del { color: var(--catalog-muted); font-size: 12px; }
+.mhi-featured-catalog-curriculum { flex-basis: 100%; }
+.mhi-featured-catalog-detail { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--catalog-border); color: var(--catalog-red) !important; font: 700 13px/1.4 MHIInter, Arial, sans-serif; text-decoration: none; }
+.mhi-featured-catalog-detail::after { content: "→"; font-size: 22px; font-weight: 400; line-height: 1; }
+.mhi-featured-catalog-detail:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mhi-featured-catalog a:focus-visible { outline: 2px solid var(--catalog-red); outline-offset: 3px; }
+
+@media (max-width: 1023px) {
+  .mhi-featured-catalog-shell { width: calc(100% - 48px); }
+  .mhi-featured-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 767px) {
   body.meduc-home-v2 > .mhi-featured { padding: 70px 0 72px; }
   .mhi-featured .section-title { width: auto; margin: 0 20px 30px !important; }
   .mhi-featured .section-title .title { font-size: clamp(42px, 11vw, 54px) !important; }
   .mhi-featured .mhi-featured-description { margin-top: 18px; font-size: 13px; }
-  .mhi-featured .row.g-4.mt--10 { gap: 12px; width: 100%; padding-inline: 16px; scrollbar-width: none; }
-  .mhi-featured .row.g-4.mt--10::-webkit-scrollbar { display: none; }
+  .mhi-featured .row.g-4.mt--10 { gap: 12px; width: 100%; padding-inline: 16px; }
   .mhi-featured .row.g-4.mt--10 > * { flex-basis: min(76vw, 300px); width: min(76vw, 300px); }
   .mhi-featured .edu-card { height: 438px; }
   .mhi-featured .content .title { font-size: 27px !important; }
   .mhi-featured .mhi-featured-footer { align-items: flex-start; flex-direction: column; gap: 12px; width: auto; margin: 15px 16px 0; }
+  body.meduc-home-v2 > .mhi-featured-catalog { padding: 70px 0 78px; }
+  .mhi-featured-catalog-shell { width: calc(100% - 32px); }
+  .mhi-featured-catalog-header { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .mhi-featured-catalog-header h2 { font-size: 30px; }
+  .mhi-featured-catalog-description { font-size: 13px; }
+  .mhi-featured-catalog-grid { grid-template-columns: 1fr; gap: 18px; }
+  .mhi-featured-catalog-cover { aspect-ratio: 1.25; }
+  .mhi-featured-catalog-body { min-height: 174px; padding: 18px 20px; }
+  .mhi-featured-catalog-body h3 { min-height: 0; font-size: 19px; }
 }
