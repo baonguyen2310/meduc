@@ -34,7 +34,9 @@
     indexText.textContent = `0${index + 1} / 04`;
     const number = document.createElement("strong");
     number.className = "mhi-impact-number";
-    number.textContent = `${new Intl.NumberFormat("vi-VN").format(figure.count)}+`;
+    number.dataset.count = String(figure.count);
+    number.setAttribute("aria-label", `${new Intl.NumberFormat("vi-VN").format(figure.count)}+`);
+    number.innerHTML = `<span class="mhi-count-value" data-count="${figure.count}" aria-hidden="true">0</span><span aria-hidden="true">+</span>`;
     const label = document.createElement("span");
     label.className = "mhi-impact-label";
     label.textContent = figure.label;

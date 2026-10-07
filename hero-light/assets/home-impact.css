@@ -31,6 +31,7 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-impact {
 .mhi-impact-item::after { position: absolute; right: 26px; bottom: 0; left: 26px; height: 3px; background: var(--impact-red); content: ''; }
 .mhi-impact-index { color: var(--impact-muted); font: 700 11px/1.3 MHIInter, Arial, sans-serif; letter-spacing: .15em; }
 .mhi-impact-number { margin-top: auto; color: var(--impact-ink); font: 400 clamp(48px, 5vw, 76px)/1 MHIAnton, Impact, sans-serif; letter-spacing: -.025em; white-space: nowrap; }
+.mhi-impact-number .mhi-count-value.odometer { font-family: inherit; line-height: inherit; vertical-align: baseline; }
 .mhi-impact-label { min-height: 43px; margin-top: 20px; color: var(--impact-muted); font: 500 clamp(13px, 1.15vw, 17px)/1.4 MHIInter, Arial, sans-serif; }
 @media (max-width: 1100px) {
   .mhi-impact-item { min-height: 235px; padding: 22px 19px 25px; }

@@ -70,7 +70,8 @@
     const platform = document.createElement("small");
     platform.textContent = item.platform;
     const count = document.createElement("strong");
-    count.textContent = `${new Intl.NumberFormat("vi-VN").format(item.count)}+`;
+    count.dataset.count = String(item.count);
+    count.innerHTML = `<span class="mhi-count-value" data-count="${item.count}" aria-hidden="true">0</span><span aria-hidden="true">+</span>`;
     const label = document.createElement("span");
     label.textContent = item.label;
     details.append(platform, count, label);
