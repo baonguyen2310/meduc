@@ -58,6 +58,7 @@
         <link href="/hero-light/assets/home-feedback.css?v=20261007-home-feedback" rel="stylesheet" />
         <link href="/hero-light/assets/home-blog.css?v=20261007-home-blog" rel="stylesheet" />
         <link href="/hero-light/assets/home-consult.css?v=20261007-home-consult" rel="stylesheet" />
+        <link href="/hero-light/assets/home-community.css?v=20261007-home-community" rel="stylesheet" />
         <script src="/hero-light/assets/original-home.js" defer></script>
         <script src="/hero-light/assets/featured-courses.js?v=20261007-featured-polish" defer></script>
         <script src="/hero-light/assets/faculty.js?v=20261007-faculty-crop" defer></script>
@@ -65,6 +66,7 @@
         <script src="/hero-light/assets/home-feedback.js?v=20261007-home-feedback" defer></script>
         <script src="/hero-light/assets/home-blog.js?v=20261007-home-blog" defer></script>
         <script src="/hero-light/assets/home-consult.js?v=20261007-home-consult" defer></script>
+        <script src="/hero-light/assets/home-community.js?v=20261007-home-community" defer></script>
     {/if}
 
 
