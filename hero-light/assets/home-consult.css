@@ -1,0 +1,60 @@
+body.meduc-home-v2 > .mhi-consult {
+  --consult-bg: #050506;
+  --consult-ink: #f5f5f6;
+  --consult-muted: #a8a9ad;
+  --consult-field: #1b1d22;
+  --consult-border: #4c4f55;
+  --consult-red: #e5334e;
+  padding: clamp(88px, 8vw, 126px) 0;
+  background: var(--consult-bg);
+  color: var(--consult-ink);
+  font-family: MHIInter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-consult {
+  --consult-bg: #faf9f7;
+  --consult-ink: #20242a;
+  --consult-muted: #626871;
+  --consult-field: #fff;
+  --consult-border: #cfd1d5;
+  --consult-red: #b6283b;
+}
+.mhi-consult, .mhi-consult * { box-sizing: border-box; }
+.mhi-consult-shell { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); align-items: center; gap: clamp(58px, 8vw, 132px); width: min(83.333333%, 1440px); margin: 0 auto; }
+.mhi-consult-copy { min-width: 0; }
+.mhi-consult-kicker { margin: 0 0 23px; color: var(--consult-red); font: 700 11px/1.4 MHIInter, Arial, sans-serif; letter-spacing: .15em; }
+.mhi-consult-copy h2 { max-width: 500px; margin: 0; color: var(--consult-ink); font: 700 clamp(34px, 3.3vw, 49px)/1.15 MHIInter, Arial, sans-serif; letter-spacing: -.045em; }
+.mhi-consult-description { max-width: 510px; margin: 27px 0 0; color: var(--consult-muted); font: 400 clamp(17px, 1.45vw, 21px)/1.65 MHIInter, Arial, sans-serif; }
+.mhi-consult-form-wrap { min-width: 0; }
+.mhi-consult-form-intro { max-width: 640px; margin: 0 0 23px; color: var(--consult-muted); font: 400 15px/1.6 MHIInter, Arial, sans-serif; }
+.mhi-consult-form > .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; margin: 0; }
+.mhi-consult-form > .row > div { width: auto; max-width: none; margin: 0; padding: 0; }
+.mhi-consult-form > .row > .col-md-12, .mhi-consult-form > .row > .col-lg-12 { grid-column: 1 / -1; }
+.mhi-consult-form .form-group { margin: 0; }
+.mhi-consult-form label { display: block; margin: 0 0 8px; color: var(--consult-ink); font: 700 12px/1.4 MHIInter, Arial, sans-serif; }
+.mhi-consult-form label span { color: var(--consult-red); }
+.mhi-consult-form input.form-control, .mhi-consult-form textarea { display: block; width: 100%; height: auto; min-height: 52px; margin: 0; padding: 14px 16px; border: 1px solid var(--consult-border); border-radius: 5px; background: var(--consult-field); color: var(--consult-ink); box-shadow: none; font: 400 14px/1.45 MHIInter, Arial, sans-serif; transition: border-color .2s, box-shadow .2s; }
+.mhi-consult-form textarea { min-height: 108px; resize: vertical; }
+.mhi-consult-form input::placeholder, .mhi-consult-form textarea::placeholder { color: var(--consult-muted); opacity: .8; }
+.mhi-consult-form input:focus, .mhi-consult-form textarea:focus { border-color: var(--consult-red); outline: 0; box-shadow: 0 0 0 3px #df2d491f; }
+.mhi-consult-form input.error, .mhi-consult-form textarea.error { border-color: var(--consult-red); }
+.mhi-consult-form .invalid-feedback { display: block; margin-top: 6px; color: var(--consult-red); font: 400 12px/1.45 MHIInter, Arial, sans-serif; }
+.mhi-consult-form .form-group.text-center { text-align: left !important; }
+.mhi-consult-submit { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-width: 265px; min-height: 54px; padding: 12px 19px; border: 1px solid var(--consult-border); border-radius: 6px; background: transparent; color: var(--consult-ink); font: 700 14px/1.4 MHIInter, Arial, sans-serif; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+.mhi-consult-submit span { font-size: 21px; line-height: 1; }
+.mhi-consult-submit:hover { border-color: var(--consult-red); background: var(--consult-red); color: #fff; }
+.mhi-consult-submit:focus-visible { outline: 2px solid var(--consult-red); outline-offset: 3px; }
+@media (max-width: 900px) {
+  .mhi-consult-shell { grid-template-columns: 1fr; gap: 40px; }
+  .mhi-consult-copy h2 { max-width: 650px; }
+  .mhi-consult-description { margin-top: 18px; }
+}
+@media (max-width: 650px) {
+  body.meduc-home-v2 > .mhi-consult { padding: 75px 0 82px; }
+  .mhi-consult-shell { width: calc(100% - 32px); gap: 32px; }
+  .mhi-consult-copy h2 { font-size: clamp(33px, 9vw, 42px); }
+  .mhi-consult-description { font-size: 16px; }
+  .mhi-consult-form > .row { grid-template-columns: 1fr; gap: 16px; }
+  .mhi-consult-form > .row > div { grid-column: 1 / -1; }
+  .mhi-consult-submit { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .mhi-consult-form input.form-control, .mhi-consult-form textarea, .mhi-consult-submit { transition: none; } }
