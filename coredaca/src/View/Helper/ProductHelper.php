@@ -162,9 +162,19 @@ class ProductHelper extends Helper
 
     public function getQuizs($params = [], $lang = null) 
     {
-        $result = [];
-        
-        $result = TableRegistry::get('Quizs')
+        $quizIds = [];
+        if (array_key_exists('lesson_list', $params)) {
+            foreach ((array)$params['lesson_list'] as $lesson) {
+                $quizId = is_array($lesson) ? ($lesson['quiz_id_vi'] ?? null) : null;
+                if (is_scalar($quizId) && ctype_digit((string)$quizId) && (int)$quizId > 0) {
+                    $quizIds[] = (int)$quizId;
+                }
+            }
+            $quizIds = array_values(array_unique($quizIds));
+            if (empty($quizIds)) return [];
+        }
+
+        $query = TableRegistry::get('Quizs')
         ->find()
         ->contain([
             'QuizsAttribute',
@@ -172,9 +182,12 @@ class ProductHelper extends Helper
         ])
         ->where([
             'Quizs.deleted' => 0
-        ])
-        ->toList();
-        
-        return $result;
+        ]);
+
+        if (array_key_exists('lesson_list', $params)) {
+            $query->where(['Quizs.id IN' => $quizIds]);
+        }
+
+        return $query->toList();
     }
 }
