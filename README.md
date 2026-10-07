@@ -19,3 +19,7 @@ docker-compose --env-file /opt/meduc-php/secrets/meduc.env -f compose.production
 ```
 
 Các trang danh mục hiện dùng JSON xuất từ dữ liệu Meduc. Trang lịch sử làm bài truy vấn dữ liệu theo tài khoản; trang phân cấp bộ đề dùng bản xuất metadata từ Meduc Cao. Trang thanh toán và tiến độ học vẫn là bản xem trước theo mô tả trong `hero-light/README.md`.
+
+## Trang chủ PHP gốc
+
+Trang chủ tại `meducv2.duckdns.org/` dùng `templates/app01/layout/default.tpl` và dữ liệu trang từ database. Header và hero mới nằm trong `templates/app01/element/home/header_hero.tpl`; hai chế độ màu của khu vực này dùng `hero-light/assets/original-home.css`. Nút trăng/mặt trời lưu lựa chọn với khóa `meduc-theme` trong `localStorage`. Các hàng nội dung cũ dưới hero vẫn do database Meduc PHP render; những khu vực đó sẽ được thay giao diện lần lượt.

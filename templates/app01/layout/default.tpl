@@ -49,6 +49,12 @@
     <link href="{if !empty($website_info.favicon)}{CDN_URL}{$website_info.favicon}{else}/favicon.ico{/if}" rel="icon" type="image/x-icon"/>
     {$this->element('layout/css', [], $this->Setting->getConfigCacheView('css', {LAYOUT}))}
 
+    {if !empty(PAGE_TYPE) && PAGE_TYPE == 'home'}
+        <script src="/hero-light/assets/original-home-theme-init.js"></script>
+        <link href="/hero-light/assets/original-home.css" rel="stylesheet" />
+        <script src="/hero-light/assets/original-home.js" defer></script>
+    {/if}
+
 
     {assign var = embed_code value = []}
     {if !empty($data_init.embed_code)}
@@ -62,9 +68,13 @@
     {*<link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf_viewer.min.css" rel="stylesheet" type="text/css" />*}
 </head>
 
-<body class="{if !empty(DEVICE)}is-mobile{/if} {if !empty(PAGE_TYPE == 'home')}home{/if}">
+<body class="{if !empty(DEVICE)}is-mobile{/if} {if !empty(PAGE_TYPE == 'home')}home meduc-home-v2{/if}">
     {if !empty($embed_code.top_body) && empty($embed_code.time_delay)}
         {$embed_code.top_body}
+    {/if}
+
+    {if !empty(PAGE_TYPE) && PAGE_TYPE == 'home'}
+        {$this->element('home/header_hero')}
     {/if}
 
     {if !empty($page_code) && !empty($structure)}
