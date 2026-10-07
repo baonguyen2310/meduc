@@ -144,7 +144,10 @@
     const body = document.createElement("div");
     body.className = "mhi-featured-catalog-body";
     const title = document.createElement("h3");
-    title.textContent = course.title;
+    const titleLink = document.createElement("a");
+    titleLink.href = course.href;
+    titleLink.textContent = course.title;
+    title.append(titleLink);
     const meta = document.createElement("div");
     meta.className = "mhi-featured-catalog-meta";
     if (course.currentPrice) {

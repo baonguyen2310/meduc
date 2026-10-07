@@ -143,17 +143,27 @@ html[data-meduc-theme="dark"] body.meduc-home-v2 > .mhi-featured-catalog {
 .mhi-featured-catalog-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--catalog-border); border-radius: 12px; background: var(--catalog-surface); box-shadow: 0 12px 32px #1c1c2510; }
 .mhi-featured-catalog-cover { position: relative; display: block; aspect-ratio: 1.25; overflow: hidden; background: #e8e9ec; }
 .mhi-featured-catalog-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.mhi-featured-catalog-badge { position: absolute; left: 16px; bottom: 16px; max-width: calc(100% - 32px); padding: 8px 11px; border-radius: 5px; background: #fff; color: #bb293c; font: 700 11px/1.25 MHIInter, Arial, sans-serif; }
+.mhi-featured-catalog-badge { position: absolute; left: 16px; bottom: 16px; max-width: calc(100% - 32px); padding: 8px 11px; border-radius: 5px; background: #bb293c; color: #fff; font: 700 12px/1.25 MHIInter, Arial, sans-serif; box-shadow: 0 3px 12px #1d111a33; }
 .mhi-featured-catalog-body { display: flex; flex: 1; flex-direction: column; min-height: 198px; padding: 22px 24px 20px; }
-.mhi-featured-catalog-body h3 { min-height: 62px; margin: 0 0 15px; color: var(--catalog-ink); font: 700 clamp(17px, 1.5vw, 21px)/1.35 MHIInter, Arial, sans-serif; letter-spacing: -.025em; }
-.mhi-featured-catalog-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; min-height: 22px; margin-bottom: 16px; color: var(--catalog-muted); font: 400 13px/1.5 MHIInter, Arial, sans-serif; }
-.mhi-featured-catalog-meta strong { color: var(--catalog-ink); font-weight: 700; }
-.mhi-featured-catalog-meta del { color: var(--catalog-muted); font-size: 12px; }
+.mhi-featured-catalog-body h3 { margin: 0 0 8px; color: var(--catalog-ink); font: 700 clamp(17px, 1.5vw, 21px)/1.35 MHIInter, Arial, sans-serif; letter-spacing: -.025em; }
+.mhi-featured-catalog-body h3 a { color: inherit !important; text-decoration: none; }
+.mhi-featured-catalog-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; min-height: 22px; margin-bottom: 12px; color: var(--catalog-muted); font: 400 13px/1.5 MHIInter, Arial, sans-serif; }
+.mhi-featured-catalog-meta strong { color: var(--catalog-red); font-size: 16px; font-weight: 700; letter-spacing: -.015em; }
+.mhi-featured-catalog-meta del { color: #737985; font-size: 13px; }
+html[data-meduc-theme="dark"] .mhi-featured-catalog-meta del { color: #b5b8c0; }
 .mhi-featured-catalog-curriculum { flex-basis: 100%; }
 .mhi-featured-catalog-detail { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--catalog-border); color: var(--catalog-red) !important; font: 700 13px/1.4 MHIInter, Arial, sans-serif; text-decoration: none; }
 .mhi-featured-catalog-detail::after { content: "→"; font-size: 22px; font-weight: 400; line-height: 1; }
 .mhi-featured-catalog-detail:hover { text-decoration: underline; text-underline-offset: 4px; }
 .mhi-featured-catalog a:focus-visible { outline: 2px solid var(--catalog-red); outline-offset: 3px; }
+@media (hover: hover) {
+  .mhi-featured-catalog-cover:hover img { transform: scale(1.045); }
+  .mhi-featured-catalog-card:hover .mhi-featured-catalog-body h3 { color: var(--catalog-red); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mhi-featured-catalog-cover img { transition: transform .38s ease; }
+  .mhi-featured-catalog-body h3 { transition: color .2s ease; }
+}
 
 @media (max-width: 1023px) {
   .mhi-featured-catalog-shell { width: calc(100% - 48px); }
@@ -178,5 +188,5 @@ html[data-meduc-theme="dark"] body.meduc-home-v2 > .mhi-featured-catalog {
   .mhi-featured-catalog-grid { grid-template-columns: 1fr; gap: 18px; }
   .mhi-featured-catalog-cover { aspect-ratio: 1.25; }
   .mhi-featured-catalog-body { min-height: 174px; padding: 18px 20px; }
-  .mhi-featured-catalog-body h3 { min-height: 0; font-size: 19px; }
+  .mhi-featured-catalog-body h3 { font-size: 19px; }
 }
