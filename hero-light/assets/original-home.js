@@ -28,13 +28,38 @@
     browseButton.setAttribute("aria-expanded", String(open));
   }
   browseButton.addEventListener("click", () => setBrowse(browseMenu.hidden));
+
+  const networkDropdowns = $$(".mhi-network-dropdown");
+  function setNetworkDropdown(dropdown, open) {
+    const button = dropdown.querySelector("button");
+    const menu = dropdown.querySelector(".mhi-network-menu");
+    menu.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+  }
+  networkDropdowns.forEach((dropdown) => {
+    dropdown.querySelector("button").addEventListener("click", () => {
+      const open = dropdown.querySelector(".mhi-network-menu").hidden;
+      networkDropdowns.forEach((item) => setNetworkDropdown(item, item === dropdown && open));
+    });
+  });
   document.addEventListener("click", (event) => {
     if (!browseMenu.hidden && !browseMenu.contains(event.target) && !browseButton.contains(event.target)) setBrowse(false);
+    networkDropdowns.forEach((dropdown) => {
+      if (!dropdown.contains(event.target)) setNetworkDropdown(dropdown, false);
+    });
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !browseMenu.hidden) {
       setBrowse(false);
       browseButton.focus();
+    }
+    if (event.key === "Escape") {
+      networkDropdowns.forEach((dropdown) => {
+        if (!dropdown.querySelector(".mhi-network-menu").hidden) {
+          setNetworkDropdown(dropdown, false);
+          dropdown.querySelector("button").focus();
+        }
+      });
     }
   });
 

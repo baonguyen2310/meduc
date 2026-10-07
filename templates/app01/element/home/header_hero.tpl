@@ -10,12 +10,33 @@
   <a class="mhi-skip" href="#meduc-home-content">Đến nội dung chính</a>
   <header class="mhi-header">
     <div class="mhi-network">
-      <nav class="mhi-shell mhi-network-links" aria-label="Hệ sinh thái Meduc">
-        <a href="/" aria-current="page">Meduc</a>
-        <a href="/khoa-hoc-v2">Khóa học</a>
-        <a href="/danh-sach-de-thi">Luyện thi</a>
-        <a href="/blog-v2">Góc học tập</a>
-        <a href="/danh-sach-de-thi">Bảng xếp hạng</a>
+      <nav class="mhi-shell mhi-network-links" aria-label="Điều hướng MedUC">
+        <a href="/gioi-thieu-v2">Giới thiệu</a>
+        <a href="/gioi-thieu-v2#doi-ngu">Giảng viên</a>
+        <a href="/phan-hoi-hoc-vien-v2">Phản hồi</a>
+        <div class="mhi-network-dropdown">
+          <a href="/blog">Kinh nghiệm</a>
+          <button type="button" aria-label="Danh mục Kinh nghiệm" aria-expanded="false" aria-controls="mhi-experience-menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>
+          <nav class="mhi-network-menu" id="mhi-experience-menu" aria-label="Danh mục Kinh nghiệm" hidden>
+            <a href="/blog-kinh-nghiem">Blog Kinh Nghiệm</a>
+            <a href="/blog-tieng-anh-y-khoa">Blog Tiếng Anh Y Khoa</a>
+            <a href="/blog-ngoai-khoa">Blog Ngoại Khoa</a>
+            <a href="/blog-noi-khoa">Blog Nội Khoa</a>
+            <a href="/blog-giai-phau">Blog Giải Phẫu</a>
+            <a href="/blog-hoa-sinh">Blog Hóa Sinh</a>
+            <a href="/blog-sinh-ly">Blog Sinh Lý</a>
+          </nav>
+        </div>
+        <div class="mhi-network-dropdown">
+          <a href="/tai-lieu-hoc-tap">Tài liệu</a>
+          <button type="button" aria-label="Danh mục Tài liệu" aria-expanded="false" aria-controls="mhi-documents-menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>
+          <nav class="mhi-network-menu" id="mhi-documents-menu" aria-label="Danh mục Tài liệu" hidden>
+            <a href="/y-khoa-nam-1">Y Khoa Năm 1</a>
+            <a href="/y-khoa-nam-2">Y Khoa Năm 2</a>
+            <a href="/y-khoa-nam-3">Y Khoa Năm 3</a>
+            <a href="/y-khoa-nam-4">Y Khoa Năm 4</a>
+          </nav>
+        </div>
       </nav>
     </div>
     <div class="mhi-shell mhi-header-main">
@@ -26,13 +47,10 @@
         <button class="mhi-browse-button" id="mhi-browse-button" type="button" aria-expanded="false" aria-controls="mhi-browse-menu">
           Khám phá <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 9 7 7 7-7" /></svg>
         </button>
-        <nav class="mhi-browse-menu" id="mhi-browse-menu" aria-label="Khám phá Meduc" hidden>
-          <p>Học điều bạn cần. Theo cách của bạn.</p>
-          <a href="/khoa-hoc-v2?nhom=foundation"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg>Y khoa cơ sở<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
-          <a href="/khoa-hoc-v2?nhom=clinical"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg>Nội khoa &amp; lâm sàng<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
-          <a href="/khoa-hoc-v2?nhom=clinical"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg>Ngoại khoa<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
-          <a href="/danh-sach-de-thi"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg>Ngân hàng đề thi<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
-          <a href="/gioi-thieu-v2#doi-ngu"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-users" /></svg>Gặp gỡ giảng viên<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+        <nav class="mhi-browse-menu" id="mhi-browse-menu" aria-label="Danh mục khóa học MedUC" hidden>
+          <a href="/khoa-hoc-sinh-vien-nam-1-nam-2"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg>Sinh viên năm 1 – năm 2<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/khoa-hoc-sinh-vien-nam-3-nam-4"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg>Sinh viên năm 3 – năm 4<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/khoa-hoc-noi-tru-sau-dai-hoc"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-users" /></svg>Nội trú – Sau đại học<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
           <a class="mhi-browse-all" href="/khoa-hoc-v2">Xem tất cả khóa học<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
         </nav>
       </div>
@@ -42,13 +60,13 @@
         <input id="mhi-search-input" name="keyword" type="search" placeholder="Hôm nay bạn muốn học gì?" autocomplete="off" />
       </form>
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
-        <a class="mhi-instructors" href="/gioi-thieu-v2#doi-ngu">Giảng viên</a>
-        <a class="mhi-plans" href="/khoa-hoc-v2">Gói học</a>
+        <a class="mhi-practice" href="/danh-sach-de-thi">Luyện thi</a>
+        <a class="mhi-books" href="/sach-y-khoa-v2">Sách</a>
         <a class="mhi-login" href="/member/login">Đăng nhập</a>
       </nav>
       <button class="mhi-theme-toggle" id="mhi-theme-toggle" type="button" aria-label="Chuyển sang chế độ sáng" aria-pressed="true" title="Chuyển sang chế độ sáng">
         <svg class="mhi-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
-        <svg class="mhi-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.3 15.4A8.5 8.5 0 0 1 8.6 3.7 8.5 8.5 0 1 0 20.3 15.4Z"/></svg>
+        <svg class="mhi-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.1 16.4A8.15 8.15 0 0 1 7.6 4.9a8.35 8.35 0 1 0 11.5 11.5Z" fill="currentColor" stroke="none"/><path d="M18.3 3.3v3.2m-1.6-1.6h3.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
       <a class="mhi-header-cta" href="#mhi-learning-goals">Bắt đầu học</a>
     </div>
