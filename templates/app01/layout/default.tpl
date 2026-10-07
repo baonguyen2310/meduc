@@ -77,6 +77,11 @@
         <script src="/hero-light/assets/home-footer.js?v=20261007-home-footer" defer></script>
     {/if}
 
+    {if !empty(PAGE_TYPE) && PAGE_TYPE == PRODUCT_DETAIL}
+        <link href="/hero-light/assets/course-classroom.css?v=20261007-classroom" rel="stylesheet" />
+        <script src="/hero-light/assets/course-classroom.js?v=20261007-classroom" defer></script>
+    {/if}
+
 
     {assign var = embed_code value = []}
     {if !empty($data_init.embed_code)}

@@ -63,7 +63,7 @@
         </div>
     {/if}
     
-    <div class="course-details-card mt--40" nh-anchor="noidung">
+    <div class="course-details-card mt--40" nh-anchor="noidung" data-mcl-licensed="{if $licensed}1{else}0{/if}">
         <div class="title-section-2">
             <span>Nội dung khóa học</span>
         </div>
@@ -80,7 +80,7 @@
             	        </h2>
                     </div>
     	        {else}
-    	            <div class="accordion-item">
+	            <div class="accordion-item" data-mcl-trial="{if !empty($item.trial_vi) && $item.trial_vi == 'y'}1{else}0{/if}" data-mcl-has-video="{if !empty($item.youtube_id_vi)}1{else}0{/if}" data-mcl-has-quiz="{if !empty($item.quiz_id_vi)}1{else}0{/if}">
     	                <div class="inner-head">
     	                    <h3>
     	                        <i class="iconsax isax-video isax-lg"></i>
