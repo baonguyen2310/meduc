@@ -96,6 +96,8 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-faculty {
   .mhi-faculty-intro { margin-top: 18px; font-size: 13px; }
   .mhi-faculty-rail { gap: 12px; width: 100%; padding-inline: 16px; }
   .mhi-faculty-card { flex-basis: min(76vw, 300px); width: min(76vw, 300px); height: 438px; }
+  .mhi-faculty-photo img { transform: scale(1.55); }
+  .mhi-faculty-card--centered .mhi-faculty-photo img { transform: none; }
   .mhi-faculty-copy h3 { font-size: 27px; }
   .mhi-faculty-footer { align-items: flex-start; flex-direction: column; gap: 12px; width: auto; margin: 15px 16px 0; }
 }
