@@ -108,17 +108,17 @@
             <span class="mhi-video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
           </button>
         </div>
-        <a class="mhi-introduction-video-link" href="https://www.youtube.com/watch?v=mvoFlFPB-rE" target="_blank" rel="noopener noreferrer">Xem video trên YouTube ↗</a>
       </div>
       <div class="mhi-introduction-copy">
         <p class="mhi-introduction-kicker">GIỚI THIỆU MEDUC</p>
-        <h2 id="mhi-introduction-title">Học Y bứt phá cùng ThS – BSNT.</h2>
-        <p class="mhi-introduction-lead">Meduc mang đến cho sinh viên Y kiến thức chuẩn xác, phương pháp học hiệu quả và trải nghiệm học tập ứng dụng công nghệ.</p>
+        <h2 id="mhi-introduction-title">Học Y Bứt Phá Cùng ThS - BSNT</h2>
+        <p class="mhi-introduction-lead">Chúng tôi là tổ chức giáo dục y khoa tiên phong, mang đến cho sinh viên y kiến thức chuẩn xác, phương pháp học hiệu quả và trải nghiệm học tập ứng dụng công nghệ cao.</p>
         <ul class="mhi-introduction-points">
-          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-users" /></svg><span>Giảng viên là Thạc sĩ, Bác sĩ nội trú giàu kinh nghiệm và tận tâm đồng hành.</span></li>
-          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg><span>Mind Map giúp hiểu sâu, nhớ lâu qua từ khóa và hình ảnh trực quan.</span></li>
-          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg><span>Bài tập tự chấm, chữa chi tiết để theo dõi tiến độ và củng cố kiến thức.</span></li>
+          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-users" /></svg><span>- Đội ngũ giảng viên là các Thạc sĩ, Bác sĩ nội trú đến từ những trường y hàng đầu cả nước, có giàu kinh nghiệm giảng dạy và tận tâm đồng hành cùng sinh viên.</span></li>
+          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg><span>- Phương pháp học hoàn toàn mới "Mind Map" giúp người học hiểu sâu – nhớ lâu thông qua từ khóa trọng tâm và hình ảnh trực quan, thay cho lối học thuộc lòng truyền thống.</span></li>
+          <li><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg><span>- Hệ thống bài tập tự động chấm và chữa chi tiết, giúp theo dõi tiến độ, củng cố kiến thức và tối ưu thời gian ôn tập, mang lại hiệu quả vượt trội.</span></li>
         </ul>
+        <p class="mhi-introduction-signoff"><strong>MedUC: Học Y Bứt Phá Cùng ThS - BSNT</strong><br /><strong>Xin Chân Thành Cám Ơn Các Bạn Đã Tin Tưởng</strong></p>
         <div class="mhi-introduction-actions">
           <a class="mhi-primary" href="/gioi-thieu-v2">Tìm hiểu sâu</a>
           <a class="mhi-secondary" href="/khoa-hoc-v2">Khám phá khóa học</a>

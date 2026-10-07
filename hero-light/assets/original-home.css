@@ -8,7 +8,10 @@
 body.meduc-home-v2 > header,
 body.meduc-home-v2 > [nh-row="jmk2b1c"],
 body.meduc-home-v2 > [nh-row="xvy1d68"],
-body.meduc-home-v2 > [nh-row="u9as36w"] { display: none !important; }
+body.meduc-home-v2 > [nh-row="u9as36w"],
+body.meduc-home-v2 > [nh-row="j2pr6d1"],
+body.meduc-home-v2 > [nh-row="vd4sx71"],
+body.meduc-home-v2 > [nh-row="r5dwkqz"] { display: none !important; }
 body.meduc-home-v2 { margin-top: 0 !important; }
 body.meduc-home-v2 .pp-login-google { display: none !important; }
 
@@ -164,8 +167,6 @@ html[data-meduc-theme="light"] .mhi-introduction { border-top-color: #e8e9ed; ba
 .mhi-video-play { position: absolute; top: 50%; left: 50%; z-index: 1; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: var(--mhi-red); color: #fff; box-shadow: 0 12px 32px #0007; transform: translate(-50%,-50%); transition: transform .2s; }
 .mhi-video-launch:hover .mhi-video-play { transform: translate(-50%,-50%) scale(1.08); }
 .mhi-video-play svg { width: 27px; height: 27px; margin-left: 3px; fill: currentColor; }
-.mhi-introduction-video-link { display: inline-block; margin-top: 12px; color: var(--mhi-muted) !important; font-size: 12px; text-decoration: underline !important; text-underline-offset: 3px; }
-.mhi-introduction-video-link:hover { color: var(--mhi-red) !important; }
 .mhi-introduction-copy { min-width: 0; }
 .mhi-introduction-kicker { margin: 0 0 14px; color: var(--mhi-red); font-size: 12px; font-weight: 700; letter-spacing: .13em; }
 .mhi-introduction-copy h2 { max-width: 560px; margin: 0; color: var(--mhi-ink); font-size: clamp(30px,3vw,48px); font-weight: 700; line-height: 1.17; letter-spacing: -.045em; }
@@ -174,6 +175,8 @@ html[data-meduc-theme="light"] .mhi-introduction { border-top-color: #e8e9ed; ba
 .mhi-introduction-points li { display: flex; align-items: flex-start; gap: 16px; margin: 0; padding: 0; color: var(--mhi-ink); font-size: clamp(14px,1.16vw,18px); font-weight: 400 !important; line-height: 1.5; }
 .mhi-introduction-points li span { font-weight: 400 !important; }
 .mhi-introduction-points .mhi-icon { width: 23px; height: 23px; margin-top: 2px; color: var(--mhi-muted); }
+.mhi-introduction-signoff { margin: 24px 0 0; color: var(--mhi-ink); font-size: clamp(14px,1.1vw,17px); line-height: 1.7; }
+.mhi-introduction-signoff strong { font-weight: 700; }
 .mhi-introduction-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .mhi-introduction-actions a { min-height: 48px; padding: 13px 22px; font-size: 14px; font-weight: 700 !important; }
 

@@ -51,7 +51,7 @@
 
     {if !empty(PAGE_TYPE) && PAGE_TYPE == 'home'}
         <script src="/hero-light/assets/original-home-theme-init.js"></script>
-        <link href="/hero-light/assets/original-home.css" rel="stylesheet" />
+        <link href="/hero-light/assets/original-home.css?v=20261007-intro-mobile" rel="stylesheet" />
         <script src="/hero-light/assets/original-home.js" defer></script>
     {/if}
 
