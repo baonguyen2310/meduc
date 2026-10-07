@@ -10,7 +10,7 @@
 
 ## Triển khai Meduc PHP
 
-`compose.production.yml` chạy MariaDB riêng và chỉ mở Apache tại `127.0.0.1:8081` trên máy chủ. [deploy/Caddyfile.uc-01](deploy/Caddyfile.uc-01) định tuyến `meducnew.duckdns.org` vào cổng này. Kho đề Meduc Cao tiếp tục chạy tại `127.0.0.1:3000` và cơ sở dữ liệu `fhd_quiz` ở các container riêng. Caddy nhận cổng 80/443 cho cả hai tên miền.
+`compose.production.yml` chạy MariaDB riêng và chỉ mở Apache tại `127.0.0.1:8081` trên máy chủ. [deploy/Caddyfile.uc-01](deploy/Caddyfile.uc-01) định tuyến `meducnew.duckdns.org` và `meducv2.duckdns.org` vào cổng này. Domain `meducnew` chuyển riêng đường dẫn `/` sang bản trang chủ mới tại `/masterclass`; domain `meducv2` mở trực tiếp trang chủ PHP gốc. Kho đề Meduc Cao tiếp tục chạy tại `127.0.0.1:3000` và cơ sở dữ liệu `fhd_quiz` ở các container riêng. Caddy nhận cổng 80/443 cho cả ba tên miền.
 
 Thông tin bí mật được lấy từ tệp môi trường **ngoài** thư mục ứng dụng, ví dụ `/opt/meduc-php/secrets/meduc.env`. Tệp Google service account được mount từ thư mục bí mật đó. Database dump được chuyển và nhập riêng qua SSH; không commit vào Git. Bộ thư viện PHP `coredaca/vendor` cũng được đồng bộ từ bản Meduc PHP đang chạy vì repository cũ không lưu `composer.lock` và bỏ qua thư mục này. Trên VPS `uc-01`, Compose là chương trình `docker-compose`; chạy bản production bằng:
 

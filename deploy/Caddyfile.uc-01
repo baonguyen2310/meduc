@@ -36,3 +36,20 @@ meducnew.duckdns.org {
 http://meducnew.duckdns.org {
     redir https://meducnew.duckdns.org{uri} 308
 }
+
+meducv2.duckdns.org {
+    tls {
+        issuer acme {
+            disable_http_challenge
+        }
+    }
+
+    @private path /.git* /.env* /scripts/* /design-references/* /config_database.php /google-service-account.json /*.sql /*.sql.gz
+    respond @private 404
+
+    reverse_proxy 127.0.0.1:8081
+}
+
+http://meducv2.duckdns.org {
+    redir https://meducv2.duckdns.org{uri} 308
+}
