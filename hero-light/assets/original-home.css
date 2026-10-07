@@ -74,7 +74,7 @@ html[data-meduc-theme="light"] .mhi {
 .mhi-network-links a:hover { color: var(--mhi-red); text-decoration: underline; text-underline-offset: 5px; }
 .mhi-header-main { display: flex; align-items: center; gap: 9px; height: 66px; }
 .mhi-brand { display: inline-flex; align-items: center; flex-shrink: 0; margin-right: 7px; }
-.mhi-brand img { display: block; width: auto; height: 64px; max-width: none; object-fit: contain; }
+.mhi-brand img { display: block; width: auto; height: 56px; max-width: none; object-fit: contain; }
 .mhi-browse-wrap { position: relative; flex-shrink: 0; }
 .mhi-browse-button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-radius: 8px; background: var(--mhi-panel); color: var(--mhi-ink); font-size: 15px; font-weight: 700 !important; white-space: nowrap; }
 .mhi-browse-button:hover { background: var(--mhi-panel-hover); }
@@ -184,7 +184,7 @@ html[data-meduc-theme="light"] .mhi-motion-toggle:hover { border-color: #df7180 
 @media (max-width: 620px) {
   .mhi-network-links { gap: 23px; overflow-x: auto; scrollbar-width: none; font-size: 11px; }
   .mhi-network-links::-webkit-scrollbar { display: none; }
-  .mhi-brand img { height: 53px; }
+  .mhi-brand img { height: 48px; }
   .mhi-browse-button { min-height: 40px; padding-inline: 9px; font-size: 13px; }
   .mhi-utility { display: none; }
   .mhi-theme-toggle { margin-left: auto; width: 40px; height: 40px; }
