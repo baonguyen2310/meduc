@@ -70,7 +70,7 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-faculty {
   scroll-snap-align: start;
 }
 .mhi-faculty-photo { position: absolute; inset: 0; display: block; overflow: hidden; background: #252932; }
-.mhi-faculty-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; transform: scale(1.2); transform-origin: right center; }
+.mhi-faculty-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; transform: scale(1.35); transform-origin: right center; }
 .mhi-faculty-card--centered .mhi-faculty-photo img { object-position: 50% 50%; transform: none; }
 .mhi-faculty-photo::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, #05050640 0%, #11131725 38%, #11131775 59%, #111317f2 100%); pointer-events: none; }
 .mhi-faculty-subject { position: absolute; z-index: 2; top: 12px; left: 12px; max-width: calc(100% - 24px); padding: 6px 10px; border-radius: 100px; background: #fff; color: #191a1f; font: 700 10px/1.2 MHIInter, Arial, sans-serif; text-transform: uppercase; }
