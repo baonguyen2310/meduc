@@ -55,10 +55,12 @@
         <link href="/hero-light/assets/featured-courses.css?v=20261007-badge-top" rel="stylesheet" />
         <link href="/hero-light/assets/faculty.css?v=20261007-faculty-portrait3" rel="stylesheet" />
         <link href="/hero-light/assets/home-books.css?v=20261007-home-books" rel="stylesheet" />
+        <link href="/hero-light/assets/home-feedback.css?v=20261007-home-feedback" rel="stylesheet" />
         <script src="/hero-light/assets/original-home.js" defer></script>
         <script src="/hero-light/assets/featured-courses.js?v=20261007-featured-polish" defer></script>
         <script src="/hero-light/assets/faculty.js?v=20261007-faculty-crop" defer></script>
         <script src="/hero-light/assets/home-books.js?v=20261007-home-books" defer></script>
+        <script src="/hero-light/assets/home-feedback.js?v=20261007-home-feedback" defer></script>
     {/if}
 
 
