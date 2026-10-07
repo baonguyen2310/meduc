@@ -100,4 +100,15 @@
   });
   $(".mhi-dialog-close").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+
+  const videoLaunch = $("#mhi-video-launch");
+  videoLaunch.addEventListener("click", () => {
+    const frame = document.createElement("iframe");
+    frame.src = "https://www.youtube.com/embed/mvoFlFPB-rE?autoplay=1&rel=0";
+    frame.title = "Phản hồi học viên về Meduc";
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.allowFullscreen = true;
+    $("#mhi-introduction-video").replaceChildren(frame);
+  });
 })();

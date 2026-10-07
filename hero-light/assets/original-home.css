@@ -152,6 +152,31 @@ html[data-meduc-theme="light"] .mhi-motion-toggle:hover { border-color: #df7180 
 .mhi-portrait-wall.is-paused .mhi-portrait-track { animation-play-state: paused; }
 @keyframes mhi-portrait-drift { to { transform: translateY(calc(-33.333333% - var(--mhi-start))); } }
 
+.mhi-introduction { border-top: 1px solid #ffffff17; background: #000; }
+html[data-meduc-theme="light"] .mhi-introduction { border-top-color: #e8e9ed; background: #f7f7f9; }
+.mhi-introduction-grid { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr); align-items: center; gap: clamp(32px,5.5vw,86px); padding-block: clamp(72px,7.6vw,120px); }
+.mhi-introduction-video { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--mhi-line); border-radius: 12px; background: var(--mhi-photo); }
+.mhi-introduction-video iframe { display: block; width: 100%; height: 100%; border: 0; }
+.mhi-video-launch { position: relative; display: block; width: 100%; height: 100%; padding: 0; overflow: hidden; border: 0; background: #1d1d1e; }
+.mhi-video-launch img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mhi-video-launch::after { position: absolute; inset: 0; content: ""; background: #0002; transition: background .2s; }
+.mhi-video-launch:hover::after { background: #0004; }
+.mhi-video-play { position: absolute; top: 50%; left: 50%; z-index: 1; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: var(--mhi-red); color: #fff; box-shadow: 0 12px 32px #0007; transform: translate(-50%,-50%); transition: transform .2s; }
+.mhi-video-launch:hover .mhi-video-play { transform: translate(-50%,-50%) scale(1.08); }
+.mhi-video-play svg { width: 27px; height: 27px; margin-left: 3px; fill: currentColor; }
+.mhi-introduction-video-link { display: inline-block; margin-top: 12px; color: var(--mhi-muted) !important; font-size: 12px; text-decoration: underline !important; text-underline-offset: 3px; }
+.mhi-introduction-video-link:hover { color: var(--mhi-red) !important; }
+.mhi-introduction-copy { min-width: 0; }
+.mhi-introduction-kicker { margin: 0 0 14px; color: var(--mhi-red); font-size: 12px; font-weight: 700; letter-spacing: .13em; }
+.mhi-introduction-copy h2 { max-width: 560px; margin: 0; color: var(--mhi-ink); font-size: clamp(30px,3vw,48px); font-weight: 700; line-height: 1.17; letter-spacing: -.045em; }
+.mhi-introduction-lead { max-width: 600px; margin: 18px 0 26px; color: var(--mhi-muted); font-size: clamp(14px,1.16vw,18px); line-height: 1.6; }
+.mhi-introduction-points { display: grid; gap: 17px; margin: 0; padding: 0; list-style: none; }
+.mhi-introduction-points li { display: flex; align-items: flex-start; gap: 16px; margin: 0; padding: 0; color: var(--mhi-ink); font-size: clamp(14px,1.16vw,18px); font-weight: 400 !important; line-height: 1.5; }
+.mhi-introduction-points li span { font-weight: 400 !important; }
+.mhi-introduction-points .mhi-icon { width: 23px; height: 23px; margin-top: 2px; color: var(--mhi-muted); }
+.mhi-introduction-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.mhi-introduction-actions a { min-height: 48px; padding: 13px 22px; font-size: 14px; font-weight: 700 !important; }
+
 .mhi-dialog { width: min(540px,calc(100vw - 36px)); max-height: calc(100svh - 40px); padding: 40px 32px 28px; overflow-y: auto; border: 1px solid var(--mhi-line); border-radius: 16px; background: var(--mhi-menu); color: var(--mhi-ink); box-shadow: 0 30px 120px var(--mhi-shadow); }
 .mhi-dialog::backdrop { background: #000b; backdrop-filter: blur(7px); }
 .mhi-dialog-close { position: absolute; top: 8px; right: 12px; padding: 4px 8px; background: none; color: var(--mhi-muted); font-size: 28px !important; }
@@ -180,6 +205,8 @@ html[data-meduc-theme="light"] .mhi-motion-toggle:hover { border-color: #df7180 
   .mhi-copy { padding-top: 55px; }
   .mhi-copy h1 { font-size: clamp(32px,5vw,47px); }
   .mhi-portrait-wall { top: 118px; height: calc(100svh - 118px); }
+  .mhi-introduction-grid { grid-template-columns: 1fr; gap: 34px; }
+  .mhi-introduction-copy { max-width: 680px; }
 }
 @media (max-width: 620px) {
   .mhi-network-links { gap: 23px; overflow-x: auto; scrollbar-width: none; font-size: 11px; }
@@ -195,6 +222,11 @@ html[data-meduc-theme="light"] .mhi-motion-toggle:hover { border-color: #df7180 
   .mhi-portrait-wall { order: 1; position: relative; top: auto; width: 100%; height: 430px; min-height: 0; }
   .mhi-goal-options label { min-height: 49px; }
   .mhi-browse-menu { left: -125px; width: min(310px,calc(100vw - 24px)); }
+  .mhi-introduction-grid { gap: 26px; padding-block: 55px 68px; }
+  .mhi-introduction-copy h2 { font-size: clamp(30px,8vw,39px); }
+  .mhi-introduction-lead { margin-block: 15px 23px; }
+  .mhi-introduction-points { gap: 15px; }
+  .mhi-introduction-actions { margin-top: 27px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mhi-portrait-track { animation: none; }
