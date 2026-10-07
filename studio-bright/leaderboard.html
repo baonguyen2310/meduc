@@ -3,11 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#050505" />
     <title>Bảng xếp hạng — Meduc</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/studio.css" />
     <link rel="stylesheet" href="assets/bright.css" />
+    <script>
+      try {
+        document.documentElement.dataset.meducTheme = localStorage.getItem('meduc-theme') === 'light' ? 'light' : 'dark';
+      } catch (_) {
+        document.documentElement.dataset.meducTheme = 'dark';
+      }
+    </script>
+    <link rel="stylesheet" href="assets/leaderboard-masterclass.css?v=20261007" />
     <script defer src="assets/data.js"></script>
     <script defer src="assets/studio.js"></script>
   </head>

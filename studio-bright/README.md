@@ -1,6 +1,6 @@
 # Meduc Bright — white & red design preview
 
-A separate, brighter color variant of Meduc Studio. Everything lives in `studio-bright/`; the original `studio/` and all existing Meduc pages remain unchanged. Layouts, content and demo interactions are retained, with pure-white page backgrounds, sharper neutral text, brighter brand-red accents and a more energetic leaderboard.
+A separate, brighter color variant of Meduc Studio. Everything lives in `studio-bright/`; the original `studio/` and all existing Meduc pages remain unchanged. Most pages use white backgrounds, neutral text and red accents. The leaderboard now has its own MasterClass-inspired dark and light layout.
 
 ## Open locally
 
@@ -19,7 +19,7 @@ Then open `http://127.0.0.1:4174/index.html`. On a server already serving the Me
 3. `course_detail.html?id=clinical-thinking` — individualized course details, accessible tabs, curriculum, teacher, reviews and a three-part reading preview. Other supported IDs: `anatomy`, `surgery`, `ecg`, `physiology`, `examination`.
 4. `instructors.html` — cinematic portrait gallery, specialty filters and individual teacher profiles.
 5. `article_detail.html` — editorial reading layout, contents navigation, reading progress, save and copy link.
-6. `leaderboard.html` — weekly/monthly rankings and school filters. Rankings are fictional demonstration snapshots, not a live points system.
+6. `leaderboard.html` — MasterClass-inspired editorial layout with dark/light switch, weekly/monthly rankings and school filters. Rankings are fictional demonstration snapshots, not a live points system.
 7. `exams.html` — school → year → subject hierarchy, difficulty, search, save and resume. Six sample sets across two schools, backed by three distinct question banks.
 8. `practice.html?exam=heart-hmu` — five true/false questions, answer feedback, explanation, references, notes, progress, results, review, wrong-answer retry and full retry.
 
@@ -35,7 +35,8 @@ Question content is limited to basic anatomy/physiology and linked to the releva
 
 - Eight independent HTML entry points with shared styling and scripts.
 - `assets/studio.css`: unmodified copy of the original layouts, components, mobile and reduced-motion support.
-- `assets/bright.css`: new white/red palette, neutral photo treatment, higher-contrast controls, answer states and leaderboard styling; loaded after `studio.css` on all eight pages.
+- `assets/bright.css`: white/red palette, neutral photo treatment, higher-contrast controls and answer states; loaded after `studio.css` on all eight pages.
+- `assets/leaderboard-masterclass.css`: leaderboard-only dark/light layout, loaded after `bright.css` on `leaderboard.html`. Its theme switch uses the same `meduc-theme` localStorage key as the PHP homepage.
 - `assets/data.js`: all fictional instructors, courses, rankings, exam sets and educational question banks.
 - `assets/studio.js`: rendering and local interactions; no libraries or CDN dependencies.
 - `assets/fonts/`: locally stored Be Vietnam Pro and Manrope font files from Google Fonts.
@@ -45,7 +46,7 @@ Accessibility includes semantic landmarks, labels, keyboard-operable tabs, nativ
 
 ## Bright variant verification
 
-- All eight pages render pure-white body backgrounds and load the new theme.
+- Seven pages render pure-white body backgrounds; the leaderboard defaults to dark and supports a saved light mode.
 - All eight pages checked at 1280 px, 390 px and 320 px without document-level horizontal overflow or observed broken images.
 - Visual checks cover every page, the homepage closing CTA, leaderboard podium and ranking table, and answer feedback.
 - Weekly/monthly ranking order and school filtering checked.
