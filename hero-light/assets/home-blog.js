@@ -87,6 +87,6 @@
     grid.append(article);
   });
 
-  voices.after(section);
+  (document.querySelector("body.meduc-home-v2 > .mhi-testimonials") || voices).after(section);
   source.remove();
 })();
