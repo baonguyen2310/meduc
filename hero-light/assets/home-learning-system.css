@@ -1,0 +1,90 @@
+body.meduc-home-v2 > .mhi-system {
+  --system-backdrop: #060607;
+  --system-copy-bg: #242113;
+  --system-ink: #f5f1e7;
+  --system-muted: #d0cbbd;
+  --system-cta: #ee3150;
+  padding: 85px 0 120px;
+  overflow: hidden;
+  background: var(--system-backdrop);
+  color: var(--system-ink);
+  font-family: MHIInter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-system {
+  --system-backdrop: #f4f5f6;
+  --system-copy-bg: #e8e4d8;
+  --system-ink: #25231e;
+  --system-muted: #58564f;
+  --system-cta: #bd2e44;
+}
+.mhi-system, .mhi-system * { box-sizing: border-box; }
+.mhi-system-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mhi-system-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; overflow: hidden; border-radius: 23px; }
+.mhi-system-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-width: 0; padding: clamp(45px, 5.2vw, 84px); background: var(--system-copy-bg); }
+.mhi-system-mark { display: flex; flex-direction: column; align-items: flex-start; color: var(--system-ink); }
+.mhi-system-mark > span { font: 500 clamp(34px, 3.15vw, 48px)/.98 Georgia, 'Times New Roman', serif; letter-spacing: -.055em; }
+.mhi-system-domain { font-size: .55em; letter-spacing: -.025em; }
+.mhi-system-mark small { margin-top: 10px; font: 500 14px/1.2 MHIInter, Arial, sans-serif; letter-spacing: .3em; }
+.mhi-system-copy h2 { max-width: 660px; margin: 55px 0 0; color: var(--system-ink); font: 400 clamp(40px, 4.3vw, 70px)/1.06 Georgia, 'Times New Roman', serif; letter-spacing: -.065em; text-wrap: balance; }
+.mhi-system-description { max-width: 550px; margin: 28px 0 0; color: var(--system-muted); font: 400 clamp(17px, 1.5vw, 22px)/1.48 MHIInter, Arial, sans-serif; }
+.mhi-system-cta { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 58px; margin-top: 45px; padding: 12px 18px 12px 25px; border-radius: 8px; background: var(--system-cta); color: #fff !important; font: 700 16px/1.3 MHIInter, Arial, sans-serif; text-decoration: none; transition: filter .2s, transform .2s; }
+.mhi-system-cta:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.mhi-system-cta-arrow { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: #ffffffd9; color: var(--system-cta); font-size: 19px; line-height: 1; }
+.mhi-system-visual { position: relative; display: grid; place-items: center; min-width: 0; min-height: 600px; padding: 48px 38px; isolation: isolate; background: repeating-linear-gradient(90deg, transparent 0, transparent calc(25% - 2px), #6e4c2f42 calc(25% - 2px), #6e4c2f42 25%), linear-gradient(125deg, #aa7743 2%, #dda665 42%, #9d6e43 100%); }
+.mhi-system-visual::before { position: absolute; z-index: -1; inset: 0; background: linear-gradient(145deg, #ffeca75c 3%, transparent 31%, transparent 62%, #38260c3d 98%); content: ''; }
+.mhi-system-visual::after { position: absolute; z-index: -1; right: -10%; bottom: -45%; width: 125%; height: 62%; transform: rotate(-13deg); background: #42301b24; filter: blur(27px); content: ''; }
+.mhi-system-frame { width: min(100%, 570px); padding: 18px; border: 13px solid #342821; background: #e7ddc6; box-shadow: 0 28px 40px #2417045c, inset 0 0 0 1px #fffbef; }
+.mhi-system-board { min-height: 455px; padding: 30px 29px 22px; background: #222019; color: #f4ead7; box-shadow: inset 0 0 0 1px #584d38; }
+.mhi-system-board-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #8b7a58; }
+.mhi-system-board-head > span { font: 500 15px/1.2 Georgia, 'Times New Roman', serif; letter-spacing: -.03em; }
+.mhi-system-board-head i { padding: 0 3px; color: #e46d54; font-style: normal; }
+.mhi-system-board-head small { color: #beb39d; font: 700 8px/1.3 MHIInter, Arial, sans-serif; letter-spacing: .13em; white-space: nowrap; }
+.mhi-system-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-top: 17px; }
+.mhi-system-link { display: flex; align-items: center; min-width: 0; min-height: 91px; gap: 11px; padding: 10px 11px; border: 1px solid #736750; background: #2d2a22; color: #f5eddf !important; text-decoration: none; transition: border-color .2s, background-color .2s, transform .2s; }
+.mhi-system-link:hover { transform: translateY(-2px); border-color: #e9c793; background: #39352a; }
+.mhi-system-icon { position: relative; display: grid; flex: 0 0 43px; place-items: center; width: 43px; height: 43px; overflow: hidden; border-radius: 4px; background: #fff; color: #c53836; font: 700 20px/1 Georgia, serif; }
+.mhi-system-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.mhi-system-link-title { min-width: 0; font: 700 11px/1.35 MHIInter, Arial, sans-serif; letter-spacing: .045em; }
+.mhi-system-link-arrow { align-self: flex-start; margin-left: auto; color: #bfb39d; font-size: 15px; line-height: 1; }
+.mhi-system-link:hover .mhi-system-link-arrow { color: #f5c68b; }
+.mhi-system-board-foot { margin: 18px 0 0; color: #aca18a; font: 600 8px/1.3 MHIInter, Arial, sans-serif; letter-spacing: .2em; text-align: center; }
+.mhi-system a:focus-visible { outline: 2px solid #ffcf9b; outline-offset: 3px; }
+@media (max-width: 1100px) {
+  .mhi-system-copy { padding: 46px; }
+  .mhi-system-copy h2 { margin-top: 43px; font-size: clamp(40px, 4.3vw, 52px); }
+  .mhi-system-visual { padding: 30px 25px; }
+  .mhi-system-frame { padding: 13px; border-width: 10px; }
+  .mhi-system-board { padding: 22px 18px 16px; }
+  .mhi-system-link { gap: 7px; padding: 8px; }
+  .mhi-system-icon { flex-basis: 34px; width: 34px; height: 34px; }
+}
+@media (max-width: 820px) {
+  .mhi-system-panel { grid-template-columns: 1fr; }
+  .mhi-system-copy { min-height: 480px; padding: 48px; }
+  .mhi-system-copy h2 { max-width: 650px; font-size: clamp(42px, 7vw, 65px); }
+  .mhi-system-visual { min-height: 555px; }
+}
+@media (max-width: 650px) {
+  body.meduc-home-v2 > .mhi-system { padding: 65px 0 80px; }
+  .mhi-system-shell { width: calc(100% - 32px); }
+  .mhi-system-panel { border-radius: 14px; }
+  .mhi-system-copy { min-height: 0; padding: 42px 28px 49px; }
+  .mhi-system-mark > span { font-size: 37px; }
+  .mhi-system-mark small { font-size: 11px; }
+  .mhi-system-copy h2 { margin-top: 37px; font-size: clamp(37px, 10.4vw, 52px); }
+  .mhi-system-description { margin-top: 23px; font-size: 16px; }
+  .mhi-system-cta { min-height: 51px; margin-top: 32px; font-size: 14px; }
+  .mhi-system-visual { min-height: 515px; padding: 30px 17px; }
+  .mhi-system-frame { padding: 10px; border-width: 8px; }
+  .mhi-system-board { min-height: 0; padding: 17px 10px 13px; }
+  .mhi-system-board-head { flex-wrap: wrap; gap: 4px; padding-bottom: 12px; }
+  .mhi-system-board-head > span { font-size: 12px; }
+  .mhi-system-board-head small { font-size: 7px; }
+  .mhi-system-links { gap: 6px; padding-top: 11px; }
+  .mhi-system-link { min-height: 82px; gap: 7px; padding: 7px; }
+  .mhi-system-icon { flex-basis: 28px; width: 28px; height: 28px; }
+  .mhi-system-link-title { font-size: 9px; }
+  .mhi-system-link-arrow { font-size: 12px; }
+  .mhi-system-board-foot { font-size: 7px; letter-spacing: .1em; }
+}
+@media (prefers-reduced-motion: reduce) { .mhi-system-link, .mhi-system-cta { transition: none; } }
