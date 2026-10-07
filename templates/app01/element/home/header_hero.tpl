@@ -1,4 +1,12 @@
 <div class="mhi" id="meduc-home-intro">
+  <svg class="mhi-icon-sprites" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="mhi-icon-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
+    <symbol id="mhi-icon-book" viewBox="0 0 24 24"><path d="M12 5v16M12 5C8 3 5 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-3-1-6-1-10 1Z" /></symbol>
+    <symbol id="mhi-icon-pulse" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5" /></symbol>
+    <symbol id="mhi-icon-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M2 21v-3a7 7 0 0 1 14 0v3M17 4a3 3 0 0 1 0 6m2 4a5 5 0 0 1 3 5v2" /></symbol>
+    <symbol id="mhi-icon-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="4" /></symbol>
+    <symbol id="mhi-icon-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z" fill="currentColor" stroke="none" /></symbol>
+  </svg>
   <a class="mhi-skip" href="#meduc-home-content">Đến nội dung chính</a>
   <header class="mhi-header">
     <div class="mhi-network">
@@ -12,8 +20,7 @@
     </div>
     <div class="mhi-shell mhi-header-main">
       <a class="mhi-brand" href="/" aria-label="Meduc — Trang chủ">
-        <svg viewBox="0 0 30 28" fill="none" aria-hidden="true"><path d="M3 24V4l12 14L27 4v20" stroke="currentColor" stroke-width="4.5" /></svg>
-        <span>meduc<span class="mhi-brand-dot">.</span></span>
+        <img src="https://cdn.meduc.vn/media/core/logo/logo-meduc.png" alt="Meduc" width="1439" height="757" decoding="async" />
       </a>
       <div class="mhi-browse-wrap">
         <button class="mhi-browse-button" id="mhi-browse-button" type="button" aria-expanded="false" aria-controls="mhi-browse-menu">
@@ -21,11 +28,12 @@
         </button>
         <nav class="mhi-browse-menu" id="mhi-browse-menu" aria-label="Khám phá Meduc" hidden>
           <p>Học điều bạn cần. Theo cách của bạn.</p>
-          <a href="/khoa-hoc-v2?nhom=foundation">Y khoa cơ sở <span aria-hidden="true">↗</span></a>
-          <a href="/khoa-hoc-v2?nhom=clinical">Nội khoa &amp; lâm sàng <span aria-hidden="true">↗</span></a>
-          <a href="/danh-sach-de-thi">Ngân hàng đề thi <span aria-hidden="true">↗</span></a>
-          <a href="/gioi-thieu">Về Meduc <span aria-hidden="true">↗</span></a>
-          <a class="mhi-browse-all" href="/khoa-hoc-v2">Xem tất cả khóa học <span aria-hidden="true">→</span></a>
+          <a href="/khoa-hoc-v2?nhom=foundation"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg>Y khoa cơ sở<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/khoa-hoc-v2?nhom=clinical"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg>Nội khoa &amp; lâm sàng<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/khoa-hoc-v2?nhom=clinical"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-book" /></svg>Ngoại khoa<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/danh-sach-de-thi"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-pulse" /></svg>Ngân hàng đề thi<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a href="/gioi-thieu-v2#doi-ngu"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-users" /></svg>Gặp gỡ giảng viên<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
+          <a class="mhi-browse-all" href="/khoa-hoc-v2">Xem tất cả khóa học<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
         </nav>
       </div>
       <form class="mhi-search" action="/tim-kiem" method="get" role="search">
@@ -34,6 +42,7 @@
         <input id="mhi-search-input" name="keyword" type="search" placeholder="Hôm nay bạn muốn học gì?" autocomplete="off" />
       </form>
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
+        <a class="mhi-instructors" href="/gioi-thieu-v2#doi-ngu">Giảng viên</a>
         <a class="mhi-plans" href="/khoa-hoc-v2">Gói học</a>
         <a class="mhi-login" href="/member/login">Đăng nhập</a>
       </nav>
@@ -68,7 +77,7 @@
           </div>
         </fieldset>
         <p class="mhi-goal-error" id="mhi-goal-error" role="alert" hidden>Chọn ít nhất một mục tiêu để Meduc gợi ý cho bạn nhé.</p>
-        <button class="mhi-goal-submit" type="submit">Tìm lộ trình của tôi <span aria-hidden="true">→</span></button>
+        <button class="mhi-goal-submit" type="submit">Tìm lộ trình của tôi <svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></button>
         <p class="mhi-goal-hint" id="mhi-goal-hint" role="status">Bạn có thể chọn nhiều mục tiêu.</p>
       </form>
     </div>
@@ -86,7 +95,7 @@
           <div class="mhi-portrait"><img src="/hero-light/assets/images/meduc-doctor-02.jpg" alt="" width="600" height="400" /></div>
         </div></div>
       </div>
-      <button class="mhi-motion-toggle" id="mhi-motion-toggle" type="button" aria-label="Tạm dừng chuyển động ảnh" aria-pressed="false" title="Tạm dừng chuyển động ảnh">Ⅱ</button>
+      <button class="mhi-motion-toggle" id="mhi-motion-toggle" type="button" aria-label="Tạm dừng chuyển động ảnh" aria-pressed="false" title="Tạm dừng chuyển động ảnh"><svg class="mhi-icon mhi-pause" aria-hidden="true"><use href="#mhi-icon-pause" /></svg><svg class="mhi-icon mhi-play" aria-hidden="true"><use href="#mhi-icon-play" /></svg></button>
     </div>
   </main>
 

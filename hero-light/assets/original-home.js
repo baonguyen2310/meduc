@@ -50,7 +50,6 @@
     motionButton.setAttribute("aria-pressed", String(paused));
     motionButton.setAttribute("aria-label", paused ? "Phát chuyển động ảnh" : "Tạm dừng chuyển động ảnh");
     motionButton.title = motionButton.getAttribute("aria-label");
-    motionButton.textContent = paused ? "▶" : "Ⅱ";
   }
   setPaused(reducedMotion.matches);
   motionButton.addEventListener("click", () => setPaused(!wall.classList.contains("is-paused")));
