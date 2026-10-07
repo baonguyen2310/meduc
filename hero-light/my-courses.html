@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="assets/hero.css" />
     <link rel="stylesheet" href="assets/light.css" />
     <link rel="stylesheet" href="assets/about.css" />
-    <link rel="stylesheet" href="assets/my-courses.css" />
-    <script src="assets/my-courses.js" defer></script>
+    <link rel="stylesheet" href="assets/my-courses.css?v=20261007-insights" />
+    <link rel="stylesheet" href="assets/my-courses-insights.css?v=20261007-insights" />
+    <script src="assets/my-courses.js?v=20261007-insights" defer></script>
+    <script src="assets/my-courses-insights.js?v=20261007-insights" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Đến nội dung chính</a>
@@ -23,6 +25,9 @@
       <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" /></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6" /></symbol>
       <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24"><path d="M2 12h4l3-7 5 14 3-7h5" /></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z" /></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5Zm-9 10 9 5 9-5M3 17l9 5 9-5" /></symbol>
     </svg>
 
     <header class="site-header about-header learning-header"><div class="shell about-header-inner">
@@ -32,7 +37,15 @@
     </div></header>
 
     <main id="main">
-      <section class="learning-hero" aria-labelledby="learning-title"><div class="shell learning-hero-grid"><div class="learning-hero-copy"><span class="learning-kicker"><span></span> KHÔNG GIAN HỌC TẬP MEDUC</span><h1 id="learning-title">HỌC TIẾP TỪ<br /><em>NƠI BẠN DỪNG.</em></h1><p>Mỗi môn học là một hành trình. Xem lại bài đang học, theo dõi chặng đường và chọn bước tiếp theo trong cùng một nơi.</p><div class="learning-hero-actions"><a class="button" href="#tiep-tuc-hoc">Xem bài đang học <svg class="icon"><use href="#i-arrow" /></svg></a><a class="learning-text-link" href="#tat-ca-khoa-hoc">Các khóa trong thư viện ↓</a></div></div><div class="learning-hero-visual" aria-hidden="true"><div class="learning-hero-image"><img src="assets/images/study-editorial.jpg" alt="" /></div><div class="learning-visual-note"><strong>MEDUC.</strong><span>HỌC SÂU<br />TỪNG BÀI MỘT.</span></div></div></div></section>
+      <section class="learning-insights" aria-labelledby="insights-title"><div class="shell">
+        <div class="insights-topline"><span>KHÔNG GIAN HỌC TẬP / PHÂN TÍCH CÁ NHÂN</span><span class="insights-sample">● DỮ LIỆU MINH HỌA</span></div>
+        <div class="insights-course-tabs" id="insights-course-tabs" role="tablist" aria-label="Chọn khóa học để xem chỉ số"><span class="insights-loading">Đang tải các khóa học Meduc...</span></div>
+        <div class="insights-heading"><div><span class="insights-eyebrow">THEO DÕI HÀNH TRÌNH HỌC</span><h1 id="insights-title">CHỈ SỐ <em>TIẾN BỘ.</em></h1><p id="insights-course-name">Chọn khóa học để xem chỉ số năng lực và sổ tay câu sai.</p></div><a class="insights-outline-link" id="insights-course-link" href="#tat-ca-khoa-hoc">Xem đề cương khóa học <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></div>
+        <div class="insights-kpis" id="insights-kpis" aria-live="polite"></div>
+        <div class="insights-chart-grid"><article class="insights-panel insights-trend"><div class="insights-panel-head"><div><span>01 / TIẾN ĐỘ HỌC TẬP</span><h2>Đi lên mỗi buổi học.</h2></div><span class="insights-panel-note">7 buổi gần nhất</span></div><div class="insights-trend-graph" id="insights-trend-graph"></div><div class="insights-chart-foot"><span>Điểm luyện tập minh họa</span><strong id="insights-trend-change"></strong></div></article><article class="insights-panel insights-ability"><div class="insights-panel-head"><div><span>02 / BẢN ĐỒ NĂNG LỰC</span><h2>Hiểu rõ điểm mạnh.</h2></div></div><div class="insights-radar" id="insights-radar"></div><p class="insights-ability-note">Năm nhóm năng lực được mô phỏng để bạn hình dung cách theo dõi sau mỗi khóa học.</p></article></div>
+        <section class="insights-notebook" aria-labelledby="notebook-title"><div class="insights-notebook-intro"><span>03 / ÔN TẬP THÔNG MINH</span><h2 id="notebook-title">SỔ TAY <em>CÂU SAI.</em></h2><p>Những câu trả lời chưa đúng được gom theo từng khóa. Mở một câu để xem đáp án và ghi chú ôn tập.</p><div class="insights-notebook-count" id="insights-notebook-count"></div></div><div class="insights-question-list" id="insights-question-list"></div></section>
+      </div></section>
+      <section class="learning-hero" aria-labelledby="learning-title"><div class="shell learning-hero-grid"><div class="learning-hero-copy"><span class="learning-kicker"><span></span> KHÔNG GIAN HỌC TẬP MEDUC</span><h2 id="learning-title">HỌC TIẾP TỪ<br /><em>NƠI BẠN DỪNG.</em></h2><p>Mỗi môn học là một hành trình. Xem lại bài đang học, theo dõi chặng đường và chọn bước tiếp theo trong cùng một nơi.</p><div class="learning-hero-actions"><a class="button" href="#tiep-tuc-hoc">Xem bài đang học <svg class="icon"><use href="#i-arrow" /></svg></a><a class="learning-text-link" href="#tat-ca-khoa-hoc">Các khóa trong thư viện ↓</a></div></div><div class="learning-hero-visual" aria-hidden="true"><div class="learning-hero-image"><img src="assets/images/study-editorial.jpg" alt="" /></div><div class="learning-visual-note"><strong>MEDUC.</strong><span>HỌC SÂU<br />TỪNG BÀI MỘT.</span></div></div></div></section>
 
       <div class="shell"><div class="learning-preview-note" role="note"><span class="learning-preview-dot"></span><p><strong>Bản xem trước giao diện.</strong> Các khóa và bài học lấy từ danh mục Meduc; số bài hoàn thành bên dưới chỉ minh họa cách hiển thị tiến độ, chưa phải dữ liệu tài khoản.</p><a href="/member/login">Đến trang đăng nhập ↗</a></div></div>
 

@@ -62,6 +62,7 @@
     fetch(`${assetsBase}course-outline.json`).then((response) => { if (!response.ok) throw new Error('Outline unavailable'); return response.json(); }),
   ]).then(([catalog, outline]) => {
     const items = enrich(catalog, outline);
+    if (window.renderMyCoursesInsights) window.renderMyCoursesInsights(items);
     renderFeatured(items[0]);
     const grid = document.querySelector('#course-grid');
     const empty = document.querySelector('#course-empty');
