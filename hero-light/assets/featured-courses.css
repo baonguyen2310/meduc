@@ -143,7 +143,7 @@ html[data-meduc-theme="dark"] body.meduc-home-v2 > .mhi-featured-catalog {
 .mhi-featured-catalog-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--catalog-border); border-radius: 12px; background: var(--catalog-surface); box-shadow: 0 12px 32px #1c1c2510; }
 .mhi-featured-catalog-cover { position: relative; display: block; aspect-ratio: 1.25; overflow: hidden; background: #e8e9ec; }
 .mhi-featured-catalog-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.mhi-featured-catalog-badge { position: absolute; left: 16px; bottom: 16px; max-width: calc(100% - 32px); padding: 8px 11px; border-radius: 5px; background: #bb293c; color: #fff; font: 700 12px/1.25 MHIInter, Arial, sans-serif; box-shadow: 0 3px 12px #1d111a33; }
+.mhi-featured-catalog-badge { position: absolute; top: 16px; left: 16px; max-width: calc(100% - 32px); padding: 8px 11px; border-radius: 5px; background: #bb293c; color: #fff; font: 700 12px/1.25 MHIInter, Arial, sans-serif; box-shadow: 0 3px 12px #1d111a33; }
 .mhi-featured-catalog-body { display: flex; flex: 1; flex-direction: column; min-height: 198px; padding: 22px 24px 20px; }
 .mhi-featured-catalog-body h3 { margin: 0 0 8px; color: var(--catalog-ink); font: 700 clamp(17px, 1.5vw, 21px)/1.35 MHIInter, Arial, sans-serif; letter-spacing: -.025em; }
 .mhi-featured-catalog-body h3 a { color: inherit !important; text-decoration: none; }
