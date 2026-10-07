@@ -5,6 +5,7 @@ body.meduc-home-v2 > .mhi-consult {
   --consult-field: #1b1d22;
   --consult-border: #4c4f55;
   --consult-red: #e5334e;
+  --consult-red-hover: #f04c65;
   padding: clamp(88px, 8vw, 126px) 0;
   background: var(--consult-bg);
   color: var(--consult-ink);
@@ -17,6 +18,7 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-consult {
   --consult-field: #fff;
   --consult-border: #cfd1d5;
   --consult-red: #b6283b;
+  --consult-red-hover: #ce3c51;
 }
 .mhi-consult, .mhi-consult * { box-sizing: border-box; }
 .mhi-consult-shell { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); align-items: center; gap: clamp(58px, 8vw, 132px); width: min(83.333333%, 1440px); margin: 0 auto; }
@@ -39,9 +41,9 @@ html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-consult {
 .mhi-consult-form input.error, .mhi-consult-form textarea.error { border-color: var(--consult-red); }
 .mhi-consult-form .invalid-feedback { display: block; margin-top: 6px; color: var(--consult-red); font: 400 12px/1.45 MHIInter, Arial, sans-serif; }
 .mhi-consult-form .form-group.text-center { text-align: left !important; }
-.mhi-consult-submit { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-width: 265px; min-height: 54px; padding: 12px 19px; border: 1px solid var(--consult-border); border-radius: 6px; background: transparent; color: var(--consult-ink); font: 700 14px/1.4 MHIInter, Arial, sans-serif; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+.mhi-consult-submit { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-width: 265px; min-height: 54px; padding: 12px 19px; border: 1px solid var(--consult-red); border-radius: 6px; background: var(--consult-red); color: #fff; font: 700 14px/1.4 MHIInter, Arial, sans-serif; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
 .mhi-consult-submit span { font-size: 21px; line-height: 1; }
-.mhi-consult-submit:hover { border-color: var(--consult-red); background: var(--consult-red); color: #fff; }
+.mhi-consult-submit:hover { border-color: var(--consult-red-hover); background: var(--consult-red-hover); color: #fff; }
 .mhi-consult-submit:focus-visible { outline: 2px solid var(--consult-red); outline-offset: 3px; }
 @media (max-width: 900px) {
   .mhi-consult-shell { grid-template-columns: 1fr; gap: 40px; }

@@ -57,7 +57,7 @@
         <link href="/hero-light/assets/home-books.css?v=20261007-home-books" rel="stylesheet" />
         <link href="/hero-light/assets/home-feedback.css?v=20261007-home-feedback" rel="stylesheet" />
         <link href="/hero-light/assets/home-blog.css?v=20261007-home-blog" rel="stylesheet" />
-        <link href="/hero-light/assets/home-consult.css?v=20261007-home-consult" rel="stylesheet" />
+        <link href="/hero-light/assets/home-consult.css?v=20261007-home-consult-cta" rel="stylesheet" />
         <link href="/hero-light/assets/home-community.css?v=20261007-home-community" rel="stylesheet" />
         <link href="/hero-light/assets/home-learning-system.css?v=20261007-home-learning-system" rel="stylesheet" />
         <script src="/hero-light/assets/original-home.js" defer></script>
