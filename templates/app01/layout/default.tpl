@@ -80,8 +80,8 @@
     {/if}
 
     {if !empty(PAGE_TYPE) && PAGE_TYPE == PRODUCT_DETAIL}
-        <link href="/hero-light/assets/course-classroom.css?v=20261007-classroom" rel="stylesheet" />
-        <script src="/hero-light/assets/course-classroom.js?v=20261007-classroom" defer></script>
+        <link href="/hero-light/assets/course-classroom.css?v=20261007-classroom2" rel="stylesheet" />
+        <script src="/hero-light/assets/course-classroom.js?v=20261007-classroom2" defer></script>
     {/if}
 
 

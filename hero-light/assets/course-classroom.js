@@ -197,8 +197,7 @@
     play.type = 'button';
     play.className = 'mcl-video-play';
     play.setAttribute('aria-label', `Phát video ${lesson.title}`);
-    play.style.backgroundImage = `linear-gradient(180deg, #1117, #111a), url("https://i.ytimg.com/vi/${id}/hqdefault.jpg")`;
-    play.innerHTML = '<span aria-hidden="true">▶</span><strong>Phát bài giảng</strong>';
+    play.innerHTML = '<em>MEDUC / VIDEO BÀI HỌC</em><span aria-hidden="true">▶</span><strong>Phát bài giảng</strong>';
     play.addEventListener('click', () => {
       const iframe = document.createElement('iframe');
       iframe.title = `Video bài học: ${lesson.title}`;
