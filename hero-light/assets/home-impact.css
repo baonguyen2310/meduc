@@ -1,0 +1,61 @@
+body.meduc-home-v2 > .mhi-impact {
+  --impact-bg: #060607;
+  --impact-ink: #f6f6f7;
+  --impact-muted: #adaeb3;
+  --impact-card: #1b1d21;
+  --impact-line: #3d4047;
+  --impact-red: #ed3854;
+  padding: 85px 0 120px;
+  background: var(--impact-bg);
+  color: var(--impact-ink);
+  font-family: MHIInter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] body.meduc-home-v2 > .mhi-impact {
+  --impact-bg: #f4f5f6;
+  --impact-ink: #23262d;
+  --impact-muted: #686d76;
+  --impact-card: #fff;
+  --impact-line: #d9dce1;
+  --impact-red: #bd2e44;
+}
+.mhi-impact, .mhi-impact * { box-sizing: border-box; }
+.mhi-impact-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mhi-impact-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 43px; }
+.mhi-impact-kicker { margin: 0 0 23px; color: var(--impact-red); font: 700 11px/1.4 MHIInter, Arial, sans-serif; letter-spacing: .17em; }
+.mhi-impact-heading h2 { margin: 0; color: var(--impact-ink); font: 400 clamp(42px, 4.8vw, 70px)/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -.06em; }
+.mhi-impact-heading h2 em { color: var(--impact-red); font-style: normal; }
+.mhi-impact-intro { max-width: 330px; margin: 0 0 5px; color: var(--impact-muted); font: 400 clamp(15px, 1.3vw, 18px)/1.55 MHIInter, Arial, sans-serif; }
+.mhi-impact-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: hidden; border: 1px solid var(--impact-line); border-radius: 14px; background: var(--impact-card); }
+.mhi-impact-item { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 270px; padding: 25px 26px 28px; border-right: 1px solid var(--impact-line); }
+.mhi-impact-item:last-child { border-right: 0; }
+.mhi-impact-item::after { position: absolute; right: 26px; bottom: 0; left: 26px; height: 3px; background: var(--impact-red); content: ''; }
+.mhi-impact-index { color: var(--impact-muted); font: 700 11px/1.3 MHIInter, Arial, sans-serif; letter-spacing: .15em; }
+.mhi-impact-number { margin-top: auto; color: var(--impact-ink); font: 400 clamp(48px, 5vw, 76px)/1 MHIAnton, Impact, sans-serif; letter-spacing: -.025em; white-space: nowrap; }
+.mhi-impact-label { min-height: 43px; margin-top: 20px; color: var(--impact-muted); font: 500 clamp(13px, 1.15vw, 17px)/1.4 MHIInter, Arial, sans-serif; }
+@media (max-width: 1100px) {
+  .mhi-impact-item { min-height: 235px; padding: 22px 19px 25px; }
+  .mhi-impact-item::after { right: 19px; left: 19px; }
+  .mhi-impact-number { font-size: clamp(44px, 4.8vw, 60px); }
+}
+@media (max-width: 820px) {
+  .mhi-impact-heading { align-items: start; flex-direction: column; gap: 22px; }
+  .mhi-impact-intro { max-width: 520px; }
+  .mhi-impact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mhi-impact-item:nth-child(2) { border-right: 0; }
+  .mhi-impact-item:nth-child(-n+2) { border-bottom: 1px solid var(--impact-line); }
+  .mhi-impact-number { font-size: clamp(48px, 7vw, 72px); }
+}
+@media (max-width: 650px) {
+  body.meduc-home-v2 > .mhi-impact { padding: 66px 0 85px; }
+  .mhi-impact-shell { width: calc(100% - 32px); }
+  .mhi-impact-heading { gap: 18px; margin-bottom: 28px; }
+  .mhi-impact-kicker { margin-bottom: 16px; font-size: 10px; }
+  .mhi-impact-heading h2 { font-size: clamp(38px, 10vw, 52px); }
+  .mhi-impact-intro { font-size: 15px; }
+  .mhi-impact-grid { border-radius: 10px; }
+  .mhi-impact-item { min-height: 182px; padding: 16px 13px 18px; }
+  .mhi-impact-item::after { right: 13px; left: 13px; height: 2px; }
+  .mhi-impact-index { font-size: 9px; }
+  .mhi-impact-number { font-size: clamp(37px, 10vw, 51px); }
+  .mhi-impact-label { min-height: 33px; margin-top: 9px; font-size: 11px; }
+}
