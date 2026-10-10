@@ -77,8 +77,12 @@ class TeacherExamLibrary
 
     public function teacherCourses(int $userId): array
     {
-        $rows = $this->connection->execute('SELECT product_id FROM teacher_course_access WHERE user_id = :id',
-            ['id' => $userId])->fetchAll('assoc');
+        $rows = $this->connection->execute('SELECT t.product_id FROM teacher_course_access t
+            JOIN products p ON p.id = t.product_id AND p.deleted = 0
+            JOIN categories c ON c.id = p.main_category_id
+                AND (c.id = 50 OR c.path_id LIKE :course_path)
+            WHERE t.user_id = :id',
+            ['id' => $userId, 'course_path' => '%|50|%'])->fetchAll('assoc');
         return array_map('intval', array_column($rows, 'product_id'));
     }
 
