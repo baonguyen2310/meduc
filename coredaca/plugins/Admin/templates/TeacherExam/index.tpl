@@ -11,7 +11,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="/masterclass" aria-label="MedUC - Trang chủ"><img src="https://cdn.meduc.vn/media/core/logo/logo-meduc.png" alt="MedUC"></a>
-    <nav><a href="/masterclass">Trang chủ</a><a href="/admin/user/profile">Tài khoản</a><a href="/admin/logout">Đăng xuất</a></nav>
+    <nav><a href="/masterclass">Trang chủ</a>{if $isManager}<a href="#management">Phân quyền</a>{/if}<a href="/admin/user/profile">Tài khoản</a><a href="/admin/logout">Đăng xuất</a></nav>
   </header>
   <main class="page">
     <section class="hero">
