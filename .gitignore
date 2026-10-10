@@ -1,6 +1,7 @@
 # Database dumps & large archives
 full_database.sql
 *.sql
+!scripts/teacher_exam_access.sql
 *.sql.gz
 *.zip
 *.tar.gz

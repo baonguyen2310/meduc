@@ -40,6 +40,8 @@ services:
       GOOGLE_SERVICE_ACCOUNT_FILE: /run/secrets/google-service-account.json
       APP_DEBUG: "false"
       MEDUC_TRUST_PROXY_HTTPS: "true"
+      MEDUC_2033_API_BASE: ${MEDUC_2033_API_BASE:-https://meduc.duckdns.org/api/2033}
+      MEDUC_2033_API_KEY: ${MEDUC_2033_API_KEY:-}
     volumes:
       - ./:/var/www/html
       - /opt/meduc-php/secrets/google-service-account.json:/run/secrets/google-service-account.json:ro

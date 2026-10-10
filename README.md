@@ -26,3 +26,13 @@ Các trang danh mục hiện dùng JSON xuất từ dữ liệu Meduc. Trang l�
 ## Trang chủ PHP gốc
 
 Trang chủ tại `meducv2.duckdns.org/` dùng `templates/app01/layout/default.tpl` và dữ liệu trang từ database. Header và hero mới nằm trong `templates/app01/element/home/header_hero.tpl`; hai chế độ màu của khu vực này dùng `hero-light/assets/original-home.css`. Nút trăng/mặt trời lưu lựa chọn với khóa `meduc-theme` trong `localStorage`. Các hàng nội dung cũ dưới hero vẫn do database Meduc PHP render; những khu vực đó sẽ được thay giao diện lần lượt.
+
+## Kho 2.033 đề cho giáo viên
+
+Sau khi triển khai mã, chạy một lần `scripts/teacher_exam_access.sql` trên database MedUC PHP. Script tạo nhóm `Giáo viên`, bảng gán giáo viên–khóa học, bảng gán môn/module–khóa học, bảng gán từng đề–khóa học và nhật ký tải Word. Có thể chạy lại script an toàn; các gán do quản trị viên đã sửa sẽ không bị đặt lại.
+
+Đặt `MEDUC_2033_API_KEY` trong file môi trường riêng của máy chủ bằng khóa API của kho đề MedUC Cao. PHP chỉ gọi API này ở phía server. `MEDUC_2033_API_BASE` mặc định là `https://meduc.duckdns.org/api/2033`. Sau khi thêm biến môi trường, tạo lại container PHP để biến mới có hiệu lực.
+
+Trang làm việc: `/admin/teacher-exams`. Quản trị viên thấy đủ 2.033 đề, tạo tài khoản quản trị với nhóm `Giáo viên` tại `/admin/user/add`, rồi gán các khóa được dạy trên trang làm việc. Giáo viên chỉ thấy và tải Word đề thuộc khóa đã được gán. Quyền này được kiểm tra lại trên từng yêu cầu xem đề và tải file; giáo viên không vào được các trang quản trị khác.
+
+24 môn/module có liên hệ rõ với khóa học được gán sẵn, bao phủ 1.349 đề trong danh mục kiểm tra ngày 10/10/2026. 684 đề còn lại vẫn có thể xem/tải bằng tài khoản quản trị và chỉ hiện với giáo viên sau khi quản trị viên gán môn/module hoặc đề riêng. Danh mục và số câu trên thẻ lấy từ bản xuất JSON đã đối chiếu với API (131.940 câu); nội dung đề và file Word lấy trực tiếp từ API MedUC Cao. Word bao gồm câu hỏi, lựa chọn, đáp án, lời giải và các ảnh đã đồng bộ; HTML phức tạp trong nội dung được chuyển thành văn bản có thể chỉnh sửa.

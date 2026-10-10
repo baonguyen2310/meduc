@@ -455,6 +455,15 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/role/permission', ['plugin' => 'Admin', 'controller' => 'Role', 'action' => 'permissionSetup']);
     $builder->connect('/role/permission/save', ['plugin' => 'Admin', 'controller' => 'Role', 'action' => 'permissionSave']);    
 
+    // Facourse 2,033 exam bank: teacher access is checked again for every exam.
+    $builder->connect('/teacher-exams', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'index']);
+    $builder->connect('/teacher-exams/data', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'data']);
+    $builder->connect('/teacher-exams/detail/:id', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/teacher-exams/word/:id', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'word'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/teacher-exams/save-teacher', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'saveTeacher']);
+    $builder->connect('/teacher-exams/save-topic', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'saveTopic']);
+    $builder->connect('/teacher-exams/save-exam', ['plugin' => 'Admin', 'controller' => 'TeacherExam', 'action' => 'saveExam']);
+
     // articles
     $builder->connect('/article', ['plugin' => 'Admin', 'controller' => 'Article', 'action' => 'list']);
     $builder->connect('/article/list', ['plugin' => 'Admin', 'controller' => 'Article', 'action' => 'list']);

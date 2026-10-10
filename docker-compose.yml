@@ -17,6 +17,8 @@ services:
       AZURE_TRANSLATOR_KEYS: ${AZURE_TRANSLATOR_KEYS:-}
       SLACK_FEEDBACK_WEBHOOK_URL: ${SLACK_FEEDBACK_WEBHOOK_URL:-}
       APP_DEBUG: "true"
+      MEDUC_2033_API_BASE: ${MEDUC_2033_API_BASE:-https://meduc.duckdns.org/api/2033}
+      MEDUC_2033_API_KEY: ${MEDUC_2033_API_KEY:-}
     volumes:
       - ./:/var/www/html
     depends_on:

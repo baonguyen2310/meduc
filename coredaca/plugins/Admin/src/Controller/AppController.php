@@ -8,6 +8,9 @@ use Cake\Event\EventInterface;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\UnauthorizedException;
+use App\Service\TeacherExamLibrary;
 
 static $js_page = [];
 
@@ -85,7 +88,9 @@ class AppController extends Controller {
             $mobile_template_code = !empty($mobile_template['code']) ? $mobile_template['code'] : null;                
         }
 
-        define('CODE_MOBILE_TEMPLATE', $mobile_template_code);
+        if (!defined('CODE_MOBILE_TEMPLATE')) {
+            define('CODE_MOBILE_TEMPLATE', $mobile_template_code);
+        }
 
         // kiểm tra tài khoản xem có quyền supper admin hay ko
         if(!defined('SUPPER_ADMIN') && !empty($this->Auth->user('supper_admin'))){
@@ -98,6 +103,28 @@ class AppController extends Controller {
 
         if($this->Auth->user('id')){
             $role_id = !empty($this->Auth->user()['role_id']) ? intval($this->Auth->user()['role_id']) : null;
+
+            if (empty($this->Auth->user('supper_admin'))) {
+                $current_user = TableRegistry::get('Users')->find()
+                    ->select(['id', 'role_id', 'status', 'deleted'])
+                    ->where(['id' => (int)$this->Auth->user('id')])->first();
+                if (empty($current_user) || empty($current_user->status) || !empty($current_user->deleted)) {
+                    throw new UnauthorizedException('Tài khoản không còn hoạt động.');
+                }
+                $role_id = (int)$current_user->role_id;
+            }
+
+            // The legacy permission map allows unlisted controllers/actions. Keep the
+            // teacher role inside its explicitly scoped workspace, regardless of it.
+            if (empty($this->Auth->user('supper_admin'))
+                && $role_id === TeacherExamLibrary::teacherRoleId()
+                && !($controller_request === 'TeacherExam'
+                    || ($controller_request === 'User' && in_array($action_request, [
+                        'login', 'logout', 'profile', 'profileSave', 'profileChangePass'
+                    ], true)))) {
+                throw new ForbiddenException('Tài khoản giáo viên chỉ được truy cập kho đề theo khóa học.');
+            }
+
             $check_permission = TableRegistry::get('Roles')->checkPermissionRequest($role_id, $controller_request, $action_request);
             if(!$check_permission && !$this->request->is('ajax')){
                 $this->showErrorPage('denied');

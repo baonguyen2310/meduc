@@ -13,6 +13,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Client;
+use App\Service\TeacherExamLibrary;
 
 class UserController extends AppController {
 
@@ -35,6 +36,9 @@ class UserController extends AppController {
 
         $params = $this->request->getQuery();
         if ($this->Auth->user()) {
+            if ((int)$this->Auth->user('role_id') === TeacherExamLibrary::teacherRoleId()) {
+                return $this->redirect(ADMIN_PATH . '/teacher-exams');
+            }
             $url_redirect = $this->Auth->redirectUrl();
             if(empty($url_redirect) || $url_redirect == '/'){
                 $url_redirect = ADMIN_PATH . '/main';
@@ -103,6 +107,10 @@ class UserController extends AppController {
 
         if(!empty($redirect) && $redirect != '/'){
             $url_redirect = $redirect;
+        }
+
+        if ((int)($user['role_id'] ?? 0) === TeacherExamLibrary::teacherRoleId()) {
+            $url_redirect = ADMIN_PATH . '/teacher-exams';
         }
         
         $this->responseJson([

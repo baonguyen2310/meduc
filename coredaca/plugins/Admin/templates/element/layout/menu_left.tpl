@@ -552,6 +552,13 @@
                 <i class="kt-menu__section-icon flaticon-more-v2"></i>
             </li>
 
+            <li class="kt-menu__item">
+                <a href="{ADMIN_PATH}/teacher-exams" class="kt-menu__link" path-menu="teacher_exams">
+                    <span class="kt-menu__link-icon"><i class="fa fa-file-word"></i></span>
+                    <span class="kt-menu__link-text">Kho 2.033 đề · giáo viên</span>
+                </a>
+            </li>
+
             {* menu bài tập *}
             <li class="kt-menu__item  kt-menu__item--submenu">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
