@@ -31,7 +31,7 @@ Trang chủ tại `meducv2.duckdns.org/` dùng `templates/app01/layout/default.t
 
 Sau khi triển khai mã, chạy một lần `scripts/teacher_exam_access.sql` trên database MedUC PHP. Script tạo nhóm `Giáo viên`, bảng gán giáo viên–khóa học, bảng gán môn/module–khóa học, bảng gán từng đề–khóa học và nhật ký tải Word. Có thể chạy lại script an toàn; các gán do quản trị viên đã sửa sẽ không bị đặt lại.
 
-Đặt `MEDUC_2033_API_KEY` trong file môi trường riêng của máy chủ bằng khóa API của kho đề MedUC Cao. PHP chỉ gọi API này ở phía server. `MEDUC_2033_API_BASE` mặc định là `https://meduc.duckdns.org/api/2033`. Sau khi thêm biến môi trường, tạo lại container PHP để biến mới có hiệu lực.
+Đặt `MEDUC_2033_API_KEY` trong file môi trường riêng của máy chủ bằng khóa API của kho đề MedUC Cao. PHP chỉ gọi API này ở phía server. `MEDUC_2033_API_BASE` mặc định là `https://meduc.duckdns.org/api/2033`. Trên Civo, người có quyền root có thể chạy `bash /opt/meduc-php/src/scripts/deploy_teacher_exams_civo.sh` để kéo mã, đồng bộ các file thay đổi, chạy migration, tạo lại container PHP và kiểm tra trang đăng nhập.
 
 Trang làm việc: `/admin/teacher-exams`. Quản trị viên thấy đủ 2.033 đề, tạo tài khoản quản trị với nhóm `Giáo viên` tại `/admin/user/add`, rồi gán các khóa được dạy trên trang làm việc. Giáo viên chỉ thấy và tải Word đề thuộc khóa đã được gán. Quyền này được kiểm tra lại trên từng yêu cầu xem đề và tải file; giáo viên không vào được các trang quản trị khác.
 
