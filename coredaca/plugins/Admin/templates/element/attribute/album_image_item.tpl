@@ -32,7 +32,7 @@
         <input name="" data-name="code" value="{if !empty($album.$key_code)}{$album.$key_code}{else}{$code_random}{/if}" class="d-none" type="text">
 
         <div class="row">
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-{if $code == 'danhsachtiethoc'}4{else}6{/if} col-12">
                 {if !empty($languages)}
                     {foreach from = $languages item = language key = k_lang name = title_item}
                         <div class="form-group">
@@ -103,6 +103,26 @@
                     {/foreach}
                 {/if}
             </div>
+
+            {if $code == 'danhsachtiethoc'}
+            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                {if !empty($languages)}
+                    {foreach from = $languages item = language key = k_lang}
+                        <div class="form-group">
+                            <label>
+                                Đề tổng ôn?
+                            </label>
+
+                            {assign var = key_review value = "review_{$k_lang}"}
+                            <select name="" data-name="review_{$k_lang}" class="form-control form-control-sm">
+                                <option value="n" {if !empty($album.$key_review) && $album.$key_review=="n"}selected{/if}>Không</option>
+                                <option value="y" {if !empty($album.$key_review) && $album.$key_review=="y"}selected{/if}>Có</option>
+                            </select>
+                        </div>
+                    {/foreach}
+                {/if}
+            </div>
+            {/if}
 
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                 {if !empty($languages)}
