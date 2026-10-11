@@ -8,6 +8,8 @@ use Cake\Event\EventInterface;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\Http\Exception\ForbiddenException;
+use Admin\Service\TeacherCourseAccess;
 
 static $js_page = [];
 
@@ -15,6 +17,7 @@ class AppController extends Controller {
 
     public $lang = null;
     public $error = null;
+    protected $teacherCourseOnly = false;
 
 	public function initialize(): void
     {        
@@ -97,7 +100,27 @@ class AppController extends Controller {
         $action_request = $this->request->getParam('action');
 
         if($this->Auth->user('id')){
-            $role_id = !empty($this->Auth->user()['role_id']) ? intval($this->Auth->user()['role_id']) : null;
+            if (!empty($this->Auth->user('supper_admin'))) {
+                return;
+            }
+            $account = TeacherCourseAccess::accountState((int)$this->Auth->user('id'));
+            if (!$account || (int)$account['status'] !== 1 || (int)$account['deleted'] !== 0) {
+                throw new ForbiddenException('Tài khoản không còn hoạt động.');
+            }
+
+            $this->teacherCourseOnly = $account['role_name'] === 'Giáo viên';
+            if ($this->teacherCourseOnly) {
+                $allowed = [
+                    'Product' => ['list', 'detail'],
+                    'User' => ['login', 'logout', 'profile', 'profileSave', 'profileChangePass']
+                ];
+                if (!isset($allowed[$controller_request]) || !in_array($action_request, $allowed[$controller_request], true)) {
+                    throw new ForbiddenException('Giáo viên chỉ được xem khóa học được phân công.');
+                }
+                return;
+            }
+
+            $role_id = (int)$account['role_id'];
             $check_permission = TableRegistry::get('Roles')->checkPermissionRequest($role_id, $controller_request, $action_request);
             if(!$check_permission && !$this->request->is('ajax')){
                 $this->showErrorPage('denied');
@@ -124,6 +147,7 @@ class AppController extends Controller {
             $this->set('css_page', !empty($this->css_page) ? $this->css_page : []);
 
             $this->set('auth_user', $this->Auth->user());
+            $this->set('teacher_course_only', $this->teacherCourseOnly);
         }
 
         if(empty($view_builder->getVars()['lang'])){

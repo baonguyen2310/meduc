@@ -13,6 +13,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Client;
+use Admin\Service\TeacherCourseAccess;
 
 class UserController extends AppController {
 
@@ -35,6 +36,10 @@ class UserController extends AppController {
 
         $params = $this->request->getQuery();
         if ($this->Auth->user()) {
+            $account = TeacherCourseAccess::accountState((int)$this->Auth->user('id'));
+            if ($account && $account['role_name'] === 'Giáo viên') {
+                return $this->redirect(ADMIN_PATH . '/product?cate=50');
+            }
             $url_redirect = $this->Auth->redirectUrl();
             if(empty($url_redirect) || $url_redirect == '/'){
                 $url_redirect = ADMIN_PATH . '/main';
@@ -103,6 +108,11 @@ class UserController extends AppController {
 
         if(!empty($redirect) && $redirect != '/'){
             $url_redirect = $redirect;
+        }
+        $account = !empty($user['id']) && empty($user['supper_admin'])
+            ? TeacherCourseAccess::accountState((int)$user['id']) : null;
+        if ($account && $account['role_name'] === 'Giáo viên') {
+            $url_redirect = ADMIN_PATH . '/product?cate=50';
         }
         
         $this->responseJson([

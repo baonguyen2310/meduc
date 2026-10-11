@@ -349,6 +349,18 @@
                     </div>
                 </div>
                                   
+                {if !empty($show_teacher_assignment)}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="teacher-ids">Giáo viên phụ trách</label>
+                                <input type="hidden" name="teacher_assignment_present" value="1">
+                                {$this->Form->select('teacher_ids', $teacher_options, ['id' => 'teacher-ids', 'default' => $selected_teacher_ids, 'class' => 'form-control kt-select-multiple', 'multiple' => 'multiple', 'data-placeholder' => 'Chọn một hoặc nhiều giáo viên'])}
+                                <small class="form-text text-muted">Có thể chọn nhiều giáo viên. Giáo viên chỉ thấy khóa học được phân công.</small>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
 
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 d-none">

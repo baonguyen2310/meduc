@@ -14,6 +14,8 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Collection\Collection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Admin\Service\TeacherCourseAccess;
+use Cake\Http\Exception\ForbiddenException;
 
 class ProductController extends AppController {
 
@@ -24,6 +26,13 @@ class ProductController extends AppController {
 
     public function list()
     {
+        if ($this->teacherCourseOnly) {
+            $this->set('assigned_courses', TeacherCourseAccess::assignedCourses((int)$this->Auth->user('id')));
+            $this->set('path_menu', 'product');
+            $this->set('title_for_layout', 'Khóa học của tôi');
+            $this->render('teacher_list');
+            return;
+        }
         $this->css_page = [
             '/assets/plugins/global/lightbox/lightbox.css',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
@@ -736,6 +745,9 @@ class ProductController extends AppController {
 
     public function add()
     {        
+        $this->set('show_teacher_assignment', (int)$this->request->getQuery('cate') === 50);
+        $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
+        $this->set('selected_teacher_ids', []);
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
         $attributes_product = !empty($all_attributes[PRODUCT]) ? $all_attributes[PRODUCT] : [];
 
@@ -783,6 +795,10 @@ class ProductController extends AppController {
 
     public function update($id = null)
     {
+        $is_course = TeacherCourseAccess::isCourse((int)$id);
+        $this->set('show_teacher_assignment', $is_course);
+        $this->set('teacher_options', $is_course ? TeacherCourseAccess::teacherOptions() : []);
+        $this->set('selected_teacher_ids', $is_course ? TeacherCourseAccess::teacherIdsForCourse((int)$id) : []);
         $table = TableRegistry::get('Products');    
         $product_detail = $table->getDetailProduct($id, $this->lang, [
             'get_user' => true, 
@@ -986,6 +1002,9 @@ class ProductController extends AppController {
 
     public function detail($id = null)
     {
+        if ($this->teacherCourseOnly && !TeacherCourseAccess::isAssigned((int)$this->Auth->user('id'), (int)$id)) {
+            throw new ForbiddenException('Khóa học chưa được phân công cho giáo viên này.');
+        }
         if(empty($id)){
             $this->showErrorPage();
         }
@@ -1024,6 +1043,16 @@ class ProductController extends AppController {
    
         if (!$this->getRequest()->is('post') || empty($data)) {
             $this->responseJson([MESSAGE => __d('admin', 'du_lieu_khong_hop_le')]);
+        }
+
+        $teacher_ids = [];
+        $save_teacher_assignments = isset($data['teacher_assignment_present']);
+        if ($save_teacher_assignments) {
+            try {
+                $teacher_ids = TeacherCourseAccess::validateTeacherIds(isset($data['teacher_ids']) ? $data['teacher_ids'] : []);
+            } catch (\InvalidArgumentException $e) {
+                $this->responseJson([MESSAGE => $e->getMessage()]);
+            }
         }
         
         $product_component = $this->loadComponent('Admin.Product');
@@ -1351,6 +1380,13 @@ class ProductController extends AppController {
         if($result[CODE] == SUCCESS){
 
             $product_id = !empty($result[DATA]->id) ? $result[DATA]->id : null;
+            if ($save_teacher_assignments && $product_id) {
+                try {
+                    TeacherCourseAccess::replaceAssignments((int)$product_id, $teacher_ids);
+                } catch (\Throwable $e) {
+                    $this->responseJson([MESSAGE => 'Khóa học đã lưu nhưng phân công giáo viên chưa thành công. Vui lòng mở lại khóa học và lưu lần nữa.']);
+                }
+            }
             // dich tự động các ngôn ngữ khác khi thêm mới bản ghi
             $auto_translate = TableRegistry::get('Settings')->getSettingAutoTranslate();
             if(empty($id) && $auto_translate){
