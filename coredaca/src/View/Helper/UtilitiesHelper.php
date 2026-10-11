@@ -619,6 +619,14 @@ class UtilitiesHelper extends Helper
         return $sortedQuizContent;
     }
 
+    /** Định dạng số giây sang phút và giây */
+    public function formatQuizTime($seconds = 0) {
+        $seconds = (int)$seconds;
+        $minutes = floor($seconds / 60);
+        $remainingSeconds = $seconds % 60;
+        return $minutes . 'p ' . $remainingSeconds . 's';
+    }
+
     /** Lịch sử làm bài tập của học viên
      * 
      * $member_code: id học viên
@@ -626,13 +634,7 @@ class UtilitiesHelper extends Helper
      * {$this->Utilities->getListHistoryQuiz($member_code)}
     */
     public function getListHistoryQuiz($member_code = null) {
-        if(empty($member_code)) return false;
-
-        function formatTime($seconds) {
-            $minutes = floor($seconds / 60);
-            $remainingSeconds = $seconds % 60;
-            return $minutes . 'p ' . $remainingSeconds . 's';
-        }
+        if(empty($member_code)) return [];
 
         $listHistoryQuiz = TableRegistry::get('QuizsAnswer')
             ->find()
@@ -642,7 +644,7 @@ class UtilitiesHelper extends Helper
             ->order(['created' => 'DESC'])
             ->toList();
 
-        if(empty($listHistoryQuiz)) return false;
+        if(empty($listHistoryQuiz)) return [];
 
         $result = [];
         foreach ($listHistoryQuiz as $index => $item) {
@@ -660,16 +662,16 @@ class UtilitiesHelper extends Helper
                 ])
                 ->first();
 
-            $item['total_time'] = formatTime($item['total_time']);
+            $formattedTime = $this->formatQuizTime($item['total_time'] ?? 0);
 
             $result[$index] = [
                 "id" => $item["id"],
-                "class_name" => $classRoom["name"],
-                "quiz_name" => $quizsContent["name"],
-                "answer_total" => $item["answer_total"],
-                "answer_correct" => $item["answer_correct"],
-                "total_time" => $item["total_time"],
-                "created" => $item["created"],
+                "class_name" => !empty($classRoom["name"]) ? $classRoom["name"] : 'Chung',
+                "quiz_name" => !empty($quizsContent["name"]) ? $quizsContent["name"] : 'Bài tập',
+                "answer_total" => $item["answer_total"] ?? 0,
+                "answer_correct" => $item["answer_correct"] ?? 0,
+                "total_time" => $formattedTime,
+                "created" => $item["created"] ?? 0,
             ];
         }
 
@@ -686,12 +688,6 @@ class UtilitiesHelper extends Helper
     public function getResultQuiz($member_code = null, $id = null) {
         if(empty($member_code)) return false;
         if(empty($id)) return false;
-
-        function formatTime($seconds) {
-            $minutes = floor($seconds / 60);
-            $remainingSeconds = $seconds % 60;
-            return $minutes . 'p ' . $remainingSeconds . 's';
-        }
 
         $resultQuiz = TableRegistry::get('QuizsAnswer')
             ->find()
@@ -725,34 +721,40 @@ class UtilitiesHelper extends Helper
             ])
             ->first();
 
-        $questions = json_decode($quizsAttribute["value"]);
-        $answers = json_decode($resultQuiz["answers"]);
+        $questions = !empty($quizsAttribute["value"]) ? json_decode($quizsAttribute["value"]) : [];
+        $answers = !empty($resultQuiz["answers"]) ? json_decode($resultQuiz["answers"]) : [];
 
-        $resultQuiz['total_time'] = formatTime($resultQuiz['total_time']);
+        $formattedTime = $this->formatQuizTime($resultQuiz['total_time'] ?? 0);
 
         $questionsAnswers = [];
 
-        foreach ($questions as $question) {
-            $questionsAnswers[$question->code] = (array) $question;
+        if (is_array($questions) || is_object($questions)) {
+            foreach ($questions as $question) {
+                if (isset($question->code)) {
+                    $questionsAnswers[$question->code] = (array) $question;
+                }
+            }
         }
 
-        foreach ($answers as $answer) {
-            if (isset($questionsAnswers[$answer->code])) {
-                $questionsAnswers[$answer->code]['answer_choose'] = $answer->answer;
+        if (is_array($answers) || is_object($answers)) {
+            foreach ($answers as $answer) {
+                if (isset($answer->code) && isset($questionsAnswers[$answer->code])) {
+                    $questionsAnswers[$answer->code]['answer_choose'] = $answer->answer;
+                }
             }
         }
 
         $result = [
             "id" => $resultQuiz["id"],
-            "class_name" => $classRoom["name"],
-            "quiz_name" => $quizsContent["name"],
-            "answer_total" => $resultQuiz["answer_total"],
-            "answer_correct" => $resultQuiz["answer_correct"],
-            "answer_wrong" => $resultQuiz["answer_wrong"],
-            "answer_correct_percent" => $resultQuiz["answer_correct_percent"],
-            "total_time" => $resultQuiz["total_time"],
+            "class_name" => !empty($classRoom["name"]) ? $classRoom["name"] : 'Chung',
+            "quiz_name" => !empty($quizsContent["name"]) ? $quizsContent["name"] : 'Bài tập',
+            "answer_total" => $resultQuiz["answer_total"] ?? 0,
+            "answer_correct" => $resultQuiz["answer_correct"] ?? 0,
+            "answer_wrong" => $resultQuiz["answer_wrong"] ?? 0,
+            "answer_correct_percent" => $resultQuiz["answer_correct_percent"] ?? 0,
+            "total_time" => $formattedTime,
             "questionsAnswers" => $questionsAnswers,
-            "created" => $resultQuiz["created"],
+            "created" => $resultQuiz["created"] ?? 0,
         ];
 
         return $result;
