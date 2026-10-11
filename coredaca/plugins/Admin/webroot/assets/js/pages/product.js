@@ -939,6 +939,7 @@ const showAttributes = () => {
 	
 		switch (cate) {
 			case "50": // Khóa học
+			case "125": // Khóa luyện thi là danh mục con của khóa học
 				motangan.style.display = "block";
 				motakhoahoc.style.display = "block";
 				// danhsachtaikhoan.style.display = "block";

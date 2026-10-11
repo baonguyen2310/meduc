@@ -148,6 +148,12 @@
                                             </span>
                                         </a>
                                     </li>
+                                    <li class="kt-menu__item">
+                                        <a href="{$link_product}?cate=125" class="kt-menu__link">
+                                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                            <span class="kt-menu__link-text">Khóa luyện thi</span>
+                                        </a>
+                                    </li>
                                 {/if}
 
                                 {if $access_brand}

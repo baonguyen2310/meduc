@@ -334,6 +334,8 @@
                                     {foreach from = $product.categories item = category}
                                         {$categories_selected[] = $category.id}
                                     {/foreach}
+                                {elseif !empty($initial_category_id)}
+                                    {$categories_selected[] = $initial_category_id}
                                 {/if}
 
                                 {$this->Form->select('categories', $categories, ['id' => 'categories', 'empty' => null, 'default' => $categories_selected, 'class' => 'form-control kt-select-multiple', 'multiple' => 'multiple', 'data-placeholder' => "{__d('admin', 'chon_danh_muc')}"])}
@@ -345,7 +347,7 @@
                         <label>
                             {__d('admin', 'danh_muc_chinh')}
                         </label>
-                        {$this->Form->select('main_category_id', $list_category_main, ['id' => 'main_category_id', 'empty' => {__d('admin', 'chon')}, 'default' => "{if !empty($product.main_category_id)}{$product.main_category_id}{/if}", 'class' => 'form-control form-control-sm kt-selectpicker', 'data-placeholder' => "{__d('admin', 'chon_danh_muc')}"])}
+                        {$this->Form->select('main_category_id', $list_category_main, ['id' => 'main_category_id', 'empty' => {__d('admin', 'chon')}, 'default' => "{if !empty($product.main_category_id)}{$product.main_category_id}{elseif !empty($initial_category_id)}{$initial_category_id}{/if}", 'class' => 'form-control form-control-sm kt-selectpicker', 'data-placeholder' => "{__d('admin', 'chon_danh_muc')}"])}
                     </div>
                 </div>
                                   

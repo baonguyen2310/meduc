@@ -745,7 +745,9 @@ class ProductController extends AppController {
 
     public function add()
     {        
-        $this->set('show_teacher_assignment', (int)$this->request->getQuery('cate') === 50);
+        $categoryId = (int)$this->request->getQuery('cate');
+        $this->set('show_teacher_assignment', in_array($categoryId, [50, 125], true));
+        $this->set('initial_category_id', $categoryId === 125 ? 125 : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
@@ -775,7 +777,7 @@ class ProductController extends AppController {
         $this->set('length_unit', Configure::read('LENGTH_UNIT'));
         $this->set('weight_unit', Configure::read('WEIGTH_UNIT'));
         $this->set('position', !empty($max_record->id) ? $max_record->id + 1 : 1);
-        $this->set('list_category_main', []);
+        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khóa luyện thi'] : []);
 
         $this->css_page = [
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
