@@ -1,0 +1,26 @@
+-- Metadata for imported exam quizzes. The existing quizs table uses MyISAM,
+-- so quiz_id is checked by the application rather than by a foreign key.
+CREATE TABLE IF NOT EXISTS quiz_exam_metadata (
+  quiz_id INT NOT NULL,
+  source_system VARCHAR(32) NOT NULL,
+  source_exam_id BIGINT UNSIGNED NOT NULL,
+  source_category_id BIGINT UNSIGNED DEFAULT NULL,
+  source_category_name VARCHAR(500) DEFAULT NULL,
+  import_topic VARCHAR(180) DEFAULT NULL,
+  school_name VARCHAR(180) DEFAULT NULL,
+  year_in_title SMALLINT UNSIGNED DEFAULT NULL,
+  source_quiz_type VARCHAR(50) DEFAULT NULL,
+  curriculum_type VARCHAR(20) DEFAULT NULL,
+  source_is_pro TINYINT(1) DEFAULT NULL,
+  question_count INT UNSIGNED DEFAULT NULL,
+  source_question_count INT UNSIGNED DEFAULT NULL,
+  source_hash CHAR(64) DEFAULT NULL,
+  imported_at DATETIME DEFAULT NULL,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (quiz_id),
+  UNIQUE KEY source_exam (source_system, source_exam_id),
+  KEY source_category (source_category_id),
+  KEY import_topic (import_topic),
+  KEY school_name (school_name),
+  KEY year_in_title (year_in_title)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

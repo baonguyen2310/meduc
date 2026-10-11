@@ -9,6 +9,7 @@ use Cake\Http\Response;
 use Cake\ORM\Query;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
+use App\Service\QuizExamMetadata;
 
 
 class QuizController extends AppController {
@@ -151,6 +152,7 @@ class QuizController extends AppController {
         $this->set('all_options', $all_options);
         $this->set('position', !empty($max_record->id) ? $max_record->id + 1 : 1);
         $this->set('list_category_main', []);
+        $this->set('quiz_exam_metadata', []);
 
         $this->css_page = [
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
@@ -201,6 +203,7 @@ class QuizController extends AppController {
         $this->set('all_attributes', $all_attributes);
         $this->set('all_options', $all_options);
         $this->set('quiz', $quiz);
+        $this->set('quiz_exam_metadata', QuizExamMetadata::forQuiz((int)$id));
         $this->set('list_category_main', $list_category_main);
 
         $this->css_page = [
@@ -290,6 +293,24 @@ class QuizController extends AppController {
         $link_id = !empty($quiz['Links']) ? $quiz['Links']['id'] : null;
         if(TableRegistry::get('Links')->checkExist($link, $link_id)){
             $this->responseJson([MESSAGE => __d('admin', 'duong_dan_da_ton_tai_tren_he_thong')]);
+        }
+
+        $examMetadata = null;
+        if (isset($data['exam_metadata'])) {
+            if (!is_array($data['exam_metadata'])) {
+                $this->responseJson([MESSAGE => 'Thông tin nguồn đề không hợp lệ.']);
+            }
+            try {
+                $examMetadata = QuizExamMetadata::normalize(
+                    $data['exam_metadata'],
+                    !empty($id) && !empty(QuizExamMetadata::forQuiz((int)$id))
+                );
+                if ($examMetadata !== null) {
+                    QuizExamMetadata::assertAvailable((int)$id, $examMetadata);
+                }
+            } catch (\InvalidArgumentException $e) {
+                $this->responseJson([MESSAGE => $e->getMessage()]);
+            }
         }
 
         // format data before save
@@ -427,6 +448,13 @@ class QuizController extends AppController {
                 throw new Exception();
             }
 
+            if ($examMetadata !== null) {
+                QuizExamMetadata::save((int)$save->id, $examMetadata);
+                QuizExamMetadata::refreshQuestionCount((int)$save->id);
+            } elseif (!empty($id) && QuizExamMetadata::forQuiz((int)$id)) {
+                QuizExamMetadata::refreshQuestionCount((int)$id);
+            }
+
             $tags = !empty($data['tags']) ? array_filter(array_column(json_decode($data['tags'], true), 'value')) : null;
             if(!empty($tags)){
                 $tag_data = [];
@@ -469,9 +497,10 @@ class QuizController extends AppController {
 
             $this->responseJson([CODE => SUCCESS, DATA => ['id' => $save->id]]);
 
-        }catch (Exception $e) {
+        }catch (\Throwable $e) {
             $conn->rollback();
-            $this->responseJson([MESSAGE => $e->getMessage()]);  
+            $message = $e instanceof \InvalidArgumentException ? $e->getMessage() : 'Không lưu được bài tập. Vui lòng thử lại.';
+            $this->responseJson([MESSAGE => $message]);
         }
     }
 

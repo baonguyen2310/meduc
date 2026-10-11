@@ -403,6 +403,79 @@
             </div>
         </div>
         
+        <div nh-anchor="exam-metadata" class="kt-portlet nh-portlet nh-active-hover position-relative">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Nguồn đề thi</h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <p class="text-muted mb-4">Chỉ điền phần này cho đề được nhập từ hệ thống khác. Năm dưới đây là năm xuất hiện trong tên đề, chưa phải năm thi đã xác minh.</p>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>Hệ thống nguồn</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_system]" maxlength="32" value="{if !empty($quiz_exam_metadata.source_system)}{$quiz_exam_metadata.source_system|escape}{else}facourse{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>ID đề gốc</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_exam_id]" inputmode="numeric" value="{if isset($quiz_exam_metadata.source_exam_id)}{$quiz_exam_metadata.source_exam_id|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>ID danh mục gốc</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_category_id]" inputmode="numeric" value="{if isset($quiz_exam_metadata.source_category_id)}{$quiz_exam_metadata.source_category_id|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Năm trong tên đề</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[year_in_title]" inputmode="numeric" value="{if isset($quiz_exam_metadata.year_in_title)}{$quiz_exam_metadata.year_in_title|escape}{/if}">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Tên danh mục gốc</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_category_name]" maxlength="500" value="{if isset($quiz_exam_metadata.source_category_name)}{$quiz_exam_metadata.source_category_name|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Nhóm nhập vào MedUC</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[import_topic]" maxlength="180" value="{if isset($quiz_exam_metadata.import_topic)}{$quiz_exam_metadata.import_topic|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Trường</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[school_name]" maxlength="180" value="{if isset($quiz_exam_metadata.school_name)}{$quiz_exam_metadata.school_name|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Loại đề ở nguồn</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_quiz_type]" maxlength="50" value="{if isset($quiz_exam_metadata.source_quiz_type)}{$quiz_exam_metadata.source_quiz_type|escape}{/if}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Chương trình</label>
+                        <select class="form-control form-control-sm" name="exam_metadata[curriculum_type]">
+                            <option value="">Chưa xác định</option>
+                            <option value="subject" {if isset($quiz_exam_metadata.curriculum_type) && $quiz_exam_metadata.curriculum_type == 'subject'}selected{/if}>Theo môn</option>
+                            <option value="module" {if isset($quiz_exam_metadata.curriculum_type) && $quiz_exam_metadata.curriculum_type == 'module'}selected{/if}>Theo module</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Pro tại nguồn</label>
+                        <select class="form-control form-control-sm" name="exam_metadata[source_is_pro]">
+                            <option value="">Chưa xác định</option>
+                            <option value="0" {if isset($quiz_exam_metadata.source_is_pro) && $quiz_exam_metadata.source_is_pro == '0'}selected{/if}>Không</option>
+                            <option value="1" {if isset($quiz_exam_metadata.source_is_pro) && $quiz_exam_metadata.source_is_pro == '1'}selected{/if}>Có</option>
+                        </select>
+                        <small class="text-muted">Chỉ ghi trạng thái ở nguồn, không cấp quyền học trên MedUC.</small>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>Số câu khai báo ở nguồn</label>
+                        <input class="form-control form-control-sm" name="exam_metadata[source_question_count]" inputmode="numeric" value="{if isset($quiz_exam_metadata.source_question_count)}{$quiz_exam_metadata.source_question_count|escape}{/if}">
+                    </div>
+                </div>
+                {if !empty($quiz_exam_metadata)}
+                    <div class="text-muted small">
+                        Số câu thực tế: {if isset($quiz_exam_metadata.question_count)}{$quiz_exam_metadata.question_count|escape}{else}chưa tính{/if}
+                        {if !empty($quiz_exam_metadata.imported_at)} &nbsp;·&nbsp; Nhập lúc: {$quiz_exam_metadata.imported_at|escape}{/if}
+                        {if !empty($quiz_exam_metadata.source_hash)} &nbsp;·&nbsp; SHA-256: {$quiz_exam_metadata.source_hash|escape}{/if}
+                    </div>
+                {/if}
+            </div>
+        </div>
+
         <div nh-anchor="media" class="kt-portlet nh-portlet nh-active-hover position-relative d-none">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
