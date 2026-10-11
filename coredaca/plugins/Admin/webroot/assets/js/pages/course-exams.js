@@ -129,7 +129,10 @@
     const old=button.textContent; button.disabled=true;button.textContent='Đang tạo Word…';
     try {
       const response=await fetch(base+'/course-exam/word/'+course+'/'+id,{credentials:'same-origin'});
-      if(!response.ok || !(response.headers.get('content-type')||'').includes('wordprocessingml'))throw Error('Không tải được Word. Vui lòng thử lại.');
+      if(!response.ok || !(response.headers.get('content-type')||'').includes('wordprocessingml')) {
+        const failure=(response.headers.get('content-type')||'').includes('application/json') ? await response.json() : {};
+        throw Error(failure.error || 'Không tải được Word. Vui lòng thử lại.');
+      }
       const blob=await response.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='meduc-de-'+id+'.docx';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
     } catch(failure) { error(failure.message); if(dialog.open)$('[data-exam-result]').textContent=failure.message; }
     finally {button.disabled=false;button.textContent=old;}

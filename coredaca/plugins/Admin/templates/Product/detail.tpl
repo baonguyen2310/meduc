@@ -1,5 +1,6 @@
 {if !empty($product)}
     {assign var = url_list value = "{ADMIN_PATH}/product"}
+    {if !empty($course_is_exam_prep)}{assign var = url_list value = "{ADMIN_PATH}/product?cate=125"}{/if}
     
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-container  kt-container--fluid ">
@@ -10,6 +11,9 @@
             </div>
 
             <div class="kt-subheader__toolbar">
+                {if !empty($course_is_exam_prep) && empty($teacher_course_only)}
+                    <a href="{ADMIN_PATH}/product/update/{$product.id}?cate=125" class="btn btn-brand btn-sm mr-2">Chỉnh sửa / phân công giáo viên</a>
+                {/if}
                 <a href="{$url_list}" class="btn btn-default btn-sm">
                     {__d('admin', 'quay_lai_danh_sach')}
                 </a>

@@ -161,7 +161,7 @@ class ExamWordExporter
         } elseif (function_exists('imagecreatefromstring')) {
             $resource = @imagecreatefromstring($bytes);
             if (!$resource) {
-                return;
+                throw new RuntimeException('Không chuyển đổi được hình minh hoạ sang Word.');
             }
             ob_start();
             imagepng($resource);
@@ -175,7 +175,8 @@ class ExamWordExporter
         $name = 'image' . $id . '.' . $ext;
         $this->media[$name] = $bytes;
         $this->relationships[] = '<Relationship Id="rId' . $id . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/' . $name . '"/>';
-        $scale = min(1, 5486400 / (max(1, $image['width']) * 9525));
+        // A tall source scan must also fit within the printable height of A4.
+        $scale = min(1, 5486400 / (max(1, $image['width']) * 9525), 6400800 / (max(1, $image['height']) * 9525));
         $cx = (int)(max(1, $image['width']) * 9525 * $scale);
         $cy = (int)(max(1, $image['height']) * 9525 * $scale);
         $this->paragraphs[] = '<w:p><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0">'

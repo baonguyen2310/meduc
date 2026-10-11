@@ -214,6 +214,10 @@ var nhListProduct = function() {
 					var url = typeof(row.url) != _UNDEFINED && row.url != null ? row.url : '';
 					var urlEdit = adminPath + '/product/update/' + row.id + `?cate=${cate}`;
 					var urlDetail = adminPath + '/product/detail/' + row.id;
+					if (row.exam_staff_only) {
+						return '<div class="kt-user-card-v2__details"><a href="' + urlDetail + '" class="d-block kt-user-card-v2__name">' + $('<span>').text(name).html() + '</a>' +
+							'<div class="mt-2"><a href="' + urlDetail + '" class="text-info mr-3">Xem danh sách đề</a><a href="' + urlEdit + '" class="text-muted">Chỉnh sửa / phân công</a></div></div>';
+					}
 
 					var preView = ''
 					if(url.length > 0){
@@ -401,6 +405,7 @@ var nhListProduct = function() {
 				template: function(row) {
 					var status = '';
 					var draftProduct = '';
+					if (row.exam_staff_only) return '<span class="badge badge-light">Nội bộ</span>';
 					if(KTUtil.isset(row, 'status') && row.status != null && row.draft != 1){
 						status = nhList.template.statusProduct(row.status);
 					}
@@ -636,4 +641,3 @@ jQuery(document).ready(function() {
 
 	nhListProduct.listData();
 });
-

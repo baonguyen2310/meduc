@@ -1,7 +1,7 @@
 <section class="mx-library" data-course-exams data-course="{$course_exam_id}" data-base="{ADMIN_PATH}" data-download="{if !empty($course_exam_download)}1{else}0{/if}">
     <header class="mx-library-head">
         <div><span class="mx-eyebrow">MEDUC · {if !empty($course_is_exam_prep)}KHOÁ LUYỆN THI{else}NỘI DUNG KHOÁ HỌC{/if}</span>
-            <h2>{if !empty($course_is_exam_prep)}Đề tổng ôn{else}Danh sách bài học{/if}</h2>
+            <h2>{if !empty($course_is_exam_prep)}{$product.name|escape} <span class="mx-muted">· Đề tổng ôn</span>{else}Danh sách bài học{/if}</h2>
             <p>{if !empty($course_is_exam_prep)}Kho đề nội bộ dành cho quản trị viên và giáo viên phụ trách.{else}Chọn bài có bài tập để xem đề hoặc làm thử.{/if}</p>
         </div>
         <span class="mx-count">{$course_lessons|count} mục</span>

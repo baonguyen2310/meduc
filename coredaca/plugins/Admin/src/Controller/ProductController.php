@@ -42,7 +42,7 @@ class ProductController extends AppController {
         $this->js_page = [
             '/assets/plugins/global/lightbox/lightbox.min.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js',
-            '/assets/js/pages/list_product.js'            
+            '/assets/js/pages/list_product.js?v=20261012-exams'
         ];
         
         $this->set('path_menu', 'product');
@@ -122,9 +122,13 @@ class ProductController extends AppController {
         $result = [];
         if(!empty($products)){
             $languages = TableRegistry::get('Languages')->getList();
+            $private_courses = array_column(ConnectionManager::get('default')->execute(
+                'SELECT product_id FROM exam_prep_courses WHERE staff_only=1'
+            )->fetchAll('assoc'), 'product_id');
 
             foreach($products as $k => $product){
                 $product_format = $table->formatDataProductDetail($product, $lang);
+                $product_format['exam_staff_only'] = in_array((int)$product['id'], array_map('intval', $private_courses), true);
 
                 // check multiple language
                 $mutiple_language = [];                
@@ -1047,7 +1051,7 @@ class ProductController extends AppController {
         $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
         $this->set('course_exam_download', !$this->teacherCourseOnly);
         $this->css_page[]='/assets/css/course-exams.css?v=20261012';
-        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261012';
+        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261012b';
     }
 
     public function save($id = null)
