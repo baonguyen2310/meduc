@@ -309,6 +309,8 @@ class QuizController extends AppController {
                 $this->responseJson([MESSAGE => 'Thông tin nguồn đề không hợp lệ.']);
             }
             try {
+                // The import identifier is internal and must not be exposed as a UI label.
+                $data['exam_metadata']['source_system'] = $existingExamMetadata['source_system'] ?? 'facourse';
                 $examMetadata = QuizExamMetadata::normalize(
                     $data['exam_metadata'],
                     !empty($id) && !empty(QuizExamMetadata::forQuiz((int)$id))

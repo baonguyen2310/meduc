@@ -413,8 +413,8 @@
                 <p class="text-muted mb-4">Chỉ điền phần này cho đề được nhập từ hệ thống khác. Năm dưới đây là năm xuất hiện trong tên đề, chưa phải năm thi đã xác minh.</p>
                 <div class="row">
                     <div class="col-md-3 form-group">
-                        <label>Hệ thống nguồn</label>
-                        <input class="form-control form-control-sm" name="exam_metadata[source_system]" maxlength="32" value="{if !empty($quiz_exam_metadata.source_system)}{$quiz_exam_metadata.source_system|escape}{else}facourse{/if}">
+                        <label>Kho đề</label>
+                        <div class="form-control form-control-sm bg-light">MedUC · Ngân hàng đề</div>
                     </div>
                     <div class="col-md-3 form-group">
                         <label>ID đề gốc</label>
