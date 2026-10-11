@@ -1,0 +1,452 @@
+msgid "tim_kiem"
+msgstr "Tìm kiếm"
+
+msgid "danh_sach"
+msgstr "Danh sách"
+
+msgid "da_chon"
+msgstr "Đã chọn"
+
+msgid "ban_ghi"
+msgstr "Bản ghi"
+
+msgid "trang_thai"
+msgstr "Trạng thái"
+
+msgid "thay_doi_trang_thai"
+msgstr "Thay đổi trạng thái"
+
+msgid "hoat_dong"
+msgstr "Hoạt động"
+
+msgid "khong_hoat_dong"
+msgstr "Không hoạt động"
+
+msgid "xoa"
+msgstr "Xóa"
+
+msgid "xoa_tat_ca"
+msgstr "Xóa tất cả"
+
+msgid "quay_lai"
+msgstr "Quay lại"
+
+msgid "them_moi"
+msgstr "Thêm mới"
+
+msgid "cap_nhat"
+msgstr "Cập nhật"
+
+msgid "chi_tiet_danh_muc"
+msgstr "Chi tiết danh mục"
+
+msgid "chi_tiet_tai_khoan"
+msgstr "Chi tiết tài khoản"
+
+msgid "chi_tiet_nhom_quyen"
+msgstr "Chi tiết nhóm quyền"
+
+msgid "quay_lai_danh_sach"
+msgstr "Quay lại danh sách"
+
+msgid "danh_muc_cha"
+msgstr "Danh mục cha"
+
+msgid "ngay_tao"
+msgstr "Ngày tạo"
+
+msgid "chi_tiet"
+msgstr "Chi tiết"
+
+msgid "luu_&_tiep_tuc"
+msgstr "Lưu &amp; tiếp tục"
+
+msgid "luu_&_them_moi"
+msgstr "Lưu &amp; thêm mới"
+
+msgid "luu_&_quay_lai"
+msgstr "Lưu &amp; quay lại"
+
+msgid "thay_doi_trang_thai"
+msgstr "Thay đổi trạng thái"
+
+msgid "lua_chon"
+msgstr "Lựa chọn"
+
+msgid "cai_dat"
+msgstr "Cài đặt"
+
+msgid "giao_dien_website"
+msgstr "Giao diện Website"
+
+msgid "cai_dat_giao_dien"
+msgstr "Cài đặt giao diện"
+
+msgid "quan_ly_module"
+msgstr "Quản lý module"
+
+msgid "quan_ly_menu"
+msgstr "Quản lý Menu"
+
+msgid "tuy_chinh_giao_dien"
+msgstr "Tùy chỉnh giao diện"
+
+msgid "tuy_chinh_css"
+msgstr "Tùy chỉnh Css"
+
+msgid "tuy_chinh_javascript"
+msgstr "Tùy chỉnh Javascript"
+
+msgid "ma_nhung"
+msgstr "Mã nhúng"
+
+msgid "ban_hang"
+msgstr "Bán hàng"
+
+msgid "thuong_mai_dien_tu"
+msgstr "Thương mại điện tử"
+
+msgid "san_pham"
+msgstr "Sản phẩm"
+
+msgid "them_san_pham"
+msgstr "Thêm sản phẩm"
+
+msgid "danh_muc_san_pham"
+msgstr "Danh mục sản phẩm"
+
+msgid "danh_muc_bai_viet"
+msgstr "Danh mục bài viết"
+
+msgid "danh_muc"
+msgstr "Danh mục"
+
+msgid "them_danh_muc"
+msgstr "Thêm danh mục"
+
+msgid "thuong_hieu"
+msgstr "Thương hiệu"
+
+msgid "them_thuong_hieu"
+msgstr "Thêm thương hiệu"
+
+msgid "khuyen_mai"
+msgstr "Khuyến mãi"
+
+msgid "chuong_trinh_khuyen_mai"
+msgstr "Chương trình khuyến mãi"
+
+msgid "chuong_trinh_coupon"
+msgstr "Chương trình Coupon"
+
+msgid "ma_coupon"
+msgstr "Mã Coupon"
+
+msgid "don_hang"
+msgstr "Đơn hàng"
+
+msgid "them_don_hang"
+msgstr "Thêm đơn hàng"
+
+msgid "giao_dich_thanh_toan"
+msgstr "Giao dịch thanh toán"
+
+msgid "ban_giao_van_chuyen"
+msgstr "Bàn giao vận chuyển"
+
+msgid "bao_cao_don_hang"
+msgstr "Báo cáo đơn hàng"
+
+msgid "theo_ngay_thang"
+msgstr "Theo ngày tháng"
+
+msgid "theo_tinh_thanh"
+msgstr "Theo tỉnh thành"
+
+msgid "theo_gia_tri"
+msgstr "Theo giá trị"
+
+msgid "theo_nguon_don"
+msgstr "Theo nguồn đơn"
+
+msgid "tai_khoan"
+msgstr "Tài khoản"
+
+msgid "danh_sach_tai_khoan"
+msgstr "Danh sách tài khoản"
+
+msgid "them_tai_khoan"
+msgstr "Thêm tài khoản"
+
+msgid "cap_nhat_tai_khoan"
+msgstr "Cập nhật tài khoản"
+
+msgid "thong_tin_tai_khoan"
+msgstr "Thông tin tài khoản"
+
+msgid "thong_tin_ca_nhan"
+msgstr "Thông tin cá nhân"
+
+msgid "doi_mat_khau"
+msgstr "Đổi mật khẩu"
+
+msgid "ten_dang_nhap"
+msgstr "Tên đăng nhập"
+
+msgid "mat_khau"
+msgstr "Mật khẩu"
+
+msgid "xac_nhan_mat_khau"
+msgstr "Xác nhận mật khẩu"
+
+msgid "ho_va_ten"
+msgstr "Họ và tên"
+
+msgid "ho_ten_day_du"
+msgstr "Họ tên đầy đủ"
+
+msgid "so_dien_thoai"
+msgstr "Số điện thoại"
+
+msgid "email"
+msgstr "Email"
+
+msgid "dia_chi"
+msgstr "Địa chỉ"
+
+msgid "ngay_sinh"
+msgstr "Ngày sinh"
+
+msgid "gioi_tinh"
+msgstr "Giới tính"
+
+msgid "nam"
+msgstr "Nam"
+
+msgid "nu"
+msgstr "Nữ"
+
+msgid "khac"
+msgstr "Khác"
+
+msgid "nhom_quyen"
+msgstr "Nhóm quyền"
+
+msgid "them_nhom_quyen"
+msgstr "Thêm nhóm quyền"
+
+msgid "cap_nhat_nhom_quyen"
+msgstr "Cập nhật nhóm quyền"
+
+msgid "thong_tin_nhom quyen"
+msgstr "Thông tin nhóm quyền"
+
+msgid "mo_ta_ngan"
+msgstr "Mô tả ngắn"
+
+msgid "phan_quyen"
+msgstr "Phân quyền"
+
+msgid "khach_hang"
+msgstr "Khách hàng"
+
+msgid "them_khach_hang"
+msgstr "Thêm khách hàng"
+
+msgid "quan_ly_bai_viet"
+msgstr "Quản lý bài viết"
+
+msgid "bai_viet"
+msgstr "Bài viết"
+
+msgid "danh_sach_bai_viet"
+msgstr "Danh sách bài viết"
+
+msgid "them_bai_viet"
+msgstr "Thêm bài viêt"
+
+msgid "cap_nhat_bai_viet"
+msgstr "Cập nhật bài viêt"
+
+msgid "thong_tin_chinh"
+msgstr "Thông tin chính"
+
+msgid "tieu_de"
+msgstr "Tiêu đề"
+
+msgid "mo_ta_ngan"
+msgstr "Mô tả ngắn"
+
+msgid "noi_dung"
+msgstr "Nội dung"
+
+msgid "duong_dan"
+msgstr "Đường dẫn"
+
+msgid "tu_khoa_seo"
+msgstr "Từ khóa SEO"
+
+msgid "tieu_de_seo"
+msgstr "Tiêu đề SEO"
+
+msgid "mo_ta_seo"
+msgstr "Mô tả SEO"
+
+msgid "the_bai_viet"
+msgstr "Thẻ bài viết"
+
+msgid "chi_ho_tro_{0}_the_va_do_dai_moi_the_khong_qua_{1}_ky_tu"
+msgstr "Chỉ hỗ trợ {0} thẻ và độ dài mỗi thẻ không quá {1} ký tự"
+
+msgid "chi_ho_tro_{0}_tu_khoa_va_do_dai_moi_tu_khoa_khong_qua_{1}_ky_tu"
+msgstr "Chỉ hỗ trợ {0} từ khóa và độ dài mỗi từ khóa không quá {1} ký tự"
+
+msgid "anh_chinh"
+msgstr "Ảnh chính"
+
+msgid "album"
+msgstr "Album"
+
+msgid "video"
+msgstr "Video"
+
+msgid "cong_thanh_toan"
+msgstr "Cổng thanh toán"
+
+msgid "danh_sach_giao_dich"
+msgstr "Danh sách giao dịch"
+
+msgid "cai_dat_chung"
+msgstr "Cài đặt chung"
+
+msgid "thong_tin_website"
+msgstr "Thông tin Website"
+
+msgid "ngon_ngu"
+msgstr "Ngôn ngữ"
+
+msgid "vi_tri"
+msgstr "Vị trí"
+
+msgid "van_chuyen"
+msgstr "Vận chuyển"
+
+msgid "hang_van_chuyen"
+msgstr "Hãng vận chuyển"
+
+msgid "mau_in"
+msgstr "Mẫu in"
+
+msgid "he_thong"
+msgstr "Hệ thống"
+
+msgid "xoa_cache"
+msgstr "Xóa Cache"
+
+msgid "bao_mat"
+msgstr "Bảo mật"
+
+msgid "ho_tro"
+msgstr "Hỗ trợ"
+
+msgid "ho_tro_khach_hang"
+msgstr "Hỗ trợ khách hàng"
+
+msgid "huong_dan_su_dung"
+msgstr "Hướng dẫn sử dụng"
+
+msgid "phan_hoi"
+msgstr "Phản hồi"
+
+msgid "thong_tin_goi_website"
+msgstr "Thông tin gói Website"
+
+msgid "cap_nhat_thanh_cong"
+msgstr "Cập nhật thành công"
+
+msgid "cap_nhat_khong_thanh_cong"
+msgstr "Cập nhật không thành công"
+
+msgid "xoa_du_lieu_thanh_cong"
+msgstr Xóa dữ liệu thành công"
+
+msgid "xu_ly_du_lieu_thanh_cong"
+msgstr "Xử lý dữ liệu thành công"
+
+msgid "loi_xu_ly_du_lieu"
+msgstr "Lỗi xử lý dữ liệu"
+
+msgid "phuong_thuc_khong_hop_le"
+msgstr "Phương thức không hợp lệ"
+
+msgid "du_lieu_khong_hop_le"
+msgstr "Dữ liệu không hợp lệ"
+
+msgid "khong_lay_duoc_thong_tin_ban_ghi"
+msgstr "Không lấy được thông tin bản ghi"
+
+msgid "ten_dang_nhap_da_ton_tai_tren_he_thong"
+msgstr "Tên đăng nhập đã tồn tại trên hệ thống"
+
+msgid "email_da_ton_tai_tren_he_thong"
+msgstr "Email đã tồn tại trên hệ thống"
+
+msgid "chua_dung_dinh_dang_ngay_thang"
+msgstr "Chưa đúng định dạng ngày tháng"
+
+msgid "vui_long_chon_ngon_ngu"
+msgstr "Vui lòng chọn ngôn ngữ"
+
+msgid "vui_long_nhap_tieu_de"
+msgstr "Vui lòng nhập tiêu đề"
+
+msgid "vui_long_nhap_duong_dan"
+msgstr "Vui lòng nhập đường dẫn"
+
+msgid "duong_dan_da_ton_tai_tren_he_thong"
+msgstr "Đường dẫn đã tồn tại trên hệ thống"
+
+msgid "co_the_su_dung_duong_dan_nay"
+msgstr "Có thể sử dụng đường dẫn này"
+
+msgid "cai_dat_thong_tin_app"
+msgstr "Settings app info"
+
+msgid "thiet_lap_giao_dien_app"
+msgstr "Setting up the app interface"
+
+msgid "cai_dat_cac_cau_hinh_chung_cua_giao_dien"
+msgstr "Settings of general interface configurations"
+
+msgid "thu_vien_anh"
+msgstr "Photo library"
+
+msgid "thu_vien_anh_danh_cho_app"
+msgstr "Gallery for apps"
+
+msgid "quan_ly_cac_block_cua_app"
+msgstr "Manage app blocks"
+
+msgid "them_block_moi_cho_app"
+msgstr "Add new block for app"
+
+msgid "cau_hinh_mau_sac"
+msgstr "Color profiles"
+
+msgid "color_main"
+msgstr "Primary Color"
+
+msgid "color_hightlight"
+msgstr "Highlight color"
+
+msgid "color_text"
+msgstr "Text color"
+
+msgid "anh_template"
+msgstr "Photo template"
+
+msgid "them_anh"
+msgstr "More photos"
+
+msgid "sua_thong_tin_trang"
+msgstr "Edit page information"

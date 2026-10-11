@@ -1,0 +1,20 @@
+{$this->Minify->compress([
+	"/templates/{CODE_TEMPLATE}/assets/css/variable.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/fonts.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap/bootstrap.min.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap-datepicker/bootstrap-datepicker.min.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap-select/bootstrap-select.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/iconsax.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/slick.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/sweetalert2/sweetalert2.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/lightgallery.css",
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery-ui/jquery-ui.min.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/catalogue.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/order.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/compare.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/member.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/comment-rating.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/utilities.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/page.css",
+	"/templates/{CODE_TEMPLATE}/assets/css/custom.css"
+])}

@@ -1,0 +1,61 @@
+{$this->Minify->compress([
+	"/templates/{CODE_TEMPLATE}/assets/js/constants.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/locales/{LANGUAGE}.js",
+
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery/jquery-3.5.1.min.js",	
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery/jquery-migrate-1.4.1.min.js",	
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery-lazy/jquery.lazy.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery-lazy/jquery.lazy.plugins.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/lazy.js",
+	
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/modernizr.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/bootstrap.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/sal.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/backtotop.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/magnifypopup.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/slick.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/countdown.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/jquery-appear.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/odometer.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/isotop.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/imageloaded.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/lightbox.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/wow.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/paralax.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/paralax-scroll.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/jquery-ui.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/vendor/tilt.jquery.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/eduvibe/js/main.js"
+], 'js')}
+
+{$this->Minify->compress([
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery/jquery.validate.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery/jquery.cookie.js",
+	
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap/popper.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap-select/bootstrap-select.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap-datepicker/bootstrap-datepicker.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/bootstrap-datepicker/locales/{LANGUAGE}.js",
+
+	"/templates/{CODE_TEMPLATE}/assets/lib/lightgallery-all.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/jquery-ui/jquery-ui.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/sweetalert2/sweetalert2.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/tocbot/tocbot.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/lib/inputmask/jquery.inputmask.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/glightbox.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/main.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/menu.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/search.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/catalogue.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/product.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/order.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/wishlist.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/compare.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/member.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/contact.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/comment.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/pdf.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/webviewer.min.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/custom.js",
+	"/templates/{CODE_TEMPLATE}/assets/js/cart-custom.js"
+], 'js')}
