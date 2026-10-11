@@ -79,10 +79,11 @@ class TeacherCourseAccess
     public static function assignedCourses(int $userId): array
     {
         return self::db()->execute(
-            "SELECT p.id, p.status, pc.name
+            "SELECT p.id, p.status, pc.name, COALESCE(e.staff_only,0) exam_staff_only
              FROM teacher_course_access t
              INNER JOIN products p ON p.id = t.product_id AND p.deleted = 0
              INNER JOIN products_content pc ON pc.product_id = p.id AND pc.lang = 'vi'
+             LEFT JOIN exam_prep_courses e ON e.product_id = p.id
              WHERE t.user_id = :user_id AND (
                p.main_category_id = 50 OR EXISTS (
                  SELECT 1 FROM categories c

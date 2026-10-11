@@ -1050,7 +1050,7 @@ class ProductController extends AppController {
         $this->set('course_exam_id', $id);
         $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
         $this->set('course_exam_download', !$this->teacherCourseOnly);
-        $this->css_page[]='/assets/css/course-exams.css?v=20261012';
+        $this->css_page[]='/assets/css/course-exams.css?v=20261012b';
         $this->js_page[]='/assets/js/pages/course-exams.js?v=20261012b';
     }
 

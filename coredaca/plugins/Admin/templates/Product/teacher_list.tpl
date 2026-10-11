@@ -24,7 +24,7 @@
                             {foreach from=$assigned_courses item=course}
                                 <tr>
                                     <td>{$course.name|escape}</td>
-                                    <td>{if $course.status == 1}Đang mở{else}Đã tắt{/if}</td>
+                                    <td>{if !empty($course.exam_staff_only)}Nội bộ{elseif $course.status == 1}Đang mở{else}Đã tắt{/if}</td>
                                     <td class="text-right"><a href="{ADMIN_PATH}/product/detail/{$course.id}">Xem chi tiết</a></td>
                                 </tr>
                             {/foreach}
