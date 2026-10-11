@@ -98,17 +98,27 @@ class TeacherCourseAccess
 
     public static function validateTeacherIds($ids): array
     {
+        // Cake's multiple select submits its empty hidden value when all teachers are removed.
+        if ($ids === null || $ids === '') {
+            return [];
+        }
         if (!is_array($ids)) {
             throw new InvalidArgumentException('Danh sách giáo viên không hợp lệ.');
         }
         $normalized = [];
         foreach ($ids as $id) {
+            if ($id === '') {
+                continue;
+            }
             if (!ctype_digit((string)$id) || (int)$id < 1) {
                 throw new InvalidArgumentException('Danh sách giáo viên không hợp lệ.');
             }
             $normalized[(int)$id] = (int)$id;
         }
         $normalized = array_values($normalized);
+        if (!$normalized) {
+            return [];
+        }
         $valid = self::teacherOptions();
         foreach ($normalized as $id) {
             if (!isset($valid[$id])) {
