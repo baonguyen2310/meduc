@@ -8,6 +8,13 @@ use Cake\Http\Exception\NotFoundException;
 
 class CourseExamLibrary
 {
+    public static function isImportedCourse(int $id): bool
+    {
+        return (bool)ConnectionManager::get('default')->execute(
+            'SELECT 1 FROM exam_prep_courses WHERE product_id=:id LIMIT 1', ['id'=>$id]
+        )->fetch('assoc');
+    }
+
     public static function isExamPrep(int $id): bool
     {
         return (bool)ConnectionManager::get('default')->execute(

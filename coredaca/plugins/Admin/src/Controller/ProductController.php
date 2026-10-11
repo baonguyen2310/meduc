@@ -816,6 +816,20 @@ class ProductController extends AppController {
         ]);
 
         $product = $table->formatDataProductDetail($product_detail, $this->lang);
+        // Edit selections must use current relations, not the public category cache.
+        if (!empty($product_detail['CategoriesProduct'])) {
+            $category_ids = array_map('intval', array_column($product_detail['CategoriesProduct'], 'category_id'));
+            $product['categories'] = [];
+            $category_rows = ConnectionManager::get('default')->execute(
+                'SELECT c.id, c.status, cc.name FROM categories c
+                 LEFT JOIN categories_content cc ON cc.category_id=c.id AND cc.lang=:lang
+                 WHERE c.deleted=0 AND c.id IN ('.implode(',', $category_ids).')',
+                ['lang' => $this->lang]
+            )->fetchAll('assoc');
+            foreach ($category_rows as $category) {
+                $product['categories'][(int)$category['id']] = $category;
+            }
+        }
         $list_category_main = [];
         if(!empty($product['categories'])) {
             foreach($product['categories'] as $category_id => $category_main){
@@ -1066,7 +1080,8 @@ class ProductController extends AppController {
         }
 
         $teacher_ids = [];
-        if (!empty($id) && !empty($data['course_lessons_readonly']) && CourseExamLibrary::isExamPrep((int)$id)) {
+        $imported_course = !empty($id) && CourseExamLibrary::isImportedCourse((int)$id);
+        if (!empty($id) && ($imported_course || (!empty($data['course_lessons_readonly']) && CourseExamLibrary::isExamPrep((int)$id)))) {
             $lessons = ConnectionManager::get('default')->execute(
                 'SELECT value FROM products_attribute WHERE product_id=:id AND attribute_id=11 LIMIT 1', ['id'=>(int)$id]
             )->fetch('assoc');
@@ -1079,6 +1094,22 @@ class ProductController extends AppController {
             } catch (\InvalidArgumentException $e) {
                 $this->responseJson([MESSAGE => $e->getMessage()]);
             }
+        }
+
+        $category_ids = is_array($data['categories'] ?? null) ? array_values(array_unique(array_filter(array_map('intval', $data['categories'])))) : [];
+        if ($imported_course && !in_array(125, $category_ids, true)) {
+            // These internal courses always belong to the exam preparation library.
+            $category_ids[] = 125;
+        }
+        if (!$category_ids) {
+            $this->responseJson([MESSAGE => 'Vui lòng chọn danh mục trước khi lưu.']);
+        }
+        if ($teacher_ids && !TeacherCourseAccess::hasCourseCategory($category_ids)) {
+            $this->responseJson([MESSAGE => 'Vui lòng chọn danh mục khóa học để phân công giáo viên.']);
+        }
+        $data['categories'] = $category_ids;
+        if (!in_array((int)($data['main_category_id'] ?? 0), $category_ids, true)) {
+            $data['main_category_id'] = $imported_course ? 125 : $category_ids[0];
         }
         
         $product_component = $this->loadComponent('Admin.Product');
@@ -1410,6 +1441,7 @@ class ProductController extends AppController {
                 try {
                     TeacherCourseAccess::replaceAssignments((int)$product_id, $teacher_ids);
                 } catch (\Throwable $e) {
+                    \Cake\Log\Log::error(sprintf('Teacher assignment failed for course %d: %s: %s', $product_id, get_class($e), $e->getMessage()));
                     $this->responseJson([MESSAGE => 'Khóa học đã lưu nhưng phân công giáo viên chưa thành công. Vui lòng mở lại khóa học và lưu lần nữa.']);
                 }
             }

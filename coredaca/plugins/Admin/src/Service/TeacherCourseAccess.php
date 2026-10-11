@@ -67,6 +67,16 @@ class TeacherCourseAccess
         return (bool)$row;
     }
 
+    public static function hasCourseCategory(array $categoryIds): bool
+    {
+        $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
+        if (!$categoryIds) return false;
+        return (bool)self::db()->execute(
+            "SELECT 1 FROM categories WHERE deleted=0 AND type='product'
+             AND id IN (".implode(',', $categoryIds).") AND (id=50 OR path_id LIKE '%|50|%') LIMIT 1"
+        )->fetch('assoc');
+    }
+
     public static function isAssigned(int $userId, int $productId): bool
     {
         $row = self::db()->execute(
