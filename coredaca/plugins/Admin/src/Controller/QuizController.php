@@ -295,6 +295,14 @@ class QuizController extends AppController {
             $this->responseJson([MESSAGE => __d('admin', 'duong_dan_da_ton_tai_tren_he_thong')]);
         }
 
+        $existingExamMetadata = !empty($id) ? QuizExamMetadata::forQuiz((int)$id) : [];
+        if (!empty($existingExamMetadata['staff_only'])) {
+            // The legacy five-option editor cannot round-trip multiple-answer/essay questions.
+            $rawQuestions = ConnectionManager::get('default')->execute(
+                'SELECT value FROM quizs_attribute WHERE quiz_id=:id AND attribute_id=18 LIMIT 1', ['id'=>(int)$id]
+            )->fetch('assoc');
+            if ($rawQuestions) $data['danhsachcauhoi'] = json_decode($rawQuestions['value'], true);
+        }
         $examMetadata = null;
         if (isset($data['exam_metadata'])) {
             if (!is_array($data['exam_metadata'])) {

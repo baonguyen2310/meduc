@@ -11,6 +11,7 @@ class QuizsContentTable extends Table
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->addBehavior('StaffExamVisibility', ['field'=>'quiz_id']);
         $this->setTable('quizs_content');
         $this->setPrimaryKey('id');
     }

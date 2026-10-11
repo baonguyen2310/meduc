@@ -670,6 +670,10 @@
 
                 <div class="kt-portlet__body">
                     {foreach from = $all_attributes item = attribute key = attribute_id}
+                        {if !empty($quiz_exam_metadata.staff_only) && $attribute.code == 'danhsachcauhoi'}
+                            <p class="text-muted">Nội dung đề được giữ đầy đủ theo bản nhập. Vào khóa luyện thi tương ứng để xem đề, làm thử hoặc tải Word.</p>
+                            {continue}
+                        {/if}
                         <div class="form-group">
                             <label>
                                 {if !empty($attribute.name)}

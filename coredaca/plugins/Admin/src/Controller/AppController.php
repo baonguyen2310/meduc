@@ -101,6 +101,7 @@ class AppController extends Controller {
 
         if($this->Auth->user('id')){
             if (!empty($this->Auth->user('supper_admin'))) {
+                if (!defined('MEDUC_EXAM_STAFF')) define('MEDUC_EXAM_STAFF', true);
                 return;
             }
             $account = TeacherCourseAccess::accountState((int)$this->Auth->user('id'));
@@ -109,9 +110,11 @@ class AppController extends Controller {
             }
 
             $this->teacherCourseOnly = $account['role_name'] === 'Giáo viên';
+            if (!defined('MEDUC_EXAM_STAFF')) define('MEDUC_EXAM_STAFF', $this->teacherCourseOnly || (int)$account['role_id'] === 1);
             if ($this->teacherCourseOnly) {
                 $allowed = [
                     'Product' => ['list', 'detail'],
+                    'CourseExam' => ['preview'],
                     'User' => ['login', 'logout', 'profile', 'profileSave', 'profileChangePass']
                 ];
                 if (!isset($allowed[$controller_request]) || !in_array($action_request, $allowed[$controller_request], true)) {
@@ -121,6 +124,7 @@ class AppController extends Controller {
             }
 
             $role_id = (int)$account['role_id'];
+            if ($controller_request === 'CourseExam' && $role_id === 1) return;
             $check_permission = TableRegistry::get('Roles')->checkPermissionRequest($role_id, $controller_request, $action_request);
             if(!$check_permission && !$this->request->is('ajax')){
                 $this->showErrorPage('denied');

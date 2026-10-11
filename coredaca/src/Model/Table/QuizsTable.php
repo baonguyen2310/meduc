@@ -14,6 +14,7 @@ class QuizsTable extends AppTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->addBehavior('StaffExamVisibility');
         $this->setTable('quizs');
 
         $this->setPrimaryKey('id');

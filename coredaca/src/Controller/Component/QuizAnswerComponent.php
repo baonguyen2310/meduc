@@ -26,6 +26,11 @@ class QuizAnswerComponent extends Component
         }
 
         $table = TableRegistry::get('QuizsAnswer');
+        $private = ConnectionManager::get('default')->execute(
+            'SELECT 1 FROM quiz_exam_metadata WHERE quiz_id=:id AND staff_only=1',
+            ['id'=>(int)($data['quiz_id']??0)]
+        )->fetch('assoc');
+        if ($private) return $this->System->getResponse([MESSAGE=>'Đề này chưa được mở cho học viên.']);
                       
         $data_save = [
             'class_room_id' => $data['class_room_id'],

@@ -15,6 +15,7 @@ class ProductsTable extends AppTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->addBehavior('StaffExamVisibility', ['scope'=>'course']);
         $this->setTable('products');
 
         $this->setPrimaryKey('id');

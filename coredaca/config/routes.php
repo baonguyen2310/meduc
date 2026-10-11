@@ -531,6 +531,8 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/product/add', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'add']);
     $builder->connect('/product/update/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/product/detail/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/course-exam/preview/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'preview'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
+    $builder->connect('/course-exam/word/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'word'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
 
     $builder->connect('/product/save', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'save']);
     $builder->connect('/product/save/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'save'], ['pass' => ['id'], 'id' => '[0-9]+']);

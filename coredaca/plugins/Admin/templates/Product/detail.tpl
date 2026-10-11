@@ -18,6 +18,7 @@
     </div>
 
     <div class="kt-container kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+        {if !empty($course_exam_id)}{$this->element('Admin.page/course_exams')}{/if}
         <div class="kt-wizard-v4">
             <div class="kt-portlet">
                 <div class="kt-portlet__body kt-portlet__body--fit">
@@ -32,7 +33,7 @@
                                             {$product.name} 
                                         {/if}
 
-                                        {if !empty($product.url)}
+                                        {if !empty($product.url) && empty($product.draft)}
                                             <small>
                                                 <a target="_blank" href="/{$product.url}" class="kt-link kt-font-bolder kt-link--info">
                                                     ({__d('admin', 'xem_san_pham')})
@@ -568,4 +569,3 @@
 {else}
     <span class="kt-datatable--error">{__d('admin', 'khong_lay_duoc_thong_tin_ban_ghi')}</span>
 {/if}
-

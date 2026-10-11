@@ -538,6 +538,7 @@
             </div>
         </div>
         
+        {if !empty($course_exam_id)}{$this->element('Admin.page/course_exams')}{/if}
         {if !empty($attributes_product)}
             <div nh-anchor="thuoc_tinh_mo_rong" class="kt-portlet nh-portlet nh-active-hover position-relative">
                 <div class="kt-portlet__head">
@@ -549,6 +550,10 @@
                 </div>
                 <div class="kt-portlet__body">
                     {foreach from = $attributes_product item = attribute key = attribute_id}
+                        {if !empty($course_is_exam_prep) && $attribute.code == 'danhsachtiethoc'}
+                            <input type="hidden" name="course_lessons_readonly" value="1">
+                            {continue}
+                        {/if}
                         <div class="form-group" data-attribute-code="{$attribute.code}">
                             <label>
                                 {if !empty($attribute.name)}

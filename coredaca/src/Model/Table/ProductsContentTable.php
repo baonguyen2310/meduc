@@ -11,6 +11,7 @@ class ProductsContentTable extends Table
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->addBehavior('StaffExamVisibility', ['scope'=>'course', 'field'=>'product_id']);
         $this->setTable('products_content');
         $this->setPrimaryKey('id');
 

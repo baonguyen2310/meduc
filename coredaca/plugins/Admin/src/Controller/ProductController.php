@@ -15,6 +15,7 @@ use Cake\Collection\Collection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Admin\Service\TeacherCourseAccess;
+use Admin\Service\CourseExamLibrary;
 use Cake\Http\Exception\ForbiddenException;
 
 class ProductController extends AppController {
@@ -908,6 +909,7 @@ class ProductController extends AppController {
 
         $this->set('path_menu', 'product');
         $this->set('title_for_layout', __d('admin', 'cap_nhat_san_pham'));
+        $this->prepareCourseExams((int)$id);
     }
 
     public function ajaxSeletAttributeSpecial()
@@ -1034,6 +1036,18 @@ class ProductController extends AppController {
         $this->set('product', $product);
         $this->set('path_menu', 'product');
         $this->set('title_for_layout', __d('admin', 'chi_tiet_san_pham'));
+        $this->prepareCourseExams((int)$id);
+    }
+
+    private function prepareCourseExams(int $id): void
+    {
+        if (!defined('MEDUC_EXAM_STAFF') || !MEDUC_EXAM_STAFF || !TeacherCourseAccess::isCourse($id)) return;
+        $this->set('course_lessons', CourseExamLibrary::lessons($id));
+        $this->set('course_exam_id', $id);
+        $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
+        $this->set('course_exam_download', !$this->teacherCourseOnly);
+        $this->css_page[]='/assets/css/course-exams.css?v=20261012';
+        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261012';
     }
 
     public function save($id = null)
@@ -1048,6 +1062,12 @@ class ProductController extends AppController {
         }
 
         $teacher_ids = [];
+        if (!empty($id) && !empty($data['course_lessons_readonly']) && CourseExamLibrary::isExamPrep((int)$id)) {
+            $lessons = ConnectionManager::get('default')->execute(
+                'SELECT value FROM products_attribute WHERE product_id=:id AND attribute_id=11 LIMIT 1', ['id'=>(int)$id]
+            )->fetch('assoc');
+            $data['danhsachtiethoc'] = $lessons ? json_decode($lessons['value'], true) : [];
+        }
         $save_teacher_assignments = isset($data['teacher_assignment_present']);
         if ($save_teacher_assignments) {
             try {
