@@ -57,7 +57,13 @@ class ExamWordExporter
                     $correct[] = (string)($option['key'] ?? '');
                 }
             }
-            $this->paragraph('Câu ' . ($index + 1) . ': ' . ($correct ? implode(', ', $correct) : 'Tự luận / chưa có đáp án'), 'Heading2');
+            $missingChoice = empty($question['options']) && (($question['question_type'] ?? '') === 'MULTIPLE_CHOICE'
+                || (empty($question['explanation']) && empty($question['rubrics'])));
+            $answerLabel = $correct ? implode(', ', $correct)
+                : ($missingChoice ? 'Thiếu lựa chọn và đáp án trong dữ liệu nguồn'
+                    : (!empty($question['options']) ? 'Chưa có đáp án trong dữ liệu nguồn'
+                        : 'Tự luận · xem lời giải hoặc đáp án tham khảo bên dưới'));
+            $this->paragraph('Câu ' . ($index + 1) . ': ' . $answerLabel, 'Heading2');
             if (!empty($question['explanation'])) {
                 $this->content($question['explanation']);
             }

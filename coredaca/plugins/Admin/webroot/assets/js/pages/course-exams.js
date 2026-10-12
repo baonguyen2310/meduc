@@ -38,11 +38,13 @@
     current.questions.forEach((q, index) => {
       const correct = q.options.filter(o => o.is_correct).map(o => o.key);
       const checkable = q.options.length > 0 && correct.length > 0;
+      const missingChoice = !q.options.length && (q.question_type === 'MULTIPLE_CHOICE' || (!q.explanation && !(q.rubrics || []).length));
+      const missingAnswer = q.options.length > 0 && !correct.length;
       const selected = Array.isArray(answers[index]) ? answers[index] : [];
       const isRight = checkable && correct.length === selected.length && correct.every(key => selected.includes(key));
       const question = plain('section', '', 'mx-question'); question.id = 'mx-question-' + index;
       const label = plain('div', '', 'mx-question-label'); label.append(plain('span', 'Câu ' + (index + 1)));
-      label.append(plain('span', q.options.length ? (correct.length > 1 ? 'Chọn nhiều đáp án' : 'Trắc nghiệm') : 'Tự luận · tự đối chiếu'));
+      label.append(plain('span', missingChoice ? 'Thiếu lựa chọn và đáp án' : missingAnswer ? 'Chưa có đáp án' : q.options.length ? (correct.length > 1 ? 'Chọn nhiều đáp án' : 'Trắc nghiệm') : 'Tự luận · tự đối chiếu'));
       question.append(label);
       const content = plain('div', '', 'mx-question-content'); content.innerHTML = q.content; question.append(content);
       (q.images || []).forEach(image => { const img = document.createElement('img'); img.src = image.url; img.alt = 'Hình minh hoạ câu ' + (index + 1); img.loading = 'lazy'; question.append(img); });
@@ -67,14 +69,14 @@
         }
         question.append(row);
       });
-      if (!q.options.length && mode === 'practice') {
+      if (!q.options.length && !missingChoice && mode === 'practice') {
         const essay = document.createElement('textarea'); essay.className = 'mx-essay'; essay.placeholder = 'Viết câu trả lời để đối chiếu với gợi ý…'; essay.setAttribute('aria-label', 'Trả lời câu ' + (index + 1)); essay.value = answers[index] || ''; essay.disabled = graded;
         essay.addEventListener('input', () => { answers[index] = essay.value; progress(); }); question.append(essay);
       }
       if (mode === 'view' || graded) {
-        const explanation = document.createElement('details'); explanation.className = 'mx-answer'; explanation.open = graded;
+        const explanation = document.createElement('details'); explanation.className = 'mx-answer'; explanation.open = graded || mode === 'view';
         explanation.append(plain('summary', graded && checkable ? (isRight ? 'Đúng · xem giải thích' : 'Chưa đúng · xem đáp án') : 'Đáp án & giải thích'));
-        const body = plain('div', '', 'mx-answer-body'); body.append(plain('div', correct.length ? 'Đáp án: ' + correct.join(', ') : 'Tự đối chiếu · câu này chưa có đáp án chấm tự động', 'mx-answer-key'));
+        const body = plain('div', '', 'mx-answer-body'); body.append(plain('div', correct.length ? 'Đáp án: ' + correct.join(', ') : missingChoice ? 'Dữ liệu nguồn chưa có lựa chọn và đáp án cho câu này' : missingAnswer ? 'Dữ liệu nguồn chưa có đáp án cho câu này' : 'Tự luận · xem lời giải hoặc đáp án tham khảo bên dưới', 'mx-answer-key'));
         const text = document.createElement('div'); text.innerHTML = q.explanation || ''; body.append(text);
         (q.rubrics || []).forEach(rubric => { if (rubric.criteria) body.append(plain('p', rubric.criteria)); if (rubric.sample_answer) body.append(plain('p', rubric.sample_answer)); });
         explanation.append(body); question.append(explanation);
@@ -114,14 +116,19 @@
   $('[data-exam-grade]').addEventListener('click', () => {
     if (!current) return;
     if (graded) { answers = {}; graded = false; $('[data-exam-result]').textContent = 'Bắt đầu lượt làm thử mới.'; render(); $('[data-exam-scroll]').scrollTop=0; return; }
-    let total=0, right=0, unanswered=0;
+    let total=0, right=0, unanswered=0, incomplete=0;
     current.questions.forEach((q,index) => {
-      const correct=q.options.filter(o=>o.is_correct).map(o=>o.key); if(!correct.length)return;
+      const correct=q.options.filter(o=>o.is_correct).map(o=>o.key);
+      if(!correct.length) {
+        if(q.options.length || q.question_type === 'MULTIPLE_CHOICE' || (!q.explanation && !(q.rubrics || []).length)) incomplete++;
+        return;
+      }
       total++;const selected=Array.isArray(answers[index])?answers[index]:[];if(!selected.length)unanswered++;
       if(correct.length===selected.length && correct.every(key=>selected.includes(key)))right++;
     });
     graded=true;render();
-    $('[data-exam-result]').replaceChildren(plain('strong', total ? right+' / '+total+' câu đúng' : 'Đề này cần tự đối chiếu', 'mx-result-strong'), plain('span', (total?' · '+Math.round(100*right/total)+'%':'')+(unanswered?' · '+unanswered+' câu chưa trả lời':'')+(current.questions.length>total?' · '+(current.questions.length-total)+' câu tự đối chiếu':'')));
+    const selfReview=current.questions.length-total-incomplete;
+    $('[data-exam-result]').replaceChildren(plain('strong', total ? right+' / '+total+' câu đúng' : 'Đề này cần tự đối chiếu', 'mx-result-strong'), plain('span', (total?' · '+Math.round(100*right/total)+'%':'')+(unanswered?' · '+unanswered+' câu chưa trả lời':'')+(selfReview?' · '+selfReview+' câu tự đối chiếu':'')+(incomplete?' · '+incomplete+' câu thiếu dữ liệu nguồn':'')));
   });
 
   async function download(id, button) {

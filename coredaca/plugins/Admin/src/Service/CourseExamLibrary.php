@@ -90,7 +90,8 @@ class CourseExamLibrary
                 $hash=(string)($image['url_hash']??'');
                 if (preg_match('/^[a-f0-9]{64}$/D',$hash)) $images[]=['url_hash'=>$hash,'url'=>'https://meduc.duckdns.org/api/media/'.$hash];
             }
-            $questions[]=['id'=>$i+1,'content'=>self::safeHtml((string)($q['name_vi']??'')),
+            $questions[]=['id'=>$i+1,'question_type'=>(string)($q['question_type']??''),
+                'content'=>self::safeHtml((string)($q['name_vi']??'')),
                 'explanation'=>self::safeHtml((string)($q['answer_detail_vi']??'')),
                 'options'=>$options,'images'=>$images,'rubrics'=>$q['rubrics']??[]];
         }
