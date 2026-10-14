@@ -1,0 +1,110 @@
+/* Homepage hero (block/slider/view_hero_wall.tpl): portrait wall, fade and headline.
+   Sizes follow MasterClass "variant_1" (DualCtaHero) as measured on masterclass.com on 14/10/2026.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mhw {
+  --mhw-red: #e8234f;
+  --mhw-fade: 20 2 10; /* background as RGB channels so the overlay can fade into it */
+  /* Dark: MasterClass's overlay. Only the top of the wall stays visible; the rest darkens like a shadow. */
+  --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade) / .98) 42%, rgb(var(--mhw-fade) / .82) 60%, rgb(var(--mhw-fade) / .35) 80%, rgb(var(--mhw-fade) / .45));
+  --mhw-tile-ring: transparent;
+  --mhw-ink: #fff;
+  --mhw-muted: rgb(255 255 255 / .7);
+  --mhw-soft: rgb(255 255 255 / .8);
+  --mhw-secondary: #3c3d42;
+  --mhw-secondary-hover: #4a4b51;
+  --mhw-secondary-ink: #fff;
+  --mhw-tile-bg: #26272b;
+  --mhw-gap: 12px;
+  --mhw-tile-w: 120px;
+  /* MasterClass loops a column in 60s (about 26px/s at desktop size). MedUC drifts slowly on purpose:
+     240s is about 6.5px/s on desktop and 4.5px/s on phones. */
+  --mhw-duration: 240s;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Fill the first screen below the header (64px single row; 106px with the secondary bar from 992px). */
+  min-height: calc(100svh - 64px);
+  overflow: hidden;
+  background: rgb(var(--mhw-fade));
+  color: var(--mhw-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+/* Light: a translucent white veil reads as fog on photos, so the photos stay clear and only a short band
+   fades into the solid panel behind the text. A faint ring separates white-background photos from the page. */
+html[data-meduc-theme="light"] .mhw {
+  --mhw-red: #de2334;
+  --mhw-fade: 245 245 247;
+  --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade)) 34%, rgb(var(--mhw-fade) / .92) 41%, rgb(var(--mhw-fade) / 0) 56%);
+  --mhw-tile-ring: rgb(21 23 28 / .08);
+  --mhw-ink: #15171c;
+  --mhw-muted: rgb(21 23 28 / .68);
+  --mhw-soft: rgb(21 23 28 / .72);
+  --mhw-secondary: #eceef2;
+  --mhw-secondary-hover: #e1e4ea;
+  --mhw-secondary-ink: #15171c;
+  --mhw-tile-bg: #e9ebef;
+}
+.mhw *, .mhw *::before, .mhw *::after { box-sizing: border-box; }
+.mhw-shell { width: min(92%, 1440px); margin-inline: auto; }
+/* The homepage row holding the hero carries a 20px bottom margin, which showed as a white strip under it. */
+[nh-row]:has(.mhw) { margin-bottom: 0 !important; }
+
+/* Portrait wall */
+.mhw-wall { position: absolute; inset: 0 0 2px; z-index: 0; display: flex; justify-content: center; gap: var(--mhw-gap); overflow: hidden; }
+.mhw-column { flex: none; width: var(--mhw-tile-w); }
+.mhw-track { display: flex; flex-direction: column; gap: var(--mhw-gap); animation: mhw-scroll-up var(--mhw-duration) linear infinite; animation-delay: var(--mhw-delay, 0s); will-change: transform; }
+.mhw-column--down .mhw-track { animation-name: mhw-scroll-down; }
+/* Each track holds two identical halves, so moving by half (plus half a gap) loops seamlessly. */
+@keyframes mhw-scroll-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - var(--mhw-gap) / 2)); } }
+@keyframes mhw-scroll-down { from { transform: translateY(calc(-50% - var(--mhw-gap) / 2)); } to { transform: translateY(0); } }
+.mhw-tile { flex: none; width: var(--mhw-tile-w); height: calc(var(--mhw-tile-w) * 1.45); overflow: hidden; border-radius: 4px; background: var(--mhw-tile-bg); box-shadow: 0 0 0 1px var(--mhw-tile-ring); }
+.mhw-tile img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+
+.mhw-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--mhw-overlay); }
+
+/* Headline and actions: stacked and centred on phones, side by side from 768px. */
+.mhw-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 24px; padding-block: 32px; text-align: center; }
+.mhw-copy { display: flex; flex-direction: column; min-width: 0; }
+/* Anton is taller than MasterClass's headline face at the same size, so sizes are scaled to match the cap height.
+   Vietnamese stacked accents (Ữ, Ớ, Ề) also need more line height than Latin text. */
+.mhw-title { margin: 0; color: var(--mhw-ink); font: 400 clamp(24px, 6.8vw, 30px)/1.12 Anton, Impact, "Arial Narrow", sans-serif; letter-spacing: .01em; text-transform: uppercase; }
+.mhw-title span { display: block; }
+.mhw-line2 { color: var(--mhw-red); font-size: 1.86em; line-height: 1.08; }
+.mhw-subtitle { max-width: 280px; margin: 16px auto 0; color: var(--mhw-ink); font-size: 16px; font-weight: 700; line-height: 1.5; }
+.mhw-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.mhw-note { margin: 0; color: var(--mhw-muted); font-size: 16px; line-height: 1.5; }
+.mhw-buttons { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.mhw-button { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; line-height: 1.25; text-decoration: none !important; transition: filter .16s, background-color .16s; }
+.mhw-button--primary { background: var(--mhw-red); color: #fff !important; }
+.mhw-button--primary:hover { filter: brightness(1.1); }
+.mhw-button--secondary { background: var(--mhw-secondary); color: var(--mhw-secondary-ink) !important; }
+.mhw-button--secondary:hover { background: var(--mhw-secondary-hover); }
+.mhw-button:focus-visible { outline: 2px solid var(--mhw-ink); outline-offset: 3px; }
+.mhw-guarantee { margin: 0; color: var(--mhw-soft); font: 11px/1.38 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* On phones the stacked text fills the lower half, so the light panel starts higher. */
+@media (max-width: 767.98px) {
+  html[data-meduc-theme="light"] .mhw { --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade)) 52%, rgb(var(--mhw-fade) / .92) 58%, rgb(var(--mhw-fade) / 0) 70%); }
+}
+@media (min-width: 768px) {
+  .mhw { --mhw-tile-w: 140px; }
+  .mhw-content { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 32px; padding-block: 32px 64px; text-align: left; }
+  .mhw-copy { max-width: 60%; }
+  .mhw-title { font-size: clamp(30px, 2.95vw, 43px); }
+  .mhw-subtitle { margin-inline: 0; }
+  .mhw-actions { flex: none; width: 317px; }
+}
+@media (min-width: 960px) {
+  .mhw { --mhw-tile-w: 172px; }
+}
+@media (min-width: 992px) {
+  .mhw { min-height: calc(100svh - 106px); }
+}
+@media (min-width: 1101px) {
+  .mhw-shell { width: min(83.333333%, 1440px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mhw-track { animation: none; }
+}
