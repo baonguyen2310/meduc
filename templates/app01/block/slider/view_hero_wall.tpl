@@ -77,13 +77,17 @@
             {if !empty($text.dong_phu)}
                 <p class="mhw-note">{$text.dong_phu|escape}</p>
             {/if}
-            {if !empty($text.nut_chinh) || !empty($text.nut_phu)}
+            {* Two red buttons (nut_chinh, nut_chinh_2) and one grey button (nut_phu). *}
+            {if !empty($text.nut_chinh) || !empty($text.nut_chinh_2) || !empty($text.nut_phu)}
                 <div class="mhw-buttons">
                     {if !empty($text.nut_chinh)}
                         <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh)}{$text.link_nut_chinh|escape}{else}/khoa-hoc{/if}">{$text.nut_chinh|escape}</a>
                     {/if}
+                    {if !empty($text.nut_chinh_2)}
+                        <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh_2)}{$text.link_nut_chinh_2|escape}{else}/danh-sach-de-thi{/if}">{$text.nut_chinh_2|escape}</a>
+                    {/if}
                     {if !empty($text.nut_phu)}
-                        <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/gioi-thieu{/if}">{$text.nut_phu|escape}</a>
+                        <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/sach-y-khoa{/if}">{$text.nut_phu|escape}</a>
                     {/if}
                 </div>
             {/if}

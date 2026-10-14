@@ -37,10 +37,12 @@ SELECT
     "tieu_de_dong_2":"VỮNG BƯỚC NGHỀ Y",
     "mo_ta":"Học Y bứt phá cùng đội ngũ Thạc sĩ, Bác sĩ nội trú.",
     "dong_phu":"Hơn 5.000 câu hỏi luyện tập có đáp án.",
-    "nut_chinh":"Khám phá khóa học",
+    "nut_chinh":"Khám phá khoá học",
     "link_nut_chinh":"/khoa-hoc",
-    "nut_phu":"Tìm hiểu về MedUC",
-    "link_nut_phu":"/gioi-thieu",
+    "nut_chinh_2":"Vào khoá luyện thi",
+    "link_nut_chinh_2":"/danh-sach-de-thi",
+    "nut_phu":"Sách Y Khoa",
+    "link_nut_phu":"/sach-y-khoa",
     "cam_ket":"Cam kết hoàn lại 100% học phí"
   }},"normal":{}}',
   UNIX_TIMESTAMP(), NULL, UNIX_TIMESTAMP(), 1, 'hero trang chu - buc tuong giang vien | herowal', 0
