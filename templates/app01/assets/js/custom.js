@@ -677,8 +677,9 @@ $(document).ready(function() {
 
 // header-fixed
 const headerHome = document.querySelector("body.home");
-if(headerHome) {
-    document.querySelector(".header-main").classList.add("header-fixed");
+const headerMain = document.querySelector(".header-main");
+if(headerHome && headerMain) {
+    headerMain.classList.add("header-fixed");
 }
 // End header-fixed
 

@@ -49,6 +49,16 @@
     <link href="{if !empty($website_info.favicon)}{CDN_URL}{$website_info.favicon}{else}/favicon.ico{/if}" rel="icon" type="image/x-icon"/>
     {$this->element('layout/css', [], $this->Setting->getConfigCacheView('css', {LAYOUT}))}
 
+    {* Every page whose layout has a header gets the new header instead of the database header rows. *}
+    {$use_header_v2 = !empty($page_code) && !empty($structure[{HEADER}])}
+    {if $use_header_v2}
+        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261014-6" rel="stylesheet">
+        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261014-3" defer></script>
+    {/if}
 
     {assign var = embed_code value = []}
     {if !empty($data_init.embed_code)}
@@ -62,19 +72,33 @@
     {*<link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf_viewer.min.css" rel="stylesheet" type="text/css" />*}
 </head>
 
-<body class="{if !empty(DEVICE)}is-mobile{/if} {if !empty(PAGE_TYPE == 'home')}home{/if}">
+<body class="{if !empty(DEVICE)}is-mobile{/if} {if !empty(PAGE_TYPE == 'home')}home{/if} {if $use_header_v2}meduc-header-v2{/if}">
     {if !empty($embed_code.top_body) && empty($embed_code.time_delay)}
         {$embed_code.top_body}
     {/if}
 
-    {if !empty($page_code) && !empty($structure)}
+    {assign var = page_structure value = $structure}
+    {if $use_header_v2}
+        {$this->element('layout/header_v2')}
+
+        {assign var = page_structure value = []}
+        {if !empty($structure)}
+            {foreach from = $structure item = rows key = type}
+                {if $type != {HEADER}}
+                    {$page_structure[$type] = $rows}
+                {/if}
+            {/foreach}
+        {/if}
+    {/if}
+
+    {if !empty($page_code) && !empty($page_structure)}
         {assign var = page_cache_options value = []}
         {if !empty($cache_page)}
             {assign var = page_cache_options value = $this->Setting->getConfigCacheView($page_code, {PAGE})}
         {/if}
 
         {$this->element('layout/page', [
-            'structure' => $structure
+            'structure' => $page_structure
         ], $page_cache_options)}
     {/if}
 
