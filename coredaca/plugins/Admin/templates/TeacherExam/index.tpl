@@ -15,7 +15,7 @@
   </header>
   <main class="page">
     <section class="hero">
-      <div><span class="eyebrow">MEDUC / FACOURSE</span><h1>Kho đề theo <em>khóa học.</em></h1><p>Giáo viên chỉ xem nội dung và tải Word những đề thuộc khóa học được giao. Quản trị viên có thể phân loại và gán quyền tại đây.</p></div>
+      <div><span class="eyebrow">MEDUC / KHO ĐỀ</span><h1>Kho đề theo <em>khóa học.</em></h1><p>Giáo viên chỉ xem nội dung và tải Word những đề thuộc khóa học được giao. Quản trị viên có thể phân loại và gán quyền tại đây.</p></div>
       <div class="hero-stat"><strong id="exam-total">—</strong><span>ĐỀ CÓ THỂ TRUY CẬP</span><small>Danh mục nguồn: 2.033 đề</small></div>
     </section>
 
