@@ -31,6 +31,9 @@ meduc_2033_de_thi_moi_draft.sql
 .env
 .env.*
 !.env.example
+/config_database.php
+/coredaca/config/app_local.php
+/infomation.json
 google-service-account.json
 /cdn/
 /coredaca/vendor/

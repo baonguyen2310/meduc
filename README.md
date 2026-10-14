@@ -8,10 +8,13 @@ can be compared or selectively brought over from `main`.
 
 Runtime data and private configuration are intentionally outside Git:
 `cdn/`, backups, database dumps, `coredaca/vendor/`, Google service account,
-and live database/application credentials. The config files tracked here are
-the sanitized placeholders from the first public repository commit. A Git
-checkout of this branch is therefore not a deployable copy of the hosting
-account without its separate runtime configuration and data.
+and live database/application credentials. In particular,
+`config_database.php`, `coredaca/config/app_local.php`, and the generated
+`infomation.json` are ignored. Copy the corresponding `.example.php` files
+to the runtime config paths and supply the environment-specific values when
+preparing a new deployment. A Git checkout of this branch is therefore not
+a deployable copy of the hosting account without its separate runtime
+configuration and data.
 
 The original feedback controller contained live notification credentials.
 This branch reads the Slack webhook from `MEDUC_FEEDBACK_SLACK_WEBHOOK_URL`
