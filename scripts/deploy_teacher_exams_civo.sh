@@ -17,26 +17,11 @@ if [[ ! -f "$secret_file" ]] || ! grep -q '^MEDUC_2033_API_KEY=.' "$secret_file"
 fi
 
 git -C "$source_dir" pull --ff-only origin main
-
-cd "$source_dir"
-rsync -a --relative \
-  compose.production.yml \
-  coredaca/config/routes.php \
-  coredaca/plugins/Admin/src/Controller/AppController.php \
-  coredaca/plugins/Admin/src/Controller/UserController.php \
-  coredaca/plugins/Admin/src/Controller/TeacherExamController.php \
-  coredaca/plugins/Admin/templates/TeacherExam/index.tpl \
-  coredaca/plugins/Admin/templates/element/layout/menu_left.tpl \
-  coredaca/src/Service/TeacherExamLibrary.php \
-  coredaca/src/Service/ExamWordExporter.php \
-  hero-light/assets/exam-hierarchy-data.json \
-  hero-light/assets/teacher-exams.css \
-  hero-light/assets/teacher-exams.js \
-  "$app_dir/"
+git -C "$app_dir" pull --ff-only origin main
 
 docker exec -i meduc_php_db sh -lc \
   'MYSQL_PWD="$MARIADB_ROOT_PASSWORD" mariadb -uroot "$MARIADB_DATABASE"' \
-  < "$source_dir/scripts/teacher_exam_access.sql"
+  < "$app_dir/scripts/teacher_exam_access.sql"
 
 cd "$app_dir"
 docker compose --env-file "$secret_file" -f compose.production.yml up -d --no-deps --force-recreate web

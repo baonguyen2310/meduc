@@ -10,7 +10,9 @@
 
 ## Triển khai Meduc PHP trên civo-01
 
-Máy production hiện tại là SSH alias **`civo-01`** (cũng có alias `civo-001`). Không triển khai Meduc lên `uc-01` nữa. Trên Civo, Git checkout nằm ở `/opt/meduc-php/src`, còn Docker Compose chạy từ `/opt/meduc-php/app`; mã đã cập nhật cần được đồng bộ từ `src` sang `app` trước khi kiểm tra bản chạy.
+Máy production hiện tại là SSH alias **`civo-01`** (cũng có alias `civo-001`). Không triển khai Meduc lên `uc-01` nữa. Trên Civo có ba Git checkout: `/opt/meduc-php/src` và `/opt/meduc-php/app` theo `main`, còn `/opt/meduc-php/production` theo `production`. Docker Compose chạy từ `app`; đây là thư mục đang serve và được mount vào container PHP. Git metadata của `app` nằm ngoài web root tại `/opt/meduc-php/app.git`.
+
+Để cập nhật checkout mà không ghi đè dữ liệu runtime, chạy `git -C /opt/meduc-php/src pull --ff-only origin main`, `git -C /opt/meduc-php/app pull --ff-only origin main` và `git -C /opt/meduc-php/production pull --ff-only origin production` với quyền sở hữu các thư mục đó. Cập nhật mã trong `app` làm thay đổi mã web đang chạy; migration database và cấu hình bí mật cần được kiểm tra riêng theo từng tính năng. Không cần rsync mã từ `src` sang `app` nữa.
 
 `compose.production.yml` chạy MariaDB riêng và chỉ mở Apache tại `127.0.0.1:8081` trên máy chủ. Caddy trên `civo-01` định tuyến `meducnew.duckdns.org` và `meducv2.duckdns.org` vào cổng này. Domain `meducnew` chuyển riêng đường dẫn `/` sang bản trang chủ mới tại `/masterclass`; domain `meducv2` mở trực tiếp trang chủ PHP gốc. Kho đề Meduc Cao chạy tại `127.0.0.1:3000` và cơ sở dữ liệu `fhd_quiz` ở các container riêng; `meduc.duckdns.org` trỏ vào kho đề này. Caddy nhận cổng 80/443 cho cả ba tên miền. [deploy/Caddyfile.uc-01](deploy/Caddyfile.uc-01) chỉ là bản cấu hình cũ để tham khảo, không phải cấu hình đang dùng trên Civo.
 
