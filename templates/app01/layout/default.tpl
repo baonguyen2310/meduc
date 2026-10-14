@@ -58,6 +58,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261014-6" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261014-3" defer></script>
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261014" rel="stylesheet">
+        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261014" defer></script>
     {/if}
 
     {assign var = embed_code value = []}
@@ -100,6 +102,10 @@
         {$this->element('layout/page', [
             'structure' => $page_structure
         ], $page_cache_options)}
+    {/if}
+
+    {if $use_header_v2}
+        {$this->element('layout/action_bar')}
     {/if}
 
 

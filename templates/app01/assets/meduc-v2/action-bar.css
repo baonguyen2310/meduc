@@ -1,0 +1,85 @@
+/* Bottom action bar (element/layout/action_bar.tpl), after MasterClass's sticky bar.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mhb {
+  --mhb-bg: #1c1d21;
+  --mhb-line: #2e2f34;
+  --mhb-ink: #fff;
+  --mhb-muted: rgb(255 255 255 / .7);
+  --mhb-red: #e8234f;
+  --mhb-secondary: #3c3d42;
+  --mhb-secondary-hover: #4a4b51;
+  --mhb-menu: #232427;
+  --mhb-shadow: #0009;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1010;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--mhb-line);
+  background: var(--mhb-bg);
+  color: var(--mhb-ink);
+  font: 400 15px/1.4 Inter, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* Hidden below the screen (and out of the tab order) until the page has scrolled. */
+  transform: translateY(105%);
+  visibility: hidden;
+  transition: transform .25s ease, visibility 0s linear .25s;
+}
+.mhb.is-shown { transform: none; visibility: visible; transition: transform .25s ease; }
+html[data-meduc-theme="light"] .mhb {
+  --mhb-bg: #fff;
+  --mhb-line: #e4e6ec;
+  --mhb-ink: #15171c;
+  --mhb-muted: rgb(21 23 28 / .65);
+  --mhb-red: #de2334;
+  --mhb-secondary: #eceef2;
+  --mhb-secondary-hover: #e1e4ea;
+  --mhb-menu: #fff;
+  --mhb-shadow: #1c24301f;
+  box-shadow: 0 -6px 24px rgb(21 23 28 / .06);
+}
+.mhb *, .mhb *::before, .mhb *::after { box-sizing: border-box; }
+.mhb [hidden] { display: none !important; }
+.mhb-shell { display: flex; align-items: center; gap: 24px; width: min(83.333333%, 1440px); min-height: 80px; margin-inline: auto; }
+.mhb-info { min-width: 0; margin-right: auto; }
+.mhb-title { margin: 0; overflow: hidden; font-size: 15px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.mhb-hotline { color: var(--mhb-muted) !important; font-size: 14px; text-decoration: none !important; }
+.mhb-hotline:hover { color: var(--mhb-red) !important; }
+.mhb-actions { display: flex; flex: none; align-items: center; gap: 10px; }
+
+.mhb-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin: 0; padding: 10px 20px; border: 1px solid transparent; border-radius: 8px; background: none; font: 600 15px/1.2 Inter, Arial, sans-serif; white-space: nowrap; text-decoration: none !important; cursor: pointer; transition: filter .16s, background-color .16s, border-color .16s; }
+.mhb-button:focus-visible { outline: 2px solid var(--mhb-ink); outline-offset: 2px; }
+.mhb-icon { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* On desktop only the gift-related buttons show their icon; on phones every button does. */
+.mhb-icon:not(.mhb-icon--always) { display: none; }
+.mhb-button--primary { background: var(--mhb-red); color: #fff !important; }
+.mhb-button--primary:hover { filter: brightness(1.1); }
+.mhb-button--secondary { background: var(--mhb-secondary); color: var(--mhb-ink) !important; }
+.mhb-button--secondary:hover { background: var(--mhb-secondary-hover); }
+.mhb-button--outline { border-color: var(--mhb-ink); color: var(--mhb-ink); }
+.mhb-button--outline:hover, .mhb-button--outline[aria-expanded="true"] { background: var(--mhb-secondary); }
+
+/* Gift menu: two buttons above the gift button. */
+.mhb-gift { position: relative; }
+.mhb-gift-menu { position: absolute; right: 0; bottom: calc(100% + 12px); display: flex; flex-direction: column; gap: 8px; min-width: 200px; padding: 8px; border: 1px solid var(--mhb-line); border-radius: 10px; background: var(--mhb-menu); box-shadow: 0 14px 48px var(--mhb-shadow); }
+.mhb-gift-menu .mhb-button { justify-content: flex-start; width: 100%; }
+
+/* Keep space under the page and lift the floating contact and back-to-top buttons above the bar. */
+body.mhb-ready { padding-bottom: var(--mhb-h, 80px); }
+body.mhb-ready .contact-fixed, body.mhb-ready .rn-progress-parent { transition: bottom .25s ease; }
+body.mhb-on .contact-fixed { bottom: calc(100px + var(--mhb-h, 80px)) !important; }
+body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !important; }
+
+@media (max-width: 1100px) {
+  .mhb-shell { width: min(92%, 1440px); }
+}
+/* Phones and small tablets: four equal buttons with icons, like an app's bottom bar. */
+@media (max-width: 767.98px) {
+  .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
+  .mhb-info { display: none; }
+  .mhb-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1; gap: 6px; }
+  .mhb-actions > .mhb-button, .mhb-gift > .mhb-button { flex-direction: column; gap: 3px; width: 100%; min-height: 54px; padding: 6px 4px; font-size: 12px; }
+  .mhb-icon:not(.mhb-icon--always) { display: block; }
+  .mhb-gift-menu { min-width: 180px; bottom: calc(100% + 10px); }
+}
