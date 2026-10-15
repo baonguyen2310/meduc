@@ -1,0 +1,115 @@
+/* Student feedback page, opening sections: view_feedback_hero.tpl, view_student_care.tpl, view_student_perks.tpl
+   and view_feedback_statement.tpl (block/slider/). MasterClass type and colour, like the homepage sections.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mfb {
+  --mfb-bg: #050506;
+  --mfb-alt: #08090b;
+  --mfb-card: #131418;
+  --mfb-ink: #f5f5f6;
+  --mfb-muted: #a9adb5;
+  --mfb-line: #2c2e34;
+  --mfb-red: #ed204f;
+  --mfb-secondary: #3c3d42;
+  --mfb-secondary-hover: #4a4b51;
+  background: var(--mfb-bg);
+  color: var(--mfb-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mfb {
+  --mfb-bg: #fff;
+  --mfb-alt: #f5f5f7;
+  --mfb-card: #fff;
+  --mfb-ink: #17191e;
+  --mfb-muted: #626771;
+  --mfb-line: #e0e3e7;
+  --mfb-red: #bd263a;
+  --mfb-secondary: #eceef2;
+  --mfb-secondary-hover: #e1e4ea;
+}
+.mfb *, .mfb *::before, .mfb *::after { box-sizing: border-box; }
+.mfb-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mfb-kicker { margin: 0 0 16px; color: var(--mfb-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .15em; text-transform: uppercase; }
+.mfb-heading { display: grid; grid-template-columns: 1fr minmax(260px, .42fr); align-items: end; gap: 55px; margin-bottom: 48px; }
+.mfb .mfb-title { margin: 0; color: var(--mfb-ink); font: 400 clamp(48px, 5vw, 76px)/1.12 Anton, Impact, sans-serif; letter-spacing: -.01em; text-wrap: balance; }
+.mfb .mfb-title span { color: var(--mfb-red); }
+.mfb-intro { max-width: 380px; margin: 0 0 6px; color: var(--mfb-muted); font: 400 15px/1.7 Inter, Arial, sans-serif; }
+
+/* Buttons */
+.mfb .mfb-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font: 700 15px/1.2 Inter, Arial, sans-serif; text-decoration: none !important; transition: filter .16s, background-color .16s, border-color .16s; }
+.mfb .mfb-button--primary { background: var(--mfb-red); color: #fff !important; }
+.mfb .mfb-button--primary:hover { filter: brightness(1.1); }
+.mfb .mfb-button--secondary { background: var(--mfb-secondary); color: var(--mfb-ink) !important; }
+.mfb .mfb-button--secondary:hover { background: var(--mfb-secondary-hover); }
+.mfb .mfb-button--outline { border: 2px solid #ffffffa6; color: #fff !important; }
+.mfb .mfb-button--outline:hover { border-color: #fff; background: #ffffff1a; }
+.mfb a:focus-visible { outline: 2px solid var(--mfb-red); outline-offset: 3px; }
+
+/* 1. Opening: heading beside a photo of MedUC students */
+.mfb-hero { padding: clamp(56px, 6vw, 96px) 0 clamp(72px, 7vw, 112px); }
+.mfb-hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: clamp(40px, 5vw, 88px); }
+.mfb-hero-grid--text { grid-template-columns: 1fr; }
+.mfb .mfb-hero-title { margin: 0; color: var(--mfb-ink); font: 400 clamp(54px, 6.2vw, 100px)/1.08 Anton, Impact, sans-serif; letter-spacing: -.01em; text-wrap: balance; }
+.mfb .mfb-hero-title span { color: var(--mfb-red); }
+.mfb-hero-lead { max-width: 540px; margin: 26px 0 0; color: var(--mfb-muted); font: 400 clamp(16px, 1.3vw, 19px)/1.65 Inter, Arial, sans-serif; }
+.mfb-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.mfb-hero-picture { position: relative; margin: 0; }
+.mfb-hero-picture img { display: block; width: 100%; aspect-ratio: 1 / 1; border-radius: 10px; object-fit: cover; }
+.mfb-badge { position: absolute; bottom: 28px; left: -28px; display: flex; flex-direction: column; gap: 4px; max-width: 220px; padding: 18px 22px; border-radius: 10px; background: #fff; color: #17191e; box-shadow: 0 20px 50px #0006; }
+.mfb-badge strong { color: #de2334; font: 400 44px/1 Anton, Impact, sans-serif; }
+.mfb-badge span { font: 600 13px/1.4 Inter, Arial, sans-serif; }
+
+/* 2. How students are cared for */
+.mfb-care { padding: clamp(82px, 7vw, 112px) 0; background: var(--mfb-alt); }
+.mfb-care-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.mfb-care-item { min-width: 0; padding: 28px 28px 32px; border: 1px solid var(--mfb-line); border-radius: 10px; background: var(--mfb-card); }
+.mfb-care-number { display: block; color: var(--mfb-red); font: 400 40px/1 Anton, Impact, sans-serif; }
+.mfb .mfb-care-title { margin: 22px 0 0; color: var(--mfb-ink); font: 700 clamp(18px, 1.5vw, 21px)/1.3 Inter, Arial, sans-serif; letter-spacing: -.02em; }
+.mfb-care-text { margin: 10px 0 0; color: var(--mfb-muted); font: 400 15px/1.6 Inter, Arial, sans-serif; }
+
+/* 3. Student benefits: a large figure on each card */
+.mfb-perks { padding: clamp(82px, 7vw, 112px) 0; }
+.mfb-perk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.mfb-perk { display: flex; flex-direction: column; min-width: 0; padding: 34px 30px 30px; border: 1px solid var(--mfb-line); border-radius: 12px; background: linear-gradient(180deg, rgb(237 32 79 / .08), transparent 55%), var(--mfb-card); }
+.mfb-perk-figure { margin: 0; color: var(--mfb-red); font: 400 clamp(64px, 6vw, 96px)/1 Anton, Impact, sans-serif; letter-spacing: -.02em; }
+.mfb .mfb-perk-title { margin: 22px 0 0; color: var(--mfb-ink); font: 700 clamp(19px, 1.6vw, 23px)/1.3 Inter, Arial, sans-serif; letter-spacing: -.02em; }
+.mfb-perk-text { flex: 1; margin: 12px 0 0; color: var(--mfb-muted); font: 400 15px/1.65 Inter, Arial, sans-serif; }
+.mfb .mfb-perk-link { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--mfb-line); color: var(--mfb-ink) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mfb .mfb-perk-link span { color: var(--mfb-red); }
+.mfb .mfb-perk-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mfb-note { margin: 18px 0 0; color: var(--mfb-muted); font: 400 12px/1.6 Inter, Arial, sans-serif; }
+
+/* 4. Statement over a darkened photo; it stays light-on-dark in both themes. */
+.mfb-statement { position: relative; isolation: isolate; display: grid; place-items: center; min-height: clamp(440px, 46vw, 620px); padding: 90px 0; overflow: hidden; text-align: center; }
+.mfb-statement-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.mfb-statement::before { position: absolute; inset: 0; z-index: -1; content: ""; background: linear-gradient(180deg, rgb(5 5 6 / .82), rgb(20 2 10 / .86)); }
+.mfb-statement--plain::before { background: #14020a; }
+.mfb-statement-inner { display: flex; flex-direction: column; align-items: center; }
+.mfb-statement .mfb-kicker { color: #ff6b86; }
+.mfb .mfb-statement-quote { max-width: 900px; margin: 0; padding: 0; border: 0; background: none; color: #fff; font: 400 clamp(34px, 4.2vw, 62px)/1.18 Georgia, "Times New Roman", serif; letter-spacing: -.04em; text-wrap: balance; }
+.mfb-statement-text { max-width: 640px; margin: 26px 0 0; color: #ffffffc7; font: 400 clamp(15px, 1.25vw, 18px)/1.7 Inter, Arial, sans-serif; }
+.mfb-statement-sign { margin: 18px 0 0; color: #ffffffa6; font: 600 13px/1.4 Inter, Arial, sans-serif; letter-spacing: .08em; }
+.mfb-statement .mfb-button { margin-top: 34px; }
+
+@media (max-width: 1100px) {
+  .mfb-care-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .mfb-heading { grid-template-columns: 1fr; gap: 18px; margin-bottom: 32px; }
+  .mfb-hero-grid { grid-template-columns: 1fr; gap: 44px; }
+  .mfb-badge { left: 16px; bottom: 16px; }
+}
+@media (max-width: 650px) {
+  .mfb-shell { width: calc(100% - 32px); }
+  .mfb-hero { padding: 40px 0 64px; }
+  .mfb .mfb-hero-title { font-size: clamp(44px, 12vw, 60px); }
+  .mfb-hero-actions .mfb-button { flex: 1 1 100%; }
+  .mfb-badge { max-width: 190px; padding: 14px 16px; }
+  .mfb-badge strong { font-size: 34px; }
+  .mfb .mfb-title { font-size: clamp(40px, 10vw, 54px); }
+  .mfb-care, .mfb-perks { padding: 72px 0; }
+  .mfb-care-grid { grid-template-columns: 1fr; gap: 12px; }
+  .mfb-care-item { padding: 22px 22px 26px; }
+  .mfb-perk { padding: 28px 22px 24px; }
+  .mfb-statement { min-height: 0; padding: 80px 0; }
+}
+@media (prefers-reduced-motion: reduce) { .mfb .mfb-button { transition: none; } }
