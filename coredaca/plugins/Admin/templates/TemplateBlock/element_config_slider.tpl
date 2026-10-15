@@ -3,6 +3,7 @@
 {assign var = filemanager_access_key value = $this->SystemAdmin->getAccessKeyUpload()}
 
 {assign var = list_item value = []}
+{$faculty_profiles = !empty($block_info.view) && $block_info.view == 'view_faculty_directory.tpl'}
 {if !empty($config.item)}
     {assign var = list_item value = $config.item}
 {/if}
@@ -22,6 +23,7 @@
             {foreach from = $list_item item = item}
                 {$this->element("../TemplateBlock/load_item_slider", [
                     'item' => $item, 
+                    'faculty_profiles' => $faculty_profiles,
                     'list_language' => $list_language,
                     'filemanager_access_key_template' => $filemanager_access_key_template,
                     'filemanager_access_key' => $filemanager_access_key
@@ -30,6 +32,7 @@
         {else}
             {$this->element("../TemplateBlock/load_item_slider", [
                 'item' => [], 
+                'faculty_profiles' => $faculty_profiles,
                 'list_language' => $list_language,
                 'filemanager_access_key_template' => $filemanager_access_key_template,
                 'filemanager_access_key' => $filemanager_access_key

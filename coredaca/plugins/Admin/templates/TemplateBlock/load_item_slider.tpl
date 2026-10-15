@@ -211,5 +211,15 @@
                 {/if}
             </div>
         </div>
+        {if !empty($faculty_profiles)}
+            <div class="form-group mt-10">
+                <label>Bằng cấp &amp; chứng chỉ của giảng viên</label>
+                <textarea name="" data-name="faculty_credentials" class="form-control" rows="4" placeholder="Bằng Thạc sĩ | /media/bang-thac-si.jpg">{$item.faculty_credentials|default:''|escape}</textarea>
+                <span class="form-text text-muted">
+                    Mỗi dòng một tài liệu: Tên bằng cấp | Đường dẫn ảnh hoặc PDF. Dùng đường dẫn /media/ từ CDN hoặc URL https:// đầy đủ.
+                    Để trống khi chưa có tài liệu. Phần Mô tả ở trên là thông tin chuyên môn và kinh nghiệm trong hồ sơ.
+                </span>
+            </div>
+        {/if}
     </div>
 </div>

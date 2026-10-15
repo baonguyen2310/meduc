@@ -1674,9 +1674,34 @@ class BlockComponent extends Component
                 'blank_link' => !empty($item['blank_link']) ? $item['blank_link'] : null,
                 'description' => !empty($item['description_' . LANGUAGE]) ? $item['description_' . LANGUAGE] : null,
                 'description_short' => !empty($item['description_short_' . LANGUAGE]) ? $item['description_short_' . LANGUAGE] : null,
+                'faculty_credentials' => $this->formatFacultyCredentials($item['faculty_credentials'] ?? ''),
             ];
         }
         return $result;
+    }
+
+    /** Optional faculty documents: one "Title | URL" per line in the existing slider editor. */
+    private function formatFacultyCredentials($value)
+    {
+        if (!is_string($value) || trim($value) === '') return [];
+        $documents = [];
+        $seen = [];
+        foreach (preg_split('/\R/u', $value) ?: [] as $line) {
+            $parts = array_map('trim', explode('|', $line, 2));
+            $url = count($parts) === 2 ? $parts[1] : $parts[0];
+            $source = strpos($url, '/media/') === 0 ? 'cdn' : 'external';
+            $path = parse_url($url, PHP_URL_PATH);
+            if ($source !== 'cdn' && (!preg_match('~^https?://~i', $url) || !parse_url($url, PHP_URL_HOST))) continue;
+            if (!is_string($path) || !preg_match('/\.(?:jpe?g|png|webp|gif|avif|pdf)$/i', $path) || isset($seen[$url])) continue;
+            $seen[$url] = true;
+            $documents[] = [
+                'title' => count($parts) === 2 && $parts[0] !== '' ? $parts[0] : 'Bằng cấp / Chứng chỉ',
+                'url' => $url,
+                'source' => $source,
+                'is_pdf' => (bool) preg_match('/\.pdf$/i', $path),
+            ];
+        }
+        return $documents;
     }
 
     public function getPathViewBlock($block_code = null)

@@ -9,7 +9,7 @@
 {if !empty($data_extend.locale[{LANGUAGE}])}
     {assign var = text value = $data_extend.locale[{LANGUAGE}]}
 {/if}
-{$team_url = '/gioi-thieu'}
+{$team_url = '/doi-ngu-giang-vien'}
 {if !empty($text.link_xem_tat_ca)}{$team_url = $text.link_xem_tat_ca}{/if}
 
 {if !empty($data_block)}
@@ -27,47 +27,7 @@
     </div>
 
     <div class="mgv-rail" data-mrail-track tabindex="0" aria-label="Giảng viên và cố vấn MedUC">
-        {foreach from = $data_block item = item}
-            {$full_name = $item.name|default:''|trim}
-            {if $full_name == ''}{continue}{/if}
-
-            {$display_name = $full_name|regex_replace:'/\s*\([^()]*\)\s*$/u':''|regex_replace:'/\s+/u':' '}
-            {$subject = 'Giảng viên MedUC'}
-            {if !empty($item.description_short)}
-                {$subject = $item.description_short|trim}
-            {elseif preg_match('/\([^()]*\)\s*$/u', $full_name)}
-                {$subject = $full_name|regex_replace:'/^.*\(\s*([^()]*?)\s*\)\s*$/us':'$1'|regex_replace:'/^Dạy\s+/iu':''}
-            {/if}
-            {* Admin descriptions are typed as lines starting with "-" or "/"; on the card they read as one line. *}
-            {$description = $item.description|default:''|regex_replace:'/^[\s\-\/]+/u':''|regex_replace:'/\s*[\r\n]+[\s\-\/]*/u':' · '|regex_replace:'/[\s·]+$/u':''}
-
-            {$course_url = $item.url|default:''|trim}
-            {$href = $team_url}
-            {if $course_url != ''}{$href = $course_url}{/if}
-
-            {$photo = ''}
-            {if !empty($item.image)}
-                {if $item.image_source == 'cdn'}
-                    {$photo = "{CDN_URL}{$this->Utilities->getThumbs($item.image, 720)}"}
-                {else}
-                    {$photo = $item.image}
-                {/if}
-            {/if}
-
-            <article class="mgv-card{if $course_url == ''} mgv-card--centered{/if}{if !empty($item.class_item)} {$item.class_item|escape}{/if}">
-                <a class="mgv-photo" href="{$href|escape}" aria-label="Tìm hiểu về {$display_name|escape}">
-                    {if $photo != ''}
-                        <img src="{$photo|escape}" alt="Chân dung {$display_name|escape}" loading="lazy" decoding="async" />
-                    {/if}
-                </a>
-                <span class="mgv-subject">{$subject|escape}</span>
-                <div class="mgv-copy">
-                    <h3 class="mgv-name"><a href="{$href|escape}">{$display_name|escape}</a></h3>
-                    <p class="mgv-description">{$description|escape}</p>
-                    <a class="mgv-cta" href="{$href|escape}">{if $course_url != ''}Tìm hiểu khóa học{else}Tìm hiểu đội ngũ{/if}</a>
-                </div>
-            </article>
-        {/foreach}
+        {$this->element('faculty/cards', ['data_block' => $data_block, 'team_url' => $team_url, 'profile_mode' => false])}
     </div>
 
     <div class="mgv-footer">
