@@ -8,6 +8,65 @@ use Cake\ORM\TableRegistry;
 
 class ProductHelper extends Helper
 {
+    /** Group the already-filtered public products by their actual year-category memberships. */
+    public function prepareCourseCatalog($courses = [], $year_ids = [], $selected_id = null, $lang = null)
+    {
+        $lang = $lang ?: LANGUAGE;
+        $categories = TableRegistry::get('Categories')->getAll(PRODUCT, $lang);
+        $groups = [];
+        foreach ((array) $year_ids as $id) {
+            $id = (int) $id;
+            if (empty($categories[$id]['status'])) continue;
+            $groups[$id] = [
+                'id' => $id,
+                'name' => $categories[$id]['name'],
+                'url' => $categories[$id]['url'],
+                'courses' => [],
+            ];
+        }
+        $nav_groups = $groups;
+        $selected_id = (int) $selected_id;
+        $selected_year = isset($groups[$selected_id]) ? $selected_id : null;
+        $unique = [];
+        $other = [];
+        foreach ((array) $courses as $course) {
+            if (empty($course['id']) || isset($unique[$course['id']])) continue;
+            $unique[$course['id']] = true;
+            $attrs = $course['attributes'] ?? [];
+            $lessons = json_decode($attrs['danhsachtiethoc']['value'] ?? '', true);
+            $chapters = $lesson_count = 0;
+            foreach (is_array($lessons) ? $lessons : [] as $lesson) {
+                if (!is_array($lesson) || empty($lesson['name_' . $lang])) continue;
+                if (($lesson['chapter_' . $lang] ?? '') === 'y') $chapters++;
+                else $lesson_count++;
+            }
+            $summary = $attrs['motangan']['value'] ?? ($course['description'] ?? '');
+            $summary = html_entity_decode(strip_tags((string) $summary), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $summary = trim(preg_replace('/\s+/u', ' ', str_replace("\xc2\xa0", ' ', $summary)) ?? '');
+            $course['catalog_meta'] = [
+                'chapters' => $chapters,
+                'lessons' => $lesson_count,
+                'summary' => mb_strlen($summary) > 190 ? mb_substr($summary, 0, 187) . '…' : $summary,
+            ];
+            $matched = false;
+            foreach ($groups as $id => &$group) {
+                if (!isset($course['categories'][$id])) continue;
+                $matched = true;
+                if ($selected_year === null || $selected_year === $id) $group['courses'][] = $course;
+            }
+            unset($group);
+            if (!$matched) $other[] = $course;
+        }
+        if ($other) $groups['other'] = ['id' => 'other', 'name' => 'Khóa học khác', 'url' => null, 'courses' => $other];
+        return [
+            'groups' => array_values(array_filter($groups, function ($group) { return !empty($group['courses']); })),
+            'nav_groups' => array_values($nav_groups),
+            'total' => count($unique),
+            'selected_id' => $selected_id,
+            'category_name' => $categories[$selected_id]['name'] ?? 'Khóa học MedUC',
+        ];
+    }
+
     /** Lấy danh sách sản phẩm
      * 
      * $params['get_user']: lấy thông tin của nhân viên - ví dụ: 'true'| 'false'

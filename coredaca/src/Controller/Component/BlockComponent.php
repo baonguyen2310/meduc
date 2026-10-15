@@ -183,6 +183,11 @@ class BlockComponent extends Component
             ]
         ];
 
+        // The public course catalogue must not list draft products, even if their status is still enabled.
+        if (($block_info['view'] ?? '') === 'view_course_catalog.tpl') {
+            $params[FILTER]['draft'] = '0';
+        }
+
         // filter params
         if($data_type == BY_URL){
             $ids = [];
