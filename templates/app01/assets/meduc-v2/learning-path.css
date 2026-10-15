@@ -1,0 +1,70 @@
+/* Homepage learning path (block/slider/view_learning_path.tpl): stage cards on a timeline, MasterClass type and colour.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mlp {
+  --mlp-bg: #08090b;
+  --mlp-ink: #f5f5f6;
+  --mlp-muted: #a9adb5;
+  --mlp-line: #3a3d43;
+  --mlp-red: #ed204f;
+  --mlp-empty: linear-gradient(160deg, #4a1424 0%, #1b1d22 70%);
+  padding: clamp(82px, 7vw, 112px) 0 clamp(80px, 7vw, 108px);
+  overflow: hidden;
+  background: var(--mlp-bg);
+  color: var(--mlp-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mlp {
+  --mlp-bg: #fff;
+  --mlp-ink: #17191e;
+  --mlp-muted: #626771;
+  --mlp-line: #e0e3e7;
+  --mlp-red: #bd263a;
+  --mlp-empty: linear-gradient(160deg, #bd263a 0%, #3b1520 100%);
+}
+.mlp *, .mlp *::before, .mlp *::after { box-sizing: border-box; }
+.mlp-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mlp-heading { display: grid; grid-template-columns: 1fr minmax(260px, .42fr); align-items: end; gap: 55px; margin-bottom: 54px; }
+.mlp-kicker { margin: 0 0 16px; color: var(--mlp-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .15em; }
+.mlp .mlp-title { margin: 0; color: var(--mlp-ink); font: 400 clamp(52px, 5.1vw, 76px)/1.12 Anton, Impact, sans-serif; letter-spacing: -.01em; text-wrap: balance; }
+.mlp .mlp-title span { color: var(--mlp-red); }
+.mlp-intro p { max-width: 360px; margin: 0; color: var(--mlp-muted); font: 400 15px/1.7 Inter, Arial, sans-serif; }
+.mlp .mlp-all { display: inline-block; margin-top: 18px; color: var(--mlp-red) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mlp .mlp-all:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Stages on a timeline: a dot above each card, and a line from each dot to the next card. */
+.mlp-stages { --mlp-gap: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--mlp-gap); margin: 0; padding: 38px 0 0; list-style: none; }
+.mlp-stage { position: relative; min-width: 0; }
+.mlp-stage::before { position: absolute; top: -31px; right: calc(-1 * var(--mlp-gap)); left: 0; height: 1px; content: ""; background: var(--mlp-line); }
+.mlp-stage:last-child::before { right: 0; }
+.mlp-dot { position: absolute; top: -38px; left: 0; width: 15px; height: 15px; border: 3px solid var(--mlp-red); border-radius: 50%; background: var(--mlp-bg); }
+.mlp-stage:first-child .mlp-dot { background: var(--mlp-red); }
+.mlp-picture { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 8px; background: #1b1d22; }
+.mlp-picture img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.mlp-stage:hover .mlp-picture img { transform: scale(1.04); }
+.mlp-picture::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, #0000 45%, #000000b3 100%); pointer-events: none; }
+.mlp-picture--empty { background: var(--mlp-empty); }
+.mlp-number { position: absolute; z-index: 1; bottom: 10px; left: 16px; color: #fff; font: 400 clamp(56px, 5vw, 76px)/1 Anton, Impact, sans-serif; letter-spacing: -.02em; }
+.mlp-label { margin: 20px 0 0; color: var(--mlp-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.mlp .mlp-stage-title { margin: 8px 0 0; color: var(--mlp-ink); font: 400 clamp(26px, 2.1vw, 32px)/1.15 Anton, Impact, sans-serif; letter-spacing: -.005em; }
+.mlp .mlp-stage-title a { color: inherit !important; text-decoration: none; }
+.mlp .mlp-stage-title a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.mlp-text { margin: 12px 0 0; color: var(--mlp-muted); font: 400 14px/1.65 Inter, Arial, sans-serif; }
+.mlp .mlp-link { display: inline-block; margin-top: 16px; color: var(--mlp-ink) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mlp .mlp-link span { color: var(--mlp-red); }
+.mlp .mlp-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mlp a:focus-visible { outline: 2px solid var(--mlp-red); outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .mlp-heading { grid-template-columns: 1fr; gap: 18px; margin-bottom: 36px; }
+  /* The stages scroll sideways; the timeline runs along with them. */
+  .mlp-stages { --mlp-gap: 14px; grid-template-columns: none; grid-auto-columns: min(74vw, 300px); grid-auto-flow: column; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mlp-stages::-webkit-scrollbar { display: none; }
+  .mlp-stage { scroll-snap-align: start; }
+}
+@media (max-width: 650px) {
+  .mlp { padding: 76px 0 80px; }
+  .mlp-shell { width: calc(100% - 32px); }
+  .mlp .mlp-title { font-size: clamp(43px, 10vw, 57px); }
+  .mlp-intro p { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .mlp-picture img { transition: none; } }

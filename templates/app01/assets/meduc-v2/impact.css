@@ -1,0 +1,65 @@
+/* Homepage community figures (block/slider/view_impact_stats.tpl), from the main branch's hero-light/assets/home-impact.css.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mim {
+  --mim-bg: #060607;
+  --mim-ink: #f6f6f7;
+  --mim-muted: #adaeb3;
+  --mim-card: #1b1d21;
+  --mim-line: #3d4047;
+  --mim-red: #ed3854;
+  padding: 85px 0 120px;
+  background: var(--mim-bg);
+  color: var(--mim-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mim {
+  --mim-bg: #f4f5f6;
+  --mim-ink: #23262d;
+  --mim-muted: #686d76;
+  --mim-card: #fff;
+  --mim-line: #d9dce1;
+  --mim-red: #bd2e44;
+}
+.mim *, .mim *::before, .mim *::after { box-sizing: border-box; }
+.mim-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mim-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 43px; }
+.mim-kicker { margin: 0 0 23px; color: var(--mim-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .17em; }
+.mim .mim-title { margin: 0; color: var(--mim-ink); font: 400 clamp(42px, 4.8vw, 70px)/1.1 Georgia, "Times New Roman", serif; letter-spacing: -.05em; }
+.mim .mim-title em { color: var(--mim-red); font-style: normal; }
+.mim-intro { max-width: 330px; margin: 0 0 5px; color: var(--mim-muted); font: 400 clamp(15px, 1.3vw, 18px)/1.55 Inter, Arial, sans-serif; }
+.mim-grid { display: grid; grid-template-columns: repeat(var(--mim-columns, 4), minmax(0, 1fr)); overflow: hidden; border: 1px solid var(--mim-line); border-radius: 14px; background: var(--mim-card); }
+.mim-item { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 270px; padding: 25px 26px 28px; border-right: 1px solid var(--mim-line); }
+.mim-item:nth-child(4n), .mim-item:last-child { border-right: 0; }
+.mim-item:nth-child(n+5) { border-top: 1px solid var(--mim-line); }
+.mim-item::after { position: absolute; right: 26px; bottom: 0; left: 26px; height: 3px; background: var(--mim-red); content: ""; }
+.mim-index { color: var(--mim-muted); font: 700 11px/1.3 Inter, Arial, sans-serif; letter-spacing: .15em; }
+.mim-number { margin-top: auto; color: var(--mim-ink); font: 400 clamp(48px, 5vw, 76px)/1 Anton, Impact, sans-serif; letter-spacing: -.025em; white-space: nowrap; }
+.mim-label { min-height: 43px; margin-top: 20px; color: var(--mim-muted); font: 500 clamp(13px, 1.15vw, 17px)/1.4 Inter, Arial, sans-serif; }
+@media (max-width: 1100px) {
+  .mim-item { min-height: 235px; padding: 22px 19px 25px; }
+  .mim-item::after { right: 19px; left: 19px; }
+  .mim-number { font-size: clamp(44px, 4.8vw, 60px); }
+}
+@media (max-width: 820px) {
+  .mim-heading { align-items: start; flex-direction: column; gap: 22px; }
+  .mim-intro { max-width: 520px; }
+  .mim-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mim-item { border-right: 1px solid var(--mim-line); border-top: 0; }
+  .mim-item:nth-child(2n) { border-right: 0; }
+  .mim-item:nth-child(n+3) { border-top: 1px solid var(--mim-line); }
+  .mim-number { font-size: clamp(48px, 7vw, 72px); }
+}
+@media (max-width: 650px) {
+  .mim { padding: 66px 0 85px; }
+  .mim-shell { width: calc(100% - 32px); }
+  .mim-heading { gap: 18px; margin-bottom: 28px; }
+  .mim-kicker { margin-bottom: 16px; font-size: 10px; }
+  .mim .mim-title { font-size: clamp(38px, 10vw, 52px); }
+  .mim-intro { font-size: 15px; }
+  .mim-grid { border-radius: 10px; }
+  .mim-item { min-height: 182px; padding: 16px 13px 18px; }
+  .mim-item::after { right: 13px; left: 13px; height: 2px; }
+  .mim-index { font-size: 9px; }
+  .mim-number { font-size: clamp(37px, 10vw, 51px); }
+  .mim-label { min-height: 33px; margin-top: 9px; font-size: 11px; }
+}

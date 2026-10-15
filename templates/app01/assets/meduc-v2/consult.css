@@ -1,0 +1,59 @@
+/* Homepage free consultation form (block/slider/view_consult_form.tpl), from the main branch's hero-light/assets/home-consult.css.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mcs {
+  --mcs-bg: #050506;
+  --mcs-ink: #f5f5f6;
+  --mcs-muted: #a8a9ad;
+  --mcs-field: #1b1d22;
+  --mcs-border: #4c4f55;
+  --mcs-red: #e5334e;
+  --mcs-red-hover: #f04c65;
+  padding: clamp(88px, 8vw, 126px) 0;
+  background: var(--mcs-bg);
+  color: var(--mcs-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mcs {
+  --mcs-bg: #faf9f7;
+  --mcs-ink: #20242a;
+  --mcs-muted: #626871;
+  --mcs-field: #fff;
+  --mcs-border: #cfd1d5;
+  --mcs-red: #b6283b;
+  --mcs-red-hover: #ce3c51;
+}
+.mcs *, .mcs *::before, .mcs *::after { box-sizing: border-box; }
+.mcs-shell { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); align-items: center; gap: clamp(58px, 8vw, 132px); width: min(83.333333%, 1440px); margin: 0 auto; }
+.mcs-kicker { margin: 0 0 23px; color: var(--mcs-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .15em; }
+.mcs .mcs-title { max-width: 500px; margin: 0; color: var(--mcs-ink); font: 700 clamp(34px, 3.3vw, 49px)/1.18 Inter, Arial, sans-serif; letter-spacing: -.04em; text-wrap: balance; }
+.mcs-description { max-width: 510px; margin: 27px 0 0; color: var(--mcs-muted); font: 400 clamp(17px, 1.45vw, 21px)/1.65 Inter, Arial, sans-serif; }
+.mcs-form-intro { max-width: 640px; margin: 0 0 23px; color: var(--mcs-muted); font: 400 15px/1.6 Inter, Arial, sans-serif; }
+.mcs-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; }
+.mcs-wide { grid-column: 1 / -1; }
+.mcs .form-group { margin: 0; }
+.mcs-form label { display: block; margin: 0 0 8px; color: var(--mcs-ink); font: 700 12px/1.4 Inter, Arial, sans-serif; }
+.mcs-form label span { color: var(--mcs-red); }
+.mcs-form .form-control { display: block; width: 100%; height: auto; min-height: 52px; margin: 0; padding: 14px 16px; border: 1px solid var(--mcs-border); border-radius: 5px; background: var(--mcs-field); color: var(--mcs-ink); box-shadow: none; font: 400 14px/1.45 Inter, Arial, sans-serif; transition: border-color .2s, box-shadow .2s; }
+.mcs-form textarea.form-control { min-height: 108px; resize: vertical; }
+.mcs-form .form-control::placeholder { color: var(--mcs-muted); opacity: .8; }
+.mcs-form .form-control:focus { border-color: var(--mcs-red); outline: 0; box-shadow: 0 0 0 3px #df2d491f; }
+.mcs-form .form-control.error { border-color: var(--mcs-red); }
+.mcs-form .invalid-feedback { display: block; margin-top: 6px; color: var(--mcs-red); font: 400 12px/1.45 Inter, Arial, sans-serif; }
+.mcs-submit { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-width: 265px; min-height: 54px; margin-top: 22px; padding: 12px 19px; border: 1px solid var(--mcs-red); border-radius: 6px; background: var(--mcs-red); color: #fff; font: 700 14px/1.4 Inter, Arial, sans-serif; cursor: pointer; transition: border-color .2s, background .2s; }
+.mcs-submit span { font-size: 21px; line-height: 1; }
+.mcs-submit:hover { border-color: var(--mcs-red-hover); background: var(--mcs-red-hover); color: #fff; }
+.mcs-submit:focus-visible { outline: 2px solid var(--mcs-red); outline-offset: 3px; }
+@media (max-width: 900px) {
+  .mcs-shell { grid-template-columns: 1fr; gap: 40px; }
+  .mcs .mcs-title { max-width: 650px; }
+  .mcs-description { margin-top: 18px; }
+}
+@media (max-width: 650px) {
+  .mcs { padding: 75px 0 82px; }
+  .mcs-shell { width: calc(100% - 32px); gap: 32px; }
+  .mcs .mcs-title { font-size: clamp(33px, 9vw, 42px); }
+  .mcs-description { font-size: 16px; }
+  .mcs-fields { grid-template-columns: 1fr; gap: 16px; }
+  .mcs-submit { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .mcs-form .form-control, .mcs-submit { transition: none; } }

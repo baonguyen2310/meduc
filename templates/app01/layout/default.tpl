@@ -60,6 +60,7 @@
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261014-3" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261014" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261014" defer></script>
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261015-2" rel="stylesheet">
     {/if}
 
     {assign var = embed_code value = []}
@@ -80,13 +81,26 @@
     {/if}
 
     {assign var = page_structure value = $structure}
+    {* With the new header, the database header and footer rows give way to header_v2 and footer_v2.
+       Only the footer row holding the floating contact button (block 5pjvim3) is kept. *}
+    {assign var = kept_footer_rows value = []}
     {if $use_header_v2}
         {$this->element('layout/header_v2')}
 
         {assign var = page_structure value = []}
         {if !empty($structure)}
             {foreach from = $structure item = rows key = type}
-                {if $type != {HEADER}}
+                {if $type == {FOOTER}}
+                    {foreach from = $rows item = row}
+                        {$keep_row = false}
+                        {if !empty($row.columns)}
+                            {foreach from = $row.columns item = column}
+                                {if !empty($column.blocks) && in_array('5pjvim3', $column.blocks)}{$keep_row = true}{/if}
+                            {/foreach}
+                        {/if}
+                        {if $keep_row}{$kept_footer_rows[] = $row}{/if}
+                    {/foreach}
+                {elseif $type != {HEADER}}
                     {$page_structure[$type] = $rows}
                 {/if}
             {/foreach}
@@ -105,6 +119,10 @@
     {/if}
 
     {if $use_header_v2}
+        {$this->element('layout/footer_v2')}
+        {foreach from = $kept_footer_rows item = row}
+            {$this->element('layout/row', ['row' => $row], [])}
+        {/foreach}
         {$this->element('layout/action_bar')}
     {/if}
 

@@ -50,6 +50,8 @@ html[data-meduc-theme="light"] .mhw {
 .mhw-shell { width: min(92%, 1440px); margin-inline: auto; }
 /* The homepage row holding the hero carries a 20px bottom margin, which showed as a white strip under it. */
 [nh-row]:has(.mhw) { margin-bottom: 0 !important; }
+/* Homepage rows whose blocks were taken off (scripts/meduc_v2_home_sections*.sql) would still leave their padding as blank bands. */
+[nh-row]:not(:has([nh-block])) { display: none !important; }
 
 /* Portrait wall */
 .mhw-wall { position: absolute; inset: 0 0 2px; z-index: 0; display: flex; justify-content: center; gap: var(--mhw-gap); overflow: hidden; }

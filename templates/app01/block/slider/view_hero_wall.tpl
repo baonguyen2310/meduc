@@ -40,7 +40,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261014-7" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261015" rel="stylesheet">
 
 <section class="mhw">
     {if $photo_count > 0}

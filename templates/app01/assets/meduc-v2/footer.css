@@ -1,0 +1,61 @@
+/* Site footer (element/layout/footer_v2.tpl), from the main branch's hero-light/assets/home-footer.css.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mfo {
+  --mfo-bg: #050505;
+  --mfo-ink: #f4f4f5;
+  --mfo-muted: #959599;
+  --mfo-line: #29292d;
+  --mfo-red: #ee4260;
+  border-top: 1px solid var(--mfo-line);
+  background: var(--mfo-bg);
+  color: var(--mfo-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mfo {
+  --mfo-bg: #fff;
+  --mfo-ink: #24262c;
+  --mfo-muted: #70747c;
+  --mfo-line: #e2e3e6;
+  --mfo-red: #bd263a;
+}
+.mfo *, .mfo *::before, .mfo *::after { box-sizing: border-box; }
+.mfo-main, .mfo-bottom { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mfo-main { padding: 81px 0 90px; }
+.mfo-grid { display: grid; grid-template-columns: 1fr 1.35fr 1fr 1.2fr; gap: clamp(30px, 5vw, 100px); }
+.mfo-column { min-width: 0; }
+.mfo .mfo-heading { margin: 0 0 30px; color: var(--mfo-muted); font: 700 16px/1.35 Inter, Arial, sans-serif; letter-spacing: 0; text-transform: none; }
+.mfo-column nav { display: flex; flex-direction: column; align-items: flex-start; gap: 23px; }
+.mfo .mfo-column nav a { display: inline-flex; align-items: center; gap: 14px; min-height: 24px; color: var(--mfo-ink) !important; font: 400 16px/1.5 Inter, Arial, sans-serif; text-decoration: none; overflow-wrap: anywhere; transition: color .18s ease; }
+.mfo .mfo-column nav a:hover, .mfo .mfo-column nav a:focus-visible { color: var(--mfo-red) !important; }
+.mfo a:focus-visible { outline: 2px solid var(--mfo-red); outline-offset: 4px; }
+.mfo-social svg { flex: none; width: 20px; height: 20px; fill: var(--mfo-muted); }
+.mfo-bottom { display: flex; align-items: end; justify-content: space-between; gap: 35px; padding: 0 0 45px; color: var(--mfo-muted); }
+.mfo-brand { display: flex; align-items: center; gap: 17px; min-width: 0; }
+.mfo-brand > a { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 54px; padding: 5px; border-radius: 5px; background: #fff; }
+.mfo-brand img { display: block; width: 100%; height: auto; max-height: 44px; object-fit: contain; }
+.mfo-brand strong { display: block; color: var(--mfo-ink); font: 500 13px/1.4 Inter, Arial, sans-serif; }
+.mfo-brand p { max-width: 470px; margin: 5px 0 0; color: var(--mfo-muted); font: 400 12px/1.5 Inter, Arial, sans-serif; }
+.mfo-legal { display: flex; align-items: center; justify-content: flex-end; gap: 22px; flex: 0 0 auto; font: 400 13px/1.45 Inter, Arial, sans-serif; }
+.mfo-dmca { display: inline-flex; align-items: center; }
+.mfo-dmca img { display: block; width: 75px; height: auto; }
+@media (max-width: 1000px) {
+  .mfo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 70px; row-gap: 60px; }
+  .mfo-bottom { align-items: flex-start; flex-direction: column; }
+  .mfo-legal { justify-content: flex-start; }
+}
+@media (max-width: 650px) {
+  .mfo-main, .mfo-bottom { width: calc(100% - 32px); }
+  .mfo-main { padding: 55px 0 72px; }
+  .mfo-grid { column-gap: 25px; row-gap: 53px; }
+  .mfo .mfo-heading { margin-bottom: 23px; font-size: 14px; }
+  .mfo-column nav { gap: 17px; }
+  .mfo .mfo-column nav a { gap: 8px; font-size: 13px; line-height: 1.4; }
+  .mfo-social svg { width: 16px; height: 16px; }
+  .mfo-bottom { gap: 24px; padding-bottom: 35px; }
+  .mfo-brand { align-items: flex-start; gap: 12px; }
+  .mfo-brand > a { width: 62px; height: 48px; }
+  .mfo-brand strong, .mfo-brand p { font-size: 11px; }
+  .mfo-legal { gap: 17px; font-size: 11px; }
+  .mfo-dmca img { width: 65px; }
+}
+@media (prefers-reduced-motion: reduce) { .mfo .mfo-column nav a { transition: none; } }
