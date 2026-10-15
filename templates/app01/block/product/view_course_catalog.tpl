@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261015" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261015" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261015-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261015-2" defer></script>
 
 <main class="mcl" id="course-catalog">
     <section class="mcl-shell mcl-hero" aria-labelledby="catalog-title">
@@ -45,9 +45,19 @@
         <p class="mcl-result" role="status" aria-live="polite" aria-atomic="true" data-catalog-status>Hiển thị {$catalog.total} khóa học đang mở</p>
 
         {foreach from = $catalog.groups item = group key = group_index}
-            <section class="mcl-group" data-course-group aria-labelledby="course-group-{$group.id}">
-                <div class="mcl-group-heading"><span class="mcl-group-number">0{$group_index + 1}</span><div><p class="mcl-eyebrow">{if $group.id == 'other'}KHÁM PHÁ THÊM{else}LỘ TRÌNH THEO NĂM HỌC{/if}</p><h2 id="course-group-{$group.id}">{$group.name|escape}</h2></div><span class="mcl-group-count"><span data-group-count>{count($group.courses)}</span> khóa học</span></div>
-                <div class="mcl-course-list" data-course-list>
+            <section class="mcl-group" data-course-group data-course-group-id="{$group.id}" data-course-layout="list" aria-labelledby="course-group-{$group.id}">
+                <div class="mcl-group-heading">
+                    <span class="mcl-group-number">0{$group_index + 1}</span>
+                    <div><p class="mcl-eyebrow">{if $group.id == 'other'}KHÁM PHÁ THÊM{else}LỘ TRÌNH THEO NĂM HỌC{/if}</p><h2 id="course-group-{$group.id}">{$group.name|escape}</h2></div>
+                    <div class="mcl-group-actions">
+                        <span class="mcl-group-count"><span data-group-count>{count($group.courses)}</span> khóa học</span>
+                        <div class="mcl-layout-switch" role="group" aria-label="Cách hiển thị {$group.name|escape}" data-layout-switch hidden>
+                            <button type="button" data-catalog-layout="list" aria-pressed="true" aria-label="Dạng danh sách: {$group.name|escape}" aria-controls="course-list-{$group.id}" title="Dạng danh sách"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="3" y="16" width="4" height="4" rx="1"/><path d="M11 6h10M11 12h10M11 18h10"/></svg></button>
+                            <button type="button" data-catalog-layout="grid" aria-pressed="false" aria-label="Dạng lưới: {$group.name|escape}" aria-controls="course-list-{$group.id}" title="Dạng lưới"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mcl-course-list" data-course-list id="course-list-{$group.id}">
                     {foreach from = $group.courses item = course key = course_index}
                         {$this->element('../block/product/item_course_horizontal', ['course' => $course, 'course_index' => $course_index, 'cart_product_ids' => $cart_product_ids])}
                     {/foreach}
