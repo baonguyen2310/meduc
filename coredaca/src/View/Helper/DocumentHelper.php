@@ -9,6 +9,55 @@ use Cake\Utility\Text;
 
 class DocumentHelper extends Helper
 {
+    /** Present an existing public document and its original attachments. */
+    public function getDetail(array $article, array $categories, string $lang): array
+    {
+        $catalog = $this->getCatalog($categories, 48, $lang);
+        $current = null;
+        foreach ($catalog['documents'] as $document) {
+            if ($document['id'] === (int) ($article['id'] ?? 0)) $current = $document;
+        }
+        if ($current === null) return [];
+
+        $files = [];
+        foreach ($article['files'] ?? [] as $file) {
+            if (!is_string($file) || trim($file) === '') continue;
+            // Older CDN paths contain literal escaped slashes after JSON decoding.
+            $path = str_replace('\\', '', trim($file));
+            if (preg_match('~^https?://~i', $path)) {
+                $url = $path;
+            } elseif (strpos($path, '/media/') === 0 || strpos($path, 'media/') === 0) {
+                // Preserve the file origin used by the original document reader.
+                $url = 'https://meduc.vn/cdn/' . ltrim($path, '/');
+            } else {
+                continue;
+            }
+            $url = str_replace(' ', '%20', $url);
+            if (isset($files[$url])) continue;
+            $filename = rawurldecode(basename((string) parse_url($url, PHP_URL_PATH)));
+            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $files[$url] = [
+                'url' => $url, 'name' => $filename,
+                'format' => strtoupper($extension ?: 'FILE'),
+                'preview' => $extension === 'pdf' ? 'pdf' : (in_array($extension, ['png', 'jpg', 'jpeg', 'webp', 'gif']) ? 'image' : (in_array($extension, ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx']) ? 'office' : ''))
+            ];
+        }
+
+        $leadHtml = (string) ($article['description'] ?? '');
+        if (preg_match('~<p\b[^>]*>(.*?)</p>~is', $leadHtml, $match)) $leadHtml = $match[1];
+        $lead = trim(preg_replace('/[\s\x{00A0}\x{200B}]+/u', ' ', html_entity_decode(strip_tags($leadHtml), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?? '');
+        $related = [];
+        foreach ($catalog['documents'] as $document) {
+            if ($document['id'] === $current['id']) continue;
+            if ($document['subject_key'] === $current['subject_key']) $related[] = $document;
+        }
+        $formats = array_unique(array_column($files, 'format'));
+        return [
+            'document' => $current, 'lead' => $lead, 'files' => array_values($files),
+            'formats' => implode(' / ', $formats), 'related' => array_slice($related, 0, 3)
+        ];
+    }
+
     /** Read the existing document articles; no snapshot, new taxonomy or file access rules. */
     public function getCatalog(array $categories, int $activeCategory, string $lang): array
     {
