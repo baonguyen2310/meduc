@@ -13,14 +13,12 @@
   const more = page.querySelector('[data-book-more]');
   const clear = page.querySelector('[data-book-clear]');
   const reset = page.querySelector('[data-book-reset]');
-  const notice = page.querySelector('[data-book-cart-notice]');
-  const message = page.querySelector('[data-book-cart-message]');
   const normalize = value => value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
   const names = new Map(cards.map(card => [card,normalize(card.dataset.bookSearch)]));
   const collator = new Intl.Collator('vi',{sensitivity:'base',numeric:true});
   let visibleCount = 12;
   page.querySelector('[data-book-tools]').hidden = false;
-  page.querySelectorAll('[data-book-add]').forEach(button => { button.hidden = false; });
+  window.MeducBookCart.bindCards(page);
   function render() {
     const words = normalize(input.value.trim()).split(/\s+/).filter(Boolean);
     const filtered = cards.filter(card => (stage.value === 'all' || card.dataset.bookCategories.split(',').includes(stage.value)) && words.every(word => names.get(card).includes(word)));
@@ -44,30 +42,5 @@
   more.addEventListener('click',() => { visibleCount += 12; render(); });
   clear.addEventListener('click',() => { input.value = ''; visibleCount = 12; render(); input.focus(); });
   reset.addEventListener('click',() => { input.value = ''; stage.value = 'all'; sort.value = 'default'; visibleCount = 12; render(); input.focus(); });
-  page.querySelector('[data-book-cart-close]').addEventListener('click',() => { notice.hidden = true; });
-  page.querySelectorAll('[data-book-add]').forEach(button => button.addEventListener('click',() => {
-    try {
-      const product = JSON.parse(button.dataset.bookProduct);
-      const saved = sessionStorage.getItem('cart');
-      const cart = saved ? JSON.parse(saved) : {cartId:`MEDUC${Math.floor(100000+Math.random()*900000)}`,cartInfo:{},cartProducts:[]};
-      if (!cart || !Array.isArray(cart.cartProducts)) throw new Error('Invalid cart');
-      const existing = cart.cartProducts.find(item => String(item.id) === String(product.id));
-      if (existing) {
-        // Refresh the current catalogue price while preserving the selected quantity.
-        const quantity = Math.max(0,Number(existing.quantity) || 0) + 1;
-        Object.assign(existing,product,{quantity});
-      } else cart.cartProducts.push(product);
-      sessionStorage.setItem('cart',JSON.stringify(cart));
-      document.querySelectorAll('[nh-mini-cart-book-quantity]').forEach(counter => { counter.textContent = cart.cartProducts.length; });
-      message.textContent = `Đã thêm “${product.name}” vào giỏ sách.`;
-      notice.classList.remove('mbc-cart-notice--error');
-      notice.querySelector('a').hidden = false;
-    } catch (_) {
-      message.textContent = 'Chưa thể thêm sách vào giỏ. Bạn có thể mở chi tiết sách để tiếp tục chọn mua.';
-      notice.classList.add('mbc-cart-notice--error');
-      notice.querySelector('a').hidden = true;
-    }
-    notice.hidden = false;
-  }));
   render();
 })();
