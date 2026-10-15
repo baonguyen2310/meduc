@@ -214,6 +214,11 @@ html[data-meduc-theme="light"] .mcr {
 .mcr .mcr-quiz-card h3 { margin: 0; color: var(--mcr-ink); font: 700 18px/1.35 Inter, Arial, sans-serif; }
 .mcr-quiz-card p { margin: 6px 0 0; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
 .mcr-quiz-card .mcr-btn { flex: none; }
+.mcr-quiz-list { display: grid; gap: 12px; }
+/* A quiz for the course's students only: its name and size, and the sign-up button. */
+.mcr-quiz-card.is-locked { background: transparent; }
+.mcr .mcr-quiz-card.is-locked .mcr-btn .mcr-lock { color: currentColor; opacity: 1; }
+.mcr-quiz-free { display: inline-block; margin-left: 10px; padding: 3px 8px; border-radius: 999px; background: var(--mcr-red); color: #fff; letter-spacing: .06em; vertical-align: 1px; }
 .mcr .mcr-feedback-title { margin: 0 0 16px; color: var(--mcr-ink); font: 700 20px/1.3 Inter, Arial, sans-serif; }
 .mcr-voices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px 14px; }
 .mcr-voice { margin: 0; }
@@ -233,11 +238,15 @@ html[data-meduc-theme="light"] .mcr {
 /* Quiz: the lesson's card, then the player (classroom-quiz.js) that takes its place. */
 .mcr-resource.is-covered { display: none !important; }
 .mcr-quiz-kicker { margin: 0 0 6px !important; color: var(--mcr-red) !important; font: 700 11px/1.3 Inter, Arial, sans-serif !important; letter-spacing: .12em; text-transform: uppercase; }
+.mcr .mcr-quiz-rank { display: inline-block; margin-top: 16px; color: var(--mcr-red); font: 700 14px/1.4 Inter, Arial, sans-serif; }
 .mcr-quiz-disclaimer { margin: 14px 0 0; color: var(--mcr-muted); font: 400 12.5px/1.6 Inter, Arial, sans-serif; }
 .mcq { overflow: clip; border: 1px solid var(--mcr-line); border-radius: 14px; scroll-margin-top: 76px; }
 .mcq-bar { position: sticky; z-index: 3; top: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--mcr-line); background: var(--mcr-panel); }
-.mcq-bar-title { min-width: 0; }
-.mcq-kicker { display: block; color: var(--mcr-muted); font: 700 11px/1.3 Inter, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.mcq-bar-title { min-width: 0; margin-right: auto; }
+.mcr .mcq-back { flex: none; padding: 8px 12px; border: 1px solid var(--mcr-line); border-radius: 8px; background: transparent; color: var(--mcr-ink); font: 600 13px/1.2 Inter, Arial, sans-serif; cursor: pointer; }
+.mcr .mcq-back:hover { background: var(--mcr-hover); }
+.mcq-back[hidden] { display: none; }
+.mcq-kicker { display: block; white-space: nowrap; color: var(--mcr-muted); font: 700 11px/1.3 Inter, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .mcq-name { display: block; margin-top: 3px; overflow: hidden; color: var(--mcr-ink); font: 700 16px/1.35 Inter, Arial, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
 .mcq-bar-meta { display: flex; flex: none; align-items: center; gap: 12px; }
 .mcq-progress { color: var(--mcr-muted); font: 600 13px/1.3 Inter, Arial, sans-serif; }

@@ -696,6 +696,10 @@ class OrderComponent extends AppComponent
             } 
 
             $conn->commit();  
+
+            // đơn bị hủy: tạm khóa các khóa học đã ghi danh theo đơn này (CourseEnrollmentsTable::syncOrder)
+            TableRegistry::get('CourseEnrollments')->syncOrder($order_id);
+
             return $this->System->getResponse([CODE => SUCCESS, MESSAGE => __d('admin', 'cap_nhat_thanh_cong')]);
 
         }catch (Exception $e) {

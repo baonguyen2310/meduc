@@ -5,6 +5,8 @@ namespace App\View\Helper;
 
 use Cake\View\Helper;
 use Cake\ORM\TableRegistry;
+use App\Lib\LessonQuizzes;
+use App\Lib\QuizQuestions;
 
 class ProductHelper extends Helper
 {
@@ -221,22 +223,10 @@ class ProductHelper extends Helper
 
     public function getQuizs($params = [], $lang = null) 
     {
+        // lesson_list: chỉ các đề của các buổi học đó; trial_only: chỉ các đề làm thử miễn phí (App\Lib\LessonQuizzes)
         $quizIds = [];
         if (array_key_exists('lesson_list', $params)) {
-            $trialOnly = !empty($params['trial_only']);
-            foreach ((array)$params['lesson_list'] as $lesson) {
-                if (!is_array($lesson) || ($lesson['chapter_vi'] ?? null) === 'y') {
-                    continue;
-                }
-                if ($trialOnly && ($lesson['trial_vi'] ?? null) !== 'y') {
-                    continue;
-                }
-                $quizId = $lesson['quiz_id_vi'] ?? null;
-                if (is_scalar($quizId) && ctype_digit((string)$quizId) && (int)$quizId > 0) {
-                    $quizIds[] = (int)$quizId;
-                }
-            }
-            $quizIds = array_values(array_unique($quizIds));
+            $quizIds = LessonQuizzes::ids($params['lesson_list'], !empty($params['trial_only']));
             if (!$quizIds) {
                 return [];
             }
@@ -254,70 +244,61 @@ class ProductHelper extends Helper
 
         if (array_key_exists('lesson_list', $params)) {
             $query->where(['Quizs.id IN' => $quizIds]);
+            // đề chỉ dành cho nội bộ (quiz_exam_metadata.staff_only) không mở cho học viên
+            $query->where(['Quizs.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)']);
         }
 
         return $query->toList();
     }
 
-    /** Dữ liệu bài tập cho trình làm bài trên trang khóa học (assets/meduc-v2/classroom-quiz.js)
+    /** Bài tập của một buổi học: [['id' => id đề, 'free' => làm thử miễn phí], ...] theo thứ tự admin xếp
      *
-     * Cùng tham số với getQuizs(). Chỉ giữ những gì trình làm bài cần, và bỏ định dạng Word dán vào
-     * (style, class, span, font...) để trang nhẹ hơn nhiều lần. Kết quả theo id đề:
-     * [id => ['id', 'name', 'minutes', 'questions' => [['code', 'question', 'note', 'options' => [[value, text]], 'answer', 'explain']]]]
+     * $lesson (*): một buổi trong "Danh sách tiết học" của khóa học (xem App\Lib\LessonQuizzes)
+     *
+     * {$quizzes = $this->Product->getLessonQuizzes($item)}
     */
-    public function getQuizPlayerData($params = [], $lang = null)
+    public function getLessonQuizzes($lesson = [])
+    {
+        return LessonQuizzes::of($lesson);
+    }
+
+    /** Bài tập của trang khóa học (block/product_detail/view_classroom.tpl, assets/meduc-v2/classroom-quiz.js)
+     *
+     * $params['lesson_list'] (*): danh sách tiết học của khóa học
+     * $params['licensed']: người xem là học viên của khóa học (làm được mọi đề), nếu không chỉ làm được đề miễn phí
+     *
+     * Câu hỏi theo App\Lib\QuizQuestions (bỏ định dạng Word dán vào, để trang nhẹ hơn nhiều lần). Kết quả:
+     * - 'info' => [id => ['id', 'name', 'count', 'minutes']]: mọi đề có câu hỏi, để hiện cả đề còn khóa;
+     * - 'play' => [id => ['id', 'name', 'minutes', 'questions' => [['code', 'question', 'note', 'options' => [[value, text]],
+     *   'answer', 'explain']]]]: chỉ các đề người xem được làm (đáp án của đề còn khóa không ra trang).
+     *
+     * {$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons, 'licensed' => $licensed])}
+    */
+    public function getCourseQuizData($params = [], $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
-        $questions_attribute = 18; // attributes.code = danhsachcauhoi
-        $minutes_attribute = 19; // attributes.code = thoigianlambai
-        $option_keys = ['option_one', 'option_two', 'option_three', 'option_four', 'option_five'];
+        $lessons = !empty($params['lesson_list']) ? $params['lesson_list'] : [];
+        $playable = array_flip(LessonQuizzes::ids($lessons, empty($params['licensed'])));
 
-        $clean = function ($html) {
-            $html = (string) $html;
-            $html = preg_replace('/<!--[\s\S]*?-->/', '', $html);
-            $html = preg_replace('/\s(?:style|class|lang|face|size|align|dir)=(?:"[^"]*"|\'[^\']*\')/i', '', $html);
-            $html = preg_replace('/<\/?(?:o:p|font|span)\b[^>]*>/i', '', $html);
-            return trim(preg_replace('/\s+/u', ' ', $html));
-        };
-
-        $result = [];
-        foreach ($this->getQuizs($params, $lang) as $quiz) {
-            $items = [];
+        $result = ['info' => [], 'play' => []];
+        foreach ($this->getQuizs(['lesson_list' => $lessons], $lang) as $quiz) {
+            $questions = [];
             $minutes = 0;
             foreach ((array) ($quiz['QuizsAttribute'] ?? []) as $attribute) {
-                if ((int) $attribute['attribute_id'] === $questions_attribute) {
-                    $items = json_decode((string) $attribute['value'], true) ?: [];
-                } elseif ((int) $attribute['attribute_id'] === $minutes_attribute) {
+                if ((int) $attribute['attribute_id'] === QuizQuestions::QUESTIONS_ATTRIBUTE) {
+                    $questions = QuizQuestions::fromValue((string) $attribute['value'], $lang);
+                } elseif ((int) $attribute['attribute_id'] === QuizQuestions::MINUTES_ATTRIBUTE) {
                     $minutes = (int) $attribute['value'];
                 }
             }
-
-            $questions = [];
-            foreach ($items as $item) {
-                if (!is_array($item) || trim((string) ($item['name_' . $lang] ?? '')) === '') continue;
-                $options = [];
-                foreach ($option_keys as $index => $key) {
-                    $text = $clean($item[$key . '_' . $lang] ?? '');
-                    if ($text !== '') $options[] = [$index + 1, $text];
-                }
-                if (!$options) continue;
-                $questions[] = [
-                    'code' => (string) ($item['code'] ?? ''),
-                    'question' => $clean($item['name_' . $lang]),
-                    'note' => $clean($item['description_' . $lang] ?? ''),
-                    'options' => $options,
-                    'answer' => (int) ($item['answer_' . $lang] ?? 0),
-                    'explain' => $clean($item['answer_detail_' . $lang] ?? ''),
-                ];
-            }
             if (!$questions) continue;
 
-            $result[(int) $quiz['id']] = [
-                'id' => (int) $quiz['id'],
-                'name' => (string) ($quiz['QuizsContent']['name'] ?? ''),
-                'minutes' => $minutes,
-                'questions' => $questions,
-            ];
+            $id = (int) $quiz['id'];
+            $name = (string) ($quiz['QuizsContent']['name'] ?? '');
+            $result['info'][$id] = ['id' => $id, 'name' => $name, 'count' => count($questions), 'minutes' => $minutes];
+            if (isset($playable[$id])) {
+                $result['play'][$id] = ['id' => $id, 'name' => $name, 'minutes' => $minutes, 'questions' => $questions];
+            }
         }
         return $result;
     }

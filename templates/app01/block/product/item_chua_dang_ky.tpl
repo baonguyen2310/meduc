@@ -1,18 +1,8 @@
 {strip}
 
-{assign var = licensed value = false}
-{assign member_info value = $this->Member->getMemberInfo()}
-{if !empty($member_info.code)}
-    {assign var = code_member value = $member_info.code}
-    {assign var = listClassRoom value = $this->Member->getListClassRoomByCustomerId($code_member)}
-    
-    {foreach from = $listClassRoom item = classRoom}
-        {if $classRoom.product_id == $product.id}
-            {assign var = licensed value = true}
-            {break}
-        {/if}
-    {/foreach}
-{/if}
+{* Học viên được học khóa này: lớp học cũ có mã học viên, hoặc ghi danh còn hiệu lực (MemberHelper::getCourseAccess). *}
+{assign var = course_access value = $this->Member->getCourseAccess($product.id)}
+{assign var = licensed value = !empty($course_access)}
 
 {if $licensed == false}
     {if empty($is_slider)}

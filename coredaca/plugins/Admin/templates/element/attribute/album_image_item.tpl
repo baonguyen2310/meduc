@@ -32,7 +32,7 @@
         <input name="" data-name="code" value="{if !empty($album.$key_code)}{$album.$key_code}{else}{$code_random}{/if}" class="d-none" type="text">
 
         <div class="row">
-            <div class="col-lg-{if $code == 'danhsachtiethoc'}4{else}6{/if} col-12">
+            <div class="col-lg-6 col-12">
                 {if !empty($languages)}
                     {foreach from = $languages item = language key = k_lang name = title_item}
                         <div class="form-group">
@@ -124,6 +124,7 @@
             </div>
             {/if}
 
+            {if $code != 'danhsachtiethoc'}
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                 {if !empty($languages)}
                     {foreach from = $languages item = language key = k_lang}
@@ -140,7 +141,36 @@
                     {/foreach}
                 {/if}
             </div>
+            {/if}
         </div>
+
+        {if $code == 'danhsachtiethoc'}
+            {* Bài tập của buổi (assets/js/pages/lesson_quizzes.js): danh sách đề theo thứ tự, mỗi đề làm thử miễn phí hoặc chỉ cho
+               học viên của khóa. Lưu ở quizzes_xx dạng JSON [{"id":75,"free":"y"}]; quiz_id_xx giữ đề đầu tiên cho chỗ còn đọc một đề.
+               Buổi lưu trước đây chỉ có quiz_id_xx: đề đó làm thử miễn phí khi buổi là "Bài học thử". *}
+            {if !empty($languages)}
+                {foreach from = $languages item = language key = k_lang}
+                    {assign var = key_quizzes value = "quizzes_{$k_lang}"}
+                    {assign var = key_quiz_id value = "quiz_id_{$k_lang}"}
+                    <div class="form-group nh-lesson-quizzes" data-lesson-quizzes data-lang="{$k_lang}">
+                        <label>
+                            Bài tập của buổi
+                        </label>
+                        <input name="" data-name="quizzes_{$k_lang}" value="{if isset($album.$key_quizzes)}{$album.$key_quizzes|escape}{/if}" type="hidden" data-lesson-quizzes-value>
+                        <input name="" data-name="quiz_id_{$k_lang}" value="{if !empty($album.$key_quiz_id)}{$album.$key_quiz_id|escape}{/if}" type="hidden" data-lesson-quizzes-first>
+                        <div class="nh-lesson-quiz-list" data-lesson-quizzes-list></div>
+                        <div class="nh-lesson-quiz-add">
+                            <div class="kt-input-icon kt-input-icon--left">
+                                <input type="text" class="form-control form-control-sm" placeholder="Thêm bài tập: gõ tên đề hoặc mã đề (ví dụ 40)" autocomplete="off" data-lesson-quizzes-search>
+                                <span class="kt-input-icon__icon kt-input-icon__icon--left"><span><i class="la la-plus"></i></span></span>
+                            </div>
+                            <div class="list-group nh-lesson-quiz-results" data-lesson-quizzes-results hidden></div>
+                        </div>
+                        <span class="form-text text-muted">Đề bật "Làm thử miễn phí" thì ai cũng làm được; đề còn lại chỉ học viên đã đăng ký khóa học làm được.</span>
+                    </div>
+                {/foreach}
+            {/if}
+        {/if}
         
         <div class="row">
             <div class="col-lg-12 col-12 d-none">

@@ -227,6 +227,7 @@
   });
   $("[data-mcr-goto-quiz]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-goto-quiz-error]")?.addEventListener("click", () => selectTab("quiz", true));
+  $("[data-mcr-goto-quiz-novideo]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-error-next]")?.addEventListener("click", () => current && selectLesson(current.number + 1));
 
   // Views
@@ -236,11 +237,16 @@
       poster.src = `https://i.ytimg.com/vi/${lesson.video}/hqdefault.jpg`;
       showStage("poster");
     } else if (licensed) {
+      const quizButton = $("[data-mcr-goto-quiz-novideo]");
+      if (quizButton) quizButton.hidden = !lesson.quiz;
       showStage("novideo");
-    } else if (lesson.access === "trial") {
-      showPaywall("Video buổi này dành cho học viên đã đăng ký", lesson.quiz ? "Bài tập của buổi này vẫn làm thử miễn phí." : `Đăng ký để học trọn ${total} bài của khoá học.`, lesson.quiz);
     } else {
-      showPaywall("Buổi này dành cho học viên đã đăng ký", `Đăng ký để học trọn ${total} bài của khoá học.`, false);
+      // lesson.quiz: the lesson has a quiz the visitor may take (free to try), even when its video is locked.
+      showPaywall(
+        lesson.access === "trial" ? "Video buổi này dành cho học viên đã đăng ký" : "Buổi này dành cho học viên đã đăng ký",
+        lesson.quiz ? "Bài tập của buổi này vẫn làm thử miễn phí." : `Đăng ký để học trọn ${total} bài của khoá học.`,
+        lesson.quiz,
+      );
     }
   }
   function markCurrent(link) {

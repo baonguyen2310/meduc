@@ -441,6 +441,7 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/quiz/change-position', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'changePosition']);
     $builder->connect('/quiz/duplicate', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'duplicate']);
     $builder->connect('/quiz/auto-suggest', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'autoSuggest']);
+    $builder->connect('/quiz/lesson-suggest', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'lessonSuggest']);
     $builder->connect('/quiz/quick-upload', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'quickUpload']);
     $builder->connect('/quiz/upload-modal/:id', ['plugin' => 'Admin', 'controller' => 'Quiz', 'action' => 'uploadModal'], ['pass' => ['id'], 'id' => '[0-9]+']);
 
@@ -461,6 +462,16 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/class-room/auto-suggest', ['plugin' => 'Admin', 'controller' => 'ClassRoom', 'action' => 'autoSuggest']);
     $builder->connect('/class-room/quick-upload', ['plugin' => 'Admin', 'controller' => 'ClassRoom', 'action' => 'quickUpload']);
     $builder->connect('/class-room/upload-modal/:id', ['plugin' => 'Admin', 'controller' => 'ClassRoom', 'action' => 'uploadModal'], ['pass' => ['id'], 'id' => '[0-9]+']);
+
+    // course-enrollment: ghi danh khóa học (scripts/meduc_v2_course_enrollment.sql)
+    $builder->connect('/course-enrollment', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'list']);
+    $builder->connect('/course-enrollment/add', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'add']);
+    $builder->connect('/course-enrollment/update/:id', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/course-enrollment/save', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'save']);
+    $builder->connect('/course-enrollment/save/:id', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'save'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    $builder->connect('/course-enrollment/delete', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'delete']);
+    $builder->connect('/course-enrollment/change-status', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'changeStatus']);
+    $builder->connect('/course-enrollment/customer-suggest', ['plugin' => 'Admin', 'controller' => 'CourseEnrollment', 'action' => 'customerSuggest']);
 
     // tags
     $builder->connect('/tag', ['plugin' => 'Admin', 'controller' => 'Tag', 'action' => 'list']);

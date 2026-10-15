@@ -3,7 +3,8 @@
    - one question at a time, a map of every question, and a countdown when the quiz has a time limit;
    - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
-   An attempt stays in memory while the visitor moves between lessons and tabs; nothing reloads the page. */
+   A lesson may have several quizzes: the player then has a way back to the lesson's list, and the result offers the next one.
+   An attempt stays in memory while the visitor moves between lessons, tabs and quizzes; nothing reloads the page. */
 (() => {
   "use strict";
   const root = document.querySelector("[data-mcr]");
@@ -75,8 +76,14 @@
     updateStartButtons();
   }, 1000);
 
+  // The quizzes of a lesson, in the order of their cards (only those the visitor may take have a start button).
+  const lessonStarts = (number) => [...root.querySelectorAll(`[data-mcr-quiz="${number}"] [data-mcr-quiz-start]`)];
+  const lessonQuizCount = (number) => root.querySelectorAll(`[data-mcr-quiz="${number}"] .mcr-quiz-card`).length;
+
   // Layout of the player
   const bar = el("div", "mcq-bar");
+  const back = button("mcq-back", "← Danh sách đề");
+  back.addEventListener("click", () => { active = null; sync(); updateStartButtons(); });
   const barTitle = el("div", "mcq-bar-title");
   const kicker = el("span", "mcq-kicker");
   const name = el("strong", "mcq-name");
@@ -88,7 +95,7 @@
   const submitButton = button("mcr-btn mcr-btn--primary mcq-submit", "Nộp bài");
   const resultButton = button("mcr-btn mcr-btn--ghost mcq-to-result", "Xem kết quả");
   barMeta.append(progress, timer, submitButton, resultButton);
-  bar.append(barTitle, barMeta);
+  bar.append(back, barTitle, barMeta);
   const confirmBox = el("div", "mcq-confirm");
   confirmBox.setAttribute("role", "alert");
   const stage = el("div", "mcq-stage");
@@ -117,7 +124,10 @@
     const attempt = active;
     if (!attempt) return;
     const total = attempt.quiz.questions.length;
-    kicker.textContent = `Bài tập · Buổi ${attempt.lesson.number}`;
+    const count = lessonQuizCount(attempt.lesson.number);
+    const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
+    kicker.textContent = count > 1 && place >= 0 ? `Bài tập ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `Bài tập · Buổi ${attempt.lesson.number}`;
+    back.hidden = count < 2;
     name.textContent = attempt.quiz.name;
     progress.textContent = attempt.state === "doing" ? `Đã làm ${attempt.answers.size}/${total}` : `${correctCount(attempt)}/${total} câu đúng`;
     submitButton.hidden = attempt.state !== "doing";
@@ -270,6 +280,13 @@
     const retry = button("mcr-btn mcr-btn--ghost", "Làm lại");
     retry.addEventListener("click", () => start(attempt.quiz, attempt.lesson, true));
     actions.append(review, retry);
+    const starts = lessonStarts(attempt.lesson.number);
+    const nextQuiz = starts[starts.findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id) + 1];
+    if (nextQuiz) {
+      const onward = button("mcr-btn mcr-btn--ghost", "Làm bài tập tiếp theo →");
+      onward.addEventListener("click", () => nextQuiz.click());
+      actions.append(onward);
+    }
     const nextLesson = root.querySelector("[data-mcr-next]");
     if (nextLesson && !nextLesson.disabled) {
       const onward = button("mcr-btn mcr-btn--ghost", "Sang bài tiếp theo →");
@@ -320,10 +337,11 @@
     if (!memberId) return;
     const total = attempt.quiz.questions.length;
     const correct = correctCount(attempt);
+    // index: the question's place in the quiz, which the server uses to mark the answers (codes repeat in old quizzes).
     const answers = attempt.quiz.questions
-      .map((question, index) => ({ code: question.code, answer: attempt.answers.get(index) }))
+      .map((question, index) => ({ index, code: question.code, answer: attempt.answers.get(index) }))
       .filter((item) => item.answer !== undefined)
-      .map((item) => ({ code: item.code, answer: String(item.answer) }));
+      .map((item) => ({ index: item.index, code: item.code, answer: String(item.answer) }));
     const data = {
       class_room_id: Number(root.dataset.mcrClassRoom) || 0,
       member_code: root.dataset.mcrMemberCode || "",
@@ -345,7 +363,12 @@
     };
     if (window.nhMain && typeof window.nhMain.callAjax === "function") {
       window.nhMain.callAjax({ async: true, url: "/quizs-answer/add", data })
-        .done(() => done("Đã lưu vào lịch sử làm bài của bạn."))
+        .done((response) => {
+          let result = response;
+          if (typeof result === "string") { try { result = JSON.parse(result); } catch (error) { result = null; } }
+          if (result && result.code === "success") done("Đã lưu vào lịch sử làm bài của bạn.");
+          else done(`Chưa lưu được kết quả${result && result.message ? `: ${result.message}` : "."} Bạn vẫn xem được lời giải bên dưới.`);
+        })
         .fail(() => done("Chưa lưu được kết quả. Bạn vẫn xem được lời giải bên dưới."));
     } else {
       done("Chưa lưu được kết quả. Bạn vẫn xem được lời giải bên dưới.");
@@ -403,11 +426,11 @@
   resultButton.addEventListener("click", () => { if (active) { active.state = "done"; render(); reveal(); } });
   root.addEventListener("mcr:lesson", (event) => {
     lessonNumber = event.detail.number;
-    if (active && active.lesson.number !== lessonNumber) {
-      // Another lesson: its own quiz attempt (if any) becomes the one shown.
-      const card = root.querySelector(`[data-mcr-quiz="${lessonNumber}"] [data-mcr-quiz-start]`);
-      const other = card && attempts.get(Number(card.dataset.mcrQuizStart));
-      active = other || active;
+    if (!active || active.lesson.number !== lessonNumber) {
+      // Another lesson: the quiz it has in progress comes back; a lesson with one quiz also brings back its result.
+      // Otherwise the lesson's list of quizzes shows.
+      const own = lessonStarts(lessonNumber).map((startButton) => attempts.get(Number(startButton.dataset.mcrQuizStart))).filter(Boolean);
+      active = own.find((attempt) => attempt.state === "doing") || (lessonQuizCount(lessonNumber) === 1 ? own[0] : null) || null;
     }
     sync();
     if (active && !host.hidden) render();

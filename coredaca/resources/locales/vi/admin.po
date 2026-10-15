@@ -5538,3 +5538,6 @@ msgstr "Trắc nghiệm"
 
 msgid "danh_muc_trac_nghiem"
 msgstr "Danh mục trắc nghiệm"
+
+msgid "ghi_danh_khoa_hoc"
+msgstr "Ghi danh khóa học"

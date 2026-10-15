@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Service;
 
+use App\Lib\LessonQuizzes;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\NotFoundException;
 
@@ -30,10 +31,8 @@ class CourseExamLibrary
         $row = $db->execute('SELECT value FROM products_attribute WHERE product_id=:id AND attribute_id=11 LIMIT 1', ['id'=>$id])->fetch('assoc');
         $lessons = $row ? json_decode($row['value'], true) : [];
         if (!is_array($lessons)) return [];
-        $ids = [];
-        foreach ($lessons as $lesson) {
-            if (!empty($lesson['quiz_id_vi'])) $ids[] = (int)$lesson['quiz_id_vi'];
-        }
+        // a lesson may have several quizzes (App\Lib\LessonQuizzes); each gets its own row, under the lesson's position
+        $ids = LessonQuizzes::ids($lessons);
         $info = [];
         if ($ids) {
             $rows = $db->execute('SELECT q.id, qc.name, m.year_in_title, m.school_name, m.source_category_name, m.question_count
@@ -44,12 +43,16 @@ class CourseExamLibrary
         $result=[];
         foreach ($lessons as $index=>$lesson) {
             if (!is_array($lesson)) continue;
-            $quizId=(int)($lesson['quiz_id_vi']??0);
-            $result[]=[
-                'position'=>$index+1, 'name'=>(string)($lesson['name_vi']??''),
-                'chapter'=>($lesson['chapter_vi']??'')==='y', 'review'=>($lesson['review_vi']??'')==='y',
-                'quiz_id'=>isset($info[$quizId])?$quizId:0, 'metadata'=>$info[$quizId]??[],
-            ];
+            $quizIds=array_column(LessonQuizzes::of($lesson),'id') ?: [0];
+            foreach ($quizIds as $place=>$quizId) {
+                $name=(string)($lesson['name_vi']??'');
+                if ($place>0) $name.=' · đề '.($place+1).(!empty($info[$quizId]['name']) ? ': '.$info[$quizId]['name'] : '');
+                $result[]=[
+                    'position'=>$index+1, 'name'=>$name,
+                    'chapter'=>($lesson['chapter_vi']??'')==='y', 'review'=>($lesson['review_vi']??'')==='y',
+                    'quiz_id'=>isset($info[$quizId])?$quizId:0, 'metadata'=>$info[$quizId]??[],
+                ];
+            }
         }
         return $result;
     }

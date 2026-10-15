@@ -11,6 +11,9 @@ class MemberHelper extends Helper
 {
     public $helpers = ['Utilities'];
 
+    // khóa học được học của học viên đang đăng nhập, tính một lần mỗi trang (getCourseAccessList)
+    private $course_access = null;
+
     /** Lấy thông tin tài khoản khách hàng khi đã đăng nhập
      * 
      * 
@@ -166,5 +169,52 @@ class MemberHelper extends Helper
 
         $data = $table->find()->where($where)->select($fields)->order($sort_string)->toList();
         return $data;
+    }
+
+    /** Khóa học mà học viên đang đăng nhập được học (các bài và bài tập dành cho học viên đã đăng ký)
+     *
+     * $product_id (*): id khóa học
+     *
+     * Trả về [] nếu chưa được học, ngược lại ['class_room_id' => id lớp hoặc 0, 'enrollment_id' => id ghi danh hoặc 0,
+     * 'expires_at' => hạn học (unix time) hoặc 0]:
+     * - học viên cũ: lớp học có mã học viên trong danh sách (class_rooms.users);
+     * - học viên mới: ghi danh còn hiệu lực, tự động khi đơn hàng thanh toán đủ hoặc do admin thêm (course_enrollments).
+     *
+     * {assign var = course_access value = $this->Member->getCourseAccess($product.id)}
+    */
+    public function getCourseAccess($product_id = null)
+    {
+        $list = $this->getCourseAccessList();
+        return !empty($product_id) && !empty($list[intval($product_id)]) ? $list[intval($product_id)] : [];
+    }
+
+    /** Mọi khóa học mà học viên đang đăng nhập được học, theo id khóa học (xem getCourseAccess); tính một lần mỗi trang
+     *
+     * {assign var = courses value = $this->Member->getCourseAccessList()}
+    */
+    public function getCourseAccessList()
+    {
+        if ($this->course_access !== null) return $this->course_access;
+
+        $this->course_access = [];
+        $member = $this->getMemberInfo();
+        if (empty($member['id'])) return $this->course_access;
+
+        if (!empty($member['code'])) {
+            foreach ($this->getListClassRoomByCustomerId($member['code']) as $class_room) {
+                $product_id = intval($class_room['product_id']);
+                if (empty($product_id) || !empty($this->course_access[$product_id])) continue;
+                $this->course_access[$product_id] = ['class_room_id' => intval($class_room['id']), 'enrollment_id' => 0, 'expires_at' => 0];
+            }
+        }
+
+        foreach (TableRegistry::get('CourseEnrollments')->activeCourses($member['id']) as $product_id => $enrollment) {
+            $access = !empty($this->course_access[$product_id]) ? $this->course_access[$product_id] : ['class_room_id' => 0];
+            $access['enrollment_id'] = intval($enrollment['id']);
+            $access['expires_at'] = intval($enrollment['expires_at']);
+            $this->course_access[$product_id] = $access;
+        }
+
+        return $this->course_access;
     }
 }

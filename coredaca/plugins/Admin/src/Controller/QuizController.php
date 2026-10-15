@@ -822,6 +822,60 @@ class QuizController extends AppController {
         ]);
     }
 
+    /** Đề cho danh sách "Bài tập của buổi" trong form khóa học (assets/js/pages/lesson_quizzes.js)
+     *
+     * POST keyword: tên đề hoặc mã đề; hoặc ids[]: lấy tên các đề đã chọn.
+     * Trả về [['id', 'name', 'count' => số câu, 'staff_only' => đề nội bộ, chưa mở cho học viên], ...]
+    */
+    public function lessonSuggest()
+    {
+        $this->layout = false;
+        $this->autoRender = false;
+
+        if (!$this->getRequest()->is('post')) {
+            $this->responseJson([MESSAGE => __d('admin', 'phuong_thuc_khong_hop_le')]);
+        }
+
+        $keyword = trim((string)$this->getRequest()->getData('keyword'));
+        $ids = $this->getRequest()->getData('ids');
+        $ids = is_array($ids) ? array_values(array_filter(array_map('intval', $ids))) : [];
+
+        $where = ['q.deleted = 0'];
+        $bind = ['lang' => $this->lang];
+        if (!empty($ids)) {
+            $where[] = 'q.id IN (' . implode(',', array_slice($ids, 0, 500)) . ')';
+        } elseif ($keyword !== '') {
+            $bind['keyword'] = '%' . $keyword . '%';
+            $where[] = ctype_digit($keyword) ? '(q.id = :id OR c.name LIKE :keyword)' : 'c.name LIKE :keyword';
+            if (ctype_digit($keyword)) $bind['id'] = intval($keyword);
+        } else {
+            $this->responseJson([CODE => SUCCESS, DATA => []]);
+        }
+
+        $rows = ConnectionManager::get('default')->execute(
+            'SELECT q.id, c.name,
+                (SELECT JSON_LENGTH(a.value) FROM quizs_attribute a WHERE a.quiz_id = q.id AND a.attribute_id = 18 AND JSON_VALID(a.value) LIMIT 1) AS count,
+                (SELECT m.staff_only FROM quiz_exam_metadata m WHERE m.quiz_id = q.id) AS staff_only
+             FROM quizs q
+             LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
+             WHERE ' . implode(' AND ', $where) . '
+             ORDER BY ' . (!empty($ids) ? 'q.id' : 'q.id DESC') . '
+             LIMIT ' . (!empty($ids) ? 500 : 15),
+            $bind
+        )->fetchAll('assoc');
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'id' => intval($row['id']),
+                'name' => trim((string)$row['name']),
+                'count' => intval($row['count']),
+                'staff_only' => !empty($row['staff_only'])
+            ];
+        }
+        $this->responseJson([CODE => SUCCESS, DATA => $result]);
+    }
+
     public function quickUpload()
     {
         $this->layout = false;

@@ -609,6 +609,9 @@ class OrdersTable extends Table
             return false;
         }
 
+        // khóa học trong đơn đã thanh toán đủ: ghi danh học viên (CourseEnrollmentsTable::syncOrder)
+        TableRegistry::get('CourseEnrollments')->syncOrder($order_id);
+
         return true;
     }
 

@@ -584,12 +584,8 @@ class UtilitiesHelper extends Helper
 
         if(empty($productAttribute)) return false;
 
-        $arrayValue = json_decode($productAttribute["value"], true);
-        $quizIds = Hash::extract($arrayValue, '{n}.quiz_id_vi');
-        $quizIds = array_filter($quizIds, function($value) {
-            return !empty($value);
-        });
-        $quizIds = array_map('intval', $quizIds);
+        // mọi đề của các buổi học, theo thứ tự buổi và thứ tự đề trong buổi (App\Lib\LessonQuizzes)
+        $quizIds = \App\Lib\LessonQuizzes::ids(\App\Lib\LessonQuizzes::lessons($productAttribute["value"]));
 
         // Kiểm tra nếu $quizIds rỗng và trả về mảng rỗng nếu đúng
         if (empty($quizIds)) {

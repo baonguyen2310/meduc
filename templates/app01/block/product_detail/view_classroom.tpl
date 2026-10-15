@@ -3,9 +3,13 @@
    (video, price, sign-up) or the selected lesson with its Video / Tài liệu / Bài tập / Phản hồi học viên tabs.
    The page opens on the introduction; ?bai=N opens lesson N (classroom.js keeps the address in step).
    - Lessons come from the course's "Danh sách tiết học". A lesson marked "Học thử" is open to everyone; only lessons
-     with a YouTube ID have a video here. Students who bought the course (a class room in their account) see every lesson.
-   - Sign-up uses the site's cart (nh-btn-action="add-cart"); PDF files keep using custom.js. Quizzes run inside the
-     "Bài tập" tab (classroom-quiz.js) and results are saved to /quizs-answer/add as before.
+     with a YouTube ID have a video here (students study the paid lessons on ClassIn). Students of the course see every
+     lesson: an old class room with their code, or an enrollment (paid order or added by the admin), see
+     MemberHelper::getCourseAccess.
+   - A lesson may have several quizzes (App\Lib\LessonQuizzes), each either free to try or for students only. Quizzes
+     run inside the "Bài tập" tab (classroom-quiz.js) and results are saved to /quizs-answer/add as before; a locked quiz
+     shows its name and size with the sign-up button, and its questions never reach the page.
+   - Sign-up uses the site's cart (nh-btn-action="add-cart"); PDF files keep using custom.js.
    - The introduction has its own tabs (Giới thiệu, Giảng viên, Q&A, Phản hồi) over one long column, and a sign-up column
      that stays in place. Teachers: the homepage faculty cards (block "gvrail") linking to this course, and the course's
      "Thông tin giảng viên". The FAQ, questions, ratings and related-course blocks below this one on the page are moved
@@ -22,22 +26,14 @@
 {assign var = first_item value = []}
 {if !empty($product.items[0])}{assign var = first_item value = $product.items[0]}{/if}
 
-{* Who is looking: a student who bought the course has a class room for it. *}
-{assign var = licensed value = false}
-{assign var = code_member value = ''}
-{assign var = class_room_id value = ''}
+{* Who is looking: a student of the course has an old class room with their code, or an enrollment. *}
 {assign var = member_info value = $this->Member->getMemberInfo()}
-{if !empty($member_info.code)}
-    {assign var = code_member value = $member_info.code}
-    {assign var = class_rooms value = $this->Member->getListClassRoomByCustomerId($code_member)}
-    {foreach from = $class_rooms item = class_room}
-        {if $class_room.product_id == $product.id}
-            {assign var = licensed value = true}
-            {assign var = class_room_id value = $class_room.id}
-            {break}
-        {/if}
-    {/foreach}
-{/if}
+{assign var = code_member value = ''}
+{if !empty($member_info.code)}{assign var = code_member value = $member_info.code}{/if}
+{$course_access = $this->Member->getCourseAccess($product.id)}
+{$licensed = !empty($course_access)}
+{$class_room_id = ''}
+{if !empty($course_access.class_room_id)}{$class_room_id = $course_access.class_room_id}{/if}
 
 {* Sign-up: a course already in the cart goes straight to the order page. *}
 {assign var = in_cart value = false}
@@ -70,6 +66,8 @@
 {$raw_lessons = []}
 {if !empty($product.attributes.danhsachtiethoc.value)}{$raw_lessons = $product.attributes.danhsachtiethoc.value|json_decode:1}{/if}
 {if !is_array($raw_lessons)}{$raw_lessons = []}{/if}
+{* Quizzes of the lessons: "info" for every quiz, "play" (with the questions) for those the visitor may take. *}
+{$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons, 'licensed' => $licensed])}
 {$chapters = []}
 {$lessons = []}
 {$chapter_index = -1}
@@ -101,11 +99,20 @@
         {$files = $item.filestwo|json_decode:1}
         {if !is_array($files)}{$files = []}{/if}
     {/if}
-    {$quiz = ''}
-    {if !empty($item.quiz_id_vi)}{$quiz = $item.quiz_id_vi}{/if}
+    {$lesson_quizzes = $this->Product->getLessonQuizzes($item)}
+    {$quizzes = []}
+    {$open_quiz = false}
+    {$free_quiz = false}
+    {foreach from = $lesson_quizzes item = lesson_quiz}
+        {if empty($course_quizzes.info[$lesson_quiz.id])}{continue}{/if}
+        {$quiz_open = $licensed || $lesson_quiz.free}
+        {$quizzes[] = ['id' => $lesson_quiz.id, 'open' => $quiz_open, 'free' => $lesson_quiz.free]}
+        {if $quiz_open}{$open_quiz = true}{/if}
+        {if $lesson_quiz.free}{$free_quiz = true}{/if}
+        {if $lesson_quiz.free && !$licensed}{$open_quizzes = $open_quizzes + 1}{/if}
+    {/foreach}
     {$number = count($lessons) + 1}
     {if $video != '' && $trial && !$licensed}{$trial_videos = $trial_videos + 1}{/if}
-    {if $quiz != '' && $open}{$open_quizzes = $open_quizzes + 1}{/if}
     {if $video != '' && $open && $first_open == 0}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
@@ -113,7 +120,7 @@
     {$code = ''}
     {if !empty($item.code)}{$code = $item.code}{/if}
 
-    {$lessons[] = ['number' => $number, 'title' => $item_title, 'chapter' => $chapter_index, 'video' => $video, 'access' => $access, 'open' => $open, 'files' => $files, 'quiz' => $quiz, 'review' => $review, 'code' => $code]}
+    {$lessons[] = ['number' => $number, 'title' => $item_title, 'chapter' => $chapter_index, 'video' => $video, 'access' => $access, 'open' => $open, 'files' => $files, 'quizzes' => $quizzes, 'open_quiz' => $open_quiz, 'free_quiz' => $free_quiz, 'quiz_pending' => count($lesson_quizzes) > count($quizzes), 'review' => $review, 'code' => $code]}
 {/foreach}
 {$lesson_count = count($lessons)}
 
@@ -220,15 +227,12 @@
     <a class="mcr-feedback-all" href="/phan-hoi-hoc-vien">Xem tất cả phản hồi của học viên <span aria-hidden="true">→</span></a>
 {/capture}
 
-{* Quizzes the visitor may take: every quiz of a bought course, else the quizzes of "Học thử" lessons. *}
-{$quiz_data = $this->Product->getQuizPlayerData(['lesson_list' => $raw_lessons, 'trial_only' => !$licensed])}
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261016-6" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-3" defer></script>
-{if !empty($quiz_data)}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261016" defer></script>{/if}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261016-9" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-4" defer></script>
+{if !empty($course_quizzes.play)}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261016-3" defer></script>{/if}
 
 <section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
@@ -271,12 +275,12 @@
                                 {foreach from = $lessons item = lesson}
                                     {if $lesson.chapter != $chapter_key}{continue}{/if}
                                     <li>
-                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.quiz != ''}1{else}0{/if}">
+                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}">
                                             <span class="mcr-lesson-number">{$lesson.number|string_format:'%02d'}</span>
                                             <span class="mcr-lesson-title">{$lesson.title|escape}</span>
                                             {if $lesson.access == 'trial' && $lesson.video != ''}
                                                 <span class="mcr-tag">Học thử</span>
-                                            {elseif $lesson.access == 'trial' && $lesson.quiz != ''}
+                                            {elseif !$licensed && $lesson.free_quiz}
                                                 <span class="mcr-tag mcr-tag--quiz">Bài tập</span>
                                             {elseif !$lesson.open || ($lesson.video == '' && !$licensed)}
                                                 <svg class="mcr-lock" viewBox="0 0 24 24" aria-label="Cần đăng ký"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>
@@ -442,9 +446,12 @@
                             </div>
                             <div class="mcr-stage-card" data-mcr-stage="novideo" hidden>
                                 <svg class="mcr-card-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m10 9 5 3-5 3z" /></svg>
-                                <h3>Video buổi này nằm trong lớp học của bạn</h3>
-                                <p>MedUC chưa gắn video của buổi này lên trang khoá học.</p>
-                                <div class="mcr-card-actions"><a class="mcr-btn mcr-btn--primary" href="/member/classroom">Vào lớp học của tôi</a></div>
+                                <h3>Buổi này học trên ClassIn</h3>
+                                <p>Video buổi học nằm trong lớp ClassIn của bạn. Tài liệu và bài tập của buổi này có ngay trong các tab bên dưới.</p>
+                                <div class="mcr-card-actions">
+                                    <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-goto-quiz-novideo hidden>Làm bài tập buổi này</button>
+                                    <a class="mcr-btn mcr-btn--ghost-light" href="/member/classroom">Khoá học của tôi</a>
+                                </div>
                             </div>
                             <div class="mcr-stage-card" data-mcr-stage="error" hidden>
                                 <svg class="mcr-card-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M12 9v4M12 16v.5" /></svg>
@@ -494,21 +501,29 @@
                     <div class="mcr-panel" id="mcr-panel-quiz" role="tabpanel" aria-labelledby="mcr-tab-quiz" data-mcr-panel="quiz" hidden>
                         {foreach from = $lessons item = lesson}
                             <div class="mcr-resource" data-mcr-quiz="{$lesson.number}" hidden>
-                                {if $lesson.quiz == ''}
-                                    <p class="mcr-empty">Buổi này chưa có bài tập trắc nghiệm.</p>
-                                {elseif !$lesson.open}
-                                    <p class="mcr-empty mcr-empty--locked">Bài tập của buổi này dành cho học viên đã đăng ký.</p>
-                                {elseif empty($quiz_data[$lesson.quiz])}
-                                    <p class="mcr-empty">Bài tập của buổi này đang được cập nhật.</p>
+                                {if empty($lesson.quizzes)}
+                                    <p class="mcr-empty">{if $lesson.quiz_pending}Bài tập của buổi này đang được cập nhật.{else}Buổi này chưa có bài tập trắc nghiệm.{/if}</p>
                                 {else}
-                                    {$quiz_info = $quiz_data[$lesson.quiz]}
-                                    <div class="mcr-quiz-card">
-                                        <div>
-                                            <p class="mcr-quiz-kicker">{if $lesson.review}Đề tổng ôn{else}Bài tập trắc nghiệm{/if}</p>
-                                            <h3>{$quiz_info.name|escape}</h3>
-                                            <p>{count($quiz_info.questions)} câu{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · Nộp bài là có điểm và lời giải chi tiết.</p>
-                                        </div>
-                                        <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-quiz-start="{$quiz_info.id}" data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Bắt đầu làm bài</button>
+                                    {$quiz_total = count($lesson.quizzes)}
+                                    <div class="mcr-quiz-list">
+                                        {foreach from = $lesson.quizzes item = quiz}
+                                            {$quiz_info = $course_quizzes.info[$quiz.id]}
+                                            <div class="mcr-quiz-card{if !$quiz.open} is-locked{/if}">
+                                                <div>
+                                                    <p class="mcr-quiz-kicker">{if $lesson.review}Đề tổng ôn{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
+                                                    <h3>{$quiz_info.name|escape}</h3>
+                                                    <p>{$quiz_info.count} câu{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}Nộp bài là có điểm và lời giải chi tiết.{else}Dành cho học viên đã đăng ký khoá học.{/if}</p>
+                                                </div>
+                                                {if $quiz.open}
+                                                    <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-quiz-start="{$quiz.id}" data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Bắt đầu làm bài</button>
+                                                {else}
+                                                    <a class="mcr-btn mcr-btn--ghost" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>
+                                                        <svg class="mcr-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>
+                                                        Đăng ký để làm
+                                                    </a>
+                                                {/if}
+                                            </div>
+                                        {/foreach}
                                     </div>
                                 {/if}
                             </div>
@@ -516,6 +531,7 @@
                         {* classroom-quiz.js builds the quiz here; the lesson's card above hides while it runs. *}
                         <div class="mcq" data-mcr-quiz-player hidden></div>
                         {if !empty($text.ghi_chu_bai_tap)}<p class="mcr-quiz-disclaimer" data-mcr-quiz-note hidden>{$text.ghi_chu_bai_tap|escape}</p>{/if}
+                        <a class="mcr-quiz-rank" href="/class-rank?khoa={$product.id}">Bảng xếp hạng và chỉ số tiến bộ của bạn <span aria-hidden="true">→</span></a>
                     </div>
 
                     <div class="mcr-panel" id="mcr-panel-feedback" role="tabpanel" aria-labelledby="mcr-tab-feedback" data-mcr-panel="feedback" hidden>
@@ -535,7 +551,7 @@
     {/if}
 
     {* Quiz data for classroom-quiz.js. 256 = JSON_UNESCAPED_UNICODE; slashes stay escaped, so the data cannot close the tag. *}
-    {if !empty($quiz_data)}<script type="application/json" data-mcr-quiz-data>{json_encode($quiz_data, 256)}</script>{/if}
+    {if !empty($course_quizzes.play)}<script type="application/json" data-mcr-quiz-data>{json_encode($course_quizzes.play, 256)}</script>{/if}
     {* PDF files keep using the site's own preview (assets/js/custom.js). *}
     <div class="modal fade modal-preview-file" id="previewFile" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">

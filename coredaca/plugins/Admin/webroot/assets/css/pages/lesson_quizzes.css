@@ -1,0 +1,17 @@
+/* "Bài tập của buổi" trong form khóa học (assets/js/pages/lesson_quizzes.js). */
+.nh-lesson-quizzes { margin-bottom: 16px; }
+.nh-lesson-quiz-list { display: grid; gap: 6px; margin-bottom: 8px; }
+.nh-lesson-quiz { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border: 1px solid #ebedf2; border-radius: 4px; background: #fff; }
+.nh-lesson-quiz.is-warning { border-color: #ffb822; background: #fff9ec; }
+.nh-lesson-quiz-number { flex: none; width: 24px; height: 24px; border-radius: 50%; background: #f0f3ff; color: #5d78ff; font-weight: 600; font-size: 12px; line-height: 24px; text-align: center; }
+.nh-lesson-quiz-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.nh-lesson-quiz-free { flex: none; white-space: nowrap; }
+.nh-lesson-quiz-tools { display: flex; flex: none; }
+.nh-lesson-quiz-empty { padding: 8px 10px; border: 1px dashed #ebedf2; border-radius: 4px; }
+.nh-lesson-quiz-add { position: relative; max-width: 560px; }
+.nh-lesson-quiz-results { position: absolute; z-index: 20; top: 100%; right: 0; left: 0; max-height: 320px; overflow-y: auto; box-shadow: 0 6px 20px rgba(0, 0, 0, .12); }
+.nh-lesson-quiz-results .list-group-item { padding: 8px 12px; font-size: 13px; text-align: left; }
+@media (max-width: 767.98px) {
+  .nh-lesson-quiz { flex-wrap: wrap; }
+  .nh-lesson-quiz-name { flex-basis: calc(100% - 40px); }
+}

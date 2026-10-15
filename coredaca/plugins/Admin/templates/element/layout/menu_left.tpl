@@ -172,6 +172,54 @@
                         </div>
                     </li>
 
+                    {* ghi danh khóa học: học viên mới (đơn hàng thanh toán đủ hoặc admin thêm); học viên cũ vẫn ở Lớp học *}
+                    {assign var = link_course_enrollment value = "{ADMIN_PATH}/course-enrollment"}
+                    {assign var = link_course_enrollment_add value = "{ADMIN_PATH}/course-enrollment/add"}
+                    {if !empty($permissions[$link_course_enrollment]) || !empty($permissions[$link_course_enrollment_add])}
+                        <li class="kt-menu__item kt-menu__item--submenu">
+                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                                <span class="kt-menu__link-icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </span>
+                                <span class="kt-menu__link-text">
+                                    Ghi danh khóa học
+                                </span>
+                                <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+
+                            <div class="kt-menu__submenu ">
+                                <span class="kt-menu__arrow"></span>
+                                <ul class="kt-menu__subnav">
+                                    {if !empty($permissions[$link_course_enrollment_add])}
+                                        <li class="kt-menu__item">
+                                            <a href="{$link_course_enrollment_add}" class="kt-menu__link" path-menu="course_enrollment_add">
+                                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="kt-menu__link-text">
+                                                    Ghi danh học viên
+                                                </span>
+                                            </a>
+                                        </li>
+                                    {/if}
+
+                                    {if !empty($permissions[$link_course_enrollment])}
+                                        <li class="kt-menu__item">
+                                            <a href="{$link_course_enrollment}" class="kt-menu__link" path-menu="course-enrollment">
+                                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="kt-menu__link-text">
+                                                    Danh sách
+                                                </span>
+                                            </a>
+                                        </li>
+                                    {/if}
+                                </ul>
+                            </div>
+                        </li>
+                    {/if}
+
                     <li class="kt-menu__item kt-menu__item--submenu">
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                             <span class="kt-menu__link-icon">

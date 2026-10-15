@@ -785,13 +785,15 @@ class ProductController extends AppController {
         $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khóa luyện thi'] : []);
 
         $this->css_page = [
-            '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
+            '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css',
+            '/assets/css/pages/lesson_quizzes.css'
         ];
 
         $this->js_page = [
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
+            '/assets/js/pages/lesson_quizzes.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 
@@ -915,13 +917,15 @@ class ProductController extends AppController {
         $this->set('list_category_main', $list_category_main);
 
         $this->css_page = [
-            '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
+            '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css',
+            '/assets/css/pages/lesson_quizzes.css'
         ];
 
         $this->js_page = [
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
+            '/assets/js/pages/lesson_quizzes.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 

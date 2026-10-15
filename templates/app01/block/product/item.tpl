@@ -1,19 +1,7 @@
 {strip}
-{assign var = licensed value = false}
-{assign member_info value = $this->Member->getMemberInfo()}
-{if !empty($member_info.code)}
-    {assign var = code_member value = $member_info.code}
-    {assign var = listClassRoom value = $this->Member->getListClassRoomByCustomerId($code_member)}
-    {assign var = idClassRoom value = ""}
-    
-    {foreach from = $listClassRoom item = classRoom}
-        {if $classRoom.product_id == $product.id}
-            {assign var = licensed value = true}
-            {assign var = idClassRoom value = $classRoom.id}
-            {break}
-        {/if}
-    {/foreach}
-{/if}
+{* Học viên được học khóa này: lớp học cũ có mã học viên, hoặc ghi danh còn hiệu lực (MemberHelper::getCourseAccess). *}
+{assign var = course_access value = $this->Member->getCourseAccess($product.id)}
+{assign var = licensed value = !empty($course_access)}
 
 {if empty($is_slider)}
 <div class="{if !empty($col)}{$col}{else}col-xl-3 col-lg-3 col-md-6 col-6 mb-20{/if}">
@@ -60,7 +48,7 @@
                     <div class="card-bottom">
                         <a href="{$this->Utilities->checkInternalUrl($product.url)}" class="edu-btn btn-small">Vào Lớp Học</a>
                         <a 
-                            href="/class-rank?class-room-id={$idClassRoom}&url={$this->Utilities->checkInternalUrl($product.url)}" 
+                            href="/class-rank?khoa={$product.id}" 
                             class="edu-btn btn-secondary btn-small ml-10"
                         >
                             Bảng Xếp Hạng

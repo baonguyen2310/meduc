@@ -325,7 +325,25 @@ Configure::write('PRODUCT_TYPE_CONTROLLER',
             ]
         ],
         'Shipment' => [],
-        'Report' => []
+        'Report' => [],
+        'CourseEnrollment' => [
+            'view' => [
+                'list',
+                'customerSuggest'
+            ],
+            'add' => [
+                'add'
+            ],
+            'status' => [
+                'changeStatus'
+            ],
+            'update' => [
+                'update'
+            ],
+            'delete' => [
+                'delete'
+            ]
+        ]
 
     ]
 );
@@ -463,6 +481,7 @@ Configure::write('LOCALES_KEY_CONTROLLER',
         'Media' => 'media',
         'Object' => 'doi_tuong',
         'Order' => 'don_hang',
+        'CourseEnrollment' => 'ghi_danh_khoa_hoc',
         'Payment' => 'giao_dich',
         'PaymentGateway' => 'cong_thanh_toan',
         'Product' => 'san_pham',
