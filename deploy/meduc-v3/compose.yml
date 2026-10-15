@@ -1,0 +1,42 @@
+name: meduc-v3
+services:
+  db:
+    image: mariadb:10.11
+    container_name: meduc_v3_db
+    restart: unless-stopped
+    mem_limit: 1g
+    command: --max_allowed_packet=512M --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-strict-mode=0 --innodb-default-row-format=DYNAMIC --innodb-buffer-pool-size=256M --max-connections=80
+    env_file: ./secrets/runtime.env
+    volumes:
+      - meduc_v3_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  web:
+    image: meduc-php-web
+    container_name: meduc_v3_web
+    restart: unless-stopped
+    mem_limit: 1g
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8082:80"
+    env_file: ./secrets/runtime.env
+    environment:
+      DB_HOST: db
+      DB_NAME: kbbcutgf_meduc
+      DB_USERNAME: meduc_v3
+      # DB_PASSWORD is provided in secrets/runtime.env.
+      APP_DEBUG: "false"
+      MEDUC_TRUST_PROXY_HTTPS: "true"
+    volumes:
+      - ./app:/var/www/html
+      - /opt/meduc-php/app/coredaca/vendor:/var/www/html/coredaca/vendor:ro
+      - /opt/meduc-php/secrets/google-service-account.json:/var/www/html/google-service-account.json:ro
+      - ./apache-proxy.conf:/etc/apache2/conf-enabled/meduc-v3-proxy.conf:ro
+      - ./php.ini:/usr/local/etc/php/conf.d/meduc-v3.ini:ro
+volumes:
+  meduc_v3_db_data:

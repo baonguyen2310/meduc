@@ -1,0 +1,14 @@
+meducv3.duckdns.org {
+    tls {
+        issuer acme {
+            disable_http_challenge
+        }
+    }
+    @private path /.git* /.env* /scripts/* /design-references/* /tmp/* /coredaca/config/* /coredaca/src/* /coredaca/vendor/* /config_database.php /google-service-account.json /*.sql /*.sql.gz
+    respond @private 404
+    reverse_proxy 127.0.0.1:8082
+}
+
+http://meducv3.duckdns.org {
+    redir https://meducv3.duckdns.org{uri} 308
+}
