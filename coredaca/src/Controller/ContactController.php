@@ -61,40 +61,27 @@ class ContactController extends AppController {
         }
 
         if($form_code == "61CQ0U3H9I") {
-            $data_products = [];
-            $totalPrice = 0;
-            $totalQuantity = 0;
-
-            foreach (json_decode($data_value["cartProducts"]) as $key => $product) {
-                $id = $product->id;
-                $quantity = $product->quantity;
-                $name = $product->name;
-    
-                $product_info = TableRegistry::get('ProductsItem')->find()->where(['id' => $id])->first();
-
-                $price = $product_info["price"];
-                $product_id = $product_info["product_id"];
-                $discount_percent = $product_info["discount_percent"];
-                $price_special = $discount_percent > 0 ? $product_info["price_special"] : $price;
-                $image = json_decode($product_info["images"])[0];
-                $total = $price_special * $quantity;
-
-                $data_product = [
-                    'id' => $id,
-                    'product_id' => $product_id,
-                    'name' => $name,
-                    'quantity' => $quantity,
-                    'price' => $price,
-                    'discount_percent' => $discount_percent,
-                    'price_special' => $price_special,
-                    'image' => $image,
-                    'total' => $total,
-                ];
-
-                $data_products[$key] = $data_product;
-
-                $totalPrice += $total;
-                $totalQuantity += $quantity;
+            $items = json_decode((string) ($data_value['cartProducts'] ?? ''), true);
+            try {
+                $data_products = \App\Lib\BookCheckout::quote(is_array($items) ? $items : []);
+            } catch (\InvalidArgumentException $e) {
+                $this->responseJson([MESSAGE => $e->getMessage()]);
+                return;
+            }
+            $totalPrice = array_sum(array_column($data_products, 'total'));
+            $totalQuantity = array_sum(array_column($data_products, 'quantity'));
+            if (isset($data['cartTotal']) && abs((float) $data['cartTotal'] - $totalPrice) > 0.5) {
+                $this->responseJson([MESSAGE => 'Giá sản phẩm vừa thay đổi. Vui lòng tải lại trang để kiểm tra số tiền trước khi đặt hàng.']);
+                return;
+            }
+            if (!in_array($data_value['payment'] ?? '', ['bank', 'cod'], true)
+                || !preg_match('/^MEDUC[0-9]{6,}$/', (string) ($data_value['cartId'] ?? ''))
+                || empty(trim((string) ($data_value['full_name'] ?? '')))
+                || !filter_var($data_value['email'] ?? '', FILTER_VALIDATE_EMAIL)
+                || !preg_match('/^(?:0|\\+84)[0-9]{9,10}$/', preg_replace('/[ .-]/', '', (string) ($data_value['phone'] ?? '')))
+                || empty(trim((string) ($data_value['address'] ?? '')))) {
+                $this->responseJson([MESSAGE => 'Vui lòng kiểm tra thông tin nhận hàng và phương thức thanh toán.']);
+                return;
             }
 
             $data_value["cartProducts"] = json_encode($data_products);
@@ -180,6 +167,10 @@ class ContactController extends AppController {
             
             $conn->commit();
 
+            if ($form_code === '61CQ0U3H9I') {
+                // The confirmation page reads only this browser session's successfully saved order.
+                $this->request->getSession()->write('MeducBookOrder', $data_value);
+            }
             $this->loadComponent('SendMessage')->send(CONTACT, $save['id']);
             
             $this->responseJson([
