@@ -258,4 +258,67 @@ class ProductHelper extends Helper
 
         return $query->toList();
     }
+
+    /** Dữ liệu bài tập cho trình làm bài trên trang khóa học (assets/meduc-v2/classroom-quiz.js)
+     *
+     * Cùng tham số với getQuizs(). Chỉ giữ những gì trình làm bài cần, và bỏ định dạng Word dán vào
+     * (style, class, span, font...) để trang nhẹ hơn nhiều lần. Kết quả theo id đề:
+     * [id => ['id', 'name', 'minutes', 'questions' => [['code', 'question', 'note', 'options' => [[value, text]], 'answer', 'explain']]]]
+    */
+    public function getQuizPlayerData($params = [], $lang = null)
+    {
+        $lang = $lang ?: LANGUAGE;
+        $questions_attribute = 18; // attributes.code = danhsachcauhoi
+        $minutes_attribute = 19; // attributes.code = thoigianlambai
+        $option_keys = ['option_one', 'option_two', 'option_three', 'option_four', 'option_five'];
+
+        $clean = function ($html) {
+            $html = (string) $html;
+            $html = preg_replace('/<!--[\s\S]*?-->/', '', $html);
+            $html = preg_replace('/\s(?:style|class|lang|face|size|align|dir)=(?:"[^"]*"|\'[^\']*\')/i', '', $html);
+            $html = preg_replace('/<\/?(?:o:p|font|span)\b[^>]*>/i', '', $html);
+            return trim(preg_replace('/\s+/u', ' ', $html));
+        };
+
+        $result = [];
+        foreach ($this->getQuizs($params, $lang) as $quiz) {
+            $items = [];
+            $minutes = 0;
+            foreach ((array) ($quiz['QuizsAttribute'] ?? []) as $attribute) {
+                if ((int) $attribute['attribute_id'] === $questions_attribute) {
+                    $items = json_decode((string) $attribute['value'], true) ?: [];
+                } elseif ((int) $attribute['attribute_id'] === $minutes_attribute) {
+                    $minutes = (int) $attribute['value'];
+                }
+            }
+
+            $questions = [];
+            foreach ($items as $item) {
+                if (!is_array($item) || trim((string) ($item['name_' . $lang] ?? '')) === '') continue;
+                $options = [];
+                foreach ($option_keys as $index => $key) {
+                    $text = $clean($item[$key . '_' . $lang] ?? '');
+                    if ($text !== '') $options[] = [$index + 1, $text];
+                }
+                if (!$options) continue;
+                $questions[] = [
+                    'code' => (string) ($item['code'] ?? ''),
+                    'question' => $clean($item['name_' . $lang]),
+                    'note' => $clean($item['description_' . $lang] ?? ''),
+                    'options' => $options,
+                    'answer' => (int) ($item['answer_' . $lang] ?? 0),
+                    'explain' => $clean($item['answer_detail_' . $lang] ?? ''),
+                ];
+            }
+            if (!$questions) continue;
+
+            $result[(int) $quiz['id']] = [
+                'id' => (int) $quiz['id'],
+                'name' => (string) ($quiz['QuizsContent']['name'] ?? ''),
+                'minutes' => $minutes,
+                'questions' => $questions,
+            ];
+        }
+        return $result;
+    }
 }
