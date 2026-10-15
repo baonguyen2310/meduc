@@ -1,4 +1,5 @@
 meducv3.duckdns.org {
+    encode zstd gzip
     tls {
         issuer acme {
             disable_http_challenge

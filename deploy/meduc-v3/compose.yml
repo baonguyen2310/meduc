@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     mem_limit: 1g
     command: --max_allowed_packet=512M --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-strict-mode=0 --innodb-default-row-format=DYNAMIC --innodb-buffer-pool-size=256M --max-connections=80
-    env_file: ./secrets/runtime.env
+    env_file: ./secrets/db.env
     volumes:
       - meduc_v3_db_data:/var/lib/mysql
     healthcheck:
@@ -22,9 +22,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    command: ["bash", "-ec", "mkdir -p tmp/logs tmp/sessions; chown -R www-data:www-data tmp; exec apache2-foreground"]
     ports:
       - "127.0.0.1:8082:80"
-    env_file: ./secrets/runtime.env
+    env_file: ./secrets/web.env
     environment:
       DB_HOST: db
       DB_NAME: kbbcutgf_meduc
