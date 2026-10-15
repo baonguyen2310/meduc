@@ -1,0 +1,85 @@
+/* Homepage student video feedback (block/slider/view_video_feedback.tpl), from the main branch's
+   hero-light/assets/home-feedback.css: three posters at a time and a pop-up player.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mvd {
+  --mvd-bg: #08090b;
+  --mvd-ink: #f5f5f6;
+  --mvd-muted: #a9adb5;
+  --mvd-line: #3a3d43;
+  --mvd-red: #ed204f;
+  padding: clamp(82px, 7vw, 112px) 0 clamp(76px, 6vw, 96px);
+  overflow: hidden;
+  background: var(--mvd-bg);
+  color: var(--mvd-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mvd {
+  --mvd-bg: #fff;
+  --mvd-ink: #17191e;
+  --mvd-muted: #626771;
+  --mvd-line: #e0e3e7;
+  --mvd-red: #bd263a;
+}
+.mvd *, .mvd *::before, .mvd *::after { box-sizing: border-box; }
+.mvd-shell { width: min(83.333333%, 1440px); margin: 0 auto; }
+.mvd-heading { display: grid; grid-template-columns: 1fr minmax(230px, .4fr); align-items: end; gap: 55px; margin-bottom: 42px; }
+.mvd-kicker { margin: 0 0 16px; color: var(--mvd-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .15em; }
+.mvd .mvd-title { margin: 0; text-wrap: balance; color: var(--mvd-ink); font: 400 clamp(52px, 5.1vw, 76px)/1.12 Anton, Impact, sans-serif; letter-spacing: -.01em; }
+.mvd .mvd-title span { color: var(--mvd-red); }
+.mvd-intro { max-width: 330px; margin: 0 0 6px; color: var(--mvd-muted); font: 400 15px/1.7 Inter, Arial, sans-serif; }
+
+.mvd-rail { display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+.mvd-rail::-webkit-scrollbar { display: none; }
+.mvd-card { flex: 0 0 calc((100% - 28px) / 3); min-width: 0; scroll-snap-align: start; }
+.mvd-poster { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--mvd-line); border-radius: 8px; background: linear-gradient(135deg, #252a30, #6d303e); color: #fff; cursor: pointer; }
+.mvd-poster::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, #0005 0%, transparent 39%, #0005 100%); pointer-events: none; }
+.mvd-poster img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .28s ease; }
+.mvd-poster:hover img { transform: scale(1.045); }
+.mvd-play { position: absolute; z-index: 2; top: 50%; left: 50%; display: grid; place-items: center; width: 59px; height: 59px; padding-left: 4px; border-radius: 50%; background: var(--mvd-red); color: #fff; font-size: 22px; box-shadow: 0 9px 28px #0008; transform: translate(-50%, -50%); transition: transform .2s, background .2s; }
+.mvd-poster:hover .mvd-play { background: #e72442; transform: translate(-50%, -50%) scale(1.08); }
+.mvd-corner { position: absolute; z-index: 2; top: 15px; left: 16px; color: #fff; font: 700 10px/1.3 Inter, Arial, sans-serif; letter-spacing: .1em; text-shadow: 0 1px 5px #0009; }
+.mvd-meta { display: flex; gap: 15px; padding: 19px 1px 0; }
+.mvd-number { color: var(--mvd-red); font: 400 25px/1 Anton, Impact, sans-serif; }
+.mvd-subject { color: var(--mvd-muted); font: 700 10px/1.4 Inter, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.mvd .mvd-card-title { margin: 7px 0 0; color: var(--mvd-ink); font: 700 clamp(16px, 1.4vw, 19px)/1.3 Inter, Arial, sans-serif; letter-spacing: -.025em; }
+
+.mvd-footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 33px; padding-top: 18px; border-top: 1px solid var(--mvd-line); }
+.mvd .mvd-all { color: var(--mvd-red) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mvd .mvd-all:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mvd-controls { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.mvd-counter { margin-right: 12px; color: var(--mvd-muted); font: 700 12px/1.4 Inter, Arial, sans-serif; letter-spacing: .08em; white-space: nowrap; }
+.mvd-controls button { display: grid; place-items: center; width: 39px; height: 39px; padding: 0; border: 1px solid var(--mvd-line); border-radius: 50%; background: transparent; color: var(--mvd-ink); font: 400 21px/1 Inter, Arial, sans-serif; cursor: pointer; }
+.mvd-controls button:hover:not(:disabled) { border-color: var(--mvd-red); color: var(--mvd-red); }
+.mvd-controls button:disabled { opacity: .35; cursor: default; }
+.mvd a:focus-visible, .mvd button:focus-visible, .mvd-rail:focus-visible { outline: 2px solid var(--mvd-red); outline-offset: 3px; }
+
+/* Pop-up player */
+.mvd-dialog { width: min(920px, calc(100vw - 32px)); max-width: none; max-height: calc(100svh - 32px); padding: 18px; overflow: visible; border: 1px solid #4a4c52; border-radius: 12px; background: #121316; color: #fff; box-shadow: 0 26px 85px #0009; }
+.mvd-dialog::backdrop { background: #000d; backdrop-filter: blur(5px); }
+.mvd-close { position: absolute; top: -18px; right: -17px; z-index: 2; width: 38px; height: 38px; padding: 0; border: 1px solid #676a72; border-radius: 50%; background: #22242a; color: #fff; font: 400 28px/1 Inter, Arial, sans-serif; cursor: pointer; }
+.mvd-player { aspect-ratio: 16 / 9; background: #000; }
+.mvd-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.mvd-dialog-info { display: flex; justify-content: space-between; align-items: end; gap: 16px; padding: 18px 3px 2px; }
+.mvd-dialog-info span { color: #ee526a; font: 700 10px/1.4 Inter, Arial, sans-serif; letter-spacing: .12em; }
+.mvd-dialog .mvd-dialog-info h3 { margin: 6px 0 0; color: #fff; font: 700 17px/1.3 Inter, Arial, sans-serif; }
+.mvd-dialog .mvd-dialog-info a { flex: none; color: #f3a3ae !important; font: 700 11px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+
+@media (max-width: 900px) {
+  .mvd-card { flex-basis: calc((100% - 14px) / 2); }
+  .mvd-heading { grid-template-columns: 1fr minmax(190px, .45fr); gap: 30px; }
+}
+@media (max-width: 650px) {
+  .mvd { padding: 76px 0 82px; }
+  .mvd-shell { width: calc(100% - 32px); }
+  .mvd-heading { grid-template-columns: 1fr; gap: 17px; margin-bottom: 29px; }
+  .mvd .mvd-title { font-size: clamp(43px, 10vw, 57px); }
+  .mvd-intro { margin: 0; font-size: 14px; }
+  .mvd-card { flex-basis: min(84vw, 360px); }
+  .mvd-meta { padding-top: 15px; }
+  .mvd-footer { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .mvd-controls { margin-left: 0; }
+  .mvd-dialog { padding: 10px; }
+  .mvd-close { top: -16px; right: -9px; }
+  .mvd-dialog-info { align-items: start; flex-direction: column; gap: 9px; padding: 13px 3px 3px; }
+}
+@media (prefers-reduced-motion: reduce) { .mvd-poster img, .mvd-play { transition: none; } }

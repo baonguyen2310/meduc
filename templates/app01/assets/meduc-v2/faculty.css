@@ -1,0 +1,102 @@
+/* Homepage faculty rail (block/slider/view_faculty_rail.tpl), from the main branch's hero-light/assets/faculty.css.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mgv {
+  --mgv-bg: #050506;
+  --mgv-line: #ffffff21;
+  --mgv-ink: #fff;
+  --mgv-muted: #bcbfc6;
+  --mgv-red: #ed204f;
+  --mgv-control-line: #3a3d43;
+  padding: clamp(82px, 7vw, 112px) 0 clamp(76px, 6vw, 96px);
+  border-top: 1px solid var(--mgv-line);
+  overflow: hidden;
+  background: var(--mgv-bg);
+  color: var(--mgv-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mgv {
+  --mgv-bg: #fff;
+  --mgv-line: #e8e9ec;
+  --mgv-ink: #15171c;
+  --mgv-muted: #6b6e76;
+  --mgv-red: #bd263a;
+  --mgv-control-line: #e0e3e7;
+}
+.mgv *, .mgv *::before, .mgv *::after { box-sizing: border-box; }
+.mgv-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(83.333333%, 1440px);
+  margin: 0 auto clamp(36px, 4.4vw, 64px);
+  text-align: center;
+}
+.mgv-kicker { margin: 0 0 14px; color: var(--mgv-red); font: 700 12px/1.4 Inter, Arial, sans-serif; letter-spacing: .14em; }
+.mgv .mgv-title { max-width: 820px; margin: 0; text-wrap: balance; color: var(--mgv-ink); font: 400 clamp(48px, 5.4vw, 80px)/1.12 Anton, Impact, sans-serif; letter-spacing: -.015em; }
+.mgv-intro { margin: 22px 0 0; color: var(--mgv-muted); font: 400 15px/1.6 Inter, Arial, sans-serif; }
+
+.mgv-rail {
+  display: flex;
+  gap: 14px;
+  width: min(83.333333%, 1440px);
+  margin: 0 auto;
+  padding: 0 0 13px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mgv-rail::-webkit-scrollbar { display: none; }
+.mgv-card {
+  position: relative;
+  flex: 0 0 clamp(215px, 18vw, 250px);
+  width: clamp(215px, 18vw, 250px);
+  height: clamp(392px, 34vw, 450px);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #252932;
+  scroll-snap-align: start;
+}
+/* Course posters put the teacher on the right, so the photo is zoomed toward the right edge. */
+.mgv-photo { position: absolute; inset: 0; display: block; overflow: hidden; background: #252932; }
+.mgv-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; transform: scale(1.35); transform-origin: right center; }
+.mgv-card--centered .mgv-photo img { object-position: 50% 50%; transform: none; }
+.mgv-photo::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, #05050640 0%, #11131725 38%, #11131775 59%, #111317f2 100%); pointer-events: none; }
+.mgv-subject { position: absolute; z-index: 2; top: 12px; left: 12px; max-width: calc(100% - 24px); padding: 6px 10px; border-radius: 100px; background: #fff; color: #191a1f; font: 700 10px/1.2 Inter, Arial, sans-serif; text-transform: uppercase; }
+.mgv-copy { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; padding: 20px 16px 17px; color: #fff; pointer-events: none; }
+.mgv-copy a { pointer-events: auto; }
+.mgv .mgv-name { display: -webkit-box; width: 100%; margin: 0 0 11px; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #fff; font: 400 clamp(23px, 1.9vw, 28px)/1.14 Anton, Impact, sans-serif; letter-spacing: -.01em; }
+.mgv .mgv-name a { color: #fff !important; text-decoration: none; }
+.mgv .mgv-name a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mgv-description { display: -webkit-box; min-height: 34px; margin: 0 0 12px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: #e3e4e7; font: 400 11px/1.5 Inter, Arial, sans-serif; }
+.mgv .mgv-cta { display: flex; align-items: center; justify-content: space-between; gap: 9px; width: 100%; padding: 10px 0 0; border-top: 1px solid #ffffff75; color: #fff !important; font: 600 11px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mgv-cta::after { content: "→"; flex: none; font-size: 18px; line-height: 1; }
+.mgv-cta:hover { text-decoration: underline; text-underline-offset: 3px; }
+.mgv a:focus-visible, .mgv button:focus-visible, .mgv-rail:focus-visible { outline: 2px solid var(--mgv-red); outline-offset: 3px; }
+
+.mgv-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: min(83.333333%, 1440px); margin: 16px auto 0; }
+.mgv-note { margin: 0; color: var(--mgv-muted); font: 400 11px/1.5 Inter, Arial, sans-serif; }
+.mgv-footer-actions { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+.mgv .mgv-all { flex: none; color: var(--mgv-red) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
+.mgv .mgv-all:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mgv-controls { display: flex; align-items: center; gap: 8px; }
+.mgv-counter { margin-right: 12px; color: var(--mgv-muted); font: 700 12px/1.4 Inter, Arial, sans-serif; letter-spacing: .08em; white-space: nowrap; }
+.mgv-controls button { display: grid; place-items: center; width: 39px; height: 39px; padding: 0; border: 1px solid var(--mgv-control-line); border-radius: 50%; background: transparent; color: var(--mgv-ink); font: 400 21px/1 Inter, Arial, sans-serif; cursor: pointer; }
+.mgv-controls button:hover:not(:disabled) { border-color: var(--mgv-red); color: var(--mgv-red); }
+.mgv-controls button:disabled { opacity: .35; cursor: default; }
+
+@media (max-width: 767px) {
+  .mgv { padding: 70px 0 72px; }
+  .mgv-heading { width: auto; margin: 0 20px 30px; }
+  .mgv .mgv-title { font-size: clamp(42px, 11vw, 54px); }
+  .mgv-intro { margin-top: 18px; font-size: 13px; }
+  .mgv-rail { gap: 12px; width: 100%; padding-inline: 16px; scroll-padding-inline: 16px; }
+  .mgv-card { flex-basis: min(76vw, 300px); width: min(76vw, 300px); height: 438px; }
+  .mgv-photo img { transform: scale(1.55); }
+  .mgv-card--centered .mgv-photo img { transform: none; }
+  .mgv .mgv-name { font-size: 27px; }
+  .mgv-footer { align-items: flex-start; flex-direction: column; gap: 12px; width: auto; margin: 15px 16px 0; }
+  .mgv-footer-actions { justify-content: space-between; width: 100%; margin-left: 0; }
+}

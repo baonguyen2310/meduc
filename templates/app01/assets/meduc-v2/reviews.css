@@ -1,0 +1,85 @@
+/* Homepage student reviews (block/slider/view_student_reviews.tpl), from the main branch's
+   hero-light/assets/home-testimonials.css. The picture is usually a screenshot of the review, so it is shown whole
+   on a white panel and the quote card only overlaps the panel's padding.
+   Colours follow the header's light/dark switch (html[data-meduc-theme]); dark is the default. */
+.mrv {
+  --mrv-bg: #08090b;
+  --mrv-card: #292d35;
+  --mrv-ink: #f7f7f8;
+  --mrv-muted: #aeb3bc;
+  --mrv-arrow: #292d35;
+  --mrv-shadow: #0005;
+  --mrv-red: #ed3152;
+  --mrv-picture-bg: #fff;
+  --mrv-overlap: 4%; /* how far the card reaches over the picture panel, as a share of the stage width */
+  padding: clamp(76px, 7.5vw, 112px) 0 clamp(74px, 6vw, 96px);
+  overflow: hidden;
+  background: var(--mrv-bg);
+  color: var(--mrv-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+html[data-meduc-theme="light"] .mrv {
+  --mrv-bg: #f3f4f6;
+  --mrv-card: #fff;
+  --mrv-ink: #22262d;
+  --mrv-muted: #686f7b;
+  --mrv-arrow: #e1e4e9;
+  --mrv-shadow: #171a2224;
+  --mrv-red: #bc253c;
+}
+.mrv *, .mrv *::before, .mrv *::after { box-sizing: border-box; }
+.mrv [hidden] { display: none !important; }
+.mrv-shell { width: min(83.333333%, 1440px); margin-inline: auto; }
+.mrv-heading { margin-bottom: 46px; text-align: center; }
+.mrv-kicker { margin: 0 0 13px; color: var(--mrv-red); font: 700 11px/1.4 Inter, Arial, sans-serif; letter-spacing: .15em; }
+.mrv .mrv-title { margin: 0; text-wrap: balance; color: var(--mrv-ink); font: 700 clamp(30px, 3vw, 43px)/1.25 Inter, Arial, sans-serif; letter-spacing: -.035em; }
+.mrv-note { margin: 13px 0 0; color: var(--mrv-muted); font: 400 12px/1.5 Inter, Arial, sans-serif; }
+
+.mrv-stage { position: relative; }
+.mrv-slide { position: relative; display: flex; align-items: center; min-height: 470px; }
+.mrv-picture { position: absolute; inset: 0 0 0 auto; display: block; width: 46%; padding: 24px 24px 24px calc(var(--mrv-overlap) + 24px); overflow: hidden; border-radius: 10px; background: var(--mrv-picture-bg); box-shadow: 0 18px 48px var(--mrv-shadow); }
+.mrv-picture img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.mrv-card { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; width: calc(54% + var(--mrv-overlap)); min-height: 345px; padding: clamp(36px, 4vw, 64px); border-radius: 10px; background: var(--mrv-card); box-shadow: 0 24px 64px var(--mrv-shadow); }
+.mrv-slide--text .mrv-card { width: min(100%, 860px); margin-inline: auto; }
+.mrv-quote-mark { height: 31px; color: var(--mrv-red); font: 700 62px/1 Georgia, serif; }
+.mrv .mrv-quote { margin: 18px 0 28px; padding: 0; border: 0; background: none; color: var(--mrv-ink); font: 400 clamp(18px, 1.55vw, 23px)/1.6 Inter, Arial, sans-serif; letter-spacing: -.012em; }
+.mrv-byline { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 0; font-size: 14px; line-height: 1.5; }
+.mrv-byline strong { color: var(--mrv-ink); font-weight: 700; }
+.mrv-byline span { color: var(--mrv-muted); }
+
+.mrv-arrow { position: absolute; z-index: 2; top: 50%; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%; background: var(--mrv-arrow); color: var(--mrv-ink); cursor: pointer; transform: translateY(-50%); transition: background .18s, color .18s, transform .18s; }
+.mrv-arrow span { margin-top: -5px; font: 300 39px/1 Arial, sans-serif; }
+.mrv-arrow:hover { background: var(--mrv-red); color: #fff; transform: translateY(-50%) scale(1.06); }
+.mrv-prev { left: -78px; }
+.mrv-next { right: -78px; }
+.mrv-dots { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 24px; margin-top: 22px; }
+.mrv-dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 8px; background: var(--mrv-muted); opacity: .65; cursor: pointer; transition: width .2s, opacity .2s, background .2s; }
+.mrv-dot[aria-current="true"] { width: 24px; background: var(--mrv-ink); opacity: 1; }
+.mrv a:focus-visible, .mrv button:focus-visible { outline: 2px solid var(--mrv-red); outline-offset: 4px; }
+
+@media (max-width: 1100px) {
+  .mrv-shell { width: min(88%, 1440px); }
+  .mrv-prev { left: -52px; }
+  .mrv-next { right: -52px; }
+}
+/* Phones: the picture on top and the card overlapping its bottom padding. */
+@media (max-width: 700px) {
+  .mrv { padding: 76px 0 74px; }
+  .mrv-shell { width: calc(100% - 32px); }
+  .mrv-heading { margin-bottom: 29px; }
+  .mrv .mrv-title { font-size: clamp(29px, 7.7vw, 39px); }
+  .mrv-slide { flex-direction: column; align-items: stretch; min-height: 0; }
+  .mrv-picture { position: relative; inset: auto; width: 100%; height: clamp(280px, 90vw, 420px); padding: 14px 14px 56px; }
+  .mrv-card { width: calc(100% - 24px); min-height: 0; margin: -44px auto 0; padding: 27px 25px 29px; }
+  .mrv-quote-mark { height: 22px; font-size: 48px; }
+  .mrv .mrv-quote { margin: 15px 0 23px; font-size: clamp(16px, 4.3vw, 19px); line-height: 1.55; }
+  .mrv-byline { gap: 4px 8px; font-size: 12px; }
+  /* The arrows would cover the screenshot's text, so they move down to the ends of the dots row. */
+  .mrv-arrow { top: auto; bottom: -58px; width: 40px; height: 40px; transform: none; }
+  .mrv-arrow:hover { transform: scale(1.06); }
+  .mrv-arrow span { font-size: 32px; }
+  .mrv-prev { left: 0; }
+  .mrv-next { right: 0; }
+  .mrv-dots { min-height: 40px; margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .mrv-arrow, .mrv-dot { transition: none; } }
