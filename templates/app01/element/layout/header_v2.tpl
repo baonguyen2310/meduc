@@ -57,7 +57,6 @@
             </nav>
           </div>
         {/foreach}
-        <a href="/thiet-bi-y-te">Thiết bị y tế</a>
       </nav>
     </div>
     <div class="mhi-shell mhi-header-main">
@@ -132,7 +131,6 @@
       <a class="mhi-drawer-link" href="/khoa-luyen-thi">Luyện thi</a>
       <a class="mhi-drawer-link" href="/class-rank">Bảng xếp hạng</a>
       <a class="mhi-drawer-link" href="/sach-y-khoa">Sách</a>
-      <a class="mhi-drawer-link" href="/thiet-bi-y-te">Thiết bị y tế</a>
       <a class="mhi-drawer-link" href="/gioi-thieu">Giới thiệu</a>
       <a class="mhi-drawer-link" href="/doi-ngu-giang-vien">Giảng viên</a>
       <a class="mhi-drawer-link" href="/phan-hoi-hoc-vien">Phản hồi</a>
