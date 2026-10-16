@@ -350,6 +350,7 @@ var nhMember = {
 		                },
 
 		                verify_password: {
+                            required: nhMain.getLabel('vui_long_nhap_mat_khau'),
 		                    equalTo: nhMain.getLabel('xac_nhan_mat_khau_chua_chinh_xac')
 		                },
 
@@ -409,7 +410,7 @@ var nhMember = {
 				            if (code == _SUCCESS) {
 			            		if(nhMain.utilities.notEmpty(data.waiting_confirm)){
 			            			nhMain.showAlert(_SUCCESS, message);
-			            			window.location.href = '/member/success?email=' + data.email;
+			            			window.location.href = '/member/success?email=' + encodeURIComponent(data.email);
 			            		} else {
 			            			window.location.href = '/member/dashboard';
 			            		}
@@ -1211,7 +1212,7 @@ var nhMember = {
 		init: function(){
 			var self = this;
 
-			var formElement = $('form[nh-form="forgot-password"');
+			var formElement = $('form[nh-form="forgot-password"]');
 			if(formElement == null || formElement == _UNDEFINED || formElement.length == 0){
 				return false;
 			}
@@ -1279,7 +1280,7 @@ var nhMember = {
 			        	nhMain.showLoading.remove();
 			            if (code == _SUCCESS) {
 			            	if(nhMain.utilities.notEmpty(data.email)){
-		            			window.location.href = '/member/verify-forgot-password?email=' + data.email;
+		            			window.location.href = '/member/verify-forgot-password?email=' + encodeURIComponent(data.email);
 		            		}
 			            } else {
 			            	nhMain.showAlert(_ERROR, message);
@@ -1356,6 +1357,7 @@ var nhMember = {
 
 	  			if(formElement.find('[name="code"]').val().length == 0) {
 		  			nhMain.showAlert(_ERROR, nhMain.getLabel('vui_long_nhap_ma_xac_nhan'));
+		  			return false;
 		  		}
 
 		  		formElement.find('[name="new_password"]').rules('add', {
@@ -1397,8 +1399,10 @@ var nhMember = {
 
 			formElement.on('click', '[nh-btn-action="resend-verify"]', function(e){
 		  		e.preventDefault();
+		  		if ($(this).hasClass('disable')) return false;
 
 		  		formElement.find('[name="new_password"]').rules('remove');
+		  		formElement.find('[name="new_password"], [name="re_password"]').removeAttr('required');
 		  		formElement.find('[name="re_password"]').rules('remove');
 
 		  		if (!validator.form()) return false;
@@ -1425,6 +1429,7 @@ var nhMember = {
 							return false;
 						}
 
+                        if (response.code == _SUCCESS) {
 						nhMember.countDown.init(60,
 		  					function(sec){
 		  						countDownElement.text(nhMain.getLabel('gui_lai_sau') + ' ('+sec+')');
@@ -1435,6 +1440,7 @@ var nhMember = {
 		  						$('[nh-btn-action="resend-verify"]').removeClass('disable');
 		  					}
 		  				);
+                        }
 
 					   	var code = typeof(response.code) != _UNDEFINED ? response.code : _ERROR;
 			        	var message = typeof(response.message) != _UNDEFINED ? response.message : '';
@@ -1505,6 +1511,7 @@ var nhMember = {
 
 		  		if(formElement.find('[name="code"]').val().length == 0) {
 		  			nhMain.showAlert(_ERROR, nhMain.getLabel('vui_long_nhap_ma_xac_nhan'));
+		  			return false;
 		  		}
 
 		  		if (!validator.form()) return false;			  		
@@ -1535,6 +1542,7 @@ var nhMember = {
 
 			formElement.on('click', '[nh-btn-action="resend-verify"]', function(e){
 		  		e.preventDefault();
+		  		if ($(this).hasClass('disable')) return false;
 
 		  		if (!validator.form()) return false;
 
@@ -1560,6 +1568,7 @@ var nhMember = {
 							return false;
 						}
 
+                        if (response.code == _SUCCESS) {
 						nhMember.countDown.init(60,
 		  					function(sec){
 		  						countDownElement.text(nhMain.getLabel('gui_lai_sau') + ' ('+sec+')');
@@ -1570,6 +1579,7 @@ var nhMember = {
 		  						$('[nh-btn-action="resend-verify"]').removeClass('disable');
 		  					}
 		  				);
+                        }
 
 					   	var code = typeof(response.code) != _UNDEFINED ? response.code : _ERROR;
 			        	var message = typeof(response.message) != _UNDEFINED ? response.message : '';

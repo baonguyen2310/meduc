@@ -1,51 +1,19 @@
-{$this->element('breadcrumb', [
-	'list_url' => [
-		['title' => {$title_for_layout}]
-	]
-])}
-{assign var = email value = $this->Utilities->getParamsByKey('email')}
-
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-5 col-12">
-			<div class="mb-60 rounded bg-white shadow p-30 session-login session-otp">
-				<div class="color-hover font-weight-bold fs-28 mb-15">
-			       {__d('template', 'xac_nhan_tai_khoan')}
-			    </div>
-				<form nh-form="verify-email" action="/member/ajax-verify-email" method="post" autocomplete="off">
-					<div class="form-group {if !empty($email)}d-none{/if}">
-						<label for="email" class="font-weight-normal color-main">
-				            {__d('template', 'email')}: 
-				            <span class="required">*</span>
-				        </label>
-				        <div class="input-login position-relative">
-				        	<input name="email" type="text" class="form-control rounded" value="{if !empty($email)}{$email}{/if}">
-				        	<div class="icon-input">
-	                            <i class="iconsax isax-lg isax-sms"></i>
-	                        </div>
-				        </div>
-					</div>
-					<div class="form-group mb-50 position-relative ">
-                        <div class="input-opt d-flex align-items-center justify-content-between">
-                            <input nh-otp="input" type="text" maxlength="1" />
-                            <input nh-otp="input" type="text" maxlength="1" />
-                            <input nh-otp="input" type="text" maxlength="1" />
-                            <input nh-otp="input" type="text" maxlength="1" />
-                            <input nh-otp="input" type="text" maxlength="1" />
-                        </div>
-                        <input nh-otp="verification" name="code" type="hidden"/>
-                    </div>
-                    <div class="form-group">
-				        <span nh-btn-action="submit" class="btn btn-1a color-white bg-main rounded btn-user w-100">
-				            {__d('template', 'buoc_tiep_theo')}
-				        </span>
-				    </div>
-		    		<div nh-btn-action="resend-verify" class="btn btn-outline-dark rounded btn-user w-100">
-				        {__d('template', 'gui_lai_ma_xac_nhan')}?
-				        <span class="ml-5" nh-countdown></span>
-				    </div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+{$email = $this->Utilities->getParamsByKey('email')}
+<main class="ma ma-page" id="meduc-auth">
+    <div class="ma-shell">
+        {$this->element('../Member/auth_intro')}
+        <section class="ma-panel" aria-labelledby="ma-title">
+            <a class="ma-back" href="/member/login"><span aria-hidden="true">←</span> Quay lại đăng nhập</a>
+            <p class="ma-eyebrow">KÍCH HOẠT TÀI KHOẢN</p>
+            <h1 id="ma-title">Sẵn sàng bắt đầu.</h1>
+            <p class="ma-description">Nhập mã xác nhận được gửi đến email để kích hoạt tài khoản MedUC của bạn.</p>
+            <form class="ma-form" nh-form="verify-email" action="/member/ajax-verify-email" method="post">
+                <div class="ma-field"><label for="ma-activation-email">Email đã đăng ký</label><div class="input-group ma-input"><input name="email" id="ma-activation-email" type="email" autocomplete="email" value="{$email|default:''|escape}" required maxlength="255"></div></div>
+                <div class="ma-field"><label for="ma-activation-code">Mã xác nhận</label><div class="input-group ma-input"><input name="code" id="ma-activation-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Nhập mã trong email" aria-required="true" maxlength="20"></div></div>
+                <p class="ma-status" role="alert" hidden></p>
+                <button type="submit" nh-btn-action="submit" class="ma-submit">Kích hoạt tài khoản <span aria-hidden="true">→</span></button>
+                <div class="ma-resend"><span>Chưa nhận được mã?</span> <button type="button" nh-btn-action="resend-verify">Gửi lại mã <span nh-countdown aria-live="polite"></span></button></div>
+            </form>
+        </section>
+    </div>
+</main>

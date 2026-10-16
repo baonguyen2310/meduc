@@ -350,7 +350,7 @@ class MemberComponent extends Component
         }
 
         $data['username'] = !empty($data['username']) ? trim(strip_tags($data['username'])) : null;
-        $data['full_name'] = !empty($data['username']) ? trim(strip_tags($data['full_name'])) : null;
+        $data['full_name'] = !empty($data['full_name']) ? trim(strip_tags($data['full_name'])) : null;
         $data['password'] = !empty($data['password']) ? $data['password'] : null;
         $data['verify_password'] = !empty($data['verify_password']) ? $data['verify_password'] : null;
         $data['email'] = !empty($data['email']) ? trim(strip_tags($data['email'])) : null;
@@ -837,6 +837,9 @@ class MemberComponent extends Component
         ];
 
         $send_email = $this->Email->send($params_email);
+        if (empty($send_email[CODE]) || $send_email[CODE] != SUCCESS) {
+            return $this->System->getResponse([MESSAGE => __d('template', 'khong_gui_duoc_email')]);
+        }
         return $this->System->getResponse([
             CODE => SUCCESS,
             MESSAGE => __d('template', 'gui_ma_xac_nhan_thanh_cong'),

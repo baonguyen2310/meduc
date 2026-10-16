@@ -1,55 +1,18 @@
-{$this->element('breadcrumb', [
-	'list_url' => [
-		['title' => {$title_for_layout}]
-	]
-])}
-
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-xl-5 col-lg-6 col-md-8 col-12">
-			<div class="mb-60 rounded bg-white shadow-box7 p-30 session-password">
-				<div class="color-hover font-weight-bold fs-28 mb-15">
-			       {__d('template', 'quen_mat_khau')}
-			    </div>
-				<form nh-form="forgot-password" action="/member/ajax-forgot-password" method="post" autocomplete="off">
-					<div class="form-group forgot-email d-flex align-items-center mb-15 p-10 rounded">
-                       <div class="icon-input text-center mr-15">
-                       		<i class="iconsax color-white isax-lg isax-sms"></i>
-                        </div>
-                        
-                        <div class="text-forgot">
-                            <p class="mb-0 color-main">
-                                <b>{__d('template', 'khoi_phuc_mat_khau_qua_email')}</b>
-                            </p>
-                            <p class="mb-0 fs-12">
-                            	{__d('template', 'ma_se_gui_qua_email_ban_dang_ky_de_thay_doi_mat_khau')}
-                            </p>
-                        </div>
-                        
-                        <div class="icon-right ml-15">
-                        	<i class="iconsax isax-2x isax-tick-circle5"></i>
-                        </div>
-                   </div>
-				    <div class="form-group">
-				        <label for="email" class="font-weight-bold">
-				            {__d('template', 'email')}: 
-				            <span class="required">*</span>
-				        </label>
-				        <div class="input-login position-relative">
-				        	<input name="email" type="text" class="form-control rounded">
-				        	<div class="icon-input">
-	                            <i class="iconsax isax-lg isax-sms"></i>
-	                        </div>
-				        </div>
-				    </div>
-				    
-				    <div class="form-group">
-				        <span nh-btn-action="submit" class="btn btn-primary py-[15px] px-8 text-center w-100">
-				            {__d('template', 'xac_nhan')}
-				        </span>
-				    </div>
-				</form>
-			</div>
-		</div>
-	</div>	
-</div>
+<main class="ma ma-page" id="meduc-auth">
+    <div class="ma-shell">
+        {$this->element('../Member/auth_intro')}
+        <section class="ma-panel" aria-labelledby="ma-title">
+            <a class="ma-back" href="/member/login"><span aria-hidden="true">←</span> Quay lại đăng nhập</a>
+            <p class="ma-eyebrow">KHÔI PHỤC TÀI KHOẢN / 01</p>
+            <h1 id="ma-title">Quên mật khẩu?</h1>
+            <p class="ma-description">Nhập email đã đăng ký. MedUC sẽ gửi mã xác nhận để bạn đặt lại mật khẩu.</p>
+            <ol class="ma-steps" aria-label="Các bước khôi phục"><li aria-current="step"><span>1</span> Xác nhận email</li><li><span>2</span> Đặt mật khẩu mới</li></ol>
+            <form class="ma-form" nh-form="forgot-password" action="/member/ajax-forgot-password" method="post">
+                <div class="ma-field"><label for="ma-recovery-email">Email đã đăng ký</label><div class="input-group ma-input"><input name="email" id="ma-recovery-email" type="email" autocomplete="email" placeholder="ban@example.com" required maxlength="255"></div></div>
+                <p class="ma-status" role="alert" hidden></p>
+                <button type="submit" nh-btn-action="submit" class="ma-submit">Gửi mã xác nhận <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="ma-help">Không còn truy cập được email? <a href="/lien-he-hop-tac">Liên hệ MedUC</a> để được hỗ trợ.</p>
+        </section>
+    </div>
+</main>
