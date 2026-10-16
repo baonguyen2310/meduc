@@ -27,14 +27,12 @@ class LeaderboardHelper extends Helper
     public function getCourses()
     {
         $rows = $this->db()->execute(
-            "SELECT qa.product_id AS id, pc.name, l.url, COUNT(*) AS attempts
-             FROM quizs_answer qa
-             JOIN products p ON p.id = qa.product_id AND p.deleted = 0
-             LEFT JOIN products_content pc ON pc.product_id = qa.product_id AND pc.lang = :lang
-             LEFT JOIN links l ON l.foreign_id = qa.product_id AND l.type = 'product_detail' AND l.lang = :lang AND l.deleted = 0
-             WHERE qa.deleted = 0 AND qa.product_id > 0
-             GROUP BY qa.product_id, pc.name, l.url
-             ORDER BY attempts DESC",
+            "SELECT a.product_id AS id, pc.name, l.url, a.attempts
+             FROM (SELECT product_id, COUNT(*) AS attempts FROM quizs_answer WHERE deleted = 0 AND product_id > 0 GROUP BY product_id) a
+             JOIN products p ON p.id = a.product_id AND p.deleted = 0
+             LEFT JOIN products_content pc ON pc.product_id = a.product_id AND pc.lang = :lang
+             LEFT JOIN links l ON l.foreign_id = a.product_id AND l.type = 'product_detail' AND l.lang = :lang AND l.deleted = 0
+             ORDER BY a.attempts DESC",
             ['lang' => LANGUAGE]
         )->fetchAll('assoc');
 
