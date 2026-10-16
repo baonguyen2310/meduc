@@ -12,7 +12,8 @@
 
 {$explore_links = [
     ['label' => 'Khóa học', 'url' => '/khoa-hoc'],
-    ['label' => 'Luyện thi', 'url' => '/danh-sach-de-thi'],
+    ['label' => 'Luyện thi', 'url' => '/khoa-luyen-thi'],
+    ['label' => 'Bảng xếp hạng', 'url' => '/class-rank'],
     ['label' => 'Sách Y khoa', 'url' => '/sach-y-khoa'],
     ['label' => 'Tài liệu học tập', 'url' => '/tai-lieu-hoc-tap'],
     ['label' => 'Blog', 'url' => '/blog'],

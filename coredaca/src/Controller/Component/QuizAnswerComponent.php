@@ -104,9 +104,9 @@ class QuizAnswerComponent extends Component
     /** Bài tập có trong một buổi của khóa học không, và học viên có được làm không:
      *  đề làm thử miễn phí thì ai cũng làm được, đề còn lại dành cho học viên của khóa
      *  (lớp học cũ có mã học viên, hoặc ghi danh còn hiệu lực trong course_enrollments).
-     *  Trả về ['found' => bool, 'allowed' => bool, 'class_room_id' => id lớp học cũ hoặc 0]
+     *  Trả về ['found' => bool, 'allowed' => bool, 'class_room_id' => id lớp học cũ hoặc 0]; $member rỗng là khách chưa đăng nhập.
     */
-    private function courseQuizAccess($member = [], $product_id = 0, $quiz_id = 0)
+    public function courseQuizAccess($member = [], $product_id = 0, $quiz_id = 0)
     {
         $result = ['found' => false, 'allowed' => false, 'class_room_id' => 0];
         if (empty($product_id) || empty($quiz_id)) return $result;
@@ -134,7 +134,7 @@ class QuizAnswerComponent extends Component
             if (!empty($class_room['id'])) $result['class_room_id'] = intval($class_room['id']);
         }
 
-        $enrolled = !empty(TableRegistry::get('CourseEnrollments')->activeCourses($member['id'])[$product_id]);
+        $enrolled = !empty($member['id']) && !empty(TableRegistry::get('CourseEnrollments')->activeCourses($member['id'])[$product_id]);
         $result['allowed'] = $free || !empty($result['class_room_id']) || $enrolled;
         return $result;
     }

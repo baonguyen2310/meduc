@@ -215,6 +215,12 @@ html[data-meduc-theme="light"] .mcr {
 .mcr-quiz-card p { margin: 6px 0 0; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
 .mcr-quiz-card .mcr-btn { flex: none; }
 .mcr-quiz-list { display: grid; gap: 12px; }
+.mcr .mcr-quiz-card .mcr-quiz-error { color: var(--mcr-red); font-weight: 600; }
+/* Filter of a long quiz list (exam-prep lessons). */
+.mcr-quiz-filter { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.mcr-quiz-filter input { flex: 1; min-width: 0; min-height: 44px; padding: 10px 14px; border: 1px solid var(--mcr-line); border-radius: 10px; background: var(--mcr-panel); color: var(--mcr-ink); font: 500 14.5px/1.3 Inter, Arial, sans-serif; }
+.mcr-quiz-filter input::placeholder { color: var(--mcr-muted); }
+.mcr-quiz-filter span { flex: none; color: var(--mcr-muted); font: 600 13px/1.3 Inter, Arial, sans-serif; }
 /* A quiz for the course's students only: its name and size, and the sign-up button. */
 .mcr-quiz-card.is-locked { background: transparent; }
 .mcr .mcr-quiz-card.is-locked .mcr-btn .mcr-lock { color: currentColor; opacity: 1; }

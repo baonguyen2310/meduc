@@ -86,7 +86,8 @@
       </form>
       <button class="mhi-icon-button mhi-search-toggle" id="mhi-search-toggle" type="button" aria-label="Tìm kiếm" aria-expanded="false" aria-controls="mhi-search-form"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-search" /></svg></button>
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
-        <a class="mhi-practice" href="/danh-sach-de-thi">Luyện thi</a>
+        <a class="mhi-practice" href="/khoa-luyen-thi">Luyện thi</a>
+        <a class="mhi-rank" href="/class-rank">Xếp hạng</a>
         <a class="mhi-books" href="/sach-y-khoa">Sách</a>
         <div class="mhi-member" nh-mini-member>
           <a class="mhi-login" href="javascript:;" data-bs-toggle="modal" data-bs-target="#login-modal" aria-label="Đăng nhập">
@@ -128,7 +129,8 @@
       <a class="mhi-drawer-link mhi-drawer-all" href="/khoa-hoc">Xem tất cả khóa học<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
 
       <p class="mhi-drawer-label">Khám phá</p>
-      <a class="mhi-drawer-link" href="/danh-sach-de-thi">Luyện thi</a>
+      <a class="mhi-drawer-link" href="/khoa-luyen-thi">Luyện thi</a>
+      <a class="mhi-drawer-link" href="/class-rank">Bảng xếp hạng</a>
       <a class="mhi-drawer-link" href="/sach-y-khoa">Sách</a>
       <a class="mhi-drawer-link" href="/thiet-bi-y-te">Thiết bị y tế</a>
       <a class="mhi-drawer-link" href="/gioi-thieu">Giới thiệu</a>

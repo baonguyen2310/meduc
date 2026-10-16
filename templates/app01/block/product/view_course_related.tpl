@@ -1,16 +1,22 @@
 {strip}
 {* Related courses on the course page: a sideways row of compact course cards; the course being viewed is left out.
-   Products: the block's product list settings. Text: tieu_de (the heading).
+   Products: the block's product list settings (up to 200, newest first: scripts/meduc_v2_exam_prep_pages.sql), of which
+   at most 12 of the same kind are shown. Text: tieu_de (the heading).
    Styles: assets/meduc-v2/classroom.css; previous/next buttons: assets/meduc-v2/rail.js. *}
 {assign var = text value = []}
 {if !empty($data_extend.locale[{LANGUAGE}])}
     {assign var = text value = $data_extend.locale[{LANGUAGE}]}
 {/if}
 {$current_path = $this->getRequest()->getPath()}
+{* An exam-prep course suggests other exam-prep courses; any other course suggests courses only. *}
+{$exam_prep = $this->Product->isExamPrepCourse(PAGE_RECORD_ID)}
 {$courses = []}
 {if !empty($data_block.data)}
     {foreach from = $data_block.data item = course}
         {if empty($course.url) || "/{$course.url}" == $current_path}{continue}{/if}
+        {$course_exam_prep = !empty($course.categories[125]) || (!empty($course.main_category_id) && $course.main_category_id == 125)}
+        {if $course_exam_prep != $exam_prep}{continue}{/if}
+        {if count($courses) >= 12}{break}{/if}
         {$courses[] = $course}
     {/foreach}
 {/if}
@@ -19,7 +25,7 @@
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/rail.js?v=20261015" defer></script>
 <div class="mrc" data-mrail>
     <div class="mrc-head">
-        <h2 class="mrc-title">{if !empty($text.tieu_de)}{$text.tieu_de|escape}{else}Khoá học liên quan{/if}</h2>
+        <h2 class="mrc-title">{if $exam_prep}Môn luyện thi khác{elseif !empty($text.tieu_de)}{$text.tieu_de|escape}{else}Khoá học liên quan{/if}</h2>
         <div class="mrc-controls">
             <button type="button" data-mrail-prev aria-label="Khoá học trước">←</button>
             <button type="button" data-mrail-next aria-label="Khoá học tiếp theo">→</button>

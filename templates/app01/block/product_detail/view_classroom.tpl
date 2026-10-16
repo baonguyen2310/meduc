@@ -66,13 +66,18 @@
 {$raw_lessons = []}
 {if !empty($product.attributes.danhsachtiethoc.value)}{$raw_lessons = $product.attributes.danhsachtiethoc.value|json_decode:1}{/if}
 {if !is_array($raw_lessons)}{$raw_lessons = []}{/if}
-{* Quizzes of the lessons: "info" for every quiz, "play" (with the questions) for those the visitor may take. *}
-{$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons, 'licensed' => $licensed])}
+{* Quizzes of the lessons: name and size of each; classroom-quiz.js loads the questions when a quiz starts. *}
+{$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons])}
 {$chapters = []}
 {$lessons = []}
 {$chapter_index = -1}
 {$trial_videos = 0}
 {$open_quizzes = 0}
+{$any_open_quiz = false}
+{$quiz_count = 0}
+{* Exam-prep course (Khóa học > Khóa luyện thi, category 125): one lesson holding the subject's exams. *}
+{$exam_prep = !empty($product.main_category_id) && $product.main_category_id == 125}
+{$course_has_video = false}
 {$first_open = 0}
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
@@ -107,12 +112,14 @@
         {if empty($course_quizzes.info[$lesson_quiz.id])}{continue}{/if}
         {$quiz_open = $licensed || $lesson_quiz.free}
         {$quizzes[] = ['id' => $lesson_quiz.id, 'open' => $quiz_open, 'free' => $lesson_quiz.free]}
-        {if $quiz_open}{$open_quiz = true}{/if}
+        {if $quiz_open}{$open_quiz = true}{$any_open_quiz = true}{/if}
         {if $lesson_quiz.free}{$free_quiz = true}{/if}
         {if $lesson_quiz.free && !$licensed}{$open_quizzes = $open_quizzes + 1}{/if}
     {/foreach}
+    {$quiz_count = $quiz_count + count($quizzes)}
     {$number = count($lessons) + 1}
     {if $video != '' && $trial && !$licensed}{$trial_videos = $trial_videos + 1}{/if}
+    {if $video != ''}{$course_has_video = true}{/if}
     {if $video != '' && $open && $first_open == 0}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
@@ -230,14 +237,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261016-9" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-4" defer></script>
-{if !empty($course_quizzes.play)}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261016-3" defer></script>{/if}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261016-10" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-5" defer></script>
+{if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261016-4" defer></script>{/if}
 
 <section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
-            <a href="/">Trang chủ</a><span aria-hidden="true">›</span><a href="/khoa-hoc">Khoá học</a><span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
+            <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/khoa-luyen-thi">Luyện thi</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
         {* The course name is the page's main heading for search engines and screen readers; the outline and the
            introduction already show the course, so it is not repeated on screen. *}
@@ -275,7 +282,7 @@
                                 {foreach from = $lessons item = lesson}
                                     {if $lesson.chapter != $chapter_key}{continue}{/if}
                                     <li>
-                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}">
+                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
                                             <span class="mcr-lesson-number">{$lesson.number|string_format:'%02d'}</span>
                                             <span class="mcr-lesson-title">{$lesson.title|escape}</span>
                                             {if $lesson.access == 'trial' && $lesson.video != ''}
@@ -385,9 +392,13 @@
                             {/if}
                             <dl class="mcr-specs">
                                 {if !empty($attributes.thoiluong.value)}<div><dt>Thời lượng</dt><dd>{$attributes.thoiluong.value|strip_tags|escape}</dd></div>{/if}
-                                <div><dt>Bài học</dt><dd>{if !empty($attributes.soluongbaihoc.value)}{$attributes.soluongbaihoc.value|strip_tags|escape}{else}{$lesson_count} bài{/if} · {count($chapters)} chương</dd></div>
+                                {if $exam_prep}
+                                    <div><dt>Đề thi</dt><dd>{$quiz_count} đề</dd></div>
+                                {else}
+                                    <div><dt>Bài học</dt><dd>{if !empty($attributes.soluongbaihoc.value)}{$attributes.soluongbaihoc.value|strip_tags|escape}{else}{$lesson_count} bài{/if} · {count($chapters)} chương</dd></div>
+                                {/if}
                                 {if !empty($attributes.soluongbaitap.value)}<div><dt>Bài tập</dt><dd>{$attributes.soluongbaitap.value|strip_tags|escape}</dd></div>{/if}
-                                {if !$licensed && ($trial_videos > 0 || $open_quizzes > 0)}<div><dt>Học thử</dt><dd>{if $trial_videos > 0}{$trial_videos} buổi video{/if}{if $trial_videos > 0 && $open_quizzes > 0} · {/if}{if $open_quizzes > 0}{$open_quizzes} bài tập{/if}</dd></div>{/if}
+                                {if !$licensed && ($trial_videos > 0 || $open_quizzes > 0)}<div><dt>Học thử</dt><dd>{if $trial_videos > 0}{$trial_videos} buổi video{/if}{if $trial_videos > 0 && $open_quizzes > 0} · {/if}{if $open_quizzes > 0}{$open_quizzes} {if $exam_prep}đề miễn phí{else}bài tập{/if}{/if}</dd></div>{/if}
                                 {if !empty($course_files)}<div><dt>Tài liệu</dt><dd>{count($course_files)} tệp</dd></div>{/if}
                                 {if !empty($product.rating_number) && $product.rating_number > 0}<div><dt>Đánh giá</dt><dd>★ {$product.rating|string_format:'%.1f'} ({$product.rating_number})</dd></div>{/if}
                             </dl>
@@ -406,7 +417,8 @@
                     </div>
                     <div class="mcr-toolbar">
                         <div class="mcr-tabs" role="tablist" aria-label="Nội dung bài học">
-                            <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video">Video</button>
+                            {* A course without any lesson video (an exam-prep course) has no Video tab; classroom.js opens "Bài tập". *}
+                            <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video" {if !$course_has_video}hidden{/if}>Video</button>
                             <button type="button" role="tab" id="mcr-tab-files" aria-controls="mcr-panel-files" aria-selected="false" tabindex="-1" data-mcr-tab="files">Tài liệu</button>
                             <button type="button" role="tab" id="mcr-tab-quiz" aria-controls="mcr-panel-quiz" aria-selected="false" tabindex="-1" data-mcr-tab="quiz">Bài tập</button>
                             <button type="button" role="tab" id="mcr-tab-feedback" aria-controls="mcr-panel-feedback" aria-selected="false" tabindex="-1" data-mcr-tab="feedback">Phản hồi học viên</button>
@@ -505,6 +517,12 @@
                                     <p class="mcr-empty">{if $lesson.quiz_pending}Bài tập của buổi này đang được cập nhật.{else}Buổi này chưa có bài tập trắc nghiệm.{/if}</p>
                                 {else}
                                     {$quiz_total = count($lesson.quizzes)}
+                                    {if $quiz_total > 8}
+                                        <div class="mcr-quiz-filter">
+                                            <input type="search" placeholder="Tìm trong {$quiz_total} đề của buổi này…" aria-label="Tìm đề" data-mcr-quiz-filter autocomplete="off">
+                                            <span data-mcr-quiz-filter-count>{$quiz_total} đề</span>
+                                        </div>
+                                    {/if}
                                     <div class="mcr-quiz-list">
                                         {foreach from = $lesson.quizzes item = quiz}
                                             {$quiz_info = $course_quizzes.info[$quiz.id]}
@@ -550,8 +568,6 @@
         </div>
     {/if}
 
-    {* Quiz data for classroom-quiz.js. 256 = JSON_UNESCAPED_UNICODE; slashes stay escaped, so the data cannot close the tag. *}
-    {if !empty($course_quizzes.play)}<script type="application/json" data-mcr-quiz-data>{json_encode($course_quizzes.play, 256)}</script>{/if}
     {* PDF files keep using the site's own preview (assets/js/custom.js). *}
     <div class="modal fade modal-preview-file" id="previewFile" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">

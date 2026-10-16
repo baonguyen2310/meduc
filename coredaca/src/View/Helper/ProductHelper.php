@@ -7,10 +7,29 @@ use Cake\View\Helper;
 use Cake\ORM\TableRegistry;
 use App\Lib\LessonQuizzes;
 use App\Lib\QuizQuestions;
+use Cake\Datasource\ConnectionManager;
 
 class ProductHelper extends Helper
 {
-    /** Group the already-filtered public products by their actual year-category memberships. */
+    // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /khoa-luyen-thi.
+    const EXAM_PREP_CATEGORY_ID = 125;
+
+    /** Khóa học có phải khóa luyện thi (thuộc danh mục 125) không
+     *
+     * {$this->Product->isExamPrepCourse(PAGE_RECORD_ID)}
+    */
+    public function isExamPrepCourse($product_id = null)
+    {
+        if (empty($product_id)) return false;
+        return (bool) ConnectionManager::get('default')->execute(
+            'SELECT 1 FROM products p WHERE p.id = :id AND (p.main_category_id = :category
+               OR EXISTS (SELECT 1 FROM categories_product cp WHERE cp.product_id = p.id AND cp.category_id = :category)) LIMIT 1',
+            ['id' => (int) $product_id, 'category' => self::EXAM_PREP_CATEGORY_ID]
+        )->fetch('assoc');
+    }
+
+    /** Group the already-filtered public products by their actual year-category memberships.
+     *  Exam-prep courses only appear on the exam-prep page; there they have one group, and each card counts its exams. */
     public function prepareCourseCatalog($courses = [], $year_ids = [], $selected_id = null, $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
@@ -33,6 +52,8 @@ class ProductHelper extends Helper
         $other = [];
         foreach ((array) $courses as $course) {
             if (empty($course['id']) || isset($unique[$course['id']])) continue;
+            $exam_prep = isset($course['categories'][self::EXAM_PREP_CATEGORY_ID]);
+            if ($exam_prep && $selected_id !== self::EXAM_PREP_CATEGORY_ID) continue;
             $unique[$course['id']] = true;
             $attrs = $course['attributes'] ?? [];
             $lessons = json_decode($attrs['danhsachtiethoc']['value'] ?? '', true);
@@ -48,6 +69,8 @@ class ProductHelper extends Helper
             $course['catalog_meta'] = [
                 'chapters' => $chapters,
                 'lessons' => $lesson_count,
+                'exam_prep' => $exam_prep,
+                'exams' => $exam_prep ? count(LessonQuizzes::ids(is_array($lessons) ? $lessons : [])) : 0,
                 'summary' => mb_strlen($summary) > 190 ? mb_substr($summary, 0, 187) . '…' : $summary,
             ];
             $matched = false;
@@ -59,7 +82,7 @@ class ProductHelper extends Helper
             unset($group);
             if (!$matched) $other[] = $course;
         }
-        if ($other) $groups['other'] = ['id' => 'other', 'name' => 'Khóa học khác', 'url' => null, 'courses' => $other];
+        if ($other) $groups['other'] = ['id' => 'other', 'name' => $selected_id === self::EXAM_PREP_CATEGORY_ID ? 'Luyện đề theo môn' : 'Khóa học khác', 'url' => null, 'courses' => $other];
         return [
             'groups' => array_values(array_filter($groups, function ($group) { return !empty($group['courses']); })),
             'nav_groups' => array_values($nav_groups),
@@ -262,43 +285,39 @@ class ProductHelper extends Helper
         return LessonQuizzes::of($lesson);
     }
 
-    /** Bài tập của trang khóa học (block/product_detail/view_classroom.tpl, assets/meduc-v2/classroom-quiz.js)
+    /** Bài tập của trang khóa học (block/product_detail/view_classroom.tpl)
      *
      * $params['lesson_list'] (*): danh sách tiết học của khóa học
-     * $params['licensed']: người xem là học viên của khóa học (làm được mọi đề), nếu không chỉ làm được đề miễn phí
      *
-     * Câu hỏi theo App\Lib\QuizQuestions (bỏ định dạng Word dán vào, để trang nhẹ hơn nhiều lần). Kết quả:
-     * - 'info' => [id => ['id', 'name', 'count', 'minutes']]: mọi đề có câu hỏi, để hiện cả đề còn khóa;
-     * - 'play' => [id => ['id', 'name', 'minutes', 'questions' => [['code', 'question', 'note', 'options' => [[value, text]],
-     *   'answer', 'explain']]]]: chỉ các đề người xem được làm (đáp án của đề còn khóa không ra trang).
+     * Trả về ['info' => [id => ['id', 'name', 'count' => số câu, 'minutes']]]: mọi đề còn dùng được của các buổi học,
+     * không gồm đề đã xóa hay đề nội bộ (quiz_exam_metadata.staff_only). Câu hỏi không có ở đây: trình làm bài
+     * (assets/meduc-v2/classroom-quiz.js) tải từng đề khi học viên bắt đầu làm, qua /khoa-hoc/bai-tap/{khóa}/{đề}
+     * (QuizsAnswerController::player), nên trang nhẹ dù khóa có hàng trăm đề.
      *
-     * {$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons, 'licensed' => $licensed])}
+     * {$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons])}
     */
     public function getCourseQuizData($params = [], $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
-        $lessons = !empty($params['lesson_list']) ? $params['lesson_list'] : [];
-        $playable = array_flip(LessonQuizzes::ids($lessons, empty($params['licensed'])));
+        $ids = LessonQuizzes::ids(!empty($params['lesson_list']) ? $params['lesson_list'] : []);
+        $result = ['info' => []];
+        if (!$ids) return $result;
 
-        $result = ['info' => [], 'play' => []];
-        foreach ($this->getQuizs(['lesson_list' => $lessons], $lang) as $quiz) {
-            $questions = [];
-            $minutes = 0;
-            foreach ((array) ($quiz['QuizsAttribute'] ?? []) as $attribute) {
-                if ((int) $attribute['attribute_id'] === QuizQuestions::QUESTIONS_ATTRIBUTE) {
-                    $questions = QuizQuestions::fromValue((string) $attribute['value'], $lang);
-                } elseif ((int) $attribute['attribute_id'] === QuizQuestions::MINUTES_ATTRIBUTE) {
-                    $minutes = (int) $attribute['value'];
-                }
-            }
-            if (!$questions) continue;
+        $rows = ConnectionManager::get('default')->execute(
+            "SELECT q.id, c.name, JSON_LENGTH(questions.value) AS count, minutes.value AS minutes
+             FROM quizs q
+             LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
+             JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
+             LEFT JOIN quizs_attribute minutes ON minutes.quiz_id = q.id AND minutes.attribute_id = :minutes
+             WHERE q.deleted = 0 AND q.id IN (" . implode(',', array_map('intval', $ids)) . ")
+               AND q.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)",
+            ['lang' => $lang, 'questions' => QuizQuestions::QUESTIONS_ATTRIBUTE, 'minutes' => QuizQuestions::MINUTES_ATTRIBUTE]
+        )->fetchAll('assoc');
 
-            $id = (int) $quiz['id'];
-            $name = (string) ($quiz['QuizsContent']['name'] ?? '');
-            $result['info'][$id] = ['id' => $id, 'name' => $name, 'count' => count($questions), 'minutes' => $minutes];
-            if (isset($playable[$id])) {
-                $result['play'][$id] = ['id' => $id, 'name' => $name, 'minutes' => $minutes, 'questions' => $questions];
-            }
+        foreach ($rows as $row) {
+            if ((int) $row['count'] < 1) continue;
+            $id = (int) $row['id'];
+            $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes']];
         }
         return $result;
     }

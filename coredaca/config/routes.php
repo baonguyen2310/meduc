@@ -156,6 +156,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     // quizs_answer
     $builder->connect('/quizs-answer/add', ['controller' => 'QuizsAnswer', 'action' => 'add']);
+    $builder->connect('/khoa-hoc/bai-tap/:product/:quiz', ['controller' => 'QuizsAnswer', 'action' => 'player'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
 
     //wishlist
     $builder->connect('/wishlist/add-product', ['controller' => 'Wishlist', 'action' => 'addProduct']);

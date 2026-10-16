@@ -14,7 +14,7 @@
             {/if}
         </div>
         <nav class="mhb-actions" aria-label="Lối tắt MedUC">
-            <a class="mhb-button mhb-button--primary" href="/danh-sach-de-thi">
+            <a class="mhb-button mhb-button--primary" href="/khoa-luyen-thi">
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M9 5.5H6V21h12V5.5h-3"/><path d="m9 14 2 2 4-4"/></svg>
                 <span>Luyện thi</span>
             </a>

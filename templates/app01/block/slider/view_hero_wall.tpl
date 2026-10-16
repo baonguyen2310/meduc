@@ -84,7 +84,7 @@
                         <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh)}{$text.link_nut_chinh|escape}{else}/khoa-hoc{/if}">{$text.nut_chinh|escape}</a>
                     {/if}
                     {if !empty($text.nut_chinh_2)}
-                        <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh_2)}{$text.link_nut_chinh_2|escape}{else}/danh-sach-de-thi{/if}">{$text.nut_chinh_2|escape}</a>
+                        <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh_2)}{$text.link_nut_chinh_2|escape}{else}/khoa-luyen-thi{/if}">{$text.nut_chinh_2|escape}</a>
                     {/if}
                     {if !empty($text.nut_phu)}
                         <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/sach-y-khoa{/if}">{$text.nut_phu|escape}</a>

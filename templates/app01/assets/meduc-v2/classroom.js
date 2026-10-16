@@ -27,6 +27,7 @@
     video: link.dataset.video || "",
     access: link.dataset.access,
     quiz: link.dataset.quiz === "1",
+    quizzes: Number(link.dataset.quizzes) || 0,
   }));
   const byNumber = new Map(lessons.map((lesson) => [lesson.number, lesson]));
   const total = lessons.length;
@@ -290,6 +291,8 @@
     $$("[data-mcr-quiz]").forEach((block) => { block.hidden = Number(block.dataset.mcrQuiz) !== lesson.number; });
 
     setLessonStage(lesson);
+    // A lesson that is only quizzes (no video, as in exam-prep courses) opens on its "Bài tập" tab.
+    if (!lesson.video && lesson.quizzes > 0) selectTab("quiz");
     // classroom-quiz.js listens to switch the "Bài tập" tab to this lesson's quiz.
     root.dispatchEvent(new CustomEvent("mcr:lesson", { detail: { number: lesson.number } }));
     if (autoplay && canWatch(lesson)) {
@@ -349,6 +352,22 @@
   const searchBox = $("#mcr-search");
   const searchInput = $("[data-mcr-search]");
   const fold = (value) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
+  // Long quiz lists (exam-prep lessons hold dozens of exams): filter the cards by name, accents ignored.
+  $$("[data-mcr-quiz-filter]").forEach((input) => {
+    const holder = input.closest("[data-mcr-quiz]");
+    const cards = [...holder.querySelectorAll(".mcr-quiz-card")].map((card) => [card, fold(card.querySelector("h3")?.textContent || "")]);
+    const count = holder.querySelector("[data-mcr-quiz-filter-count]");
+    input.addEventListener("input", () => {
+      const words = fold(input.value).split(/\s+/).filter(Boolean);
+      let shown = 0;
+      cards.forEach(([card, name]) => {
+        const match = words.every((word) => name.includes(word));
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      if (count) count.textContent = words.length ? `${shown}/${cards.length} đề` : `${cards.length} đề`;
+    });
+  });
   searchToggle?.addEventListener("click", () => {
     const open = searchBox.hidden;
     searchBox.hidden = !open;

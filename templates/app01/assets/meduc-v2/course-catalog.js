@@ -51,7 +51,9 @@
     empty.hidden = ids.size>0;
     reset.hidden = input.value.length===0;
     clear.hidden = input.value.length===0;
-    status.textContent = words.length ? `Tìm thấy ${ids.size} / ${total} khóa học` : `Hiển thị ${total} khóa học đang mở`;
+    // data-catalog-noun: "môn luyện thi" on the exam-prep page.
+    const noun = status.dataset.catalogNoun || "khóa học";
+    status.textContent = words.length ? `Tìm thấy ${ids.size} / ${total} ${noun}` : `Hiển thị ${total} ${status.dataset.catalogNoun || "khóa học đang mở"}`;
   }
   input.addEventListener('input',update);
   sort.addEventListener('change',update);

@@ -4,17 +4,18 @@
    - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
    A lesson may have several quizzes: the player then has a way back to the lesson's list, and the result offers the next one.
+   The page lists the quizzes only; a quiz's questions load from /khoa-hoc/bai-tap/{course}/{quiz} when it starts
+   (QuizsAnswerController::player, which also checks the visitor may take it).
    An attempt stays in memory while the visitor moves between lessons, tabs and quizzes; nothing reloads the page. */
 (() => {
   "use strict";
   const root = document.querySelector("[data-mcr]");
-  const dataTag = root && root.querySelector("[data-mcr-quiz-data]");
   const host = root && root.querySelector("[data-mcr-quiz-player]");
-  if (!root || !dataTag || !host || host.dataset.mcqReady) return;
+  if (!root || !host || host.dataset.mcqReady) return;
   host.dataset.mcqReady = "1";
 
-  let quizzes = {};
-  try { quizzes = JSON.parse(dataTag.textContent) || {}; } catch (error) { return; }
+  const quizzes = {}; // quiz id -> {id, name, minutes, questions}, loaded on first start
+  const productId = Number(root.dataset.mcrProduct) || 0;
 
   const note = root.querySelector("[data-mcr-quiz-note]");
   const memberId = Number(root.dataset.mcrMember) || 0;
@@ -416,9 +417,35 @@
     });
   }
 
-  root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", () => {
-    const quiz = quizzes[startButton.dataset.mcrQuizStart];
-    if (!quiz) return;
+  async function load(id) {
+    if (quizzes[id]) return quizzes[id];
+    const response = await fetch(`/khoa-hoc/bai-tap/${productId}/${id}`, { credentials: "same-origin", headers: { Accept: "application/json" } });
+    const body = await response.json().catch(() => null);
+    if (!response.ok || !body || body.code !== "success" || !body.data) throw new Error((body && body.message) || "");
+    quizzes[id] = body.data;
+    return body.data;
+  }
+  root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", async () => {
+    if (startButton.disabled) return;
+    const id = Number(startButton.dataset.mcrQuizStart);
+    const card = startButton.closest(".mcr-quiz-card");
+    card?.querySelector(".mcr-quiz-error")?.remove();
+    let quiz = quizzes[id];
+    if (!quiz) {
+      const label = startButton.textContent;
+      startButton.disabled = true;
+      startButton.textContent = "Đang tải đề…";
+      try {
+        quiz = await load(id);
+      } catch (error) {
+        const message = el("p", "mcr-quiz-error", error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.");
+        message.setAttribute("role", "alert");
+        (card ? card.firstElementChild : startButton.parentElement).append(message);
+      }
+      startButton.disabled = false;
+      startButton.textContent = label;
+      if (!quiz) return;
+    }
     lessonNumber = Number(startButton.dataset.lesson);
     start(quiz, { number: lessonNumber, title: startButton.dataset.lessonTitle || "", code: startButton.dataset.lessonCode || "" }, false);
   }));

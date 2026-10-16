@@ -46,7 +46,7 @@ class CourseExamLibrary
             $quizIds=array_column(LessonQuizzes::of($lesson),'id') ?: [0];
             foreach ($quizIds as $place=>$quizId) {
                 $name=(string)($lesson['name_vi']??'');
-                if ($place>0) $name.=' · đề '.($place+1).(!empty($info[$quizId]['name']) ? ': '.$info[$quizId]['name'] : '');
+                if (count($quizIds)>1) $name.=' · đề '.($place+1).(!empty($info[$quizId]['name']) ? ': '.$info[$quizId]['name'] : '');
                 $result[]=[
                     'position'=>$index+1, 'name'=>$name,
                     'chapter'=>($lesson['chapter_vi']??'')==='y', 'review'=>($lesson['review_vi']??'')==='y',

@@ -167,11 +167,13 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
 @media (max-width: 1100px) {
   .mhi-shell { width: min(92%,1440px); }
   .mhi-utility { padding-left: 6px; }
+  /* Room for the search box: the leaderboard stays in the footer and, on phones, in the menu. */
+  .mhi-rank { display: none; }
 }
 /* Below desktop width the header is one row: logo, search, course cart, account and the menu button. */
 @media (max-width: 991.98px) {
   .mhi { --mhi-network-h: 0px; }
-  .mhi-network, .mhi-browse-wrap, .mhi-practice, .mhi-books, .mhi-cart-book, .mhi-theme-toggle, .mhi-header-main > .mhi-header-cta, .mhi-login-text { display: none !important; }
+  .mhi-network, .mhi-browse-wrap, .mhi-practice, .mhi-rank, .mhi-books, .mhi-cart-book, .mhi-theme-toggle, .mhi-header-main > .mhi-header-cta, .mhi-login-text { display: none !important; }
   .mhi-search-toggle, .mhi-menu-toggle, .mhi-login-icon { display: grid !important; }
   .mhi-header-main { position: relative; gap: 4px; height: 64px; }
   .mhi-brand { margin-right: auto; }
