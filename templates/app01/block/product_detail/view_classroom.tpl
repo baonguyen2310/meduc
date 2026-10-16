@@ -77,7 +77,6 @@
 {$quiz_count = 0}
 {* Exam-prep course (Khóa học > Khóa luyện thi, category 125): one lesson holding the subject's exams. *}
 {$exam_prep = !empty($product.main_category_id) && $product.main_category_id == 125}
-{$course_has_video = false}
 {$first_open = 0}
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
@@ -119,7 +118,6 @@
     {$quiz_count = $quiz_count + count($quizzes)}
     {$number = count($lessons) + 1}
     {if $video != '' && $trial && !$licensed}{$trial_videos = $trial_videos + 1}{/if}
-    {if $video != ''}{$course_has_video = true}{/if}
     {if $video != '' && $open && $first_open == 0}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
@@ -238,10 +236,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261016-10" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-5" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-6" defer></script>
 {if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261016-4" defer></script>{/if}
 
-<section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
+<section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
             <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/khoa-luyen-thi">Luyện thi</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
@@ -417,8 +415,7 @@
                     </div>
                     <div class="mcr-toolbar">
                         <div class="mcr-tabs" role="tablist" aria-label="Nội dung bài học">
-                            {* A course without any lesson video (an exam-prep course) has no Video tab; classroom.js opens "Bài tập". *}
-                            <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video" {if !$course_has_video}hidden{/if}>Video</button>
+                            <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video">Video</button>
                             <button type="button" role="tab" id="mcr-tab-files" aria-controls="mcr-panel-files" aria-selected="false" tabindex="-1" data-mcr-tab="files">Tài liệu</button>
                             <button type="button" role="tab" id="mcr-tab-quiz" aria-controls="mcr-panel-quiz" aria-selected="false" tabindex="-1" data-mcr-tab="quiz">Bài tập</button>
                             <button type="button" role="tab" id="mcr-tab-feedback" aria-controls="mcr-panel-feedback" aria-selected="false" tabindex="-1" data-mcr-tab="feedback">Phản hồi học viên</button>
@@ -472,6 +469,16 @@
                                 <div class="mcr-card-actions">
                                     <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-error-next>Sang bài tiếp theo</button>
                                     <button type="button" class="mcr-btn mcr-btn--ghost-light" data-mcr-goto-quiz-error hidden>Làm bài tập buổi này</button>
+                                </div>
+                            </div>
+                            {* Exam-prep lessons have no video yet: a placeholder that leads to the exams. *}
+                            <div class="mcr-stage-card" data-mcr-stage="soon" hidden>
+                                <svg class="mcr-card-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m10 9 5 3-5 3z" /></svg>
+                                <p class="mcr-card-kicker">Video chữa đề</p>
+                                <h3>Video bài giảng sắp có</h3>
+                                <p>MedUC đang chuẩn bị video chữa đề cho phần này. Trong lúc chờ, bạn làm đề ngay ở tab Bài tập: nộp bài là có điểm và lời giải chi tiết.</p>
+                                <div class="mcr-card-actions">
+                                    <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-goto-quiz-soon hidden>Làm đề ngay</button>
                                 </div>
                             </div>
                             <div class="mcr-stage-card" data-mcr-stage="end" hidden>

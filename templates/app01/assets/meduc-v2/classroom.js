@@ -31,6 +31,7 @@
   }));
   const byNumber = new Map(lessons.map((lesson) => [lesson.number, lesson]));
   const total = lessons.length;
+  const examPrep = root.dataset.mcrExamPrep === "1";
   const canWatch = (lesson) => Boolean(lesson && lesson.video) && (licensed || lesson.access === "trial");
 
   const introView = $('[data-mcr-view="intro"]');
@@ -229,12 +230,18 @@
   $("[data-mcr-goto-quiz]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-goto-quiz-error]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-goto-quiz-novideo]")?.addEventListener("click", () => selectTab("quiz", true));
+  $("[data-mcr-goto-quiz-soon]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-error-next]")?.addEventListener("click", () => current && selectLesson(current.number + 1));
 
   // Views
   let current = null;
   function setLessonStage(lesson) {
-    if (canWatch(lesson)) {
+    if (examPrep && !lesson.video) {
+      // Exam-prep courses have no videos yet: a placeholder, with a way to the lesson's exams.
+      const quizButton = $("[data-mcr-goto-quiz-soon]");
+      if (quizButton) quizButton.hidden = !lesson.quizzes;
+      showStage("soon");
+    } else if (canWatch(lesson)) {
       poster.src = `https://i.ytimg.com/vi/${lesson.video}/hqdefault.jpg`;
       showStage("poster");
     } else if (licensed) {
@@ -291,8 +298,6 @@
     $$("[data-mcr-quiz]").forEach((block) => { block.hidden = Number(block.dataset.mcrQuiz) !== lesson.number; });
 
     setLessonStage(lesson);
-    // A lesson that is only quizzes (no video, as in exam-prep courses) opens on its "Bài tập" tab.
-    if (!lesson.video && lesson.quizzes > 0) selectTab("quiz");
     // classroom-quiz.js listens to switch the "Bài tập" tab to this lesson's quiz.
     root.dispatchEvent(new CustomEvent("mcr:lesson", { detail: { number: lesson.number } }));
     if (autoplay && canWatch(lesson)) {
