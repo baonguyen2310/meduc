@@ -138,8 +138,6 @@ class MemberController extends AppController
 
     public function dashboard() 
     {
-        $this->response = $this->response->withHeader('Cache-Control', 'private, no-store, max-age=0');
-        $this->set('cache_page', false);
         $member = $this->request->getSession()->read(MEMBER);
         $customer_id = !empty($member['customer_id']) ? intval($member['customer_id']) : null;
         $customers_table = TableRegistry::get('Customers');
@@ -158,7 +156,7 @@ class MemberController extends AppController
 
         $this->set('order', $orders);
         $this->set('member', $member_info);
-        $this->set('title_for_layout', 'Không gian học tập của tôi');
+        $this->set('title_for_layout', __d('template', 'quan_ly_tai_khoan'));
     }
 
     public function address() 
