@@ -24,6 +24,7 @@
   const clock = (seconds) => `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
   const percentText = (value) => `${value.toLocaleString("vi-VN", { maximumFractionDigits: 1 })}%`;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const inlineMobileQuery = matchMedia("(max-width: 767.98px)");
   // Question texts usually start with their own "Câu 3." — the player already shows the number.
   const dropNumber = (html) => html.replace(/^(\s*<p>)?\s*Câu\s*\d+\s*[.:)]\s*/i, "$1");
 
@@ -608,12 +609,18 @@
     const card = stage.querySelector(`[data-mcq-question="${index}"]`);
     if (!card) return;
     setCurrentQuestion(attempt, index);
+    const mobileInline = !host.classList.contains("is-expanded") && inlineMobileQuery.matches;
+    if (mobileInline) {
+      card.scrollIntoView({ block: "start", behavior: animate && !reducedMotion ? "smooth" : "auto" });
+      return;
+    }
     const top = card.getBoundingClientRect().top - stage.getBoundingClientRect().top + stage.scrollTop - 16;
     stage.scrollTo({ top, behavior: animate && !reducedMotion ? "smooth" : "auto" });
   }
-  stage.addEventListener("scroll", () => {
+  function trackVisibleQuestion() {
     if (view !== "player" || !active) return;
-    const top = stage.getBoundingClientRect().top + Math.min(160, stage.clientHeight * 0.3);
+    const mobileInline = !host.classList.contains("is-expanded") && inlineMobileQuery.matches;
+    const top = mobileInline ? Math.min(180, window.innerHeight * 0.3) : stage.getBoundingClientRect().top + Math.min(160, stage.clientHeight * 0.3);
     const cards = stage.querySelectorAll("[data-mcq-question]");
     for (const card of cards) {
       if (card.getBoundingClientRect().bottom > top) {
@@ -622,7 +629,19 @@
         break;
       }
     }
-  });
+  }
+  let questionScrollFrame = 0;
+  function scheduleQuestionTracking() {
+    if (questionScrollFrame) return;
+    questionScrollFrame = requestAnimationFrame(() => {
+      questionScrollFrame = 0;
+      trackVisibleQuestion();
+    });
+  }
+  stage.addEventListener("scroll", scheduleQuestionTracking, { passive: true });
+  window.addEventListener("scroll", () => {
+    if (!host.classList.contains("is-expanded") && inlineMobileQuery.matches) scheduleQuestionTracking();
+  }, { passive: true });
   function askSubmit(attempt) {
     if (attempt.answers.size < attempt.quiz.questions.length) {
       attempt.confirming = true;

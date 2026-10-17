@@ -470,11 +470,16 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 @media (max-width: 991.98px) {
   .mcr-layout { grid-template-columns: 1fr; }
   .mcr-main { order: -1; padding: 14px 20px 28px; border-left: 0; }
-  .mcr-sidebar { position: static; max-height: none; border-top: 1px solid var(--mcr-line); }
+  .mcr-sidebar { position: static; max-height: none; overflow: visible; overscroll-behavior: auto; border-top: 1px solid var(--mcr-line); }
   .mcr-outline-actions { position: static; }
   .mcr-lesson-view, .mcr-intro { scroll-margin-top: 72px; }
 }
 @media (max-width: 767.98px) {
+  /* On phones, the inline quiz and curriculum follow the page scroll. The expanded quiz keeps its own scroll area. */
+  .mcq:not(.is-expanded) .mcq-workspace { height:auto; min-height:0; grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto; }
+  .mcq:not(.is-expanded) .mcq-workspace:has(.mcq-map-panel[hidden]) { grid-template-rows:auto; }
+  .mcq:not(.is-expanded) .mcq-stage, .mcq:not(.is-expanded) .mcq-map-panel { overflow:visible; overscroll-behavior:auto; }
+  .mcq:not(.is-expanded) [data-mcq-question] { scroll-margin-top:150px; }
   .mcq.is-expanded { inset: 0; height: 100dvh; border: 0; border-radius: 0; }
   .mcq.is-expanded .mcq-workspace { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
   .mcq.is-expanded .mcq-map-panel { order: -1; overflow: visible; border-left: 0; border-bottom: 1px solid var(--mcr-line); }
