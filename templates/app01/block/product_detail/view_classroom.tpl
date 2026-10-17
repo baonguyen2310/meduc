@@ -237,7 +237,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-13" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-14" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261017-8" defer></script>
 {if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-9" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
@@ -255,7 +255,7 @@
             {* Course outline *}
             <aside class="mcr-sidebar" aria-label="Lộ trình học">
                 <div class="mcr-outline-actions{if $exam_prep && $review_lesson_number > 0} mcr-outline-actions--paired{/if}">
-                    <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">Giới thiệu</a>
+                    <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">{if $exam_prep && $review_lesson_number > 0}Giới thiệu{else}Giới thiệu khoá học{/if}</a>
                     {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử</button>{/if}
                 </div>
                 <div class="mcr-outline">

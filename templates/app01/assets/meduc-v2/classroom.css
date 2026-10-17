@@ -51,9 +51,9 @@ html[data-meduc-theme="light"] .mcr {
 /* Frame: outline + main */
 .mcr-layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); overflow: clip; border: 1px solid var(--mcr-line); border-radius: 16px; background: var(--mcr-panel); }
 .mcr-sidebar { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 88px); overflow-y: auto; overscroll-behavior: contain; background: var(--mcr-side); scrollbar-width: thin; }
-.mcr-outline-actions { display:grid; grid-template-columns:minmax(0,1fr); gap:10px; padding:18px 16px; }
+.mcr-outline-actions { position:sticky; top:0; z-index:10; display:grid; grid-template-columns:minmax(0,1fr); gap:10px; padding:12px 16px; background:var(--mcr-side); }
 .mcr-outline-actions--paired { grid-template-columns:repeat(2,minmax(0,1fr)); }
-.mcr .mcr-outline-actions .mcr-intro-link, .mcr .mcr-outline-actions .mcr-mock-exam { display:flex; align-items:center; justify-content:center; min-width:0; min-height:54px; margin:0; padding:10px 8px; border:1px solid var(--mcr-line); border-radius:12px; background:var(--mcr-panel); color:var(--mcr-ink) !important; font:700 15px/1.2 Inter,Arial,sans-serif; text-align:center; cursor:pointer; transition:border-color .18s,background-color .18s,transform .18s; }
+.mcr .mcr-outline-actions .mcr-intro-link, .mcr .mcr-outline-actions .mcr-mock-exam { display:flex; align-items:center; justify-content:center; min-width:0; min-height:46px; margin:0; padding:8px; border:1px solid var(--mcr-line); border-radius:12px; background:var(--mcr-panel); color:var(--mcr-ink) !important; font:700 15px/1.2 Inter,Arial,sans-serif; text-align:center; cursor:pointer; transition:border-color .18s,background-color .18s,transform .18s; }
 .mcr .mcr-outline-actions .mcr-intro-link:hover, .mcr .mcr-outline-actions .mcr-mock-exam:hover { border-color:var(--mcr-red); background:var(--mcr-red-soft); transform:translateY(-1px); }
 .mcr .mcr-outline-actions .mcr-intro-link.is-active, .mcr .mcr-outline-actions .mcr-mock-exam { border-color:rgb(232 35 79 / .42); background:var(--mcr-red-soft); color:var(--mcr-red) !important; }
 .mcr-lock, .mcr-files svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -97,7 +97,7 @@ html[data-meduc-theme="light"] .mcr-tag--free { color:#16824e; }
 .mcr-intro { display: grid; grid-template-columns: minmax(0, 1fr) 330px; align-items: start; gap: 28px; }
 .mcr-intro-main { min-width: 0; }
 .mcr-intro-side { position: sticky; top: 76px; }
-.mcr-anchors { position: sticky; z-index: 5; top: 64px; display: flex; gap: 26px; margin: -28px 0 0; padding-top: 14px; overflow-x: auto; border-bottom: 1px solid var(--mcr-line); background: var(--mcr-panel); scrollbar-width: none; }
+.mcr-anchors { position: sticky; z-index: 5; top: var(--mhi-header-h, 66px); display: flex; gap: 26px; margin: 0; padding-top: 4px; overflow-x: auto; border-bottom: 1px solid var(--mcr-line); background: var(--mcr-panel); scrollbar-width: none; }
 .mcr-anchors::-webkit-scrollbar { display: none; }
 .mcr .mcr-anchors a { flex: none; padding: 12px 0; border-bottom: 3px solid transparent; color: var(--mcr-muted); font: 600 15px/1.2 Inter, Arial, sans-serif; }
 .mcr .mcr-anchors a:hover { color: var(--mcr-ink); }
@@ -153,10 +153,10 @@ html[data-meduc-theme="light"] .mcr-tag--free { color:#16824e; }
 .mcr-lead { margin-bottom: 14px; }
 
 /* Lesson */
-.mcr-toolbar { position:sticky; top:var(--mhi-header-h,66px); z-index:40; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin:0 0 22px; padding:4px 0 0; border-bottom:1px solid var(--mcr-line); background:var(--mcr-panel); box-shadow:0 12px 22px -22px rgb(0 0 0 / .6); }
-.mcr-tabs { display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none; }
+.mcr-toolbar { position:sticky; top:var(--mhi-header-h,66px); z-index:40; display:flex; align-items:stretch; justify-content:space-between; gap:16px; min-height:67px; margin:0 0 22px; padding:4px 0 0; border-bottom:1px solid var(--mcr-line); background:var(--mcr-panel); box-shadow:0 12px 22px -22px rgb(0 0 0 / .6); }
+.mcr-tabs { display:flex; align-items:stretch; min-width:0; gap:26px; overflow-x:auto; scrollbar-width:none; }
 .mcr-tabs::-webkit-scrollbar { display: none; }
-.mcr-tabs button { flex: none; padding: 12px 0; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--mcr-muted); font: 600 15px/1.2 Inter, Arial, sans-serif; cursor: pointer; }
+.mcr-tabs button { display:flex; align-items:center; flex:none; padding:0; border:0; border-bottom:3px solid transparent; background: none; color: var(--mcr-muted); font: 600 15px/1.2 Inter, Arial, sans-serif; cursor: pointer; }
 .mcr-tabs button:hover { color: var(--mcr-ink); }
 .mcr-tabs button[aria-selected="true"] { border-bottom-color: var(--mcr-red); color: var(--mcr-red); }
 .mcr-toolbar-buy { display:flex; flex:none; align-items:center; gap:13px; margin-bottom:7px; padding:6px 6px 6px 13px; border:1px solid rgb(232 35 79 / .28); border-radius:12px; background:var(--mcr-red-soft); box-shadow:0 5px 16px rgb(232 35 79 / .08); }
@@ -448,9 +448,14 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 }
 /* Narrower screens: one column. The middle column's parts join the grid so the sign-up card can sit right after
    the video: tabs, video, sign-up, then the rest. */
+@media (min-width: 1281px) {
+  .mcr-anchors { min-height:67px; align-items:stretch; }
+  .mcr .mcr-anchors a { display:flex; align-items:center; padding:0; }
+}
 @media (max-width: 1280px) {
   /* The lesson tabs need the whole row: the price and sign-up button move to their own row above them. */
-  .mcr-toolbar { flex-direction: column-reverse; align-items: stretch; gap: 4px; }
+  .mcr-toolbar { flex-direction: column-reverse; align-items: stretch; gap: 4px; min-height:0; }
+  .mcr-tabs button { padding: 12px 0; }
   .mcr-toolbar-buy { justify-content: flex-end; padding-bottom: 0; }
   /* minmax(0, …): the related-courses rail must scroll inside the column, not widen it. */
   .mcr-intro { grid-template-columns: minmax(0, 1fr); gap: 0; }
@@ -464,6 +469,7 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-layout { grid-template-columns: 1fr; }
   .mcr-main { order: -1; padding: 14px 20px 28px; border-left: 0; }
   .mcr-sidebar { position: static; max-height: none; border-top: 1px solid var(--mcr-line); }
+  .mcr-outline-actions { position: static; }
   .mcr-lesson-view, .mcr-intro { scroll-margin-top: 72px; }
 }
 @media (max-width: 767.98px) {
