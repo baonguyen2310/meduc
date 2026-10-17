@@ -19,7 +19,7 @@ cổng 3307. Database nguồn `fhd_quiz_source` là MySQL local trên cổng 330
   `scripts/publish_curriculum_v2_catalog.py --apply` để hiện danh sách và
   lộ trình môn trên `/khoa-luyen-thi` (`status=1`, `draft=0`,
   `products_item.status=1`, `exam_prep_courses.staff_only=0`).
-  Việc này không mở đề hoặc câu hỏi cho học viên.
+  Ban đầu chưa mở đề hoặc câu hỏi cho học viên.
 
 ## Đề thử đầu tiên
 
@@ -30,8 +30,22 @@ Script `scripts/import_curriculum_v2_first_exam.py` nạp đề nguồn `2431`
 
 Đáp án được sao chép từ `question_options.is_correct`; giải thích AI nằm trong
 phần giải thích câu và trong dữ liệu từng lựa chọn. Câu hỏi, đáp án và giải thích
-gốc không bị sửa trên DB nguồn. Đề cũng ở trạng thái nội bộ
-(`quiz_exam_metadata.staff_only=1`, `status=0`, `draft=1`).
+gốc không bị sửa trên DB nguồn. Đề được nạp ban đầu ở trạng thái nội bộ.
+
+## Bài tập từng bài và đề Tổng ôn
+
+Script `scripts/create_curriculum_v2_lesson_quizzes.py` tạo một bản ghi bài tập
+cho mỗi bài trong 108 môn: 2.970 bản ghi mới cộng với đề Tổng ôn đã có, đủ
+2.971 bài. Bài tập chưa có câu hỏi vẫn ở trạng thái nội bộ và hiện là
+“đang được cập nhật” trên trang khóa học, không có nút bắt đầu làm.
+
+Trong môn Sinh học - Di truyền, 29 câu của đề đầu tiên được gắn vào bảy bài
+đúng theo ánh xạ từ DB nguồn. Gồm 16 câu khớp trực tiếp và 13 câu liên quan
+ít; 11 câu chưa có bài phù hợp chỉ giữ trong đề Tổng ôn. Cả bảy bài tập đã
+có câu hỏi và đề Tổng ôn 40 câu chỉ mở qua trình làm bài của khóa cho học
+viên đã ghi danh; khách chưa ghi danh nhận HTTP 403. Đề vẫn ở trạng thái
+`quizs.status=0`, `draft=1` để không xuất hiện như một đề công khai riêng lẻ.
+Chỉ cờ `quiz_exam_metadata.staff_only` của tám bài có câu được chuyển về 0.
 
 ## Script và sao lưu
 
@@ -44,12 +58,18 @@ python3 scripts/import_curriculum_v2_first_exam.py
 python3 scripts/import_curriculum_v2_first_exam.py --apply
 python3 scripts/publish_curriculum_v2_catalog.py
 python3 scripts/publish_curriculum_v2_catalog.py --apply
+python3 scripts/create_curriculum_v2_lesson_quizzes.py
+python3 scripts/create_curriculum_v2_lesson_quizzes.py --apply --backup /Users/Shared/architecture/artifacts/meduc-local-backups/before-lesson-quizzes-20261017-full.sql.gz
 ```
 
-Ba script có thể chạy lại để xác nhận dữ liệu và trạng thái hiển thị. Lệnh
+Các script có thể chạy lại để xác nhận dữ liệu và trạng thái hiển thị. Lệnh
 `--apply` của script chuyển lộ trình yêu cầu bản sao lưu đầy đủ nằm ngoài
 web root.
 
 Bản sao lưu toàn bộ DB local trước khi thay:
 `/Users/Shared/architecture/artifacts/meduc-local-backups/before-curriculum-v2-20261017-full.sql.gz`
 (SHA-256 `7ce51344084cd0d418e91c895ea092ac1d8c3037c6c7628298edbb15bc3c83bc`).
+
+Bản sao lưu toàn bộ DB local trước khi tạo bài tập:
+`/Users/Shared/architecture/artifacts/meduc-local-backups/before-lesson-quizzes-20261017-full.sql.gz`
+(SHA-256 `d65b691b21fec63aafb91a4fb34cb4553f8a9923ad7225e37f04828db501599f`).

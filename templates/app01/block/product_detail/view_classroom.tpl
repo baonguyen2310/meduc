@@ -75,7 +75,7 @@
 {$open_quizzes = 0}
 {$any_open_quiz = false}
 {$quiz_count = 0}
-{* Exam-prep course (Khóa học > Khóa luyện thi, category 125): one lesson holding the subject's exams. *}
+{* Exam-prep course (category 125): lessons hold their exercises; the review lesson holds source exams. *}
 {$exam_prep = !empty($product.main_category_id) && $product.main_category_id == 125}
 {$first_open = 0}
 {foreach from = $raw_lessons item = item}
@@ -118,7 +118,7 @@
     {$quiz_count = $quiz_count + count($quizzes)}
     {$number = count($lessons) + 1}
     {if $video != '' && $trial && !$licensed}{$trial_videos = $trial_videos + 1}{/if}
-    {if $video != '' && $open && $first_open == 0}{$first_open = $number}{/if}
+    {if $first_open == 0 && (($video != '' && $open) || $open_quiz)}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
     {$review = !empty($item.review_vi) && $item.review_vi == 'y'}
@@ -391,7 +391,8 @@
                             <dl class="mcr-specs">
                                 {if !empty($attributes.thoiluong.value)}<div><dt>Thời lượng</dt><dd>{$attributes.thoiluong.value|strip_tags|escape}</dd></div>{/if}
                                 {if $exam_prep}
-                                    <div><dt>Đề thi</dt><dd>{$quiz_count} đề</dd></div>
+                                    <div><dt>Lộ trình</dt><dd>{$lesson_count} bài · {count($chapters)} chương</dd></div>
+                                    <div><dt>Bài tập có câu hỏi</dt><dd>{$quiz_count} bài/đề</dd></div>
                                 {else}
                                     <div><dt>Bài học</dt><dd>{if !empty($attributes.soluongbaihoc.value)}{$attributes.soluongbaihoc.value|strip_tags|escape}{else}{$lesson_count} bài{/if} · {count($chapters)} chương</dd></div>
                                 {/if}
@@ -476,7 +477,7 @@
                                 <svg class="mcr-card-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m10 9 5 3-5 3z" /></svg>
                                 <p class="mcr-card-kicker">Video chữa đề</p>
                                 <h3>Video bài giảng sắp có</h3>
-                                <p>MedUC đang chuẩn bị video chữa đề cho phần này. Trong lúc chờ, bạn làm đề ngay ở tab Bài tập: nộp bài là có điểm và lời giải chi tiết.</p>
+                                <p>MedUC đang chuẩn bị video cho phần này. Nếu bài tập đã có câu hỏi, bạn có thể làm ở tab Bài tập.</p>
                                 <div class="mcr-card-actions">
                                     <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-goto-quiz-soon hidden>Làm đề ngay</button>
                                 </div>

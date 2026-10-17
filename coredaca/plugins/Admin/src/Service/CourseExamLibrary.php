@@ -35,9 +35,12 @@ class CourseExamLibrary
         $ids = LessonQuizzes::ids($lessons);
         $info = [];
         if ($ids) {
-            $rows = $db->execute('SELECT q.id, qc.name, m.year_in_title, m.school_name, m.source_category_name, m.question_count
+            $rows = $db->execute('SELECT q.id, qc.name, m.year_in_title, m.school_name, m.source_category_name, m.question_count,
+                CASE WHEN JSON_VALID(qa.value) THEN JSON_LENGTH(qa.value) ELSE 0 END AS stored_questions
                 FROM quizs q LEFT JOIN quizs_content qc ON qc.quiz_id=q.id AND qc.lang=\'vi\'
-                LEFT JOIN quiz_exam_metadata m ON m.quiz_id=q.id WHERE q.deleted=0 AND q.id IN ('.implode(',', array_unique($ids)).')')->fetchAll('assoc');
+                LEFT JOIN quiz_exam_metadata m ON m.quiz_id=q.id
+                LEFT JOIN quizs_attribute qa ON qa.quiz_id=q.id AND qa.attribute_id=18
+                WHERE q.deleted=0 AND q.id IN ('.implode(',', array_unique($ids)).')')->fetchAll('assoc');
             foreach ($rows as $q) $info[(int)$q['id']]=$q;
         }
         $result=[];
@@ -50,7 +53,9 @@ class CourseExamLibrary
                 $result[]=[
                     'position'=>$index+1, 'name'=>$name,
                     'chapter'=>($lesson['chapter_vi']??'')==='y', 'review'=>($lesson['review_vi']??'')==='y',
-                    'quiz_id'=>isset($info[$quizId])?$quizId:0, 'metadata'=>$info[$quizId]??[],
+                    'quiz_id'=>!empty($info[$quizId]['stored_questions'])?$quizId:0,
+                    'pending'=>isset($info[$quizId]) && empty($info[$quizId]['stored_questions']),
+                    'metadata'=>$info[$quizId]??[],
                 ];
             }
         }

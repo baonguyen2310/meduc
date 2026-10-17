@@ -190,7 +190,7 @@ def main():
                 FROM quiz_exam_metadata m JOIN quizs q ON q.id=m.quiz_id
                 JOIN quizs_attribute qa ON qa.quiz_id=q.id AND qa.attribute_id=18
                 WHERE m.quiz_id=%s''', (quiz_id,))
-            require(row['staff_only'] == 1 and row['status'] == 0 and row['draft'] == 1
+            require(row['staff_only'] in (0, 1) and row['status'] == 0 and row['draft'] == 1
                     and row['deleted'] == 0 and len(json.loads(row['value'])) == 40,
                     'Imported quiz failed verification')
             print(encoded({'mode':'applied','state':state,'product_id':product_id,

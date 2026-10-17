@@ -31,7 +31,7 @@
                                 <button type="button" class="mx-open" data-exam-open="{$lesson.quiz_id}" aria-label="Xem {$lesson.name|escape}">Xem đề <span aria-hidden="true">↗</span></button>
                                 {if !empty($course_exam_download)}<button type="button" class="mx-word" data-exam-word="{$lesson.quiz_id}" title="Tải đề và đáp án dạng Word"><i class="la la-download" aria-hidden="true"></i> Word</button>{/if}
                             </div>
-                        {else}<span class="mx-muted">Chưa có bài tập</span>{/if}
+                        {else}<span class="mx-muted">{if !empty($lesson.pending)}Chưa có câu hỏi{else}Chưa có bài tập{/if}</span>{/if}
                     </article>
                 {/if}
             {/foreach}

@@ -249,9 +249,10 @@ def verify_target(cur, subjects, by_subject, by_chapter, digest):
                 f'Course mismatch for {subject["code"]}')
         actual = json.loads(row['value'])
         expected = course_json(by_subject[subject['id']], by_chapter)
-        # A later exam import is allowed to attach quizzes to the review lesson.
+        # Later imports may attach exercises to every lesson; their own scripts
+        # verify the quiz IDs and question contents.
         for entry in actual:
-            if entry['code'].endswith('-L-REVIEW'):
+            if entry['chapter_vi'] == 'n':
                 entry['quiz_id_vi'] = ''
                 entry.pop('quizzes_vi', None)
         require(actual == expected, f'Curriculum mismatch for {subject["code"]}')
