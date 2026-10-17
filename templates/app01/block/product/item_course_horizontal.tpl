@@ -13,6 +13,7 @@
         <h3><a href="{$course_url|escape}">{$course.name|escape}</a></h3>
         <div class="mcl-card-meta">{if $course.catalog_meta.chapters > 0}<span>{$course.catalog_meta.chapters} chương</span>{/if}{if $course.catalog_meta.lessons > 0}<span>{$course.catalog_meta.lessons} bài học</span>{/if}</div>
         {if !empty($course.catalog_meta.summary)}<p class="mcl-card-description">{$course.catalog_meta.summary|escape}</p>{/if}
+        {if !empty($course.catalog_meta.exam_prep)}<a class="mcl-details" href="{$course_url|escape}">Xem lộ trình <span aria-hidden="true">→</span></a>{/if}
     </div>
     <div class="mcl-card-enroll">
         <div class="mcl-price"><span class="mcl-price-label">Học phí</span>{if $current_price > 0}<strong>{$current_price|number_format:0:',':'.'} <small>{CURRENCY_UNIT}</small></strong>{else}<strong class="mcl-contact-price">Liên hệ tư vấn</strong>{/if}{if $discount > 0}<del>{$course.price|number_format:0:',':'.'} {CURRENCY_UNIT}</del>{/if}</div>
