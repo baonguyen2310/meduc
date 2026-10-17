@@ -54,8 +54,10 @@ html[data-meduc-theme="light"] .mcr {
 .mcr-outline-actions { position:sticky; top:0; z-index:10; display:grid; grid-template-columns:minmax(0,1fr); gap:10px; padding:12px 16px; background:var(--mcr-side); }
 .mcr-outline-actions--paired { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .mcr .mcr-outline-actions .mcr-intro-link, .mcr .mcr-outline-actions .mcr-mock-exam { display:flex; align-items:center; justify-content:center; min-width:0; min-height:46px; margin:0; padding:8px; border:1px solid var(--mcr-line); border-radius:12px; background:var(--mcr-panel); color:var(--mcr-ink) !important; font:700 15px/1.2 Inter,Arial,sans-serif; text-align:center; cursor:pointer; transition:border-color .18s,background-color .18s,transform .18s; }
-.mcr .mcr-outline-actions .mcr-intro-link:hover, .mcr .mcr-outline-actions .mcr-mock-exam:hover { border-color:var(--mcr-red); background:var(--mcr-red-soft); transform:translateY(-1px); }
-.mcr .mcr-outline-actions .mcr-intro-link.is-active, .mcr .mcr-outline-actions .mcr-mock-exam { border-color:rgb(232 35 79 / .42); background:var(--mcr-red-soft); color:var(--mcr-red) !important; }
+.mcr .mcr-outline-actions .mcr-intro-link:hover { border-color:var(--mcr-red); background:var(--mcr-red-soft); transform:translateY(-1px); }
+.mcr .mcr-outline-actions .mcr-intro-link.is-active { border-color:rgb(232 35 79 / .42); background:var(--mcr-red-soft); color:var(--mcr-red) !important; }
+.mcr .mcr-outline-actions .mcr-mock-exam { border-color:var(--mcr-line); background:var(--mcr-soft-button); color:var(--mcr-ink) !important; }
+.mcr .mcr-outline-actions .mcr-mock-exam:hover { border-color:var(--mcr-muted); transform:translateY(-1px); }
 .mcr-lock, .mcr-files svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .mcr-chapter { border-top: 1px solid var(--mcr-line); }
 .mcr-chapter summary { display: grid; grid-template-columns: 34px minmax(0, 1fr) 18px; align-items: start; gap: 4px; padding: 16px 18px 14px 22px; color: var(--mcr-ink); cursor: pointer; list-style: none; }
