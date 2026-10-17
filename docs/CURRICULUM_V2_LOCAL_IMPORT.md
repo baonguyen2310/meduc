@@ -15,8 +15,11 @@ cổng 3307. Database nguồn `fhd_quiz_source` là MySQL local trên cổng 330
 - Dữ liệu khóa học được lưu theo định dạng `products_attribute.attribute_id=11`
   mà trang web hiện dùng. Mã chương/bài của lộ trình được giữ trong `code`.
   Bảng mới `curriculum_v2_courses` ánh xạ mã môn nguồn với `products.id`.
-- 108 khóa còn ở trạng thái nội bộ (`status=0`, `draft=1`,
-  `exam_prep_courses.staff_only=1`), chưa xuất hiện với học viên.
+- 108 khóa được nạp ban đầu ở trạng thái nội bộ. Sau đó chạy
+  `scripts/publish_curriculum_v2_catalog.py --apply` để hiện danh sách và
+  lộ trình môn trên `/khoa-luyen-thi` (`status=1`, `draft=0`,
+  `products_item.status=1`, `exam_prep_courses.staff_only=0`).
+  Việc này không mở đề hoặc câu hỏi cho học viên.
 
 ## Đề thử đầu tiên
 
@@ -39,11 +42,13 @@ python3 scripts/curriculum_v2_local.py
 python3 scripts/curriculum_v2_local.py --apply --backup /Users/Shared/architecture/artifacts/meduc-local-backups/before-curriculum-v2-20261017-full.sql.gz
 python3 scripts/import_curriculum_v2_first_exam.py
 python3 scripts/import_curriculum_v2_first_exam.py --apply
+python3 scripts/publish_curriculum_v2_catalog.py
+python3 scripts/publish_curriculum_v2_catalog.py --apply
 ```
 
-Hai script kiểm tra dữ liệu nguồn và có thể chạy lại: lần sau chỉ xác nhận
-108 khóa và đề đã nạp trùng khớp. Lệnh `--apply` của script chuyển lộ trình
-yêu cầu bản sao lưu đầy đủ nằm ngoài web root.
+Ba script có thể chạy lại để xác nhận dữ liệu và trạng thái hiển thị. Lệnh
+`--apply` của script chuyển lộ trình yêu cầu bản sao lưu đầy đủ nằm ngoài
+web root.
 
 Bản sao lưu toàn bộ DB local trước khi thay:
 `/Users/Shared/architecture/artifacts/meduc-local-backups/before-curriculum-v2-20261017-full.sql.gz`

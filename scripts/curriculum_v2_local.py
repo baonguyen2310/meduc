@@ -232,18 +232,20 @@ def insert_course(cur, subject, curriculum, digest):
 
 def verify_target(cur, subjects, by_subject, by_chapter, digest):
     cur.execute('''SELECT cv.product_id,cv.source_subject_id,cv.subject_code,cv.source_digest,
-        e.staff_only,p.status,p.draft,p.deleted,pa.value
+        e.staff_only,p.status,p.draft,p.deleted,pi.status AS item_status,pa.value
         FROM curriculum_v2_courses cv JOIN exam_prep_courses e ON e.product_id=cv.product_id
         JOIN products p ON p.id=cv.product_id
+        JOIN products_item pi ON pi.product_id=cv.product_id AND pi.deleted=0
         JOIN products_attribute pa ON pa.product_id=cv.product_id AND pa.attribute_id=11
         ORDER BY cv.source_subject_id''')
     rows = cur.fetchall()
     require(len(rows) == 108, f'Expected 108 new courses, got {len(rows)}')
     chapters = lessons = 0
     for row, subject in zip(rows, subjects):
+        visibility = (row['status'], row['draft'], row['item_status'], row['staff_only'])
         require(row['source_subject_id'] == subject['id'] and row['subject_code'] == subject['code']
-                and row['source_digest'] == digest and row['staff_only'] == 1
-                and row['status'] == 0 and row['draft'] == 1 and row['deleted'] == 0,
+                and row['source_digest'] == digest and row['deleted'] == 0
+                and visibility in ((0, 1, 0, 1), (1, 0, 1, 0)),
                 f'Course mismatch for {subject["code"]}')
         actual = json.loads(row['value'])
         expected = course_json(by_subject[subject['id']], by_chapter)

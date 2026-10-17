@@ -30,7 +30,7 @@
             {/if}
         </div>
         {if $exam_prep}
-            <div class="mcl-hero-detail"><p>Đề thi thật của các trường Y, gom theo môn. Mỗi môn có đề làm thử miễn phí; nộp bài là có điểm và lời giải chi tiết.</p><span><strong>{$catalog.total}</strong> môn luyện thi</span></div>
+            <div class="mcl-hero-detail"><p>Khám phá lộ trình luyện thi theo môn, từ chương và bài học đến phần tổng ôn. Bộ đề đang được MedUC chuẩn bị.</p><span><strong>{$catalog.total}</strong> môn luyện thi</span></div>
         {else}
             <div class="mcl-hero-detail"><p>{$text.mo_ta|default:'Tìm môn học phù hợp với năm học và mục tiêu của bạn. Xem lộ trình, chọn khóa học và bắt đầu cùng MedUC.'|escape}</p><span><strong>{$catalog.total}</strong> khóa học đang mở</span></div>
         {/if}
@@ -73,7 +73,7 @@
             </section>
         {/foreach}
         <div class="mcl-empty" data-catalog-empty {if $catalog.total > 0}hidden{/if}><span aria-hidden="true">↗</span><h2>Chưa tìm thấy khóa học phù hợp.</h2><p>Thử tên môn khác hoặc xem lại danh sách đầy đủ.</p><button type="button" data-catalog-reset hidden>Xóa tìm kiếm</button><a href="/khoa-hoc">Xem tất cả khóa học →</a></div>
-        {if $catalog.total > 0}<p class="mcl-list-note">{if $exam_prep}Mỗi môn có một bài tổng ôn gồm nhiều đề. Đề đầu tiên làm thử miễn phí, các đề còn lại dành cho học viên đã đăng ký.{else}Khóa học được xếp theo danh mục năm học của MedUC. Một khóa có thể thuộc nhiều nhóm.{/if}</p>{/if}
+        {if $catalog.total > 0}<p class="mcl-list-note">{if $exam_prep}Mỗi môn có lộ trình chương, bài học và phần tổng ôn. Các đề thi đang được chuẩn bị và chưa mở cho học viên.{else}Khóa học được xếp theo danh mục năm học của MedUC. Một khóa có thể thuộc nhiều nhóm.{/if}</p>{/if}
     </section>
 
     <section class="mcl-help"><div class="mcl-shell mcl-help-inner"><div><p class="mcl-eyebrow">CHƯA BIẾT BẮT ĐẦU TỪ ĐÂU?</p><h2>CÙNG TÌM LỘ TRÌNH<br><span>PHÙ HỢP VỚI BẠN.</span></h2><p>Chia sẻ môn học hoặc mục tiêu hiện tại để MedUC hỗ trợ bạn lựa chọn.</p></div><div>{if !empty($website.hotline)}<a class="mcl-register" href="tel:{$website.hotline|escape}">Nhận tư vấn <span aria-hidden="true">↗</span></a><span class="mcl-help-phone">{$website.hotline|escape}</span>{else}<a class="mcl-register" href="/gioi-thieu">Tìm hiểu về MedUC <span aria-hidden="true">→</span></a>{/if}</div></div></section>

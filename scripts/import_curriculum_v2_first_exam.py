@@ -111,8 +111,9 @@ def target_course(cur, subject_code, review_code):
         JOIN exam_prep_courses e ON e.product_id=cv.product_id
         JOIN products_attribute pa ON pa.product_id=cv.product_id AND pa.attribute_id=11
         WHERE cv.subject_code=%s''', (subject_code,))
-    require(course['status'] == 0 and course['draft'] == 1 and course['deleted'] == 0
-            and course['staff_only'] == 1, 'Target course is not private')
+    require(course['deleted'] == 0 and
+            (course['status'], course['draft'], course['staff_only']) in ((0, 1, 1), (1, 0, 0)),
+            'Target course visibility is inconsistent')
     lessons = json.loads(course['value'])
     matches = [i for i,l in enumerate(lessons) if l['code'] == review_code]
     require(len(matches) == 1 and lessons[matches[0]]['review_vi'] == 'y',
