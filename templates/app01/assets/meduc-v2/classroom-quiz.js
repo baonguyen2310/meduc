@@ -321,19 +321,6 @@
     const list = button("mcr-btn mcr-btn--ghost", "Danh sách đề");
     list.addEventListener("click", showList);
     actions.append(history, list);
-    const starts = lessonStarts(attempt.lesson.number);
-    const nextQuiz = starts[starts.findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id) + 1];
-    if (nextQuiz) {
-      const onward = button("mcr-btn mcr-btn--ghost", "Làm bài tập tiếp theo →");
-      onward.addEventListener("click", () => nextQuiz.click());
-      actions.append(onward);
-    }
-    const nextLesson = root.querySelector("[data-mcr-next]");
-    if (nextLesson && !nextLesson.disabled) {
-      const onward = button("mcr-btn mcr-btn--ghost", "Sang bài tiếp theo →");
-      onward.addEventListener("click", () => nextLesson.click());
-      actions.append(onward);
-    }
     box.append(actions);
     stage.replaceChildren(box);
   }
