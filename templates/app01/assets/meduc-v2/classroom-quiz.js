@@ -1,6 +1,6 @@
 /* Quiz flow in the course classroom's "Bài tập" tab (block/product_detail/view_classroom.tpl).
    It replaces the Bootstrap modal built by assets/js/custom.js, whose close button reloaded the page:
-   - one question at a time, a map of every question, and a countdown when the quiz has a time limit;
+   - all questions in a scrollable column, a right-side question map, and a countdown when time is limited;
    - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
    A lesson may have several quizzes: list -> that quiz's saved history -> player/review, with a back button at each level.
@@ -106,11 +106,63 @@
   bar.append(back, barTitle, barMeta);
   const confirmBox = el("div", "mcq-confirm");
   confirmBox.setAttribute("role", "alert");
+  const workspace = el("div", "mcq-workspace");
   const stage = el("div", "mcq-stage");
+  stage.setAttribute("aria-label", "Nội dung bài tập");
+  const mapPanel = el("aside", "mcq-map-panel");
+  mapPanel.setAttribute("aria-label", "Điều hướng câu hỏi");
+  const mapHead = el("div", "mcq-map-head");
+  mapHead.append(el("strong", "", "Danh sách câu"));
+  const expandButton = button("mcq-expand");
+  expandButton.setAttribute("aria-label", "Phóng to vùng làm bài");
+  expandButton.title = "Phóng to vùng làm bài";
+  expandButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4a1 1 0 0 0-1 1v5m12-6h5a1 1 0 0 1 1 1v5M3 15v5a1 1 0 0 0 1 1h5m12-6v5a1 1 0 0 1-1 1h-5"/></svg>';
+  mapHead.append(expandButton);
   const map = el("div", "mcq-map");
   map.setAttribute("aria-label", "Chọn câu hỏi");
+  mapPanel.append(mapHead, map);
+  workspace.append(stage, mapPanel);
   const playerPolicy = el("p", "mcq-policy", "Bộ đề được đội ngũ ThS, BSNT của MedUC tổng hợp, rà soát và giải đáp, có hỗ trợ một phần của AI. Nội dung có thể còn sai sót; MedUC trân trọng mọi góp ý về đề, đáp án và lộ trình học.");
-  host.append(bar, confirmBox, stage, map, playerPolicy);
+  host.append(bar, confirmBox, workspace, playerPolicy);
+
+  function setExpanded(expanded) {
+    host.classList.toggle("is-expanded", expanded);
+    document.body.classList.toggle("mcr-quiz-expanded", expanded);
+    if (expanded) {
+      host.setAttribute("role", "dialog");
+      host.setAttribute("aria-modal", "true");
+      host.setAttribute("aria-label", "Làm bài tập");
+    } else {
+      host.removeAttribute("role");
+      host.removeAttribute("aria-modal");
+      host.removeAttribute("aria-label");
+    }
+    expandButton.setAttribute("aria-label", expanded ? "Thu nhỏ vùng làm bài" : "Phóng to vùng làm bài");
+    expandButton.title = expanded ? "Thu nhỏ vùng làm bài" : "Phóng to vùng làm bài";
+    expandButton.setAttribute("aria-pressed", String(expanded));
+    expandButton.innerHTML = expanded
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h5a1 1 0 0 0 1-1V3m12 6h-5a1 1 0 0 1-1-1V3M3 15h5a1 1 0 0 1 1 1v5m12-6h-5a1 1 0 0 0-1 1v5"/></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4a1 1 0 0 0-1 1v5m12-6h5a1 1 0 0 1 1 1v5M3 15v5a1 1 0 0 0 1 1h5m12-6v5a1 1 0 0 1-1 1h-5"/></svg>';
+  }
+  expandButton.addEventListener("click", () => setExpanded(!host.classList.contains("is-expanded")));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && host.classList.contains("is-expanded")) {
+      event.preventDefault();
+      setExpanded(false);
+    }
+    if (event.key === "Tab" && host.classList.contains("is-expanded")) {
+      const controls = [...host.querySelectorAll('button:not([disabled]):not([hidden]), a[href]:not([hidden])')]
+        .filter((control) => control.getClientRects().length);
+      if (!controls.length) return;
+      const first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !host.contains(document.activeElement))) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !host.contains(document.activeElement))) {
+        event.preventDefault(); first.focus();
+      }
+    }
+  });
+  root.addEventListener("mcr:contribute", () => setExpanded(false));
 
   function renderTimer() {
     const attempt = active;
@@ -129,6 +181,19 @@
     }
   }
 
+  function renderConfirm(attempt) {
+    confirmBox.replaceChildren();
+    confirmBox.hidden = !attempt.confirming;
+    if (attempt.confirming) {
+      const left = attempt.quiz.questions.length - attempt.answers.size;
+      const sendAnyway = button("mcr-btn mcr-btn--primary", "Nộp luôn");
+      const keepGoing = button("mcr-btn mcr-btn--ghost", "Làm tiếp");
+      sendAnyway.addEventListener("click", () => submit(attempt));
+      keepGoing.addEventListener("click", () => { attempt.confirming = false; renderConfirm(attempt); });
+      confirmBox.append(el("p", "", `Còn ${left} câu chưa làm. Câu bỏ trống được tính là sai.`), sendAnyway, keepGoing);
+    }
+  }
+
   function render() {
     const attempt = active;
     if (!attempt || view !== "player") return;
@@ -144,28 +209,21 @@
     submitButton.hidden = attempt.state !== "doing";
     resultButton.hidden = attempt.state !== "review";
     renderTimer();
+    renderConfirm(attempt);
 
-    confirmBox.replaceChildren();
-    confirmBox.hidden = !attempt.confirming;
-    if (attempt.confirming) {
-      const left = total - attempt.answers.size;
-      const sendAnyway = button("mcr-btn mcr-btn--primary", "Nộp luôn");
-      const keepGoing = button("mcr-btn mcr-btn--ghost", "Làm tiếp");
-      sendAnyway.addEventListener("click", () => submit(attempt));
-      keepGoing.addEventListener("click", () => { attempt.confirming = false; render(); });
-      confirmBox.append(el("p", "", `Còn ${left} câu chưa làm. Câu bỏ trống được tính là sai.`), sendAnyway, keepGoing);
-    }
-
-    if (attempt.state === "done") renderResult(attempt); else renderQuestion(attempt);
+    if (attempt.state === "done") renderResult(attempt); else renderQuestions(attempt);
     renderMap(attempt);
+    stage.scrollTop = 0;
+    if (attempt.state === "doing" && attempt.index > 0) jumpToQuestion(attempt, attempt.index, false);
   }
 
   function buildQuestion(attempt, index, inline = false) {
     const questions = attempt.quiz.questions;
     const question = questions[index];
     const chosen = attempt.answers.get(index);
-    const reviewing = inline || attempt.state === "review";
-    const wrap = el("div", `mcq-question${inline ? " mcq-review-question" : ""}`);
+    const reviewing = attempt.state !== "doing";
+    const wrap = el("div", `mcq-question${inline && reviewing ? " mcq-review-question" : ""}`);
+    wrap.dataset.mcqQuestion = String(index);
     wrap.append(el("p", "mcq-count", `Câu ${index + 1} / ${questions.length}`));
     const text = el("div", "mcq-text");
     text.innerHTML = dropNumber(question.question);
@@ -193,7 +251,7 @@
       const body = el("span", "mcq-option-text");
       body.innerHTML = html;
       option.append(letter, body);
-      if (!reviewing) option.addEventListener("click", () => choose(attempt, value));
+      if (!reviewing) option.addEventListener("click", () => choose(attempt, index, value));
       options.append(option);
     });
     wrap.append(options);
@@ -237,18 +295,6 @@
     }
 
     const nav = el("div", "mcq-nav");
-    if (!inline) {
-      const previous = button("mcr-nav-button", "← Câu trước");
-      const next = button("mcr-nav-button", index === questions.length - 1 && !reviewing ? "Nộp bài" : "Câu tiếp →");
-      previous.disabled = index === 0;
-      next.disabled = reviewing && index === questions.length - 1;
-      previous.addEventListener("click", () => go(attempt, index - 1));
-      next.addEventListener("click", () => {
-        if (!reviewing && index === questions.length - 1) askSubmit(attempt);
-        else go(attempt, index + 1);
-      });
-      nav.append(previous, next);
-    }
     if (reviewing) {
       const contribute = button("mcq-contribute-question", "Góp ý câu này ↗");
       contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
@@ -260,18 +306,20 @@
     return wrap;
   }
 
-  function renderQuestion(attempt) {
-    stage.replaceChildren(buildQuestion(attempt, attempt.index));
-    map.hidden = false;
+  function renderQuestions(attempt) {
+    const list = el("div", "mcq-question-list");
+    attempt.quiz.questions.forEach((question, index) => list.append(buildQuestion(attempt, index, true)));
+    stage.replaceChildren(list);
+    mapPanel.hidden = false;
   }
 
   function renderMap(attempt) {
     map.replaceChildren();
-    if (attempt.state === "done") { map.hidden = true; return; }
+    mapPanel.hidden = false;
     attempt.quiz.questions.forEach((question, index) => {
       const cell = button("mcq-cell", String(index + 1));
       const chosen = attempt.answers.get(index);
-      if (attempt.state === "review") {
+      if (attempt.state !== "doing") {
         cell.classList.add(chosen === undefined ? (attempt.incompleteHistory ? "is-unknown" : "is-skipped") : chosen === question.answer ? "is-correct" : "is-wrong");
       } else if (chosen !== undefined) {
         cell.classList.add("is-answered");
@@ -281,7 +329,7 @@
         cell.setAttribute("aria-current", "true");
       }
       cell.setAttribute("aria-label", `Câu ${index + 1}`);
-      cell.addEventListener("click", () => go(attempt, index));
+      cell.addEventListener("click", () => jumpToQuestion(attempt, index));
       map.append(cell);
     });
   }
@@ -326,13 +374,14 @@
     const postActions = el("div", "mcq-post-actions");
     if (root.dataset.mcrLicensed === "1") {
       const course = button("mcr-btn mcr-btn--primary", "Về khóa học");
-      course.addEventListener("click", () => root.querySelector("[data-mcr-intro]")?.click());
+      course.addEventListener("click", () => { setExpanded(false); root.querySelector("[data-mcr-intro]")?.click(); });
       postActions.append(course);
     } else {
       const buySource = root.querySelector(".mcr-toolbar-buy .mcr-btn--primary");
       if (buySource) {
         const buy = buySource.cloneNode(true);
         buy.textContent = "Mua khóa học";
+        buy.addEventListener("click", () => setExpanded(false));
         postActions.append(buy);
       }
     }
@@ -360,12 +409,6 @@
     box.append(actions);
     stage.replaceChildren(box);
   }
-  // Review opens on the first question that was wrong or skipped.
-  function firstToReview(attempt) {
-    const index = attempt.quiz.questions.findIndex((question, i) => attempt.answers.get(i) !== question.answer);
-    return index < 0 ? 0 : index;
-  }
-
   function showList() {
     historyRequest++;
     view = "list";
@@ -395,7 +438,7 @@
     name.textContent = selected.title;
     barMeta.hidden = true;
     confirmBox.hidden = true;
-    map.hidden = true;
+    mapPanel.hidden = true;
     const panel = el("div", "mcq-history");
     panel.append(el("p", "mcq-result-kicker", "Bài tập đã chọn"));
     panel.append(el("h2", "mcq-history-title", selected.title));
@@ -436,6 +479,7 @@
       panel.append(list);
     }
     stage.replaceChildren(panel);
+    stage.scrollTop = 0;
   }
 
   async function openHistory(context) {
@@ -511,7 +555,7 @@
         });
       }
       attempt.state = "review";
-      attempt.index = firstToReview(attempt);
+      attempt.index = 0;
       active = attempt;
       view = "player";
       sync();
@@ -528,22 +572,52 @@
   }
 
   // Actions
-  function choose(attempt, value) {
-    attempt.answers.set(attempt.index, value);
-    attempt.confirming = false;
-    render();
-  }
-  function go(attempt, index) {
-    if (index < 0 || index >= attempt.quiz.questions.length) return;
+  function setCurrentQuestion(attempt, index) {
     attempt.index = index;
-    if (attempt.state === "done") attempt.state = "review";
-    render();
-    reveal();
+    [...map.children].forEach((cell, position) => {
+      cell.classList.toggle("is-current", position === index);
+      if (position === index) cell.setAttribute("aria-current", "true");
+      else cell.removeAttribute("aria-current");
+    });
   }
+  function choose(attempt, index, value) {
+    attempt.answers.set(index, value);
+    attempt.confirming = false;
+    renderConfirm(attempt);
+    progress.textContent = `Đã làm ${attempt.answers.size}/${attempt.quiz.questions.length}`;
+    const card = stage.querySelector(`[data-mcq-question="${index}"]`);
+    card?.querySelectorAll(".mcq-option").forEach((option, position) => {
+      const selected = attempt.quiz.questions[index].options[position][0] === value;
+      option.classList.toggle("is-selected", selected);
+      option.setAttribute("aria-checked", String(selected));
+    });
+    map.children[index]?.classList.add("is-answered");
+    setCurrentQuestion(attempt, index);
+  }
+  function jumpToQuestion(attempt, index, animate = true) {
+    if (index < 0 || index >= attempt.quiz.questions.length) return;
+    const card = stage.querySelector(`[data-mcq-question="${index}"]`);
+    if (!card) return;
+    setCurrentQuestion(attempt, index);
+    const top = card.getBoundingClientRect().top - stage.getBoundingClientRect().top + stage.scrollTop - 16;
+    stage.scrollTo({ top, behavior: animate && !reducedMotion ? "smooth" : "auto" });
+  }
+  stage.addEventListener("scroll", () => {
+    if (view !== "player" || !active) return;
+    const top = stage.getBoundingClientRect().top + Math.min(160, stage.clientHeight * 0.3);
+    const cards = stage.querySelectorAll("[data-mcq-question]");
+    for (const card of cards) {
+      if (card.getBoundingClientRect().bottom > top) {
+        const index = Number(card.dataset.mcqQuestion);
+        if (index !== active.index) setCurrentQuestion(active, index);
+        break;
+      }
+    }
+  });
   function askSubmit(attempt) {
     if (attempt.answers.size < attempt.quiz.questions.length) {
       attempt.confirming = true;
-      render();
+      renderConfirm(attempt);
       confirmBox.querySelector("button")?.focus();
       return;
     }
@@ -552,6 +626,7 @@
   function submit(attempt) {
     if (attempt.state !== "doing") return;
     attempt.state = "done";
+    attempt.index = 0;
     attempt.confirming = false;
     attempt.spent = Math.max(0, Math.round((Math.min(Date.now(), attempt.deadline || Date.now()) - attempt.started) / 1000));
     save(attempt);
@@ -585,7 +660,10 @@
     const done = (message, savedId = 0) => {
       attempt.saved = message;
       if (savedId) attempt.savedRecordId = savedId;
-      if (attempt === active && attempt.state === "done" && view === "player") render();
+      if (attempt === active && attempt.state === "done" && view === "player") {
+        const saved = stage.querySelector(".mcq-saved");
+        if (saved) saved.textContent = message;
+      }
       if (view === "history" && selected && selected.id === attempt.quiz.id) openHistory(selected);
     };
     if (window.nhMain && typeof window.nhMain.callAjax === "function") {
@@ -626,6 +704,7 @@
   // The selected quiz's history or player replaces the lesson's quiz list.
   function sync() {
     const showing = view !== "list" && selected && selected.lesson.number === lessonNumber;
+    if (view !== "player" || !showing) setExpanded(false);
     host.hidden = !showing;
     if (policy) policy.hidden = !!showing;
     root.querySelectorAll("[data-mcr-quiz]").forEach((card) => {
@@ -674,13 +753,13 @@
     const position = "12345".indexOf(key) >= 0 ? "12345".indexOf(key) : "abcde".indexOf(key);
     if (position >= 0 && active.state === "doing") {
       const option = active.quiz.questions[active.index].options[position];
-      if (option) { event.preventDefault(); choose(active, option[0]); }
+      if (option) { event.preventDefault(); choose(active, active.index, option[0]); }
     } else if (event.key === "ArrowRight") {
       event.preventDefault();
-      go(active, active.index + 1);
+      jumpToQuestion(active, active.index + 1);
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
-      go(active, active.index - 1);
+      jumpToQuestion(active, active.index - 1);
     }
   });
 
