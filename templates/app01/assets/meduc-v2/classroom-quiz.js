@@ -371,6 +371,15 @@
     }
     box.append(saved);
 
+    if (root.dataset.mcrLicensed !== "1") {
+      const priceSource = root.querySelector(".mcr-intro-side .mcr-price");
+      if (priceSource) {
+        const offer = el("div", "mcq-result-offer");
+        offer.append(el("p", "mcq-result-offer-label", "Học trọn khóa học"), priceSource.cloneNode(true));
+        box.append(offer);
+      }
+    }
+
     const postActions = el("div", "mcq-post-actions");
     if (root.dataset.mcrLicensed === "1") {
       const course = button("mcr-btn mcr-btn--primary", "Về khóa học");
@@ -380,7 +389,7 @@
       const buySource = root.querySelector(".mcr-toolbar-buy .mcr-btn--primary");
       if (buySource) {
         const buy = buySource.cloneNode(true);
-        buy.textContent = "Mua khóa học";
+        buy.textContent = "Đăng ký khóa học";
         buy.addEventListener("click", () => setExpanded(false));
         postActions.append(buy);
       }

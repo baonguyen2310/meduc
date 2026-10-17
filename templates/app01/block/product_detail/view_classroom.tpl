@@ -235,9 +235,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-9" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-6" defer></script>
-{if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-8" defer></script>{/if}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-10" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261017-7" defer></script>
+{if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-9" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
@@ -449,7 +449,8 @@
                                 {if !$licensed}
                                     <p class="mcr-price mcr-price--center"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><span class="mcr-discount">−{$discount}%</span>{/if}</p>
                                     <div class="mcr-card-actions">
-                                        <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học</a>
+                                        <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký khóa học</a>
+                                        <button type="button" class="mcr-btn mcr-btn--ghost-light" data-mcr-paywall-next hidden>Xem video học thử tiếp</button>
                                         {if !empty($text.link_zalo)}<a class="mcr-btn mcr-btn--ghost-light" href="{$text.link_zalo|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo</a>{/if}
                                     </div>
                                     <button type="button" class="mcr-card-link" data-mcr-goto-quiz hidden>Buổi này có bài tập làm thử miễn phí →</button>

@@ -1,8 +1,8 @@
 /* Course page as a classroom (block/product_detail/view_classroom.tpl).
    - The outline switches the right-hand side between the course introduction and a lesson; ?bai=N keeps the address
      in step so a lesson can be shared and the Back button works.
-   - Lesson videos play inside the page (YouTube IFrame API). When one ends, the next lesson with a video starts after
-     a short countdown; past the free lessons, the sign-up card takes the frame instead.
+   - Lesson videos play inside the page (YouTube IFrame API). Students continue to the next video after
+     a short countdown; visitors trying a free lesson see the sign-up card and may choose another free video.
    - The introduction: the FAQ, questions, ratings and related-course blocks rendered below on the page move into their
      places (data-mcr-slot), and the tabs above it follow the reader through its sections.
    - Progress (lessons watched, last lesson) is kept in this browser only. */
@@ -147,13 +147,18 @@
     playerHolder.replaceChildren(frame);
   }
 
-  function showPaywall(title, text, offerQuiz) {
+  function showPaywall(title, text, offerQuiz, nextTrial = null) {
     const heading = $("[data-mcr-paywall-title]");
     const body = $("[data-mcr-paywall-text]");
     if (heading) heading.textContent = title;
     if (body) body.textContent = text;
     const quizLink = $("[data-mcr-goto-quiz]");
     if (quizLink) quizLink.hidden = !offerQuiz;
+    const trialLink = $("[data-mcr-paywall-next]");
+    if (trialLink) {
+      trialLink.hidden = !nextTrial;
+      trialLink.dataset.mcrPaywallNext = nextTrial ? String(nextTrial.number) : "";
+    }
     showStage("paywall");
   }
   function showVideoError() {
@@ -170,14 +175,17 @@
     const lesson = current;
     if (!lesson) return;
     const next = nextWatchable(lesson.number);
-    if (!next) {
-      if (licensed) return;
+    if (!licensed) {
       const following = byNumber.get(lesson.number + 1);
       showPaywall(
-        "Bạn đã xem hết video học thử",
-        following ? `Đăng ký để học tiếp từ “${following.title}” và trọn ${total} bài của khoá học.` : `Đăng ký để học trọn ${total} bài của khoá học.`,
+        "Bạn đã xem xong video học thử",
+        !next && following ? `Đăng ký để học tiếp từ “${following.title}” và trọn ${total} bài của khoá học.` : `Đăng ký để học trọn ${total} bài của khoá học.`,
         false,
+        next,
       );
+      return;
+    }
+    if (!next) {
       return;
     }
     $("[data-mcr-end-title]").textContent = next.title;
@@ -199,6 +207,10 @@
   $("[data-mcr-end-stay]")?.addEventListener("click", () => {
     clearInterval(endTimer);
     if (current) setLessonStage(current);
+  });
+  $("[data-mcr-paywall-next]")?.addEventListener("click", (event) => {
+    const next = byNumber.get(Number(event.currentTarget.dataset.mcrPaywallNext));
+    if (next && canWatch(next)) selectLesson(next.number, { autoplay: true });
   });
 
   // Tabs
