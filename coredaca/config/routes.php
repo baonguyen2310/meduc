@@ -156,6 +156,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     // quizs_answer
     $builder->connect('/quizs-answer/add', ['controller' => 'QuizsAnswer', 'action' => 'add']);
+    $builder->connect('/khoa-hoc/dong-gop', ['controller' => 'CourseContribution', 'action' => 'submit']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz/lich-su', ['controller' => 'QuizsAnswer', 'action' => 'history'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz', ['controller' => 'QuizsAnswer', 'action' => 'player'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
 
@@ -546,6 +547,9 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/product/detail/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/course-exam/preview/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'preview'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
     $builder->connect('/course-exam/word/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'word'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
+    $builder->connect('/course-contributions', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'index']);
+    $builder->connect('/course-contributions/review/:id', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'review'], ['pass'=>['id'],'id'=>'[0-9]+']);
+    $builder->connect('/course-contributions/photo/:id/:number', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'photo'], ['pass'=>['id','number'],'id'=>'[0-9]+','number'=>'[0-9]+']);
 
     $builder->connect('/product/save', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'save']);
     $builder->connect('/product/save/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'save'], ['pass' => ['id'], 'id' => '[0-9]+']);

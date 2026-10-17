@@ -81,6 +81,7 @@ class EmailComponent extends Component
 
         if($send_try_content){
             $content = !empty($params['content']) ? $params['content'] : null;
+            $title_email = !empty($params['subject']) ? (string)$params['subject'] : $title_email;
             if(empty($content)){
                 $this->log('Vui lòng nhập nội dung gửi thử', 'error');
                 return $this->System->getResponse([MESSAGE => 'Vui lòng nhập nội dung gửi thử']);

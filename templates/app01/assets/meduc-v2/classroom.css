@@ -245,7 +245,37 @@ html[data-meduc-theme="light"] .mcr {
 .mcr-resource.is-covered { display: none !important; }
 .mcr-quiz-kicker { margin: 0 0 6px !important; color: var(--mcr-red) !important; font: 700 11px/1.3 Inter, Arial, sans-serif !important; letter-spacing: .12em; text-transform: uppercase; }
 .mcr .mcr-quiz-rank { display: inline-block; margin-top: 16px; color: var(--mcr-red); font: 700 14px/1.4 Inter, Arial, sans-serif; }
-.mcr-quiz-disclaimer { margin: 14px 0 0; color: var(--mcr-muted); font: 400 12.5px/1.6 Inter, Arial, sans-serif; }
+.mcr-quiz-disclaimer { margin: 18px 0 0; padding: 15px 18px; border-left: 3px solid var(--mcr-red); border-radius: 0 10px 10px 0; background: var(--mcr-red-soft); color: var(--mcr-ink); font: 400 13px/1.65 Inter, Arial, sans-serif; }
+.mcr-quiz-disclaimer[hidden] { display: none; }
+.mcq-policy { margin: 0; padding: 14px 20px; border-top: 1px solid var(--mcr-line); color: var(--mcr-muted); background: var(--mcr-red-soft); font: 400 12.5px/1.6 Inter, Arial, sans-serif; }
+.mcr-contribution { margin-top: 18px; border: 1px solid var(--mcr-line); border-radius: 14px; background: var(--mcr-panel); }
+.mcr-contribution summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 20px; color: var(--mcr-ink); font: 700 15px/1.4 Inter, Arial, sans-serif; cursor: pointer; list-style: none; }
+.mcr-contribution summary::-webkit-details-marker { display: none; }
+.mcr-contribution summary span { color: var(--mcr-red); }
+.mcr-contribution[open] summary { border-bottom: 1px solid var(--mcr-line); }
+.mcr-contribution-body { padding: 20px; }
+.mcr-contribution-intro { margin: 0 0 18px; color: var(--mcr-muted); font: 400 14px/1.6 Inter, Arial, sans-serif; }
+.mcr-contribution-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mcr-contribution label { display: grid; gap: 7px; color: var(--mcr-ink); font: 600 13px/1.4 Inter, Arial, sans-serif; }
+.mcr-contribution label[hidden] { display: none; }
+.mcr-contribution input, .mcr-contribution select, .mcr-contribution textarea { width: 100%; min-width: 0; padding: 11px 12px; border: 1px solid var(--mcr-line); border-radius: 9px; background: var(--mcr-panel); color: var(--mcr-ink); font: 400 14px/1.5 Inter, Arial, sans-serif; }
+.mcr-contribution :is(input, select, textarea):focus-visible { outline: 2px solid var(--mcr-red); outline-offset: 2px; }
+.mcr-contribution-wide { margin-top: 16px; }
+.mcr-contribution textarea { resize: vertical; }
+.mcr-contribution-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+.mcr-contribution-footer [role=status] { color: var(--mcr-red); font: 600 13px/1.5 Inter, Arial, sans-serif; }
+.mcr-contribution-footer [role=status].is-success { flex: 0 0 100%; padding: 14px 16px; border-radius: 9px; background: #eef8f1; color: #18834b; overflow-wrap: anywhere; }
+.mcq-invitation { max-width: 660px; margin: 24px auto 0; padding: 18px 20px; border: 1px solid var(--mcr-line); border-radius: 12px; background: var(--mcr-red-soft); text-align: center; }
+.mcq-invitation strong { color: var(--mcr-ink); font: 700 17px/1.4 Inter, Arial, sans-serif; }
+.mcq-invitation p { margin: 7px 0 14px; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
+.mcq-contribute-question { margin-left: auto; padding: 7px 0; border: 0; background: none; color: var(--mcr-red); font: 700 13px/1.4 Inter, Arial, sans-serif; cursor: pointer; }
+.mcq-contribute-question:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) {
+  .mcr-contribution-grid { grid-template-columns: 1fr; }
+  .mcr-contribution-body { padding: 16px; }
+  .mcr-contribution summary { padding: 16px; }
+  .mcq-contribute-question { margin-left: 0; }
+}
 .mcq { overflow: clip; border: 1px solid var(--mcr-line); border-radius: 14px; scroll-margin-top: 76px; }
 .mcq-bar { position: sticky; z-index: 3; top: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--mcr-line); background: var(--mcr-panel); }
 .mcq-bar-title { min-width: 0; margin-right: auto; }

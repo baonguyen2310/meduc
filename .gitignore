@@ -1,6 +1,7 @@
 # Database dumps & large archives
 full_database.sql
 *.sql
+!scripts/course_contributions.sql
 *.sql.gz
 *.zip
 *.tar.gz

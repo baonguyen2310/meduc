@@ -235,9 +235,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-4" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-6" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261016-6" defer></script>
-{if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-4" defer></script>{/if}
+{if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-6" defer></script>{/if}
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
@@ -556,7 +557,47 @@
                         {/foreach}
                         {* classroom-quiz.js builds the quiz here; the lesson's card above hides while it runs. *}
                         <div class="mcq" data-mcr-quiz-player hidden></div>
-                        {if !empty($text.ghi_chu_bai_tap)}<p class="mcr-quiz-disclaimer" data-mcr-quiz-note hidden>{$text.ghi_chu_bai_tap|escape}</p>{/if}
+                        <p class="mcr-quiz-disclaimer" data-mcr-policy>Bộ đề được đội ngũ ThS, BSNT của MedUC tổng hợp, rà soát và giải đáp, có hỗ trợ một phần của AI. Nội dung có thể còn sai sót; MedUC trân trọng mọi góp ý về đề, đáp án và lộ trình học.</p>
+                        <details class="mcr-contribution" data-mcr-contribution>
+                            <summary>Góp ý đáp án, lộ trình hoặc đóng góp đề <span aria-hidden="true">→</span></summary>
+                            <div class="mcr-contribution-body">
+                                <p class="mcr-contribution-intro">Học xong, bạn thấy đáp án hoặc lộ trình có điểm nào cần sửa? Bạn có đề muốn chia sẻ với cộng đồng học Y?</p>
+                                {if empty($member_info.id)}
+                                    <p>Vui lòng <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#login-modal">đăng nhập</a> để gửi đóng góp.</p>
+                                {else}
+                                    <form data-mcr-contribution-form enctype="multipart/form-data">
+                                        <input type="hidden" name="product_id" value="{$product.id}">
+                                        <input type="hidden" name="lesson_number" value="" data-contribution-lesson>
+                                        <div class="mcr-contribution-grid">
+                                            <label>Loại đóng góp
+                                                <select name="type" required data-contribution-type>
+                                                    <option value="answer">Góp ý đáp án / lời giải</option>
+                                                    <option value="exam">Đóng góp đề dạng ảnh chụp</option>
+                                                    <option value="curriculum">Góp ý lộ trình, chương, bài</option>
+                                                    <option value="general">Góp ý khác</option>
+                                                </select>
+                                            </label>
+                                            <label data-contribution-quiz-field>Đề cần góp ý
+                                                <select name="quiz_id" data-contribution-quiz><option value="">Chọn đề trong bài này</option></select>
+                                            </label>
+                                            <label data-contribution-question-field>Số câu
+                                                <input type="number" min="1" name="question_number" placeholder="Ví dụ: 12">
+                                            </label>
+                                            <label data-contribution-answer-field>Đáp án đề xuất
+                                                <input type="text" maxlength="255" name="suggested_answer" placeholder="Ví dụ: B">
+                                            </label>
+                                        </div>
+                                        <label class="mcr-contribution-wide" data-contribution-photo-field hidden>Ảnh đề (tối đa 5 ảnh, mỗi ảnh dưới 8 MB)
+                                            <input type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple>
+                                        </label>
+                                        <label class="mcr-contribution-wide">Nội dung đóng góp
+                                            <textarea name="content" rows="4" minlength="10" maxlength="5000" required placeholder="Mô tả điều cần sửa, lý do hoặc thông tin về đề bạn muốn chia sẻ..."></textarea>
+                                        </label>
+                                        <div class="mcr-contribution-footer"><button type="submit" class="mcr-btn mcr-btn--primary">Gửi đóng góp</button><span data-contribution-status role="status" aria-live="polite"></span></div>
+                                    </form>
+                                {/if}
+                            </div>
+                        </details>
                         <a class="mcr-quiz-rank" href="/class-rank?khoa={$product.id}">Bảng xếp hạng và chỉ số tiến bộ của bạn <span aria-hidden="true">→</span></a>
                     </div>
 

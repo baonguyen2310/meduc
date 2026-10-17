@@ -17,8 +17,8 @@
   const quizzes = {}; // quiz id -> {id, name, minutes, questions}, loaded on first start
   const productId = Number(root.dataset.mcrProduct) || 0;
 
-  const note = root.querySelector("[data-mcr-quiz-note]");
   const memberId = Number(root.dataset.mcrMember) || 0;
+  const policy = root.querySelector("[data-mcr-policy]");
   const letters = ["A", "B", "C", "D", "E"];
   const pad = (number) => String(number).padStart(2, "0");
   const clock = (seconds) => `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
@@ -109,7 +109,8 @@
   const stage = el("div", "mcq-stage");
   const map = el("div", "mcq-map");
   map.setAttribute("aria-label", "Chọn câu hỏi");
-  host.append(bar, confirmBox, stage, map);
+  const playerPolicy = el("p", "mcq-policy", "Bộ đề được đội ngũ ThS, BSNT của MedUC tổng hợp, rà soát và giải đáp, có hỗ trợ một phần của AI. Nội dung có thể còn sai sót; MedUC trân trọng mọi góp ý về đề, đáp án và lộ trình học.");
+  host.append(bar, confirmBox, stage, map, playerPolicy);
 
   function renderTimer() {
     const attempt = active;
@@ -157,7 +158,6 @@
 
     if (attempt.state === "done") renderResult(attempt); else renderQuestion(attempt);
     renderMap(attempt);
-    if (note) note.hidden = attempt.state === "done";
   }
 
   function renderQuestion(attempt) {
@@ -247,6 +247,11 @@
       else go(attempt, attempt.index + 1);
     });
     nav.append(previous, next);
+    const contribute = button("mcq-contribute-question", "Góp ý câu này ↗");
+    contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
+      detail: { quizId: attempt.quiz.id, questionNumber: attempt.index + 1, type: "answer" }
+    })));
+    nav.append(contribute);
     wrap.append(nav);
     stage.replaceChildren(wrap);
     map.hidden = false;
@@ -309,6 +314,16 @@
       saved.append(login, " để lưu vào lịch sử làm bài.");
     }
     box.append(saved);
+
+    const invitation = el("div", "mcq-invitation");
+    invitation.append(el("strong", "", "Bạn có góp ý về lộ trình, đề hoặc đáp án?"));
+    invitation.append(el("p", "", "Chia sẻ với MedUC để bộ đề ngày càng chính xác và hữu ích cho cộng đồng học Y."));
+    const contribute = button("mcr-btn mcr-btn--ghost", "Gửi góp ý hoặc đóng góp đề");
+    contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
+      detail: { quizId: attempt.quiz.id, type: "general" }
+    })));
+    invitation.append(contribute);
+    box.append(invitation);
 
     const actions = el("div", "mcq-actions");
     const review = button("mcr-btn mcr-btn--primary", "Xem lời giải chi tiết");
@@ -591,10 +606,10 @@
   function sync() {
     const showing = view !== "list" && selected && selected.lesson.number === lessonNumber;
     host.hidden = !showing;
+    if (policy) policy.hidden = !!showing;
     root.querySelectorAll("[data-mcr-quiz]").forEach((card) => {
       card.classList.toggle("is-covered", showing && Number(card.dataset.mcrQuiz) === lessonNumber);
     });
-    if (note) note.hidden = !showing || view !== "player" || !active || active.state === "done";
   }
   function updateStartButtons() {
     root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => {

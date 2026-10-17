@@ -125,6 +125,7 @@ class AppController extends Controller {
 
             $role_id = (int)$account['role_id'];
             if ($controller_request === 'CourseExam' && $role_id === 1) return;
+            if ($controller_request === 'CourseContribution' && $role_id === 1) return;
             $check_permission = TableRegistry::get('Roles')->checkPermissionRequest($role_id, $controller_request, $action_request);
             if(!$check_permission && !$this->request->is('ajax')){
                 $this->showErrorPage('denied');

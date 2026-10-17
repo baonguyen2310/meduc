@@ -24,6 +24,15 @@
                 </li>
             {else}
 
+            {if !empty($auth_user.supper_admin) || (!empty($auth_user.role_id) && $auth_user.role_id == 1)}
+                <li class="kt-menu__item">
+                    <a href="{ADMIN_PATH}/course-contributions" class="kt-menu__link" path-menu="course-contributions">
+                        <span class="kt-menu__link-icon"><i class="fas fa-comment-medical"></i></span>
+                        <span class="kt-menu__link-text">Đóng góp học viên</span>
+                    </a>
+                </li>
+            {/if}
+
 
             {* ---------------------------- menu tổng quan *}
             {assign var = link_dashboard value = "{ADMIN_PATH}/main"}
