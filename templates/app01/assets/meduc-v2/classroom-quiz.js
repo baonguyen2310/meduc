@@ -1,10 +1,10 @@
-/* Quiz player in the course classroom's "Bài tập" tab (block/product_detail/view_classroom.tpl).
+/* Quiz flow in the course classroom's "Bài tập" tab (block/product_detail/view_classroom.tpl).
    It replaces the Bootstrap modal built by assets/js/custom.js, whose close button reloaded the page:
    - one question at a time, a map of every question, and a countdown when the quiz has a time limit;
    - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
-   A lesson may have several quizzes: the player then has a way back to the lesson's list, and the result offers the next one.
-   The page lists the quizzes only; a quiz's questions load from /khoa-hoc/bai-tap/{course}/{quiz} when it starts
+   A lesson may have several quizzes: list -> that quiz's saved history -> player/review, with a back button at each level.
+   A quiz's questions load from /khoa-hoc/bai-tap/{course}/{quiz} when it starts
    (QuizsAnswerController::player, which also checks the visitor may take it).
    An attempt stays in memory while the visitor moves between lessons, tabs and quizzes; nothing reloads the page. */
 (() => {
@@ -30,6 +30,9 @@
   const attempts = new Map(); // quiz id -> attempt
   let active = null;
   let lessonNumber = 0;
+  let view = "list"; // list -> history of one quiz -> player/review
+  let selected = null;
+  let historyRequest = 0;
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -60,6 +63,7 @@
     };
   }
   function correctCount(attempt) {
+    if (attempt.record) return attempt.record.correct;
     return attempt.quiz.questions.filter((question, index) => attempt.answers.get(index) === question.answer).length;
   }
 
@@ -84,7 +88,10 @@
   // Layout of the player
   const bar = el("div", "mcq-bar");
   const back = button("mcq-back", "← Danh sách đề");
-  back.addEventListener("click", () => { active = null; sync(); updateStartButtons(); });
+  back.addEventListener("click", () => {
+    if (view === "player" && selected) openHistory(selected);
+    else showList();
+  });
   const barTitle = el("div", "mcq-bar-title");
   const kicker = el("span", "mcq-kicker");
   const name = el("strong", "mcq-name");
@@ -123,12 +130,14 @@
 
   function render() {
     const attempt = active;
-    if (!attempt) return;
+    if (!attempt || view !== "player") return;
     const total = attempt.quiz.questions.length;
     const count = lessonQuizCount(attempt.lesson.number);
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
     kicker.textContent = count > 1 && place >= 0 ? `Bài tập ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `Bài tập · Buổi ${attempt.lesson.number}`;
-    back.hidden = count < 2;
+    back.hidden = false;
+    back.textContent = "← Lịch sử bài tập";
+    barMeta.hidden = false;
     name.textContent = attempt.quiz.name;
     progress.textContent = attempt.state === "doing" ? `Đã làm ${attempt.answers.size}/${total}` : `${correctCount(attempt)}/${total} câu đúng`;
     submitButton.hidden = attempt.state !== "doing";
@@ -190,7 +199,7 @@
     wrap.append(options);
 
     if (reviewing) {
-      if (chosen === undefined) wrap.append(el("p", "mcq-skipped", "Bạn chưa trả lời câu này."));
+      if (chosen === undefined) wrap.append(el("p", "mcq-skipped", attempt.incompleteHistory ? "Bài nộp cũ không lưu được lựa chọn của câu này; bạn vẫn có thể xem đáp án và lời giải." : "Bạn chưa trả lời câu này."));
       const parts = question.explanation_parts;
       if ((parts && parts.options && parts.options.length) || question.explain) {
         const explain = el("div", "mcq-explain");
@@ -250,7 +259,7 @@
       const cell = button("mcq-cell", String(index + 1));
       const chosen = attempt.answers.get(index);
       if (attempt.state === "review") {
-        cell.classList.add(chosen === undefined ? "is-skipped" : chosen === question.answer ? "is-correct" : "is-wrong");
+        cell.classList.add(chosen === undefined ? (attempt.incompleteHistory ? "is-unknown" : "is-skipped") : chosen === question.answer ? "is-correct" : "is-wrong");
       } else if (chosen !== undefined) {
         cell.classList.add("is-answered");
       }
@@ -307,6 +316,11 @@
     const retry = button("mcr-btn mcr-btn--ghost", "Làm lại");
     retry.addEventListener("click", () => start(attempt.quiz, attempt.lesson, true));
     actions.append(review, retry);
+    const history = button("mcr-btn mcr-btn--ghost", "Lịch sử bài tập");
+    history.addEventListener("click", () => selected && openHistory(selected));
+    const list = button("mcr-btn mcr-btn--ghost", "Danh sách đề");
+    list.addEventListener("click", showList);
+    actions.append(history, list);
     const starts = lessonStarts(attempt.lesson.number);
     const nextQuiz = starts[starts.findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id) + 1];
     if (nextQuiz) {
@@ -327,6 +341,167 @@
   function firstToReview(attempt) {
     const index = attempt.quiz.questions.findIndex((question, i) => attempt.answers.get(i) !== question.answer);
     return index < 0 ? 0 : index;
+  }
+
+  function showList() {
+    historyRequest++;
+    view = "list";
+    active = null;
+    selected = null;
+    sync();
+    updateStartButtons();
+  }
+
+  function historyRows() {
+    const rows = [...(selected.history || [])];
+    const local = attempts.get(selected.id);
+    if (local && local.state !== "doing" && !rows.some((row) => row.id === local.savedRecordId)) {
+      rows.unshift({
+        id: 0, localAttempt: local, created: Math.floor(Date.now() / 1000),
+        total: local.quiz.questions.length, correct: correctCount(local), seconds: local.spent,
+      });
+    }
+    return rows;
+  }
+
+  function renderHistory() {
+    if (view !== "history" || !selected) return;
+    back.hidden = false;
+    back.textContent = "← Danh sách đề";
+    kicker.textContent = `Lịch sử bài tập · Buổi ${selected.lesson.number}`;
+    name.textContent = selected.title;
+    barMeta.hidden = true;
+    confirmBox.hidden = true;
+    map.hidden = true;
+    const panel = el("div", "mcq-history");
+    panel.append(el("p", "mcq-result-kicker", "Bài tập đã chọn"));
+    panel.append(el("h2", "mcq-history-title", selected.title));
+    panel.append(el("p", "mcq-history-subtitle", "Xem các lần đã làm hoặc bắt đầu một lần mới."));
+    const current = attempts.get(selected.id);
+    const startButton = button("mcr-btn mcr-btn--primary", current && current.state === "doing" ? "Tiếp tục làm bài" : "Bắt đầu làm bài");
+    startButton.addEventListener("click", () => beginSelected(startButton));
+    panel.append(startButton);
+    if (current && current.state === "doing" && current.deadline) {
+      panel.append(el("p", "mcq-history-hint", "Bài đang làm vẫn tiếp tục tính giờ khi bạn rời màn hình làm bài."));
+    }
+    const rows = historyRows();
+    const heading = el("h3", "mcq-history-heading", `Lịch sử làm bài${selected.loading ? "" : ` · ${rows.length} lần`}`);
+    panel.append(heading);
+    if (selected.loading) {
+      panel.append(el("p", "mcq-history-empty", "Đang tải lịch sử…"));
+    } else if (selected.error) {
+      const error = el("p", "mcq-history-error", selected.error);
+      error.setAttribute("role", "alert");
+      panel.append(error);
+    } else if (!rows.length) {
+      panel.append(el("p", "mcq-history-empty", memberId ? "Bạn chưa làm bài tập này. Hãy bắt đầu lần đầu tiên." : "Đăng nhập để lưu và xem lịch sử làm bài của bạn."));
+    } else {
+      const list = el("div", "mcq-history-list");
+      rows.forEach((record, index) => {
+        const item = el("div", "mcq-history-item");
+        const copy = el("div", "mcq-history-copy");
+        copy.append(el("strong", "", `Lần ${rows.length - index}`));
+        copy.append(el("span", "", record.localAttempt && !record.localAttempt.savedRecordId ? (record.localAttempt.saved || "Bài vừa làm · đang chờ lưu") : new Date(record.created * 1000).toLocaleString("vi-VN")));
+        const score = el("div", "mcq-history-score");
+        score.append(el("strong", "", `${record.correct}/${record.total}`));
+        score.append(el("span", "", `${record.total ? Math.round(record.correct / record.total * 100) : 0}% đúng · ${clock(record.seconds)}`));
+        const review = button("mcr-btn mcr-btn--ghost", "Xem lại");
+        review.addEventListener("click", () => reviewHistory(record, review));
+        item.append(copy, score, review);
+        list.append(item);
+      });
+      panel.append(list);
+    }
+    stage.replaceChildren(panel);
+  }
+
+  async function openHistory(context) {
+    const request = ++historyRequest;
+    selected = context;
+    selected.loading = true;
+    selected.error = "";
+    view = "history";
+    active = null;
+    sync();
+    renderHistory();
+    reveal();
+    try {
+      const response = await fetch(`/khoa-hoc/bai-tap/${productId}/${context.id}/lich-su`, { credentials: "same-origin", headers: { Accept: "application/json" } });
+      const body = await response.json().catch(() => null);
+      if (!response.ok || !body || body.code !== "success" || !Array.isArray(body.data)) throw new Error((body && body.message) || "Chưa tải được lịch sử làm bài.");
+      if (request !== historyRequest || view !== "history") return;
+      context.history = body.data;
+    } catch (error) {
+      if (request !== historyRequest || view !== "history") return;
+      context.error = error.message || "Chưa tải được lịch sử làm bài.";
+    }
+    context.loading = false;
+    renderHistory();
+  }
+
+  async function beginSelected(control) {
+    if (!selected) return;
+    const context = selected;
+    control.disabled = true;
+    control.textContent = "Đang tải đề…";
+    try {
+      const quiz = await load(context.id);
+      if (view !== "history" || selected !== context) return;
+      const current = attempts.get(context.id);
+      start(quiz, context.lesson, !current || current.state !== "doing");
+    } catch (error) {
+      if (view === "history" && selected === context) {
+        context.error = error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.";
+        renderHistory();
+      }
+    } finally {
+      control.disabled = false;
+    }
+  }
+
+  async function reviewHistory(record, control) {
+    if (!selected) return;
+    const context = selected;
+    control.disabled = true;
+    control.textContent = "Đang tải…";
+    try {
+      const quiz = await load(context.id);
+      if (view !== "history" || selected !== context) return;
+      const attempt = record.localAttempt || newAttempt(quiz, context.lesson);
+      if (!record.localAttempt) {
+        attempt.record = record;
+        attempt.spent = record.seconds;
+        attempt.saved = "Đây là bài làm đã lưu trong lịch sử của bạn.";
+        const positions = new Map();
+        quiz.questions.forEach((question, index) => {
+          const matches = positions.get(question.code) || [];
+          matches.push(index);
+          positions.set(question.code, matches);
+        });
+        (record.answers || []).forEach((answer) => {
+          const index = Number(answer.index);
+          const position = answer.index !== undefined && Number.isInteger(index) && index >= 0 && index < quiz.questions.length
+            ? index : (positions.get(answer.code) || []).length === 1 ? positions.get(answer.code)[0] : -1;
+          const value = Number(answer.answer);
+          if (position >= 0 && Number.isInteger(value) && value >= 1 && value <= 5) attempt.answers.set(position, value);
+          else attempt.incompleteHistory = true;
+        });
+      }
+      attempt.state = "review";
+      attempt.index = firstToReview(attempt);
+      active = attempt;
+      view = "player";
+      sync();
+      render();
+      reveal();
+    } catch (error) {
+      if (view === "history" && selected === context) {
+        context.error = error.message || "Chưa mở được bài làm này.";
+        renderHistory();
+      }
+    } finally {
+      control.disabled = false;
+    }
   }
 
   // Actions
@@ -384,16 +559,18 @@
       answer_correct_percent: (total ? (correct / total) * 100 : 0).toFixed(2),
       total_time: attempt.spent,
     };
-    const done = (message) => {
+    const done = (message, savedId = 0) => {
       attempt.saved = message;
-      if (attempt === active && attempt.state === "done") render();
+      if (savedId) attempt.savedRecordId = savedId;
+      if (attempt === active && attempt.state === "done" && view === "player") render();
+      if (view === "history" && selected && selected.id === attempt.quiz.id) openHistory(selected);
     };
     if (window.nhMain && typeof window.nhMain.callAjax === "function") {
       window.nhMain.callAjax({ async: true, url: "/quizs-answer/add", data })
         .done((response) => {
           let result = response;
           if (typeof result === "string") { try { result = JSON.parse(result); } catch (error) { result = null; } }
-          if (result && result.code === "success") done("Đã lưu vào lịch sử làm bài của bạn.");
+          if (result && result.code === "success") done("Đã lưu vào lịch sử làm bài của bạn.", Number(result.data && result.data.id) || 0);
           else done(`Chưa lưu được kết quả${result && result.message ? `: ${result.message}` : "."} Bạn vẫn xem được lời giải bên dưới.`);
         })
         .fail(() => done("Chưa lưu được kết quả. Bạn vẫn xem được lời giải bên dưới."));
@@ -409,6 +586,8 @@
       attempts.set(quiz.id, attempt);
     }
     active = attempt;
+    selected = selected && selected.id === quiz.id ? selected : { id: quiz.id, title: quiz.name, lesson };
+    view = "player";
     sync();
     render();
     reveal();
@@ -421,25 +600,19 @@
     if (top < 70 || top > window.innerHeight * 0.6) host.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   }
 
-  // The player belongs to one lesson: it shows only on that lesson's "Bài tập" tab and covers that lesson's card.
+  // The selected quiz's history or player replaces the lesson's quiz list.
   function sync() {
-    const showing = Boolean(active) && active.lesson.number === lessonNumber;
+    const showing = view !== "list" && selected && selected.lesson.number === lessonNumber;
     host.hidden = !showing;
     root.querySelectorAll("[data-mcr-quiz]").forEach((card) => {
       card.classList.toggle("is-covered", showing && Number(card.dataset.mcrQuiz) === lessonNumber);
     });
-    if (note) note.hidden = !showing || active.state === "done";
+    if (note) note.hidden = !showing || view !== "player" || !active || active.state === "done";
   }
   function updateStartButtons() {
     root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => {
       const attempt = attempts.get(Number(startButton.dataset.mcrQuizStart));
-      if (!attempt) return;
-      if (attempt.state === "doing") {
-        const left = attempt.deadline ? ` (còn ${clock(Math.max(0, Math.ceil((attempt.deadline - Date.now()) / 1000)))})` : "";
-        startButton.textContent = `Tiếp tục làm bài${left}`;
-      } else {
-        startButton.textContent = "Xem kết quả";
-      }
+      startButton.textContent = attempt && attempt.state === "doing" ? "Xem lịch sử · Đang làm" : "Xem lịch sử & làm bài";
     });
   }
 
@@ -451,42 +624,21 @@
     quizzes[id] = body.data;
     return body.data;
   }
-  root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", async () => {
+  root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", () => {
     if (startButton.disabled) return;
     const id = Number(startButton.dataset.mcrQuizStart);
     const card = startButton.closest(".mcr-quiz-card");
-    card?.querySelector(".mcr-quiz-error")?.remove();
-    let quiz = quizzes[id];
-    if (!quiz) {
-      const label = startButton.textContent;
-      startButton.disabled = true;
-      startButton.textContent = "Đang tải đề…";
-      try {
-        quiz = await load(id);
-      } catch (error) {
-        const message = el("p", "mcr-quiz-error", error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.");
-        message.setAttribute("role", "alert");
-        (card ? card.firstElementChild : startButton.parentElement).append(message);
-      }
-      startButton.disabled = false;
-      startButton.textContent = label;
-      if (!quiz) return;
-    }
     lessonNumber = Number(startButton.dataset.lesson);
-    start(quiz, { number: lessonNumber, title: startButton.dataset.lessonTitle || "", code: startButton.dataset.lessonCode || "" }, false);
+    openHistory({
+      id, title: card?.querySelector("h3")?.textContent?.trim() || "Bài tập",
+      lesson: { number: lessonNumber, title: startButton.dataset.lessonTitle || "", code: startButton.dataset.lessonCode || "" },
+    });
   }));
   submitButton.addEventListener("click", () => active && askSubmit(active));
   resultButton.addEventListener("click", () => { if (active) { active.state = "done"; render(); reveal(); } });
   root.addEventListener("mcr:lesson", (event) => {
     lessonNumber = event.detail.number;
-    if (!active || active.lesson.number !== lessonNumber) {
-      // Another lesson: the quiz it has in progress comes back; a lesson with one quiz also brings back its result.
-      // Otherwise the lesson's list of quizzes shows.
-      const own = lessonStarts(lessonNumber).map((startButton) => attempts.get(Number(startButton.dataset.mcrQuizStart))).filter(Boolean);
-      active = own.find((attempt) => attempt.state === "doing") || (lessonQuizCount(lessonNumber) === 1 ? own[0] : null) || null;
-    }
-    sync();
-    if (active && !host.hidden) render();
+    showList();
   });
 
   // Keyboard: 1–5 or A–E pick an answer, ← → move between questions.

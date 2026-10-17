@@ -48,4 +48,48 @@ class QuizsAnswerController extends AppController {
             ->withStringBody(json_encode($body, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE));
     }
 
+    /** Lịch sử của đúng học viên đang đăng nhập, cho một đề thuộc khóa học mà họ được phép mở. */
+    public function history($product_id = null, $quiz_id = null)
+    {
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $productId = intval($product_id);
+        $quizId = intval($quiz_id);
+        $member = $this->getRequest()->getSession()->read(MEMBER);
+        $member = is_array($member) ? $member : [];
+        $access = $this->loadComponent('QuizAnswer')->courseQuizAccess($member, $productId, $quizId);
+        $quiz = !empty($access['allowed']) ? \App\Lib\QuizQuestions::load($quizId, LANGUAGE) : null;
+        $status = empty($access['found']) || (!empty($access['allowed']) && empty($quiz)) ? 404 : (empty($access['allowed']) ? 403 : 200);
+        if ($status !== 200) {
+            $body = [CODE => ERROR, MESSAGE => $status === 403 ? 'Bài tập này dành cho học viên đã đăng ký khóa học.' : 'Không tìm thấy bài tập.'];
+        } else {
+            $history = [];
+            if (!empty($member['id'])) {
+                $rows = ConnectionManager::get('default')->execute(
+                    'SELECT id, created, answer_total, answer_correct, answer_correct_percent, total_time, answers
+                     FROM quizs_answer WHERE deleted=0 AND customer_id=:customer AND product_id=:product AND quiz_id=:quiz
+                     ORDER BY created DESC, id DESC',
+                    ['customer' => intval($member['id']), 'product' => $productId, 'quiz' => $quizId]
+                )->fetchAll('assoc');
+                foreach ($rows as $row) {
+                    $answers = json_decode((string)$row['answers'], true);
+                    $history[] = [
+                        'id' => intval($row['id']),
+                        'created' => intval($row['created']),
+                        'total' => intval($row['answer_total']),
+                        'correct' => intval($row['answer_correct']),
+                        'percent' => floatval($row['answer_correct_percent']),
+                        'seconds' => intval($row['total_time']),
+                        'answers' => is_array($answers) ? $answers : [],
+                    ];
+                }
+            }
+            $body = [CODE => SUCCESS, DATA => $history];
+        }
+
+        return $this->response->withStatus($status)->withType('application/json')->withHeader('Cache-Control', 'private, no-store')
+            ->withStringBody(json_encode($body, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE));
+    }
+
 }
