@@ -237,7 +237,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-11" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-12" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261017-8" defer></script>
 {if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-9" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
@@ -254,14 +254,10 @@
         <div class="mcr-layout">
             {* Course outline *}
             <aside class="mcr-sidebar" aria-label="Lộ trình học">
-                <div class="mcr-outline-head">
-                    <h2>Lộ trình</h2>
-                    {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử <span aria-hidden="true">→</span></button>{/if}
+                <div class="mcr-outline-actions{if $exam_prep && $review_lesson_number > 0} mcr-outline-actions--paired{/if}">
+                    <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">Giới thiệu</a>
+                    {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử</button>{/if}
                 </div>
-                <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">
-                    <span class="mcr-intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7.5v.5" /></svg></span>
-                    <span><strong>Giới thiệu khoá học</strong><small>Học phí, đăng ký và học thử</small></span>
-                </a>
                 <div class="mcr-outline">
                     {foreach from = $chapters key = chapter_key item = chapter_title}
                         {$chapter_size = 0}
