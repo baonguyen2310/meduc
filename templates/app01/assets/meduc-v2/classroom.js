@@ -297,12 +297,8 @@
     introView.hidden = true;
     lessonView.hidden = false;
 
-    // Lesson titles carry their own numbering ("Bài 13: …"), so the position is shown as a plain count.
-    $("[data-mcr-location]").textContent = `${lesson.chapter} · ${lesson.number}/${total}`;
+    // Keep the active lesson available to screen readers without repeating its heading visually.
     $("[data-mcr-heading]").textContent = lesson.title;
-    const badge = $("[data-mcr-access]");
-    badge.textContent = licensed ? "ĐÃ MỞ KHOÁ" : lesson.access === "trial" ? "HỌC THỬ" : "CẦN ĐĂNG KÝ";
-    badge.dataset.state = licensed ? "open" : lesson.access;
     $("[data-mcr-position]").textContent = `${pad(lesson.number)} / ${pad(total)}`;
     $("[data-mcr-prev]").disabled = lesson.number <= 1;
     $("[data-mcr-next]").disabled = lesson.number >= total;
@@ -332,6 +328,14 @@
     root.dispatchEvent(new CustomEvent("mcr:lesson", { detail: { number: 0 } }));
     if (push) history.pushState({ mcrLesson: 0 }, "", addressFor(0));
   }
+
+  $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
+    const number = Number(event.currentTarget.dataset.mcrMockExam);
+    if (!byNumber.has(number)) return;
+    selectLesson(number, { scroll: false });
+    selectTab("quiz");
+    lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+  });
 
   lessons.forEach((lesson) => lesson.link.addEventListener("click", (event) => {
     event.preventDefault();
@@ -364,10 +368,7 @@
     button.replaceWith(frame);
   }));
 
-  // Outline search (diacritics ignored).
-  const searchToggle = $(".mcr-search-toggle");
-  const searchBox = $("#mcr-search");
-  const searchInput = $("[data-mcr-search]");
+  // Accent-insensitive filtering for long exam lists inside a lesson.
   const fold = (value) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
   // Long quiz lists (exam-prep lessons hold dozens of exams): filter the cards by name, accents ignored.
   $$("[data-mcr-quiz-filter]").forEach((input) => {
@@ -385,28 +386,6 @@
       if (count) count.textContent = words.length ? `${shown}/${cards.length} đề` : `${cards.length} đề`;
     });
   });
-  searchToggle?.addEventListener("click", () => {
-    const open = searchBox.hidden;
-    searchBox.hidden = !open;
-    searchToggle.setAttribute("aria-expanded", String(open));
-    if (open) searchInput.focus();
-    else { searchInput.value = ""; filterOutline(""); }
-  });
-  function filterOutline(query) {
-    const needle = fold(query.trim());
-    $$(".mcr-chapter").forEach((chapter) => {
-      const chapterMatch = needle && fold(chapter.querySelector(".mcr-chapter-title").textContent).includes(needle);
-      let visible = 0;
-      chapter.querySelectorAll("[data-mcr-lesson]").forEach((link) => {
-        const show = !needle || chapterMatch || fold(link.dataset.title || "").includes(needle);
-        link.parentElement.hidden = !show;
-        if (show) visible += 1;
-      });
-      chapter.hidden = Boolean(needle) && visible === 0;
-      if (needle && visible) chapter.open = true;
-    });
-  }
-  searchInput?.addEventListener("input", () => filterOutline(searchInput.value));
 
   // The page's own FAQ, questions, ratings and related-course blocks move into the introduction.
   $$("[data-mcr-slot]").forEach((slot) => {

@@ -78,6 +78,7 @@
 {* Exam-prep course (category 125): lessons hold their exercises; the review lesson holds source exams. *}
 {$exam_prep = !empty($product.main_category_id) && $product.main_category_id == 125}
 {$first_open = 0}
+{$review_lesson_number = 0}
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
     {$item_title = $item.name_vi|trim}
@@ -122,6 +123,7 @@
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
     {$review = !empty($item.review_vi) && $item.review_vi == 'y'}
+    {if $review}{$review_lesson_number = $number}{/if}
     {$code = ''}
     {if !empty($item.code)}{$code = $item.code}{/if}
 
@@ -235,8 +237,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-10" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261017-7" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261017-11" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261017-8" defer></script>
 {if $any_open_quiz}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261017-9" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
@@ -251,16 +253,10 @@
 
         <div class="mcr-layout">
             {* Course outline *}
-            <aside class="mcr-sidebar" aria-label="Đề cương khoá học">
+            <aside class="mcr-sidebar" aria-label="Lộ trình học">
                 <div class="mcr-outline-head">
-                    <h2>Đề cương khoá học</h2>
-                    <span>{count($chapters)} chương</span>
-                    <button type="button" class="mcr-search-toggle" aria-expanded="false" aria-controls="mcr-search" aria-label="Tìm bài học">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-                    </button>
-                </div>
-                <div class="mcr-search" id="mcr-search" hidden>
-                    <input type="search" placeholder="Tìm chương hoặc bài học" aria-label="Tìm chương hoặc bài học" data-mcr-search>
+                    <h2>Lộ trình</h2>
+                    {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử <span aria-hidden="true">→</span></button>{/if}
                 </div>
                 <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">
                     <span class="mcr-intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7.5v.5" /></svg></span>
@@ -284,12 +280,10 @@
                                         <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
                                             <span class="mcr-lesson-number">{$lesson.number|string_format:'%02d'}</span>
                                             <span class="mcr-lesson-title">{$lesson.title|escape}</span>
-                                            {if $lesson.access == 'trial' && $lesson.video != ''}
-                                                <span class="mcr-tag">Học thử</span>
-                                            {elseif !$licensed && $lesson.free_quiz}
-                                                <span class="mcr-tag mcr-tag--quiz">Bài tập</span>
-                                            {elseif !$lesson.open || ($lesson.video == '' && !$licensed)}
-                                                <svg class="mcr-lock" viewBox="0 0 24 24" aria-label="Cần đăng ký"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>
+                                            {if $lesson.access == 'trial' || $lesson.free_quiz}
+                                                <span class="mcr-tag mcr-tag--free">Free</span>
+                                            {else}
+                                                <span class="mcr-tag mcr-tag--pro">Pro</span>
                                             {/if}
                                         </a>
                                     </li>
@@ -408,13 +402,7 @@
 
                 {* Lesson: filled in by classroom.js from the outline *}
                 <div class="mcr-view mcr-lesson-view" data-mcr-view="lesson" hidden>
-                    <div class="mcr-lesson-head">
-                        <div>
-                            <p class="mcr-location" data-mcr-location></p>
-                            <h2 class="mcr-lesson-heading" data-mcr-heading></h2>
-                        </div>
-                        <span class="mcr-access" data-mcr-access></span>
-                    </div>
+                    <h2 class="mcr-sr-only" data-mcr-heading></h2>
                     <div class="mcr-toolbar">
                         <div class="mcr-tabs" role="tablist" aria-label="Nội dung bài học">
                             <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video">Video</button>
@@ -424,7 +412,7 @@
                         </div>
                         {if !$licensed}
                             <div class="mcr-toolbar-buy">
-                                <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</span>
+                                <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><em class="mcr-toolbar-discount">−{$discount}%</em>{/if}</span>
                                 <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học</a>
                             </div>
                         {else}
@@ -613,7 +601,7 @@
     {if !$licensed}
         {* Phones: the sign-up bar takes the place of the site's bottom action bar on this page. *}
         <div class="mcr-buybar">
-            <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</span>
+            <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><em class="mcr-toolbar-discount">−{$discount}%</em>{/if}</span>
             <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học</a>
         </div>
     {/if}
