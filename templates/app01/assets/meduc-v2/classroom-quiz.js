@@ -160,13 +160,13 @@
     renderMap(attempt);
   }
 
-  function renderQuestion(attempt) {
+  function buildQuestion(attempt, index, inline = false) {
     const questions = attempt.quiz.questions;
-    const question = questions[attempt.index];
-    const chosen = attempt.answers.get(attempt.index);
-    const reviewing = attempt.state === "review";
-    const wrap = el("div", "mcq-question");
-    wrap.append(el("p", "mcq-count", `Câu ${attempt.index + 1} / ${questions.length}`));
+    const question = questions[index];
+    const chosen = attempt.answers.get(index);
+    const reviewing = inline || attempt.state === "review";
+    const wrap = el("div", `mcq-question${inline ? " mcq-review-question" : ""}`);
+    wrap.append(el("p", "mcq-count", `Câu ${index + 1} / ${questions.length}`));
     const text = el("div", "mcq-text");
     text.innerHTML = dropNumber(question.question);
     wrap.append(text);
@@ -237,23 +237,31 @@
     }
 
     const nav = el("div", "mcq-nav");
-    const previous = button("mcr-nav-button", "← Câu trước");
-    const next = button("mcr-nav-button", attempt.index === questions.length - 1 && !reviewing ? "Nộp bài" : "Câu tiếp →");
-    previous.disabled = attempt.index === 0;
-    next.disabled = reviewing && attempt.index === questions.length - 1;
-    previous.addEventListener("click", () => go(attempt, attempt.index - 1));
-    next.addEventListener("click", () => {
-      if (!reviewing && attempt.index === questions.length - 1) askSubmit(attempt);
-      else go(attempt, attempt.index + 1);
-    });
-    nav.append(previous, next);
-    const contribute = button("mcq-contribute-question", "Góp ý câu này ↗");
-    contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
-      detail: { quizId: attempt.quiz.id, questionNumber: attempt.index + 1, type: "answer" }
-    })));
-    nav.append(contribute);
-    wrap.append(nav);
-    stage.replaceChildren(wrap);
+    if (!inline) {
+      const previous = button("mcr-nav-button", "← Câu trước");
+      const next = button("mcr-nav-button", index === questions.length - 1 && !reviewing ? "Nộp bài" : "Câu tiếp →");
+      previous.disabled = index === 0;
+      next.disabled = reviewing && index === questions.length - 1;
+      previous.addEventListener("click", () => go(attempt, index - 1));
+      next.addEventListener("click", () => {
+        if (!reviewing && index === questions.length - 1) askSubmit(attempt);
+        else go(attempt, index + 1);
+      });
+      nav.append(previous, next);
+    }
+    if (reviewing) {
+      const contribute = button("mcq-contribute-question", "Góp ý câu này ↗");
+      contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
+        detail: { quizId: attempt.quiz.id, questionNumber: index + 1, type: "answer" }
+      })));
+      nav.append(contribute);
+    }
+    if (nav.childElementCount) wrap.append(nav);
+    return wrap;
+  }
+
+  function renderQuestion(attempt) {
+    stage.replaceChildren(buildQuestion(attempt, attempt.index));
     map.hidden = false;
   }
 
@@ -315,22 +323,35 @@
     }
     box.append(saved);
 
-    const invitation = el("div", "mcq-invitation");
-    invitation.append(el("strong", "", "Bạn có góp ý về lộ trình, đề hoặc đáp án?"));
-    invitation.append(el("p", "", "Chia sẻ với MedUC để bộ đề ngày càng chính xác và hữu ích cho cộng đồng học Y."));
-    const contribute = button("mcr-btn mcr-btn--ghost", "Gửi góp ý hoặc đóng góp đề");
+    const postActions = el("div", "mcq-post-actions");
+    if (root.dataset.mcrLicensed === "1") {
+      const course = button("mcr-btn mcr-btn--primary", "Về khóa học");
+      course.addEventListener("click", () => root.querySelector("[data-mcr-intro]")?.click());
+      postActions.append(course);
+    } else {
+      const buySource = root.querySelector(".mcr-toolbar-buy .mcr-btn--primary");
+      if (buySource) {
+        const buy = buySource.cloneNode(true);
+        buy.textContent = "Mua khóa học";
+        postActions.append(buy);
+      }
+    }
+    const contribute = button("mcr-btn mcr-btn--ghost", "Góp ý bài này");
     contribute.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {
       detail: { quizId: attempt.quiz.id, type: "general" }
     })));
-    invitation.append(contribute);
-    box.append(invitation);
+    postActions.append(contribute);
+    box.append(postActions);
+
+    const review = el("section", "mcq-result-review");
+    review.append(el("h3", "mcq-result-review-title", `Xem lại ${total} câu hỏi và lời giải`));
+    attempt.quiz.questions.forEach((question, index) => review.append(buildQuestion(attempt, index, true)));
+    box.append(review);
 
     const actions = el("div", "mcq-actions");
-    const review = button("mcr-btn mcr-btn--primary", "Xem lời giải chi tiết");
-    review.addEventListener("click", () => { attempt.state = "review"; attempt.index = firstToReview(attempt); render(); reveal(); });
     const retry = button("mcr-btn mcr-btn--ghost", "Làm lại");
     retry.addEventListener("click", () => start(attempt.quiz, attempt.lesson, true));
-    actions.append(review, retry);
+    actions.append(retry);
     const history = button("mcr-btn mcr-btn--ghost", "Lịch sử bài tập");
     history.addEventListener("click", () => selected && openHistory(selected));
     const list = button("mcr-btn mcr-btn--ghost", "Danh sách đề");
