@@ -77,7 +77,30 @@
         const explanation = document.createElement('details'); explanation.className = 'mx-answer'; explanation.open = graded || mode === 'view';
         explanation.append(plain('summary', graded && checkable ? (isRight ? 'Đúng · xem giải thích' : 'Chưa đúng · xem đáp án') : 'Đáp án & giải thích'));
         const body = plain('div', '', 'mx-answer-body'); body.append(plain('div', correct.length ? 'Đáp án: ' + correct.join(', ') : missingChoice ? 'Dữ liệu nguồn chưa có lựa chọn và đáp án cho câu này' : missingAnswer ? 'Dữ liệu nguồn chưa có đáp án cho câu này' : 'Tự luận · xem lời giải hoặc đáp án tham khảo bên dưới', 'mx-answer-key'));
-        const text = document.createElement('div'); text.innerHTML = q.explanation || ''; body.append(text);
+        const parts = q.explanation_parts;
+        if (parts && Array.isArray(parts.options) && parts.options.length) {
+          if (parts.concept) {
+            body.append(plain('h3', 'Khái niệm', 'mx-answer-heading'));
+            body.append(plain('p', parts.concept, 'mx-answer-concept'));
+          }
+          if (parts.source) {
+            body.append(plain('h3', 'Giải thích gốc', 'mx-answer-heading'));
+            body.append(plain('p', parts.source, 'mx-answer-concept'));
+          }
+          body.append(plain('h3', 'Giải thích từng lựa chọn', 'mx-answer-heading'));
+          const list = plain('div', '', 'mx-answer-options');
+          parts.options.forEach(part => {
+            const item = plain('div', '', 'mx-answer-option ' + (part.correct ? 'mx-answer-correct' : 'mx-answer-wrong'));
+            item.append(plain('strong', part.key + '.', 'mx-answer-option-key'));
+            const detail = plain('span', '');
+            detail.append(plain('strong', part.correct ? 'Đúng vì ' : 'Sai vì '));
+            detail.append(document.createTextNode(part.reason));
+            item.append(detail); list.append(item);
+          });
+          body.append(list);
+        } else {
+          const text = document.createElement('div'); text.innerHTML = q.explanation || ''; body.append(text);
+        }
         (q.rubrics || []).forEach(rubric => { if (rubric.criteria) body.append(plain('p', rubric.criteria)); if (rubric.sample_answer) body.append(plain('p', rubric.sample_answer)); });
         explanation.append(body); question.append(explanation);
       }

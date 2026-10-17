@@ -283,8 +283,19 @@ html[data-meduc-theme="light"] .mcr {
 .mcq-explain { margin-top: 18px; padding: 16px 18px; border-left: 3px solid #22a35a; border-radius: 0 10px 10px 0; background: rgb(34 163 90 / .08); }
 .mcq-explain-title { margin: 0 0 6px; color: #22a35a; font: 700 12px/1.3 Inter, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .mcq-explain-body { color: var(--mcr-ink); font: 400 15px/1.7 Inter, Arial, sans-serif; overflow-wrap: anywhere; }
-.mcq-explain-body * { color: inherit !important; background: transparent !important; font-family: inherit !important; font-size: inherit !important; }
+.mcq-explain-legacy * { color: inherit !important; background: transparent !important; font-family: inherit !important; font-size: inherit !important; }
 .mcq-explain-body p { margin: 0 0 8px; }
+.mcq-explain-heading { margin: 14px 0 8px; color: var(--mcr-ink); font: 700 15px/1.4 Inter, Arial, sans-serif; }
+.mcq-explain-heading:first-child { margin-top: 0; }
+.mcq-explain-concept { color: var(--mcr-ink); }
+.mcq-explain-options { display: grid; gap: 9px; }
+.mcq-explain-option { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid; border-radius: 8px; line-height: 1.55; }
+.mcq-explain-option-key { flex: none; font-weight: 700; }
+.mcq-explain-option.is-correct { border-color: rgb(34 163 90 / .45); background: rgb(34 163 90 / .12); color: #79dba4; }
+.mcq-explain-option.is-wrong { border-color: rgb(232 35 79 / .4); background: rgb(232 35 79 / .1); color: #ff94a5; }
+html[data-meduc-theme="light"] .mcq-explain-option.is-correct { color: #16804b; }
+html[data-meduc-theme="light"] .mcq-explain-option.is-wrong { color: #bf2944; }
+.mcq-explain-verdict { font-weight: 700; }
 .mcq-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; padding-bottom: 18px; }
 .mcq-map { display: flex; flex-wrap: wrap; gap: 6px; padding: 16px 24px 22px; border-top: 1px solid var(--mcr-line); }
 .mcq-cell { width: 36px; height: 36px; padding: 0; border: 1px solid var(--mcr-line); border-radius: 8px; background: transparent; color: var(--mcr-muted); font: 600 13px/1 Inter, Arial, sans-serif; cursor: pointer; }

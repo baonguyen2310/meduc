@@ -72,9 +72,40 @@ final class QuizQuestions
                 'options' => $options,
                 'answer' => $answer,
                 'explain' => self::clean($item['answer_detail_' . $lang] ?? ''),
+                'explanation_parts' => self::explanationParts($item),
             ];
         }
         return $questions;
+    }
+
+    /** AI explanations are separate from the original answer and explanation. Keep the source answer authoritative. */
+    public static function explanationParts(array $item): ?array
+    {
+        $options = $item['options'] ?? null;
+        if (!is_array($options) || !$options) return null;
+        $answer = (int)($item['answer_vi'] ?? 0);
+        $parts = [];
+        foreach (array_values($options) as $index => $option) {
+            if (!is_array($option)) return null;
+            $reason = self::plainText($option['ai_explanation'] ?? '');
+            if ($reason === '') return null;
+            $parts[] = [
+                'key' => (string)($option['key'] ?? chr(65 + $index)),
+                'correct' => $answer > 0 ? $answer === $index + 1 : !empty($option['is_correct']),
+                'reason' => $reason,
+            ];
+        }
+        return [
+            'concept' => self::plainText($item['ai_general_explanation'] ?? ''),
+            'source' => self::plainText($item['source_explanation'] ?? ''),
+            'options' => $parts,
+        ];
+    }
+
+    private static function plainText($value): string
+    {
+        $text = html_entity_decode(strip_tags((string)$value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return trim(preg_replace('/\s+/u', ' ', $text));
     }
 
     /** Pictures of an imported question, from the MedUC Cao media API (as the admin exam library shows them). */

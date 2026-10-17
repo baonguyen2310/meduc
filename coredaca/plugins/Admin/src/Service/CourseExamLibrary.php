@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Service;
 
 use App\Lib\LessonQuizzes;
+use App\Lib\QuizQuestions;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\NotFoundException;
 
@@ -101,6 +102,7 @@ class CourseExamLibrary
             $questions[]=['id'=>$i+1,'question_type'=>(string)($q['question_type']??''),
                 'content'=>self::safeHtml((string)($q['name_vi']??'')),
                 'explanation'=>self::safeHtml((string)($q['answer_detail_vi']??'')),
+                'explanation_parts'=>QuizQuestions::explanationParts($q),
                 'options'=>$options,'images'=>$images,'rubrics'=>$q['rubrics']??[]];
         }
         return ['exam'=>['id'=>$quizId,'name'=>$row['name'],'school'=>$row['school_name'],

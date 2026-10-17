@@ -191,11 +191,37 @@
 
     if (reviewing) {
       if (chosen === undefined) wrap.append(el("p", "mcq-skipped", "Bạn chưa trả lời câu này."));
-      if (question.explain) {
+      const parts = question.explanation_parts;
+      if ((parts && parts.options && parts.options.length) || question.explain) {
         const explain = el("div", "mcq-explain");
         explain.append(el("p", "mcq-explain-title", "Lời giải"));
         const body = el("div", "mcq-explain-body");
-        body.innerHTML = question.explain;
+        if (parts && parts.options && parts.options.length) {
+          if (parts.concept) {
+            body.append(el("h3", "mcq-explain-heading", "Khái niệm"));
+            body.append(el("p", "mcq-explain-concept", parts.concept));
+          }
+          if (parts.source) {
+            body.append(el("h3", "mcq-explain-heading", "Giải thích gốc"));
+            body.append(el("p", "mcq-explain-concept", parts.source));
+          }
+          body.append(el("h3", "mcq-explain-heading", "Giải thích từng lựa chọn"));
+          const list = el("div", "mcq-explain-options");
+          parts.options.forEach((part) => {
+            const row = el("div", `mcq-explain-option ${part.correct ? "is-correct" : "is-wrong"}`);
+            row.append(el("span", "mcq-explain-option-key", `${part.key}.`));
+            const detail = el("span");
+            detail.append(el("strong", "mcq-explain-verdict", part.correct ? "Đúng vì " : "Sai vì "));
+            detail.append(document.createTextNode(part.reason));
+            row.append(detail);
+            list.append(row);
+          });
+          body.append(list);
+        } else {
+          const legacy = el("div", "mcq-explain-legacy");
+          legacy.innerHTML = question.explain;
+          body.append(legacy);
+        }
         explain.append(body);
         wrap.append(explain);
       }
