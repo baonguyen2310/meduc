@@ -5,7 +5,18 @@
   // Keep native library anchors clear of both the header and the year navigation.
   const paths = root.querySelector('.mdc-paths');
   if (paths) {
-    const measurePaths = () => root.style.setProperty('--mdc-paths-h', `${paths.offsetHeight}px`);
+    const years = paths.querySelector('.mdc-year-grid');
+    let previousWidth = 0;
+    const measurePaths = () => {
+      root.style.setProperty('--mdc-paths-h', `${paths.offsetHeight}px`);
+      if (years && years.clientWidth !== previousWidth) {
+        previousWidth = years.clientWidth;
+        const current = years.querySelector('[aria-current]');
+        if (current && years.scrollWidth > years.clientWidth) {
+          years.scrollLeft = current.offsetLeft - (years.clientWidth - current.offsetWidth) / 2;
+        }
+      }
+    };
     measurePaths();
     if ('ResizeObserver' in window) new ResizeObserver(measurePaths).observe(paths);
     else window.addEventListener('resize', measurePaths);
