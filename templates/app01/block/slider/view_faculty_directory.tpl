@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-3" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-4" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261018" defer></script>
 
 <main class="mft" id="faculty-page">
@@ -38,6 +38,21 @@
                 <li><span class="mft-standard-number">01</span><div><h3>Nền tảng chuyên môn</h3><p>Hồ sơ đào tạo, bằng cấp và lĩnh vực chuyên môn được xem xét khi tuyển chọn.</p></div></li>
                 <li><span class="mft-standard-number">02</span><div><h3>Kinh nghiệm thực tế</h3><p>Kinh nghiệm giảng dạy, nghiên cứu hoặc thực hành giúp kiến thức gắn với nghề Y.</p></div></li>
                 <li><span class="mft-standard-number">03</span><div><h3>Khả năng đồng hành</h3><p>Giải thích rõ ràng, hướng dẫn có lộ trình và tận tâm giải đáp cho người học.</p></div></li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="mft-process" id="quy-trinh-tuyen-chon" aria-labelledby="faculty-process-title">
+        <div class="mft-shell">
+            <div class="mft-process-heading">
+                <div><p class="mft-kicker">TỪ HỒ SƠ ĐẾN BÀI GIẢNG</p><h2 id="faculty-process-title">Quy trình tuyển chọn</h2></div>
+                <p>Đánh giá người dạy từ nền tảng chuyên môn, kinh nghiệm thực tế đến cách truyền đạt và đồng hành cùng học viên.</p>
+            </div>
+            <ol class="mft-process-steps">
+                <li><span class="mft-process-number" aria-hidden="true">01</span><div><h3>Hồ sơ &amp; bằng cấp</h3><p>Xem xét chuyên ngành đào tạo, bằng cấp và kinh nghiệm giảng dạy hoặc thực hành.</p></div></li>
+                <li><span class="mft-process-number" aria-hidden="true">02</span><div><h3>Trao đổi chuyên môn</h3><p>Trao đổi về kiến thức trọng tâm, cách tiếp cận môn học và những khó khăn thường gặp của sinh viên.</p></div></li>
+                <li><span class="mft-process-number" aria-hidden="true">03</span><div><h3>Giảng dạy thử</h3><p>Đánh giá cách giải thích khái niệm, kết nối kiến thức với tình huống thực tế và giải đáp câu hỏi.</p></div></li>
+                <li><span class="mft-process-number" aria-hidden="true">04</span><div><h3>Đồng hành &amp; cải tiến</h3><p>Lắng nghe phản hồi học viên, trao đổi với giảng viên để hoàn thiện nội dung và cách giảng dạy.</p></div></li>
             </ol>
         </div>
     </section>
