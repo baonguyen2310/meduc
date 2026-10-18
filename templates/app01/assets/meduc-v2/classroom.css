@@ -518,3 +518,22 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   body:has(.mcr-buybar) .contact-fixed { bottom: 90px !important; }
 }
 @media (prefers-reduced-motion: reduce) { .mcr *, .mcr *::before, .mcr *::after { transition:none !important; animation:none !important; } .mcr .mcr-toolbar-buy .mcr-btn--primary::after, .mcr .mcr-buybar .mcr-btn--primary::after { display:none; } }
+
+/* Explanation Markdown follows the quiz typography in either theme. */
+.mcq-markdown { min-width: 0; }
+.mcq-markdown > :first-child { margin-top: 0; }
+.mcq-markdown > :last-child { margin-bottom: 0; }
+.mcq-markdown p { margin: 0 0 .65em; }
+.mcq-markdown :is(h1,h2,h3,h4,h5,h6) { margin: 1em 0 .45em; font: 700 1em/1.45 Inter, Arial, sans-serif; color: inherit; }
+.mcq-markdown ul, .mcq-markdown ol { margin: .55em 0 .8em; padding-left: 1.5em; }
+.mcq-markdown ul { list-style: disc; }
+.mcq-markdown ol { list-style: decimal; }
+.mcq-markdown li { margin: .3em 0; }
+.mcq-markdown blockquote { margin: .7em 0; padding-left: 1em; border-left: 3px solid currentColor; }
+.mcq-markdown pre { max-width: 100%; padding: .75em; overflow-x: auto; background: rgb(127 127 127 / .1); border-radius: 6px; white-space: pre; }
+.mcq-markdown code { padding: .12em .3em; border-radius: 4px; background: rgb(127 127 127 / .1); font-size: .9em; }
+.mcq-markdown pre code { padding: 0; background: none; }
+.mcq-markdown a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.mcq-markdown table { display: block; max-width: 100%; margin: .7em 0; border-collapse: collapse; overflow-x: auto; }
+.mcq-markdown th, .mcq-markdown td { padding: .4em .65em; border: 1px solid rgb(127 127 127 / .35); text-align: left; }
+.mcq-explain-option-detail { flex: 1; }

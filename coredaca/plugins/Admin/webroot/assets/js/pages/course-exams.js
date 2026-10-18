@@ -81,25 +81,31 @@
         if (parts && Array.isArray(parts.options) && parts.options.length) {
           if (parts.concept) {
             body.append(plain('h3', 'Khái niệm', 'mx-answer-heading'));
-            body.append(plain('p', parts.concept, 'mx-answer-concept'));
+            const concept = plain('div', '', 'mx-answer-concept mx-markdown');
+            if (parts.concept_html) concept.innerHTML = parts.concept_html; else concept.textContent = parts.concept;
+            body.append(concept);
           }
           if (parts.source) {
             body.append(plain('h3', 'Giải thích gốc', 'mx-answer-heading'));
-            body.append(plain('p', parts.source, 'mx-answer-concept'));
+            const source = plain('div', '', 'mx-answer-concept mx-markdown');
+            if (parts.source_html) source.innerHTML = parts.source_html; else source.textContent = parts.source;
+            body.append(source);
           }
           body.append(plain('h3', 'Giải thích từng lựa chọn', 'mx-answer-heading'));
           const list = plain('div', '', 'mx-answer-options');
           parts.options.forEach(part => {
             const item = plain('div', '', 'mx-answer-option ' + (part.correct ? 'mx-answer-correct' : 'mx-answer-wrong'));
             item.append(plain('strong', part.key + '.', 'mx-answer-option-key'));
-            const detail = plain('span', '');
-            detail.append(plain('strong', part.correct ? 'Đúng vì ' : 'Sai vì '));
-            detail.append(document.createTextNode(part.reason));
+            const detail = plain('div', '', 'mx-answer-option-detail mx-markdown');
+            if (part.reason_html) detail.innerHTML = part.reason_html; else detail.textContent = part.reason;
+            const verdict = plain('strong', part.correct ? 'Đúng vì ' : 'Sai vì ');
+            const first = detail.firstElementChild;
+            if (first && first.tagName === 'P') first.prepend(verdict); else detail.prepend(verdict);
             item.append(detail); list.append(item);
           });
           body.append(list);
         } else {
-          const text = document.createElement('div'); text.innerHTML = q.explanation || ''; body.append(text);
+          const text = plain('div', '', 'mx-markdown'); text.innerHTML = q.explanation || ''; body.append(text);
         }
         (q.rubrics || []).forEach(rubric => { if (rubric.criteria) body.append(plain('p', rubric.criteria)); if (rubric.sample_answer) body.append(plain('p', rubric.sample_answer)); });
         explanation.append(body); question.append(explanation);

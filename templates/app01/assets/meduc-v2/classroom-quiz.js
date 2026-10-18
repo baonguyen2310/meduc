@@ -267,26 +267,32 @@
         if (parts && parts.options && parts.options.length) {
           if (parts.concept) {
             body.append(el("h3", "mcq-explain-heading", "Khái niệm"));
-            body.append(el("p", "mcq-explain-concept", parts.concept));
+            const concept = el("div", "mcq-explain-concept mcq-markdown");
+            if (parts.concept_html) concept.innerHTML = parts.concept_html; else concept.textContent = parts.concept;
+            body.append(concept);
           }
           if (parts.source) {
             body.append(el("h3", "mcq-explain-heading", "Giải thích gốc"));
-            body.append(el("p", "mcq-explain-concept", parts.source));
+            const source = el("div", "mcq-explain-concept mcq-markdown");
+            if (parts.source_html) source.innerHTML = parts.source_html; else source.textContent = parts.source;
+            body.append(source);
           }
           body.append(el("h3", "mcq-explain-heading", "Giải thích từng lựa chọn"));
           const list = el("div", "mcq-explain-options");
           parts.options.forEach((part) => {
             const row = el("div", `mcq-explain-option ${part.correct ? "is-correct" : "is-wrong"}`);
             row.append(el("span", "mcq-explain-option-key", `${part.key}.`));
-            const detail = el("span");
-            detail.append(el("strong", "mcq-explain-verdict", part.correct ? "Đúng vì " : "Sai vì "));
-            detail.append(document.createTextNode(part.reason));
+            const detail = el("div", "mcq-explain-option-detail mcq-markdown");
+            if (part.reason_html) detail.innerHTML = part.reason_html; else detail.textContent = part.reason;
+            const verdict = el("strong", "mcq-explain-verdict", part.correct ? "Đúng vì " : "Sai vì ");
+            const first = detail.firstElementChild;
+            if (first && first.tagName === "P") first.prepend(verdict); else detail.prepend(verdict);
             row.append(detail);
             list.append(row);
           });
           body.append(list);
         } else {
-          const legacy = el("div", "mcq-explain-legacy");
+          const legacy = el("div", "mcq-explain-legacy mcq-markdown");
           legacy.innerHTML = question.explain;
           body.append(legacy);
         }

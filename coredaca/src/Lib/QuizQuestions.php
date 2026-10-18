@@ -71,7 +71,7 @@ final class QuizQuestions
                 'note' => self::clean($item['description_' . $lang] ?? ''),
                 'options' => $options,
                 'answer' => $answer,
-                'explain' => self::clean($item['answer_detail_' . $lang] ?? ''),
+                'explain' => QuizExplanation::render($item['answer_detail_' . $lang] ?? ''),
                 'explanation_parts' => self::explanationParts($item),
             ];
         }
@@ -93,19 +93,24 @@ final class QuizQuestions
                 'key' => (string)($option['key'] ?? chr(65 + $index)),
                 'correct' => $answer > 0 ? $answer === $index + 1 : !empty($option['is_correct']),
                 'reason' => $reason,
+                'reason_html' => QuizExplanation::render($option['ai_explanation'] ?? ''),
             ];
         }
         return [
             'concept' => self::plainText($item['ai_general_explanation'] ?? ''),
+            'concept_html' => QuizExplanation::render($item['ai_general_explanation'] ?? ''),
             'source' => self::plainText($item['source_explanation'] ?? ''),
+            'source_html' => QuizExplanation::render($item['source_explanation'] ?? ''),
             'options' => $parts,
         ];
     }
 
     private static function plainText($value): string
     {
-        $text = html_entity_decode(strip_tags((string)$value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        return trim(preg_replace('/\s+/u', ' ', $text));
+        $text = str_replace(["\r\n", "\r"], "\n", (string)$value);
+        $text = preg_replace('/<br\s*\/?\s*>/i', "\n", $text);
+        $text = preg_replace('/<\/(?:p|div|li|h[1-6])\s*>/i', "\n\n", $text);
+        return trim(html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     }
 
     /** Pictures of an imported question, from the MedUC Cao media API (as the admin exam library shows them). */

@@ -101,7 +101,7 @@ class CourseExamLibrary
             }
             $questions[]=['id'=>$i+1,'question_type'=>(string)($q['question_type']??''),
                 'content'=>self::safeHtml((string)($q['name_vi']??'')),
-                'explanation'=>self::safeHtml((string)($q['answer_detail_vi']??'')),
+                'explanation'=>\App\Lib\QuizExplanation::render($q['answer_detail_vi']??''),
                 'explanation_parts'=>QuizQuestions::explanationParts($q),
                 'options'=>$options,'images'=>$images,'rubrics'=>$q['rubrics']??[]];
         }
