@@ -53,6 +53,6 @@
         <div class="mbl-empty" data-blog-empty {if $journal.selected_count}hidden{/if}><span aria-hidden="true">↗</span><h3>Chưa tìm thấy bài viết phù hợp.</h3><p>Thử một từ khóa hoặc chủ đề khác.</p><button type="button" data-blog-reset hidden>Xóa bộ lọc</button><a href="/blog">Xem tất cả bài viết →</a></div>
         <button class="mbl-more" type="button" data-blog-more hidden>Xem thêm bài viết <span aria-hidden="true">↓</span></button>
     </section>
-    <aside class="mbl-next"><div class="mbl-shell mbl-next-inner"><div><p class="mbl-eyebrow">TIẾP TỤC HỌC CÙNG MEDUC</p><h2>ĐỌC ĐỂ HIỂU.<br><span>HỌC ĐỂ VẬN DỤNG.</span></h2><p>Kết nối kiến thức bạn vừa đọc với bài giảng và thực hành trong các khóa học tại MedUC.</p></div><a href="/khoa-hoc" class="mbl-button">Khám phá khóa học <span aria-hidden="true">→</span></a></div></aside>
+    <aside class="mbl-next"><div class="mbl-shell mbl-next-inner"><div><p class="mbl-eyebrow">TIẾP TỤC HỌC CÙNG MEDUC</p><h2>ĐỌC ĐỂ HIỂU.<br><span>HỌC ĐỂ VẬN DỤNG.</span></h2><p>Kết nối kiến thức bạn vừa đọc với bài giảng và thực hành trong các khóa học tại MedUC.</p></div><a href="/khoa-hoc" class="mbl-button">Học thử miễn phí <span aria-hidden="true">→</span></a></div></aside>
 </main>
 {/strip}

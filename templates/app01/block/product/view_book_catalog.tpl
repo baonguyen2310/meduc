@@ -65,7 +65,7 @@
         <button type="button" class="mbc-more" data-book-more hidden>Xem thêm sách <span aria-hidden="true">↓</span></button>
     </section>
 
-    <aside class="mbc-next"><div class="mbc-shell mbc-next-inner"><div><p class="mbc-eyebrow">TIẾP TỤC HỌC CÙNG MEDUC</p><h2>ĐỌC SÁCH.<br><span>RỒI HỌC SÂU HƠN.</span></h2><p>Kết nối kiến thức trong sách với bài giảng và thực hành qua các khóa học tại MedUC.</p></div><a class="mbc-button" href="/khoa-hoc">Khám phá khóa học <span aria-hidden="true">→</span></a></div></aside>
+    <aside class="mbc-next"><div class="mbc-shell mbc-next-inner"><div><p class="mbc-eyebrow">TIẾP TỤC HỌC CÙNG MEDUC</p><h2>ĐỌC SÁCH.<br><span>RỒI HỌC SÂU HƠN.</span></h2><p>Kết nối kiến thức trong sách với bài giảng và thực hành qua các khóa học tại MedUC.</p></div><a class="mbc-button" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div></aside>
     <div class="mbc-cart-notice" data-book-cart-notice hidden><span role="status" aria-live="polite" aria-atomic="true" data-book-cart-message></span><a href="/dat-hang">Xem giỏ sách →</a><button type="button" aria-label="Đóng thông báo" data-book-cart-close>×</button></div>
 </main>
 {/strip}

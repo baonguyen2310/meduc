@@ -37,7 +37,7 @@ SELECT
     "tieu_de_dong_2":"VỮNG BƯỚC NGHỀ Y",
     "mo_ta":"Học Y bứt phá cùng đội ngũ Thạc sĩ, Bác sĩ nội trú.",
     "dong_phu":"Hơn 5.000 câu hỏi luyện tập có đáp án.",
-    "nut_chinh":"Khám phá khoá học",
+    "nut_chinh":"Học thử miễn phí",
     "link_nut_chinh":"/khoa-hoc",
     "nut_chinh_2":"Vào khoá luyện thi",
     "link_nut_chinh_2":"/danh-sach-de-thi",

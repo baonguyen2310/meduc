@@ -108,7 +108,7 @@
     <section class="mab-outro">
         <div class="mab-shell mab-outro-inner">
             <div><p class="mab-eyebrow">BƯỚC TIẾP CÙNG MEDUC</p><h2>ĐI CÙNG NHAU.<br><span>TIẾN XA HƠN.</span></h2><p>Gặp gỡ người hướng dẫn và tìm lộ trình học phù hợp với bạn.</p></div>
-            <div class="mab-outro-actions"><a class="mab-button mab-button--primary" href="/khoa-hoc">Khám phá khóa học <span aria-hidden="true">→</span></a><a class="mab-button mab-button--outline" href="/doi-ngu-giang-vien">Gặp gỡ đội ngũ <span aria-hidden="true">↗</span></a><a class="mab-feedback-link" href="/phan-hoi-hoc-vien">Lắng nghe cảm nhận của học viên <span aria-hidden="true">→</span></a>{if !empty($website.hotline)}<a class="mab-hotline" href="tel:{$website.hotline|escape}">Cần tư vấn? {$website.hotline|escape}</a>{/if}</div>
+            <div class="mab-outro-actions"><a class="mab-button mab-button--primary" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a><a class="mab-button mab-button--outline" href="/doi-ngu-giang-vien">Gặp gỡ đội ngũ <span aria-hidden="true">↗</span></a><a class="mab-feedback-link" href="/phan-hoi-hoc-vien">Lắng nghe cảm nhận của học viên <span aria-hidden="true">→</span></a>{if !empty($website.hotline)}<a class="mab-hotline" href="tel:{$website.hotline|escape}">Cần tư vấn? {$website.hotline|escape}</a>{/if}</div>
         </div>
     </section>
 </main>

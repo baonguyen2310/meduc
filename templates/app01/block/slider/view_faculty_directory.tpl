@@ -56,7 +56,7 @@
 
     <section class="mft-shell mft-outro">
         <div><p class="mft-kicker">BƯỚC TIẾP CÙNG MEDUC</p><h2>Tìm người hướng dẫn.<br>Chọn hành trình của bạn.</h2></div>
-        <a class="mft-button mft-button--primary" href="/khoa-hoc">Khám phá khóa học <span aria-hidden="true">→</span></a>
+        <a class="mft-button mft-button--primary" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a>
     </section>
 
     <dialog class="mft-modal" id="faculty-profile-dialog" aria-labelledby="mft-profile-title">

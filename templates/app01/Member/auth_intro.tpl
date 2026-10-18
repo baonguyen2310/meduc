@@ -8,5 +8,5 @@
         <img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero/meduc-doctor-04.jpg" alt="" decoding="async">
         <img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero/professor.jpg" alt="" decoding="async">
     </div>
-    <div class="ma-intro-foot"><span>TỪ KIẾN THỨC ĐẾN THỰC HÀNH.</span><a href="/khoa-hoc">Khám phá khóa học <span aria-hidden="true">↗</span></a></div>
+    <div class="ma-intro-foot"><span>TỪ KIẾN THỨC ĐẾN THỰC HÀNH.</span><a href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">↗</span></a></div>
 </aside>

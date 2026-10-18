@@ -36,7 +36,7 @@ SELECT
     "mo_ta":"MedUC ra đời để không sinh viên Y nào phải một mình vượt qua khối kiến thức khổng lồ. Vì vậy mọi điều chúng tôi làm, từ chọn giảng viên, xây lộ trình đến chăm sóc từng buổi học, đều bắt đầu từ người học.",
     "nut_chinh":"Xem học viên nói gì",
     "link_nut_chinh":"#phan-hoi",
-    "nut_phu":"Khám phá khoá học",
+    "nut_phu":"Học thử miễn phí",
     "link_nut_phu":"/khoa-hoc",
     "anh":"/templates/app01/assets/meduc-v2/feedback/hoc-vien-meduc.jpg",
     "mo_ta_anh":"Học viên MedUC cùng xem tài liệu học tập",

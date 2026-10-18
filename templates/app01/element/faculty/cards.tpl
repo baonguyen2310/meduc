@@ -79,7 +79,7 @@
                         <p class="mft-credentials-pending">Ảnh bằng cấp và chứng chỉ sẽ được MedUC bổ sung vào hồ sơ này.</p>
                     {/if}
                 </section>
-                {if $course_url != ''}<a class="mft-button mft-button--primary" href="{$course_url|escape}">Khám phá khóa học <span aria-hidden="true">→</span></a>{/if}
+                {if $course_url != ''}<a class="mft-button mft-button--primary" href="{$course_url|escape}">Học thử miễn phí <span aria-hidden="true">→</span></a>{/if}
             </div>
         </template>
     {/if}
