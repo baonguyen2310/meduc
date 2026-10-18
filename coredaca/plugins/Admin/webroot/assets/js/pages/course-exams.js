@@ -98,14 +98,6 @@
             item.append(detail); list.append(item);
           });
           body.append(list);
-          if (parts.source) {
-            const original = plain('details', '', 'mx-answer-source');
-            original.append(plain('summary', 'Xem giải thích gốc'));
-            const source = plain('div', '', 'mx-answer-concept mx-markdown');
-            if (parts.source_html) source.innerHTML = parts.source_html; else source.textContent = parts.source;
-            original.append(source);
-            body.append(original);
-          }
         } else {
           const text = plain('div', '', 'mx-markdown'); text.innerHTML = q.explanation || ''; body.append(text);
         }
