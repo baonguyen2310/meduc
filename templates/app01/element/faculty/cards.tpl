@@ -39,6 +39,7 @@
             {/if}
         </div>
         {if !empty($profile_mode)}
+            <div class="mft-list-action" aria-hidden="true"><span class="mft-list-action-label">BẰNG CẤP &amp; CHUYÊN MÔN</span><span class="mft-list-cta">Xem hồ sơ <span>→</span></span></div>
             <button class="mft-open-profile" type="button" data-faculty-open="mft-profile-{$index}" aria-label="Xem hồ sơ và bằng cấp của {$display_name|escape}" aria-haspopup="dialog"></button>
         {/if}
     </article>

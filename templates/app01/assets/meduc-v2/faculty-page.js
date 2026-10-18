@@ -3,6 +3,21 @@
   'use strict';
   const page = document.querySelector('#faculty-page');
   if (!page) return;
+  const directory = page.querySelector('[data-faculty-view]');
+  const layoutSwitch = page.querySelector('[data-faculty-layout-switch]');
+  if (directory && layoutSwitch) {
+    layoutSwitch.hidden = false;
+    layoutSwitch.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-faculty-layout]');
+      if (!button) return;
+      const view = button.dataset.facultyLayout;
+      if (view !== 'list' && view !== 'grid') return;
+      directory.dataset.facultyView = view;
+      layoutSwitch.querySelectorAll('[data-faculty-layout]').forEach((option) => {
+        option.setAttribute('aria-pressed', String(option === button));
+      });
+    });
+  }
   const dialog = page.querySelector('#faculty-profile-dialog');
   const content = dialog.querySelector('[data-faculty-content]');
   let opener = null;
