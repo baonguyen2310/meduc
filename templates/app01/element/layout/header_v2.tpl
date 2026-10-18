@@ -65,6 +65,7 @@
       <nav class="mhi-shell mhi-network-links" aria-label="Điều hướng MedUC">
         <a href="/gioi-thieu">Giới thiệu</a>
         <a href="/doi-ngu-giang-vien">Giảng viên</a>
+        <a href="/phuong-phap-hoc">Phương pháp học</a>
         <a href="/phan-hoi-hoc-vien">Phản hồi</a>
         {foreach from = $nav_groups item = group}
           <div class="mhi-network-dropdown">
@@ -155,6 +156,7 @@
       <a class="mhi-drawer-link" href="/class-rank">Bảng xếp hạng</a>
       <a class="mhi-drawer-link" href="/gioi-thieu">Giới thiệu</a>
       <a class="mhi-drawer-link" href="/doi-ngu-giang-vien">Giảng viên</a>
+      <a class="mhi-drawer-link" href="/phuong-phap-hoc">Phương pháp học</a>
       <a class="mhi-drawer-link" href="/phan-hoi-hoc-vien">Phản hồi</a>
       {foreach from = $nav_groups item = group}
         <details class="mhi-drawer-group">

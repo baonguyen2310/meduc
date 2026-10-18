@@ -61,7 +61,7 @@
                         </a>
                     {/if}
                     {if !empty($text.nut)}
-                        <a class="{if $video_id != ''}mcl-link{else}mcl-button{/if}" href="{if !empty($text.link_nut)}{$text.link_nut|escape}{else}/khoa-hoc{/if}">{$text.nut|escape} <span aria-hidden="true">→</span></a>
+                        <a class="{if $video_id != ''}mcl-link{else}mcl-button{/if}" href="{if !empty($text.link_nut)}{$text.link_nut|escape}{else}/phuong-phap-hoc{/if}">{$text.nut|escape} <span aria-hidden="true">→</span></a>
                     {/if}
                 </div>
             </div>
