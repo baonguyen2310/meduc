@@ -60,7 +60,10 @@ html[data-meduc-theme="light"] .mfo {
 }
 @media (prefers-reduced-motion: reduce) { .mfo .mfo-column nav a { transition: none; } }
 
-.mfo-brand > a.mfo-master-logo { width:200px; height:auto; padding:0; border-radius:0; background:none; }
-.mfo-master-logo img { width:100%; height:auto; max-height:none; filter:brightness(0) invert(1); }
-html[data-meduc-theme="light"] .mfo-master-logo img { filter:none; }
-@media (max-width:767.98px) { .mfo-brand--master { flex-direction:column; gap:16px; } .mfo-brand > a.mfo-master-logo { width:190px; } }
+.mfo-brand > a.mfo-master-logo { width:112px; height:auto; padding:0; border-radius:0; background:none; }
+.mfo-master-logo img { width:100%; height:auto; max-height:none; filter:none; }
+.mfo-master-logo .mfo-master-light { display:none; }
+.mfo-master-logo .mfo-master-dark { display:block; }
+html[data-meduc-theme="light"] .mfo-master-logo .mfo-master-dark { display:none; }
+html[data-meduc-theme="light"] .mfo-master-logo .mfo-master-light { display:block; }
+@media (max-width:767.98px) { .mfo-brand--master { flex-direction:column; gap:16px; } .mfo-brand > a.mfo-master-logo { width:112px; } }

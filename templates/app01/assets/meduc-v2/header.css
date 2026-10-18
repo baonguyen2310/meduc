@@ -196,22 +196,16 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
   .mhi-member #member-info { width: 36px; height: 36px; font-size: 17px !important; }
 }
 
-/* MedUC Master wordmark; future images selected in Admin retain the standard logo styles. */
+/* MasterClass-reference geometry: pink monogram, outlined serif wordmark. */
 .mhi-brand--master { min-height:44px; }
 .mhi-brand--master .mhi-brand-wordmark { width:218px; height:auto; max-height:40px; }
-.mhi-brand--master .mhi-brand-mark { display:none; }
-.mhi-brand--master img { filter:brightness(0) invert(1); }
-html[data-meduc-theme="light"] .mhi-brand--master img { filter:none; }
-@media (min-width:992px) and (max-width:1279.98px) {
- .mhi-brand--master .mhi-brand-wordmark { display:none; }
- .mhi-brand--master .mhi-brand-mark { display:block; width:60px; height:37px; }
+.mhi-brand--master .mhi-brand-wordmark--light, .mhi-brand--master .mhi-brand-mark { display:none; }
+.mhi-brand--master .mhi-brand-wordmark--dark { display:block; }
+.mhi-brand--master img { filter:none; }
+html[data-meduc-theme="light"] .mhi-brand--master .mhi-brand-wordmark--dark { display:none; }
+html[data-meduc-theme="light"] .mhi-brand--master .mhi-brand-wordmark--light { display:block; }
+@media (max-width:1279.98px) {
+ .mhi-brand--master .mhi-brand-wordmark { display:none !important; }
+ .mhi-brand--master .mhi-brand-mark { display:block; width:44px; height:36px; }
 }
-@media (max-width:991.98px) {
- .mhi-brand--master .mhi-brand-wordmark { width:150px; height:auto; }
-}
-@media (max-width:359.98px) {
- .mhi-brand--master .mhi-brand-wordmark { display:none; }
- .mhi-brand--master .mhi-brand-mark { display:block; width:60px; height:37px; }
-}
-
 @media (min-width:1280px) and (max-width:1399.98px) { .mhi-brand--master .mhi-brand-wordmark { width:190px; } }
