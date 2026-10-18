@@ -271,12 +271,6 @@
             if (parts.concept_html) concept.innerHTML = parts.concept_html; else concept.textContent = parts.concept;
             body.append(concept);
           }
-          if (parts.source) {
-            body.append(el("h3", "mcq-explain-heading", "Giải thích gốc"));
-            const source = el("div", "mcq-explain-concept mcq-markdown");
-            if (parts.source_html) source.innerHTML = parts.source_html; else source.textContent = parts.source;
-            body.append(source);
-          }
           body.append(el("h3", "mcq-explain-heading", "Giải thích từng lựa chọn"));
           const list = el("div", "mcq-explain-options");
           parts.options.forEach((part) => {
@@ -291,6 +285,14 @@
             list.append(row);
           });
           body.append(list);
+          if (parts.source) {
+            const original = el("details", "mcq-explain-source");
+            original.append(el("summary", "mcq-explain-source-toggle", "Xem giải thích gốc"));
+            const source = el("div", "mcq-explain-concept mcq-markdown");
+            if (parts.source_html) source.innerHTML = parts.source_html; else source.textContent = parts.source;
+            original.append(source);
+            body.append(original);
+          }
         } else {
           const legacy = el("div", "mcq-explain-legacy mcq-markdown");
           legacy.innerHTML = question.explain;

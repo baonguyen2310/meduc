@@ -24,3 +24,7 @@
 .mx-answer-option-detail { flex: 1; }
 
 .mx-answer-body .mx-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }
+
+.mx-answer-source { margin-top: 14px; padding-top: 10px; border-top: 1px solid #e1e5ec; }
+.mx-answer-source > summary { cursor: pointer; color: #667184; font-size: 12px; }
+.mx-answer-source[open] > .mx-markdown { margin-top: 10px; }

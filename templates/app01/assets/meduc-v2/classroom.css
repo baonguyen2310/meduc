@@ -539,3 +539,7 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 .mcq-explain-option-detail { flex: 1; }
 
 .mcq-explain-body .mcq-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }
+
+.mcq-explain-source { margin-top: 15px; padding-top: 10px; border-top: 1px solid rgb(127 127 127 / .22); }
+.mcq-explain-source-toggle { cursor: pointer; color: var(--mcr-muted); font-size: 13px; font-weight: 600; }
+.mcq-explain-source[open] > .mcq-markdown { margin-top: 10px; }
