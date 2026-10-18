@@ -38,7 +38,7 @@ html[data-meduc-theme="light"] .mdc .mdc-button { background:#de2334; }
 .mdc .mdc-back { display:block; margin-bottom:20px; color:var(--mdc-muted); font-size:12px; }
 .mdc .mdc-back:hover { color:var(--mdc-red); }
 .mdc-hero--category .mdc-intro { max-width:640px; }
-.mdc-paths { position:sticky; z-index:1000; top:var(--mhi-header-h,66px); padding:0; background:var(--mdc-bg); box-shadow:0 1px 0 var(--mdc-line); }
+.mdc-paths { position:sticky; z-index:1000; top:var(--mhi-header-h,66px); padding:2px 0; background:var(--mdc-bg); box-shadow:0 1px 0 var(--mdc-line); }
 .mdc-path-intro { padding-top:35px; }
 .mdc-path-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:17px; }
 .mdc-path-heading .mdc-eyebrow { margin:0; color:var(--mdc-muted); font-size:9px; }

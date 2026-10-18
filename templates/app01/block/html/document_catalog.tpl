@@ -5,7 +5,7 @@
 {$text = $data_extend.locale[{LANGUAGE}]|default:[]}
 {$keyword = $this->getRequest()->getQuery('keyword')}{if !is_string($keyword)}{$keyword = ''}{/if}
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261018-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261018-3" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.js?v=20261018-2" defer></script>
 <main class="mdc" id="document-catalog-page" data-active-category="{PAGE_CATEGORY_ID}">
     <svg class="mdc-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="mdc-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="mdc-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 13h8m-8 4h6"/></symbol><symbol id="mdc-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol></svg>
