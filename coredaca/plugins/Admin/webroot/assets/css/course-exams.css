@@ -22,3 +22,5 @@
 .mx-markdown a { color: inherit; text-decoration: underline; }
 .mx-markdown table { display: block; max-width: 100%; overflow-x: auto; }
 .mx-answer-option-detail { flex: 1; }
+
+.mx-answer-body .mx-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }

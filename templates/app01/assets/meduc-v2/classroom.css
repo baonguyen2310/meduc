@@ -537,3 +537,5 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 .mcq-markdown table { display: block; max-width: 100%; margin: .7em 0; border-collapse: collapse; overflow-x: auto; }
 .mcq-markdown th, .mcq-markdown td { padding: .4em .65em; border: 1px solid rgb(127 127 127 / .35); text-align: left; }
 .mcq-explain-option-detail { flex: 1; }
+
+.mcq-explain-body .mcq-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }
