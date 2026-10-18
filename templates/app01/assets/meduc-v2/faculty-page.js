@@ -1,8 +1,59 @@
-/* A single native dialog displays the selected faculty dossier; the browser handles focus containment and Escape. */
+/* Section navigation, faculty layouts and a native dialog for profile dossiers. */
 (() => {
   'use strict';
   const page = document.querySelector('#faculty-page');
   if (!page) return;
+  const sectionNav = page.querySelector('[data-faculty-sections]');
+  if (sectionNav) {
+    const track = sectionNav.querySelector('.mft-section-links');
+    const links = [...track.querySelectorAll('a[href^="#"]')];
+    const sections = links.map(link => page.querySelector(link.getAttribute('href')));
+    // The theme's legacy anchor handler uses a fixed header offset. Keep these links scoped to the actual sticky bars.
+    sectionNav.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href^="#"]');
+      if (!link || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const target = page.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      event.preventDefault();
+      event.stopPropagation();
+      history.pushState(null, '', link.getAttribute('href'));
+      target.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    }, { capture: true });
+    let pending = false;
+    let previous = null;
+    let previousWidth = 0;
+    const updateSections = () => {
+      pending = false;
+      page.style.setProperty('--mft-nav-h', `${sectionNav.offsetHeight}px`);
+      const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mhi-header-h')) || 66;
+      const readingLine = headerHeight + sectionNav.offsetHeight + 40;
+      let current = 0;
+      sections.forEach((section, index) => {
+        if (section && section.getBoundingClientRect().top <= readingLine) current = index;
+      });
+      links.forEach((link, index) => {
+        if (index === current) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      if (current !== previous || track.clientWidth !== previousWidth) {
+        previous = current;
+        previousWidth = track.clientWidth;
+        if (track.scrollWidth > track.clientWidth) {
+          track.scrollLeft = links[current].offsetLeft - (track.clientWidth - links[current].offsetWidth) / 2;
+        }
+      }
+    };
+    const scheduleSections = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(updateSections);
+    };
+    window.addEventListener('scroll', scheduleSections, { passive: true });
+    window.addEventListener('resize', scheduleSections);
+    window.addEventListener('load', scheduleSections, { once: true });
+    if ('ResizeObserver' in window) new ResizeObserver(scheduleSections).observe(sectionNav);
+    updateSections();
+  }
   const directory = page.querySelector('[data-faculty-view]');
   const layoutSwitch = page.querySelector('[data-faculty-layout-switch]');
   if (directory && layoutSwitch) {

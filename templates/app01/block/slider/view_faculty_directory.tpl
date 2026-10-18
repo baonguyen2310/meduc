@@ -5,8 +5,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-6" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261018" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-8" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261018-3" defer></script>
 
 <main class="mft" id="faculty-page">
     <section class="mft-hero" aria-labelledby="faculty-title">
@@ -28,10 +28,20 @@
                 <span class="mft-portrait-caption">CHUYÊN MÔN VỮNG. ĐỒNG HÀNH TẬN TÂM.</span>
             </div>
         </div>
-        <div class="mft-shell mft-selection">
+    </section>
+
+    <nav class="mft-section-nav" aria-label="Nội dung trang giảng viên" data-faculty-sections>
+        <div class="mft-shell mft-section-links">
+            <a href="#tieu-chuan-tuyen-chon" aria-current="location"><span class="mft-section-index" aria-hidden="true">01</span><strong>Tiêu chuẩn tuyển chọn</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+            <a href="#quy-trinh-tuyen-chon"><span class="mft-section-index" aria-hidden="true">02</span><strong>Quy trình tuyển chọn</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+            <a href="#doi-ngu"><span class="mft-section-index" aria-hidden="true">03</span><strong>Đội ngũ giảng viên</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a>
+        </div>
+    </nav>
+
+    <section class="mft-shell mft-selection" id="tieu-chuan-tuyen-chon" aria-labelledby="faculty-standards-title">
             <div class="mft-selection-intro">
                 <p class="mft-kicker">{$text.tuyen_chon_nhan|default:'TIÊU CHUẨN TUYỂN CHỌN'|escape}</p>
-                <h2>{$text.tuyen_chon_tieu_de|default:'Chọn người dạy. Chọn chất lượng.'|escape}</h2>
+                <h2 id="faculty-standards-title">{$text.tuyen_chon_tieu_de|default:'Chọn người dạy. Chọn chất lượng.'|escape}</h2>
                 <p>{$text.tuyen_chon_mo_ta|default:'MedUC không tuyển sinh viên hoặc bác sĩ vừa tốt nghiệp làm giảng viên. Chúng tôi lựa chọn những người có nền tảng chuyên môn, kinh nghiệm và khả năng truyền đạt phù hợp với người học.'|escape}</p>
             </div>
             <ol class="mft-standards">
@@ -39,7 +49,6 @@
                 <li><span class="mft-standard-number">02</span><div><h3>Kinh nghiệm thực tế</h3><p>Kinh nghiệm giảng dạy, nghiên cứu hoặc thực hành giúp kiến thức gắn với nghề Y.</p></div></li>
                 <li><span class="mft-standard-number">03</span><div><h3>Khả năng đồng hành</h3><p>Giải thích rõ ràng, hướng dẫn có lộ trình và tận tâm giải đáp cho người học.</p></div></li>
             </ol>
-        </div>
     </section>
 
     <section class="mft-process" id="quy-trinh-tuyen-chon" aria-labelledby="faculty-process-title">
