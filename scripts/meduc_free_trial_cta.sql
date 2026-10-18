@@ -14,3 +14,10 @@ SET normal_data_extend = JSON_SET(normal_data_extend, '$.locale.vi.nut_phu', 'H�
 WHERE template_code = 'app01' AND code = 'fbhero'
   AND JSON_UNQUOTE(JSON_EXTRACT(normal_data_extend, '$.locale.vi.nut_phu'))
       IN ('Khám phá khóa học', 'Khám phá khoá học');
+
+UPDATE templates_block
+SET normal_data_extend = JSON_SET(normal_data_extend, '$.locale.vi.nut_chinh_2', 'Luyện thi miễn phí'),
+    updated = UNIX_TIMESTAMP()
+WHERE template_code = 'app01' AND code = 'herowal'
+  AND JSON_UNQUOTE(JSON_EXTRACT(normal_data_extend, '$.locale.vi.nut_chinh_2'))
+      IN ('Vào khoá luyện thi', 'Vào khóa luyện thi');

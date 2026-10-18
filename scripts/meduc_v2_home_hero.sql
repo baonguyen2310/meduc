@@ -39,7 +39,7 @@ SELECT
     "dong_phu":"Hơn 5.000 câu hỏi luyện tập có đáp án.",
     "nut_chinh":"Học thử miễn phí",
     "link_nut_chinh":"/khoa-hoc",
-    "nut_chinh_2":"Vào khoá luyện thi",
+    "nut_chinh_2":"Luyện thi miễn phí",
     "link_nut_chinh_2":"/danh-sach-de-thi",
     "nut_phu":"Sách Y Khoa",
     "link_nut_phu":"/sach-y-khoa",
