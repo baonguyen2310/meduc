@@ -28,12 +28,28 @@ class ProductHelper extends Helper
         )->fetch('assoc');
     }
 
-    /** Group the already-filtered public products by their actual year-category memberships.
-     *  Exam-prep courses only appear on the exam-prep page; there they have one group, and each card counts its exams. */
+    /** Group public products by their actual year-category memberships.
+     * Exam-prep categories stay separate from regular courses, including on year pages. */
     public function prepareCourseCatalog($courses = [], $year_ids = [], $selected_id = null, $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
         $categories = TableRegistry::get('Categories')->getAll(PRODUCT, $lang);
+        $selected_id = (int) $selected_id;
+        $exam_catalog = $selected_id === self::EXAM_PREP_CATEGORY_ID;
+        $ancestor = $selected_id;
+        $visited = [];
+        while ($ancestor && isset($categories[$ancestor]) && !isset($visited[$ancestor])) {
+            $visited[$ancestor] = true;
+            if ($ancestor === self::EXAM_PREP_CATEGORY_ID) { $exam_catalog = true; break; }
+            $ancestor = (int) $categories[$ancestor]['parent_id'];
+        }
+        if ($exam_catalog) {
+            $years = array_filter($categories, function ($category) {
+                return (int) $category['parent_id'] === self::EXAM_PREP_CATEGORY_ID && !empty($category['status']);
+            });
+            uasort($years, function ($a, $b) { return strnatcasecmp($a['name'], $b['name']); });
+            $year_ids = array_keys($years);
+        }
         $groups = [];
         foreach ((array) $year_ids as $id) {
             $id = (int) $id;
@@ -46,14 +62,16 @@ class ProductHelper extends Helper
             ];
         }
         $nav_groups = $groups;
-        $selected_id = (int) $selected_id;
         $selected_year = isset($groups[$selected_id]) ? $selected_id : null;
+        // Keep the full exam catalogue unique; year links provide the grouped views.
+        if ($exam_catalog && $selected_id === self::EXAM_PREP_CATEGORY_ID) $groups = [];
         $unique = [];
         $other = [];
         foreach ((array) $courses as $course) {
             if (empty($course['id']) || isset($unique[$course['id']])) continue;
             $exam_prep = isset($course['categories'][self::EXAM_PREP_CATEGORY_ID]);
-            if ($exam_prep && $selected_id !== self::EXAM_PREP_CATEGORY_ID) continue;
+            if ($exam_prep !== $exam_catalog) continue;
+            if ($selected_year !== null && !isset($course['categories'][$selected_year])) continue;
             $unique[$course['id']] = true;
             $attrs = $course['attributes'] ?? [];
             $lessons = json_decode($attrs['danhsachtiethoc']['value'] ?? '', true);
@@ -82,12 +100,13 @@ class ProductHelper extends Helper
             unset($group);
             if (!$matched) $other[] = $course;
         }
-        if ($other) $groups['other'] = ['id' => 'other', 'name' => $selected_id === self::EXAM_PREP_CATEGORY_ID ? 'Luyện đề theo môn' : 'Khóa học khác', 'url' => null, 'courses' => $other];
+        if ($other) $groups['other'] = ['id' => 'other', 'name' => $exam_catalog ? 'Luyện đề theo môn' : 'Khóa học khác', 'url' => null, 'courses' => $other];
         return [
             'groups' => array_values(array_filter($groups, function ($group) { return !empty($group['courses']); })),
             'nav_groups' => array_values($nav_groups),
             'total' => count($unique),
             'selected_id' => $selected_id,
+            'exam_prep' => $exam_catalog,
             'category_name' => $categories[$selected_id]['name'] ?? 'Khóa học MedUC',
         ];
     }

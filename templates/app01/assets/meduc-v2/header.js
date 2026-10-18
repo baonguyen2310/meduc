@@ -1,4 +1,4 @@
-/* Site header behaviour ported from the main branch (hero-light/assets/original-home.js). */
+/* Shared desktop category menus and mobile navigation. */
 (() => {
   "use strict";
   const root = document.querySelector("#meduc-header");
@@ -6,7 +6,6 @@
   const $ = (selector) => root.querySelector(selector);
   const $$ = (selector) => [...root.querySelectorAll(selector)];
 
-  // Boxes that older scripts pin while scrolling read this to stay below the sticky part of the header.
   const network = $(".mhi-network");
   function setHeaderHeight() {
     const scrolledAway = getComputedStyle(network).display === "none" ? 0 : network.offsetHeight;
@@ -34,81 +33,93 @@
     updateThemeButtons();
   }));
 
-  const browseButton = $("#mhi-browse-button");
-  const browseMenu = $("#mhi-browse-menu");
-  function setBrowse(open) {
-    browseMenu.hidden = !open;
-    browseButton.setAttribute("aria-expanded", String(open));
+  const dropdowns = $$("[data-mhi-dropdown], .mhi-network-dropdown").map((wrap) => ({
+    wrap,
+    button: wrap.querySelector("button[aria-controls]"),
+    menu: wrap.querySelector("nav")
+  })).filter((item) => item.button && item.menu);
+  function setDropdown(item, open) {
+    item.menu.hidden = !open;
+    item.button.setAttribute("aria-expanded", String(open));
   }
-  browseButton.addEventListener("click", () => setBrowse(browseMenu.hidden));
-
-  const networkDropdowns = $$(".mhi-network-dropdown");
-  function setNetworkDropdown(dropdown, open) {
-    const button = dropdown.querySelector("button");
-    const menu = dropdown.querySelector(".mhi-network-menu");
-    menu.hidden = !open;
-    button.setAttribute("aria-expanded", String(open));
+  function closeDropdowns(except = null) {
+    dropdowns.forEach((item) => { if (item !== except) setDropdown(item, false); });
   }
-  networkDropdowns.forEach((dropdown) => {
-    dropdown.querySelector("button").addEventListener("click", () => {
-      const open = dropdown.querySelector(".mhi-network-menu").hidden;
-      networkDropdowns.forEach((item) => setNetworkDropdown(item, item === dropdown && open));
+  dropdowns.forEach((item) => {
+    item.button.addEventListener("click", () => {
+      const open = item.menu.hidden;
+      closeDropdowns();
+      setDropdown(item, open);
+    });
+    item.button.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      event.preventDefault();
+      closeDropdowns(item);
+      setDropdown(item, true);
+      const links = [...item.menu.querySelectorAll("a[href]")];
+      (event.key === "ArrowUp" ? links.at(-1) : links[0])?.focus();
+    });
+    item.menu.addEventListener("keydown", (event) => {
+      const links = [...item.menu.querySelectorAll("a[href]")];
+      const index = links.indexOf(document.activeElement);
+      let next;
+      if (event.key === "ArrowDown") next = (index + 1) % links.length;
+      if (event.key === "ArrowUp") next = (index - 1 + links.length) % links.length;
+      if (event.key === "Home") next = 0;
+      if (event.key === "End") next = links.length - 1;
+      if (next === undefined || !links.length) return;
+      event.preventDefault();
+      links[next].focus();
     });
   });
 
-  // Mobile: the search box opens below the single header row.
   const searchToggle = $("#mhi-search-toggle");
   const searchForm = $("#mhi-search-form");
   function setSearch(open) {
     root.classList.toggle("is-search-open", open);
     searchToggle.setAttribute("aria-expanded", String(open));
-    if (open) $("#mhi-search-input").focus();
+    if (open) { closeDropdowns(); $("#mhi-search-input").focus(); }
   }
   searchToggle.addEventListener("click", () => setSearch(!root.classList.contains("is-search-open")));
 
-  // Mobile: the menu button opens a side panel with every link.
   const menuToggle = $("#mhi-menu-toggle");
   const drawer = $("#mhi-drawer");
   function setDrawer(open) {
     drawer.hidden = !open;
     menuToggle.setAttribute("aria-expanded", String(open));
     document.documentElement.classList.toggle("mhi-scroll-lock", open);
-    if (open) drawer.querySelector("[data-mhi-drawer-close]:not(.mhi-drawer-backdrop)").focus();
-    else menuToggle.focus();
+    if (open) {
+      closeDropdowns();
+      setSearch(false);
+      drawer.querySelector("button[data-mhi-drawer-close]").focus();
+    } else menuToggle.focus();
   }
   menuToggle.addEventListener("click", () => setDrawer(true));
   $$("[data-mhi-drawer-close]").forEach((element) => element.addEventListener("click", () => setDrawer(false)));
   window.matchMedia("(min-width: 992px)").addEventListener("change", (event) => {
+    closeDropdowns();
     if (event.matches && !drawer.hidden) setDrawer(false);
     if (event.matches) setSearch(false);
   });
 
   document.addEventListener("click", (event) => {
-    if (!browseMenu.hidden && !browseMenu.contains(event.target) && !browseButton.contains(event.target)) setBrowse(false);
-    networkDropdowns.forEach((dropdown) => {
-      if (!dropdown.contains(event.target)) setNetworkDropdown(dropdown, false);
-    });
+    dropdowns.forEach((item) => { if (!item.wrap.contains(event.target)) setDropdown(item, false); });
     if (root.classList.contains("is-search-open") && !searchForm.contains(event.target) && !searchToggle.contains(event.target)) setSearch(false);
   });
+  document.addEventListener("focusin", (event) => {
+    dropdowns.forEach((item) => { if (!item.wrap.contains(event.target)) setDropdown(item, false); });
+  });
   document.addEventListener("keydown", (event) => {
+    if (!drawer.hidden && event.key === "Tab") {
+      const focusable = [...drawer.querySelectorAll("a[href], button, summary")].filter((el) => el.getClientRects().length);
+      const first = focusable[0], last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
     if (event.key !== "Escape") return;
-    if (!drawer.hidden) {
-      setDrawer(false);
-      return;
-    }
-    if (root.classList.contains("is-search-open")) {
-      setSearch(false);
-      searchToggle.focus();
-    }
-    if (!browseMenu.hidden) {
-      setBrowse(false);
-      browseButton.focus();
-    }
-    networkDropdowns.forEach((dropdown) => {
-      if (!dropdown.querySelector(".mhi-network-menu").hidden) {
-        setNetworkDropdown(dropdown, false);
-        dropdown.querySelector("button").focus();
-      }
-    });
+    if (!drawer.hidden) { setDrawer(false); return; }
+    if (root.classList.contains("is-search-open")) { setSearch(false); searchToggle.focus(); }
+    const open = dropdowns.find((item) => !item.menu.hidden);
+    if (open) { setDropdown(open, false); open.button.focus(); }
   });
 })();

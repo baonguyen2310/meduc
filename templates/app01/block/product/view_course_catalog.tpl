@@ -9,7 +9,7 @@
 {if !is_string($keyword)}{$keyword = ''}{/if}
 {$website = $this->Setting->getWebsiteInfo()}
 {* Khóa luyện thi (/khoa-luyen-thi, "Luyện thi" in the header): each course is a subject whose lesson holds its exams. *}
-{$exam_prep = PAGE_CATEGORY_ID == 125}
+{$exam_prep = $catalog.exam_prep}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
@@ -20,7 +20,10 @@
     <section class="mcl-shell mcl-hero" aria-labelledby="catalog-title">
         <div>
             <p class="mcl-eyebrow">{if $exam_prep}LUYỆN THI MEDUC / ĐỀ THI CÁC TRƯỜNG Y{else}KHÓA HỌC MEDUC / TỪ CƠ BẢN ĐẾN CHUYÊN SÂU{/if}</p>
-            {if $exam_prep}
+            {if $exam_prep && PAGE_CATEGORY_ID != 125}
+                <a class="mcl-back" href="/khoa-luyen-thi">← Tất cả môn luyện thi</a>
+                <h1 class="mcl-category-title" id="catalog-title">{$catalog.category_name|escape}</h1>
+            {elseif $exam_prep}
                 <h1 id="catalog-title">LUYỆN ĐỀ THEO MÔN.<span>VỮNG VÀNG MÙA THI.</span></h1>
             {elseif PAGE_CATEGORY_ID == 50}
                 <h1 id="catalog-title">{$text.tieu_de_1|default:'CHỌN KHÓA HỌC.'|escape}<span>{$text.tieu_de_2|default:'ĐÚNG CHẶNG ĐƯỜNG.'|escape}</span></h1>
@@ -36,9 +39,10 @@
         {/if}
     </section>
 
-    <nav class="mcl-year-nav" aria-label="Danh mục theo năm học" {if $exam_prep}hidden{/if}>
+    <nav class="mcl-year-nav" aria-label="Danh mục theo năm học">
         <div class="mcl-shell mcl-year-links">
-            <a href="/khoa-hoc" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>
+            {if $exam_prep}<a href="/khoa-luyen-thi" {if PAGE_CATEGORY_ID == 125}aria-current="page"{/if}>Tất cả môn</a>
+            {else}<a href="/khoa-hoc" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>{/if}
             {foreach from = $catalog.nav_groups item = category}
                 <a href="{$this->Utilities->checkInternalUrl($category.url)|escape}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>
             {/foreach}
@@ -73,7 +77,7 @@
             </section>
         {/foreach}
         <div class="mcl-empty" data-catalog-empty {if $catalog.total > 0}hidden{/if}><span aria-hidden="true">↗</span><h2>Chưa tìm thấy khóa học phù hợp.</h2><p>Thử tên môn khác hoặc xem lại danh sách đầy đủ.</p><button type="button" data-catalog-reset hidden>Xóa tìm kiếm</button><a href="/khoa-hoc">Xem tất cả khóa học →</a></div>
-        {if $catalog.total > 0}<p class="mcl-list-note">{if $exam_prep}Mỗi môn có lộ trình chương, bài học và phần tổng ôn. Các đề thi đang được chuẩn bị và chưa mở cho học viên.{else}Khóa học được xếp theo danh mục năm học của MedUC. Một khóa có thể thuộc nhiều nhóm.{/if}</p>{/if}
+        {if $catalog.total > 0}<p class="mcl-list-note">{if $exam_prep}Phân nhóm theo giai đoạn học; một môn có thể thuộc nhiều năm tùy chương trình của trường. Mỗi môn giữ nguyên lộ trình chương, bài học và phần tổng ôn.{else}Khóa học được xếp theo danh mục năm học của MedUC. Một khóa có thể thuộc nhiều nhóm.{/if}</p>{/if}
     </section>
 
     <section class="mcl-help"><div class="mcl-shell mcl-help-inner"><div><p class="mcl-eyebrow">CHƯA BIẾT BẮT ĐẦU TỪ ĐÂU?</p><h2>CÙNG TÌM LỘ TRÌNH<br><span>PHÙ HỢP VỚI BẠN.</span></h2><p>Chia sẻ môn học hoặc mục tiêu hiện tại để MedUC hỗ trợ bạn lựa chọn.</p></div><div>{if !empty($website.hotline)}<a class="mcl-register" href="tel:{$website.hotline|escape}">Nhận tư vấn <span aria-hidden="true">↗</span></a><span class="mcl-help-phone">{$website.hotline|escape}</span>{else}<a class="mcl-register" href="/gioi-thieu">Tìm hiểu về MedUC <span aria-hidden="true">→</span></a>{/if}</div></div></section>
