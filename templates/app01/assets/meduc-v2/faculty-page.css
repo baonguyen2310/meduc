@@ -134,9 +134,9 @@ html.mft-profile-open,html.mft-profile-open body { overflow:hidden !important; }
 .mft-directory[data-faculty-view="list"] .mgv-card:hover .mgv-name { color:var(--mft-red); }
 .mft-directory[data-faculty-view="list"] .mgv-description { display:block; min-height:0; margin:0; overflow:visible; color:var(--mft-muted); font-size:13px; line-height:1.85; -webkit-line-clamp:unset; }
 .mft-grid .mft-description-line + .mft-description-line::before { content:" · "; }
-.mft-directory[data-faculty-view="list"] .mft-description-line { display:block; }
+.mft-directory[data-faculty-view="list"] .mft-description-line { position:relative; display:block; padding-left:14px; }
 .mft-directory[data-faculty-view="list"] .mft-description-line + .mft-description-line { margin-top:5px; }
-.mft-directory[data-faculty-view="list"] .mft-description-line + .mft-description-line::before { content:none; }
+.mft-directory[data-faculty-view="list"] .mft-description-line::before { position:absolute; top:.7em; left:0; width:5px; height:5px; background:currentColor; content:""; }
 .mft-directory[data-faculty-view="list"] .mgv-copy .mgv-cta { display:none; }
 .mft-directory[data-faculty-view="list"] .mft-list-action { display:flex; flex-direction:column; justify-content:center; gap:17px; grid-column:3; grid-row:1 / 3; min-width:0; margin-block:30px; padding-inline:25px; border-left:1px solid var(--mft-line); }
 .mft-list-action-label { color:var(--mft-muted); font:600 9px/1.6 Inter,Arial,sans-serif; letter-spacing:.08em; }
