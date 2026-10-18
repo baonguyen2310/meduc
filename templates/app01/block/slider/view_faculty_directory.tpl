@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-4" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-5" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261018" defer></script>
 
 <main class="mft" id="faculty-page">

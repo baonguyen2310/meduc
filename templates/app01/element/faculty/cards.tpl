@@ -31,7 +31,14 @@
         <span class="mgv-subject">{$subject|escape}</span>
         <div class="mgv-copy">
             <h3 class="mgv-name">{if !empty($profile_mode)}{$display_name|escape}{else}<a href="{$href|escape}">{$display_name|escape}</a>{/if}</h3>
-            <p class="mgv-description">{$description|escape}</p>
+            <p class="mgv-description">
+                {if !empty($profile_mode) && !empty($item.description)}
+                    {foreach from = preg_split('/[\r\n]+/u', $item.description) item = line}
+                        {$line = $line|regex_replace:'/^[\s\-\/]+/u':''|trim}
+                        {if $line != ''}<span class="mft-description-line">{$line|escape}</span>{/if}
+                    {/foreach}
+                {else}{$description|escape}{/if}
+            </p>
             {if !empty($profile_mode)}
                 <span class="mgv-cta">Xem hồ sơ &amp; bằng cấp</span>
             {else}
