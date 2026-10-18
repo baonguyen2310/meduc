@@ -20,7 +20,7 @@
 		'name' => "{if !empty($website_name)}{$website_name}{else}{$company_name}{/if}",
 		'legalName' => $company_name,
 		'url' => "{$url_website}/",
-		'logo' => "{if !empty($website_info.company_logo)}{CDN_URL}{$website_info.company_logo}{/if}"
+		'logo' => "{if !empty($website_info.company_logo)}{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)}{/if}"
 	]}
 
 	<script type="application/ld+json">

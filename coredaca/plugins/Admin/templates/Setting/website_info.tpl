@@ -185,10 +185,10 @@
                                         </label>
                                         {assign var = bg_favicon value = ''}
                                         {if !empty($website_info[$lang].favicon)}
-                                            {assign var = bg_favicon value = "background-image: url('{CDN_URL}{$website_info[$lang].favicon}');;background-size: contain;background-position: 50% 50%;"}
+                                            {assign var = bg_favicon value = "background-image: url('{$this->Utilities->getWebsiteImageUrl($website_info[$lang].favicon)}');;background-size: contain;background-position: 50% 50%;"}
                                         {/if}
                                         <div class="kt-avatar kt-avatar--outline kt-avatar--circle- {if !empty($bg_favicon)}kt-avatar--changed{/if}">
-                                            <a {if !empty($website_info[$lang].favicon)}href="{CDN_URL}{$website_info[$lang].favicon}"{/if} target="_blank" class="kt-avatar__holder kt-favicon d-block" style="{$bg_favicon}"></a>
+                                            <a {if !empty($website_info[$lang].favicon)}href="{$this->Utilities->getWebsiteImageUrl($website_info[$lang].favicon)}"{/if} target="_blank" class="kt-avatar__holder kt-favicon d-block" style="{$bg_favicon}"></a>
                                             <label class="kt-avatar__upload btn-select-image" data-toggle="kt-tooltip" data-original-title="{__d('admin', 'chon_anh')}" data-src="{CDN_URL}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=favicon&lang={LANGUAGE_ADMIN}" data-type="iframe">
                                                 <i class="fa fa-pen"></i>
                                             </label>
@@ -205,10 +205,10 @@
                                         <label class="w-100">{__d('admin', 'logo_cong_ty')}</label>
                                         {assign var = bg_logo value = ''}
                                         {if !empty($website_info[$lang].company_logo)}
-                                            {assign var = bg_logo value = "background-image: url('{CDN_URL}{$website_info[$lang].company_logo}');background-size: contain;background-position: 50% 50%;"}
+                                            {assign var = bg_logo value = "background-image: url('{$this->Utilities->getWebsiteImageUrl($website_info[$lang].company_logo)}');background-size: contain;background-position: 50% 50%;"}
                                         {/if}
                                         <div class="kt-avatar kt-avatar--outline kt-avatar--circle- {if !empty($bg_logo)}kt-avatar--changed{/if}">
-                                            <a {if !empty($website_info[$lang].company_logo)}href="{CDN_URL}{$website_info[$lang].company_logo}"{/if} target="_blank" class="kt-avatar__holder d-block" style="{$bg_logo}"></a>
+                                            <a {if !empty($website_info[$lang].company_logo)}href="{$this->Utilities->getWebsiteImageUrl($website_info[$lang].company_logo)}"{/if} target="_blank" class="kt-avatar__holder d-block" style="{$bg_logo}"></a>
                                             <label class="kt-avatar__upload btn-select-image" data-toggle="kt-tooltip" data-original-title="{__d('admin', 'chon_anh')}" data-src="{CDN_URL}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=company_logo&lang={LANGUAGE_ADMIN}" data-type="iframe">
                                                 <i class="fa fa-pen"></i>
                                             </label>

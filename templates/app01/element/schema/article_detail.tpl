@@ -30,7 +30,7 @@
             'name' => "{if !empty($website_info.website_name)}{$website_info.website_name}{/if}",
             'logo' => [
                 '@type' => 'ImageObject',
-                'url' => "{if !empty($website_info.company_logo)}{CDN_URL}{$website_info.company_logo}{/if}"
+                'url' => "{if !empty($website_info.company_logo)}{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)}{/if}"
             ]
         ],
         'author' => "{if !empty($website_info.website_name)}{$website_info.website_name}{/if}",

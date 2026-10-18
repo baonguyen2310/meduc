@@ -2,6 +2,6 @@
 
 <div class="logo">
     <a href="/">
-        <img src="{CDN_URL}{$website_info.company_logo}" alt="{$website_info.website_name}" />
+        <img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)}" alt="{$website_info.website_name}" />
     </a>
 </div>{/strip}

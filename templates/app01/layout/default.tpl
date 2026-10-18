@@ -46,7 +46,7 @@
     {*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />*}
     
     {assign website_info value = $this->Setting->getWebsiteInfo()}
-    <link href="{if !empty($website_info.favicon)}{CDN_URL}{$website_info.favicon}{else}/favicon.ico{/if}" rel="icon" type="image/x-icon"/>
+    <link href="{if !empty($website_info.favicon)}{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}{else}/favicon.ico{/if}" rel="icon" type="{if !empty($website_info.favicon) && substr($website_info.favicon, -4) == '.svg'}image/svg+xml{else}image/x-icon{/if}"/>
     {$this->element('layout/css', [], $this->Setting->getConfigCacheView('css', {LAYOUT}))}
 
     {* Every page whose layout has a header gets the new header instead of the database header rows. *}
@@ -56,11 +56,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261018-2" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261018-4" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261018-1" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261014" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261014" defer></script>
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261015-2" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261018-1" rel="stylesheet">
     {/if}
 
     {* The sign-in dialog is present on every page, so its styles are shared. *}

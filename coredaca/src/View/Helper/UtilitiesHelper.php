@@ -328,6 +328,16 @@ class UtilitiesHelper extends Helper
         return $this->getView()->getRequest()->getQuery($key);    
     }
 
+    /** Resolve an admin-selected website logo/favicon from the CDN or bundled template assets. */
+    public function getWebsiteImageUrl($path = null)
+    {
+        $path = trim((string) $path);
+        if ($path === '') return '';
+        if (preg_match('#^https?://#i', $path)) return $path;
+        if (strpos($path, '/templates/') === 0) return Router::url($path, true);
+        return rtrim(CDN_URL, '/') . '/' . ltrim($path, '/');
+    }
+
     /** thay thế biến hệ thống
     */
     public function replaceVariableSystem($str = null)

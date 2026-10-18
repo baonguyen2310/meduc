@@ -1,6 +1,7 @@
 {strip}
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
+{$master_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-master.svg') === 0}
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
 {* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
@@ -88,9 +89,10 @@
       </nav>
     </div>
     <div class="mhi-shell mhi-header-main">
-      <a class="mhi-brand" href="/" aria-label="{$website_name|escape} — Trang chủ">
+      <a class="mhi-brand{if $master_brand} mhi-brand--master{/if}" href="/" aria-label="{$website_name|escape} — Trang chủ">
         {if !empty($website_info.company_logo)}
-          <img src="{CDN_URL}{$website_info.company_logo}" alt="{$website_name|escape}" decoding="async" />
+          <img class="mhi-brand-wordmark" src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
+          {if $master_brand}<img class="mhi-brand-mark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-master-mark.svg" alt="" aria-hidden="true" decoding="async" width="95" height="58" />{/if}
         {else}
           <span class="mhi-brand-text">{$website_name|escape}</span>
         {/if}
