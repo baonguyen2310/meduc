@@ -2,6 +2,14 @@
   'use strict';
   const root = document.querySelector('#document-catalog-page');
   if (!root) return;
+  // Keep native library anchors clear of both the header and the year navigation.
+  const paths = root.querySelector('.mdc-paths');
+  if (paths) {
+    const measurePaths = () => root.style.setProperty('--mdc-paths-h', `${paths.offsetHeight}px`);
+    measurePaths();
+    if ('ResizeObserver' in window) new ResizeObserver(measurePaths).observe(paths);
+    else window.addEventListener('resize', measurePaths);
+  }
   const grid = root.querySelector('[data-document-grid]');
   const cards = [...root.querySelectorAll('[data-document-card]')];
   const search = root.querySelector('#document-search');
