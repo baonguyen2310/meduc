@@ -243,10 +243,10 @@ class MemberComponent extends Component
         $email = !empty($data['email']) ? $data['email'] : '';
         $picture = !empty($data['picture']) ? $data['picture'] : null;
         $redirect = !empty($data['redirect']) ? $data['redirect'] : null;        
-        if ($type === 'google') {
-            return $this->System->getResponse([MESSAGE => 'Đăng nhập bằng Google đã được tắt. Vui lòng dùng tài khoản MedUC.']);
+        if (in_array($type, ['google', 'facebook'], true)) {
+            return $this->System->getResponse([MESSAGE => 'Đăng nhập mạng xã hội đã được tắt. Vui lòng dùng tài khoản MedUC.']);
         }
-        if(empty($social_id) || empty($type) || !in_array($type, ['facebook', 'apple'])){
+        if(empty($social_id) || empty($type) || !in_array($type, ['apple'])){
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
 
@@ -814,58 +814,18 @@ class MemberComponent extends Component
 
     public function forgotPassword($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
         if (!$this->controller->getRequest()->is('post') || empty($data)) {
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
-
-        $email = !empty($data['email']) ? trim($data['email']) : null;
-        if(empty($email)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_dia_chi_email')]);
+        $email = isset($data['email']) && is_string($data['email']) ? trim($data['email']) : '';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 255) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập email hợp lệ.']);
         }
-
-        // check recaptcha
-        if(!$api){
-            $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-            $check_recaptcha = $this->ReCaptcha->check($token);
-            if($check_recaptcha[CODE] != SUCCESS){
-                return $this->System->getResponse([MESSAGE => $check_recaptcha[MESSAGE]]);
-            }
+        if (empty($options['api'])) {
+            $captcha = $this->ReCaptcha->check(!empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null);
+            if ($captcha[CODE] !== SUCCESS) return $captcha;
         }
-
-        $customer_info = TableRegistry::get('Customers')->find()->contain(['Account'])->where([
-            'Customers.deleted' => 0,
-            'Customers.email' => $email,
-            'Account.deleted' => 0,
-        ])->select(['Customers.id', 'Customers.email', 'Customers.status', 'Account.status'])->first();
-        if(empty($customer_info['id'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'thong_tin_tai_khoan_khong_ton_tai')]);
-        }
-
-        if(empty($customer_info['status']) || empty($customer_info['Account']['status'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'tai_khoan_cua_ban_hien_dang_bi_khoa')]);
-        }
-
-        $params_email = [
-            'to_email' => $email,
-            'code' => 'FORGOT_PASSWORD',
-            'id_record' => $customer_info['id'],
-            'generate_token' => 'forgot_password',
-            'from_website_template' => !empty($data['from_website_template']) ? true : false
-        ];
-
-        $send_email = $this->Email->send($params_email);
-        if (empty($send_email[CODE]) || $send_email[CODE] != SUCCESS) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'khong_gui_duoc_email')]);
-        }
-        return $this->System->getResponse([
-            CODE => SUCCESS,
-            MESSAGE => __d('template', 'gui_ma_xac_nhan_thanh_cong'),
-            DATA => [
-                'email' => $email
-            ]
-        ]);
+        return $this->controller->loadComponent('PasswordResetOtp')->send($email);
     }
 
     public function resendVerifyCode($data = [], $options = [])
@@ -898,6 +858,9 @@ class MemberComponent extends Component
 
         if ($generate_token === 'active_account') {
             return $this->controller->loadComponent('RegistrationOtp')->resend($email);
+        }
+        if ($generate_token === 'forgot_password') {
+            return $this->controller->loadComponent('PasswordResetOtp')->send($email);
         }
 
         $session = $this->controller->getRequest()->getSession();
@@ -944,101 +907,27 @@ class MemberComponent extends Component
 
     public function verifyForgotPassword($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
         if (!$this->controller->getRequest()->is('post') || empty($data)) {
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
-
-        $email = !empty($data['email']) ? trim($data['email']) : null;
-        $code = !empty($data['code']) ? trim($data['code']) : null;
-        $new_password = !empty($data['new_password']) ? trim($data['new_password']) : null;
-        $re_password = !empty($data['re_password']) ? trim($data['re_password']) : null;
-
-        if(empty($email)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_dia_chi_email')]);
+        $email = isset($data['email']) && is_string($data['email']) ? trim($data['email']) : '';
+        $code = isset($data['code']) && is_string($data['code']) ? trim($data['code']) : '';
+        $password = isset($data['new_password']) && is_string($data['new_password']) ? $data['new_password'] : '';
+        $confirm = isset($data['re_password']) && is_string($data['re_password']) ? $data['re_password'] : '';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 255 || strlen($code) > 20) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập email và mã OTP hợp lệ.']);
         }
-
-        if(empty($code)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_ma_xac_nhan')]);
+        if (mb_strlen($password) < 6 || mb_strlen($password) > 255) {
+            return $this->System->getResponse([MESSAGE => 'Mật khẩu mới cần có từ 6 đến 255 ký tự.']);
         }
-
-        if(empty($new_password) || empty($re_password)){
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_day_du_thong_tin')]);
+        if ($password !== $confirm) {
+            return $this->System->getResponse([MESSAGE => 'Nhập lại mật khẩu mới chưa khớp.']);
         }
-
-        if($new_password != $re_password){
-            return $this->System->getResponse([MESSAGE => __d('template', 'xac_nhan_mat_khau_khong_chinh_xac')]);
+        if (empty($options['api'])) {
+            $captcha = $this->ReCaptcha->check(!empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null);
+            if ($captcha[CODE] !== SUCCESS) return $captcha;
         }
-
-        // check recaptcha
-        if(!$api){
-            $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-            $check_recaptcha = $this->ReCaptcha->check($token);
-            if($check_recaptcha[CODE] != SUCCESS){
-                return $this->System->getResponse([MESSAGE => $check_recaptcha[MESSAGE]]);
-            }
-        }    
-
-        $account_table = TableRegistry::get('CustomersAccount');
-        $account_info = $account_table->find()->contain(['Customer'])->where([
-            'Customer.email' => $email,
-            'CustomersAccount.deleted' => 0,
-            'Customer.deleted' => 0
-        ])->select(['CustomersAccount.id', 'CustomersAccount.status', 'Customer.status'])->first();
-        if (empty($account_info)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_tai_khoan')]);
-        }
-
-        if(empty($account_info['status']) || empty($account_info['Customer']['status'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'tai_khoan_cua_ban_hien_dang_bi_khoa')]);
-        }
-
-        $data_account = $account_table->patchEntity($account_info, [
-            'password' => Security::hash($new_password, 'md5', false)
-        ]);
-
-        $table_email_token = TableRegistry::get('EmailToken');
-        $email_token_info = $table_email_token->find()->where([
-            'email' => $email,
-            'code' => $code,
-            'type' => 'forgot_password',
-            'status' => 0,
-            'end_time >=' => time()
-        ])->first();
-
-        if(empty($email_token_info)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'thong_tin_khong_chinh_xac_hoac_ma_xac_nhan_da_het_han')]);
-        }
-
-        $email_token = $table_email_token->patchEntity($email_token_info, ['status' => 1]);
-
-        $conn = ConnectionManager::get('default');
-        try{
-            $conn->begin();
-                        
-            $save_password = $account_table->save($data_account);
-
-            if (empty($save_password->id)){
-                throw new Exception();
-            }
-
-            $save = $table_email_token->save($email_token);
-            if (empty($save->id)){
-                throw new Exception();
-            }
-
-            $conn->commit();
-
-            return $this->System->getResponse([
-                CODE => SUCCESS, 
-                MESSAGE => __d('template', 'thay_doi_mat_khau_thanh_cong')
-            ]);
-
-        }catch (Exception $e) {
-            $conn->rollback();
-            return $this->System->getResponse([MESSAGE => $e->getMessage()]);  
-        }
+        return $this->controller->loadComponent('PasswordResetOtp')->reset($email, $code, $password);
     }
 
     public function verifyAccount($data = [], $options = [])

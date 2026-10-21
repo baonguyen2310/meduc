@@ -16,6 +16,12 @@
                 <section id="ma-panel-register" role="tabpanel" data-ma-panel="register" aria-labelledby="ma-tab-register" hidden>
                     {$this->element('../Member/element_register_form', ['register_form_id' => 'meduc-register-modal'])}
                 </section>
+                <section data-ma-panel="forgot" aria-label="Khôi phục tài khoản" hidden>
+                    {$this->element('../Member/element_recovery_form', ['recovery_form_id' => 'ma-modal-recovery'])}
+                </section>
+                <section data-ma-panel="reset" aria-label="Đặt lại mật khẩu" hidden>
+                    {$this->element('../Member/element_reset_form', ['reset_form_id' => 'ma-modal-reset', 'reset_readonly' => true])}
+                </section>
                 <section data-ma-panel="verify" aria-label="Xác thực email đăng ký" hidden>
                     <form class="ma-form" data-ma-verify action="/member/ajax-verify-email" method="post">
                         <div class="ma-field"><label for="ma-modal-email">Email đã đăng ký</label><div class="input-group ma-input"><input id="ma-modal-email" name="email" type="email" autocomplete="email" readonly required maxlength="255"></div></div>

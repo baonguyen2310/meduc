@@ -23,25 +23,27 @@
     const verifyForm = modal.querySelector("[data-ma-verify]");
     let requestedView = null;
     let opener = null;
-    let resendTimer = null;
-    let resendUntil = 0;
+    const resendTimers = new WeakMap();
     let verifyInFlight = false;
     const resendButton = modal.querySelector("[data-ma-resend]");
-    function countdown(seconds) {
-      clearInterval(resendTimer);
-      resendUntil = Date.now() + Math.max(0, Number(seconds) || 0) * 1000;
+    function countdown(seconds, button = resendButton) {
+      if (!button) return;
+      clearInterval(resendTimers.get(button));
+      const until = Date.now() + Math.max(0, Number(seconds) || 0) * 1000;
       const update = () => {
-        const remaining = Math.max(0, Math.ceil((resendUntil - Date.now()) / 1000));
-        resendButton.disabled = remaining > 0;
-        resendButton.textContent = remaining ? "Gửi lại sau " + remaining + "s" : "Gửi lại mã";
-        if (!remaining) clearInterval(resendTimer);
+        const remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+        button.disabled = remaining > 0;
+        button.textContent = remaining ? "Gửi lại sau " + remaining + "s" : "Gửi lại mã";
+        if (!remaining) clearInterval(resendTimers.get(button));
       };
       update();
-      if (resendUntil > Date.now()) resendTimer = setInterval(update, 1000);
+      if (until > Date.now()) resendTimers.set(button, setInterval(update, 1000));
     }
 
     const copy = {
       login: ["Chào mừng trở lại.", "Đăng nhập để tiếp tục hành trình học Y."],
+      forgot: ["Quên mật khẩu?", "Nhập email đã đăng ký. MedUC sẽ gửi mã OTP để bạn đặt lại mật khẩu."],
+      reset: ["Đặt mật khẩu mới.", "Nhập mã OTP từ email và chọn mật khẩu mới cho tài khoản của bạn."],
       register: ["Bắt đầu cùng MedUC.", "Tạo tài khoản để học, luyện tập và lưu lại hành trình của bạn."],
       verify: ["Xác thực email.", "Chỉ còn một bước: nhập mã OTP để hoàn tất đăng ký và tự động đăng nhập."]
     };
@@ -54,8 +56,8 @@
         tab.tabIndex = selected ? 0 : -1;
       });
       modal.classList.toggle("is-register", view === "register");
-      modal.querySelector('[role="tablist"]').hidden = view === "verify";
-      modal.querySelector(".ma-eyebrow").textContent = view === "verify" ? "BƯỚC 2 / 2 · XÁC THỰC EMAIL" : "TÀI KHOẢN MEDUC";
+      modal.querySelector('[role="tablist"]').hidden = !["login", "register"].includes(view);
+      modal.querySelector(".ma-eyebrow").textContent = view === "verify" ? "BƯỚC 2 / 2 · XÁC THỰC EMAIL" : view === "forgot" ? "KHÔI PHỤC TÀI KHOẢN / 01" : view === "reset" ? "KHÔI PHỤC TÀI KHOẢN / 02" : "TÀI KHOẢN MEDUC";
       modal.querySelector("#ma-modal-title").textContent = copy[view][0];
       modal.querySelector("#ma-modal-description").textContent = copy[view][1];
       modal.querySelector(".modal-body").scrollTop = 0;
@@ -139,9 +141,9 @@
         const link = event.target.closest("a[href]");
         if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
         const url = new URL(link.href, location.origin);
-        if (url.origin !== location.origin || !/^\/member\/(login|register)\/?$/.test(url.pathname)) return;
+        if (url.origin !== location.origin || !/^\/member\/(login|register|forgot-password)\/?$/.test(url.pathname)) return;
         trigger = link;
-        view = /register/.test(url.pathname) ? "register" : "login";
+        view = /forgot-password/.test(url.pathname) ? "forgot" : /register/.test(url.pathname) ? "register" : "login";
       }
       if (!trigger) return;
       event.preventDefault();
@@ -207,6 +209,68 @@
           countdown(response.data?.resend_after || (response.code === "success" ? 60 : 0));
         }).fail(() => { countdown(0); });
       });
+    });
+
+
+    const resetForm = modal.querySelector("[data-ma-reset]");
+    const recoveryInFlight = new WeakSet();
+    const recoveryForms = [...document.querySelectorAll("[data-ma-recovery], [data-ma-reset]")];
+    function recoveryRequest(form, resend = false) {
+      if (recoveryInFlight.has(form)) return;
+      const resetting = form.hasAttribute("data-ma-reset") && !resend;
+      if (resetting) {
+        form.elements.re_password.setCustomValidity(
+          form.elements.new_password.value === form.elements.re_password.value ? "" : "Nhập lại mật khẩu mới chưa khớp."
+        );
+      }
+      if (resend ? !form.elements.email.reportValidity() : !form.reportValidity()) return;
+      recoveryInFlight.add(form);
+      const submit = form.querySelector(resend ? "[data-ma-reset-resend]" : '[type="submit"]');
+      submit.disabled = true;
+      const finish = () => { recoveryInFlight.delete(form); if (!resend) submit.disabled = false; };
+      nhMain.reCaptcha.check((token) => {
+        let data = resetting ? $(form).serialize() : $.param({email:form.elements.email.value});
+        if (token != null) data += "&" + _TOKEN_RECAPTCHA + "=" + encodeURIComponent(token);
+        nhMain.callAjax({url:resetting ? form.action : "/member/ajax-forgot-password", data}).done((response) => {
+          if (response.code !== "success") {
+            setStatus(form, response.message);
+            if (resend) countdown(response.data?.resend_after || 0, submit);
+            return;
+          }
+          if (resetting) {
+            const email = form.elements.email.value;
+            form.reset();
+            form.elements.code.value = "";
+            loginForm.elements.username.value = email;
+            loginForm.elements.password.value = "";
+            if (modal.contains(form)) showView("login");
+            else openAuth("login", submit);
+            setStatus(loginForm, response.message, true);
+            loginForm.elements.password.focus({preventScroll:true});
+          } else if (resend) {
+            setStatus(form, response.message, true);
+            countdown(response.data?.resend_after || 60, submit);
+          } else {
+            resetForm.reset();
+            resetForm.elements.email.value = response.data?.email || form.elements.email.value;
+            countdown(response.data?.resend_after || 60, resetForm.querySelector("[data-ma-reset-resend]"));
+            if (modal.contains(form)) showView("reset", true);
+            else openAuth("reset", submit);
+            setStatus(resetForm, response.message, true);
+          }
+        }).fail(() => {
+          setStatus(form, "Không thể kết nối. Vui lòng thử lại.");
+          if (resend) countdown(0, submit);
+        }).always(finish);
+      });
+    }
+    recoveryForms.forEach((form) => {
+      form.addEventListener("submit", (event) => { event.preventDefault(); recoveryRequest(form); });
+      form.querySelector("[data-ma-reset-resend]")?.addEventListener("click", (event) => {
+        if (!event.currentTarget.disabled) recoveryRequest(form, true);
+      });
+      form.querySelector('[name="re_password"]')?.addEventListener("input", (event) => event.target.setCustomValidity(""));
+      form.querySelector('[name="new_password"]')?.addEventListener("input", () => form.elements.re_password.setCustomValidity(""));
     });
 
     const requests = new WeakMap();
