@@ -66,8 +66,8 @@
         {if !empty($website_info.company_logo)}
           {if $meduc_brand}
             <img class="mhi-brand-wordmark mhi-brand-wordmark--light" src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
-            <img class="mhi-brand-wordmark mhi-brand-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-logo-dark.svg" alt="" aria-hidden="true" decoding="async" />
-            <img class="mhi-brand-mark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-mark.svg" alt="" aria-hidden="true" decoding="async" width="56" height="48" />
+            <img class="mhi-brand-wordmark mhi-brand-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg" alt="" aria-hidden="true" decoding="async" />
+            <img class="mhi-brand-mark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-mark.svg" alt="" aria-hidden="true" decoding="async" width="64" height="54" />
           {else}
             <img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
           {/if}

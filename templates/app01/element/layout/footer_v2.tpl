@@ -109,8 +109,8 @@
             {if !empty($website_info.company_logo)}
                 {if $meduc_brand}
                     <a href="/" class="mfo-meduc-logo" aria-label="MedUC — Trang chủ">
-                        <img class="mfo-meduc-light" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-footer-light.svg" alt="" aria-hidden="true" loading="lazy" />
-                        <img class="mfo-meduc-dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-footer-dark.svg" alt="" aria-hidden="true" loading="lazy" />
+                        <img class="mfo-meduc-light" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-light.svg" alt="" aria-hidden="true" loading="lazy" />
+                        <img class="mfo-meduc-dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-dark.svg" alt="" aria-hidden="true" loading="lazy" />
                     </a>
                 {else}
                     <a href="/" aria-label="Trang chủ"><img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{if !empty($website_info.website_name)}{$website_info.website_name|escape}{else}MedUC{/if}" loading="lazy" /></a>
