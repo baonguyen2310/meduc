@@ -143,12 +143,30 @@ class EmailComponent extends Component
         $delivery_timeout = !empty($params['delivery_timeout']) ? max(5, min(30, (int)$params['delivery_timeout'])) : 30;
         $from_email = !empty($config['email']) ? $config['email'] : null;
 
+        // Deployment-only credentials stay outside tracked source and database settings.
+        $resend_file = CONFIG . '.env.resend.php';
+        $resend_config = is_file($resend_file) ? require $resend_file : [];
+        if (is_array($resend_config) && !empty($resend_config['enabled'])
+            && !empty($resend_config['api_key']) && !empty($resend_config['from_email'])) {
+            $smtp_host = 'resend';
+            $from_email = $resend_config['from_email'];
+        }
+
         if(empty($from_email)){
             $this->log('Vui lòng cấu hình Email ứng dụng', 'error');
             return $this->System->getResponse([MESSAGE => 'Vui lòng cấu hình Email ứng dụng']);
         }
 
         switch ($smtp_host) {
+            case 'resend':
+                if (empty(TransportFactory::getConfig('resend'))) {
+                    TransportFactory::setConfig('resend', [
+                        'className' => 'App\\Mailer\\Transport\\ResendTransport',
+                        'apiKey' => $resend_config['api_key'],
+                        'timeout' => $delivery_timeout,
+                    ]);
+                }
+                break;
             case 'gmail':
                 if(empty(TransportFactory::getConfig('gmail'))){
                     TransportFactory::setConfig('gmail', [
