@@ -62,23 +62,9 @@ body.meduc-header-v2 .category-topic.form-fixed { top: calc(var(--mhi-header-h, 
 
 /* Secondary link bar */
 .mhi-network { background: var(--mhi-top); }
-.mhi-network-links { display: flex; align-items: center; gap: 34px; height: var(--mhi-network-h); white-space: nowrap; font-size: 12px; font-weight: 700; }
+.mhi-network-links { display: flex; align-items: center; justify-content: flex-start; gap: clamp(18px, 2.2vw, 34px); height: var(--mhi-network-h); white-space: nowrap; font-size: 12px; font-weight: 700; }
 .mhi-network-links a { color: var(--mhi-muted); }
 .mhi-network-links a:hover { color: var(--mhi-red); text-decoration: underline; text-underline-offset: 5px; }
-.mhi-network-tools { display: flex; align-items: center; gap: 24px; margin-left: auto; }
-.mhi-network-tools .mhi-theme-toggle { width: 28px; height: 28px; margin: 0; background: none; border-color: transparent !important; }
-.mhi-network-tools .mhi-theme-toggle .mhi-icon { width: 18px; height: 18px; }
-.mhi-network-dropdown { position: relative; display: inline-flex; align-items: center; gap: 3px; height: 100%; }
-.mhi-network-dropdown > button { display: grid; place-items: center; width: 22px; height: 28px; padding: 0; background: none; color: var(--mhi-muted); }
-.mhi-network-dropdown > button:hover, .mhi-network-dropdown > button[aria-expanded="true"] { color: var(--mhi-red); }
-.mhi-network-dropdown > button:focus { outline: none !important; }
-.mhi-network-dropdown > button:focus-visible { color: var(--mhi-red); }
-.mhi-network-dropdown > button .mhi-icon { width: 14px; height: 14px; transition: transform .18s; }
-.mhi-network-dropdown > button[aria-expanded="true"] .mhi-icon { transform: rotate(180deg); }
-.mhi-network-menu { position: absolute; top: calc(100% + 4px); left: 0; z-index: 80; width: max-content; min-width: 220px; max-width: calc(100vw - 24px); padding: 7px; border: 1px solid var(--mhi-line); border-radius: 10px; background: var(--mhi-menu); box-shadow: 0 14px 48px var(--mhi-shadow); }
-.mhi-network-menu a { display: block; padding: 10px 12px; border-radius: 5px; color: var(--mhi-ink); font-size: 13px; font-weight: 500; }
-.mhi-network-menu a:hover, .mhi-network-menu a:focus-visible { background: var(--mhi-panel-hover); color: var(--mhi-red); text-decoration: none; }
-
 /* Main row */
 .mhi-header-main { display: flex; align-items: center; gap: 9px; height: 66px; }
 .mhi-brand { display: inline-flex; align-items: center; flex-shrink: 0; margin-right: 7px; }
@@ -179,20 +165,22 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
   .mhi-header-main > .mhi-header-cta { padding-inline: 14px; font-size: 13px; }
   .mhi-member { margin-inline: 4px; }
 }
-/* Below desktop width the header is one row: logo, search, course cart, account and the menu button. */
+/* Compact main row keeps account, both carts and the theme switch within reach. */
 @media (max-width: 991.98px) {
   .mhi { --mhi-network-h: 0px; }
-  .mhi-network, .mhi-browse-wrap, .mhi-cart-book, .mhi-theme-toggle, .mhi-header-main > .mhi-header-cta, .mhi-login-text { display: none !important; }
+  .mhi-network, .mhi-browse-wrap, .mhi-header-main > .mhi-header-cta, .mhi-login-text { display: none !important; }
   .mhi-search-toggle, .mhi-menu-toggle, .mhi-login-icon { display: grid !important; }
   .mhi-header-main { position: relative; gap: 4px; height: 64px; }
   .mhi-brand { margin-right: auto; }
   .mhi-brand img { height: 48px; }
   .mhi-search { display: none; }
   .mhi-header-wrap.is-search-open .mhi-search { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60; display: flex; max-width: none; box-shadow: 0 14px 48px var(--mhi-shadow); }
-  .mhi-utility { order: 0; gap: 4px; margin-left: 0; padding-left: 0; }
-  .mhi-utility .mhi-cart { order: 1; width: 40px; }
-  .mhi-utility .mhi-member { order: 2; }
-  .mhi-login { width: 40px; height: 40px; justify-content: center; }
+  .mhi-utility { order: 0; gap: 3px; margin-left: 0; padding-left: 0; }
+  .mhi-utility .mhi-member { order: 0; margin-inline: 0; }
+  .mhi-utility .mhi-cart { order: 1; width: 34px; }
+  .mhi-utility .mhi-theme-toggle { order: 2; width: 36px; height: 36px; margin-left: 2px; }
+  .mhi-search-toggle, .mhi-menu-toggle { width: 34px; }
+  .mhi-login { width: 34px; height: 40px; justify-content: center; }
   .mhi-member #member-info { width: 36px; height: 36px; font-size: 17px !important; }
 }
 

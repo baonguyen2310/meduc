@@ -10,22 +10,13 @@
   ['url' => '/khoa-hoc-sinh-vien-nam-3-nam-4', 'label' => 'Sinh viên năm 3 – năm 4', 'icon' => 'pulse'],
   ['url' => '/khoa-hoc-noi-tru-sau-dai-hoc', 'label' => 'Nội trú – Sau đại học', 'icon' => 'users']
 ]}
-{$nav_groups = [
-  ['id' => 'experience', 'label' => 'Kinh nghiệm', 'url' => '/blog', 'all' => 'Tất cả bài viết', 'items' => [
-    ['url' => '/blog-kinh-nghiem', 'label' => 'Blog Kinh Nghiệm'],
-    ['url' => '/blog-tieng-anh-y-khoa', 'label' => 'Blog Tiếng Anh Y Khoa'],
-    ['url' => '/blog-ngoai-khoa', 'label' => 'Blog Ngoại Khoa'],
-    ['url' => '/blog-noi-khoa', 'label' => 'Blog Nội Khoa'],
-    ['url' => '/blog-giai-phau', 'label' => 'Blog Giải Phẫu'],
-    ['url' => '/blog-hoa-sinh', 'label' => 'Blog Hóa Sinh'],
-    ['url' => '/blog-sinh-ly', 'label' => 'Blog Sinh Lý']
-  ]],
-  ['id' => 'documents', 'label' => 'Tài liệu', 'url' => '/tai-lieu-hoc-tap', 'all' => 'Tất cả tài liệu', 'items' => [
-    ['url' => '/y-khoa-nam-1', 'label' => 'Y Khoa Năm 1'],
-    ['url' => '/y-khoa-nam-2', 'label' => 'Y Khoa Năm 2'],
-    ['url' => '/y-khoa-nam-3', 'label' => 'Y Khoa Năm 3'],
-    ['url' => '/y-khoa-nam-4', 'label' => 'Y Khoa Năm 4']
-  ]]
+{$nav_secondary = [
+  ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
+  ['url' => '/doi-ngu-giang-vien', 'label' => 'Giảng viên'],
+  ['url' => '/phuong-phap-hoc', 'label' => 'Phương pháp học'],
+  ['url' => '/phan-hoi-hoc-vien', 'label' => 'Phản hồi'],
+  ['url' => '/lo-trinh-hoc', 'label' => 'Lộ trình học'],
+  ['url' => '/class-rank', 'label' => 'Xếp hạng']
 ]}
 
 {* Product categories are shared with Admin and the year-filtered catalogue. *}
@@ -64,28 +55,9 @@
   <header class="mhi-header">
     <div class="mhi-network">
       <nav class="mhi-shell mhi-network-links" aria-label="Điều hướng MedUC">
-        <a href="/gioi-thieu">Giới thiệu</a>
-        <a href="/doi-ngu-giang-vien">Giảng viên</a>
-        <a href="/phuong-phap-hoc">Phương pháp học</a>
-        <a href="/phan-hoi-hoc-vien">Phản hồi</a>
-        {foreach from = $nav_groups item = group}
-          <div class="mhi-network-dropdown">
-            <a href="{$group.url}">{$group.label}</a>
-            <button type="button" aria-label="Danh mục {$group.label}" aria-expanded="false" aria-controls="mhi-{$group.id}-menu"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg></button>
-            <nav class="mhi-network-menu" id="mhi-{$group.id}-menu" aria-label="Danh mục {$group.label}" hidden>
-              {foreach from = $group.items item = link}
-                <a href="{$link.url}">{$link.label}</a>
-              {/foreach}
-            </nav>
-          </div>
+        {foreach from = $nav_secondary item = link}
+          <a href="{$link.url|escape}">{$link.label|escape}</a>
         {/foreach}
-        <div class="mhi-network-tools">
-          <a class="mhi-rank" href="/class-rank">Xếp hạng</a>
-          <button class="mhi-theme-toggle" data-mhi-theme-toggle type="button" aria-label="Chuyển sang chế độ sáng" aria-pressed="true" title="Chuyển sang chế độ sáng">
-            <svg class="mhi-icon mhi-sun" aria-hidden="true"><use href="#mhi-icon-sun" /></svg>
-            <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
-          </button>
-        </div>
       </nav>
     </div>
     <div class="mhi-shell mhi-header-main">
@@ -137,6 +109,10 @@
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 4h2.3l2.4 11h10.6l2-8H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
           <span nh-mini-cart-book-quantity class="mhi-cart-count">0</span>
         </a>
+        <button class="mhi-theme-toggle" data-mhi-theme-toggle type="button" aria-label="Chuyển sang chế độ sáng" aria-pressed="true" title="Chuyển sang chế độ sáng">
+          <svg class="mhi-icon mhi-sun" aria-hidden="true"><use href="#mhi-icon-sun" /></svg>
+          <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
+        </button>
       </nav>
       <a class="mhi-header-cta" href="/khoa-hoc">Bắt đầu học</a>
       <button class="mhi-icon-button mhi-menu-toggle" id="mhi-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mhi-drawer">
@@ -160,19 +136,8 @@
         </details>
       {/foreach}
       <p class="mhi-drawer-label">Về MedUC</p>
-      <a class="mhi-drawer-link" href="/class-rank">Bảng xếp hạng</a>
-      <a class="mhi-drawer-link" href="/gioi-thieu">Giới thiệu</a>
-      <a class="mhi-drawer-link" href="/doi-ngu-giang-vien">Giảng viên</a>
-      <a class="mhi-drawer-link" href="/phuong-phap-hoc">Phương pháp học</a>
-      <a class="mhi-drawer-link" href="/phan-hoi-hoc-vien">Phản hồi</a>
-      {foreach from = $nav_groups item = group}
-        <details class="mhi-drawer-group">
-          <summary class="mhi-drawer-link">{$group.label}<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg></summary>
-          <a class="mhi-drawer-sublink" href="{$group.url}">{$group.all}</a>
-          {foreach from = $group.items item = link}
-            <a class="mhi-drawer-sublink" href="{$link.url}">{$link.label}</a>
-          {/foreach}
-        </details>
+      {foreach from = $nav_secondary item = link}
+        <a class="mhi-drawer-link" href="{$link.url|escape}">{$link.label|escape}</a>
       {/foreach}
       <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách &amp; thiết bị</a>
 
