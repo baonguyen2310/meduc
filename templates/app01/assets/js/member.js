@@ -298,6 +298,12 @@ var nhMember = {
 							maxlength: 255
 						},
 
+						school_name: {
+                            required: true,
+                            maxlength: 255,
+                            normalizer: function(value) { return $.trim(value); }
+                        },
+                        student_year: { required: true },
 						password: {
 							minlength: 6,
 							required: true,
@@ -345,6 +351,11 @@ var nhMember = {
 		                    maxlength: nhMain.getLabel('email_nhap_qua_dai')
 		                },
 
+		                school_name: {
+                            required: 'Vui lòng nhập trường học',
+                            maxlength: 'Tên trường không được quá 255 ký tự'
+                        },
+                        student_year: { required: 'Vui lòng chọn năm sinh viên' },
 		                password: {
 		                    required: nhMain.getLabel('vui_long_nhap_mat_khau'),
 		                    minlength: nhMain.getLabel('mat_khau_nhap_qua_ngan')

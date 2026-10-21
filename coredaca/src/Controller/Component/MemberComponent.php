@@ -243,7 +243,10 @@ class MemberComponent extends Component
         $email = !empty($data['email']) ? $data['email'] : '';
         $picture = !empty($data['picture']) ? $data['picture'] : null;
         $redirect = !empty($data['redirect']) ? $data['redirect'] : null;        
-        if(empty($social_id) || empty($type) || !in_array($type, ['facebook', 'google', 'apple'])){
+        if ($type === 'google') {
+            return $this->System->getResponse([MESSAGE => 'Đăng nhập bằng Google đã được tắt. Vui lòng dùng tài khoản MedUC.']);
+        }
+        if(empty($social_id) || empty($type) || !in_array($type, ['facebook', 'apple'])){
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
 
@@ -380,6 +383,34 @@ class MemberComponent extends Component
             return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_so_dien_thoai')]);
         }
 
+        $data['school_name'] = isset($data['school_name']) && is_string($data['school_name'])
+            ? trim(strip_tags($data['school_name'])) : '';
+        $data['student_year'] = isset($data['student_year']) && is_scalar($data['student_year'])
+            ? trim((string)$data['student_year']) : '';
+
+        if ($data['school_name'] === '' || preg_match('/^\s*$/u', $data['school_name'])) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập trường học.']);
+        }
+        if (mb_strlen($data['school_name']) > 255) {
+            return $this->System->getResponse([MESSAGE => 'Tên trường không được quá 255 ký tự.']);
+        }
+        if (!in_array($data['student_year'], ['1', '2', '3', '4', '5', '6', 'graduate'], true)) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng chọn năm sinh viên hợp lệ.']);
+        }
+
+        // The browser sends ISO dates; the shared customer saver expects dd/mm/yyyy.
+        $birthday = isset($data['birthday']) && is_string($data['birthday']) ? trim($data['birthday']) : '';
+        $data['birthday'] = null;
+        if ($birthday !== '') {
+            $format = preg_match('/^\d{4}-\d{2}-\d{2}$/D', $birthday) ? 'Y-m-d' : 'd/m/Y';
+            $date = \DateTimeImmutable::createFromFormat('!' . $format, $birthday);
+            if (!$date || $date->format($format) !== $birthday ||
+                $date > new \DateTimeImmutable('today') || $date->getTimestamp() < -2147483648) {
+                return $this->System->getResponse([MESSAGE => 'Ngày sinh không hợp lệ hoặc ở trong tương lai.']);
+            }
+            $data['birthday'] = $date->format('d/m/Y');
+        }
+
         // check recaptcha
         if(!$api){
             $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
@@ -401,6 +432,8 @@ class MemberComponent extends Component
             'email' => !empty($data['email']) ? trim($data['email']) : null,
             'phone' => !empty($data['phone']) ? trim($data['phone']) : null,
             'birthday' => !empty($data['birthday']) ? trim($data['birthday']) : null,
+            'school_name' => $data['school_name'],
+            'student_year' => $data['student_year'],
             'sex' => !empty($data['sex']) ? trim($data['sex']) : null,
             'city_id' => !empty($data['city_id']) ? intval($data['city_id']) : null,
             'district_id' => !empty($data['district_id']) ? intval($data['district_id']) : null,

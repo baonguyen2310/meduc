@@ -16,11 +16,8 @@
         <p class="ma-status" role="alert" hidden></p>
         <button type="submit" nh-btn-action="submit" class="ma-submit">Đăng nhập <span aria-hidden="true">→</span></button>
         <input type="hidden" name="redirect" value="{if !empty($redirect)}{$redirect|escape}{/if}">
-        {if (!empty($social_login.facebook_app_id) && !empty($social_login.facebook_load_sdk)) || (!empty($social_login.google_client_id) && !empty($social_login.google_load_sdk))}
+        {if !empty($social_login.facebook_app_id) && !empty($social_login.facebook_load_sdk)}
             <div class="ma-divider"><span>hoặc</span></div>
-        {/if}
-        {if !empty($social_login.google_client_id) && !empty($social_login.google_load_sdk)}
-            <div class="ma-google-slot" data-ma-google-slot></div>
         {/if}
         {if !empty($social_login.facebook_app_id) && !empty($social_login.facebook_load_sdk)}
             <button type="button" nh-btn-login-social="facebook" class="ma-social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-8h3l.5-4H14V7c0-1 .3-2 2-2h2V1.5c-.7-.1-1.8-.3-3-.3-3 0-5 1.8-5 5V9H7v4h3v8Z"/></svg>Tiếp tục với Facebook</button>

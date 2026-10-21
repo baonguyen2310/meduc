@@ -12,7 +12,7 @@ html[data-meduc-theme="light"] .ma {
 .ma [hidden] { display:none !important; }
 .ma a { color:inherit; text-decoration:none; }
 .ma a:hover { color:var(--ma-red); text-decoration:none; }
-.ma button, .ma input { font:inherit; }
+.ma button, .ma input, .ma select { font:inherit; }
 .ma button { cursor:pointer; }
 .ma a:focus-visible, .ma button:focus-visible { outline:2px solid var(--ma-red); outline-offset:4px; }
 .ma-page { background:var(--ma-bg); }
@@ -41,8 +41,8 @@ html[data-meduc-theme="light"] .ma {
 .ma-label-row a { font-size:11px; color:var(--ma-muted); }
 .ma .ma-input { position:relative; display:flex; align-items:center; flex-wrap:nowrap; width:100%; margin:0; border:1px solid transparent; border-radius:6px; background:var(--ma-input); transition:border-color .16s; }
 .ma .ma-input:focus-within { border-color:var(--ma-red); }
-.ma .ma-input:has(input.error) { border-color:var(--ma-error); }
-.ma .ma-input input { display:block; min-width:0; width:100%; height:50px; padding:0 14px; margin:0; border:0; border-radius:6px !important; outline:none !important; box-shadow:none !important; background:transparent; color:var(--ma-ink); font-size:13px; line-height:normal; }
+.ma .ma-input:has(input.error, select.error) { border-color:var(--ma-error); }
+.ma .ma-input input, .ma .ma-input select { display:block; min-width:0; width:100%; height:50px; padding:0 14px; margin:0; border:0; border-radius:6px !important; outline:none !important; box-shadow:none !important; background:transparent; color:var(--ma-ink); font-size:13px; line-height:normal; }
 .ma .ma-input input::placeholder { color:var(--ma-muted); opacity:.85; }
 .ma .ma-input input[readonly] { color:var(--ma-muted); }
 .ma .ma-input input:-webkit-autofill { -webkit-text-fill-color:var(--ma-ink); -webkit-box-shadow:0 0 0 1000px var(--ma-input) inset !important; }
@@ -59,15 +59,18 @@ html[data-meduc-theme="light"] .ma {
 .ma .ma-social { color:var(--ma-ink); background:transparent; border:1px solid var(--ma-line); font-size:12px; font-weight:500; }
 .ma-social svg { width:18px; height:18px; fill:currentColor; }
 .ma-social:hover { background:var(--ma-input); }
-.ma-google-slot { display:flex; justify-content:center; margin-bottom:12px; }
-.ma-google-slot:empty { display:none; }
-.ma .ma-google-slot .pp-login-google { position:static !important; display:block; width:auto; padding:0; margin:0; background:none; box-shadow:none; border:0; }
-.ma-google-slot .pp-login-google .btn-close { display:none; }
 .ma-divider { display:flex; align-items:center; gap:14px; margin:24px 0; color:var(--ma-muted); font-size:11px; }
 .ma-divider::before, .ma-divider::after { content:""; height:1px; background:var(--ma-line); flex:1; }
 .ma .ma-switch { margin:24px 0 0; color:var(--ma-muted); font-size:12px; text-align:center; }
 .ma-switch a, .ma-help a { color:var(--ma-ink); font-weight:700; margin-left:4px; }
 .ma-field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 16px; }
+.ma-field--wide { grid-column:1 / -1; }
+.ma .ma-required { color:var(--ma-red); }
+.ma .ma-optional { color:var(--ma-muted); font-weight:400; }
+.ma .ma-input select { appearance:auto; padding-right:10px; background:var(--ma-input); color-scheme:dark; }
+.ma .ma-input input[type="date"] { color-scheme:dark; }
+html[data-meduc-theme="light"] .ma .ma-input select,
+html[data-meduc-theme="light"] .ma .ma-input input[type="date"] { color-scheme:light; }
 .ma .ma-hint, .ma .ma-legal, .ma .ma-help { margin:10px 0 0; color:var(--ma-muted); font-size:11px; line-height:1.8; }
 .ma-field-grid+.ma-hint { margin:0 0 18px; }
 .ma .ma-legal { margin:18px 0 0; text-align:center; }
@@ -104,7 +107,7 @@ html[data-meduc-theme="light"] .ma {
   .ma-tabs { margin-bottom:30px; }
   .ma .ma-panel h1 { font-size:27px; }
   .ma .ma-description { font-size:13px; }
-  .ma .ma-input input { font-size:16px; }
+  .ma .ma-input input, .ma .ma-input select { font-size:16px; }
   .ma .ma-back { margin-bottom:30px; }
   .ma-modal .modal-dialog { margin:12px; max-width:none; min-height:calc(100% - 24px); }
   .ma-modal .modal-body { padding:42px 23px 27px; }

@@ -140,7 +140,7 @@ class CustomersTable extends Table
         // fields select
         switch($field){
             case FULL_INFO:
-                $fields = ['Customers.id', 'Customers.code', 'Customers.member_id', 'Customers.full_name', 'Customers.email', 'Customers.phone', 'Customers.birthday', 'Customers.sex', 'Customers.note', 'Customers.status', 'Customers.reminded', 'Customers.course', 'Customers.created', 'Customers.updated', 'Customers.is_partner_affiliate', 'DefaultAddress.name', 'DefaultAddress.phone', 'DefaultAddress.address', 'DefaultAddress.country_id', 'DefaultAddress.city_id', 'DefaultAddress.district_id', 'DefaultAddress.ward_id', 'DefaultAddress.country_name', 'DefaultAddress.city_name', 'DefaultAddress.district_name', 'DefaultAddress.ward_name', 'DefaultAddress.full_address', 'DefaultAddress.zip_code', 'DefaultAddress.is_default'];
+                $fields = ['Customers.id', 'Customers.code', 'Customers.member_id', 'Customers.full_name', 'Customers.email', 'Customers.phone', 'Customers.birthday', 'Customers.school_name', 'Customers.student_year', 'Customers.sex', 'Customers.note', 'Customers.status', 'Customers.reminded', 'Customers.course', 'Customers.created', 'Customers.updated', 'Customers.is_partner_affiliate', 'DefaultAddress.name', 'DefaultAddress.phone', 'DefaultAddress.address', 'DefaultAddress.country_id', 'DefaultAddress.city_id', 'DefaultAddress.district_id', 'DefaultAddress.ward_id', 'DefaultAddress.country_name', 'DefaultAddress.city_name', 'DefaultAddress.district_name', 'DefaultAddress.ward_name', 'DefaultAddress.full_address', 'DefaultAddress.zip_code', 'DefaultAddress.is_default'];
             break;
 
             case LIST_INFO:
@@ -149,7 +149,7 @@ class CustomersTable extends Table
 
             case SIMPLE_INFO:
             default:
-                $fields = ['Customers.id', 'Customers.full_name', 'Customers.email', 'Customers.phone', 'Customers.code', 'Customers.status', 'Customers.reminded', 'Customers.course', 'Customers.birthday', 'Customers.sex', 'Customers.is_partner_affiliate', 'DefaultAddress.name', 'DefaultAddress.phone', 'DefaultAddress.address', 'DefaultAddress.country_id', 'DefaultAddress.city_id', 'DefaultAddress.district_id', 'DefaultAddress.ward_id', 'DefaultAddress.country_name', 'DefaultAddress.city_name', 'DefaultAddress.district_name', 'DefaultAddress.ward_name', 'DefaultAddress.full_address'];
+                $fields = ['Customers.id', 'Customers.full_name', 'Customers.email', 'Customers.phone', 'Customers.code', 'Customers.status', 'Customers.reminded', 'Customers.course', 'Customers.birthday', 'Customers.school_name', 'Customers.student_year', 'Customers.sex', 'Customers.is_partner_affiliate', 'DefaultAddress.name', 'DefaultAddress.phone', 'DefaultAddress.address', 'DefaultAddress.country_id', 'DefaultAddress.city_id', 'DefaultAddress.district_id', 'DefaultAddress.ward_id', 'DefaultAddress.country_name', 'DefaultAddress.city_name', 'DefaultAddress.district_name', 'DefaultAddress.ward_name', 'DefaultAddress.full_address'];
             break;
         }
 
@@ -296,6 +296,8 @@ class CustomersTable extends Table
             'bank_fullname' => !empty($data['bank_fullname']) ? $data['bank_fullname'] : null,
             'bank_number' => !empty($data['bank_number']) ? $data['bank_number'] : null,
             'birthday' => !empty($data['birthday']) ? date('d/m/Y', $data['birthday']) : null,
+            'school_name' => !empty($data['school_name']) ? $data['school_name'] : null,
+            'student_year' => !empty($data['student_year']) ? (string)$data['student_year'] : null,
             'avatar' => !empty($data['avatar']) ? $data['avatar'] : null,
             'sex' => !empty($data['sex']) ? $data['sex'] : null,
             'note' => !empty($data['note']) ? json_decode($data['note'], true) : null,

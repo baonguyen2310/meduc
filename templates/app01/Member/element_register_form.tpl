@@ -6,6 +6,29 @@
         <div class="ma-field"><label for="{$register_id|escape}-email">Email</label><div class="input-group ma-input"><input name="email" id="{$register_id|escape}-email" type="email" autocomplete="email" placeholder="ban@example.com" required maxlength="255"></div></div>
         <div class="ma-field"><label for="{$register_id|escape}-phone">Số điện thoại</label><div class="input-group ma-input"><input name="phone" id="{$register_id|escape}-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Nhập số điện thoại" required maxlength="11"></div></div>
         <div class="ma-field">
+            <label for="{$register_id|escape}-birthday">Ngày sinh <span class="ma-optional">(không bắt buộc)</span></label>
+            <div class="input-group ma-input"><input name="birthday" id="{$register_id|escape}-birthday" type="date" autocomplete="bday" max="{$smarty.now|date_format:'%Y-%m-%d'}"></div>
+        </div>
+        <div class="ma-field">
+            <label for="{$register_id|escape}-student-year">Năm sinh viên <span class="ma-required" aria-hidden="true">*</span></label>
+            <div class="input-group ma-input">
+                <select name="student_year" id="{$register_id|escape}-student-year" required data-msg-required="Vui lòng chọn năm sinh viên">
+                    <option value="">Chọn năm học</option>
+                    <option value="1">Sinh viên năm 1</option>
+                    <option value="2">Sinh viên năm 2</option>
+                    <option value="3">Sinh viên năm 3</option>
+                    <option value="4">Sinh viên năm 4</option>
+                    <option value="5">Sinh viên năm 5</option>
+                    <option value="6">Sinh viên năm 6</option>
+                    <option value="graduate">Đã tốt nghiệp / Sau đại học</option>
+                </select>
+            </div>
+        </div>
+        <div class="ma-field ma-field--wide">
+            <label for="{$register_id|escape}-school">Trường học <span class="ma-required" aria-hidden="true">*</span></label>
+            <div class="input-group ma-input"><input name="school_name" id="{$register_id|escape}-school" type="text" autocomplete="organization" placeholder="Nhập tên trường của bạn" required maxlength="255" data-msg-required="Vui lòng nhập trường học"></div>
+        </div>
+        <div class="ma-field">
             <label for="{$register_id|escape}-password">Mật khẩu</label>
             <div class="input-group ma-input ma-input-password"><input name="password" id="{$register_id|escape}-password" type="password" autocomplete="new-password" placeholder="Tối thiểu 6 ký tự" required minlength="6" maxlength="255">{$this->element('../Member/auth_password_toggle', ['input_id' => "{$register_id}-password"])}</div>
         </div>

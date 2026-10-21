@@ -135,22 +135,16 @@
       event.target.querySelector('[nh-btn-action="submit"]')?.click();
     });
 
-    const googleButton = document.querySelector(".pp-login-google");
-    const pageSlot = document.querySelector("#meduc-auth [data-ma-google-slot]");
-    const modalSlot = modal.querySelector("[data-ma-google-slot]");
-    if (googleButton && (pageSlot || modalSlot)) (pageSlot || modalSlot).append(googleButton);
     $(modal).on("show.bs.modal", () => {
       document.body.classList.add("ma-auth-open");
       showView(requestedView || "login");
       requestedView = null;
     }).on("shown.bs.modal", () => {
-      if (googleButton && modalSlot) modalSlot.append(googleButton);
       const redirect = loginForm.querySelector('input[name="redirect"]');
       if (redirect) redirect.value = location.pathname + location.search + location.hash;
       modal.querySelector("[data-ma-panel]:not([hidden]) input:not([type=hidden])")?.focus({preventScroll:true});
     }).on("hidden.bs.modal", () => {
       document.body.classList.remove("ma-auth-open");
-      if (googleButton && pageSlot) pageSlot.append(googleButton);
       if (opener?.isConnected) opener.focus({preventScroll:true});
       else document.querySelector("#member-info")?.focus({preventScroll:true});
     });
