@@ -140,6 +140,7 @@ class EmailComponent extends Component
         $smtp_host = !empty($config['smtp_host']) ? $config['smtp_host'] : null;
         $smtp = !empty($config['smtp']) ? $config['smtp'] : null;
         $port = !empty($config['port']) ? intval($config['port']) : null;
+        $delivery_timeout = !empty($params['delivery_timeout']) ? max(5, min(30, (int)$params['delivery_timeout'])) : 30;
         $from_email = !empty($config['email']) ? $config['email'] : null;
 
         if(empty($from_email)){
@@ -155,6 +156,7 @@ class EmailComponent extends Component
                         'port' => 465,
                         'username' => $from_email,
                         'password' => !empty($config['application_password']) ? $config['application_password'] : null,
+                        'timeout' => $delivery_timeout,
                         'className' => 'Smtp'
                     ]);
                 }
@@ -166,6 +168,7 @@ class EmailComponent extends Component
                         'port' => 465,
                         'username' => $from_email,
                         'password' => !empty($config['application_password']) ? $config['application_password'] : null,
+                        'timeout' => $delivery_timeout,
                         'className' => 'Smtp'
                     ]);
                 }
@@ -177,6 +180,7 @@ class EmailComponent extends Component
                         'port' => $port,
                         'username' => $from_email,
                         'password' => !empty($config['application_password']) ? $config['application_password'] : null,
+                        'timeout' => $delivery_timeout,
                         'className' => 'Smtp'
                     ]);
                 }

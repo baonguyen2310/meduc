@@ -411,6 +411,10 @@ class MemberComponent extends Component
             $data['birthday'] = $date->format('d/m/Y');
         }
 
+        if (empty($data['email']) || mb_strlen($data['email']) > 255 || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập địa chỉ email hợp lệ để nhận mã OTP.']);
+        }
+
         // check recaptcha
         if(!$api){
             $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
@@ -426,6 +430,7 @@ class MemberComponent extends Component
         }
 
         $data_save = [
+            'status_account' => 2, // Email OTP is required for every new self-registration.
             'full_name' => !empty($data['full_name']) ? trim($data['full_name']) : null,
             'username' => !empty($data['username']) ? trim($data['username']) : null,
             'password' => !empty($data['password']) ? $data['password'] : null,
@@ -444,39 +449,20 @@ class MemberComponent extends Component
         ];
         
         $result = $this->Customer->saveCustomer($data_save);
-        if($result[CODE] == SUCCESS){
-
-            $result[DATA] = TableRegistry::get('Customers')->formatDataCustomerDetail($result[DATA]);
-            $settings = TableRegistry::get('Settings')->getSettingWebsite();
-            $waiting_confirm = !empty($settings['customer']['waiting_confirm']) ? 1 : 0;
-            if (!empty($waiting_confirm)) {                
-                
-                $params_email = [
-                    'to_email' => $result[DATA]['email'],
-                    'code' => 'REGISTER_MEMBER',
-                    'id_record' => $result[DATA]['customer_id'],
-                    'generate_token' => 'active_account',
-                    'from_website_template' => !empty($data['from_website_template']) ? true : false
-                ];
-
-                $this->Email->send($params_email);
-
-                return $this->System->getResponse([
-                    CODE => SUCCESS,
-                    MESSAGE => __d('template', 'tai_khoan_cua_ban_da_duoc_dang_ky_thanh_cong'),
-                    DATA => [
-                        'waiting_confirm' => true,
-                        'email' => $result[DATA]['email']
-                    ]
-                ]);
-            }
-
-            $result[MESSAGE] = __d('template', 'tai_khoan_cua_ban_da_duoc_dang_ky_thanh_cong');
-            $session = $this->controller->getRequest()->getSession();
-            $session->write(MEMBER, $result[DATA]);
-        }
-
-        return $result;
+        if ($result[CODE] !== SUCCESS) return $result;
+        $customerId = (int)$result[DATA]['id'];
+        $this->controller->getRequest()->getSession()->delete(MEMBER);
+        $sent = $this->controller->loadComponent('RegistrationOtp')->send($customerId);
+        $emailSent = !empty($sent[CODE]) && $sent[CODE] === SUCCESS;
+        return $this->System->getResponse([
+            CODE => SUCCESS,
+            MESSAGE => $sent[MESSAGE],
+            DATA => [
+                'waiting_confirm' => true, 'email' => $data['email'], 'email_sent' => $emailSent,
+                'resend_after' => !empty($sent[DATA]['resend_after']) ? $sent[DATA]['resend_after'] : 0,
+                'expires_in' => 600
+            ]
+        ]);
     }
 
     public function updateProfile($data = [], $options = [])
@@ -910,6 +896,10 @@ class MemberComponent extends Component
             }
         }
 
+        if ($generate_token === 'active_account') {
+            return $this->controller->loadComponent('RegistrationOtp')->resend($email);
+        }
+
         $session = $this->controller->getRequest()->getSession();
         $time_verify_account = $session->read('time_verify_account');
 
@@ -1053,89 +1043,20 @@ class MemberComponent extends Component
 
     public function verifyAccount($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
-        if (!$this->controller->getRequest()->is('post') || empty($data)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
+        if (!$this->controller->getRequest()->is('post')) {
+            return $this->System->getResponse([MESSAGE => __d('template', 'phuong_thuc_khong_hop_le')]);
         }
-
-        $email = !empty($data['email']) ? trim($data['email']) : null;
-        $code = !empty($data['code']) ? trim($data['code']) : null;
-
-        if(empty($email)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_dia_chi_email')]);
+        $email = isset($data['email']) && is_string($data['email']) ? trim($data['email']) : '';
+        $code = isset($data['code']) && is_string($data['code']) ? trim($data['code']) : '';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $code === '' || strlen($code) > 20) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập email và mã OTP hợp lệ.']);
         }
-
-        if(empty($code)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_ma_xac_nhan')]);
-        }
-
-        // check recaptcha
-        if(!$api){
+        if (empty($options['api'])) {
             $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-            $check_recaptcha = $this->ReCaptcha->check($token);
-            if($check_recaptcha[CODE] != SUCCESS){
-                return $this->System->getResponse([MESSAGE => $check_recaptcha[MESSAGE]]);
-            }
+            $captcha = $this->ReCaptcha->check($token);
+            if ($captcha[CODE] !== SUCCESS) return $captcha;
         }
-
-        // check account
-        $table_account = TableRegistry::get('CustomersAccount');
-        $account_info = $table_account->find()->contain(['Customer'])->where([
-            'Customer.deleted' => 0,
-            'Customer.email' => $email,
-            'CustomersAccount.status' => 2,
-            'CustomersAccount.deleted' => 0
-        ])->first();
-
-        if(empty($account_info)){
-            return $this->System->getResponse([MESSAGE => __d('template', 'khong_the_kich_hoat_tai_khoan_nay')]);
-        }
-
-
-        $table_email_token = TableRegistry::get('EmailToken');
-
-        $email_token_info = $table_email_token->find()->where([
-            'email' => $email,
-            'code' => $code,
-            'type' => 'active_account',
-            'status' => 0,
-            'end_time >=' => time()
-        ])->first();
-
-        if(empty($email_token_info)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'thong_tin_khong_chinh_xac_hoac_ma_xac_nhan_da_het_han')]);
-        }
-
-        $email_token = $table_email_token->patchEntity($email_token_info, ['status' => 1]);
-
-        $account = $table_account->patchEntity($account_info, ['status' => 1]);
-
-        $conn = ConnectionManager::get('default');
-        try{
-            $conn->begin();
-                        
-            $save = $table_email_token->save($email_token);
-            if (empty($save->id)){
-                throw new Exception();
-            }
-
-            $save_account = $table_account->save($account);
-            if (empty($save_account->id)){
-                throw new Exception();
-            }
-
-            $conn->commit();
-
-            return $this->System->getResponse([
-                CODE => SUCCESS, 
-                MESSAGE => __d('template', 'kich_hoat_tai_khoan_thanh_cong')
-            ]);
-
-        }catch (Exception $e) {
-            $conn->rollback();
-            return $this->System->getResponse([MESSAGE => $e->getMessage()]);  
-        }
+        return $this->controller->loadComponent('RegistrationOtp')->verify($email, $code);
     }
 
     public function updateAvatar($data = [], $options = [])

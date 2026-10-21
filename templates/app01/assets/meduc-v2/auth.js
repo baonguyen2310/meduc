@@ -23,11 +23,27 @@
     const verifyForm = modal.querySelector("[data-ma-verify]");
     let requestedView = null;
     let opener = null;
+    let resendTimer = null;
+    let resendUntil = 0;
+    let verifyInFlight = false;
+    const resendButton = modal.querySelector("[data-ma-resend]");
+    function countdown(seconds) {
+      clearInterval(resendTimer);
+      resendUntil = Date.now() + Math.max(0, Number(seconds) || 0) * 1000;
+      const update = () => {
+        const remaining = Math.max(0, Math.ceil((resendUntil - Date.now()) / 1000));
+        resendButton.disabled = remaining > 0;
+        resendButton.textContent = remaining ? "Gửi lại sau " + remaining + "s" : "Gửi lại mã";
+        if (!remaining) clearInterval(resendTimer);
+      };
+      update();
+      if (resendUntil > Date.now()) resendTimer = setInterval(update, 1000);
+    }
 
     const copy = {
       login: ["Chào mừng trở lại.", "Đăng nhập để tiếp tục hành trình học Y."],
       register: ["Bắt đầu cùng MedUC.", "Tạo tài khoản để học, luyện tập và lưu lại hành trình của bạn."],
-      verify: ["Kích hoạt tài khoản.", "Nhập mã xác nhận trong email để hoàn tất đăng ký. Bạn vẫn ở ngay trang này."]
+      verify: ["Xác thực email.", "Chỉ còn một bước: nhập mã OTP để hoàn tất đăng ký và tự động đăng nhập."]
     };
     function showView(view, focus = false) {
       if (!copy[view]) view = "login";
@@ -38,10 +54,12 @@
         tab.tabIndex = selected ? 0 : -1;
       });
       modal.classList.toggle("is-register", view === "register");
+      modal.querySelector('[role="tablist"]').hidden = view === "verify";
+      modal.querySelector(".ma-eyebrow").textContent = view === "verify" ? "BƯỚC 2 / 2 · XÁC THỰC EMAIL" : "TÀI KHOẢN MEDUC";
       modal.querySelector("#ma-modal-title").textContent = copy[view][0];
       modal.querySelector("#ma-modal-description").textContent = copy[view][1];
       modal.querySelector(".modal-body").scrollTop = 0;
-      if (focus) modal.querySelector('[data-ma-panel="' + view + '"] input:not([type="hidden"])')?.focus({preventScroll:true});
+      if (focus) modal.querySelector('[data-ma-panel="' + view + '"] input:not([type="hidden"]):not([readonly])')?.focus({preventScroll:true});
     }
     function openAuth(view = "login", trigger = null) {
       opener = trigger || document.activeElement;
@@ -59,11 +77,14 @@
       status.toggleAttribute("data-success", success);
       status.hidden = false;
     }
-    function activate(email) {
+    function activate(email, data = {}, message = "") {
+      const changedEmail = verifyForm.elements.email.value !== email;
       verifyForm.elements.email.value = email || "";
       verifyForm.elements.code.value = "";
       verifyForm.querySelector(".ma-status").hidden = true;
+      if (changedEmail || data.resend_after !== undefined) countdown(data.resend_after || 0);
       showView("verify", true);
+      if (message) setStatus(verifyForm, message, data.email_sent !== false);
     }
     function completeAuth(kind, result) {
       // Registration can return the member profile; login deliberately returns only a redirect.
@@ -84,14 +105,22 @@
     window.meducAuth = {
       open: openAuth,
       handleResponse(kind, form, response) {
-        if (!modal.contains(form)) return false;
+        const outsideRegister = !modal.contains(form) && kind === "register";
+        const outsideVerify = !modal.contains(form) && kind === "verify";
+        if (!modal.contains(form) && !outsideRegister && !outsideVerify) return false;
+        if (window.nhMain?.showLoading) nhMain.showLoading.remove();
         if (response?.code !== "success") {
           setStatus(form, response?.message);
           return true;
         }
         const data = response.data || {};
-        if (data.wait_active || data.waiting_confirm) activate(data.email);
-        else completeAuth(kind, response);
+        if (data.wait_active || data.waiting_confirm) {
+          if (outsideRegister) openAuth("verify", form.querySelector('[type="submit"]'));
+          activate(data.email, data, data.waiting_confirm ? response.message : "");
+        } else {
+          completeAuth(kind, response);
+          if (outsideVerify) setStatus(form, response.message, true);
+        }
         return true;
       }
     };
@@ -142,46 +171,41 @@
     }).on("shown.bs.modal", () => {
       const redirect = loginForm.querySelector('input[name="redirect"]');
       if (redirect) redirect.value = location.pathname + location.search + location.hash;
-      modal.querySelector("[data-ma-panel]:not([hidden]) input:not([type=hidden])")?.focus({preventScroll:true});
+      modal.querySelector("[data-ma-panel]:not([hidden]) input:not([type=hidden]):not([readonly])")?.focus({preventScroll:true});
     }).on("hidden.bs.modal", () => {
       document.body.classList.remove("ma-auth-open");
       if (opener?.isConnected) opener.focus({preventScroll:true});
       else document.querySelector("#member-info")?.focus({preventScroll:true});
     });
 
-    // Existing activation policy is preserved; verification never redirects out of the dialog.
     verifyForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (verifyForm.getAttribute("aria-busy") === "true" || !verifyForm.reportValidity()) return;
+      if (verifyInFlight || !verifyForm.reportValidity()) return;
+      verifyInFlight = true;
+      const submit = verifyForm.querySelector('[type="submit"]');
+      submit.disabled = true;
       nhMain.reCaptcha.check((token) => {
         let data = $(verifyForm).serialize();
         if (token != null) data += "&" + _TOKEN_RECAPTCHA + "=" + encodeURIComponent(token);
         nhMain.callAjax({url:verifyForm.action, data}).done((response) => {
-          if (response.code !== "success") return;
-          loginForm.elements.username.value = verifyForm.elements.email.value;
-          showView("login", true);
-          setStatus(loginForm, response.message || "Tài khoản đã được kích hoạt. Bạn có thể đăng nhập ngay.", true);
+          if (response.code === "success") completeAuth("verify", response);
+        }).always(() => {
+          verifyInFlight = false;
+          submit.disabled = false;
         });
       });
     });
-    const resendButton = modal.querySelector("[data-ma-resend]");
     resendButton.addEventListener("click", () => {
       if (resendButton.disabled || !verifyForm.elements.email.reportValidity()) return;
       resendButton.disabled = true;
+      resendButton.textContent = "Đang gửi…";
       nhMain.reCaptcha.check((token) => {
         const data = {email:verifyForm.elements.email.value, generate_token:"active_account"};
         if (token != null) data[_TOKEN_RECAPTCHA] = token;
         nhMain.callAjax({url:"/member/resend-verify-code", data}).done((response) => {
           setStatus(verifyForm, response.message, response.code === "success");
-          if (response.code !== "success") { resendButton.disabled = false; return; }
-          let remaining = 60;
-          resendButton.textContent = "Gửi lại sau " + remaining + "s";
-          const timer = setInterval(() => {
-            remaining -= 1;
-            resendButton.textContent = remaining ? "Gửi lại sau " + remaining + "s" : "Gửi lại mã";
-            if (!remaining) { clearInterval(timer); resendButton.disabled = false; }
-          }, 1000);
-        }).fail(() => { resendButton.disabled = false; });
+          countdown(response.data?.resend_after || (response.code === "success" ? 60 : 0));
+        }).fail(() => { countdown(0); });
       });
     });
 

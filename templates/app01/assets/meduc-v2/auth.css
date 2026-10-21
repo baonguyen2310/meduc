@@ -133,4 +133,6 @@ html[data-meduc-theme="light"] .ma .ma-input input[type="date"] { color-scheme:l
 .ma-modal-tabs button:focus-visible, .ma .ma-submit:focus-visible { box-shadow:inset 0 0 0 2px var(--ma-red); }
 
 /* The legacy scroll-to-top control uses z-index:10000 and must not cover form fields. */
+.ma .ma-input .ma-otp-code { text-align:center; font-size:26px; font-weight:700; letter-spacing:10px; padding-left:24px; }
+.ma [data-ma-verify] .ma-hint { margin:0 0 18px; }
 body.ma-auth-open .rn-progress-parent { visibility:hidden !important; pointer-events:none !important; }

@@ -498,87 +498,8 @@ class MemberController extends AppController
     {
         $this->layout = false;
         $this->autoRender = false;
-
-        if (!$this->getRequest()->is('post')) {
-            $this->responseJson([MESSAGE => __d('template', 'phuong_thuc_khong_hop_le')]);
-        }
-
-        $data = !empty($this->request->getData()) ? $this->request->getData() : [];
-
-        $email = !empty($data['email']) ? trim($data['email']) : null;
-        $code = !empty($data['code']) ? trim($data['code']) : null;
-
-        if(empty($email)) {
-            $this->responseJson([MESSAGE => __d('template', 'vui_long_nhap_dia_chi_email')]);
-        }
-
-        // check account
-        $table_account = TableRegistry::get('CustomersAccount');
-        $account_info = $table_account->find()->contain(['Customer'])->where([
-            'Customer.email' => $email,
-            'Customer.deleted' => 0,
-            'CustomersAccount.status' => 2
-        ])->first();
-
-        if(empty($account_info)){
-            $this->responseJson([MESSAGE => __d('template', 'khong_the_kich_hoat_tai_khoan_nay')]);
-        }
-
-        // check recaptcha
-        $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-        $check_recaptcha = $this->loadComponent('ReCaptcha')->check($token);
-        if($check_recaptcha[CODE] != SUCCESS){
-            $this->responseJson([MESSAGE => $check_recaptcha[MESSAGE]]);
-        }
-
-        //verifyEmail
-        if(empty($code)) {
-            $this->responseJson([MESSAGE => __d('template', 'vui_long_nhap_ma_xac_nhan')]);
-        }
-
-        $table_email_token = TableRegistry::get('EmailToken');
-
-        $email_token_info = $table_email_token->find()->where([
-            'email' => $email,
-            'code' => $code,
-            'type' => 'active_account',
-            'status' => 0,
-            'end_time >=' => time()
-        ])->first();
-
-        if(empty($email_token_info)) {
-            $this->responseJson([MESSAGE => __d('template', 'thong_tin_kich_hoat_khong_ton_tai')]);
-        }
-
-        $email_token = $table_email_token->patchEntity($email_token_info, ['status' => 1]);
-
-        $account = $table_account->patchEntity($account_info, ['status' => 1]);
-
-        $conn = ConnectionManager::get('default');
-        try{
-            $conn->begin();
-                        
-            $save = $table_email_token->save($email_token);
-            if (empty($save->id)){
-                throw new Exception();
-            }
-
-            $save_account = $table_account->save($account);
-            if (empty($save_account->id)){
-                throw new Exception();
-            }
-
-            $conn->commit();
-
-            $this->responseJson([
-                CODE => SUCCESS, 
-                MESSAGE => __d('template', 'ban_da_kich_hoat_thanh_cong_tai_khoan')
-            ]);
-
-        }catch (Exception $e) {
-            $conn->rollback();
-            $this->responseJson([MESSAGE => $e->getMessage()]);  
-        }
+        $result = $this->loadComponent('Member')->verifyAccount($this->getRequest()->getData());
+        $this->responseJson($result);
     }
 
     public function success()

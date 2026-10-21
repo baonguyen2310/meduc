@@ -16,12 +16,13 @@
                 <section id="ma-panel-register" role="tabpanel" data-ma-panel="register" aria-labelledby="ma-tab-register" hidden>
                     {$this->element('../Member/element_register_form', ['register_form_id' => 'meduc-register-modal'])}
                 </section>
-                <section data-ma-panel="verify" aria-label="Kích hoạt tài khoản" hidden>
+                <section data-ma-panel="verify" aria-label="Xác thực email đăng ký" hidden>
                     <form class="ma-form" data-ma-verify action="/member/ajax-verify-email" method="post">
-                        <div class="ma-field"><label for="ma-modal-email">Email đã đăng ký</label><div class="input-group ma-input"><input id="ma-modal-email" name="email" type="email" autocomplete="email" required maxlength="255"></div></div>
-                        <div class="ma-field"><label for="ma-modal-code">Mã xác nhận</label><div class="input-group ma-input"><input id="ma-modal-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Nhập mã trong email" required maxlength="20"></div></div>
+                        <div class="ma-field"><label for="ma-modal-email">Email đã đăng ký</label><div class="input-group ma-input"><input id="ma-modal-email" name="email" type="email" autocomplete="email" readonly required maxlength="255"></div></div>
+                        <div class="ma-field"><label for="ma-modal-code">Mã OTP gồm 6 số</label><div class="input-group ma-input"><input id="ma-modal-code" name="code" class="ma-otp-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" required pattern="[0-9][0-9][0-9][0-9][0-9][0-9]" minlength="6" maxlength="6" aria-describedby="ma-otp-hint"></div></div>
+                        <p class="ma-hint" id="ma-otp-hint">Mã có hiệu lực 10 phút. Hãy kiểm tra cả thư mục Spam và dùng mã trong email mới nhất.</p>
                         <p class="ma-status" role="alert" hidden></p>
-                        <button type="submit" nh-btn-action="submit" class="ma-submit">Kích hoạt tài khoản <span aria-hidden="true">→</span></button>
+                        <button type="submit" nh-btn-action="submit" class="ma-submit">Xác thực và bắt đầu học <span aria-hidden="true">→</span></button>
                         <div class="ma-resend"><span>Chưa nhận được mã?</span><button type="button" data-ma-resend>Gửi lại mã</button></div>
                         <p class="ma-switch"><button type="button" data-ma-view="login">Quay lại đăng nhập</button></p>
                     </form>

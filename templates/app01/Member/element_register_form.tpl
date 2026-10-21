@@ -39,7 +39,7 @@
     </div>
     <p class="ma-hint" id="{$register_id|escape}-username-hint">Tên đăng nhập gồm ít nhất 6 ký tự, chỉ dùng chữ cái không dấu và số.</p>
     <p class="ma-status" role="alert" hidden></p>
-    <button type="submit" nh-btn-action="submit" class="ma-submit">Tạo tài khoản <span aria-hidden="true">→</span></button>
+    <button type="submit" nh-btn-action="submit" class="ma-submit">Đăng ký và nhận mã OTP <span aria-hidden="true">→</span></button>
     <p class="ma-legal">Thông tin của bạn được bảo vệ theo <a href="/chinh-sach-bao-mat-thong-tin">Chính sách bảo mật</a> của MedUC.</p>
     <p class="ma-switch">Đã có tài khoản? <a href="/member/login" data-ma-open="login">Đăng nhập</a></p>
 </form>
