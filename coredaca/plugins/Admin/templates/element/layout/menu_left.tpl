@@ -25,6 +25,7 @@
             {else}
 
             {if !empty($auth_user.supper_admin) || (!empty($auth_user.role_id) && $auth_user.role_id == 1)}
+                <li class="kt-menu__item"><a href="{ADMIN_PATH}/course-prices" class="kt-menu__link" path-menu="course-prices"><span class="kt-menu__link-icon"><i class="fas fa-tags"></i></span><span class="kt-menu__link-text">Bảng báo giá</span></a></li>
                 <li class="kt-menu__item">
                     <a href="{ADMIN_PATH}/course-contributions" class="kt-menu__link" path-menu="course-contributions">
                         <span class="kt-menu__link-icon"><i class="fas fa-comment-medical"></i></span>

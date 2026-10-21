@@ -755,6 +755,8 @@ class ProductController extends AppController {
         $this->set('initial_category_id', $categoryId === 125 ? 125 : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
+        $this->set('course_price_options', \App\Service\CoursePricing::options());
+        $this->set('course_price_list_id', 0);
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
         $attributes_product = !empty($all_attributes[PRODUCT]) ? $all_attributes[PRODUCT] : [];
 
@@ -805,6 +807,8 @@ class ProductController extends AppController {
     public function update($id = null)
     {
         $is_course = TeacherCourseAccess::isCourse((int)$id);
+        $this->set('course_price_options', \App\Service\CoursePricing::options());
+        $this->set('course_price_list_id', \App\Service\CoursePricing::courseListId((int)$id));
         $this->set('show_teacher_assignment', $is_course);
         $this->set('teacher_options', $is_course ? TeacherCourseAccess::teacherOptions() : []);
         $this->set('selected_teacher_ids', $is_course ? TeacherCourseAccess::teacherIdsForCourse((int)$id) : []);
@@ -1111,6 +1115,12 @@ class ProductController extends AppController {
         if ($teacher_ids && !TeacherCourseAccess::hasCourseCategory($category_ids)) {
             $this->responseJson([MESSAGE => 'Vui lòng chọn danh mục khóa học để phân công giáo viên.']);
         }
+        if (isset($data['course_price_assignment'])) {
+            $price_list_id = (int)($data['course_price_list_id'] ?? 0);
+            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::get($price_list_id))) {
+                $this->responseJson([MESSAGE => 'Bảng báo giá không hợp lệ hoặc sản phẩm không phải khóa học.']);
+            }
+        }
         $data['categories'] = $category_ids;
         if (!in_array((int)($data['main_category_id'] ?? 0), $category_ids, true)) {
             $data['main_category_id'] = $imported_course ? 125 : $category_ids[0];
@@ -1415,6 +1425,7 @@ class ProductController extends AppController {
         $seo_title = !empty($data['seo_title']) ? trim(strip_tags($data['seo_title'])) : null;
         $seo_description = !empty($data['seo_description']) ? trim(strip_tags($data['seo_description'])) : null;
 
+        if (isset($data['course_price_assignment'])) $data_save['course_price_list_id'] = $price_list_id ?: null;
         $data_save['ProductsContent'] = [
             'name' => $name,
             'description' => !empty($data['description']) ? trim($data['description']) : null,

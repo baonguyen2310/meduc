@@ -1,0 +1,6 @@
+<div class="kt-subheader kt-grid__item"><div class="kt-container kt-container--fluid"><h3 class="kt-subheader__title">Bảng báo giá khóa học</h3><a href="{ADMIN_PATH}/course-prices/add" class="btn btn-brand">+ Thêm bảng báo giá</a></div></div>
+<div class="kt-container kt-container--fluid"><div class="kt-portlet"><div class="kt-portlet__body">
+<p class="text-muted">Mỗi môn thuộc một bảng báo giá. Mỗi bảng có các gói theo số môn được chọn.</p>
+<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Tên bảng giá</th><th>Số môn</th><th>Gói đang mở</th><th>Thứ tự</th><th>Trạng thái</th><th></th></tr></thead><tbody>
+{foreach $lists as $l}<tr><td><a href="{ADMIN_PATH}/course-prices/edit/{$l.id}">{$l.name|escape}</a></td><td>{$l.course_total}</td><td>{$l.package_total}</td><td>{$l.position}</td><td>{if $l.status}Đang mở{else}Đang ẩn{/if}</td><td><a class="btn btn-sm btn-outline-primary" href="{ADMIN_PATH}/course-prices/edit/{$l.id}">Chỉnh sửa</a> <a class="btn btn-sm btn-light" href="/bang-bao-gia/{$l.slug|escape}" target="_blank" rel="noopener">Xem trang</a></td></tr>{foreachelse}<tr><td colspan="6">Chưa có bảng báo giá.</td></tr>{/foreach}
+</tbody></table></div></div></div></div>

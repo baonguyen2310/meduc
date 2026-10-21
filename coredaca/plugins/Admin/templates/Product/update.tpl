@@ -352,6 +352,7 @@
                 </div>
                                   
                 {if !empty($show_teacher_assignment)}
+                    <div class="form-group"><label for="course-price-list">Bảng báo giá</label><input type="hidden" name="course_price_assignment" value="1">{$this->Form->select('course_price_list_id', $course_price_options, ['id'=>'course-price-list','empty'=>'Chưa gán bảng báo giá','default'=>$course_price_list_id,'class'=>'form-control'])}<small class="form-text text-muted">Mỗi môn thuộc một bảng báo giá. <a href="{ADMIN_PATH}/course-prices">Quản lý bảng báo giá</a></small></div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">

@@ -63,6 +63,8 @@
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261021-1" rel="stylesheet">
     {/if}
 
+    <script src="/bang-bao-gia/lien-ket.js" defer></script>
+
     {* The sign-in dialog is present on every page, so its styles are shared. *}
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261021-7" rel="stylesheet">
     <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261021-7" defer></script>

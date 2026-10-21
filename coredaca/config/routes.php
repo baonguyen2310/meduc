@@ -20,6 +20,12 @@ $routes->scope('/', function (RouteBuilder $builder) {
     ]));
     $builder->applyMiddleware('csrf');
 
+    // Course price lists and quantity packages.
+    $builder->connect('/bang-bao-gia/dang-ky', ['controller'=>'CoursePrice','action'=>'create']);
+    $builder->connect('/bang-bao-gia/lien-ket.js', ['controller'=>'CoursePrice','action'=>'links']);
+    $builder->connect('/bang-bao-gia', ['controller'=>'CoursePrice','action'=>'index']);
+    $builder->connect('/bang-bao-gia/:slug', ['controller'=>'CoursePrice','action'=>'index'], ['pass'=>['slug'],'slug'=>'[a-z0-9-]+']);
+
     // system
     $builder->connect('/404', ['controller' => 'Page', 'action' => 'notFound']);
     $builder->connect('/error', ['controller' => 'Page', 'action' => 'error']);
@@ -547,6 +553,9 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/product/detail/:id', ['plugin' => 'Admin', 'controller' => 'Product', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/course-exam/preview/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'preview'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
     $builder->connect('/course-exam/word/:course/:quiz', ['plugin'=>'Admin','controller'=>'CourseExam','action'=>'word'], ['pass'=>['course','quiz'],'course'=>'[0-9]+','quiz'=>'[0-9]+']);
+    $builder->connect('/course-prices', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'index']);
+    $builder->connect('/course-prices/add', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'edit']);
+    $builder->connect('/course-prices/edit/:id', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'edit'], ['pass'=>['id'],'id'=>'[0-9]+']);
     $builder->connect('/course-contributions', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'index']);
     $builder->connect('/course-contributions/review/:id', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'review'], ['pass'=>['id'],'id'=>'[0-9]+']);
     $builder->connect('/course-contributions/photo/:id/:number', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'photo'], ['pass'=>['id','number'],'id'=>'[0-9]+','number'=>'[0-9]+']);
