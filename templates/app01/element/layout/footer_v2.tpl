@@ -7,7 +7,7 @@
    - "List Social" (mv6ky0z): Facebook, Zalo and YouTube. "Coppyright HTML" (awlj4fk): copyright line and DMCA badge.
    The "Khám phá" links match the header menu. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
-{$master_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-master') === 0}
+{$meduc_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}
 {$footer_blocks = []}
 {if !empty($blocks)}{$footer_blocks = $blocks}{/if}
 
@@ -105,12 +105,12 @@
     </div>
 
     <div class="mfo-bottom">
-        <div class="mfo-brand{if $master_brand} mfo-brand--master{/if}">
+        <div class="mfo-brand{if $meduc_brand} mfo-brand--meduc{/if}">
             {if !empty($website_info.company_logo)}
-                {if $master_brand}
-                    <a href="/" class="mfo-master-logo" aria-label="MedUC Master — Trang chủ">
-                        <img class="mfo-master-light" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-master-footer-light-v2.svg" alt="" aria-hidden="true" loading="lazy" />
-                        <img class="mfo-master-dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-master-footer-dark-v2.svg" alt="" aria-hidden="true" loading="lazy" />
+                {if $meduc_brand}
+                    <a href="/" class="mfo-meduc-logo" aria-label="MedUC — Trang chủ">
+                        <img class="mfo-meduc-light" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-footer-light.svg" alt="" aria-hidden="true" loading="lazy" />
+                        <img class="mfo-meduc-dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-footer-dark.svg" alt="" aria-hidden="true" loading="lazy" />
                     </a>
                 {else}
                     <a href="/" aria-label="Trang chủ"><img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{if !empty($website_info.website_name)}{$website_info.website_name|escape}{else}MedUC{/if}" loading="lazy" /></a>

@@ -81,7 +81,7 @@ class PasswordResetOtpComponent extends Component
             if (!$table->save($row)) throw new \RuntimeException('Cannot store reset OTP');
             $content = '<!doctype html><html lang="vi"><body style="margin:0;background:#f5f5f7;font-family:Arial,sans-serif;color:#202228">' .
                 '<div style="max-width:520px;margin:32px auto;padding:32px;background:#fff;border-radius:12px">' .
-                '<p style="font-size:20px;font-weight:bold">MedUC Master</p><h1 style="font-size:24px">Đặt lại mật khẩu</h1>' .
+                '<p style="font-size:20px;font-weight:bold">MedUC</p><h1 style="font-size:24px">Đặt lại mật khẩu</h1>' .
                 '<p>Nhập mã dưới đây trong cửa sổ khôi phục tài khoản MedUC, sau đó chọn mật khẩu mới.</p>' .
                 '<p style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#df203c">' . $code . '</p>' .
                 '<p>Mã có hiệu lực trong <strong>10 phút</strong> và chỉ dùng một lần. Khi gửi lại, hãy dùng mã trong email mới nhất.</p>' .

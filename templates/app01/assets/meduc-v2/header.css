@@ -185,23 +185,23 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
   .mhi-member #member-info { width: 36px; height: 36px; font-size: 17px !important; }
 }
 
-/* MasterClass-reference geometry: pink monogram, outlined serif wordmark. */
-.mhi-brand--master { min-height:44px; }
-.mhi-brand--master .mhi-brand-wordmark { width:218px; height:auto; max-height:40px; }
-.mhi-brand--master .mhi-brand-wordmark--light, .mhi-brand--master .mhi-brand-mark { display:none; }
-.mhi-brand--master .mhi-brand-wordmark--dark { display:block; }
-.mhi-brand--master img { filter:none; }
-html[data-meduc-theme="light"] .mhi-brand--master .mhi-brand-wordmark--dark { display:none; }
-html[data-meduc-theme="light"] .mhi-brand--master .mhi-brand-wordmark--light { display:block; }
+/* MedUC identity: a custom continuous red M and outlined geometric wordmark. */
+.mhi-brand--meduc { min-height:44px; }
+.mhi-brand--meduc .mhi-brand-wordmark { width:190px; height:auto; max-height:44px; }
+.mhi-brand--meduc .mhi-brand-wordmark--light, .mhi-brand--meduc .mhi-brand-mark { display:none; }
+.mhi-brand--meduc .mhi-brand-wordmark--dark { display:block; }
+.mhi-brand--meduc img { filter:none; }
+html[data-meduc-theme="light"] .mhi-brand--meduc .mhi-brand-wordmark--dark { display:none; }
+html[data-meduc-theme="light"] .mhi-brand--meduc .mhi-brand-wordmark--light { display:block; }
 @media (max-width:1279.98px) {
- .mhi-brand--master .mhi-brand-wordmark { display:none !important; }
- .mhi-brand--master .mhi-brand-mark { display:block; width:44px; height:36px; }
+ .mhi-brand--meduc .mhi-brand-wordmark { display:none !important; }
+ .mhi-brand--meduc .mhi-brand-mark { display:block; width:44px; height:36px; }
 }
-@media (min-width:1280px) and (max-width:1399.98px) { .mhi-brand--master .mhi-brand-wordmark { width:190px; } }
+@media (min-width:1280px) and (max-width:1399.98px) { .mhi-brand--meduc .mhi-brand-wordmark { width:174px; } }
 
 @media (max-width: 374px) {
  .mhi-header-main { gap: 3px; }
- .mhi-brand--master .mhi-brand-mark { width: 36px; }
+ .mhi-brand--meduc .mhi-brand-mark { width: 36px; }
  .mhi-search-toggle, .mhi-menu-toggle { width: 30px; }
  .mhi-utility .mhi-cart { width: 28px; }
  .mhi-utility .mhi-theme-toggle { width: 30px; height: 30px; }

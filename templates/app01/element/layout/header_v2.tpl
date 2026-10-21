@@ -2,7 +2,7 @@
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
 {$header_member = $this->Member->getMemberInfo()}
-{$master_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-master') === 0}
+{$meduc_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
 {* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
@@ -62,12 +62,12 @@
       </nav>
     </div>
     <div class="mhi-shell mhi-header-main">
-      <a class="mhi-brand{if $master_brand} mhi-brand--master{/if}" href="/" aria-label="{$website_name|escape} — Trang chủ">
+      <a class="mhi-brand{if $meduc_brand} mhi-brand--meduc{/if}" href="/" aria-label="{$website_name|escape} — Trang chủ">
         {if !empty($website_info.company_logo)}
-          {if $master_brand}
+          {if $meduc_brand}
             <img class="mhi-brand-wordmark mhi-brand-wordmark--light" src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
-            <img class="mhi-brand-wordmark mhi-brand-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-master-dark-v2.svg" alt="" aria-hidden="true" decoding="async" />
-            <img class="mhi-brand-mark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-master-mark-v2.svg" alt="" aria-hidden="true" decoding="async" width="29" height="24" />
+            <img class="mhi-brand-wordmark mhi-brand-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-logo-dark.svg" alt="" aria-hidden="true" decoding="async" />
+            <img class="mhi-brand-mark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-mark.svg" alt="" aria-hidden="true" decoding="async" width="56" height="48" />
           {else}
             <img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
           {/if}

@@ -6,7 +6,7 @@ FROM templates_page WHERE template_code='app01' AND code='cidahpl'
 AND NOT EXISTS (SELECT 1 FROM templates_page WHERE template_code='app01' AND code='privacyv3');
 
 INSERT INTO templates_page_content (template_code,page_code,url,lang,seo_title,seo_description)
-SELECT 'app01','privacyv3','chinh-sach-bao-mat-thong-tin','vi','Chính sách bảo mật | MedUC Master',
+SELECT 'app01','privacyv3','chinh-sach-bao-mat-thong-tin','vi','Chính sách bảo mật | MedUC',
 'Thông tin MedUC thu thập, mục đích sử dụng, email xác thực và cách liên hệ về dữ liệu tài khoản.'
 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM templates_page_content WHERE template_code='app01' AND (page_code='privacyv3' OR url='chinh-sach-bao-mat-thong-tin'));
 
