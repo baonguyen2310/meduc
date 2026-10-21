@@ -107,6 +107,7 @@ var nhMember = {
 							url: formElement.attr('action'),
 							data: formData
 						}).done(function(response) {
+							if (window.meducAuth && window.meducAuth.handleResponse('login', formElement[0], response)) return;
 						   	var code = typeof(response.code) != _UNDEFINED ? response.code : _ERROR;
 				        	var message = typeof(response.message) != _UNDEFINED ? response.message : '';
 				        	var data = typeof(response.data) != _UNDEFINED ? response.data : {};
@@ -303,7 +304,7 @@ var nhMember = {
 						},
 
 						verify_password: {
-		                    equalTo: '#password-register'
+		                    equalTo: formElement.find('[name="password"]')[0]
 		                },
 
 		                city_id: {
@@ -403,6 +404,7 @@ var nhMember = {
 							url: formElement.attr('action'),
 							data: formData
 						}).done(function(response) {
+							if (window.meducAuth && window.meducAuth.handleResponse('register', formElement[0], response)) return;
 						   	var code = typeof(response.code) != _UNDEFINED ? response.code : _ERROR;
 				        	var message = typeof(response.message) != _UNDEFINED ? response.message : '';
 				        	var data = typeof(response.data) != _UNDEFINED ? response.data : {};

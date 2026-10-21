@@ -26,5 +26,5 @@
             <button type="button" nh-btn-login-social="facebook" class="ma-social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-8h3l.5-4H14V7c0-1 .3-2 2-2h2V1.5c-.7-.1-1.8-.3-3-.3-3 0-5 1.8-5 5V9H7v4h3v8Z"/></svg>Tiếp tục với Facebook</button>
         {/if}
     </form>
-    <p class="ma-switch">Chưa có tài khoản? <a href="/member/register">Đăng ký ngay</a></p>
+    <p class="ma-switch">Chưa có tài khoản? <a href="/member/register" data-ma-open="register">Đăng ký ngay</a></p>
 </div>

@@ -1,6 +1,7 @@
 {strip}
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
+{$header_member = $this->Member->getMemberInfo()}
 {$master_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-master') === 0}
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
@@ -95,11 +96,8 @@
             </nav>
           </div>
         {/foreach}
-        <div class="mhi-member" nh-mini-member>
-          <a class="mhi-login" href="javascript:;" data-bs-toggle="modal" data-bs-target="#login-modal" aria-label="Đăng nhập">
-            <svg class="mhi-icon mhi-login-icon" aria-hidden="true"><use href="#mhi-icon-user" /></svg>
-            <span class="mhi-login-text">Đăng nhập</span>
-          </a>
+        <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
+          {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
         </div>
         <a class="mhi-cart" nh-mini-cart="open" href="javascript:;" title="Giỏ hàng khóa học" aria-label="Giỏ hàng khóa học">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
@@ -114,7 +112,7 @@
           <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
         </button>
       </nav>
-      <a class="mhi-header-cta" href="/khoa-hoc">Bắt đầu học</a>
+      {if !empty($header_member)}<a class="mhi-header-cta" href="/khoa-hoc-da-dang-ky">Bắt đầu học</a>{else}<button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal">Bắt đầu học</button>{/if}
       <button class="mhi-icon-button mhi-menu-toggle" id="mhi-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mhi-drawer">
         <svg class="mhi-icon" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -147,7 +145,7 @@
           <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
           <span>Đổi giao diện sáng/tối</span>
         </button>
-        <a class="mhi-header-cta" href="/khoa-hoc">Bắt đầu học</a>
+        {if !empty($header_member)}<a class="mhi-header-cta" href="/khoa-hoc-da-dang-ky">Bắt đầu học</a>{else}<button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal">Bắt đầu học</button>{/if}
       </div>
     </nav>
   </div>

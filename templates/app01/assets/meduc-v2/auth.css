@@ -111,3 +111,23 @@ html[data-meduc-theme="light"] .ma {
 }
 @media(max-width:420px) { .ma-field-grid { grid-template-columns:1fr; } .ma-shell { padding-inline:20px; } .ma-steps { gap:16px; } }
 @media(prefers-reduced-motion:reduce) { .ma *, .ma *::before, .ma *::after { transition:none !important; } }
+
+/* Both forms stay mounted in one accessible dialog; changing tabs preserves entered values. */
+.ma-modal.is-register .modal-dialog { max-width:640px; }
+.ma-modal .modal-body { max-height:calc(100dvh - 60px); overflow-y:auto; }
+.ma-modal-tabs { gap:0; margin-bottom:24px; }
+.ma-modal-tabs button { flex:1; padding:0 12px 13px; border:0; border-bottom:2px solid transparent; background:none; color:var(--ma-muted); font-weight:700; }
+.ma-modal-tabs button[aria-selected="true"] { color:var(--ma-ink); border-bottom-color:var(--ma-red); }
+.ma .ma-switch button { padding:0; margin-left:4px; border:0; background:none; color:var(--ma-ink); font-weight:700; }
+.ma .ma-switch button:hover { color:var(--ma-red); }
+.ma-modal .ma-resend button:disabled { opacity:.6; cursor:wait; }
+@media(max-width:760px) {
+ .ma-modal.is-register .modal-dialog { max-width:none; }
+ .ma-modal .modal-body { max-height:calc(100dvh - 24px); }
+}
+
+.ma-modal-tabs button:focus, .ma .ma-submit:focus { outline:none !important; }
+.ma-modal-tabs button:focus-visible, .ma .ma-submit:focus-visible { box-shadow:inset 0 0 0 2px var(--ma-red); }
+
+/* The legacy scroll-to-top control uses z-index:10000 and must not cover form fields. */
+body.ma-auth-open .rn-progress-parent { visibility:hidden !important; pointer-events:none !important; }
