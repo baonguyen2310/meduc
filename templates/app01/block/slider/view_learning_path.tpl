@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/learning-path.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/learning-path.css?v=20261022-1" rel="stylesheet">
 
 <section class="mlp" {if !empty($text.tieu_de_dong_1) || !empty($text.tieu_de_dong_2)}aria-labelledby="mlp-title"{/if}>
     <div class="mlp-shell">

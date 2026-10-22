@@ -16,8 +16,9 @@
     const counter = root.querySelector("[data-mrail-counter]");
 
     const step = () => cards[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
-    const visibleCount = () => Math.max(1, Math.round(track.clientWidth / step()));
-    const currentIndex = () => Math.max(0, Math.round(track.scrollLeft / step()));
+    const rows = () => Math.max(1, parseInt(getComputedStyle(track).getPropertyValue("--mrail-rows"), 10) || 1);
+    const visibleCount = () => Math.max(1, Math.round(track.clientWidth / step())) * rows();
+    const currentIndex = () => Math.max(0, Math.round(track.scrollLeft / step())) * rows();
     function update() {
       const first = currentIndex();
       const last = Math.min(cards.length, first + visibleCount());

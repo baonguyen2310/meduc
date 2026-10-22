@@ -68,3 +68,15 @@ html[data-meduc-theme="light"] .mlp {
   .mlp-intro p { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .mlp-picture img { transition: none; } }
+
+/* Four compact stages in a two-by-two mobile layout. */
+@media (max-width: 767px) {
+  .mlp-stages { --mlp-gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-columns: auto; grid-auto-flow: row; gap: 12px; padding-top: 0; overflow: visible; }
+  .mlp-stage { margin: 0; overflow: hidden; border: 1px solid var(--mlp-line); border-radius: 10px; }
+  .mlp-stage::before, .mlp-dot { display: none; }
+  .mlp-picture { aspect-ratio: 4 / 3; border-radius: 0; }
+  .mlp-number { bottom: 8px; left: 12px; font-size: 44px; }
+  .mlp-label { margin: 12px 12px 0; font-size: 9px; letter-spacing: .08em; }
+  .mlp .mlp-stage-title { margin: 7px 12px 14px; font-size: 22px; }
+  .mlp-text, .mlp .mlp-link { display: none; }
+}

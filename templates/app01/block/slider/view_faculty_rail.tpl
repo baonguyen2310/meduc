@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261022-2" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/rail.js?v=20261015" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261022-3" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/rail.js?v=20261022-1" defer></script>
 
 <section class="mgv" data-mrail {if !empty($text.tieu_de)}aria-labelledby="mgv-title"{/if}>
     <div class="mgv-heading">
