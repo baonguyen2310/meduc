@@ -4,3 +4,5 @@
 .mpc-dialog-foot{background:var(--mpc-panel);background-image:none;color:var(--mpc-muted);box-shadow:none}.mpc-cart-group{padding:16px}.mpc-group-head{padding-bottom:10px}.mpc-course-row{padding:8px 0}.mpc-course-cover{width:68px;height:48px}.mpc-package-choice select{height:40px;min-height:40px;padding:8px 11px}.mpc-group-actions{margin-top:14px}.mpc-confirm-form input{height:45px;min-height:45px}@media(max-width:680px){.mpc-cart-group{padding:14px}.mpc-course-cover{width:60px;height:45px}}
 
 @media(max-width:680px){.mpc-confirm-form input,.mpc-package-choice select{font-size:16px}}
+
+.mpc-price-stack{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.mpc-price-original{font-size:12px;line-height:1.4;color:var(--mpc-muted);font-weight:400;text-decoration:line-through;white-space:nowrap}.mpc-group-price.is-discounted,.mpc-confirm-price.is-discounted{color:#e51d32}.mpc-confirm-prices{align-items:flex-start;margin-top:10px}.mpc-confirm-prices .mpc-confirm-price{margin-top:0}@media(max-width:680px){.mpc-price-original{font-size:11px}}

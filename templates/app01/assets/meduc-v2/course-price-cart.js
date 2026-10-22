@@ -131,6 +131,13 @@
     const catalogPath=(board,pack)=>(board.kind==='exam_prep'?'/khoa-luyen-thi':'/khoa-hoc')+`?bang_gia=${board.id}&goi=${pack.id}`;
     const link=(href,text,cls)=>{const a=node('a',cls,text);a.href=href;return a;};
     const button=(text,cls,action)=>{const b=node('button',cls,text);b.type='button';if(action)b.addEventListener('click',action);return b;};
+    function priceDisplay(pack,priceClass='mpc-group-price') {
+      const discounted=Number(pack.price)>Number(pack.amount);
+      const prices=node('div','mpc-price-stack'+(priceClass==='mpc-confirm-price'?' mpc-confirm-prices':''));
+      if(discounted){const original=node('del','mpc-price-original',money(pack.price));original.setAttribute('aria-label',`Giá gốc ${money(pack.price)}`);prices.append(original);}
+      const current=node('strong',priceClass+(discounted?' is-discounted':''),money(pack.amount));
+      current.setAttribute('aria-label',`${discounted?'Giá ưu đãi':'Giá gốc'} ${money(pack.amount)}`);prices.append(current);return prices;
+    }
     const dialog=node('dialog','mpc-dialog');dialog.id='meduc-course-cart';dialog.setAttribute('aria-labelledby','mpc-cart-title');
     const head=node('header','mpc-dialog-head'), heading=node('div');heading.append(node('p','mpc-eyebrow','MEDUC / GIỎ KHÓA HỌC'));
     const title=node('h2','', 'Các môn bạn đã chọn.');title.id='mpc-cart-title';heading.append(title);
@@ -200,7 +207,7 @@
         const count=node('strong','mpc-group-count',ids.length<=pack.count?`Đã chọn ${ids.length}/${pack.count} môn`:`Đã chọn ${ids.length} môn · Gói ${pack.count} môn`);choices.append(count);group.append(choices);
         if(ids.length!==pack.count)group.append(node('p','mpc-group-hint',ids.length<pack.count?`Chọn thêm ${pack.count-ids.length} môn hoặc đổi sang gói phù hợp.`:`Bỏ bớt ${ids.length-pack.count} môn hoặc đổi sang gói lớn hơn.`));
         const actions=node('div','mpc-group-actions');actions.append(link(catalogPath(board,pack),'Chọn thêm / đổi môn','mpc-link-button'));
-        const total=node('div','mpc-group-payment');total.append(node('strong','mpc-group-price',money(pack.amount)));
+        const total=node('div','mpc-group-payment');total.append(priceDisplay(pack));
         const checkout=button('Thanh toán nhóm này →','mpc-primary',()=>startCheckout(board.id));checkout.disabled=ids.length!==pack.count;checkout.setAttribute('aria-label',`Thanh toán nhóm ${board.name}`);total.append(checkout);actions.append(total);group.append(actions);body.append(group);
       }
       if(legacyUnknown){const old=node('div','mpc-legacy');old.append(node('p','',`Bạn còn ${legacyUnknown} mục đã thêm từ giỏ trước đây.`),link('/order/info','Xem các mục này →','mpc-link-button'));body.append(old);}
@@ -222,7 +229,7 @@
     }
     function renderConfirmation(){
       const {board,pack,ids}=confirmation;title.textContent='Kiểm tra đăng ký.';body.replaceChildren();foot.hidden=true;
-      const summary=node('div','mpc-confirm-summary');summary.append(node('p','mpc-eyebrow',board.name),node('h3','',pack.name),node('strong','mpc-confirm-price',money(pack.amount)));body.append(summary);
+      const summary=node('div','mpc-confirm-summary');summary.append(node('p','mpc-eyebrow',board.name),node('h3','',pack.name),priceDisplay(pack,'mpc-confirm-price'));body.append(summary);
       const courses=new Map(board.course_data.map(c=>[String(c.id),c]));ids.forEach(id=>body.append(courseRow(board,courses.get(id),false)));
       const form=node('form','mpc-confirm-form'), label=node('label','','Số điện thoại liên hệ'), phone=node('input');phone.name='phone';phone.type='tel';phone.autocomplete='tel';phone.required=true;phone.value=context.phone||'';phone.placeholder='Nhập số điện thoại';label.append(phone);form.append(label,node('p','mpc-confirm-note','Bạn sẽ chọn phương thức thanh toán ở bước tiếp theo.'));
       const error=node('p','mpc-cart-error');error.setAttribute('role','alert');form.append(error);
