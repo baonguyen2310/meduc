@@ -83,11 +83,17 @@ html[data-meduc-theme="light"] .mhw {
 .mhw-button--primary:hover { filter: brightness(1.1); }
 .mhw-button--secondary { background: var(--mhw-secondary); color: var(--mhw-secondary-ink) !important; }
 .mhw-button--secondary:hover { background: var(--mhw-secondary-hover); }
+.mhw-button--gift { gap: 8px; border: 1px solid var(--mhw-ink); padding-block: 11px; color: var(--mhw-ink) !important; }
+.mhw-button--gift:hover { background: var(--mhw-secondary); }
+.mhw-button--gift svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mhw-button:focus-visible { outline: 2px solid var(--mhw-ink); outline-offset: 3px; }
 .mhw-guarantee { margin: 0; color: var(--mhw-soft); font: 11px/1.38 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
 /* On phones the stacked text fills the lower half, so the light panel starts higher. */
 @media (max-width: 767.98px) {
+  .mhw-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mhw-button { min-height: 52px; padding: 10px 8px; font-size: 14px; gap: 6px; }
+  .mhw-button--gift svg { width: 18px; height: 18px; }
   html[data-meduc-theme="light"] .mhw { --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade)) 52%, rgb(var(--mhw-fade) / .92) 58%, rgb(var(--mhw-fade) / 0) 70%); }
 }
 @media (min-width: 768px) {

@@ -40,7 +40,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261022-1" rel="stylesheet">
 
 <section class="mhw">
     {if $photo_count > 0}
@@ -77,7 +77,7 @@
             {if !empty($text.dong_phu)}
                 <p class="mhw-note">{$text.dong_phu|escape}</p>
             {/if}
-            {* Two red buttons (nut_chinh, nut_chinh_2) and one grey button (nut_phu). *}
+            {* Course, exam, book and free-resource actions. *}
             {if !empty($text.nut_chinh) || !empty($text.nut_chinh_2) || !empty($text.nut_phu)}
                 <div class="mhw-buttons">
                     {if !empty($text.nut_chinh)}
@@ -89,6 +89,10 @@
                     {if !empty($text.nut_phu)}
                         <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/sach-y-khoa{/if}">{$text.nut_phu|escape}</a>
                     {/if}
+                    <a class="mhw-button mhw-button--gift" href="/tai-lieu-hoc-tap">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C10.5 5 7 4.5 7 7c0 1.5 2 1 5 1Zm0 0c1.5-3 5-3.5 5-1 0 1.5-2 1-5 1Z"/></svg>
+                        <span>Quà tặng miễn phí</span>
+                    </a>
                 </div>
             {/if}
             {if !empty($text.cam_ket)}
