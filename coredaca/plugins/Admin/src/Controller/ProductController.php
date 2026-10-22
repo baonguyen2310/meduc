@@ -755,7 +755,7 @@ class ProductController extends AppController {
         $this->set('initial_category_id', $categoryId === 125 ? 125 : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
-        $this->set('course_price_options', \App\Service\CoursePricing::options());
+        $this->set('course_price_options', \App\Service\CoursePricing::options(\App\Service\CoursePricing::categoryKind([$categoryId])));
         $this->set('course_price_list_id', 0);
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
         $attributes_product = !empty($all_attributes[PRODUCT]) ? $all_attributes[PRODUCT] : [];
@@ -807,7 +807,7 @@ class ProductController extends AppController {
     public function update($id = null)
     {
         $is_course = TeacherCourseAccess::isCourse((int)$id);
-        $this->set('course_price_options', \App\Service\CoursePricing::options());
+        $this->set('course_price_options', \App\Service\CoursePricing::options(\App\Service\CoursePricing::courseKind((int)$id)));
         $this->set('course_price_list_id', \App\Service\CoursePricing::courseListId((int)$id));
         $this->set('show_teacher_assignment', $is_course);
         $this->set('teacher_options', $is_course ? TeacherCourseAccess::teacherOptions() : []);
@@ -1117,7 +1117,7 @@ class ProductController extends AppController {
         }
         if (isset($data['course_price_assignment'])) {
             $price_list_id = (int)($data['course_price_list_id'] ?? 0);
-            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::get($price_list_id))) {
+            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCategories($price_list_id, $category_ids))) {
                 $this->responseJson([MESSAGE => 'Bảng báo giá không hợp lệ hoặc sản phẩm không phải khóa học.']);
             }
         }

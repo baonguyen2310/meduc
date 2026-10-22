@@ -25,6 +25,12 @@ class CoursePriceController extends AppController
         $ids=array_column($courses,'id'); if (!in_array($from,$ids)) $from=0;
         $member=$this->request->getSession()->read(MEMBER)?:[];
         $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first() : [];
+        $recommended_year=(string)($customer['student_year']??'');
+        if (!in_array($recommended_year,['1','2','3','4','5','6','graduate'],true)) {
+            $source=null; foreach ($courses as $c) if ((int)$c['id']===$from) $source=$c;
+            $recommended_year=(string)($source['years'][0]??'');
+        }
+        $catalog_json=json_encode(array_values($courses),JSON_UNESCAPED_UNICODE|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT);
         $token=bin2hex(random_bytes(24));
         $tokens=$this->request->getSession()->read('CoursePrice.tokens')?:[];
         $tokens[$token]=time(); $tokens=array_slice($tokens,-10,null,true);
@@ -34,7 +40,7 @@ class CoursePriceController extends AppController
             $b=TableRegistry::get('TemplatesBlock')->getInfoBlock($code);
             if (!empty($b['status'])) { $b['data_block']=$this->loadComponent('Block')->getDataBlock($b); $blocks[$code]=$b; }
         }
-        $this->set(compact('lists','list','packages','courses','from','member','customer','token','blocks'));
+        $this->set(compact('lists','list','packages','courses','from','member','customer','token','blocks','recommended_year','catalog_json'));
         $this->set('title_for_layout',($list?$list['name']:'Bảng báo giá').' | MedUC');
         $this->set('data_init',['device'=>DEVICE,'member'=>$member,'template'=>['code'=>CODE_TEMPLATE,'url'=>URL_TEMPLATE]]);
         $this->viewBuilder()->setLayout('course_pricing');
