@@ -177,7 +177,7 @@
       const row=node('article','mpc-course-row');
       const cover=link(path(course),'','mpc-course-cover');cover.setAttribute('aria-label',`Xem môn ${course.name}`);
       const fallback=node('span','mpc-cover-fallback',course.name.replace(/^[\[\s]+/,'').slice(0,2).toLocaleUpperCase('vi'));fallback.setAttribute('aria-hidden','true');cover.append(fallback);
-      if(course.image){const image=node('img');image.alt='';image.loading='lazy';image.decoding='async';image.src=course.image;image.addEventListener('error',()=>image.remove());cover.append(image);}
+      if(course.image){const image=node('img');image.alt='';image.loading='lazy';image.decoding='async';let original=false;image.src=course.image.replace('/media/','/thumbs/').replace(/(\.[a-z0-9]+)(\?.*)?$/i,'_thumb_250$1$2');image.addEventListener('error',()=>{if(!original){original=true;image.src=course.image;}else image.remove();});cover.append(image);}
       const copy=node('div','mpc-course-copy');copy.append(link(path(course),course.name,'mpc-course-title'),link(path(course),'Xem môn →','mpc-course-view'));
       row.append(cover,copy);
       if(remove){const del=button('×','mpc-remove',()=>api.set(board.id,idsFor(board).filter(id=>id!==String(course.id))));del.setAttribute('aria-label',`Bỏ ${course.name} khỏi giỏ`);row.append(del);}
