@@ -101,13 +101,17 @@ html[data-meduc-theme="light"] .mgv {
   .mgv-footer-actions { justify-content: space-between; width: 100%; margin-left: 0; }
 }
 
-/* Compact homepage portraits on phones; keep desktop and directory layouts as they are. */
+/* Four compact homepage portraits on phones. */
 @media (max-width: 767px) {
-  .mgv[data-mrail] .mgv-card { flex-basis: min(60vw, 230px); width: min(60vw, 230px); height: 330px; }
+  .mgv[data-mrail] .mgv-rail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: auto; margin: 0 16px; padding: 0; overflow: visible; }
+  .mgv[data-mrail] .mgv-card { width: 100%; height: 224px; }
+  .mgv[data-mrail] .mgv-card:nth-child(n + 5) { display: none; }
   .mgv[data-mrail] .mgv-card:not(.mgv-card--centered) .mgv-photo img { transform: scale(1.35); }
-  .mgv[data-mrail] .mgv-copy { padding: 16px 12px 13px; }
-  .mgv[data-mrail] .mgv-name { font-size: 22px; margin-bottom: 8px; }
+  .mgv[data-mrail] .mgv-copy { padding: 12px; }
+  .mgv[data-mrail] .mgv-name { font-size: 20px; margin: 0; }
   .mgv[data-mrail] .mgv-subject { top: 10px; left: 10px; max-width: calc(100% - 20px); padding: 5px 8px; font-size: 9px; }
-  .mgv[data-mrail] .mgv-description { margin-bottom: 8px; font-size: 10.5px; }
-  .mgv[data-mrail] .mgv-cta { padding-top: 8px; font-size: 10.5px; }
+  .mgv[data-mrail] .mgv-description,
+  .mgv[data-mrail] .mgv-cta,
+  .mgv[data-mrail] .mgv-note,
+  .mgv[data-mrail] .mgv-controls { display: none; }
 }
