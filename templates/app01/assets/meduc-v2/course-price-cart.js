@@ -1,12 +1,26 @@
 (() => {
   'use strict';
-  const key = 'meduc-course-package-cart-v1';
-  let memory = {plans:{}, active:null};
+  const key = 'meduc-course-selection-v2';
+  let memory = {lists:{}, active:null};
+  const unique = ids => [...new Set(ids.map(String).filter(id => /^[1-9][0-9]*$/.test(id)))];
   function read() {
     try {
-      const value = JSON.parse(localStorage.getItem(key));
-      memory = value && value.plans && typeof value.plans === 'object' ? value : {plans:{},active:null};
-    } catch (_) { /* Selections remain available in this page if browser storage is unavailable. */ }
+      const raw = localStorage.getItem(key);
+      if (raw === null) {
+        const legacy = JSON.parse(localStorage.getItem('meduc-course-package-cart-v1'));
+        memory = {lists:{},active:legacy?.active || null};
+        // Combine the old package selections without silently dropping any subject.
+        for (const [plan,ids] of Object.entries(legacy?.plans || {})) {
+          const list = plan.split(':')[0];
+          if (!/^[1-9][0-9]*$/.test(list) || !Array.isArray(ids)) continue;
+          memory.lists[list] = unique([...(memory.lists[list] || []), ...ids]);
+        }
+        localStorage.setItem(key,JSON.stringify(memory));
+      } else {
+        const value = JSON.parse(raw);
+        memory = value && value.lists && typeof value.lists === 'object' ? value : {lists:{},active:null};
+      }
+    } catch (_) { /* Keep selections in this page when browser storage is unavailable. */ }
     return memory;
   }
   function save(value) {
@@ -15,12 +29,13 @@
     window.dispatchEvent(new CustomEvent('meduc:course-cart'));
   }
   const api = window.MeducCourseCart = {
-    get(list, pack) {
-      const ids = read().plans[`${list}:${pack}`];
-      return Array.isArray(ids) ? [...new Set(ids.map(String))] : null;
+    key,
+    get(list) {
+      const ids = read().lists[String(list)];
+      return Array.isArray(ids) ? unique(ids) : null;
     },
-    set(list, pack, ids) {
-      const value = read(); value.plans[`${list}:${pack}`] = [...new Set(ids.map(String))]; save(value);
+    set(list, ids) {
+      const value = read(); value.lists[String(list)] = unique(ids); save(value);
     },
     activate(list, pack) { const value = read(); value.active = {list:Number(list),pack:Number(pack)}; save(value); },
     active() { return read().active; },
@@ -39,14 +54,14 @@
     const catalog = document.querySelector('#course-catalog');
     const detail = document.querySelector('[data-mcr-product]');
     const detailId = detail?.getAttribute('data-mcr-product');
-    function selection() { return (api.get(board.id,pack.id) || []).filter(id => board.courses.includes(Number(id))).slice(0,pack.count); }
+    function selection() { return (api.get(board.id) || []).filter(id => board.courses.includes(Number(id))); }
     function toggle(id) {
       if (!board || !board.courses.includes(Number(id))) return;
       const ids = selection(), index = ids.indexOf(String(id));
       if (index >= 0) ids.splice(index,1);
       else if (ids.length < pack.count) ids.push(String(id));
       else { alert.textContent = `Gói đã đủ ${pack.count} môn. Bỏ chọn một môn để đổi.`; return; }
-      alert.textContent = ''; api.set(board.id,pack.id,ids);
+      alert.textContent = ''; api.set(board.id,ids);
     }
     function update() {
       const active = api.active();
@@ -55,7 +70,8 @@
         return;
       }
       const ids = selection();
-      counter.textContent = `Đã chọn ${ids.length}/${pack.count} môn`;
+      counter.textContent = ids.length > pack.count ? `Đã chọn ${ids.length} môn · ${pack.name}` : `Đã chọn ${ids.length}/${pack.count} môn`;
+      if (ids.length > pack.count) alert.textContent = `Gói này gồm ${pack.count} môn. Bỏ bớt ${ids.length-pack.count} môn hoặc chọn gói lớn hơn.`;
       for (const {button,id} of controls) {
         const selected = ids.includes(id);
         button.classList.toggle('is-selected',selected);button.setAttribute('aria-pressed',String(selected));
