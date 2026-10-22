@@ -22,6 +22,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     // Course price lists and quantity packages.
     $builder->connect('/bang-bao-gia/dang-ky', ['controller'=>'CoursePrice','action'=>'create']);
+    $builder->connect('/bang-bao-gia/phien-dang-ky', ['controller'=>'CoursePrice','action'=>'checkoutContext']);
     $builder->connect('/bang-bao-gia/lien-ket.js', ['controller'=>'CoursePrice','action'=>'links']);
     $builder->connect('/bang-bao-gia', ['controller'=>'CoursePrice','action'=>'index']);
     $builder->connect('/bang-bao-gia/:slug', ['controller'=>'CoursePrice','action'=>'index'], ['pass'=>['slug'],'slug'=>'[a-z0-9-]+']);

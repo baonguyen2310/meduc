@@ -31,10 +31,7 @@ class CoursePriceController extends AppController
             $recommended_year=(string)($source['years'][0]??'');
         }
         $catalog_json=json_encode(array_values($courses),JSON_UNESCAPED_UNICODE|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT);
-        $token=bin2hex(random_bytes(24));
-        $tokens=$this->request->getSession()->read('CoursePrice.tokens')?:[];
-        $tokens[$token]=time(); $tokens=array_slice($tokens,-10,null,true);
-        $this->request->getSession()->write('CoursePrice.tokens',$tokens);
+        $token=$this->registrationToken();
         $blocks=[];
         foreach (['6bcghom','fcm8r16','mv6ky0z','awlj4fk'] as $code) {
             $b=TableRegistry::get('TemplatesBlock')->getInfoBlock($code);
@@ -61,6 +58,36 @@ class CoursePriceController extends AppController
         $json=json_encode(['links'=>$map,'boards'=>$boards],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT|JSON_HEX_APOS);
         $js='window.MeducCourseCart && window.MeducCourseCart.configure('.$json.');';
         return $this->response->withType('application/javascript')->withHeader('Cache-Control','no-store')->withStringBody($js);
+    }
+
+    public function checkoutContext()
+    {
+        $this->autoRender=false;
+        if (!$this->request->is('get')) return $this->json(405,'Phương thức không hợp lệ.');
+        $session=$this->request->getSession();
+        $member=$session->read(MEMBER)?:[];
+        $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first() : null;
+        $boards=[];
+        foreach(CoursePricing::lists(true) as $l) {
+            $courses=CoursePricing::courses((int)$l['id'],true);
+            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],
+                'courses'=>array_map('intval',array_column($courses,'id')),
+                'course_data'=>array_map(function($c){return ['id'=>(int)$c['id'],'name'=>$c['name'],'url'=>$c['url'],'image'=>$c['image']];},$courses),
+                'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount'],'price'=>(int)$p['price']];},CoursePricing::packages((int)$l['id']))];
+        }
+        $legacy=[];
+        foreach((array)($session->read(CART)['items']??[]) as $itemId=>$item) {
+            if (!empty($item['product_id'])) $legacy[]=['item_id'=>(int)$itemId,'product_id'=>(int)$item['product_id'],'quantity'=>max(1,(int)($item['quantity']??1))];
+        }
+        return $this->json(200,'Thông tin giỏ khóa học.',['member'=>(bool)$customer,'phone'=>(string)($customer['phone']??''),'token'=>$this->request->getQuery('checkout')==='1'?$this->registrationToken():'','boards'=>$boards,'legacy'=>$legacy]);
+    }
+
+    private function registrationToken(): string
+    {
+        $token=bin2hex(random_bytes(24));
+        $session=$this->request->getSession();$tokens=$session->read('CoursePrice.tokens')?:[];
+        $tokens[$token]=time();$session->write('CoursePrice.tokens',array_slice($tokens,-10,null,true));
+        return $token;
     }
 
     public function create()

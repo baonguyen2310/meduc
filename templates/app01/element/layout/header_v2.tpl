@@ -2,6 +2,7 @@
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
 {$header_member = $this->Member->getMemberInfo()}
+{$header_course_cart = $this->Cart->getCartInfo()}
 {$meduc_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
@@ -99,9 +100,9 @@
         <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
           {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
         </div>
-        <a class="mhi-cart" nh-mini-cart="open" href="javascript:;" title="Giỏ hàng khóa học" aria-label="Giỏ hàng khóa học">
+        <a class="mhi-cart" data-course-cart-open data-course-cart-legacy="{$header_course_cart.total_quantity|default:0}" href="/bang-bao-gia" title="Giỏ hàng khóa học" aria-label="Giỏ hàng khóa học" aria-haspopup="dialog">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
-          <span nh-total-quantity-mini-cart class="mhi-cart-count">0</span>
+          <span data-course-cart-count class="mhi-cart-count">{$header_course_cart.total_quantity|default:0}</span>
         </a>
         <a class="mhi-cart mhi-cart-book" nh-mini-cart-book href="/dat-hang" title="Giỏ hàng sách và thiết bị" aria-label="Giỏ hàng sách và thiết bị">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 4h2.3l2.4 11h10.6l2-8H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>

@@ -38,9 +38,9 @@
     const contextUrl = path => { const url = new URL(path || '/', location.origin + '/'); url.searchParams.set('bang_gia',listId);url.searchParams.set('goi',plan.id);return url.pathname + url.search; };
     function persist() { cart?.set(listId,chosen); }
     persist();
-    window.addEventListener('storage', event => {
-      if (event.key !== cart?.key) return;
-      chosen=stored();updateCards();
+    window.addEventListener('meduc:course-cart', () => {
+      const next=stored();if (JSON.stringify(next)===JSON.stringify(chosen)) return;
+      chosen=next;updateCards();
       if (picker.open) {draft=[...chosen];renderCourses();}
       if (checkout.open && !busy) {closeDialog(checkout,false);openPicker(plan.id);}
     });
@@ -183,6 +183,7 @@
         const result = await response.json();
         if (response.status === 401) { authenticated = false; pendingPlan = plan.id; busy = false; closeDialog(checkout, false); window.meducAuth?.open('login'); return; }
         if (!response.ok || result.code !== 'success') throw new Error(result.message || 'Chưa đăng ký được.');
+        cart?.set(listId,[]);
         location.href = result.data.redirect;
       } catch (e) { error.textContent = e.message || 'Kết nối gián đoạn. Vui lòng thử lại.'; }
       finally { busy = false; submit.disabled = false; }
