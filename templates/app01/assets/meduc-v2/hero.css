@@ -14,6 +14,8 @@
   --mhw-secondary-hover: #4a4b51;
   --mhw-secondary-ink: #fff;
   --mhw-tile-bg: #26272b;
+  --mhw-menu-bg: #232427;
+  --mhw-menu-line: #ffffff26;
   --mhw-gap: 12px;
   --mhw-tile-w: 120px;
   /* MasterClass loops a column in 60s (about 26px/s at desktop size). MedUC drifts slowly on purpose:
@@ -45,6 +47,8 @@ html[data-meduc-theme="light"] .mhw {
   --mhw-secondary-hover: #e1e4ea;
   --mhw-secondary-ink: #15171c;
   --mhw-tile-bg: #e9ebef;
+  --mhw-menu-bg: #fff;
+  --mhw-menu-line: #e0e3e7;
 }
 .mhw *, .mhw *::before, .mhw *::after { box-sizing: border-box; }
 .mhw-shell { width: min(92%, 1440px); margin-inline: auto; }
@@ -83,10 +87,18 @@ html[data-meduc-theme="light"] .mhw {
 .mhw-button--primary:hover { filter: brightness(1.1); }
 .mhw-button--secondary { background: var(--mhw-secondary); color: var(--mhw-secondary-ink) !important; }
 .mhw-button--secondary:hover { background: var(--mhw-secondary-hover); }
-.mhw-button--gift { gap: 8px; border: 1px solid var(--mhw-ink); padding-block: 11px; color: var(--mhw-ink) !important; }
-.mhw-button--gift:hover { background: var(--mhw-secondary); }
+.mhw-button--gift { width: 100%; background: transparent; font-family: inherit; cursor: pointer; gap: 8px; border: 1px solid var(--mhw-ink); padding-block: 11px; color: var(--mhw-ink) !important; }
+.mhw-button--gift:hover, .mhw-button--gift[aria-expanded="true"] { background: var(--mhw-secondary); }
+.mhw-button--gift:focus { outline: none !important; }
 .mhw-button--gift svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.mhw-button:focus-visible { outline: 2px solid var(--mhw-ink); outline-offset: 3px; }
+.mhw-gift { position: relative; min-width: 0; }
+.mhw-gift-menu { position: absolute; z-index: 5; right: 0; bottom: calc(100% + 8px); width: 100%; min-width: 200px; padding: 8px; border: 1px solid var(--mhw-menu-line); border-radius: 10px; background: var(--mhw-menu-bg); box-shadow: 0 12px 36px #0002; text-align: left; }
+.mhw-gift-menu[hidden] { display: none !important; }
+.mhw-gift-menu a { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 6px; color: var(--mhw-ink) !important; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none !important; }
+.mhw-gift-menu a:hover { background: var(--mhw-secondary); }
+.mhw-gift-menu svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mhw-gift-arrow { margin-left: auto; font-size: 20px; }
+.mhw-button:focus-visible, .mhw-gift-menu a:focus-visible { outline: 2px solid var(--mhw-ink) !important; outline-offset: 3px; }
 .mhw-guarantee { margin: 0; color: var(--mhw-soft); font: 11px/1.38 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
 /* On phones the stacked text fills the lower half, so the light panel starts higher. */

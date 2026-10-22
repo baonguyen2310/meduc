@@ -40,7 +40,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261022-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261022-2" rel="stylesheet">
+
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.js?v=20261022-1" defer></script>
 
 <section class="mhw">
     {if $photo_count > 0}
@@ -89,10 +91,16 @@
                     {if !empty($text.nut_phu)}
                         <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/sach-y-khoa{/if}">{$text.nut_phu|escape}</a>
                     {/if}
-                    <a class="mhw-button mhw-button--gift" href="/tai-lieu-hoc-tap">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C10.5 5 7 4.5 7 7c0 1.5 2 1 5 1Zm0 0c1.5-3 5-3.5 5-1 0 1.5-2 1-5 1Z"/></svg>
-                        <span>Quà tặng miễn phí</span>
-                    </a>
+                    <div class="mhw-gift">
+                        <button class="mhw-button mhw-button--gift" type="button" aria-expanded="false" aria-controls="mhw-gift-menu">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C10.5 5 7 4.5 7 7c0 1.5 2 1 5 1Zm0 0c1.5-3 5-3.5 5-1 0 1.5-2 1-5 1Z"/></svg>
+                            <span>Quà tặng miễn phí</span>
+                        </button>
+                        <nav class="mhw-gift-menu" id="mhw-gift-menu" aria-label="Quà tặng miễn phí" hidden>
+                            <a href="/blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg><span>Blog</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
+                            <a href="/tai-lieu-hoc-tap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg><span>Tài liệu</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
+                        </nav>
+                    </div>
                 </div>
             {/if}
             {if !empty($text.cam_ket)}
