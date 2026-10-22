@@ -21,7 +21,7 @@ class CoursePriceController extends AppController
         foreach($lists as $l) if ($slug ? $l['slug']===$slug : !$list) $list=$l;
         if ($slug && !$list) throw new NotFoundException('Bảng giá không còn mở.');
         $packages=$list?CoursePricing::packages((int)$list['id']):[];
-        $courses=$list?CoursePricing::courses((int)$list['id']):[];
+        $courses=$list?CoursePricing::courses((int)$list['id'],true):[];
         $ids=array_column($courses,'id'); if (!in_array($from,$ids)) $from=0;
         $member=$this->request->getSession()->read(MEMBER)?:[];
         $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first() : [];
@@ -49,10 +49,17 @@ class CoursePriceController extends AppController
     public function links()
     {
         $this->autoRender=false;
-        $map=[];
-        foreach(CoursePricing::lists(true) as $l) foreach(CoursePricing::courses((int)$l['id']) as $c) $map[$c['id']]='/bang-bao-gia/'.$l['slug'].'?mon='.$c['id'];
-        $json=json_encode($map,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG);
-        $js='(()=>{const m='.$json.';document.addEventListener("click",e=>{const a=e.target.closest("a[nh-btn-action=add-cart],a.mcl-register,a.mcr-btn[href=\"/order/info\"]");if(!a)return;const p=a.closest("[nh-product]");const page=document.querySelector("[data-mcr-product]");const id=p?p.getAttribute("nh-product"):(page&&page.getAttribute("data-mcr-product"));if(m[id]){e.preventDefault();e.stopImmediatePropagation();location.href=m[id];}},true);})();';
+        $map=[]; $boards=[];
+        foreach(CoursePricing::lists(true) as $l) {
+            $courses=CoursePricing::courses((int)$l['id']);
+            $packages=CoursePricing::packages((int)$l['id']);
+            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],
+                'courses'=>array_map('intval',array_column($courses,'id')),
+                'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount']];},$packages)];
+            foreach($courses as $c) $map[$c['id']]='/bang-bao-gia/'.$l['slug'].'?mon='.$c['id'];
+        }
+        $json=json_encode(['links'=>$map,'boards'=>$boards],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT|JSON_HEX_APOS);
+        $js='window.MeducCourseCart && window.MeducCourseCart.configure('.$json.');';
         return $this->response->withType('application/javascript')->withHeader('Cache-Control','no-store')->withStringBody($js);
     }
 

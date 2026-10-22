@@ -34,7 +34,7 @@ class CoursePricing
         return $rows;
     }
 
-    public static function courses(int $id): array
+    public static function courses(int $id, bool $presentation=false): array
     {
         $rows = self::db()->execute("SELECT p.id,pc.name,l.url,
             (SELECT GROUP_CONCAT(cp.category_id) FROM categories_product cp WHERE cp.product_id=p.id) AS category_ids,
@@ -54,6 +54,34 @@ class CoursePricing
             }
             $row['years']=array_values(array_unique($years));
             unset($row['category_ids']);
+        }
+        if ($presentation && $rows) {
+            $ids=implode(',',array_map('intval',array_column($rows,'id')));
+            $items=self::db()->execute('SELECT id,images FROM products_item WHERE product_id IN ('.$ids.') AND deleted=0 AND status=1')->fetchAll('assoc');
+            $images=[];
+            foreach ($items as $item) {
+                $files=json_decode((string)$item['images'],true);
+                $path=is_array($files) ? (string)($files[0]??'') : '';
+                if (preg_match('~^/(?!/)[^<>]+$~u',$path)) $images[(int)$item['id']]=rtrim(CDN_URL,'/').$path;
+                elseif (preg_match('~^https://[^<>]+$~u',$path)) $images[(int)$item['id']]=$path;
+            }
+            $curricula=self::db()->execute("SELECT pa.product_id,pa.value FROM products_attribute pa JOIN attributes a ON a.id=pa.attribute_id
+                WHERE pa.product_id IN (".$ids.") AND a.code='danhsachtiethoc'")->fetchAll('assoc');
+            $meta=[];
+            foreach ($curricula as $curriculum) {
+                $chapters=$lessons=0;
+                foreach ((array)json_decode((string)$curriculum['value'],true) as $lesson) {
+                    if (!is_array($lesson) || empty($lesson['name_vi'])) continue;
+                    if (($lesson['chapter_vi']??'')==='y') $chapters++; else $lessons++;
+                }
+                $meta[(int)$curriculum['product_id']]=['chapters'=>$chapters,'lessons'=>$lessons];
+            }
+            unset($row);
+            foreach ($rows as &$row) {
+                $row['image']=$images[(int)$row['item_id']]??'';
+                $row['chapters']=$meta[(int)$row['id']]['chapters']??0;
+                $row['lessons']=$meta[(int)$row['id']]['lessons']??0;
+            }
         }
         return $rows;
     }

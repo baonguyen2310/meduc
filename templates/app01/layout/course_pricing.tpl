@@ -10,11 +10,12 @@
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261018-1" defer></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261021-1" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261021-7" rel="stylesheet">
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261022-2" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261022-4" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261021-7" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261022-2" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261022-2" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261022-4" defer></script>
 </head>
 <body class="meduc-header-v2 mpr-body">
 {$this->element('layout/header_v2')}

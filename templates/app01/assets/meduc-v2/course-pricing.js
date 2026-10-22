@@ -6,9 +6,14 @@
     if (!catalogNode) return;
     const courses = JSON.parse(catalogNode.textContent);
     const byId = new Map(courses.map(c => [String(c.id), c]));
+    const cart = window.MeducCourseCart, listId = page.dataset.listId;
+    function stored(id,count) {
+      const saved = cart?.get(listId,id);
+      return saved !== null && saved !== undefined ? saved.filter(id => byId.has(id)).slice(0,count) : (byId.has(page.dataset.from) ? [page.dataset.from] : []);
+    }
     const plans = new Map([...page.querySelectorAll('[data-package]')].map(el => [el.dataset.package, {
       el, id: el.dataset.package, count: Number(el.dataset.count), amount: Number(el.dataset.amount), name: el.dataset.name,
-      chosen: byId.has(page.dataset.from) ? [page.dataset.from] : []
+      chosen: stored(el.dataset.package,Number(el.dataset.count))
     }]));
     const picker = page.querySelector('[data-course-dialog]');
     const checkout = page.querySelector('[data-checkout-dialog]');
@@ -17,12 +22,18 @@
     const form = checkout.querySelector('[data-price-form]');
     const error = checkout.querySelector('[data-price-error]');
     const submit = checkout.querySelector('[data-checkout]');
-    const preferredYear = page.dataset.recommendedYear || '';
+    const firstSelected = [...plans.values()].flatMap(p => p.chosen).find(id => byId.get(id)?.years?.length);
+    const preferredYear = page.dataset.recommendedYear || byId.get(firstSelected)?.years?.[0] || '';
     const money = n => new Intl.NumberFormat('vi-VN').format(n) + 'đ';
     const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
-    let plan = null, draft = [], showAll = false, busy = false;
+    let plan = null, draft = [], busy = false;
     let authenticated = page.dataset.member === '1', pendingPlan = null, opener = null;
     let previousOverflow = '';
+    const allPath = page.dataset.courseType === 'exam_prep' ? '/khoa-luyen-thi' : '/khoa-hoc';
+    const contextUrl = path => { const url = new URL(path || '/', location.origin + '/'); url.searchParams.set('bang_gia',listId);url.searchParams.set('goi',plan.id);return url.pathname + url.search; };
+    function persist(p) { cart?.set(listId,p.id,p.chosen); }
+    plans.forEach(p => persist(p));
+    window.addEventListener('storage', event => { if (event.key === 'meduc-course-package-cart-v1') { plans.forEach(p => {p.chosen=stored(p.id,p.count);});updateCards(); } });
 
     function openDialog(dialog, trigger) {
       opener = trigger || document.activeElement;
@@ -61,7 +72,7 @@
           const label = document.createElement('span'); label.textContent = c.name;
           const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '×';
           remove.setAttribute('aria-label', `Bỏ chọn ${c.name} trong ${p.name}`);
-          remove.addEventListener('click', () => { p.chosen = p.chosen.filter(v => v !== id); updateCards(); });
+          remove.addEventListener('click', () => { p.chosen = p.chosen.filter(v => v !== id); persist(p); updateCards(); });
           chip.append(label, remove); area.append(chip);
         });
         if (!p.chosen.length) { const hint = document.createElement('p'); hint.textContent = 'Thêm môn bạn muốn học.'; area.append(hint); }
@@ -73,36 +84,54 @@
     function renderCourses() {
       const q = normalize(search.value.trim());
       const filtered = courses.filter(c => (!year.value || c.years.includes(year.value)) && (!q || normalize(c.name).includes(q)));
-      const visible = showAll || q ? filtered : filtered.slice(0, 6);
+      const visible = q ? filtered : filtered.slice(0, 6);
       const container = picker.querySelector('[data-dialog-courses]'); container.replaceChildren();
-      picker.querySelector('[data-course-list-title]').textContent = showAll || q ? `Môn học (${filtered.length})` : 'Đề xuất cho bạn';
-      picker.querySelector('[data-toggle-all]').textContent = showAll ? '← Gợi ý' : 'Xem tất cả →';
+      picker.querySelector('[data-course-list-title]').textContent = q ? `Môn phù hợp (${filtered.length})` : 'Đề xuất cho bạn';
+      picker.querySelector('[data-browse-all]').href = contextUrl(allPath);
       picker.querySelector('[data-suggestion-caption]').textContent = year.value ? (year.value === 'graduate' ? 'Các môn dành cho giai đoạn sau tốt nghiệp.' : `Ưu tiên môn dành cho sinh viên năm ${year.value}.`) : 'Chọn môn trong bảng giá này.';
       picker.querySelector('[data-empty]').hidden = visible.length > 0;
       visible.forEach(c => {
-        const label = document.createElement('label'); label.className = 'mpr-course';
-        const input = document.createElement('input'); input.type = 'checkbox'; input.value = c.id; input.checked = draft.includes(String(c.id));
+        const row = document.createElement('article'); row.className = 'mpr-course';
+        const href = contextUrl(c.url);
+        const cover = document.createElement('a'); cover.className = 'mpr-mini-cover';cover.href=href;cover.setAttribute('aria-label',`Xem môn ${c.name}`);
+        const fallback = document.createElement('span'); fallback.className='mpr-mini-placeholder';fallback.setAttribute('aria-hidden','true');
+        const brand = document.createElement('small');brand.textContent='MEDUC';
+        const initial = document.createElement('strong');initial.textContent=c.name.replace(/^[\[\s]+/,'').slice(0,2).toLocaleUpperCase('vi');
+        fallback.append(brand,initial);cover.append(fallback);
+        if (c.image) {
+          const img = document.createElement('img');img.alt='';img.loading='lazy';img.decoding='async';
+          const image = new URL(c.image,location.origin);let original=false;
+          img.src=image.href.replace('/media/','/thumbs/').replace(/(\.[a-z0-9]+)(\?.*)?$/i,'_thumb_250$1$2');
+          img.addEventListener('error',()=>{if(!original){original=true;img.src=image.href;}else img.remove();});cover.append(img);
+        }
+        const copy = document.createElement('div');copy.className='mpr-mini-copy';
+        const title = document.createElement('h4'), link = document.createElement('a');link.href=href;link.textContent=c.name;title.append(link);
+        const meta = document.createElement('p');meta.className='mpr-mini-meta';
+        meta.textContent=[c.chapters ? `${c.chapters} chương` : '',c.lessons ? `${c.lessons} bài học` : ''].filter(Boolean).join(' · ');
+        const view = document.createElement('a');view.className='mpr-mini-view';view.href=href;view.textContent='Xem môn →';
+        copy.append(title,meta,view);
+        const label = document.createElement('label');label.className='mpr-course-toggle';
+        const input = document.createElement('input'); input.type = 'checkbox'; input.value = c.id; input.checked = draft.includes(String(c.id));input.setAttribute('aria-label',`Chọn ${c.name}`);
         const check = document.createElement('span'); check.className = 'mpr-course-check'; check.textContent = '✓'; check.setAttribute('aria-hidden', 'true');
-        const name = document.createElement('span'); name.textContent = c.name;
         input.addEventListener('change', () => {
           const id = String(c.id), status = picker.querySelector('[data-dialog-error]'); status.textContent = '';
           if (input.checked && draft.length >= plan.count) { input.checked = false; status.textContent = `Gói này gồm ${plan.count} môn. Bỏ chọn một môn nếu bạn muốn đổi.`; return; }
-          draft = input.checked ? [...draft, id] : draft.filter(v => v !== id); updateDraftCount();
+          draft = input.checked ? [...draft, id] : draft.filter(v => v !== id);
+          plan.chosen=[...draft];persist(plan);updateCards();updateDraftCount();
         });
-        label.append(input, check, name); container.append(label);
+        label.append(input,check);row.append(cover,copy,label);container.append(row);
       });
       updateDraftCount();
     }
     function openPicker(id, trigger) {
       plan = plans.get(String(id)); if (!plan) return;
-      draft = [...plan.chosen]; showAll = false; search.value = ''; year.value = preferredYear;
+      draft = [...plan.chosen]; search.value = ''; year.value = preferredYear;cart?.activate(listId,plan.id);
       picker.querySelector('#mpr-dialog-title').textContent = `Chọn môn · ${plan.name}`;
       picker.querySelector('[data-dialog-error]').textContent = '';
       renderCourses(); openDialog(picker, trigger);
     }
-    picker.querySelector('[data-toggle-all]').addEventListener('click', () => { showAll = !showAll; search.value = ''; year.value = showAll ? '' : preferredYear; renderCourses(); });
     search.addEventListener('input', renderCourses); year.addEventListener('change', renderCourses);
-    picker.querySelector('[data-apply-courses]').addEventListener('click', () => { plan.chosen = [...draft]; updateCards(); closeDialog(picker); });
+    picker.querySelector('[data-apply-courses]').addEventListener('click', () => { plan.chosen = [...draft]; persist(plan); updateCards(); closeDialog(picker); });
 
     function openCheckout(id, trigger) {
       const p = plans.get(String(id)); if (!p) return;
