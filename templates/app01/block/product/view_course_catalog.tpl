@@ -13,8 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261028-cards" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261016" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261028-cards-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261028-2" defer></script>
 
 <main class="mcl" id="course-catalog">
     <section class="mcl-shell mcl-hero" aria-labelledby="catalog-title">

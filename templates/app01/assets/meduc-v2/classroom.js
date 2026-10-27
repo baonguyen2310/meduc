@@ -515,5 +515,8 @@
 
   renderProgress();
   const initial = Number(new URLSearchParams(location.search).get("bai"));
-  if (byNumber.has(initial)) selectLesson(initial, { push: false, scroll: false });
+  if (byNumber.has(initial)) {
+    selectLesson(initial, { push: false, scroll: false });
+    if (new URLSearchParams(location.search).get("tab") === "quiz") selectTab("quiz");
+  }
 })();

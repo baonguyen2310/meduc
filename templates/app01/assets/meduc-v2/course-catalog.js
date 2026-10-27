@@ -15,6 +15,7 @@
   const names = new Map(groups.flatMap(group => group.cards.map(card => [card,normalize(card.dataset.courseName)])));
   const total = new Set(groups.flatMap(group => group.cards.map(card => card.dataset.courseId))).size;
   page.querySelector('[data-catalog-tools]').hidden = false;
+  const mobileLayout = matchMedia("(max-width: 767.98px)");
   for (const group of groups) {
     const key = `meduc-course-layout-${group.section.dataset.courseGroupId}`;
     const buttons = [...group.section.querySelectorAll('[data-catalog-layout]')];
@@ -22,12 +23,21 @@
       group.section.dataset.courseLayout = layout === 'grid' ? 'grid' : 'list';
       for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.catalogLayout === group.section.dataset.courseLayout));
     }
-    try { setLayout(localStorage.getItem(key)); } catch (_) { setLayout('list'); }
+    let desktopLayout = 'list';
+    try { desktopLayout = localStorage.getItem(key) === 'grid' ? 'grid' : 'list'; } catch (_) { /* Keep the desktop default. */ }
+    const switcher = group.section.querySelector('[data-layout-switch]');
+    function syncLayout() {
+      setLayout(mobileLayout.matches ? 'grid' : desktopLayout);
+      switcher.hidden = mobileLayout.matches;
+    }
     for (const button of buttons) button.addEventListener('click', () => {
-      setLayout(button.dataset.catalogLayout);
-      try { localStorage.setItem(key, group.section.dataset.courseLayout); } catch (_) { /* Layout switching still works when storage is unavailable. */ }
+      if (mobileLayout.matches) return;
+      desktopLayout = button.dataset.catalogLayout;
+      syncLayout();
+      try { localStorage.setItem(key, desktopLayout); } catch (_) { /* Layout switching still works when storage is unavailable. */ }
     });
-    group.section.querySelector('[data-layout-switch]').hidden = false;
+    mobileLayout.addEventListener('change', syncLayout);
+    syncLayout();
   }
   function update() {
     const words = normalize(input.value.trim()).split(/\s+/).filter(Boolean);

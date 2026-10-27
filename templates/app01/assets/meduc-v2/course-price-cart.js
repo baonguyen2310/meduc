@@ -110,7 +110,7 @@
     }
     document.addEventListener('click', event => {
       const link=event.target.closest('a[nh-btn-action="add-cart"],a.mcl-register,a.mcr-btn[href="/order/info"]');
-      if (!link) return;
+      if (!link || link.hasAttribute('data-course-preview')) return;
       const id=link.closest('[nh-product]')?.getAttribute('nh-product') || document.querySelector('[data-mcr-product]')?.getAttribute('data-mcr-product');
       if (!config.links[id]) return;
       event.preventDefault();event.stopImmediatePropagation();

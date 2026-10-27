@@ -76,10 +76,17 @@ class ProductHelper extends Helper
             $attrs = $course['attributes'] ?? [];
             $lessons = json_decode($attrs['danhsachtiethoc']['value'] ?? '', true);
             $chapters = $lesson_count = 0;
+            $first_trial_video = $first_free_quiz = $first_quiz = 0;
             foreach (is_array($lessons) ? $lessons : [] as $lesson) {
                 if (!is_array($lesson) || empty($lesson['name_' . $lang])) continue;
-                if (($lesson['chapter_' . $lang] ?? '') === 'y') $chapters++;
-                else $lesson_count++;
+                if (($lesson['chapter_' . $lang] ?? '') === 'y') { $chapters++; continue; }
+                $lesson_count++;
+                $video = preg_replace('/[^\w-].*$/s', '', trim((string) ($lesson['youtube_id_' . $lang] ?? '')));
+                if (!$first_trial_video && ($lesson['trial_' . $lang] ?? '') === 'y' && strlen($video) === 11) $first_trial_video = $lesson_count;
+                foreach (LessonQuizzes::of($lesson, $lang) as $quiz) {
+                    if (!$first_quiz) $first_quiz = $lesson_count;
+                    if (!$first_free_quiz && $quiz['free']) $first_free_quiz = $lesson_count;
+                }
             }
             $summary = $attrs['motangan']['value'] ?? ($course['description'] ?? '');
             $summary = html_entity_decode(strip_tags((string) $summary), ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -89,6 +96,8 @@ class ProductHelper extends Helper
                 'lessons' => $lesson_count,
                 'exam_prep' => $exam_prep,
                 'exams' => $exam_prep ? count(LessonQuizzes::ids(is_array($lessons) ? $lessons : [])) : 0,
+                'preview_lesson' => $exam_prep ? ($first_free_quiz ?: $first_quiz ?: 1) : ($first_trial_video ?: $first_free_quiz ?: 1),
+                'preview_tab' => $exam_prep || (!$first_trial_video && $first_free_quiz) ? 'quiz' : 'video',
                 'summary' => mb_strlen($summary) > 190 ? mb_substr($summary, 0, 187) . '…' : $summary,
             ];
             $matched = false;
