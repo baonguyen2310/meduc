@@ -8,6 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-catalog.css?v=20261015" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-catalog.js?v=20261015" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <main class="mbl" id="blog-catalog-page" data-initial-topic="{$journal.active}">
     <section class="mbl-hero {if $journal.active}mbl-hero--subject{/if}" aria-labelledby="journal-title">
         <div class="mbl-shell">
@@ -19,15 +21,11 @@
         </div>
     </section>
 
-    {if !empty($journal.lead)}{$lead = $journal.lead}
-    <section class="mbl-shell mbl-feature" aria-labelledby="journal-feature-title">
-        <div class="mbl-section-line"><p>GÓC ĐỌC HÔM NAY</p><span>01 / MEDUC JOURNAL</span></div>
-        <article class="mbl-feature-layout">
-            <a class="mbl-feature-image" href="{$this->Utilities->checkInternalUrl($lead.url)|escape}" aria-label="Đọc {$lead.name|escape}"><img src="{CDN_URL}{$lead.image|escape}" alt="{$lead.name|escape}" fetchpriority="high" decoding="async"></a>
-            <div class="mbl-feature-copy"><p class="mbl-category">{$lead.topic_name|escape}</p><h2 id="journal-feature-title"><a href="{$this->Utilities->checkInternalUrl($lead.url)|escape}">{$lead.name|escape}</a></h2><p class="mbl-feature-summary">{$lead.summary|escape}</p><div class="mbl-feature-bottom">{if $lead.date}<time datetime="{$lead.datetime}">{$lead.date}</time>{/if}<a class="mbl-read" href="{$this->Utilities->checkInternalUrl($lead.url)|escape}">Đọc bài viết <span aria-hidden="true">↗</span></a></div></div>
-        </article>
+    <section class="mrh" data-reading-history="blog" aria-labelledby="recent-blog-title" hidden>
+        <div class="mrh-heading"><h2 id="recent-blog-title">BÀI ĐỌC GẦN NHẤT.</h2><p>Tiếp tục từ chỗ bạn đang đọc.</p></div>
+        <div class="mrh-grid" data-reading-cards></div>
+        <p class="mrh-empty" data-reading-empty>Bạn chưa mở bài viết nào gần đây. <a href="#bai-viet">Khám phá bài viết bên dưới →</a></p>
     </section>
-    {/if}
 
     <section class="mbl-shell mbl-catalog" id="bai-viet" aria-labelledby="journal-catalog-title">
         <div class="mbl-heading"><div><p class="mbl-eyebrow">THƯ VIỆN BÀI VIẾT</p><h2 id="journal-catalog-title">TÌM BÀI VIẾT<br><span>BẠN CẦN.</span></h2></div><p>Từ những môn học nền tảng đến góc nhìn lâm sàng và kinh nghiệm học Y. Bắt đầu từ điều bạn đang tò mò.</p></div>

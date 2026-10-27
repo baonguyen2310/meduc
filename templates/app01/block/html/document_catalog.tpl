@@ -7,12 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261018-3" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.js?v=20261018-2" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <main class="mdc" id="document-catalog-page" data-active-category="{PAGE_CATEGORY_ID}">
     <svg class="mdc-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="mdc-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="mdc-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 13h8m-8 4h6"/></symbol><symbol id="mdc-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol></svg>
     <section class="mdc-hero {if !empty($catalog.category)}mdc-hero--category{/if}" aria-labelledby="documents-title"><div class="mdc-shell mdc-hero-inner">
         <div class="mdc-hero-copy"><p class="mdc-eyebrow">MEDUC / THƯ VIỆN TÀI LIỆU</p>{if !empty($catalog.category)}<a class="mdc-back" href="/tai-lieu-hoc-tap">← Thư viện tài liệu</a><h1 id="documents-title">{$catalog.category.name|escape}</h1>{else}<h1 id="documents-title">{$text.tieu_de_1|default:'ĐÚNG TÀI LIỆU.'|escape}<span>{$text.tieu_de_2|default:'VỮNG KIẾN THỨC.'|escape}</span></h1>{/if}<p class="mdc-intro">{$text.mo_ta|default:'Giáo trình, bài giảng và tài liệu ôn tập cho hành trình học Y. Bắt đầu từ môn bạn đang học, tìm thêm một góc nhìn để hiểu sâu hơn.'|escape}</p><a class="mdc-button" href="#document-library">Khám phá tài liệu <span aria-hidden="true">↓</span></a><p class="mdc-total"><strong>{count($catalog.documents)}</strong> tài liệu đang mở <span aria-hidden="true">/</span> Theo môn và năm học</p></div>
         {if empty($catalog.category)}<div class="mdc-hero-art" aria-label="Tài liệu từ thư viện MedUC"><span class="mdc-art-label">ĐỌC. HIỂU. KẾT NỐI.</span><div class="mdc-paper-grid">{foreach from=$catalog.hero item=document}<a href="{$this->Utilities->checkInternalUrl($document.url)|escape}" aria-label="{$document.name|escape}"><img src="{CDN_URL}{$this->Utilities->getThumbs($document.image, 350)}" alt="{$document.name|escape}" decoding="async"><span>{$document.year_label|escape}</span></a>{/foreach}</div><span class="mdc-art-note"><svg aria-hidden="true"><use href="#mdc-file"/></svg><span>KIẾN THỨC LỚN.<br>TỪ TỪNG TRANG NHỎ.</span></span></div>{/if}
     </div></section>
+    <section class="mrh" data-reading-history="document" aria-labelledby="recent-document-title" hidden>
+        <div class="mrh-heading"><h2 id="recent-document-title">TÀI LIỆU ĐỌC GẦN NHẤT.</h2><p>Tiếp tục từ chỗ bạn đang đọc.</p></div>
+        <div class="mrh-grid" data-reading-cards></div>
+        <p class="mrh-empty" data-reading-empty>Bạn chưa mở tài liệu nào gần đây. <a href="#document-library">Khám phá tài liệu bên dưới →</a></p>
+    </section>
+
     <div class="mdc-shell mdc-path-heading mdc-path-intro"><p class="mdc-eyebrow">CHỌN CHẶNG ĐƯỜNG CỦA BẠN</p><a href="/tai-lieu-hoc-tap#document-library" data-document-all>Tất cả tài liệu <svg aria-hidden="true"><use href="#mdc-arrow"/></svg></a></div><nav class="mdc-paths" aria-label="Tài liệu theo năm học"><div class="mdc-shell mdc-year-grid">
         {foreach from=[75, 122, 123, 124] item=year_category_id}{foreach from=$categories item=category}{if $category.id == $year_category_id}
             {$year = 1}{if $category.id == 122}{$year = 2}{elseif $category.id == 123}{$year = 3}{elseif $category.id == 124}{$year = 4}{/if}

@@ -36,6 +36,11 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/language/active', ['controller' => 'Language', 'action' => 'activeLanguage']);
     $builder->connect('/currency/active', ['controller' => 'Currency', 'action' => 'activeCurrency']);
 
+    // Private reading history and published PDF attachment reader.
+    $builder->connect('/reading-history', ['controller'=>'ReadingHistory','action'=>'index']);
+    $builder->connect('/reading-history/save', ['controller'=>'ReadingHistory','action'=>'save']);
+    $builder->connect('/reading-history/pdf/:article/:file', ['controller'=>'ReadingHistory','action'=>'pdf'], ['pass'=>['article','file'],'article'=>'[0-9]+','file'=>'[0-9]+']);
+
     // block
     $builder->connect('/block/ajax-load-content/:code', ['controller' => 'Block', 'action' => 'ajaxLoadContent'], ['pass' => ['code']]);
     

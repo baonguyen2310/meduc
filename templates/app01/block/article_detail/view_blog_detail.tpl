@@ -6,8 +6,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-detail.css?v=20261016" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-detail.js?v=20261015" defer></script>
-<main class="mbj" id="blog-detail-page">
+<main class="mbj" id="blog-detail-page" {if !empty($journal.current)}data-reading-item="blog" data-reading-id="{$journal.current.id}" data-reading-title="{$journal.current.name|escape}" data-reading-topic="{$journal.topic.name|escape}" data-reading-image="{if !empty($journal.current.image)}{CDN_URL}{$journal.current.image|escape}{/if}"{/if}>
     {if !empty($journal)}{$current = $journal.current}
     <div class="mbj-progress" data-reading-bar hidden aria-hidden="true"><span></span></div>
     <nav class="mbj-shell mbj-crumb" aria-label="Đường dẫn trang"><a href="/">Trang chủ</a><span aria-hidden="true">/</span><a href="/blog">Blog</a><span aria-hidden="true">/</span><a href="{$this->Utilities->checkInternalUrl($journal.topic.url)|escape}">{$journal.topic.name|escape}</a></nav>
