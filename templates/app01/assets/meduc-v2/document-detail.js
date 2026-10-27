@@ -15,7 +15,8 @@
     function restoreReader(){
         if(!expanded)return;
         expanded=false;marker.after(viewer);document.body.classList.remove('meduc-document-reading');labelExpanded(false);
-        window.meducReading?.flush();lastFocus?.focus({preventScroll:true});
+        if(preview.classList.contains('mdp-host')&&!preview.hidden&&unavailable.hidden){preview.hidden=true;placeholder.hidden=false;start.firstChild.textContent=`Tiếp tục từ trang ${positions.get(active)||1} `;}
+        window.meducReading?.flush(true);lastFocus?.focus({preventScroll:true});
     }
     function collapse(){
         if(!dialog||!expanded)return;
@@ -26,6 +27,7 @@
         if(!viewer||!dialog||expanded)return;
         lastFocus=opener||document.activeElement;dialog.append(viewer);
         if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+        if(loaded===active&&preview.childElementCount&&unavailable.hidden){preview.hidden=false;placeholder.hidden=true;}
         expanded=true;document.body.classList.add('meduc-document-reading');labelExpanded(true);fullscreen?.focus({preventScroll:true});
     }
     function openReader(index,opener){userActed=true;expand(opener);void select(index,true);}
@@ -44,7 +46,7 @@
         const name=file.querySelector('strong').textContent;
         page.querySelector('[data-document-file-title]').textContent=name;page.querySelector('[data-document-format]').textContent=file.dataset.fileFormat;
         if(!read||loaded===index)return;
-        const run=++sequence;loaded=index;loadController?.abort();loadController=new AbortController();instance?.destroy();instance=null;preview.replaceChildren();placeholder.hidden=true;
+        const run=++sequence;loaded=index;loadController?.abort();loadController=new AbortController();instance?.destroy();instance=null;preview.classList.remove('mdp-host');preview.replaceChildren();placeholder.hidden=true;
         const kind=file.dataset.filePreview;preview.hidden=!kind;unavailable.hidden=!!kind;
         fullscreen.hidden=false;
         viewer.querySelector('.mdd-viewer-kicker').textContent='TỆP ĐANG ĐỌC';
@@ -57,7 +59,7 @@
                 const saved=window.meducReading?.progress()||{};
                 const number=positions.get(index)||(saved.file_index===index?saved.page:1)||1;
                 const reader=await window.meducPdf.open(preview,{articleId:Number(page.dataset.readingId),fileIndex:index,page:number,name,signal:loadController.signal,
-                    onPage(number,total){if(run!==sequence)return;remember(index,number);status.textContent=`Trang ${number} / ${total} · Vị trí đọc được ghi nhớ khi bạn chuyển trang.`;},
+                    onPage(number,total){if(run!==sequence)return;remember(index,number);status.textContent=`Trang ${number} / ${total} · Vị trí đọc được ghi nhớ tự động.`;},
                     onError(){if(run===sequence)failure(index,'Chưa mở được tài liệu. Vui lòng thử lại sau giây lát.');}
                 });
                 if(run!==sequence)reader.destroy();else instance=reader;

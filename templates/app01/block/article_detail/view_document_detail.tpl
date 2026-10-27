@@ -10,10 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261015" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.css?v=20261028-reader" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-scroll" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/pdf-reader.js?v=20261028-2" defer></script>
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261028-reader" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/pdf-reader.js?v=20261028-scroll-2" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261028-scroll-2" defer></script>
 <main class="mdd" id="document-detail-page" data-reading-item="document" data-reading-id="{$document.id}" data-reading-title="{$document.title|escape}" data-reading-topic="{$document.subject|escape}" data-reading-image="{if !empty($document.image)}{CDN_URL}{$document.image|escape}{/if}">
     <svg class="mdd-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="mdd-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="mdd-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 13h8m-8 4h6"/></symbol><symbol id="mdd-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="mdd-expand" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol><symbol id="mdd-link" viewBox="0 0 24 24"><path d="m10 7 3-3a5 5 0 0 1 7 7l-3 3M14 17l-3 3a5 5 0 0 1-7-7l3-3m1 6 8-8"/></symbol></svg>
     <div class="mdd-hero"><div class="mdd-shell">
@@ -33,7 +33,7 @@
         <div class="mdd-reader-layout">
             <aside class="mdd-file-list" aria-label="Tệp đính kèm"><div class="mdd-file-list-heading"><h3>Tệp tài liệu</h3><span>{count($detail.files)|string_format:'%02d'}</span></div>
                 {foreach from=$detail.files item=file key=index}<div class="mdd-file-item"><button type="button" class="mdd-file-select" data-document-file="{$index}" data-file-url="{$file.url|escape}" data-file-format="{$file.format|escape}" data-file-preview="{$file.preview|escape}"><span class="mdd-file-type">{$file.format|escape}</span><span class="mdd-file-copy"><strong>{$file.name|escape}</strong><small>Tệp {$index+1|string_format:'%02d'} <span data-file-hint>· Đọc toàn màn hình</span></small></span><span class="mdd-file-indicator" aria-hidden="true">→</span></button></div>{/foreach}
-                <p class="mdd-file-help">Bấm vào tên tệp để đọc. Vị trí được ghi nhớ khi bạn chuyển trang.</p>
+                <p class="mdd-file-help">Bấm vào tên tệp để đọc. Vị trí đọc được ghi nhớ tự động.</p>
             </aside>
             <div class="mdd-viewer" data-document-viewer>
                 <div class="mdd-viewer-toolbar"><div><span class="mdd-viewer-kicker">ĐANG CHỌN</span><h3 id="document-file-title" data-document-file-title>{$detail.files[0].name|escape}</h3></div><div class="mdd-viewer-tools"><button type="button" data-document-fullscreen hidden aria-label="Phóng to trình đọc"><svg aria-hidden="true"><use href="#mdd-expand"/></svg><span data-document-expand-label>Phóng to</span></button></div></div>

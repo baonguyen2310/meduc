@@ -21,18 +21,24 @@ html[data-meduc-theme="light"] .mrh { --mr-bg:#fff;--mr-card:#fff;--mr-ink:#1719
 .mrh-continue span { flex:none;font-size:20px;font-weight:400; }
 .mrh .mrh-empty { margin:0;padding:20px;border:1px dashed var(--mr-line);border-radius:8px;color:var(--mr-muted);font:400 14px/1.8 Inter,Arial,sans-serif; }
 .mrh-empty a { color:var(--mr-red);text-decoration:underline;text-underline-offset:3px; }
-/* One PDF page at a time. The normal page scrolls naturally; fullscreen gets its own reader scroll. */
-.mdp { scroll-margin-top:calc(var(--mhi-header-h,66px) + 80px);background:#323639; }
-.mdp-toolbar,.mdp-footer { display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:12px;background:var(--mdd-surface,#fff);color:var(--mdd-ink,#191b20); }
-.mdp-toolbar { border-bottom:1px solid var(--mdd-line,#ddd); }
-.mdp-footer { justify-content:space-between;border-top:1px solid var(--mdd-line,#ddd); }
-.mdp button { min-width:36px;min-height:36px;padding:7px 12px;border:1px solid var(--mdd-line,#ddd);border-radius:6px;background:var(--mdd-bg,#fff);color:var(--mdd-ink,#191b20);font:600 13px/1.5 Inter,Arial,sans-serif; }
-.mdp button:disabled { opacity:.4;cursor:default; }
+/* Continuous PDF pages; the viewer renders and caches only pages around the reading viewport. */
+.mdp-host { height:75vh; min-height:360px; }
+.mdd-reader-dialog .mdd-preview.mdp-host { height:auto; min-height:0; overflow:hidden; }
+.mdp { display:flex; flex-direction:column; width:100%; height:100%; min-height:0; background:#323639; }
+.mdp-toolbar { display:flex; flex:none; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; padding:10px 12px; border-bottom:1px solid var(--mdd-line,#ddd); background:var(--mdd-surface,#fff); color:var(--mdd-ink,#191b20); }
+.mdp button { min-width:36px; min-height:36px; padding:7px 12px; border:1px solid var(--mdd-line,#ddd); border-radius:6px; background:var(--mdd-bg,#fff); color:var(--mdd-ink,#191b20); font:600 13px/1.5 Inter,Arial,sans-serif; }
+.mdp button:disabled { opacity:.4; cursor:default; }
 .mdp button:not(:disabled):hover { color:var(--mdd-red,#bd263a); }
-.mdp-page-label { display:inline-flex;align-items:center;gap:7px;margin:0;font:400 12px/1.5 Inter,Arial,sans-serif; }
-.mdp-page-label input { width:62px;min-height:36px;margin:0;padding:5px;border:1px solid var(--mdd-line,#ddd);border-radius:5px;background:var(--mdd-bg,#fff);color:var(--mdd-ink,#191b20);font:600 13px/1.5 Inter,Arial,sans-serif;text-align:center; }
-.mdp button:focus-visible,.mdp input:focus-visible { outline:2px solid var(--mdd-red,#bd263a);outline-offset:2px; }
-.mdp-paper { display:flex;justify-content:safe center;overflow-x:auto;padding:16px; }
-.mdp-paper canvas { display:block;flex:none;background:#fff;box-shadow:0 4px 20px #0004; }
+.mdp-page-label { display:inline-flex; align-items:center; gap:7px; margin:0; font:400 12px/1.5 Inter,Arial,sans-serif; }
+.mdp-page-label input { width:62px; min-height:36px; margin:0; padding:5px; border:1px solid var(--mdd-line,#ddd); border-radius:5px; background:var(--mdd-bg,#fff); color:var(--mdd-ink,#191b20); font:600 13px/1.5 Inter,Arial,sans-serif; text-align:center; }
+.mdp button:focus-visible,.mdp input:focus-visible,.mdp-scroll:focus-visible { outline:2px solid var(--mdd-red,#bd263a); outline-offset:-2px; }
+.mdp-scroll-hint { margin-left:10px; color:var(--mdd-muted,#666); font:400 11px/1.6 Inter,Arial,sans-serif; }
+.mdp-view-area { position:relative; flex:1; min-height:0; }
+.mdp-scroll { position:absolute; inset:0; overflow:auto; overscroll-behavior:contain; }
+.mdp .pdfViewer { --scale-factor:1; --page-bg-color:#fff; padding:2px 0 12px; }
+.mdp .pdfViewer .page { --user-unit:1; --total-scale-factor:calc(var(--scale-factor) * var(--user-unit)); --scale-round-x:1px; --scale-round-y:1px; direction:ltr; position:relative; width:816px; height:1056px; margin:12px auto; overflow:visible; border:0; background:#fff; background-clip:content-box; box-shadow:0 3px 14px #0004; }
+.mdp .pdfViewer .canvasWrapper { overflow:hidden; width:100%; height:100%; }
+.mdp .pdfViewer .canvasWrapper canvas { position:absolute; top:0; left:0; display:block; width:100%; height:100%; margin:0; contain:content; }
+.mdp .pdfViewer .page:not([data-loaded])::after { content:'Đang tải trang…'; position:absolute; inset:0; display:grid; place-items:center; color:#777; font:400 12px/1.6 Inter,Arial,sans-serif; }
 @media(max-width:900px) { .mrh { width:88%; } .mrh-grid { gap:15px; } .mrh-copy { padding:16px; } .mrh .mrh-card h3 { font-size:16px;min-height:48px; } }
-@media(max-width:650px) { .mrh { width:calc(100% - 32px);padding-block:34px 40px; } .mrh-heading { align-items:start;flex-direction:column;gap:12px; } .mrh .mrh-heading p { font-size:12px; } .mrh-grid { grid-template-columns:1fr;gap:13px; } .mrh-card { display:grid;grid-template-columns:105px minmax(0,1fr); } .mrh-cover { aspect-ratio:auto;height:100%;min-height:145px; } .mrh-cover-label { left:5px;bottom:7px;padding:3px 4px;font-size:6px; } .mrh-copy { padding:14px; } .mrh .mrh-topic { font-size:9px;margin-bottom:7px; } .mrh .mrh-card h3 { font-size:14px;min-height:42px; } .mrh .mrh-continue { margin-top:10px;padding-top:8px;font-size:10px; } .mdp-toolbar { gap:7px;padding:10px 7px; } .mdp button { padding-inline:8px; } .mdp-paper { padding:10px; } }
+@media(max-width:650px) { .mrh { width:calc(100% - 32px);padding-block:34px 40px; } .mrh-heading { align-items:start;flex-direction:column;gap:12px; } .mrh .mrh-heading p { font-size:12px; } .mrh-grid { grid-template-columns:1fr;gap:13px; } .mrh-card { display:grid;grid-template-columns:105px minmax(0,1fr); } .mrh-cover { aspect-ratio:auto;height:100%;min-height:145px; } .mrh-cover-label { left:5px;bottom:7px;padding:3px 4px;font-size:6px; } .mrh-copy { padding:14px; } .mrh .mrh-topic { font-size:9px;margin-bottom:7px; } .mrh .mrh-card h3 { font-size:14px;min-height:42px; } .mrh .mrh-continue { margin-top:10px;padding-top:8px;font-size:10px; } .mdp-toolbar { gap:7px;padding:10px 7px; } .mdp button { padding-inline:8px; } .mdp-scroll-hint { flex-basis:100%; margin:0; text-align:center; } }
