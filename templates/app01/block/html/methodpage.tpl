@@ -73,7 +73,7 @@
             <p class="mmp-eyebrow">03 / ÁP DỤNG VÀO BUỔI HỌC</p>
             <h2 id="method-apply-title">{$text.ap_dung_tieu_de_1|default:'Hiểu kiến thức.'|escape}<br>{$text.ap_dung_tieu_de_2|default:'Giải thích và vận dụng được.'|escape}</h2>
             <p class="mmp-application-text">{$text.ap_dung_mo_ta|default:'Sau bài giảng, tự nói lại ý chính rồi làm bài tập. Đọc lời giải, hiểu vì sao đúng hoặc sai và ôn lại phần chưa vững.'|escape}</p>
-            <a class="mmp-button mmp-button--outline" href="/phan-hoi-hoc-vien">Xem học viên nói gì <span aria-hidden="true">→</span></a>
+            <a class="mmp-button mmp-button--outline" href="/lo-trinh-hoc">Xem lộ trình học <span aria-hidden="true">→</span></a>
         </div>
     </section>
 
