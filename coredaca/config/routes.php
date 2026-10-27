@@ -161,6 +161,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/comment/like', ['controller' => 'Comment', 'action' => 'like']);
     $builder->connect('/comment/upload-image', ['controller' => 'Comment', 'action' => 'uploadImage']);
 
+    $builder->connect('/khoa-hoc/trang-thai/:product', ['controller'=>'Classroom','action'=>'access'], ['pass'=>['product'],'product'=>'[0-9]+']);
+
     // quizs_answer
     $builder->connect('/quizs-answer/add', ['controller' => 'QuizsAnswer', 'action' => 'add']);
     $builder->connect('/khoa-hoc/dong-gop', ['controller' => 'CourseContribution', 'action' => 'submit']);

@@ -23,6 +23,8 @@
     const verifyForm = modal.querySelector("[data-ma-verify]");
     let requestedView = null;
     let opener = null;
+    let contextMessage = "";
+    let completedSinceOpen = false;
     const resendTimers = new WeakMap();
     let verifyInFlight = false;
     const resendButton = modal.querySelector("[data-ma-resend]");
@@ -59,11 +61,13 @@
       modal.querySelector('[role="tablist"]').hidden = !["login", "register"].includes(view);
       modal.querySelector(".ma-eyebrow").textContent = view === "verify" ? "BƯỚC 2 / 2 · XÁC THỰC EMAIL" : view === "forgot" ? "KHÔI PHỤC TÀI KHOẢN / 01" : view === "reset" ? "KHÔI PHỤC TÀI KHOẢN / 02" : "TÀI KHOẢN MEDUC";
       modal.querySelector("#ma-modal-title").textContent = copy[view][0];
-      modal.querySelector("#ma-modal-description").textContent = copy[view][1];
+      modal.querySelector("#ma-modal-description").textContent = contextMessage && ["login", "register"].includes(view) ? contextMessage : copy[view][1];
       modal.querySelector(".modal-body").scrollTop = 0;
       if (focus) modal.querySelector('[data-ma-panel="' + view + '"] input:not([type="hidden"]):not([readonly])')?.focus({preventScroll:true});
     }
-    function openAuth(view = "login", trigger = null) {
+    function openAuth(view = "login", trigger = null, options = {}) {
+      contextMessage = options.message || "";
+      completedSinceOpen = false;
       opener = trigger || document.activeElement;
       const drawer = document.getElementById("mhi-drawer");
       if (drawer && !drawer.hidden) drawer.querySelector("[data-mhi-drawer-close]")?.click();
@@ -101,6 +105,7 @@
         button.replaceWith(link);
       });
       modal.querySelectorAll('input[name="password"], input[name="verify_password"]').forEach((input) => { input.value = ""; });
+      completedSinceOpen = true;
       $(modal).modal("hide");
       window.dispatchEvent(new CustomEvent("meduc:authenticated", {detail:{source:kind}}));
     }
@@ -176,6 +181,8 @@
       modal.querySelector("[data-ma-panel]:not([hidden]) input:not([type=hidden]):not([readonly])")?.focus({preventScroll:true});
     }).on("hidden.bs.modal", () => {
       document.body.classList.remove("ma-auth-open");
+      window.dispatchEvent(new CustomEvent("meduc:auth-closed", {detail:{authenticated:completedSinceOpen}}));
+      contextMessage = "";
       if (opener?.isConnected) opener.focus({preventScroll:true});
       else document.querySelector("#member-info")?.focus({preventScroll:true});
     });

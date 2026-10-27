@@ -12,7 +12,7 @@
   if (!root || root.dataset.mcrReady) return;
   root.dataset.mcrReady = "1";
 
-  const licensed = root.dataset.mcrLicensed === "1";
+  let licensed = root.dataset.mcrLicensed === "1";
   const $ = (selector) => root.querySelector(selector);
   const $$ = (selector) => [...root.querySelectorAll(selector)];
   const pad = (number) => String(number).padStart(2, "0");
@@ -26,13 +26,15 @@
     chapter: link.dataset.chapter || "",
     video: link.dataset.video || "",
     access: link.dataset.access,
+    trial: link.dataset.trial === "1",
+    freeQuiz: link.dataset.freeQuiz === "1",
     quiz: link.dataset.quiz === "1",
     quizzes: Number(link.dataset.quizzes) || 0,
   }));
   const byNumber = new Map(lessons.map((lesson) => [lesson.number, lesson]));
   const total = lessons.length;
   const examPrep = root.dataset.mcrExamPrep === "1";
-  const canWatch = (lesson) => Boolean(lesson && lesson.video) && (licensed || lesson.access === "trial");
+  const canWatch = (lesson) => Boolean(lesson && lesson.video) && (licensed || lesson.trial);
 
   const introView = $('[data-mcr-view="intro"]');
   const lessonView = $('[data-mcr-view="lesson"]');
@@ -113,12 +115,17 @@
     }
     if (!player) playerHolder.replaceChildren();
   }
-  async function play(lesson) {
+  async function play(lesson, authorized = false) {
     if (!canWatch(lesson)) return;
+    if (!authorized) return root.mcrStudyAccess.request({
+      kind:'video',trigger:$("[data-mcr-play-lesson]"),free:lesson.trial,
+      valid:()=>current===lesson && !lessonView.hidden && !$("[data-mcr-panel='video']").hidden,
+      resume:()=>play(lesson,true),
+    });
     showStage("player");
     markWatched(lesson.number);
     const ready = await loadApi();
-    if (current !== lesson) return;
+    if (current !== lesson || $("[data-mcr-panel='video']").hidden) return;
     if (ready) {
       if (player && typeof player.loadVideoById === "function") {
         player.loadVideoById(lesson.video);
@@ -211,6 +218,76 @@
   $("[data-mcr-paywall-next]")?.addEventListener("click", (event) => {
     const next = byNumber.get(Number(event.currentTarget.dataset.mcrPaywallNext));
     if (next && canWatch(next)) selectLesson(next.number, { autoplay: true });
+  });
+
+  // Refresh identity after popup login/OTP; queue only the action the visitor actually requested.
+  let pendingStudy = null;
+  let studyRequest = 0;
+  let accessRequest = null;
+  const accessError = document.createElement('p');
+  accessError.className = 'mcr-empty'; accessError.hidden = true; accessError.setAttribute('role','alert');
+  lessonView.querySelector('.mcr-toolbar').after(accessError);
+  async function refreshAccess() {
+    if (accessRequest) return accessRequest;
+    accessRequest = (async () => {
+      const response = await fetch(`/khoa-hoc/trang-thai/${root.dataset.mcrProduct}`, {credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json'}});
+      const body = await response.json().catch(() => null);
+      if (!response.ok || body?.code !== 'success') throw new Error('Chưa kiểm tra được tài khoản. Vui lòng thử lại.');
+      const access = body.data;
+      licensed = access.licensed === true;
+      root.dataset.mcrLicensed = licensed ? '1' : '0';
+      root.dataset.mcrMember = String(Number(access.member_id) || 0);
+      root.dataset.mcrMemberCode = access.member_code || '';
+      root.dataset.mcrClassRoom = String(Number(access.class_room_id) || 0);
+      lessons.forEach(lesson => {lesson.access=licensed?'open':lesson.trial?'trial':'locked';lesson.quiz=licensed?lesson.quizzes>0:lesson.freeQuiz;});
+      $$('[data-mcr-quiz-start]').forEach(button => {
+        const open=licensed || button.dataset.mcrQuizFree==='1';
+        button.hidden=!open;
+        const card=button.closest('.mcr-quiz-card');
+        card.classList.toggle('is-locked',!open);
+        const enroll=card.querySelector('[data-mcr-quiz-enroll]');if(enroll)enroll.hidden=open;
+      });
+      $$('.mcr-toolbar-buy').forEach(button => {button.hidden=licensed;});
+      root.dispatchEvent(new CustomEvent('mcr:access',{detail:access}));
+      return access;
+    })().finally(() => {accessRequest=null;});
+    return accessRequest;
+  }
+  function resumeStudy() {
+    const pending=pendingStudy;
+    const modal=document.getElementById('login-modal');
+    if (!pending?.ready || (modal && modal.style.display!=='none')) return;
+    pendingStudy=null;
+    if (Number(root.dataset.mcrMember)>0 && pending.valid()) pending.resume();
+  }
+  root.mcrStudyAccess = {
+    async request({kind,trigger,resume,valid,free=true}) {
+      const ticket=++studyRequest;
+      accessError.hidden=true;
+      try {
+        const access=await refreshAccess();
+        if (ticket!==studyRequest || !valid()) return;
+        if (access.member_id) {pendingStudy=null;return resume();}
+        const message=free ? (kind==='video'
+          ? 'Đăng nhập hoặc đăng ký tài khoản để xem video miễn phí. Bạn không cần mua khóa học để học thử.'
+          : 'Đăng nhập hoặc đăng ký tài khoản để làm bài tập miễn phí. Bạn không cần mua khóa học để làm thử.')
+          : 'Đăng nhập để tiếp tục bài học. Bạn sẽ trở lại đúng nội dung vừa chọn.';
+        if (!window.meducAuth) throw new Error('Chưa mở được cửa sổ đăng nhập. Vui lòng thử lại.');
+        pendingStudy={resume,valid,ready:false};
+        window.meducAuth.open('login',trigger,{message});
+      } catch(error) {accessError.textContent=error.message;accessError.hidden=false;}
+    }
+  };
+  window.addEventListener('meduc:authenticated',async () => {
+    const pending=pendingStudy;
+    try {
+      await refreshAccess();
+      if (pending && pendingStudy===pending) {pending.ready=true;resumeStudy();}
+    } catch(error) {pendingStudy=null;accessError.textContent=error.message;accessError.hidden=false;}
+  });
+  window.addEventListener('meduc:auth-closed',event => {
+    if (!event.detail?.authenticated) {pendingStudy=null;studyRequest++;}
+    else resumeStudy();
   });
 
   // Tabs

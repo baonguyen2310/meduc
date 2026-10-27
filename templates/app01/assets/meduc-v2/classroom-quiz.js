@@ -17,7 +17,7 @@
   const quizzes = {}; // quiz id -> {id, name, minutes, questions}, loaded on first start
   const productId = Number(root.dataset.mcrProduct) || 0;
 
-  const memberId = Number(root.dataset.mcrMember) || 0;
+  let memberId = Number(root.dataset.mcrMember) || 0;
   const policy = root.querySelector("[data-mcr-policy]");
   const letters = ["A", "B", "C", "D", "E"];
   const pad = (number) => String(number).padStart(2, "0");
@@ -83,7 +83,7 @@
   }, 1000);
 
   // The quizzes of a lesson, in the order of their cards (only those the visitor may take have a start button).
-  const lessonStarts = (number) => [...root.querySelectorAll(`[data-mcr-quiz="${number}"] [data-mcr-quiz-start]`)];
+  const lessonStarts = (number) => [...root.querySelectorAll(`[data-mcr-quiz="${number}"] [data-mcr-quiz-start]`)].filter(control => !control.hidden);
   const lessonQuizCount = (number) => root.querySelectorAll(`[data-mcr-quiz="${number}"] .mcr-quiz-card`).length;
 
   // Layout of the player
@@ -409,7 +409,7 @@
 
     const actions = el("div", "mcq-actions");
     const retry = button("mcr-btn mcr-btn--ghost", "Làm lại");
-    retry.addEventListener("click", () => start(attempt.quiz, attempt.lesson, true));
+    retry.addEventListener("click", () => {setExpanded(false);beginSelected(retry,false,selected,true);});
     actions.append(retry);
     const history = button("mcr-btn mcr-btn--ghost", "Lịch sử bài tập");
     history.addEventListener("click", () => selected && openHistory(selected));
@@ -455,6 +455,7 @@
     panel.append(el("p", "mcq-history-subtitle", "Xem các lần đã làm hoặc bắt đầu một lần mới."));
     const current = attempts.get(selected.id);
     const startButton = button("mcr-btn mcr-btn--primary", current && current.state === "doing" ? "Tiếp tục làm bài" : "Bắt đầu làm bài");
+    startButton.dataset.mcqBegin = "";
     startButton.addEventListener("click", () => beginSelected(startButton));
     panel.append(startButton);
     if (current && current.state === "doing" && current.deadline) {
@@ -516,20 +517,28 @@
     renderHistory();
   }
 
-  async function beginSelected(control) {
-    if (!selected) return;
-    const context = selected;
+  async function beginSelected(control, authorized = false, context = selected, fresh = false) {
+    if (!context || selected!==context) return;
+    const fromView=view;
+    const valid=()=>selected===context && view===fromView && lessonNumber===context.lesson.number && !root.querySelector('[data-mcr-panel="quiz"]').hidden;
+    if (!authorized) {
+      if (!root.mcrStudyAccess) {context.error='Chưa kiểm tra được tài khoản. Vui lòng thử lại.';renderHistory();return;}
+      return root.mcrStudyAccess.request({kind:'quiz',trigger:control,free:context.free!==false,valid,
+        resume:()=>beginSelected(stage.querySelector('[data-mcq-begin]') || control,true,context,fresh)});
+    }
     control.disabled = true;
     control.textContent = "Đang tải đề…";
     try {
       const quiz = await load(context.id);
-      if (view !== "history" || selected !== context) return;
+      if (!valid()) return;
       const current = attempts.get(context.id);
-      start(quiz, context.lesson, !current || current.state !== "doing");
+      start(quiz, context.lesson, fresh || !current || current.state !== "doing");
     } catch (error) {
-      if (view === "history" && selected === context) {
+      if (valid() && error.authenticationRequired) return beginSelected(control,false,context,fresh);
+      if (valid()) {
         context.error = error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.";
-        renderHistory();
+        if (view==='history') renderHistory();
+        else {confirmBox.hidden=false;confirmBox.textContent=context.error;}
       }
     } finally {
       control.disabled = false;
@@ -750,17 +759,20 @@
     if (quizzes[id]) return quizzes[id];
     const response = await fetch(`/khoa-hoc/bai-tap/${productId}/${id}`, { credentials: "same-origin", headers: { Accept: "application/json" } });
     const body = await response.json().catch(() => null);
-    if (!response.ok || !body || body.code !== "success" || !body.data) throw new Error((body && body.message) || "");
+    if (!response.ok || !body || body.code !== "success" || !body.data) {
+      const error=new Error((body && body.message) || "Chưa tải được bài tập.");
+      error.authenticationRequired=response.status===401;throw error;
+    }
     quizzes[id] = body.data;
     return body.data;
   }
   root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", () => {
-    if (startButton.disabled) return;
+    if (startButton.disabled || startButton.hidden) return;
     const id = Number(startButton.dataset.mcrQuizStart);
     const card = startButton.closest(".mcr-quiz-card");
     lessonNumber = Number(startButton.dataset.lesson);
     openHistory({
-      id, title: card?.querySelector("h3")?.textContent?.trim() || "Bài tập",
+      id, free:startButton.dataset.mcrQuizFree==='1', title: card?.querySelector("h3")?.textContent?.trim() || "Bài tập",
       lesson: { number: lessonNumber, title: startButton.dataset.lessonTitle || "", code: startButton.dataset.lessonCode || "" },
     });
   }));
@@ -769,6 +781,15 @@
   root.addEventListener("mcr:lesson", (event) => {
     lessonNumber = event.detail.number;
     showList();
+  });
+
+  root.addEventListener('mcr:access',event => {
+    const next=Number(event.detail.member_id)||0;
+    if(next===memberId)return;
+    memberId=next;
+    attempts.clear();Object.keys(quizzes).forEach(id=>delete quizzes[id]);
+    if(view==='history' && selected) openHistory(selected);
+    else if(view==='player') showList();
   });
 
   // Keyboard: 1–5 or A–E pick an answer, ← → move between questions.

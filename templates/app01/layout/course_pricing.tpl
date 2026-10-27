@@ -14,7 +14,7 @@
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261022-6" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261021-7" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261028-1" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261022-8" defer></script>
   <script src="/bang-bao-gia/lien-ket.js" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261022-7" defer></script>

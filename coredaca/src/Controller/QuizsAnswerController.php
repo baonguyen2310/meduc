@@ -39,10 +39,13 @@ class QuizsAnswerController extends AppController {
 
         $member = $this->getRequest()->getSession()->read(MEMBER);
         $access = $this->loadComponent('QuizAnswer')->courseQuizAccess(is_array($member) ? $member : [], intval($product_id), intval($quiz_id));
-        $quiz = !empty($access['allowed']) ? \App\Lib\QuizQuestions::load(intval($quiz_id), LANGUAGE) : null;
-
-        $status = empty($access['found']) || (!empty($access['allowed']) && empty($quiz)) ? 404 : (empty($access['allowed']) ? 403 : 200);
-        $body = $status === 200 ? [CODE => SUCCESS, DATA => $quiz] : [CODE => ERROR, MESSAGE => $status === 403 ? 'Bài tập này dành cho học viên đã đăng ký khóa học.' : 'Không tìm thấy bài tập.'];
+        // Even a free quiz starts only after account authentication; never send guest question/answer data.
+        $quiz = !empty($access['allowed']) && !empty($member['id']) ? \App\Lib\QuizQuestions::load(intval($quiz_id), LANGUAGE) : null;
+        $status = empty($access['found']) ? 404 : (empty($access['allowed']) ? 403 : (empty($member['id']) ? 401 : (empty($quiz) ? 404 : 200)));
+        $body = $status === 200 ? [CODE => SUCCESS, DATA => $quiz] : [CODE => ERROR, MESSAGE => $status === 401
+            ? 'Đăng nhập hoặc đăng ký tài khoản để làm bài tập miễn phí. Bạn không cần mua khóa học để làm thử.'
+            : ($status === 403 ? 'Bài tập này dành cho học viên đã đăng ký khóa học.' : 'Không tìm thấy bài tập.')];
+        if ($status === 401) $body[DATA] = ['login_required' => true];
 
         return $this->response->withStatus($status)->withType('application/json')->withHeader('Cache-Control', 'private, no-store')
             ->withStringBody(json_encode($body, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE));
