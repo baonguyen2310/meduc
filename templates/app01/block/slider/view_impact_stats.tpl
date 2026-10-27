@@ -1,55 +1,47 @@
 {strip}
-{* Homepage community figures ("Cùng nhau học Y tốt hơn"), from the main branch's hero-light/assets/home-impact.js.
-   Figures: the block's slider items. Name: the number, e.g. 6000. Mô tả: what it counts.
-   The numbers count up when the section scrolls into view (impact.js); without JavaScript they show as written.
-   Text: the block's "Dữ liệu mở rộng" keys below; an empty key hides its element. *}
-{assign var = text value = []}
-{if !empty($data_extend.locale[{LANGUAGE}])}
-    {assign var = text value = $data_extend.locale[{LANGUAGE}]}
-{/if}
-
-{$figures = []}
-{if !empty($data_block)}
-    {foreach from = $data_block item = item}
-        {$count = $item.name|default:''|regex_replace:'/[^0-9]/':''}
-        {if $count == ''}{continue}{/if}
-        {$label = $item.description|default:''|trim}
-        {$figures[] = ['count' => $count, 'label' => $label]}
-    {/foreach}
-{/if}
-{$figure_count = count($figures)}
-
-{if $figure_count > 0}
+{* Homepage connection panel from main:hero-light/assets/home-community.js.
+   Keep the four figures, icons and URLs editable in the original contact slider block. *}
+{$community_items = $this->Block->getSliderItems('3p9qz6e')}
+{$platforms = ['YOUTUBE', 'NHÓM FACEBOOK', 'FACEBOOK', 'ZALO']}
+{if !empty($community_items)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/impact.css?v=20261015" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/impact.js?v=20261015" defer></script>
-
-<section class="mim" {if !empty($text.tieu_de_dong_1) || !empty($text.tieu_de_dong_2)}aria-labelledby="mim-title"{/if}>
-    <div class="mim-shell">
-        <div class="mim-heading">
-            <div>
-                {if !empty($text.tieu_de_phu)}<p class="mim-kicker">{$text.tieu_de_phu|escape}</p>{/if}
-                {if !empty($text.tieu_de_dong_1) || !empty($text.tieu_de_dong_2)}
-                    <h2 class="mim-title" id="mim-title">
-                        {if !empty($text.tieu_de_dong_1)}{$text.tieu_de_dong_1|escape}{/if}
-                        {if !empty($text.tieu_de_dong_1) && !empty($text.tieu_de_dong_2)}<br />{/if}
-                        {if !empty($text.tieu_de_dong_2)}<em>{$text.tieu_de_dong_2|escape}</em>{/if}
-                    </h2>
-                {/if}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/community.css?v=20261028-1" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/community.js?v=20261028-1" defer></script>
+<section class="mhi-community" aria-labelledby="mhi-community-title">
+    <div class="mhi-community-shell">
+        <div class="mhi-community-panel">
+            <div class="mhi-community-grid" aria-label="Cộng đồng MedUC trên các nền tảng">
+                {foreach from = $community_items item = item key = index}
+                    {$count = $item.name|default:''|regex_replace:'/[^0-9]/':''}
+                    {if $count == '' || empty($item.url)}{continue}{/if}
+                    {$shown = $count|number_format:0:',':'.'}
+                    {$platform = $platforms[$index]|default:''}
+                    {$image_url = $item.image|default:''}
+                    {if !empty($image_url) && $item.image_source == 'cdn'}{$image_url = "{CDN_URL}{$image_url}"}{/if}
+                    <a class="mhi-community-card" href="{$item.url|escape}" target="_blank" rel="noopener noreferrer" data-platform="{$index + 1}" aria-label="{$platform|escape}: {$shown}+ {$item.description|escape}">
+                        <span class="mhi-community-card-top">
+                            <span class="mhi-community-icon">{if !empty($image_url)}<img src="{$image_url|escape}" alt="" loading="lazy" decoding="async">{/if}</span>
+                            <span class="mhi-community-card-arrow" aria-hidden="true">↗</span>
+                        </span>
+                        <span class="mhi-community-card-details">
+                            <small>{$platform|escape}</small>
+                            <strong aria-hidden="true"><span class="mhi-count-value" data-count="{$count}">{$shown}</span><span>+</span></strong>
+                            <span>{$item.description|escape}</span>
+                        </span>
+                    </a>
+                {/foreach}
             </div>
-            {if !empty($text.mo_ta)}<p class="mim-intro">{$text.mo_ta|escape}</p>{/if}
-        </div>
-        <div class="mim-grid" style="--mim-columns: {min($figure_count, 4)}" aria-label="Các chỉ số của MedUC">
-            {foreach from = $figures item = figure}
-                {$shown = $figure.count|number_format:0:',':'.'}
-                <div class="mim-item">
-                    <span class="mim-index">{$figure@iteration|string_format:'%02d'} / {$figure_count|string_format:'%02d'}</span>
-                    <strong class="mim-number" aria-label="{$shown}+"><span class="mim-count" data-count="{$figure.count}" aria-hidden="true">{$shown}</span><span aria-hidden="true">+</span></strong>
-                    <span class="mim-label">{$figure.label|escape}</span>
+            <div class="mhi-community-copy">
+                <p class="mhi-community-kicker">THÔNG TIN LIÊN HỆ · MEDUC</p>
+                <h2 id="mhi-community-title">KẾT NỐI<br>CÙNG MEDUC.</h2>
+                <p class="mhi-community-description">Theo dõi nội dung và trao đổi kiến thức Y khoa cùng cộng đồng MedUC trên YouTube, Facebook và Zalo.</p>
+                <div class="mhi-community-actions">
+                    {if !empty($community_items[1].url)}<a class="mhi-community-primary" href="{$community_items[1].url|escape}" target="_blank" rel="noopener noreferrer">Tham gia nhóm Facebook</a>{/if}
+                    {if !empty($community_items[3].url)}<a class="mhi-community-secondary" href="{$community_items[3].url|escape}" target="_blank" rel="noopener noreferrer">Nhóm học tập Zalo <span aria-hidden="true">→</span></a>{/if}
                 </div>
-            {/foreach}
+            </div>
         </div>
     </div>
 </section>
