@@ -1,22 +1,11 @@
 {strip}
-{* Course page as a classroom: the course outline on the left, and on the right either the course introduction
-   (video, price, sign-up) or the selected lesson with its Video / Tài liệu / Bài tập / Phản hồi học viên tabs.
-   The page opens on the introduction; ?bai=N opens lesson N (classroom.js keeps the address in step).
-   - Lessons come from the course's "Danh sách tiết học". A lesson marked "Học thử" is open to everyone; only lessons
-     with a YouTube ID have a video here (students study the paid lessons on ClassIn). Students of the course see every
-     lesson: an old class room with their code, or an enrollment (paid order or added by the admin), see
-     MemberHelper::getCourseAccess.
-   - A lesson may have several quizzes (App\Lib\LessonQuizzes), each either free to try or for students only. Quizzes
-     run inside the "Bài tập" tab (classroom-quiz.js) and results are saved to /quizs-answer/add as before; a locked quiz
-     shows its name and size with the sign-up button, and its questions never reach the page.
-   - Sign-up uses the site's cart (nh-btn-action="add-cart"); PDF files keep using custom.js.
-   - The introduction has its own tabs (Giới thiệu, Giảng viên, Q&A, Phản hồi) over one long column, and a sign-up column
-     that stays in place. Teachers: the homepage faculty cards (block "gvrail") linking to this course, and the course's
-     "Thông tin giảng viên". The FAQ, questions, ratings and related-course blocks below this one on the page are moved
-     into the introduction by classroom.js (see the data-mcr-slot elements); without JavaScript they stay below.
-   - Student feedback: videos of block "fbvideos" whose "Mô tả ngắn" is this course's address, else the first videos;
-     text reviews of block "hvreview".
-   Text: the block's "Dữ liệu mở rộng": link_zalo, loi_moi (line above the sign-up button), ghi_chu_bai_tap (quiz note). *}
+{* Course information appears above the classroom with Giới thiệu / Tổng quan / Phản hồi tabs.
+   Tổng quan displays only the course image attribute anhtongquan, selected in the product admin.
+   The classroom keeps the course outline and lesson Video / Tài liệu / Bài tập / Giới thiệu tabs.
+   Lessons and access come from Danh sách tiết học and MemberHelper::getCourseAccess.
+   Quizzes use App\Lib\LessonQuizzes and classroom-quiz.js; locked questions are never sent to the page.
+   Student feedback videos come from fbvideos; sign-up uses the existing cart.
+   Block text keys: link_zalo, loi_moi, ghi_chu_bai_tap. *}
 {assign var = product value = []}
 {if !empty($data_block.data)}{assign var = product value = $data_block.data}{/if}
 {assign var = text value = []}
@@ -158,7 +147,7 @@
     {if !is_array($course_files)}{$course_files = []}{/if}
 {/if}
 
-{* Student feedback for the "Phản hồi học viên" tab *}
+{* Student feedback videos for the upper Phản hồi tab *}
 {$course_path = "/{$product.url}"}
 {$voices = []}
 {$voices_general = false}
@@ -181,43 +170,7 @@
     {$voices = array_slice($all_voice_items, 0, 4)}
     {$voices_general = true}
 {/if}
-{$reviews = []}
-{$review_items = $this->Block->getSliderItems('hvreview')}
-{foreach from = $review_items item = review}
-    {if !empty($review.description_short)}{$reviews[] = $review}{/if}
-{/foreach}
-
-{* Teachers of this course *}
-{$teachers = []}
-{if !empty($attributes.thongtingiangvien.value)}
-    {$teacher_articles = $this->Article->getArticles(['filter' => ['ids' => json_decode($attributes.thongtingiangvien.value, true)], 'get_attributes' => true])}
-    {foreach from = $teacher_articles item = article}
-        {if empty($article.name)}{continue}{/if}
-        {$teacher_name = $article.name|trim}
-        {$teacher_text = $article.description|default:''|strip_tags|trim}
-        {$teacher_photo = ''}
-        {if !empty($article.image_avatar)}{$teacher_photo = "{CDN_URL}{$article.image_avatar}"}{/if}
-        {$teachers[] = ['name' => $teacher_name, 'subject' => 'Giảng viên', 'description' => $teacher_text, 'photo' => $teacher_photo, 'poster' => false]}
-    {/foreach}
-{/if}
-{$faculty_items = $this->Block->getSliderItems('gvrail')}
-{foreach from = $faculty_items item = person}
-    {if empty($person.name) || empty($person.url) || $person.url|trim != $course_path}{continue}{/if}
-    {$full_name = $person.name|trim}
-    {$teacher_name = $full_name|regex_replace:'/\s*\([^()]*\)\s*$/u':''|regex_replace:'/\s+/u':' '}
-    {$teacher_subject = 'Giảng viên MedUC'}
-    {if preg_match('/\([^()]*\)\s*$/u', $full_name)}
-        {$teacher_subject = $full_name|regex_replace:'/^.*\(\s*([^()]*?)\s*\)\s*$/us':'$1'|regex_replace:'/^Dạy\s+/iu':''}
-    {/if}
-    {$teacher_text = $person.description|default:''|regex_replace:'/^[\s\-\/]+/u':''|regex_replace:'/\s*[\r\n]+[\s\-\/]*/u':' · '|regex_replace:'/[\s·]+$/u':''}
-    {$teacher_photo = ''}
-    {if !empty($person.image)}
-        {if $person.image_source == 'cdn'}{$teacher_photo = "{CDN_URL}{$this->Utilities->getThumbs($person.image, 720)}"}{else}{$teacher_photo = $person.image}{/if}
-    {/if}
-    {$teachers[] = ['name' => $teacher_name, 'subject' => $teacher_subject, 'description' => $teacher_text, 'photo' => $teacher_photo, 'poster' => true]}
-{/foreach}
-
-{* The feedback list appears twice: in the introduction and in the lesson's "Phản hồi học viên" tab. *}
+{* Feedback on the course page contains videos only. *}
 {capture name = mcr_feedback}
     <h3 class="mcr-feedback-title">{if $voices_general}Học viên nói gì về MedUC{else}Học viên nói gì về khoá học này{/if}</h3>
     {if !empty($voices)}
@@ -233,26 +186,15 @@
             {/foreach}
         </div>
     {/if}
-    {if !empty($reviews)}
-        <div class="mcr-quotes">
-            {foreach from = $reviews item = review}
-                {if $review@iteration > 4}{break}{/if}
-                <blockquote class="mcr-quote">
-                    <p>“{$review.description_short|escape}”</p>
-                    <footer>{if !empty($review.name)}<strong>{$review.name|escape}</strong>{/if}{if !empty($review.description)} · {$review.description|escape}{/if}</footer>
-                </blockquote>
-            {/foreach}
-        </div>
-    {/if}
     <a class="mcr-feedback-all" href="/phan-hoi-hoc-vien">Xem tất cả phản hồi của học viên <span aria-hidden="true">→</span></a>
 {/capture}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261028-1" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261028-2" defer></script>
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261028-1" defer></script>{/if}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261028-10" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261028-6" defer></script>
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261028-3" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
@@ -260,15 +202,114 @@
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
             <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/khoa-luyen-thi">Luyện thi</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
-        {* The course name is the page's main heading for search engines and screen readers; the outline and the
-           introduction already show the course, so it is not repeated on screen. *}
-        <h1 class="mcr-sr-only">{$product.name|escape}</h1>
+        <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">
+            <header class="mcr-course-heading">
+                <p class="mcr-course-eyebrow">{if $exam_prep}Khoá luyện thi{else}Khoá học MedUC{/if}</p>
+                <h1 id="mcr-course-title">{$product.name|escape}</h1>
+            </header>
+            <div class="mcr-intro">
+                <div class="mcr-intro-main">
+                    <div class="mcr-overview-tabs" role="tablist" aria-label="Thông tin khoá học">
+                        <button type="button" role="tab" id="mcr-overview-tab-about" aria-controls="mcr-overview-about" aria-selected="true" data-mcr-overview-tab="about">Giới thiệu</button>
+                        <button type="button" role="tab" id="mcr-overview-tab-summary" aria-controls="mcr-overview-summary" aria-selected="false" tabindex="-1" data-mcr-overview-tab="summary">Tổng quan</button>
+                        <a class="mcr-overview-jump" href="#mcr-learning" data-mcr-outline-jump>Lộ trình</a>
+                        <button type="button" role="tab" id="mcr-overview-tab-feedback" aria-controls="mcr-overview-feedback" aria-selected="false" tabindex="-1" data-mcr-overview-tab="feedback">Phản hồi</button>
+                    </div>
+                    <div id="mcr-overview-about" role="tabpanel" aria-labelledby="mcr-overview-tab-about" data-mcr-overview-panel="about">
+                        <div class="mcr-intro-hero">
+                            {if $intro_video != '' || !empty($product.all_images[0])}
+                                <div class="mcr-intro-media">
+                                    {if $intro_video != ''}
+                                        <button type="button" class="mcr-poster" data-mcr-embed="{$intro_video}" aria-label="Phát video giới thiệu khoá học">
+                                            <img src="https://i.ytimg.com/vi/{$intro_video}/hqdefault.jpg" alt="" decoding="async" />
+                                            <span class="mcr-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg></span>
+                                            <span class="mcr-poster-label">Video giới thiệu</span>
+                                        </button>
+                                    {else}
+                                        <img class="mcr-cover" src="{CDN_URL}{$product.all_images[0]}" alt="{$product.name|escape}" />
+                                    {/if}
+                                </div>
+                            {/if}
+                        </div>
+                        <section class="mcr-section mcr-section--about" aria-label="Giới thiệu khoá học">
+                            {if !empty($attributes.motangan.value) || !empty($attributes.motakhoahoc.value)}
+                                <p class="mcr-about-preview" data-mcr-description-preview>{if !empty($attributes.motangan.value)}{$attributes.motangan.value|strip_tags|truncate:480:'…':true}{else}{$attributes.motakhoahoc.value|strip_tags|truncate:480:'…':true}{/if}</p>
+                                <div class="mcr-richtext" id="mcr-description-full" data-mcr-description-full hidden>
+                                    {if !empty($attributes.motangan.value)}<div class="mcr-lead">{$attributes.motangan.value}</div>{/if}
+                                    {if !empty($attributes.motakhoahoc.value)}{$attributes.motakhoahoc.value}{/if}
+                                </div>
+                                <button type="button" class="mcr-read-more" aria-expanded="false" aria-controls="mcr-description-full" data-mcr-description-toggle>Xem thêm <span aria-hidden="true">↓</span></button>
+                            {else}
+                                <p class="mcr-about-preview">Khám phá lộ trình {$product.name|escape} qua {$lesson_count} bài học. Chọn một bài bên dưới để xem nội dung và bắt đầu học.</p>
+                            {/if}
+                        </section>
+                    </div>
+                    <div id="mcr-overview-summary" role="tabpanel" aria-labelledby="mcr-overview-tab-summary" data-mcr-overview-panel="summary" hidden>
+                        {if !empty($attributes.anhtongquan.value)}
+                            <img class="mcr-overview-image" src="{CDN_URL}{$attributes.anhtongquan.value|escape}" alt="Tổng quan {$product.name|escape}" loading="lazy" decoding="async" />
+                        {else}
+                            <p class="mcr-empty mcr-overview-pending">Ảnh tổng quan đang được cập nhật.</p>
+                        {/if}
+                    </div>
+                    <div id="mcr-overview-feedback" role="tabpanel" aria-labelledby="mcr-overview-tab-feedback" data-mcr-overview-panel="feedback" hidden>
+                        <section class="mcr-section" id="mcr-phan-hoi" aria-label="Phản hồi">
+                            <div class="mcr-feedback">{$smarty.capture.mcr_feedback}</div>
+                        </section>
 
-        <div class="mcr-layout">
+                    </div>
+                </div>
+                    <aside class="mcr-intro-side" aria-label="Đăng ký khoá học">
+                        <div class="mcr-buy">
+                            {if !$licensed}
+                                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><span class="mcr-discount">−{$discount}%</span>{/if}</p>
+                                {if $unit_price > 0}<p class="mcr-unit-cost">Bình quân <strong>{$unit_price|number_format:0:',':'.'}đ/{if $exam_prep}bài{else}buổi{/if}</strong></p>{/if}
+                                {if !empty($text.loi_moi) && ($intro_video != '' || !empty($product.all_images[0]))}<p class="mcr-buy-note">{$text.loi_moi|escape}</p>{/if}
+                                <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học ngay</a>
+                                <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Cần tư vấn thêm <span aria-hidden="true">↗</span></a>
+                            {else}
+                                <p class="mcr-owned">Bạn đã sở hữu khoá học này</p>
+                                {if $first_open > 0}
+                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span></a>
+                                {/if}
+                                <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="/member/classroom">Lớp học của tôi</a>
+                            {/if}
+                            {if $intro_video != '' || !empty($product.all_images[0])}
+                            <dl class="mcr-specs">
+                                {if $course_time != ''}<div><dt>{$course_time_label}</dt><dd>{$course_time|escape}</dd></div>{else}<div><dt>Quyền học</dt><dd>Trọn nội dung khóa học</dd></div>{/if}
+                                {if $exam_prep}
+                                    <div><dt>Lộ trình</dt><dd>{$lesson_count} bài · {count($chapters)} chương</dd></div>
+                                    <div><dt>Bài tập có câu hỏi</dt><dd>{$quiz_count} bài/đề</dd></div>
+                                {else}
+                                    {if $lesson_count > 0}<div><dt>Buổi học</dt><dd>{$lesson_count} buổi · {count($chapters)} chương</dd></div>{/if}
+                                {/if}
+                                {if !empty($attributes.soluongbaitap.value)}<div><dt>Bài tập</dt><dd>{$attributes.soluongbaitap.value|strip_tags|escape}</dd></div>{/if}
+                                {if !$licensed && ($trial_videos > 0 || $open_quizzes > 0)}<div><dt>Học thử</dt><dd>{if $trial_videos > 0}{$trial_videos} buổi video{/if}{if $trial_videos > 0 && $open_quizzes > 0} · {/if}{if $open_quizzes > 0}{$open_quizzes} {if $exam_prep}đề miễn phí{else}bài tập{/if}{/if}</dd></div>{/if}
+                                {if !empty($course_files)}<div><dt>Tài liệu</dt><dd>{count($course_files)} tệp</dd></div>{/if}
+                                {if !empty($product.rating_number) && $product.rating_number > 0}<div><dt>Đánh giá</dt><dd>★ {$product.rating|string_format:'%.1f'} ({$product.rating_number})</dd></div>{/if}
+                            </dl>
+                            <section class="mcr-assurance" aria-label="Cam kết hoàn học phí">
+                                <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết hoàn học phí</h3>
+                                <ul>
+                                    <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>hoàn 100% học phí.</strong></li>
+                                    <li>Hoàn thành <strong>80% khóa học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>hoàn 100% học phí.</strong></li>
+                                </ul>
+                            </section>
+                            {/if}
+                        </div>
+                    </aside>
+            </div>
+        </section>
+
+        <header class="mcr-learning-heading" id="mcr-learning">
+            <div><p class="mcr-course-eyebrow">Học theo lộ trình</p><h2>Nội dung khoá học</h2></div>
+            <span>{$lesson_count} bài học</span>
+        </header>
+
+        <div class="mcr-layout" data-mcr-classroom>
             {* Course outline *}
             <aside class="mcr-sidebar" aria-label="Lộ trình học">
-                <div class="mcr-outline-actions{if $exam_prep && $review_lesson_number > 0} mcr-outline-actions--paired{/if}">
-                    <a class="mcr-intro-link is-active" href="{$course_path|escape}" data-mcr-intro aria-current="page">{if $exam_prep && $review_lesson_number > 0}Giới thiệu{else}Giới thiệu khoá học{/if}</a>
+                <div class="mcr-outline-actions">
+                    <h3>Chương trình học</h3>
                     {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử</button>{/if}
                 </div>
                 <div class="mcr-outline">
@@ -276,7 +317,7 @@
                         {$chapter_size = 0}
                         {foreach from = $lessons item = lesson}{if $lesson.chapter == $chapter_key}{$chapter_size = $chapter_size + 1}{/if}{/foreach}
                         {if $chapter_size == 0}{continue}{/if}
-                        <details class="mcr-chapter" {if $chapter_key == 0}open{/if}>
+                        <details class="mcr-chapter" open>
                             <summary>
                                 <span class="mcr-chapter-number">{($chapter_key + 1)|string_format:'%02d'}</span>
                                 <span class="mcr-chapter-title">{$chapter_title|escape}<small>{$chapter_size} bài</small></span>
@@ -304,114 +345,6 @@
             </aside>
 
             <div class="mcr-main">
-                {* Introduction: what a visitor sees first *}
-                <div class="mcr-view mcr-intro" data-mcr-view="intro">
-                    <div class="mcr-intro-main">
-                        <nav class="mcr-anchors" aria-label="Các phần giới thiệu khoá học">
-                            <a href="#mcr-gioi-thieu" data-mcr-anchor>Giới thiệu</a>
-                            {if !empty($teachers)}<a href="#mcr-giang-vien" data-mcr-anchor>Giảng viên</a>{/if}
-                            <a href="#mcr-qa" data-mcr-anchor>Q&amp;A</a>
-                            <a href="#mcr-phan-hoi" data-mcr-anchor>Phản hồi</a>
-                        </nav>
-
-                        {* The video sits apart from the description so that, on narrow screens, the sign-up card can come right after it. *}
-                        <div class="mcr-intro-hero" id="mcr-gioi-thieu">
-                            {if $intro_video != '' || !empty($product.all_images[0])}
-                                <div class="mcr-intro-media">
-                                    {if $intro_video != ''}
-                                        <button type="button" class="mcr-poster" data-mcr-embed="{$intro_video}" aria-label="Phát video giới thiệu khoá học">
-                                            <img src="https://i.ytimg.com/vi/{$intro_video}/hqdefault.jpg" alt="" decoding="async" />
-                                            <span class="mcr-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg></span>
-                                            <span class="mcr-poster-label">Video giới thiệu</span>
-                                        </button>
-                                    {else}
-                                        <img class="mcr-cover" src="{CDN_URL}{$product.all_images[0]}" alt="{$product.name|escape}" />
-                                    {/if}
-                                </div>
-                            {/if}
-                        </div>
-                        <section class="mcr-section mcr-section--about" aria-label="Giới thiệu khoá học">
-                            {if !empty($attributes.motangan.value) || !empty($attributes.motakhoahoc.value)}
-                                <h2 class="mcr-section-title">Về khoá học</h2>
-                                <div class="mcr-richtext">
-                                    {if !empty($attributes.motangan.value)}<div class="mcr-lead">{$attributes.motangan.value}</div>{/if}
-                                    {if !empty($attributes.motakhoahoc.value)}{$attributes.motakhoahoc.value}{/if}
-                                </div>
-                            {/if}
-                        </section>
-
-                        {if !empty($teachers)}
-                            <section class="mcr-section" id="mcr-giang-vien" aria-labelledby="mcr-teachers-title">
-                                <h2 class="mcr-section-title" id="mcr-teachers-title">Giảng viên</h2>
-                                <div class="mcr-teachers">
-                                    {foreach from = $teachers item = teacher}
-                                        <article class="mcr-teacher-card">
-                                            {if $teacher.photo != ''}<img class="{if $teacher.poster}is-poster{/if}" src="{$teacher.photo|escape}" alt="Chân dung {$teacher.name|escape}" loading="lazy" decoding="async" />{/if}
-                                            <div>
-                                                <span class="mcr-teacher-subject">{$teacher.subject|escape}</span>
-                                                <h3>{$teacher.name|escape}</h3>
-                                                {if $teacher.description != ''}<p>{$teacher.description|escape}</p>{/if}
-                                            </div>
-                                        </article>
-                                    {/foreach}
-                                </div>
-                                <a class="mcr-section-link" href="/doi-ngu-giang-vien">Xem hồ sơ đội ngũ giảng viên <span aria-hidden="true">→</span></a>
-                            </section>
-                        {/if}
-
-                        {* Filled by classroom.js with the FAQ and questions blocks placed below this one on the page. *}
-                        <section class="mcr-section mcr-section--slots" id="mcr-qa" aria-label="Hỏi đáp">
-                            <div class="mcr-slot" data-mcr-slot="6a5tyhf"></div>
-                            <div class="mcr-slot" data-mcr-slot="zdi3rma"></div>
-                        </section>
-
-                        <section class="mcr-section" id="mcr-phan-hoi" aria-label="Phản hồi">
-                            <div class="mcr-slot" data-mcr-slot="5y31vx8"></div>
-                            <div class="mcr-feedback">{$smarty.capture.mcr_feedback}</div>
-                        </section>
-
-                        <div class="mcr-slot mcr-slot--related" data-mcr-slot="sw780fy"></div>
-                    </div>
-
-                    <aside class="mcr-intro-side" aria-label="Đăng ký khoá học">
-                        <div class="mcr-buy">
-                            {if !$licensed}
-                                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><span class="mcr-discount">−{$discount}%</span>{/if}</p>
-                                {if $unit_price > 0}<p class="mcr-unit-cost">Bình quân <strong>{$unit_price|number_format:0:',':'.'}đ/{if $exam_prep}bài{else}buổi{/if}</strong></p>{/if}
-                                {if !empty($text.loi_moi)}<p class="mcr-buy-note">{$text.loi_moi|escape}</p>{/if}
-                                <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học ngay</a>
-                                <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Cần tư vấn thêm <span aria-hidden="true">↗</span></a>
-                            {else}
-                                <p class="mcr-owned">Bạn đã sở hữu khoá học này</p>
-                                {if $first_open > 0}
-                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span></a>
-                                {/if}
-                                <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="/member/classroom">Lớp học của tôi</a>
-                            {/if}
-                            <dl class="mcr-specs">
-                                {if $course_time != ''}<div><dt>{$course_time_label}</dt><dd>{$course_time|escape}</dd></div>{else}<div><dt>Quyền học</dt><dd>Trọn nội dung khóa học</dd></div>{/if}
-                                {if $exam_prep}
-                                    <div><dt>Lộ trình</dt><dd>{$lesson_count} bài · {count($chapters)} chương</dd></div>
-                                    <div><dt>Bài tập có câu hỏi</dt><dd>{$quiz_count} bài/đề</dd></div>
-                                {else}
-                                    {if $lesson_count > 0}<div><dt>Buổi học</dt><dd>{$lesson_count} buổi · {count($chapters)} chương</dd></div>{/if}
-                                {/if}
-                                {if !empty($attributes.soluongbaitap.value)}<div><dt>Bài tập</dt><dd>{$attributes.soluongbaitap.value|strip_tags|escape}</dd></div>{/if}
-                                {if !$licensed && ($trial_videos > 0 || $open_quizzes > 0)}<div><dt>Học thử</dt><dd>{if $trial_videos > 0}{$trial_videos} buổi video{/if}{if $trial_videos > 0 && $open_quizzes > 0} · {/if}{if $open_quizzes > 0}{$open_quizzes} {if $exam_prep}đề miễn phí{else}bài tập{/if}{/if}</dd></div>{/if}
-                                {if !empty($course_files)}<div><dt>Tài liệu</dt><dd>{count($course_files)} tệp</dd></div>{/if}
-                                {if !empty($product.rating_number) && $product.rating_number > 0}<div><dt>Đánh giá</dt><dd>★ {$product.rating|string_format:'%.1f'} ({$product.rating_number})</dd></div>{/if}
-                            </dl>
-                            <section class="mcr-assurance" aria-label="Cam kết hoàn học phí">
-                                <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết hoàn học phí</h3>
-                                <ul>
-                                    <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>hoàn 100% học phí.</strong></li>
-                                    <li>Hoàn thành <strong>80% khóa học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>hoàn 100% học phí.</strong></li>
-                                </ul>
-                            </section>
-                        </div>
-                    </aside>
-                </div>
-
                 {* Lesson: filled in by classroom.js from the outline *}
                 <div class="mcr-view mcr-lesson-view" data-mcr-view="lesson" hidden>
                     <h2 class="mcr-sr-only" data-mcr-heading></h2>
@@ -420,16 +353,9 @@
                             <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video">Video</button>
                             <button type="button" role="tab" id="mcr-tab-files" aria-controls="mcr-panel-files" aria-selected="false" tabindex="-1" data-mcr-tab="files">Tài liệu</button>
                             <button type="button" role="tab" id="mcr-tab-quiz" aria-controls="mcr-panel-quiz" aria-selected="false" tabindex="-1" data-mcr-tab="quiz">Bài tập</button>
-                            <button type="button" role="tab" id="mcr-tab-feedback" aria-controls="mcr-panel-feedback" aria-selected="false" tabindex="-1" data-mcr-tab="feedback">Phản hồi học viên</button>
+                            <a class="mcr-tab-jump" href="#mcr-course-title" data-mcr-back-to-intro>Giới thiệu</a>
                         </div>
-                        {if !$licensed}
-                            <div class="mcr-toolbar-buy">
-                                <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><em class="mcr-toolbar-discount">−{$discount}%</em>{/if}</span>
-                                <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học ngay</a>
-                            </div>
-                        {else}
-                            <span class="mcr-toolbar-progress" data-mcr-progress></span>
-                        {/if}
+                        {if $licensed}<span class="mcr-toolbar-progress" data-mcr-progress></span>{/if}
                     </div>
 
                     <div class="mcr-panel" id="mcr-panel-video" role="tabpanel" aria-labelledby="mcr-tab-video" data-mcr-panel="video">
@@ -599,12 +525,11 @@
                         <a class="mcr-quiz-rank" href="/class-rank?khoa={$product.id}">Bảng xếp hạng và chỉ số tiến bộ của bạn <span aria-hidden="true">→</span></a>
                     </div>
 
-                    <div class="mcr-panel" id="mcr-panel-feedback" role="tabpanel" aria-labelledby="mcr-tab-feedback" data-mcr-panel="feedback" hidden>
-                        {$smarty.capture.mcr_feedback}
-                    </div>
+
                 </div>
             </div>
         </div>
+        <div class="mcr-slot mcr-slot--related mcr-related-courses" data-mcr-slot="sw780fy"></div>
     </div>
 
     {if !$licensed}

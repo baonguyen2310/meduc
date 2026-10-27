@@ -551,6 +551,7 @@
                 </div>
                 <div class="kt-portlet__body">
                     {foreach from = $attributes_product item = attribute key = attribute_id}
+                        {if $attribute.code == 'anhtongquan' && empty($show_teacher_assignment)}{continue}{/if}
                         {if !empty($course_is_exam_prep) && $attribute.code == 'danhsachtiethoc'}
                             <input type="hidden" name="course_lessons_readonly" value="1">
                             {continue}
@@ -574,6 +575,7 @@
                             {/if}
 
                             {$this->AttributeAdmin->generateInput($attribute, $lang)}
+                            {if $attribute.code == 'anhtongquan'}<small class="form-text text-muted">Chọn hoặc tải lên một ảnh để hiển thị trong tab Tổng quan của khoá học.</small>{/if}
                         </div>
                     {/foreach}
                 </div>

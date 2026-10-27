@@ -1,10 +1,9 @@
 /* Course page as a classroom (block/product_detail/view_classroom.tpl).
-   - The outline switches the right-hand side between the course introduction and a lesson; ?bai=N keeps the address
+   - The course overview stays above the classroom. The outline selects a lesson; ?bai=N keeps the address
      in step so a lesson can be shared and the Back button works.
    - Lesson videos play inside the page (YouTube IFrame API). Students continue to the next video after
      a short countdown; visitors trying a free lesson see the sign-up card and may choose another free video.
-   - The introduction: the FAQ, questions, ratings and related-course blocks rendered below on the page move into their
-     places (data-mcr-slot), and the tabs above it follow the reader through its sections.
+   - The overview has independent tabs and an expandable description. Existing ratings and related courses move into their places (data-mcr-slot).
    - Progress (lessons watched, last lesson) is kept in this browser only. */
 (() => {
   "use strict";
@@ -36,9 +35,8 @@
   const examPrep = root.dataset.mcrExamPrep === "1";
   const canWatch = (lesson) => Boolean(lesson && lesson.video) && (licensed || lesson.trial);
 
-  const introView = $('[data-mcr-view="intro"]');
+  const overview = $("[data-mcr-overview]");
   const lessonView = $('[data-mcr-view="lesson"]');
-  const introLink = $("[data-mcr-intro]");
   const stages = Object.fromEntries($$("[data-mcr-stage]").map((stage) => [stage.dataset.mcrStage, stage]));
   const poster = $("[data-mcr-poster]");
   const playerHolder = $("[data-mcr-player]");
@@ -247,7 +245,6 @@
         card.classList.toggle('is-locked',!open);
         const enroll=card.querySelector('[data-mcr-quiz-enroll]');if(enroll)enroll.hidden=open;
       });
-      $$('.mcr-toolbar-buy').forEach(button => {button.hidden=licensed;});
       root.dispatchEvent(new CustomEvent('mcr:access',{detail:access}));
       return access;
     })().finally(() => {accessRequest=null;});
@@ -351,8 +348,6 @@
       lesson.link.classList.toggle("is-current", lesson.link === link);
       if (lesson.link === link) lesson.link.setAttribute("aria-current", "page"); else lesson.link.removeAttribute("aria-current");
     });
-    introLink.classList.toggle("is-active", !link);
-    if (link) introLink.removeAttribute("aria-current"); else introLink.setAttribute("aria-current", "page");
   }
   // Keep the current lesson visible inside the sticky outline (only the outline scrolls, not the page).
   function revealInOutline(link) {
@@ -371,7 +366,6 @@
     const chapter = lesson.link.closest("details");
     if (chapter) chapter.open = true;
     revealInOutline(lesson.link);
-    introView.hidden = true;
     lessonView.hidden = false;
 
     // Keep the active lesson available to screen readers without repeating its heading visually.
@@ -391,20 +385,25 @@
     }
     writeStore({ last: lesson.number });
     if (push) history.pushState({ mcrLesson: lesson.number }, "", addressFor(lesson.number));
-    if (scroll) {
-      const top = lessonView.getBoundingClientRect().top;
-      if (narrow() || top < 60) lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
-    }
+    if (scroll) lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   }
   function showIntro({ push = true } = {}) {
     stopPlayer();
-    current = null;
-    markCurrent(null);
-    lessonView.hidden = true;
-    introView.hidden = false;
-    root.dispatchEvent(new CustomEvent("mcr:lesson", { detail: { number: 0 } }));
+    selectOverview("about");
     if (push) history.pushState({ mcrLesson: 0 }, "", addressFor(0));
+    overview.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   }
+  // Result screens can return to the course information without a sidebar introduction button.
+  root.addEventListener("mcr:overview", () => showIntro());
+  $("[data-mcr-back-to-intro]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    showIntro();
+  });
+  $("[data-mcr-outline-jump]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    const target = narrow() ? $(".mcr-sidebar") : $("#mcr-learning");
+    target?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+  });
 
   $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
     const number = Number(event.currentTarget.dataset.mcrMockExam);
@@ -418,11 +417,6 @@
     event.preventDefault();
     selectLesson(lesson.number);
   }));
-  introLink.addEventListener("click", (event) => {
-    event.preventDefault();
-    showIntro();
-    if (narrow()) introView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
-  });
   $$("[data-mcr-start]").forEach((button) => button.addEventListener("click", (event) => {
     event.preventDefault();
     selectLesson(Number(button.dataset.mcrStart), { autoplay: true });
@@ -464,7 +458,10 @@
     });
   });
 
-  // The page's own FAQ, questions, ratings and related-course blocks move into the introduction.
+  // The old FAQ, questions and written reviews no longer belong on the course detail page.
+  ["6a5tyhf", "zdi3rma", "5y31vx8"].forEach((id) => document.querySelector(`[nh-block="${id}"]`)?.remove());
+
+  // Keep the page's related courses in their designated section.
   $$("[data-mcr-slot]").forEach((slot) => {
     const block = document.querySelector(`[nh-block="${slot.dataset.mcrSlot}"]`);
     if (block && !root.contains(block)) slot.append(block);
@@ -477,46 +474,56 @@
       heading.textContent = lower.charAt(0).toLocaleUpperCase("vi") + lower.slice(1);
     }
   });
-  // A section left empty (e.g. no FAQ block on the page) loses its tab.
-  $$(".mcr-section--slots").forEach((section) => {
-    if (section.querySelector("[nh-block]")) return;
-    section.hidden = true;
-    root.querySelector(`[data-mcr-anchor][href="#${section.id}"]`)?.remove();
-  });
-
-  // Introduction tabs: jump to a section; the tab of the section being read stays highlighted.
-  const anchors = $$("[data-mcr-anchor]");
-  const sections = anchors.map((anchor) => root.querySelector(anchor.getAttribute("href"))).filter(Boolean);
-  function highlight(id) {
-    anchors.forEach((anchor) => {
-      const active = anchor.getAttribute("href") === `#${id}`;
-      anchor.classList.toggle("is-active", active);
-      if (active) anchor.setAttribute("aria-current", "true"); else anchor.removeAttribute("aria-current");
+  // Course overview tabs are independent of the lesson tabs below.
+  const overviewTabs = $$("[data-mcr-overview-tab]");
+  function selectOverview(name, focus = false) {
+    overviewTabs.forEach((tab) => {
+      const active = tab.dataset.mcrOverviewTab === name;
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+      if (active && focus) tab.focus();
     });
+    $$("[data-mcr-overview-panel]").forEach((panel) => { panel.hidden = panel.dataset.mcrOverviewPanel !== name; });
   }
-  anchors.forEach((anchor) => anchor.addEventListener("click", (event) => {
-    const target = root.querySelector(anchor.getAttribute("href"));
-    if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
-    highlight(target.id);
-  }));
-  if (sections.length) {
-    highlight(sections[0].id);
-    window.addEventListener("scroll", () => {
-      if (introView.hidden) return;
-      // The section whose top has passed a line just under the sticky tabs is the one being read.
-      const line = 150;
-      let currentId = sections[0].id;
-      sections.forEach((section) => { if (!section.hidden && section.getBoundingClientRect().top <= line) currentId = section.id; });
-      highlight(currentId);
-    }, { passive: true });
+  overviewTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => selectOverview(tab.dataset.mcrOverviewTab));
+    tab.addEventListener("keydown", (event) => {
+      let next = index;
+      if (event.key === "ArrowRight") next = (index + 1) % overviewTabs.length;
+      else if (event.key === "ArrowLeft") next = (index - 1 + overviewTabs.length) % overviewTabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = overviewTabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectOverview(overviewTabs[next].dataset.mcrOverviewTab, true);
+    });
+  });
+  const description = $("[data-mcr-description-full]");
+  const preview = $("[data-mcr-description-preview]");
+  const more = $("[data-mcr-description-toggle]");
+  if (description && preview && more) {
+    const clean = (text) => text.replace(/\s+/g, " ").trim();
+    const paragraph = [...description.querySelectorAll("p")].map((p) => clean(p.textContent)).find((text) => text.length > 80);
+    const excerpt = paragraph || clean(description.textContent);
+    preview.textContent = excerpt.length > 480 ? `${excerpt.slice(0, 480).replace(/\s+\S*$/, "")}…` : excerpt;
+    more.hidden = clean(description.textContent) === preview.textContent && !description.querySelector("img,table,ul,ol");
+    more.addEventListener("click", () => {
+      const expanded = more.getAttribute("aria-expanded") !== "true";
+      more.setAttribute("aria-expanded", String(expanded));
+      description.hidden = !expanded;
+      preview.hidden = expanded;
+      more.textContent = expanded ? "Thu gọn ↑" : "Xem thêm ↓";
+      if (!expanded) $(".mcr-overview-tabs").scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+    });
   }
 
   renderProgress();
   const initial = Number(new URLSearchParams(location.search).get("bai"));
-  if (byNumber.has(initial)) {
-    selectLesson(initial, { push: false, scroll: false });
+  const defaultLesson = byNumber.get(readStore().last) || lessons.find((lesson) => canWatch(lesson) || lesson.quiz) || lessons[0];
+  const selected = byNumber.has(initial) ? initial : defaultLesson?.number;
+  if (selected) {
+    selectLesson(selected, { push: false, scroll: false });
     if (new URLSearchParams(location.search).get("tab") === "quiz") selectTab("quiz");
+    if (byNumber.has(initial)) requestAnimationFrame(() => lessonView.scrollIntoView({ block: "start", behavior: "instant" }));
   }
 })();

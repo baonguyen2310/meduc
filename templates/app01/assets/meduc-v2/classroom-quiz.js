@@ -384,10 +384,10 @@
     const postActions = el("div", "mcq-post-actions");
     if (root.dataset.mcrLicensed === "1") {
       const course = button("mcr-btn mcr-btn--primary", "Về khóa học");
-      course.addEventListener("click", () => { setExpanded(false); root.querySelector("[data-mcr-intro]")?.click(); });
+      course.addEventListener("click", () => { setExpanded(false); root.dispatchEvent(new CustomEvent("mcr:overview")); });
       postActions.append(course);
     } else {
-      const buySource = root.querySelector(".mcr-toolbar-buy .mcr-btn--primary");
+      const buySource = root.querySelector(".mcr-intro-side .mcr-btn--primary");
       if (buySource) {
         const buy = buySource.cloneNode(true);
         buy.textContent = "Đăng ký khóa học";
