@@ -6,6 +6,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-page.css?v=20261021-2" rel="stylesheet">
 
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-nav.css?v=20261028-1" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-nav.js?v=20261028-1" defer></script>
+
 <main class="mlr" id="meduc-roadmap">
     <section class="mlr-shell mlr-hero" aria-labelledby="roadmap-title">
         <div>
