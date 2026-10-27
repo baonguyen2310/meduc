@@ -1,7 +1,7 @@
 {strip}
 {* Four editorial sections for /phuong-phap-hoc. Existing hero keys remain supported.
    Optional block copy/photos: anh_vi_sao, mo_ta_anh_vi_sao, anh_ap_dung, mo_ta_anh_ap_dung,
-   anh_core_learning (replaces the HTML concept map), ket_qua_nhan, ket_qua_tieu_de_1,
+   ket_qua_nhan, ket_qua_tieu_de_1,
    ket_qua_tieu_de_2, ket_qua_mo_ta. The fourth section is provisional copy for CEO review. *}
 {$text = $data_extend.locale[{LANGUAGE}]|default:[]}
 {$picture = $this->Utilities->replaceVariableSystem($text.anh|default:'/templates/app01/assets/meduc-v2/method/study-editorial.jpg')}
@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261028-2" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.js?v=20261028-1" defer></script>
 
 <main class="mmp" id="meduc-method">
@@ -51,32 +51,20 @@
     </section>
 
     <section class="mmp-band" id="core-learning" aria-labelledby="method-core-title">
-        <div class="mmp-shell mmp-section mmp-editorial mmp-editorial--reverse">
-            <div class="mmp-copy">
-                <p class="mmp-eyebrow">02 / CÁCH HỌC MEDUC</p>
-                <h2 id="method-core-title">CORE LEARNING.<br><span>HIỂU TỪ CỐT LÕI.</span></h2>
+        <div class="mmp-shell mmp-section">
+            <div class="mmp-core-heading">
+                <div><p class="mmp-eyebrow">02 / CÁCH HỌC MEDUC</p><h2 id="method-core-title">CORE LEARNING.<br><span>HIỂU TỪ CỐT LÕI.</span></h2></div>
                 <p>MedUC bắt đầu từ khái niệm và cơ chế. Từ khóa làm rõ ý chính, Mind Map kết nối các ý; câu hỏi và tình huống giúp bạn tập vận dụng.</p>
-                <ul class="mmp-principles">
-                    <li><strong>Hiểu bản chất.</strong> Biết kiến thức nói về điều gì và vì sao lại như vậy.</li>
-                    <li><strong>Nhìn thấy liên hệ.</strong> Nối phần đang học với những điều đã biết.</li>
-                    <li><strong>Lý giải lựa chọn.</strong> Hiểu cả vì sao đúng lẫn vì sao sai.</li>
-                </ul>
-                <a class="mmp-text-link" href="/doi-ngu-giang-vien">Gặp người đồng hành cùng bạn <span aria-hidden="true">→</span></a>
             </div>
-            {if !empty($text.anh_core_learning)}
-                <figure class="mmp-photo"><img src="{$this->Utilities->replaceVariableSystem($text.anh_core_learning)|escape}" alt="Sơ đồ phương pháp Core Learning tại MedUC" loading="lazy" decoding="async"></figure>
-            {else}
-                <figure class="mmp-map" aria-labelledby="method-map-caption">
-                    <p class="mmp-map-label">MEDUC / CORE LEARNING</p>
-                    <div class="mmp-map-root"><span>BẮT ĐẦU TỪ</span><strong>Kiến thức<br>cốt lõi</strong></div>
-                    <div class="mmp-map-branches">
-                        <div><span class="mmp-map-dot" aria-hidden="true"></span><strong>Từ khóa</strong><small>Nhận ra ý chính</small></div>
-                        <div><span class="mmp-map-dot" aria-hidden="true"></span><strong>Mind Map</strong><small>Kết nối các ý</small></div>
-                        <div><span class="mmp-map-dot" aria-hidden="true"></span><strong>Tình huống</strong><small>Tập vận dụng</small></div>
-                    </div>
-                    <figcaption id="method-map-caption">Từ câu hỏi <span aria-hidden="true">→</span> Khái niệm <span aria-hidden="true">→</span> Lập luận</figcaption>
-                </figure>
-            {/if}
+            <ol class="mmp-core-grid" aria-label="Cách học Core Learning tại MedUC">
+                <li><span class="mmp-core-number" aria-hidden="true">01</span><h3>Hiểu từ khái niệm và cơ chế</h3><p>Làm rõ bản chất và trả lời câu hỏi “vì sao”, để việc ghi nhớ chi tiết có một nền tảng.</p></li>
+                <li><span class="mmp-core-number" aria-hidden="true">02</span><h3>Nắm ý chính bằng từ khóa</h3><p>Nhận ra những ý trọng tâm của bài học, thay vì ghi chép và học thuộc mọi chi tiết rời rạc.</p></li>
+                <li><span class="mmp-core-number" aria-hidden="true">03</span><h3>Kết nối kiến thức bằng Mind Map</h3><p>Hệ thống các ý và mối liên hệ, nối phần đang học với những kiến thức bạn đã biết.</p></li>
+                <li><span class="mmp-core-number" aria-hidden="true">04</span><h3>Vận dụng qua câu hỏi, tình huống</h3><p>Tập nhận diện dữ kiện và dùng kiến thức để lập luận, kể cả khi cách hỏi thay đổi.</p></li>
+                <li><span class="mmp-core-number" aria-hidden="true">05</span><h3>Hiểu vì sao đúng, vì sao sai</h3><p>Đối chiếu lời giải cho từng lựa chọn để hiểu cách suy luận, thay vì chỉ ghi lại đáp án.</p></li>
+                <li><span class="mmp-core-number" aria-hidden="true">06</span><h3>Ôn lại đúng phần chưa vững</h3><p>Từ câu sai và lịch sử làm bài, tìm phần cần học lại rồi tự giải thích bằng lời của mình.</p></li>
+            </ol>
+            <a class="mmp-text-link mmp-core-link" href="/doi-ngu-giang-vien">Gặp người đồng hành cùng bạn <span aria-hidden="true">→</span></a>
         </div>
     </section>
 
