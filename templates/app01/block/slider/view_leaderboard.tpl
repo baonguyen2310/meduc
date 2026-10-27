@@ -3,7 +3,7 @@
    - Bảng xếp hạng: theo một khóa hoặc mọi khóa, trong tuần / tháng / từ trước đến nay. Ba người đầu đứng trên bục có vương
      miện vàng, bạc, đồng; bên dưới là toàn bộ thứ hạng, dòng của người xem được tô sáng.
    - Chỉ số tiến bộ: của học viên đang đăng nhập, theo từng khóa đã học: số đề, điểm, thời gian, biểu đồ điểm qua các lần làm,
-     tỉ lệ đúng theo chương, sổ tay câu sai.
+     tỉ lệ đúng theo chương. Sổ tay câu sai nằm trong lịch sử từng bài tập.
    Địa chỉ: ?khoa=id khóa, ?ky=tuan|thang, ?tab=tien-bo; địa chỉ cũ ?class-room-id= mở khóa của lớp đó.
    Dữ liệu: LeaderboardHelper (từ lịch sử làm bài). Giao diện: assets/meduc-v2/leaderboard.css và leaderboard.js. *}
 {$selection = $this->Leaderboard->getSelection()}
@@ -255,37 +255,6 @@
                         </div>
                     </div>
 
-                    <div class="mlb-notebook">
-                        <div class="mlb-notebook-intro">
-                            <p class="mlb-kicker">03 / Ôn tập thông minh</p>
-                            <h2 class="mlb-title mlb-title--small">Sổ tay <em>câu sai.</em></h2>
-                            <p>Những câu bạn chọn chưa đúng ở lần làm gần nhất của mỗi đề. Mở một câu để xem đáp án và lời giải.</p>
-                            <p class="mlb-notebook-count"><strong>{$progress.mistakes_total}</strong><span>câu cần ôn lại</span></p>
-                        </div>
-                        <div class="mlb-notebook-list">
-                            {if empty($progress.mistakes)}
-                                <p class="mlb-empty-line">Không có câu sai nào ở lần làm gần nhất. Tuyệt vời!</p>
-                            {else}
-                                {foreach from = $progress.mistakes item = mistake}
-                                    <details class="mlb-mistake">
-                                        <summary>
-                                            <span class="mlb-mistake-number">{$mistake@iteration|string_format:'%02d'}</span>
-                                            <span class="mlb-mistake-title"><small>{$mistake.quiz|escape} · câu {$mistake.number}</small>{$mistake.question|strip_tags|truncate:160}</span>
-                                            <span class="mlb-mistake-toggle" aria-hidden="true"></span>
-                                        </summary>
-                                        <div class="mlb-mistake-body">
-                                            {* the full question only when the title above had to cut it, or it has a picture *}
-                                            {if mb_strlen(strip_tags($mistake.question)) > 160 || strpos($mistake.question, '<img') !== false}<div class="mlb-mistake-question">{$mistake.question}</div>{/if}
-                                            <p class="mlb-mistake-wrong"><span>Bạn chọn</span>{$mistake.chosen|strip_tags}</p>
-                                            <p class="mlb-mistake-right"><span>Đáp án đúng</span>{$mistake.answer|strip_tags}</p>
-                                            {if $mistake.explain != ''}<div class="mlb-mistake-explain"><span>Lời giải</span>{$mistake.explain}</div>{/if}
-                                        </div>
-                                    </details>
-                                {/foreach}
-                                {if $progress.mistakes_total > count($progress.mistakes)}<p class="mlb-empty-line">Và {$progress.mistakes_total - count($progress.mistakes)} câu khác. Làm lại các đề để ôn tiếp.</p>{/if}
-                            {/if}
-                        </div>
-                    </div>
                 {/if}
             {/if}
         </div>

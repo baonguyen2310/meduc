@@ -238,7 +238,7 @@
       root.dataset.mcrMemberCode = access.member_code || '';
       root.dataset.mcrClassRoom = String(Number(access.class_room_id) || 0);
       lessons.forEach(lesson => {lesson.access=licensed?'open':lesson.trial?'trial':'locked';lesson.quiz=licensed?lesson.quizzes>0:lesson.freeQuiz;});
-      $$('[data-mcr-quiz-start]').forEach(button => {
+      $$('[data-mcr-quiz-start], [data-mcr-quiz-history]').forEach(button => {
         const open=licensed || button.dataset.mcrQuizFree==='1';
         button.hidden=!open;
         const card=button.closest('.mcr-quiz-card');

@@ -3,7 +3,7 @@
    - all questions in a scrollable column, a right-side question map, and a countdown when time is limited;
    - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
-   A lesson may have several quizzes: list -> that quiz's saved history -> player/review, with a back button at each level.
+   A lesson may have several quizzes: separate History and Start actions. History contains attempts and a per-quiz wrong-answer notebook.
    A quiz's questions load from /khoa-hoc/bai-tap/{course}/{quiz} when it starts
    (QuizsAnswerController::player, which also checks the visitor may take it).
    An attempt stays in memory while the visitor moves between lessons, tabs and quizzes; nothing reloads the page. */
@@ -103,7 +103,9 @@
   timer.setAttribute("role", "timer");
   const submitButton = button("mcr-btn mcr-btn--primary mcq-submit", "Nộp bài");
   const resultButton = button("mcr-btn mcr-btn--ghost mcq-to-result", "Xem kết quả");
-  barMeta.append(progress, timer, submitButton, resultButton);
+  const submitActions = el("div", "mcq-submit-actions");
+  submitActions.append(submitButton, resultButton);
+  barMeta.append(progress, timer, submitActions);
   bar.append(back, barTitle, barMeta);
   const confirmBox = el("div", "mcq-confirm");
   confirmBox.setAttribute("role", "alert");
@@ -118,7 +120,7 @@
   expandButton.setAttribute("aria-label", "Phóng to vùng làm bài");
   expandButton.title = "Phóng to vùng làm bài";
   expandButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4a1 1 0 0 0-1 1v5m12-6h5a1 1 0 0 1 1 1v5M3 15v5a1 1 0 0 0 1 1h5m12-6v5a1 1 0 0 1-1 1h-5"/></svg>';
-  mapHead.append(expandButton);
+  submitActions.append(expandButton);
   const map = el("div", "mcq-map");
   map.setAttribute("aria-label", "Chọn câu hỏi");
   mapPanel.append(mapHead, map);
@@ -442,54 +444,168 @@
     return rows;
   }
 
+  // Both the notebook and a saved review resolve answers within this quiz only. Legacy duplicate codes
+  // without a question index remain unknown rather than being assigned to a different question.
+  function attemptFromRecord(record, quiz, lesson) {
+    if (record.localAttempt) return { ...record.localAttempt, answers: new Map(record.localAttempt.answers), state: "review" };
+    const attempt = newAttempt(quiz, lesson);
+    attempt.record = record;
+    attempt.spent = record.seconds;
+    attempt.saved = "Đây là bài làm đã lưu trong lịch sử của bạn.";
+    attempt.state = "review";
+    const positions = new Map();
+    quiz.questions.forEach((question, index) => {
+      const matches = positions.get(question.code) || [];
+      matches.push(index);
+      positions.set(question.code, matches);
+    });
+    (record.answers || []).forEach((answer) => {
+      const index = Number(answer.index);
+      const position = answer.index !== undefined && Number.isInteger(index) && index >= 0 && index < quiz.questions.length
+        ? index : (positions.get(answer.code) || []).length === 1 ? positions.get(answer.code)[0] : -1;
+      const value = Number(answer.answer);
+      if (position >= 0 && Number.isInteger(value) && value >= 1 && value <= 5) attempt.answers.set(position, value);
+      else attempt.incompleteHistory = true;
+    });
+    return attempt;
+  }
+
+  async function loadNotebook(context, record) {
+    const request = historyRequest;
+    const notebook = context.notebook = { loading: true, error: "", attempt: null, indices: [] };
+    try {
+      const quiz = record.localAttempt?.quiz || await load(context.id);
+      if (request !== historyRequest || selected !== context || view !== "history") return;
+      notebook.attempt = attemptFromRecord(record, quiz, context.lesson);
+      quiz.questions.forEach((question, index) => {
+        const chosen = notebook.attempt.answers.get(index);
+        if (question.answer > 0 && chosen !== undefined && chosen !== question.answer
+            && question.options.some(([value]) => value === chosen)) notebook.indices.push(index);
+      });
+    } catch (error) {
+      notebook.error = error.message || "Chưa tải được sổ tay câu sai.";
+    }
+    notebook.loading = false;
+    if (request === historyRequest && selected === context && view === "history" && context.historyTab === "mistakes") renderHistory();
+  }
+
+  function renderNotebook(panel, rows) {
+    panel.append(el("p", "mcq-notebook-intro", "Các câu bạn chọn sai ở lần làm gần nhất của bài tập này. Câu bỏ trống không được tính là câu chọn sai."));
+    if (selected.loading || selected.error || !rows.length) {
+      panel.append(el("p", selected.error ? "mcq-history-error" : "mcq-history-empty", selected.loading ? "Đang tải lịch sử…"
+        : selected.error || (memberId ? "Bạn chưa có bài làm để lập sổ tay câu sai." : "Đăng nhập để xem sổ tay câu sai của bạn.")));
+      return;
+    }
+    const record = rows[0];
+    if (!selected.notebook) void loadNotebook(selected, record);
+    const notebook = selected.notebook;
+    if (notebook.loading) {
+      panel.append(el("p", "mcq-history-empty", "Đang tải sổ tay câu sai…"));
+      return;
+    }
+    if (notebook.error) {
+      const error = el("p", "mcq-history-error", notebook.error);
+      error.setAttribute("role", "alert");
+      panel.append(error);
+      const retry = button("mcr-btn mcr-btn--ghost", "Thử lại");
+      retry.addEventListener("click", () => { selected.notebook = null; renderHistory(); });
+      panel.append(retry);
+      return;
+    }
+    panel.append(el("h3", "mcq-history-heading", `${notebook.indices.length} câu cần ôn lại`));
+    if (!notebook.indices.length) {
+      panel.append(el("p", "mcq-history-empty", "Không có câu chọn sai trong lần làm gần nhất của bài tập này."));
+      return;
+    }
+    const list = el("div", "mcq-notebook-list");
+    notebook.indices.forEach((index) => {
+      const question = notebook.attempt.quiz.questions[index];
+      const item = el("details", "mcq-notebook-item");
+      const summary = el("summary");
+      const plain = el("div");
+      plain.innerHTML = dropNumber(question.question);
+      const text = plain.textContent.replace(/\s+/g, " ").trim() || "Câu hỏi có hình ảnh";
+      summary.append(el("span", "mcq-notebook-number", `Câu ${index + 1}`), el("span", "mcq-notebook-question", text.length > 160 ? `${text.slice(0, 160)}…` : text));
+      item.append(summary, buildQuestion(notebook.attempt, index, true));
+      list.append(item);
+    });
+    panel.append(list);
+  }
+
   function renderHistory() {
     if (view !== "history" || !selected) return;
+    const context = selected;
     back.hidden = false;
     back.textContent = "← Danh sách đề";
-    kicker.textContent = `Lịch sử bài tập · Buổi ${selected.lesson.number}`;
-    name.textContent = selected.title;
+    kicker.textContent = `Lịch sử bài tập · Buổi ${context.lesson.number}`;
+    name.textContent = context.title;
     barMeta.hidden = true;
     confirmBox.hidden = true;
     mapPanel.hidden = true;
     const panel = el("div", "mcq-history");
-    panel.append(el("p", "mcq-result-kicker", "Bài tập đã chọn"));
-    panel.append(el("h2", "mcq-history-title", selected.title));
-    panel.append(el("p", "mcq-history-subtitle", "Xem các lần đã làm hoặc bắt đầu một lần mới."));
-    const current = attempts.get(selected.id);
-    const startButton = button("mcr-btn mcr-btn--primary", current && current.state === "doing" ? "Tiếp tục làm bài" : "Bắt đầu làm bài");
-    startButton.dataset.mcqBegin = "";
-    startButton.addEventListener("click", () => beginSelected(startButton));
-    panel.append(startButton);
-    if (current && current.state === "doing" && current.deadline) {
-      panel.append(el("p", "mcq-history-hint", "Bài đang làm vẫn tiếp tục tính giờ khi bạn rời màn hình làm bài."));
-    }
-    const rows = historyRows();
-    const heading = el("h3", "mcq-history-heading", `Lịch sử làm bài${selected.loading ? "" : ` · ${rows.length} lần`}`);
-    panel.append(heading);
-    if (selected.loading) {
-      panel.append(el("p", "mcq-history-empty", "Đang tải lịch sử…"));
-    } else if (selected.error) {
-      const error = el("p", "mcq-history-error", selected.error);
-      error.setAttribute("role", "alert");
-      panel.append(error);
-    } else if (!rows.length) {
-      panel.append(el("p", "mcq-history-empty", memberId ? "Bạn chưa làm bài tập này. Hãy bắt đầu lần đầu tiên." : "Đăng nhập để lưu và xem lịch sử làm bài của bạn."));
-    } else {
-      const list = el("div", "mcq-history-list");
-      rows.forEach((record, index) => {
-        const item = el("div", "mcq-history-item");
-        const copy = el("div", "mcq-history-copy");
-        copy.append(el("strong", "", `Lần ${rows.length - index}`));
-        copy.append(el("span", "", record.localAttempt && !record.localAttempt.savedRecordId ? (record.localAttempt.saved || "Bài vừa làm · đang chờ lưu") : new Date(record.created * 1000).toLocaleString("vi-VN")));
-        const score = el("div", "mcq-history-score");
-        score.append(el("strong", "", `${record.correct}/${record.total}`));
-        score.append(el("span", "", `${record.total ? Math.round(record.correct / record.total * 100) : 0}% đúng · ${clock(record.seconds)}`));
-        const review = button("mcr-btn mcr-btn--ghost", "Xem lại");
-        review.addEventListener("click", () => reviewHistory(record, review));
-        item.append(copy, score, review);
-        list.append(item);
+    const tabs = el("div", "mcq-history-tabs");
+    tabs.setAttribute("role", "tablist");
+    tabs.setAttribute("aria-label", "Lịch sử và sổ tay bài tập");
+    const definitions = [["history", "Lịch sử"], ["mistakes", "Sổ tay câu sai"]];
+    const tabName = context.historyTab || "history";
+    const panels = {};
+    definitions.forEach(([key, label], index) => {
+      const tab = button("mcq-history-tab", label);
+      tab.id = `mcq-history-tab-${key}`;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", `mcq-history-panel-${key}`);
+      tab.setAttribute("aria-selected", String(tabName === key));
+      tab.tabIndex = tabName === key ? 0 : -1;
+      const activate = (name) => {
+        if (selected !== context) return;
+        context.historyTab = name;
+        renderHistory();
+        stage.querySelector(`#mcq-history-tab-${name}`)?.focus({ preventScroll: true });
+      };
+      tab.addEventListener("click", () => activate(key));
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? definitions.length - 1 : (index + 1) % definitions.length;
+        activate(definitions[next][0]);
       });
-      panel.append(list);
+      tabs.append(tab);
+      const body = el("div", "mcq-history-panel");
+      body.id = `mcq-history-panel-${key}`;
+      body.setAttribute("role", "tabpanel");
+      body.setAttribute("aria-labelledby", tab.id);
+      body.hidden = key !== tabName;
+      panels[key] = body;
+    });
+    panel.append(tabs, panels.history, panels.mistakes);
+    const rows = historyRows();
+    if (tabName === "mistakes") {
+      renderNotebook(panels.mistakes, rows);
+    } else {
+      const body = panels.history;
+      body.append(el("h3", "mcq-history-heading", `Lịch sử làm bài${context.loading ? "" : ` · ${rows.length} lần`}`));
+      if (context.loading || context.error || !rows.length) {
+        const message = el("p", context.error ? "mcq-history-error" : "mcq-history-empty", context.loading ? "Đang tải lịch sử…" : context.error
+          || (memberId ? "Bạn chưa làm bài tập này. Hãy bắt đầu lần đầu tiên." : "Đăng nhập để lưu và xem lịch sử làm bài của bạn."));
+        if (context.error) message.setAttribute("role", "alert");
+        body.append(message);
+      } else {
+        const list = el("div", "mcq-history-list");
+        rows.forEach((record, index) => {
+          const item = el("div", "mcq-history-item");
+          const copy = el("div", "mcq-history-copy");
+          copy.append(el("strong", "", `Lần ${rows.length - index}`));
+          copy.append(el("span", "", record.localAttempt && !record.localAttempt.savedRecordId ? (record.localAttempt.saved || "Bài vừa làm · đang chờ lưu") : new Date(record.created * 1000).toLocaleString("vi-VN")));
+          const score = el("div", "mcq-history-score");
+          score.append(el("strong", "", `${record.correct}/${record.total}`));
+          score.append(el("span", "", `${record.total ? Math.round(record.correct / record.total * 100) : 0}% đúng · ${clock(record.seconds)}`));
+          const review = button("mcr-btn mcr-btn--ghost", "Xem lại");
+          review.addEventListener("click", () => reviewHistory(record, review));
+          item.append(copy, score, review);
+          list.append(item);
+        });
+        body.append(list);
+      }
     }
     stage.replaceChildren(panel);
     stage.scrollTop = 0;
@@ -498,6 +614,8 @@
   async function openHistory(context) {
     const request = ++historyRequest;
     selected = context;
+    context.historyTab = context.historyTab || "history";
+    context.notebook = null;
     selected.loading = true;
     selected.error = "";
     view = "history";
@@ -509,10 +627,10 @@
       const response = await fetch(`/khoa-hoc/bai-tap/${productId}/${context.id}/lich-su`, { credentials: "same-origin", headers: { Accept: "application/json" } });
       const body = await response.json().catch(() => null);
       if (!response.ok || !body || body.code !== "success" || !Array.isArray(body.data)) throw new Error((body && body.message) || "Chưa tải được lịch sử làm bài.");
-      if (request !== historyRequest || view !== "history") return;
+      if (request !== historyRequest || view !== "history" || selected !== context) return;
       context.history = body.data;
     } catch (error) {
-      if (request !== historyRequest || view !== "history") return;
+      if (request !== historyRequest || view !== "history" || selected !== context) return;
       context.error = error.message || "Chưa tải được lịch sử làm bài.";
     }
     context.loading = false;
@@ -522,11 +640,22 @@
   async function beginSelected(control, authorized = false, context = selected, fresh = false) {
     if (!context || selected!==context) return;
     const fromView=view;
+    context.error = "";
+    control.closest(".mcr-quiz-card")?.querySelector(".mcr-quiz-error")?.remove();
+    const showError = (message) => {
+      context.error = message;
+      if (view === "history") renderHistory();
+      else {
+        const error = el("p", "mcr-quiz-error", message);
+        error.setAttribute("role", "alert");
+        control.closest(".mcr-quiz-card")?.append(error);
+      }
+    };
     const valid=()=>selected===context && view===fromView && lessonNumber===context.lesson.number && !root.querySelector('[data-mcr-panel="quiz"]').hidden;
     if (!authorized) {
-      if (!root.mcrStudyAccess) {context.error='Chưa kiểm tra được tài khoản. Vui lòng thử lại.';renderHistory();return;}
+      if (!root.mcrStudyAccess) {showError('Chưa kiểm tra được tài khoản. Vui lòng thử lại.');return;}
       return root.mcrStudyAccess.request({kind:'quiz',trigger:control,free:context.free!==false,valid,
-        resume:()=>beginSelected(stage.querySelector('[data-mcq-begin]') || control,true,context,fresh)});
+        resume:()=>beginSelected(view==='history' ? stage.querySelector('[data-mcq-begin]') || control : control,true,context,fresh)});
     }
     control.disabled = true;
     control.textContent = "Đang tải đề…";
@@ -538,12 +667,11 @@
     } catch (error) {
       if (valid() && error.authenticationRequired) return beginSelected(control,false,context,fresh);
       if (valid()) {
-        context.error = error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.";
-        if (view==='history') renderHistory();
-        else {confirmBox.hidden=false;confirmBox.textContent=context.error;}
+        showError(error.message || "Chưa tải được đề. Bạn thử lại sau ít phút nhé.");
       }
     } finally {
       control.disabled = false;
+      updateStartButtons();
     }
   }
 
@@ -555,33 +683,16 @@
     try {
       const quiz = await load(context.id);
       if (view !== "history" || selected !== context) return;
-      const attempt = record.localAttempt || newAttempt(quiz, context.lesson);
-      if (!record.localAttempt) {
-        attempt.record = record;
-        attempt.spent = record.seconds;
-        attempt.saved = "Đây là bài làm đã lưu trong lịch sử của bạn.";
-        const positions = new Map();
-        quiz.questions.forEach((question, index) => {
-          const matches = positions.get(question.code) || [];
-          matches.push(index);
-          positions.set(question.code, matches);
-        });
-        (record.answers || []).forEach((answer) => {
-          const index = Number(answer.index);
-          const position = answer.index !== undefined && Number.isInteger(index) && index >= 0 && index < quiz.questions.length
-            ? index : (positions.get(answer.code) || []).length === 1 ? positions.get(answer.code)[0] : -1;
-          const value = Number(answer.answer);
-          if (position >= 0 && Number.isInteger(value) && value >= 1 && value <= 5) attempt.answers.set(position, value);
-          else attempt.incompleteHistory = true;
-        });
-      }
+      const attempt = attemptFromRecord(record, quiz, context.lesson);
       attempt.state = "review";
       attempt.index = 0;
       active = attempt;
       view = "player";
       sync();
       render();
+      setExpanded(true);
       reveal();
+      back.focus({ preventScroll: true });
     } catch (error) {
       if (view === "history" && selected === context) {
         context.error = error.message || "Chưa mở được bài làm này.";
@@ -731,6 +842,7 @@
     view = "player";
     sync();
     render();
+    setExpanded(true);
     reveal();
     stage.querySelector(".mcq-option, button")?.focus({ preventScroll: true });
   }
@@ -753,8 +865,9 @@
   }
   function updateStartButtons() {
     root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => {
+      if (startButton.disabled) return;
       const attempt = attempts.get(Number(startButton.dataset.mcrQuizStart));
-      startButton.textContent = attempt && attempt.state === "doing" ? "Xem lịch sử · Đang làm" : "Xem lịch sử & làm bài";
+      startButton.textContent = attempt && attempt.state === "doing" ? "Làm tiếp" : "Làm bài";
     });
   }
 
@@ -769,15 +882,27 @@
     quizzes[id] = body.data;
     return body.data;
   }
-  root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => startButton.addEventListener("click", () => {
-    if (startButton.disabled || startButton.hidden) return;
-    const id = Number(startButton.dataset.mcrQuizStart);
-    const card = startButton.closest(".mcr-quiz-card");
-    lessonNumber = Number(startButton.dataset.lesson);
-    openHistory({
-      id, free:startButton.dataset.mcrQuizFree==='1', title: card?.querySelector("h3")?.textContent?.trim() || "Bài tập",
-      lesson: { number: lessonNumber, title: startButton.dataset.lessonTitle || "", code: startButton.dataset.lessonCode || "" },
-    });
+  function quizContext(control) {
+    const card = control.closest(".mcr-quiz-card");
+    return {
+      id: Number(control.dataset.mcrQuizStart || control.dataset.mcrQuizHistory),
+      free: control.dataset.mcrQuizFree === "1",
+      title: card?.querySelector("h3")?.textContent?.trim() || "Bài tập",
+      lesson: { number: Number(control.dataset.lesson), title: control.dataset.lessonTitle || "", code: control.dataset.lessonCode || "" },
+    };
+  }
+  root.querySelectorAll("[data-mcr-quiz-history]").forEach((control) => control.addEventListener("click", () => {
+    if (control.disabled || control.hidden) return;
+    const context = quizContext(control);
+    lessonNumber = context.lesson.number;
+    openHistory(context);
+  }));
+  root.querySelectorAll("[data-mcr-quiz-start]").forEach((control) => control.addEventListener("click", () => {
+    if (control.disabled || control.hidden) return;
+    historyRequest++;
+    selected = quizContext(control);
+    lessonNumber = selected.lesson.number;
+    beginSelected(control);
   }));
   submitButton.addEventListener("click", () => active && askSubmit(active));
   resultButton.addEventListener("click", () => { if (active) { active.state = "done"; render(); reveal(); } });

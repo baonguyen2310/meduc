@@ -193,8 +193,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261028-11" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261028-6" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261028-15" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261028-7" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
@@ -266,8 +266,8 @@
                     <aside class="mcr-intro-side" aria-label="Đăng ký khoá học">
                         <div class="mcr-buy">
                             {if !$licensed}
-                                <p class="mcr-buy-eyebrow">Học phí khoá học</p>
-                                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><span class="mcr-discount">−{$discount}%</span>{/if}</p>
+                                <div class="mcr-buy-heading"><p class="mcr-buy-eyebrow">Học phí khoá học</p>{if $old_price_text != ''}<span class="mcr-discount">−{$discount}%</span>{/if}</div>
+                                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</p>
                                 {if $unit_price > 0}<p class="mcr-unit-cost"><span>Bình quân</span><strong>{$unit_price|number_format:0:',':'.'}đ/{if $exam_prep}bài{else}buổi{/if}</strong></p>{/if}
                             {else}
                                 <p class="mcr-owned"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Bạn đã sở hữu khoá học này</p>
@@ -278,11 +278,19 @@
                                 {if $course_exercises_text != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4H5v16h14v-7M10 15l1-4 7-7 3 3-7 7z"/></svg>Số lượng bài tập</dt><dd>{$course_exercises_text|escape}</dd></div>{/if}
                                 {if $course_ownership != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16"/></svg>Sở hữu</dt><dd>{$course_ownership|escape}</dd></div>{/if}
                             </dl>
-                            {if !$licensed && !empty($text.loi_moi)}<p class="mcr-buy-note">{$text.loi_moi|escape}</p>{/if}
+                            {if !$licensed}
+                                <section class="mcr-assurance" aria-label="Cam kết hoàn học phí">
+                                    <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết hoàn học phí</h3>
+                                    <ul>
+                                        <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>hoàn 100% học phí.</strong></li>
+                                        <li>Hoàn thành <strong>80% khoá học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>hoàn 100% học phí.</strong></li>
+                                    </ul>
+                                </section>
+                            {/if}
                             <div class="mcr-buy-actions">
                                 {if !$licensed}
-                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học <span aria-hidden="true">→</span></a>
-                                    <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo <span aria-hidden="true">↗</span></a>
+                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học ngay</a>
+                                    <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo</a>
                                 {else}
                                     {if $first_open > 0}<a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span><span aria-hidden="true">→</span></a>{/if}
                                     <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="/member/classroom">Lớp học của tôi</a>
@@ -461,11 +469,14 @@
                                                     <h3>{$quiz_info.name|escape}</h3>
                                                     <p>{$quiz_info.count} câu{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}Nộp bài là có điểm và lời giải chi tiết.{else}Dành cho học viên đã đăng ký khoá học.{/if}</p>
                                                 </div>
-                                                <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-quiz-start="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Xem lịch sử &amp; làm bài</button>
+                                                <div class="mcr-quiz-actions">
+                                                <button type="button" class="mcr-btn mcr-btn--ghost" data-mcr-quiz-history="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Lịch sử</button>
+                                                <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-quiz-start="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Làm bài</button>
                                                 <a data-mcr-quiz-enroll {if $quiz.open}hidden{/if} class="mcr-btn mcr-btn--ghost" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>
                                                         <svg class="mcr-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>
                                                         Đăng ký để làm
                                                     </a>
+                                                </div>
                                             </div>
                                         {/foreach}
                                     </div>
@@ -524,14 +535,6 @@
         </div>
         <div class="mcr-slot mcr-slot--related mcr-related-courses" data-mcr-slot="sw780fy"></div>
     </div>
-
-    {if !$licensed}
-        {* Phones: the sign-up bar takes the place of the site's bottom action bar on this page. *}
-        <div class="mcr-buybar">
-            <span class="mcr-toolbar-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s><em class="mcr-toolbar-discount">−{$discount}%</em>{/if}</span>
-            <a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Đăng ký học ngay</a>
-        </div>
-    {/if}
 
     {* PDF files keep using the site's own preview (assets/js/custom.js). *}
     <div class="modal fade modal-preview-file" id="previewFile" tabindex="-1" aria-hidden="true">

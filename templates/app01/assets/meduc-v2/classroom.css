@@ -5,6 +5,7 @@
   --mcr-panel: #0d0e11;
   --mcr-side: #09090b;
   --mcr-line: #24262c;
+  --mcr-card-line: #3e414a;
   --mcr-ink: #f5f5f6;
   --mcr-muted: #a2a6ae;
   --mcr-red: #e8234f;
@@ -23,6 +24,7 @@ html[data-meduc-theme="light"] .mcr {
   --mcr-panel: #fff;
   --mcr-side: #fbfbfc;
   --mcr-line: #e5e6ea;
+  --mcr-card-line: #cbd0d8;
   --mcr-ink: #15171c;
   --mcr-muted: #6b6f78;
   --mcr-red: #d4213d;
@@ -142,11 +144,12 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-poster:hover .mcr-play { transform: translate(-50%, -50%) scale(1.06); }
 .mcr-poster-label { position: absolute; z-index: 1; bottom: 16px; left: 18px; font: 700 11px/1.3 Inter, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
 .mcr-buy { padding:26px 24px 24px; border:1px solid var(--mcr-line); border-top:3px solid var(--mcr-red); border-radius:16px; background:var(--mcr-panel); box-shadow:0 10px 36px rgb(0 0 0 / .06); }
-.mcr-buy-eyebrow { margin:0 0 12px; color:var(--mcr-muted); font:700 11px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
-.mcr-buy .mcr-price { gap:8px 10px; }
-.mcr-buy .mcr-price strong { flex-basis:100%; font-size:36px; letter-spacing:-.04em; }
-.mcr-buy .mcr-price s { font-size:14px; }
-.mcr-buy .mcr-discount { padding:4px 7px; background:var(--mcr-red-soft); color:var(--mcr-red); font-size:11px; }
+.mcr-buy-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.mcr-buy-eyebrow { margin:0; color:var(--mcr-muted); font:700 11px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+.mcr-buy .mcr-price { flex-wrap:nowrap; justify-content:space-between; gap:12px; }
+.mcr-buy .mcr-price strong { flex:0 1 auto; font-size:30px; letter-spacing:-.04em; white-space:nowrap; }
+.mcr-buy .mcr-price s { flex:none; font-size:14px; white-space:nowrap; }
+.mcr-buy .mcr-discount { flex:none; padding:4px 7px; background:var(--mcr-red-soft); color:var(--mcr-red); font-size:11px; }
 .mcr-buy .mcr-unit-cost { display:flex; justify-content:space-between; align-items:baseline; gap:8px 12px; margin:18px 0 8px; padding:12px 14px; border:1px solid var(--mcr-line); border-radius:9px; background:var(--mcr-side); font-size:13px; }
 .mcr-buy .mcr-unit-cost strong { color:var(--mcr-ink); font-size:17px; }
 .mcr-buy .mcr-specs { margin:8px 0 0; border-top:0; }
@@ -157,8 +160,10 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-buy .mcr-specs dd { flex:1 1 53%; min-width:0; font-size:13px; font-weight:650; overflow-wrap:anywhere; }
 .mcr-buy .mcr-buy-note { margin:18px 0 0; color:var(--mcr-muted); font-size:13px; font-weight:500; line-height:1.7; text-align:center; }
 .mcr-buy-actions { display:grid; gap:10px; margin-top:20px; }
-.mcr-buy-actions .mcr-btn { justify-content:space-between; min-height:49px; margin:0; padding:14px 18px; font-size:15px; }
-.mcr-buy-actions .mcr-btn--primary { box-shadow:0 5px 15px rgb(212 33 61 / .15); }
+.mcr-buy-actions .mcr-btn { justify-content:center; min-height:49px; margin:0; padding:14px 18px; font-size:15px; }
+.mcr-buy-actions .mcr-btn--primary { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(110deg,#bd1939,var(--mcr-red),#e72b50); box-shadow:0 5px 18px rgb(212 33 61 / .2); transition:filter .2s,box-shadow .2s; }
+.mcr-buy-actions .mcr-btn--primary:hover { filter:brightness(1.08); box-shadow:0 7px 22px rgb(212 33 61 / .28); }
+.mcr-buy-actions .mcr-btn--primary::after { content:""; position:absolute; top:-70%; bottom:-70%; left:-55%; width:40%; background:linear-gradient(90deg,transparent,rgb(255 255 255 / .08),rgb(255 255 255 / .38),rgb(255 255 255 / .08),transparent); transform:skewX(-22deg); animation:mcr-glass-sweep 5.6s ease-in-out infinite; pointer-events:none; }
 .mcr-buy .mcr-owned { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; font-size:19px; }
 .mcr-buy .mcr-owned svg { width:21px; height:21px; margin-top:1px; stroke:#22a363; }
 .mcr-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 0; }
@@ -211,9 +216,6 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-toolbar-price strong { color:var(--mcr-red); font:800 21px/1.2 Inter,Arial,sans-serif; letter-spacing:-.035em; }
 .mcr-toolbar-price s { color:var(--mcr-muted); font:500 12px/1.2 Inter,Arial,sans-serif; }
 .mcr-toolbar-discount { padding:3px 6px; border-radius:5px; background:rgb(232 35 79 / .14); color:var(--mcr-red); font:800 10px/1.2 Inter,Arial,sans-serif; font-style:normal; white-space:nowrap; }
-.mcr .mcr-buybar .mcr-btn--primary { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(115deg,#bd1539,var(--mcr-red),#f52b58); box-shadow:0 7px 19px rgb(198 23 61 / .27); transition:filter .2s,box-shadow .2s,transform .2s; }
-.mcr .mcr-buybar .mcr-btn--primary:hover { filter:brightness(1.12); box-shadow:0 10px 24px rgb(198 23 61 / .38); transform:translateY(-1px); }
-.mcr .mcr-buybar .mcr-btn--primary::after { content:""; position:absolute; top:-60%; bottom:-60%; left:-55%; width:45%; background:linear-gradient(90deg,transparent,rgb(255 255 255 / .06),rgb(255 255 255 / .5),rgb(255 255 255 / .06),transparent); transform:skewX(-22deg); animation:mcr-glass-sweep 5.2s ease-in-out infinite; pointer-events:none; }
 @keyframes mcr-glass-sweep { 0%,55% { transform:translateX(0) skewX(-22deg); } 82%,100% { transform:translateX(390%) skewX(-22deg); } }
 .mcr-toolbar-progress { padding-bottom: 14px; color: var(--mcr-muted); font: 600 13px/1.2 Inter, Arial, sans-serif; }
 
@@ -221,6 +223,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 /* The layers sit in one grid cell. While a card shows, the frame drops its fixed 16:9 ratio (keeping 16:9 as the
    minimum height, measured on the panel's width), so a sign-up card on a narrow screen is never cut off. */
 .mcr-panel { container-type: inline-size; }
+/* The quiz dialog must use the viewport as its fixed-position containing block. */
+.mcr-panel[data-mcr-panel="quiz"] { container-type:normal; }
 .mcr-stage:has(> .mcr-stage-card:not([hidden])) { aspect-ratio: auto; min-height: calc(100cqw * 9 / 16); }
 .mcr-stage { position: relative; display: grid; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; background: radial-gradient(circle at 72% 28%, rgb(232 35 79 / .32), transparent 55%), linear-gradient(135deg, #1c2028, #121318); color: #fff; }
 .mcr-stage > * { grid-area: 1 / 1; min-width: 0; }
@@ -250,10 +254,32 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-files { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .mcr .mcr-files a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--mcr-line); border-radius: 10px; color: var(--mcr-ink); font: 600 14.5px/1.4 Inter, Arial, sans-serif; overflow-wrap: anywhere; }
 .mcr .mcr-files a:hover { border-color: var(--mcr-red); }
-.mcr-quiz-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 24px; border: 1px solid var(--mcr-line); border-radius: 14px; background: var(--mcr-red-soft); }
+.mcr-quiz-card { display: flex; flex-wrap:wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 24px; border: 1.5px solid var(--mcr-card-line); border-radius: 14px; background: var(--mcr-panel); }
 .mcr .mcr-quiz-card h3 { margin: 0; color: var(--mcr-ink); font: 700 18px/1.35 Inter, Arial, sans-serif; }
 .mcr-quiz-card p { margin: 6px 0 0; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
 .mcr-quiz-card .mcr-btn { flex: none; }
+.mcr-quiz-card > div:first-child { flex:1; min-width:0; }
+.mcr-quiz-actions { display:flex; flex:none; align-items:center; gap:10px; }
+.mcr .mcr-quiz-actions .mcr-btn { min-height:42px; padding:10px 16px; font-size:14px; }
+.mcr .mcr-quiz-actions [data-mcr-quiz-history] { border-color:var(--mcr-ink); background:var(--mcr-ink); color:var(--mcr-panel) !important; }
+.mcr .mcr-quiz-actions [data-mcr-quiz-history]:hover { opacity:.85; }
+.mcr-quiz-card > .mcr-quiz-error { flex-basis:100%; margin:0; }
+.mcq-submit-actions { display:flex; flex:none; align-items:center; gap:8px; }
+.mcq-history-tabs { display:flex; gap:28px; margin:0; border-bottom:1px solid var(--mcr-line); }
+.mcq-history-tab { padding:12px 0; border:0; border-bottom:3px solid transparent; background:none; color:var(--mcr-muted); font:700 15px/1.4 Inter,Arial,sans-serif; cursor:pointer; }
+.mcq-history-tab[aria-selected="true"] { color:var(--mcr-red); border-bottom-color:var(--mcr-red); }
+.mcq-history-panel[hidden] { display:none; }
+.mcq-notebook-intro { margin:22px 0 0; color:var(--mcr-muted); font:400 14px/1.65 Inter,Arial,sans-serif; }
+.mcq-notebook-list { display:grid; gap:12px; }
+.mcq-notebook-item { border:1px solid var(--mcr-line); border-radius:12px; background:var(--mcr-panel); }
+.mcq-notebook-item > summary { display:flex; align-items:flex-start; gap:14px; padding:18px; color:var(--mcr-ink); font:600 15px/1.55 Inter,Arial,sans-serif; cursor:pointer; list-style:none; }
+.mcq-notebook-item > summary::-webkit-details-marker { display:none; }
+.mcq-notebook-item > summary::after { content:"+"; flex:none; margin-left:auto; color:var(--mcr-muted); font-size:20px; line-height:1.1; }
+.mcq-notebook-item[open] > summary { border-bottom:1px solid var(--mcr-line); }
+.mcq-notebook-item[open] > summary::after { content:"−"; }
+.mcq-notebook-number { flex:none; padding:4px 8px; border-radius:6px; background:var(--mcr-red-soft); color:var(--mcr-red); font:700 12px/1.4 Inter,Arial,sans-serif; }
+.mcq-notebook-question { min-width:0; overflow-wrap:anywhere; }
+.mcq-notebook-item .mcq-review-question { margin:0; padding:20px 18px; border:0; }
 .mcr-quiz-list { display: grid; gap: 12px; }
 .mcr .mcr-quiz-card .mcr-quiz-error { color: var(--mcr-red); font-weight: 600; }
 /* Filter of a long quiz list (exam-prep lessons). */
@@ -320,7 +346,7 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcq-map-panel[hidden] { display: none; }
 .mcq-workspace:has(.mcq-map-panel[hidden]) { grid-template-columns: minmax(0, 1fr); }
 .mcq-map-head { position: sticky; z-index: 1; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 12px 11px; background: var(--mcr-side); color: var(--mcr-ink); font: 700 13px/1.3 Inter, Arial, sans-serif; }
-.mcq-expand { display: grid; flex: none; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--mcr-line); border-radius: 8px; background: var(--mcr-panel); color: var(--mcr-ink); cursor: pointer; }
+.mcq-expand { display: grid; flex: none; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--mcr-line); border-radius: 8px; background: var(--mcr-panel); color: var(--mcr-ink); cursor: pointer; }
 .mcq-expand:hover { border-color: var(--mcr-red); color: var(--mcr-red); }
 .mcq-expand svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 body.mcr-quiz-expanded { overflow: hidden; }
@@ -334,7 +360,7 @@ body.mcr-quiz-expanded { overflow: hidden; }
 .mcr .mcq-back:hover { background: var(--mcr-hover); }
 .mcr .mcq-back:focus { outline: 2px solid var(--mcr-red); outline-offset: 2px; box-shadow: none; }
 .mcq-back[hidden] { display: none; }
-.mcq-history { padding: 28px 4px 34px; }
+.mcq-history { padding:0 4px 24px; }
 .mcq-history-title { margin: 10px 0 6px; color: var(--mcr-ink); font: 700 27px/1.25 Inter, Arial, sans-serif; }
 .mcq-history-subtitle { margin: 0 0 20px; color: var(--mcr-muted); font: 400 15px/1.5 Inter, Arial, sans-serif; }
 .mcq-history-heading { margin: 30px 0 14px; color: var(--mcr-ink); font: 700 18px/1.35 Inter, Arial, sans-serif; }
@@ -379,7 +405,7 @@ body.mcr-quiz-expanded { overflow: hidden; }
 .mcq-option.is-correct .mcq-letter { border-color: #22a35a; background: #22a35a; color: #fff; }
 .mcq-option.is-wrong { border-color: var(--mcr-red); background: var(--mcr-red-soft); }
 .mcq-skipped { margin: 14px 0 0; color: #e8930c; font: 600 14px/1.5 Inter, Arial, sans-serif; }
-.mcq-explain { margin-top: 18px; padding: 16px 18px; border-left: 3px solid #22a35a; border-radius: 0 10px 10px 0; background: rgb(34 163 90 / .08); }
+.mcq-explain { margin-top: 18px; padding: 16px 18px; border-left: 3px solid #22a35a; border-radius: 0 10px 10px 0; background: rgb(148 148 148 / .1); }
 .mcq-explain-title { margin: 0 0 6px; color: #22a35a; font: 700 12px/1.3 Inter, Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .mcq-explain-body { color: var(--mcr-ink); font: 400 15px/1.7 Inter, Arial, sans-serif; overflow-wrap: anywhere; }
 .mcq-explain-legacy * { color: inherit !important; background: transparent !important; font-family: inherit !important; font-size: inherit !important; }
@@ -479,8 +505,7 @@ html[data-meduc-theme="light"] .mcq-explain-option.is-wrong { color: #bf2944; }
 .mcr-slot .btn-primary, .mcr-slot .edu-btn { border-color: var(--mcr-red) !important; border-radius: 10px; background: var(--mcr-red) !important; color: #fff !important; }
 .mcr-slot .rating-list li, .mcr-slot .list-comment li { border-color: var(--mcr-line) !important; }
 
-/* Phones: a sign-up bar replaces the site's bottom action bar on this page. */
-.mcr-buybar { display: none; }
+/* Course pages use the registration card instead of a fixed bottom purchase bar. */
 body:has(.mcr) #meduc-action-bar { display: none !important; }
 body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 
@@ -517,7 +542,8 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr { padding-top:14px; }
   .mcr-course-overview { padding:20px 16px; border-radius:12px; }
   .mcr-buy { padding:22px 18px 20px; }
-  .mcr-buy .mcr-price strong { font-size:34px; }
+  .mcr-buy .mcr-price strong { font-size:clamp(22px,6vw,28px); }
+  .mcr-buy .mcr-price s { font-size:clamp(12px,3vw,14px); }
   .mcr-course-heading { margin-bottom:16px; }
   .mcr-overview-tabs { gap:24px; }
   .mcr-overview-tabs button, .mcr .mcr-overview-jump { font-size:15px; }
@@ -533,12 +559,18 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-stage-card { padding: 26px 18px; }
   .mcr-stage-card p { font-size: 13.5px; }
   .mcr-quiz-card { align-items: stretch; flex-direction: column; }
+  .mcr-quiz-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
+  .mcr-quiz-actions [data-mcr-quiz-enroll] { grid-column:1 / -1; }
+  .mcq-bar-meta { flex-wrap:wrap; }
+  .mcq-submit-actions { margin-left:auto; }
+  .mcq-history-tabs { gap:22px; }
+  .mcq-notebook-item > summary { gap:10px; padding:14px; font-size:14px; }
   .mcq-bar { flex-wrap: wrap; gap: 10px; padding: 12px 14px; }
   .mcq-bar-meta { width: 100%; justify-content: space-between; }
   .mcq-stage { padding: 20px 14px 4px; }
   .mcq-review-question { padding: 16px; }
   .mcq-result-review-title { font-size: 19px; }
-  .mcq-history { padding: 18px 0 26px; }
+  .mcq-history { padding:0 0 20px; }
   .mcq-history-title { font-size: 22px; }
   .mcq-history-item { flex-wrap: wrap; gap: 10px 14px; padding: 14px; }
   .mcq-history-copy { flex: 1 1 100%; }
@@ -549,13 +581,8 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcq-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mcq-stats div:nth-child(2) { border-right: 0; }
   .mcq-stats div:nth-child(-n+2) { border-bottom: 1px solid var(--mcr-line); }
-  .mcr-buybar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 1010; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--mcr-line); background: var(--mcr-panel); box-shadow: 0 -8px 24px rgb(0 0 0 / .18); }
-  .mcr-buybar .mcr-btn { min-height: 46px; padding: 10px 22px; }
-  .mcr-buybar .mcr-toolbar-discount { display:none; }
-  body:has(.mcr-buybar) { padding-bottom: 70px !important; }
-  body:has(.mcr-buybar) .contact-fixed { bottom: 90px !important; }
 }
-@media (prefers-reduced-motion: reduce) { .mcr *, .mcr *::before, .mcr *::after { transition:none !important; animation:none !important; } .mcr .mcr-buybar .mcr-btn--primary::after { display:none; } }
+@media (prefers-reduced-motion: reduce) { .mcr *, .mcr *::before, .mcr *::after { transition:none !important; animation:none !important; } .mcr-buy-actions .mcr-btn--primary::after { display:none; } }
 
 /* Explanation Markdown follows the quiz typography in either theme. */
 .mcq-markdown { min-width: 0; }
