@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.css?v=20261028-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.css?v=20261028-3" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback-page.css?v=20261015" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.js?v=20261015" defer></script>
 
 <main class="mab" id="meduc-about">
@@ -34,7 +35,6 @@
                 <a href="#ten-goi"><span>02</span> Tên gọi</a>
                 <a href="#tam-nhin"><span>03</span> Tầm nhìn &amp; sứ mệnh</a>
                 <a href="#gia-tri"><span>04</span> Giá trị cốt lõi</a>
-                <a href="#tuong-lai"><span>05</span> Tương lai</a>
             </div>
         </div>
     </nav>
@@ -94,24 +94,20 @@
         </div>
     </section>
 
-    <section class="mab-section mab-values" id="gia-tri" aria-labelledby="values-title" data-about-chapter>
-        <div class="mab-shell">
-            <div class="mab-values-heading"><div><p class="mab-eyebrow">04 / NHỮNG ĐIỀU MEDUC GIỮ VỮNG</p><h2 id="values-title">SÁU GIÁ TRỊ.<br><span>MỘT TINH THẦN.</span></h2></div><p>Những giá trị cốt lõi của MedUC,<br>trong giảng dạy và trong cách đồng hành.</p></div>
-            <div class="mab-values-grid">
+    <section class="mab-section mfb mfb-care" id="gia-tri" aria-labelledby="values-title" data-about-chapter>
+        <div class="mfb-shell">
+            <div class="mfb-heading">
+                <div><p class="mfb-kicker">04 / NHỮNG ĐIỀU MEDUC GIỮ VỮNG</p><h2 class="mfb-title" id="values-title">SÁU GIÁ TRỊ.<br><span>MỘT TINH THẦN.</span></h2></div>
+                <p class="mfb-intro">Những giá trị cốt lõi của MedUC,<br>trong giảng dạy và trong cách đồng hành.</p>
+            </div>
+            <ol class="mfb-care-grid">
                 {for $i = 1 to 6}
                     {$value_key = "gia_tri_{$i}"}
-                    {if !empty($text.$value_key)}<article><span class="mab-small-number">0{$i}</span><h3>{$text.$value_key|escape}</h3></article>{/if}
+                    {if !empty($text.$value_key)}
+                        <li class="mfb-care-item"><span class="mfb-care-number" aria-hidden="true">0{$i}</span><h3 class="mfb-care-title">{$text.$value_key|escape}</h3></li>
+                    {/if}
                 {/for}
-            </div>
-        </div>
-    </section>
-
-    <section class="mab-section mab-shell mab-future" id="tuong-lai" aria-labelledby="future-title" data-about-chapter>
-        <div class="mab-section-heading"><p class="mab-eyebrow">05 / ĐỊNH HƯỚNG PHÁT TRIỂN</p><h2 id="future-title">KHÔNG NGỪNG HỌC HỎI.<br><span>KHÔNG NGỪNG PHÁT TRIỂN.</span></h2><p>{$text.tuong_lai_mo_ta|default:'Lấy người học làm trung tâm, tiếp tục đầu tư vào đội ngũ giảng viên và phương pháp dạy học là định hướng phát triển của MedUC.'|escape}</p></div>
-        <div class="mab-future-grid">
-            <article><span class="mab-small-number">01</span><h3>{$text.tuong_lai_1_tieu_de|default:'Đầu tư vào người dạy'|escape}</h3><p>{$text.tuong_lai_1|default:'Tiếp tục đầu tư vào giảng viên, chuyên môn và kinh nghiệm giảng dạy.'|escape}</p></article>
-            <article><span class="mab-small-number">02</span><h3>{$text.tuong_lai_2_tieu_de|default:'Hoàn thiện cách học'|escape}</h3><p>{$text.tuong_lai_2|default:'Phát triển phương pháp dạy học, hệ thống kiến thức từ nền tảng đến chuyên sâu.'|escape}</p></article>
-            <article><span class="mab-small-number">03</span><h3>{$text.tuong_lai_3_tieu_de|default:'Đồng hành cùng người học'|escape}</h3><p>{$text.tuong_lai_3|default:'Lắng nghe khó khăn của học viên, nâng cao chất lượng và dịch vụ hỗ trợ học tập.'|escape}</p></article>
+            </ol>
         </div>
     </section>
 

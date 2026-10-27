@@ -148,3 +148,7 @@ html[data-meduc-theme="light"] .mab-name-logo .mab-name-wordmark--dark { display
   .mab-outro-inner>div>p:last-child { font-size:13px; }
 }
 @media(prefers-reduced-motion:reduce) { .mab * { transition:none !important; scroll-behavior:auto !important; } }
+
+/* Reuse the student-care cards for the six core values. */
+.mab .mfb-kicker { color:var(--mfb-red); }
+.mab .mfb-intro { color:var(--mfb-muted); }
