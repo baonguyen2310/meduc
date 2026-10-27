@@ -76,7 +76,7 @@
                         {if $meduc_brand}<img class="mab-name-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg" alt="MedUC" loading="lazy" decoding="async" />{/if}
                     </div>
                 {/if}
-                <h2 id="name-title"><span>NGHĨA LÀ GÌ?</span></h2><p>MEDICAL · ULTIMATE · CENTER</p>
+                <h2 id="name-title"><span>NGHĨA LÀ GÌ?</span></h2>
             </div>
             <div class="mab-name-grid">
                 <article><span class="mab-letter">MED</span><h3>Medical</h3><p>{$text.ten_goi_med|default:'Chuyên sâu lĩnh vực Y khoa.'|escape}</p></article>
