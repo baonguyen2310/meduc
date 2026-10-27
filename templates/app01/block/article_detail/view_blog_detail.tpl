@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-detail.css?v=20261016" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-detail.css?v=20261028-courses" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-2" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/blog-detail.js?v=20261015" defer></script>
@@ -40,10 +40,19 @@
         </div>
     </article>
 
+    {$courses = []}
+    {if !empty($journal.course_ids)}{$courses = $this->Product->getProducts(['filter' => ['ids' => $journal.course_ids, 'draft' => '0'], 'limit' => 3])}{/if}
+    {* Prefer courses selected for this article in the CMS; otherwise suggest current courses from the student-year catalogue. *}
+    {if empty($courses)}{$courses = $this->Product->getProducts(['filter' => ['id_categories' => [102, 72, 103], 'draft' => '0'], 'limit' => 3])}{/if}
+    {if !empty($courses)}
+    <section class="mbj-shell mbj-courses" aria-labelledby="blog-courses-title">
+        <div class="mbj-section-heading"><div><p class="mbj-eyebrow">GỢI Ý TỪ MEDUC</p><h2 id="blog-courses-title">TỪ BÀI VIẾT.<br><span>ĐẾN BÀI GIẢNG.</span></h2></div><a href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div>
+        <div class="mbj-course-grid">{foreach from=$courses item=course}<article><a href="{$this->Utilities->checkInternalUrl($course.url)|escape}"><span class="mbj-course-image">{if !empty($course.all_images[0])}<img src="{CDN_URL}{$this->Utilities->getThumbs($course.all_images[0], 500)}" alt="{$course.name|escape}" loading="lazy" decoding="async">{/if}</span><div class="mbj-course-copy"><h3>{$course.name|escape}</h3><span class="mbj-course-link">Xem khóa học <span aria-hidden="true">→</span></span></div></a></article>{/foreach}</div>
+    </section>
+    {else}<aside class="mbj-next"><div class="mbj-shell mbj-next-inner"><div><p class="mbj-eyebrow">GỢI Ý TỪ MEDUC</p><h2>TỪ BÀI VIẾT.<br><span>ĐẾN BÀI GIẢNG.</span></h2><p>Nối điều vừa đọc với bài giảng và thực hành theo lộ trình học Y của bạn.</p></div><a class="mbj-button" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div></aside>{/if}
+
     {if !empty($journal.related)}<section class="mbj-related" aria-labelledby="blog-related-title"><div class="mbj-shell"><div class="mbj-section-heading"><div><p class="mbj-eyebrow">TIẾP TỤC KHÁM PHÁ</p><h2 id="blog-related-title">ĐỌC THÊM.<br><span>HIỂU SÂU HƠN.</span></h2></div><a href="/blog">Xem tất cả bài viết <span aria-hidden="true">↗</span></a></div><div class="mbj-related-grid">{foreach from=$journal.related item=item}<article class="mbj-card"><a class="mbj-card-image" href="{$this->Utilities->checkInternalUrl($item.url)|escape}" aria-label="Đọc {$item.name|escape}">{if $item.image}<img src="{CDN_URL}{$item.image|escape}" alt="{$item.name|escape}" loading="lazy" decoding="async">{else}<span>MEDUC JOURNAL</span>{/if}</a><div class="mbj-card-copy"><p class="mbj-eyebrow">{$item.topic_name|escape}</p><h3><a href="{$this->Utilities->checkInternalUrl($item.url)|escape}">{$item.name|escape}</a></h3><p>{$item.summary|escape}</p><div><time datetime="{$item.datetime}">{$item.date}</time><a href="{$this->Utilities->checkInternalUrl($item.url)|escape}">Đọc tiếp <span aria-hidden="true">↗</span></a></div></div></article>{/foreach}</div></div></section>{/if}
 
-    {if !empty($journal.course_ids)}{$courses = $this->Product->getProducts(['filter'=>['ids'=>$journal.course_ids,'draft'=>'0'],'limit'=>6])}{if !empty($courses)}<section class="mbj-shell mbj-courses" aria-labelledby="blog-courses-title"><div class="mbj-section-heading"><div><p class="mbj-eyebrow">TỪ KIẾN THỨC ĐẾN THỰC HÀNH</p><h2 id="blog-courses-title">HỌC TIẾP<br><span>CÙNG MEDUC.</span></h2></div><p>Các khóa học được MedUC giới thiệu trong bài viết.</p></div><div class="mbj-course-grid">{foreach from=$courses item=course}<article><a class="mbj-course-image" href="{$this->Utilities->checkInternalUrl($course.url)|escape}">{if !empty($course.all_images[0])}<img src="{CDN_URL}{$course.all_images[0]|escape}" alt="{$course.name|escape}" loading="lazy" decoding="async">{/if}</a><div><h3><a href="{$this->Utilities->checkInternalUrl($course.url)|escape}">{$course.name|escape}</a></h3><a class="mbj-button" href="{$this->Utilities->checkInternalUrl($course.url)|escape}">Học thử miễn phí <span aria-hidden="true">→</span></a></div></article>{/foreach}</div></section>{/if}
-    {else}<aside class="mbj-next"><div class="mbj-shell mbj-next-inner"><div><p class="mbj-eyebrow">TIẾP TỤC HỌC CÙNG MEDUC</p><h2>ĐỌC ĐỂ HIỂU.<br><span>HỌC ĐỂ VẬN DỤNG.</span></h2><p>Nối điều vừa đọc với bài giảng và thực hành theo lộ trình học Y của bạn.</p></div><a class="mbj-button" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div></aside>{/if}
     <dialog class="mbj-copy-dialog" data-copy-dialog aria-labelledby="copy-link-title"><h2 id="copy-link-title">Liên kết bài viết</h2><p>Chọn và sao chép liên kết bên dưới.</p><label for="blog-copy-url" class="mbj-sr-only">Địa chỉ bài viết</label><input id="blog-copy-url" type="url" readonly><form method="dialog"><button type="submit">Đóng</button></form></dialog>
     <p class="mbj-sr-only" data-copy-status role="status" aria-live="polite"></p>
     {else}<section class="mbj-shell mbj-unavailable"><p class="mbj-eyebrow">MEDUC JOURNAL</p><h1>Bài viết hiện chưa khả dụng.</h1><a class="mbj-button" href="/blog">Về danh sách blog <span aria-hidden="true">→</span></a></section>{/if}
