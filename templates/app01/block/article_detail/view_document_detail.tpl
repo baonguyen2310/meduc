@@ -14,7 +14,7 @@
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/pdf-reader.js?v=20261028-scroll-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261028-scroll-2" defer></script>
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261028-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261028-hover-3" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261028-2" defer></script>
 <main class="mdd" id="document-detail-page" data-reading-item="document" data-reading-id="{$document.id}" data-reading-title="{$document.title|escape}" data-reading-topic="{$document.subject|escape}" data-reading-image="{if !empty($document.image)}{CDN_URL}{$document.image|escape}{/if}">
     <svg class="mdd-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="mdd-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="mdd-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 13h8m-8 4h6"/></symbol><symbol id="mdd-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="mdd-expand" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol><symbol id="mdd-link" viewBox="0 0 24 24"><path d="m10 7 3-3a5 5 0 0 1 7 7l-3 3M14 17l-3 3a5 5 0 0 1-7-7l3-3m1 6 8-8"/></symbol></svg>

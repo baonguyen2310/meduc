@@ -1,5 +1,5 @@
 {include file='../Order/meduc_assets.tpl'}
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261028-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261028-hover-3" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261028-2" defer></script>
 <main class="mco mds-payment" data-document-payment="{$purchase_code|escape}">
   <div class="mco-shell">
