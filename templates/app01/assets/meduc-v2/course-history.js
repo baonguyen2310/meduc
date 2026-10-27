@@ -17,7 +17,6 @@
     if(!value)return '';
     try{const u=new URL(value,location.origin);return ['https:','http:'].includes(u.protocol)&&(image||u.origin===location.origin)?u.href:'';}catch(_){return '';}
   }
-  const money=value=>`${Number(value).toLocaleString('vi-VN')}đ`;
   if(catalog){
     box=node('section','mch');box.hidden=true;box.setAttribute('aria-labelledby','recent-courses-title');box.dataset.courseHistory=kind;
     const heading=node('div','mch-heading'),copy=node('div');
@@ -40,7 +39,6 @@
       cover.append(node('span','mch-cover-label',kind==='course'?'MEDUC / KHOÁ HỌC':'MEDUC / LUYỆN THI'));
       const body=node('div','mch-copy'),title=node('h3'),link=node('a','',course.title);link.href=url;title.append(link);body.append(title);
       const meta=node('p','mch-meta'),facts=[];if(course.chapters>0)facts.push(`${course.chapters} chương`);if(course.lessons>0)facts.push(`${course.lessons} bài học`);meta.textContent=facts.join(' · ');if(facts.length)body.append(meta);
-      if(course.price>0){const price=node('p','mch-price');price.append(node('strong','',money(course.price)));if(course.old_price>course.price)price.append(node('del','',money(course.old_price)));body.append(price);}
       const go=node('a','mch-action',course.preview_label||'Xem lại khoá học');go.href=safeURL(course.preview_url)||url;go.append(node('span','','→'));body.append(go);card.append(cover,body);grid.append(card);
     });
     box.hidden=grid.children.length===0;
