@@ -5,7 +5,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback-page.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261028-2" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261028-1" defer></script>
 
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-application.css?v=20261028-1" rel="stylesheet">
@@ -42,17 +43,23 @@
         </div>
     </nav>
 
-    <section class="mft-shell mft-selection" id="tieu-chuan-tuyen-chon" aria-labelledby="faculty-standards-title">
-            <div class="mft-selection-intro">
-                <p class="mft-kicker">{$text.tuyen_chon_nhan|default:'TIÊU CHUẨN TUYỂN CHỌN'|escape}</p>
-                <h2 id="faculty-standards-title">{$text.tuyen_chon_tieu_de|default:'Chọn người dạy. Chọn chất lượng.'|escape}</h2>
-                <p>{$text.tuyen_chon_mo_ta|default:'MedUC không tuyển sinh viên hoặc bác sĩ vừa tốt nghiệp làm giảng viên. Chúng tôi lựa chọn những người có nền tảng chuyên môn, kinh nghiệm và khả năng truyền đạt phù hợp với người học.'|escape}</p>
+    <section class="mfb mfb-perks mft-selection" id="tieu-chuan-tuyen-chon" aria-labelledby="faculty-standards-title">
+        <div class="mfb-shell">
+            <div class="mfb-heading">
+                <div>
+                    <p class="mfb-kicker">{$text.tuyen_chon_nhan|default:'TIÊU CHUẨN TUYỂN CHỌN'|escape}</p>
+                    {$standards_title = $text.tuyen_chon_tieu_de|default:'Chọn người dạy. Chọn chất lượng.'}
+                    {$standards_title_parts = explode('. ', $standards_title, 2)}
+                    <h2 class="mfb-title" id="faculty-standards-title">{$standards_title_parts[0]|escape|upper}{if count($standards_title_parts) > 1}.<br><span>{$standards_title_parts[1]|escape|upper}</span>{/if}</h2>
+                </div>
+                <p class="mfb-intro">{$text.tuyen_chon_mo_ta|default:'MedUC không tuyển sinh viên hoặc bác sĩ vừa tốt nghiệp làm giảng viên. Chúng tôi lựa chọn những người có nền tảng chuyên môn, kinh nghiệm và khả năng truyền đạt phù hợp với người học.'|escape}</p>
             </div>
-            <ol class="mft-standards">
-                <li><span class="mft-standard-number">01</span><div><h3>Nền tảng chuyên môn</h3><p>Hồ sơ đào tạo, bằng cấp và lĩnh vực chuyên môn được xem xét khi tuyển chọn.</p></div></li>
-                <li><span class="mft-standard-number">02</span><div><h3>Kinh nghiệm thực tế</h3><p>Kinh nghiệm giảng dạy, nghiên cứu hoặc thực hành giúp kiến thức gắn với nghề Y.</p></div></li>
-                <li><span class="mft-standard-number">03</span><div><h3>Khả năng đồng hành</h3><p>Giải thích rõ ràng, hướng dẫn có lộ trình và tận tâm giải đáp cho người học.</p></div></li>
+            <ol class="mfb-perk-grid mft-standards-cards">
+                <li class="mfb-perk"><span class="mfb-perk-figure" aria-hidden="true">01</span><h3 class="mfb-perk-title">Nền tảng chuyên môn</h3><p class="mfb-perk-text">Hồ sơ đào tạo, bằng cấp và lĩnh vực chuyên môn được xem xét khi tuyển chọn.</p></li>
+                <li class="mfb-perk"><span class="mfb-perk-figure" aria-hidden="true">02</span><h3 class="mfb-perk-title">Kinh nghiệm thực tế</h3><p class="mfb-perk-text">Kinh nghiệm giảng dạy, nghiên cứu hoặc thực hành giúp kiến thức gắn với nghề Y.</p></li>
+                <li class="mfb-perk"><span class="mfb-perk-figure" aria-hidden="true">03</span><h3 class="mfb-perk-title">Khả năng đồng hành</h3><p class="mfb-perk-text">Giải thích rõ ràng, hướng dẫn có lộ trình và tận tâm giải đáp cho người học.</p></li>
             </ol>
+        </div>
     </section>
 
     <section class="mft-process" id="quy-trinh-tuyen-chon" aria-labelledby="faculty-process-title">
