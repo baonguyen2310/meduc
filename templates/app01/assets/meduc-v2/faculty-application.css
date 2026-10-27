@@ -1,0 +1,52 @@
+/* Recruitment stays inside the faculty page and follows its light/dark palette. */
+.mft-application{padding-block:80px;background:var(--mft-surface);scroll-margin-top:calc(var(--mhi-header-h,80px) + var(--mft-nav-h,76px) + 20px)}
+.mft-application-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,76px);align-items:start}
+.mft-application-copy{padding-top:12px}
+.mft .mft-application h2{margin:0;font:400 clamp(36px,3.4vw,58px)/1.2 Anton,Impact,sans-serif;text-transform:uppercase;text-wrap:balance}
+.mft-application h2 span{color:var(--mft-red)}
+.mft-application-lead{color:var(--mft-muted);margin:24px 0 32px;font-size:15px;max-width:390px}
+.mft-application-steps{list-style:none;padding:0;margin:0;max-width:390px;counter-reset:application-step}
+.mft-application-steps li{display:flex;gap:16px;padding:20px 0;border-top:1px solid var(--mft-line);counter-increment:application-step}
+.mft-application-steps li:before{content:'0' counter(application-step);color:var(--mft-red);font:400 26px/1.2 Anton,Impact,sans-serif}
+.mft-application-steps strong{display:block;font-size:14px;margin-bottom:3px}
+.mft-application-steps p{margin:0;color:var(--mft-muted);font-size:13px;line-height:1.7}
+.mft-application-card{background:var(--mft-bg);border:1px solid var(--mft-line);border-radius:16px;padding:clamp(24px,3vw,40px);box-shadow:0 16px 48px #00000008;min-width:0}
+.mft-application-card h3{margin:0 0 7px;font-size:23px;font-weight:700;letter-spacing:-.025em}
+.mft-application-note{font-size:12px;color:var(--mft-muted);margin:0 0 26px}
+.mft-application-fields{display:grid;grid-template-columns:1fr 1fr;gap:19px 18px}
+.mft-application-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.mft-application-field--wide{grid-column:1/-1}
+.mft-application-field label{font:600 13px/1.5 Inter,Arial,sans-serif;margin:0;color:var(--mft-ink)}
+.mft-application-field label span{font-weight:400;color:var(--mft-muted);font-size:11px}
+.mft .mft-application-field input,.mft .mft-application-field select,.mft .mft-application-field textarea{display:block;width:100%;height:46px;padding:11px 13px;border:1px solid var(--mft-line);border-radius:7px;background:var(--mft-surface);color:var(--mft-ink);font:400 14px/1.5 Inter,Arial,sans-serif;box-shadow:none;transition:border-color .18s}
+.mft .mft-application-field textarea{height:auto;min-height:134px;resize:vertical}
+.mft .mft-application-field input:focus,.mft .mft-application-field select:focus,.mft .mft-application-field textarea:focus{outline:none;border-color:var(--mft-red);box-shadow:0 0 0 3px color-mix(in srgb,var(--mft-red) 12%,transparent)}
+.mft .mft-application-field input::placeholder,.mft .mft-application-field textarea::placeholder{color:var(--mft-muted);opacity:.8}
+.mft-application-upload{border:1px dashed var(--mft-line);border-radius:10px;padding:24px 18px;text-align:center;background:var(--mft-surface);transition:border-color .18s,background .18s}
+.mft-application-upload[data-dragging="true"]{border-color:var(--mft-red);background:color-mix(in srgb,var(--mft-red) 8%,var(--mft-bg))}
+.mft-application-upload svg{display:block;width:26px;height:26px;margin:0 auto 9px;fill:none;stroke:var(--mft-red);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mft-application-upload p{margin:0 0 12px;color:var(--mft-muted);font-size:12px}
+.mft .mft-application-pick{border:1px solid var(--mft-line);border-radius:6px;padding:9px 16px;background:var(--mft-bg);color:var(--mft-ink);font:600 12px/1.5 Inter,Arial,sans-serif;cursor:pointer}
+.mft-application-file-input{position:absolute!important;width:1px!important;height:1px!important;opacity:0;overflow:hidden;pointer-events:none}
+.mft-application-files{list-style:none;margin:10px 0 0;padding:0}
+.mft-application-files li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--mft-line);font-size:12px;text-align:left}
+.mft-application-file-name{flex:1;min-width:0;overflow-wrap:anywhere}
+.mft-application-file-size{color:var(--mft-muted);font-size:11px;white-space:nowrap}
+.mft .mft-application-remove{border:0;padding:4px 7px;background:transparent;color:var(--mft-muted);font-size:20px;line-height:1;cursor:pointer}
+.mft-application-file-count{font-size:11px;color:var(--mft-muted);margin:9px 0 0;text-align:right}
+.mft-application-privacy{font-size:11px;line-height:1.75;color:var(--mft-muted);margin:22px 0 16px}
+.mft-application-privacy a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.mft .mft-application-submit{width:100%;border:0;cursor:pointer;justify-content:space-between;min-height:49px}
+.mft .mft-application-submit:disabled{cursor:wait;opacity:.65}
+.mft .mft-application-pick:disabled{cursor:default;opacity:.5}
+.mft-application-message{margin:0 0 18px;padding:12px 14px;border-radius:7px;font-size:13px;background:#cf2d4212;border:1px solid #cf2d4244;color:var(--mft-red)}
+.mft-application-message:empty{display:none}
+.mft-application-success{padding:36px 0;text-align:center}
+.mft-application-success svg{width:52px;height:52px;fill:none;stroke:#29a46a;stroke-width:1.5;margin:0 0 20px}
+.mft-application-success h3{font-size:26px;margin-bottom:16px}
+.mft-application-success p{color:var(--mft-muted);font-size:14px}
+.mft-application-reference{display:inline-block;padding:8px 14px;border:1px solid var(--mft-line);border-radius:6px;margin-top:8px}
+.mft-application-hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.mft-application [hidden]{display:none!important}
+@media(max-width:980px){.mft-application-layout{grid-template-columns:1fr}.mft-application-copy{max-width:660px}.mft-application-lead{max-width:580px}.mft-application-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:none}.mft-application-steps li{display:block}.mft-application-steps li:before{display:block;margin-bottom:14px}}
+@media(max-width:600px){.mft-application{padding-block:48px}.mft-application-layout{gap:24px}.mft-application-card{padding:22px 18px;border-radius:12px}.mft-application-fields{grid-template-columns:1fr;gap:16px}.mft-application-steps{display:none}.mft-application-lead{margin:18px 0 0}.mft .mft-application-field input,.mft .mft-application-field select,.mft .mft-application-field textarea{font-size:16px}.mft-application-upload{padding:20px 12px}}

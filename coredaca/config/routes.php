@@ -165,6 +165,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     // quizs_answer
     $builder->connect('/quizs-answer/add', ['controller' => 'QuizsAnswer', 'action' => 'add']);
+    $builder->connect('/giang-vien/ung-tuyen', ['controller'=>'FacultyApplication','action'=>'submit']);
     $builder->connect('/khoa-hoc/dong-gop', ['controller' => 'CourseContribution', 'action' => 'submit']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz/lich-su', ['controller' => 'QuizsAnswer', 'action' => 'history'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz', ['controller' => 'QuizsAnswer', 'action' => 'player'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
@@ -559,6 +560,11 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/course-prices', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'index']);
     $builder->connect('/course-prices/add', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'edit']);
     $builder->connect('/course-prices/edit/:id', ['plugin'=>'Admin','controller'=>'CoursePrice','action'=>'edit'], ['pass'=>['id'],'id'=>'[0-9]+']);
+    $builder->connect('/faculty-applications', ['plugin'=>'Admin','controller'=>'FacultyApplication','action'=>'index']);
+    $builder->connect('/faculty-applications/detail/:id', ['plugin'=>'Admin','controller'=>'FacultyApplication','action'=>'detail'], ['pass'=>['id'],'id'=>'[0-9]+']);
+    $builder->connect('/faculty-applications/review/:id', ['plugin'=>'Admin','controller'=>'FacultyApplication','action'=>'review'], ['pass'=>['id'],'id'=>'[0-9]+']);
+    $builder->connect('/faculty-applications/notify/:id', ['plugin'=>'Admin','controller'=>'FacultyApplication','action'=>'notify'], ['pass'=>['id'],'id'=>'[0-9]+']);
+    $builder->connect('/faculty-applications/download/:id/:number', ['plugin'=>'Admin','controller'=>'FacultyApplication','action'=>'download'], ['pass'=>['id','number'],'id'=>'[0-9]+','number'=>'[0-9]+']);
     $builder->connect('/course-contributions', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'index']);
     $builder->connect('/course-contributions/review/:id', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'review'], ['pass'=>['id'],'id'=>'[0-9]+']);
     $builder->connect('/course-contributions/photo/:id/:number', ['plugin'=>'Admin','controller'=>'CourseContribution','action'=>'photo'], ['pass'=>['id','number'],'id'=>'[0-9]+','number'=>'[0-9]+']);

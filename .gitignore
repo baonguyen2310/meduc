@@ -2,6 +2,7 @@
 full_database.sql
 *.sql
 !scripts/course_contributions.sql
+!scripts/faculty_applications.sql
 *.sql.gz
 *.zip
 *.tar.gz
@@ -48,3 +49,6 @@ scripts/__pycache__/
 hero-light/previews/
 design-references/
 HUONG_DAN_NAP_DE_THI_MEDUC_HOSTING.md
+
+# Private recruitment attachments
+/coredaca/private/faculty-applications/
