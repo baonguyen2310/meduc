@@ -29,7 +29,7 @@
         </section>
         <section class="mpv-section" aria-labelledby="mpv-06">
             <span class="mpv-number" aria-hidden="true">06</span>
-            <div><h2 id="mpv-06">Liên hệ và cập nhật chính sách</h2><p>Khi có thay đổi, nội dung và ngày cập nhật sẽ được công bố tại trang này. Nếu có câu hỏi về cách MedUC sử dụng thông tin, bạn có thể gửi yêu cầu qua trang liên hệ.</p><a class="mpv-contact" href="/lien-he-hop-tac">Liên hệ MedUC <span aria-hidden="true">→</span></a></div>
+            <div><h2 id="mpv-06">Liên hệ và cập nhật chính sách</h2><p>Khi có thay đổi, nội dung và ngày cập nhật sẽ được công bố tại trang này. Nếu có câu hỏi về cách MedUC sử dụng thông tin, bạn có thể gửi yêu cầu qua trang liên hệ.</p></div>
         </section>
     </div>
 </main>
