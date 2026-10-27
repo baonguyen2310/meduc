@@ -98,7 +98,7 @@ html[data-meduc-theme="light"] .mcr-tag--free { color:#16824e; }
 /* Introduction: a long middle column with its own tabs, and a sign-up column that stays in place. */
 .mcr-intro { display: grid; grid-template-columns: minmax(0, 1fr) 330px; align-items: start; gap: 28px; }
 .mcr-intro-main { min-width: 0; }
-.mcr-intro-side { position: sticky; top: 76px; }
+.mcr-intro-side { position: relative; }
 .mcr-anchors { position: sticky; z-index: 5; top: var(--mhi-header-h, 66px); display: flex; gap: 26px; margin: 0; padding-top: 4px; overflow-x: auto; border-bottom: 1px solid var(--mcr-line); background: var(--mcr-panel); scrollbar-width: none; }
 .mcr-anchors::-webkit-scrollbar { display: none; }
 .mcr .mcr-anchors a { flex: none; padding: 12px 0; border-bottom: 3px solid transparent; color: var(--mcr-muted); font: 600 15px/1.2 Inter, Arial, sans-serif; }
@@ -132,6 +132,16 @@ html[data-meduc-theme="light"] .mcr-tag--free { color:#16824e; }
 .mcr-price--center { justify-content: center; margin: 4px 0 18px; }
 .mcr-price--center s { color: rgb(255 255 255 / .6); }
 .mcr-buy-note { margin: 12px 0 4px; color: var(--mcr-muted); font: 500 13px/1.55 Inter, Arial, sans-serif; }
+.mcr-unit-cost { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 10px 0 16px; color: var(--mcr-muted); font: 500 12px/1.5 Inter, Arial, sans-serif; }
+.mcr-unit-cost strong { color: var(--mcr-ink); font-size: 17px; font-weight: 700; }
+.mcr-assurance { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--mcr-line); }
+.mcr .mcr-assurance-title { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--mcr-red); font: 800 11px/1.45 Inter, Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.mcr-assurance-title svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.mcr-assurance ul { display: grid; gap: 12px; margin: 12px 0 0; padding: 0; list-style: none; }
+.mcr-assurance li { position: relative; margin: 0; padding-left: 12px; color: var(--mcr-muted); font: 400 12px/1.65 Inter, Arial, sans-serif; }
+.mcr-assurance li::before { position: absolute; top: .65em; left: 0; width: 4px; height: 4px; background: var(--mcr-red); content: ""; }
+.mcr-assurance strong { color: var(--mcr-ink); font-weight: 700; }
+
 .mcr-specs { margin: 18px 0 0; padding: 0; border-top: 1px solid var(--mcr-line); }
 .mcr-specs div { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--mcr-line); }
 .mcr-specs div:last-child { border-bottom: 0; padding-bottom: 0; }
