@@ -13,12 +13,7 @@
         <h3><a href="{$course_url|escape}">{$course.name|escape}</a></h3>
         <div class="mcl-card-meta">{if $course.catalog_meta.chapters > 0}<span>{$course.catalog_meta.chapters} chương</span>{/if}{if $course.catalog_meta.lessons > 0}<span>{$course.catalog_meta.lessons} bài học</span>{/if}</div>
         {if !empty($course.catalog_meta.summary)}<p class="mcl-card-description">{$course.catalog_meta.summary|escape}</p>{/if}
-    </div>
-    <div class="mcl-card-enroll">
-        <div class="mcl-price"><span class="mcl-price-label">Học phí</span>{if $current_price > 0}<strong>{$current_price|number_format:0:',':'.'} <small>{CURRENCY_UNIT}</small></strong>{else}<strong class="mcl-contact-price">Liên hệ tư vấn</strong>{/if}{if $discount > 0}<del>{$course.price|number_format:0:',':'.'} {CURRENCY_UNIT}</del>{/if}</div>
-        {if $current_price > 0 && !empty($course.items[0].id)}
-            <a class="mcl-register" {if in_array($course.id, $cart_product_ids)}href="/order/info"{else}href="{$course_url|escape}" nh-btn-action="add-cart" nh-redirect="/order/info"{/if} aria-label="Đăng ký học: {$course.name|escape}">Đăng ký học <span aria-hidden="true">→</span></a>
-        {else}<a class="mcl-register" href="{$course_url|escape}">Tìm hiểu khóa học <span aria-hidden="true">→</span></a>{/if}
+        <a class="mcl-register" href="{$course_url|escape}" aria-label="Học thử miễn phí: {$course.name|escape}">Học thử miễn phí <span aria-hidden="true">→</span></a>
     </div>
 </article>
 {/strip}
