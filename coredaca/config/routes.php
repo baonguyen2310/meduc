@@ -41,6 +41,15 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/reading-history/save', ['controller'=>'ReadingHistory','action'=>'save']);
     $builder->connect('/reading-history/pdf/:article/:file', ['controller'=>'ReadingHistory','action'=>'pdf'], ['pass'=>['article','file'],'article'=>'[0-9]+','file'=>'[0-9]+']);
 
+    // Owner-bound document download invoices; reuse admin's confirmed receipt ledger.
+    $builder->connect('/document-download/context', ['controller'=>'DocumentDownload','action'=>'context']);
+    $builder->connect('/document-download/purchase', ['controller'=>'DocumentDownload','action'=>'purchase']);
+    $builder->connect('/document-download/payment/:code', ['controller'=>'DocumentDownload','action'=>'payment'], ['pass'=>['code'],'code'=>'[a-f0-9]{32}']);
+    $builder->connect('/document-download/status/:code', ['controller'=>'DocumentDownload','action'=>'status'], ['pass'=>['code'],'code'=>'[a-f0-9]{32}']);
+    $builder->connect('/document-download/transfer/:code', ['controller'=>'DocumentDownload','action'=>'transfer'], ['pass'=>['code'],'code'=>'[a-f0-9]{32}']);
+    $builder->connect('/document-download/start/:code', ['controller'=>'DocumentDownload','action'=>'start'], ['pass'=>['code'],'code'=>'[a-f0-9]{32}']);
+    $builder->connect('/document-download/file/:token', ['controller'=>'DocumentDownload','action'=>'file'], ['pass'=>['token'],'token'=>'[a-f0-9]{64}']);
+
     // block
     $builder->connect('/block/ajax-load-content/:code', ['controller' => 'Block', 'action' => 'ajaxLoadContent'], ['pass' => ['code']]);
     

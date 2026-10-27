@@ -17,6 +17,22 @@ class OrderController extends AppController {
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
+
+        // Document download invoices are private and use their own transfer-report flow.
+        $code=(string)($this->request->getQuery('code')?:$this->request->getData('code')?:'');
+        $download=\App\Service\DocumentDownloads::byOrderCode($code);
+        if($download){
+            $member=$this->request->getSession()->read(MEMBER)?:[];
+            if(empty($member['id'])||(int)$member['id']!==(int)$download['customer_id']){
+                $this->autoRender=false;
+                return $this->response->withStatus(404)->withHeader('Cache-Control','private, no-store')->withStringBody('Không tìm thấy đơn hàng.');
+            }
+            if($this->request->getParam('action')==='processCheckout'){
+                $this->autoRender=false;
+                return $this->response->withStatus(409)->withType('application/json')->withStringBody(json_encode(['code'=>'error','message'=>'Vui lòng thanh toán tại trang mua lượt tải tài liệu.'],JSON_UNESCAPED_UNICODE));
+            }
+            return $this->redirect('/document-download/payment/'.$download['code']);
+        }
     }
 
 	public function cartInfo() 
