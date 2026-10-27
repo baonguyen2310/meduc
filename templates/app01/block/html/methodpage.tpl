@@ -1,8 +1,7 @@
 {strip}
-{* Four editorial sections for /phuong-phap-hoc. Existing hero keys remain supported.
-   Optional block copy/photos: anh_vi_sao, mo_ta_anh_vi_sao, anh_ap_dung, mo_ta_anh_ap_dung,
-   ket_qua_nhan, ket_qua_tieu_de_1,
-   ket_qua_tieu_de_2, ket_qua_mo_ta. The fourth section is provisional copy for CEO review. *}
+{* Three sections for /phuong-phap-hoc. Hero and photos use the existing block settings.
+   Optional copy/photos: anh_vi_sao, mo_ta_anh_vi_sao, anh_ap_dung,
+   ap_dung_tieu_de_1, ap_dung_tieu_de_2, ap_dung_mo_ta. *}
 {$text = $data_extend.locale[{LANGUAGE}]|default:[]}
 {$picture = $this->Utilities->replaceVariableSystem($text.anh|default:'/templates/app01/assets/meduc-v2/method/study-editorial.jpg')}
 {$why_picture = $this->Utilities->replaceVariableSystem($text.anh_vi_sao|default:'/templates/app01/assets/meduc-v2/feedback/hoc-vien-meduc.jpg')}
@@ -10,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261028-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261028-3" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.js?v=20261028-1" defer></script>
 
 <main class="mmp" id="meduc-method">
@@ -32,7 +31,6 @@
             <a href="#vi-sao" aria-current="location"><span>01</span> Vì sao cần phương pháp</a>
             <a href="#core-learning"><span>02</span> Cách học MedUC</a>
             <a href="#cach-ap-dung"><span>03</span> Áp dụng vào buổi học</a>
-            <a href="#dieu-dat-duoc"><span>04</span> Hiểu, giải thích, vận dụng</a>
         </div>
     </nav>
 
@@ -68,36 +66,14 @@
         </div>
     </section>
 
-    <section class="mmp-shell mmp-section mmp-editorial" id="cach-ap-dung" aria-labelledby="method-apply-title">
-        <figure class="mmp-photo mmp-photo--apply">
-            <img src="{$apply_picture|escape}" alt="{$text.mo_ta_anh_ap_dung|default:'Sinh viên học và trao đổi trong buổi thực hành lâm sàng'|escape}" loading="lazy" decoding="async" width="1600" height="1058">
-            <figcaption>Từ lời giảng.<br>Đến cách bạn tự lập luận.</figcaption>
-        </figure>
-        <div class="mmp-copy">
+    <section class="mmp-application" id="cach-ap-dung" aria-labelledby="method-apply-title">
+        <span class="mmp-legacy-anchor" id="dieu-dat-duoc" aria-hidden="true"></span>
+        <img class="mmp-application-bg" src="{$apply_picture|escape}" alt="" loading="lazy" decoding="async" width="1600" height="1058">
+        <div class="mmp-shell mmp-application-inner">
             <p class="mmp-eyebrow">03 / ÁP DỤNG VÀO BUỔI HỌC</p>
-            <h2 id="method-apply-title">ĐỪNG CHỈ XEM.<br><span>HÃY TỰ LÝ GIẢI.</span></h2>
-            <p>Học xong một ý, hãy tạm dừng và thử giải thích bằng lời của mình. Sau đó dùng bài tập để kiểm tra điều vừa hiểu.</p>
-            <dl class="mmp-session">
-                <div><dt>Khi xem bài giảng</dt><dd>Ghi từ khóa và mối liên hệ. Tự vẽ lại sơ đồ, thay vì chép mọi lời giảng.</dd></div>
-                <div><dt>Khi làm bài tập</dt><dd>Trả lời trước khi xem lời giải. Đối chiếu cả lựa chọn đúng và những lựa chọn sai.</dd></div>
-                <div><dt>Khi còn chưa chắc</dt><dd>Quay lại phần liên quan, xem lịch sử làm bài và ghi câu hỏi để trao đổi với giảng viên.</dd></div>
-            </dl>
-        </div>
-    </section>
-
-    <section class="mmp-outcomes" id="dieu-dat-duoc" aria-labelledby="method-outcome-title">
-        <div class="mmp-shell">
-            <div class="mmp-outcome-heading">
-                <p class="mmp-eyebrow">{$text.ket_qua_nhan|default:'04 / ĐÍCH ĐẾN CỦA MỖI BÀI HỌC'|escape}</p>
-                <h2 id="method-outcome-title">{$text.ket_qua_tieu_de_1|default:'HIỂU. GIẢI THÍCH.'|escape}<br><span>{$text.ket_qua_tieu_de_2|default:'VẬN DỤNG ĐƯỢC.'|escape}</span></h2>
-                <p>{$text.ket_qua_mo_ta|default:'Học xong không chỉ là xem hết video. Đây là ba điều bạn có thể tự kiểm tra sau mỗi bài học.'|escape}</p>
-            </div>
-            <div class="mmp-outcome-grid">
-                <article><span aria-hidden="true">01</span><h3>Hiểu</h3><p>Tôi có hiểu bản chất và mối liên hệ của kiến thức này không?</p></article>
-                <article><span aria-hidden="true">02</span><h3>Giải thích</h3><p>Tôi có thể giải thích bằng lời của mình khi không nhìn tài liệu?</p></article>
-                <article><span aria-hidden="true">03</span><h3>Vận dụng</h3><p>Gặp một câu hỏi khác, tôi có biết dùng kiến thức nào để lập luận không?</p></article>
-            </div>
-            <div class="mmp-outcome-footer"><p>Nếu chưa làm được, bạn đã tìm thấy phần cần quay lại.</p><a class="mmp-text-link" href="/phan-hoi-hoc-vien">Lắng nghe trải nghiệm học viên <span aria-hidden="true">→</span></a></div>
+            <h2 id="method-apply-title">{$text.ap_dung_tieu_de_1|default:'Hiểu kiến thức.'|escape}<br>{$text.ap_dung_tieu_de_2|default:'Giải thích và vận dụng được.'|escape}</h2>
+            <p class="mmp-application-text">{$text.ap_dung_mo_ta|default:'Sau bài giảng, tự nói lại ý chính rồi làm bài tập. Đọc lời giải, hiểu vì sao đúng hoặc sai và ôn lại phần chưa vững.'|escape}</p>
+            <a class="mmp-button mmp-button--outline" href="/phan-hoi-hoc-vien">Xem học viên nói gì <span aria-hidden="true">→</span></a>
         </div>
     </section>
 
