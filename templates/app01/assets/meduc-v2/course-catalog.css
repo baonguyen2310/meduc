@@ -19,13 +19,13 @@ html[data-meduc-theme="light"] .mcl { --mcl-bg:#fff; --mcl-surface:#fff; --mcl-i
 .mcl-hero-detail p { margin:0 0 20px; color:var(--mcl-muted); font-size:13px; line-height:1.8; }
 .mcl-hero-detail>span { color:var(--mcl-muted); font-size:12px; }
 .mcl-hero-detail strong { margin-right:5px; color:var(--mcl-ink); font-size:25px; font-weight:600; }
-.mcl-year-nav { border-block:1px solid var(--mcl-line); background:var(--mcl-bg); }
+.mcl-year-nav { position:sticky; top:var(--mhi-header-h,66px); z-index:1010; border-block:1px solid var(--mcl-line); background:var(--mcl-bg); }
 .mcl-year-links { display:flex; gap:32px; overflow:auto; scrollbar-width:none; }
 .mcl-year-links::-webkit-scrollbar { display:none; }
 .mcl-year-links>a { display:flex; align-items:center; position:relative; min-height:60px; color:var(--mcl-muted); font-size:12px; font-weight:600; white-space:nowrap; }
 .mcl-year-links>a:hover,.mcl-year-links>a[aria-current] { color:var(--mcl-ink); }
 .mcl-year-links>a[aria-current]::after { position:absolute; right:0; bottom:0; left:0; height:2px; background:var(--mcl-red); content:""; }
-.mcl-catalog-body { padding-block:32px 65px; }
+.mcl-catalog-body { padding-block:32px 65px; scroll-margin-top:calc(var(--mhi-header-h,66px) + 76px); }
 .mcl-tools { display:flex; align-items:center; justify-content:space-between; gap:30px; }
 .mcl-search { display:flex; align-items:center; gap:12px; width:min(100%,580px); min-height:48px; padding:0 15px; border:1px solid transparent; border-radius:7px; background:var(--mcl-input); }
 .mcl-search:focus-within { border-color:var(--mcl-red); }

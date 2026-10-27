@@ -36,13 +36,13 @@ html[data-meduc-theme="light"] .mbc-art-backdrop { background:radial-gradient(el
 .mbc-hero--category .mbc-hero-intro { max-width:640px; margin-top:18px; }
 .mbc .mbc-back { display:inline-block; margin-bottom:17px; color:var(--mbc-muted); font-size:12px; }
 .mbc .mbc-back:hover { color:var(--mbc-red); }
-.mbc-topics { border-block:1px solid var(--mbc-line); }
+.mbc-topics { position:sticky; top:var(--mhi-header-h,66px); z-index:1010; border-block:1px solid var(--mbc-line); background:var(--mbc-bg); }
 .mbc-topic-links { display:flex; gap:28px; overflow:auto; scrollbar-width:none; }
 .mbc-topic-links::-webkit-scrollbar { display:none; }
 .mbc-topic-links>a { display:flex; align-items:center; position:relative; min-height:60px; color:var(--mbc-muted); font-size:11px; font-weight:600; white-space:nowrap; }
 .mbc-topic-links>a:hover,.mbc-topic-links>a[aria-current] { color:var(--mbc-ink); }
 .mbc-topic-links>a[aria-current]::after { content:""; position:absolute; right:0; bottom:0; left:0; height:2px; background:var(--mbc-red); }
-.mbc-catalog { padding-block:65px 75px; scroll-margin-top:95px; }
+.mbc-catalog { padding-block:65px 75px; scroll-margin-top:calc(var(--mhi-header-h,66px) + 76px); }
 .mbc-section-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:55px; }
 .mbc h2 { margin:0; font:400 clamp(43px,4.5vw,64px)/1.14 Anton,Impact,sans-serif; letter-spacing:-.01em; }
 .mbc h2 span { color:var(--mbc-red); }
@@ -124,7 +124,7 @@ html[data-meduc-theme="light"] .mbc .mbc-add { background:#de2334; }
   .mbc-hero--category h1 { font-size:40px; }
   .mbc-topic-links { gap:24px; }
   .mbc-topic-links>a { min-height:54px; font-size:10px; }
-  .mbc-catalog { padding-block:42px 50px; scroll-margin-top:85px; }
+  .mbc-catalog { padding-block:42px 50px; scroll-margin-top:calc(var(--mhi-header-h,66px) + 76px); }
   .mbc-section-heading { align-items:flex-start; flex-direction:column; gap:18px; }
   .mbc h2 { font-size:clamp(40px,9vw,55px); }
   .mbc-section-heading>p { flex-basis:auto; max-width:500px; font-size:12px; }

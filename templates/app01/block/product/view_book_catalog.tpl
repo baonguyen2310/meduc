@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261028-sticky" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261015" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.js?v=20261015-2" defer></script>
 
