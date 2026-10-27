@@ -162,34 +162,45 @@ html[data-meduc-theme="light"] .mft-list-cta { background:#de2334; }
   .mft-directory[data-faculty-view="list"] .mgv-copy { padding-inline:13px; }
   .mft-directory[data-faculty-view="list"] .mgv-name { font-size:21px; }
 }
-/* Selection process sits between the recruitment standards and faculty directory. */
-.mft-process { padding-block:62px 68px; border-top:1px solid var(--mft-line); background:var(--mft-surface); scroll-margin-top:calc(var(--mhi-header-h,66px) + var(--mft-nav-h,66px) + 14px); }
-.mft-process-heading { display:grid; grid-template-columns:1.1fr 1fr; align-items:end; gap:56px; margin-bottom:40px; }
-.mft-process-heading .mft-kicker { margin-bottom:13px; }
-.mft-process-heading h2 { margin:0; font:400 clamp(34px,3.6vw,54px)/1.2 Anton,Impact,sans-serif; letter-spacing:-.015em; }
-.mft-process-heading>p { max-width:440px; margin:0; color:var(--mft-muted); font-size:13px; line-height:1.85; }
-.mft-process-steps { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:28px; margin:0; padding:0; list-style:none; }
-.mft-process-steps li { position:relative; min-width:0; }
-.mft-process-steps li:not(:last-child)::after { position:absolute; top:22px; right:-28px; left:44px; height:1px; background:var(--mft-line); content:""; }
-.mft-process-number { position:relative; z-index:1; display:grid; place-items:center; width:44px; height:44px; margin-bottom:23px; border:1px solid var(--mft-red); border-radius:50%; background:var(--mft-surface); color:var(--mft-red); font:700 12px/1 Inter,Arial,sans-serif; }
-.mft-process-steps h3 { min-height:44px; margin:0 0 9px; font:700 16px/1.4 Inter,Arial,sans-serif; }
-.mft-process-steps p { margin:0; color:var(--mft-muted); font-size:12px; line-height:1.8; }
+/* A spacious vertical timeline contrasts with the standards' three benefit cards. */
+.mft-process { padding-block:clamp(82px,7vw,112px); border-top:1px solid var(--mft-line); background:var(--mft-surface); scroll-margin-top:calc(var(--mhi-header-h,66px) + var(--mft-nav-h,66px) + 14px); }
+.mft-process-heading { display:grid; grid-template-columns:1fr minmax(260px,.42fr); align-items:end; gap:55px; margin-bottom:48px; }
+.mft-process-heading .mft-kicker { margin-bottom:16px; }
+.mft-process-heading h2 { margin:0; font:400 clamp(48px,5vw,76px)/1.12 Anton,Impact,sans-serif; letter-spacing:-.01em; text-wrap:balance; }
+.mft-process-heading h2 span { color:var(--mft-red); }
+.mft-process-heading>p { max-width:380px; margin:0 0 6px; color:var(--mft-muted); font:400 15px/1.7 Inter,Arial,sans-serif; }
+.mft-process-steps { position:relative; margin:0; padding:0; list-style:none; }
+.mft-process-steps li { position:relative; display:grid; grid-template-columns:72px minmax(0,1fr); align-items:center; gap:36px; min-width:0; padding-block:32px; }
+.mft-process-steps li::before { position:absolute; top:0; bottom:0; left:35px; width:1px; background:var(--mft-line); content:""; }
+.mft-process-steps li:first-child::before { top:68px; }
+.mft-process-steps li:last-child::before { bottom:auto; height:68px; }
+.mft-process-number { position:relative; z-index:1; display:grid; place-items:center; width:72px; height:72px; border:1px solid var(--mft-line); border-radius:50%; background:var(--mft-bg); color:var(--mft-red); font:400 32px/1 Anton,Impact,sans-serif; }
+.mft-process-detail { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); align-items:center; gap:48px; min-width:0; }
+.mft-process-steps li+li .mft-process-detail::before { position:absolute; top:0; right:0; left:108px; height:1px; background:var(--mft-line); content:""; }
+.mft-process-steps h3 { margin:0; font:700 clamp(21px,1.8vw,26px)/1.35 Inter,Arial,sans-serif; letter-spacing:-.025em; }
+.mft-process-steps p { max-width:550px; margin:0; color:var(--mft-muted); font:400 16px/1.75 Inter,Arial,sans-serif; }
 @media(max-width:1000px) {
-  .mft-process-heading { gap:32px; }
-  .mft-process-steps { grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:32px; }
-  .mft-process-steps li:nth-child(even)::after { display:none; }
-  .mft-process-steps h3 { min-height:0; }
+  .mft-process-detail { grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:28px; }
+  .mft-process-steps li { gap:28px; }
+  .mft-process-steps li+li .mft-process-detail::before { left:100px; }
 }
-@media(max-width:767.98px) {
-  .mft-process { padding-block:39px 43px; }
-  .mft-process-heading { grid-template-columns:1fr; gap:18px; margin-bottom:30px; }
-  .mft-process-heading h2 { font-size:36px; }
-  .mft-process-heading>p { max-width:none; font-size:12px; }
-  .mft-process-steps { grid-template-columns:1fr; gap:28px; }
-  .mft-process-steps li { display:grid; grid-template-columns:44px minmax(0,1fr); align-items:start; gap:18px; }
-  .mft-process-steps li:not(:last-child)::after { display:block; top:44px; right:auto; bottom:-28px; left:21px; width:1px; height:auto; }
-  .mft-process-number { margin:0; }
-  .mft-process-steps h3 { margin-top:3px; font-size:15px; }
+@media(max-width:900px) {
+  .mft-process-heading { grid-template-columns:1fr; gap:18px; margin-bottom:32px; }
+  .mft-process-heading>p { max-width:580px; }
+}
+@media(max-width:650px) {
+  .mft-process { padding-block:72px; }
+  .mft-process-heading h2 { font-size:clamp(40px,10vw,54px); }
+  .mft-process-steps li::before { left:25px; }
+  .mft-process-steps li:first-child::before { top:50px; }
+  .mft-process-steps li:last-child::before { height:50px; }
+  .mft-process-steps li { grid-template-columns:52px minmax(0,1fr); align-items:start; gap:20px; padding-block:24px; }
+  .mft-process-number { width:52px; height:52px; font-size:25px; }
+  .mft-process-detail { display:block; padding-top:4px; }
+  .mft-process-steps li+li .mft-process-detail::before { left:72px; }
+  .mft-process-steps h3 { margin:0 0 10px; font-size:21px; }
+  .mft-process-steps p { font-size:15px; line-height:1.7; }
+  .mft-process-steps li:last-child { padding-bottom:0; }
 }
 .mft-section-nav { position:sticky; z-index:1000; top:var(--mhi-header-h,66px); padding-block:2px; background:var(--mft-bg); box-shadow:0 1px 0 var(--mft-line); }
 .mft-section-links { position:relative; display:flex; align-items:stretch; gap:10px; overflow-x:auto; scrollbar-width:none; }
