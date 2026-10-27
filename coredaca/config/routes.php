@@ -172,6 +172,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/quizs-answer/add', ['controller' => 'QuizsAnswer', 'action' => 'add']);
     $builder->connect('/giang-vien/ung-tuyen', ['controller'=>'FacultyApplication','action'=>'submit']);
     $builder->connect('/khoa-hoc/dong-gop', ['controller' => 'CourseContribution', 'action' => 'submit']);
+    $builder->connect('/khoa-hoc/bai-tap/:product/:quiz/tu-tin/:attempt', ['controller'=>'QuizConfidence','action'=>'index'], ['pass'=>['product','quiz','attempt'],'product'=>'[0-9]+','quiz'=>'[0-9]+','attempt'=>'[0-9]+']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz/lich-su', ['controller' => 'QuizsAnswer', 'action' => 'history'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
     $builder->connect('/khoa-hoc/bai-tap/:product/:quiz', ['controller' => 'QuizsAnswer', 'action' => 'player'], ['pass' => ['product', 'quiz'], 'product' => '[0-9]+', 'quiz' => '[0-9]+']);
 

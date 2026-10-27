@@ -65,7 +65,7 @@ final class QuizQuestions
                 }
             }
             if (!$options) continue;
-            $questions[] = [
+            $question = [
                 'code' => (string)($item['code'] ?? ''),
                 'question' => self::clean($item['name_' . $lang]) . self::images($item['images'] ?? []),
                 'note' => self::clean($item['description_' . $lang] ?? ''),
@@ -74,6 +74,9 @@ final class QuizQuestions
                 'explain' => QuizExplanation::render($item['answer_detail_' . $lang] ?? ''),
                 'explanation_parts' => self::explanationParts($item),
             ];
+            // Bind self-assessment to the displayed question, including repeated legacy codes.
+            $question['key'] = hash('sha256', json_encode([$question['code'], $question['question'], $question['options']], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE));
+            $questions[] = $question;
         }
         return $questions;
     }

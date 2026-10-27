@@ -1,0 +1,16 @@
+/* A quiet self-assessment row, visually separate from right/wrong answers. */
+.mcr .mcq-confidence{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:20px;padding-top:14px;border-top:1px solid var(--mcr-line,#e2e4e9);font:400 12px/1.5 Inter,Arial,sans-serif}
+.mcr .mcq-confidence-label{color:var(--mcr-muted,#737783);font-weight:500}
+.mcr .mcq-confidence-choices{display:flex;flex-wrap:wrap;gap:6px}
+.mcr .mcq-confidence-choice{min-height:32px;padding:6px 11px;border:1px solid var(--mcr-line,#e2e4e9);border-radius:6px;background:transparent;color:var(--mcr-muted,#737783);font:600 12px/1.4 Inter,Arial,sans-serif;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.mcr .mcq-confidence-choice:hover:not(:disabled){border-color:var(--mcr-red,#e51e40);color:var(--mcr-red,#e51e40)}
+.mcr .mcq-confidence-choice[aria-pressed="true"]{border-color:var(--mcr-red,#e51e40);background:color-mix(in srgb,var(--mcr-red,#e51e40) 8%,transparent);color:var(--mcr-red,#e51e40)}
+.mcr .mcq-confidence-choice:disabled{opacity:.55;cursor:default}
+.mcr .mcq-confidence-status{font-size:11px;color:var(--mcr-muted,#737783)}
+.mcr .mcq-confidence-status.is-error{color:var(--mcr-red,#e51e40)}
+.mcr .mcq-confidence-retry{padding:3px 0;border:0;background:none;color:var(--mcr-red,#e51e40);font:600 11px/1.5 Inter,Arial,sans-serif;cursor:pointer;text-decoration:underline}
+.mcr .mcq-confidence-retry[hidden]{display:none}
+.mcr .mcq-confidence button:focus:not(:focus-visible){outline:none}
+.mcr .mcq-confidence button:focus-visible{outline:2px solid var(--mcr-red,#e51e40);outline-offset:3px}
+@media(max-width:480px){.mcr .mcq-confidence{gap:8px}.mcr .mcq-confidence-label{flex-basis:100%}.mcr .mcq-confidence-choice{min-height:36px;padding-inline:12px}.mcr .mcq-confidence-status.is-error{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){.mcr .mcq-confidence-choice{transition:none}}

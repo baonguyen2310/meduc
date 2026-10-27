@@ -3,6 +3,7 @@ full_database.sql
 *.sql
 !scripts/course_contributions.sql
 !scripts/faculty_applications.sql
+!scripts/quiz_question_confidence.sql
 *.sql.gz
 *.zip
 *.tar.gz

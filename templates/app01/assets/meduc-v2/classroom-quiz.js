@@ -295,6 +295,8 @@
       }
     }
 
+    if (reviewing && window.MeducQuizConfidence) wrap.append(window.MeducQuizConfidence.create({ attempt, productId, index, question }));
+
     const nav = el("div", "mcq-nav");
     if (reviewing) {
       const contribute = button("mcq-contribute-question", "Góp ý câu này ↗");
@@ -697,6 +699,7 @@
     const done = (message, savedId = 0) => {
       attempt.saved = message;
       if (savedId) attempt.savedRecordId = savedId;
+      window.MeducQuizConfidence?.recordSaved(attempt, savedId);
       if (attempt === active && attempt.state === "done" && view === "player") {
         const saved = stage.querySelector(".mcq-saved");
         if (saved) saved.textContent = message;
