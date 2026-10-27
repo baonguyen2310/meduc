@@ -5,8 +5,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261018-8" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261018-3" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261028-1" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261028-1" defer></script>
 
 <main class="mft" id="faculty-page">
     <section class="mft-hero" aria-labelledby="faculty-title">
@@ -66,12 +66,12 @@
         </div>
     </section>
 
-    <section class="mgv mft-directory" id="doi-ngu" data-faculty-view="list" aria-labelledby="faculty-list-title">
+    <section class="mgv mft-directory" id="doi-ngu" data-faculty-view="list" data-faculty-expanded="false" aria-labelledby="faculty-list-title">
         <div class="mft-shell mft-directory-heading">
             <div><p class="mgv-kicker">{$text.tieu_de_phu|default:'CON NGƯỜI MEDUC'|escape}</p><h2 class="mgv-title" id="faculty-list-title">{$text.tieu_de|default:'Đội Ngũ Giảng Viên Và Cố Vấn'|escape}</h2><p class="mft-directory-intro">Chọn một hồ sơ để xem chuyên môn, kinh nghiệm và bằng cấp.</p></div>
             {if !empty($data_block)}
                 <div class="mft-directory-tools">
-                    <span class="mft-directory-count">{count($data_block)} giảng viên &amp; cố vấn</span>
+                    <span class="mft-directory-count" data-faculty-count aria-live="polite">{if count($data_block) > 6}6 / {/if}{count($data_block)} giảng viên &amp; cố vấn</span>
                     <div class="mft-layout-switch" role="group" aria-label="Cách hiển thị đội ngũ giảng viên" data-faculty-layout-switch hidden>
                         <button type="button" data-faculty-layout="list" aria-pressed="true" aria-label="Dạng danh sách" aria-controls="faculty-list" title="Dạng danh sách"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="3" y="16" width="4" height="4" rx="1"/><path d="M11 6h10M11 12h10M11 18h10"/></svg></button>
                         <button type="button" data-faculty-layout="grid" aria-pressed="false" aria-label="Dạng lưới" aria-controls="faculty-list" title="Dạng lưới"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
@@ -83,6 +83,11 @@
             <div class="mft-shell mft-grid" id="faculty-list">
                 {$this->element('faculty/cards', ['data_block' => $data_block, 'profile_mode' => true])}
             </div>
+            {if count($data_block) > 6}
+                <div class="mft-shell mft-load-more" data-faculty-more-wrap>
+                    <button class="mft-button mft-button--primary" type="button" data-faculty-more aria-controls="faculty-list" aria-expanded="false">Xem thêm <span aria-hidden="true">↓</span></button>
+                </div>
+            {/if}
         {else}<p class="mft-shell mft-empty">Thông tin đội ngũ đang được cập nhật.</p>{/if}
     </section>
 

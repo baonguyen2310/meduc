@@ -69,6 +69,17 @@
       });
     });
   }
+  const showMore = page.querySelector('[data-faculty-more]');
+  if (directory && showMore) {
+    showMore.addEventListener('click', () => {
+      directory.dataset.facultyExpanded = 'true';
+      showMore.setAttribute('aria-expanded', 'true');
+      page.querySelector('[data-faculty-more-wrap]').hidden = true;
+      const cards = [...directory.querySelectorAll('.mft-grid > .mgv-card')];
+      page.querySelector('[data-faculty-count]').textContent = `${cards.length} giảng viên & cố vấn`;
+      cards[6]?.querySelector('[data-faculty-open]')?.focus({ preventScroll: true });
+    });
+  }
   const dialog = page.querySelector('#faculty-profile-dialog');
   const content = dialog.querySelector('[data-faculty-content]');
   let opener = null;

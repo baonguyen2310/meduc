@@ -221,3 +221,9 @@ html[data-meduc-theme="light"] .mft-list-cta { background:#de2334; }
   .mft-section-links svg { width:14px; height:14px; margin-left:5px; }
 }
 @media(prefers-reduced-motion:reduce) { .mft *, .mft *::before, .mft *::after { scroll-behavior:auto !important; transition:none !important; } }
+
+/* Show six profiles before expanding the directory, in either layout. */
+.mft-directory[data-faculty-expanded="false"] .mft-grid > .mgv-card:nth-of-type(n + 7) { display:none; }
+.mft-load-more { display:flex; justify-content:center; margin-top:28px; }
+.mft-load-more .mft-button { border:1px solid transparent; cursor:pointer; }
+.mft-load-more[hidden] { display:none; }
