@@ -9,7 +9,6 @@
   --mcl-pill-bg: #fff;
   --mcl-pill-ink: #111;
   --mcl-red: #ed204f;
-  --mcl-point-line: #ffffff26;
   padding: clamp(72px, 7vw, 112px) 0;
   overflow: hidden;
   background: rgb(var(--mcl-bg));
@@ -24,7 +23,6 @@ html[data-meduc-theme="light"] .mcl {
   --mcl-pill-bg: #15171c;
   --mcl-pill-ink: #fff;
   --mcl-red: #bd263a;
-  --mcl-point-line: #d9dce1;
 }
 .mcl *, .mcl *::before, .mcl *::after { box-sizing: border-box; }
 .mcl [hidden] { display: none !important; }
@@ -37,11 +35,11 @@ html[data-meduc-theme="light"] .mcl {
 .mcl-banner:not(.mcl-banner--text)::after { position: absolute; inset: 0; z-index: 1; content: ""; background: linear-gradient(90deg, rgb(var(--mcl-bg) / 0) 0, rgb(var(--mcl-bg) / 0) 42%, rgb(var(--mcl-bg) / .55) 58%, rgb(var(--mcl-bg)) 77%); pointer-events: none; }
 .mcl-copy { position: absolute; inset: 0 0 0 auto; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 32%; padding: 24px 2%; text-align: center; }
 .mcl-banner--text .mcl-copy { position: relative; width: 100%; height: 100%; }
-.mcl-pill { display: inline-block; padding: 6px 16px; border-radius: 100px; background: var(--mcl-pill-bg); color: var(--mcl-pill-ink); font: 600 14px/1.3 Inter, Arial, sans-serif; }
-.mcl .mcl-title { margin: 26px 0 0; color: var(--mcl-ink); font: 800 clamp(32px, 3vw, 50px)/1.12 Inter, Arial, sans-serif; letter-spacing: -.02em; text-wrap: balance; }
-.mcl-subtitle { display: flex; align-items: center; gap: 14px; width: 100%; max-width: 340px; margin: 12px 0 0; color: var(--mcl-ink); font: 500 13px/1.4 Inter, Arial, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+.mcl-pill { display: inline-block; padding: 6px 16px; border-radius: 100px; background: var(--mcl-pill-bg); color: var(--mcl-pill-ink); font: 600 17px/1.3 Inter, Arial, sans-serif; }
+.mcl .mcl-title { margin: 26px 0 0; color: var(--mcl-ink); font: 800 clamp(44px, 4vw, 68px)/1.12 Inter, Arial, sans-serif; letter-spacing: -.02em; text-wrap: balance; }
+.mcl-subtitle { display: flex; align-items: center; gap: 14px; width: 100%; max-width: 340px; margin: 12px 0 0; color: var(--mcl-ink); font: 600 18px/1.4 Inter, Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
 .mcl-subtitle::before, .mcl-subtitle::after { flex: 1; height: 1px; content: ""; background: var(--mcl-line); }
-.mcl-subtitle span { flex: none; max-width: 70%; }
+.mcl-subtitle span { flex: none; max-width: 82%; }
 .mcl-dash { display: block; width: 24px; height: 4px; margin: 30px auto 18px; background: var(--mcl-ink); }
 .mcl-text { max-width: 340px; margin: 0; color: var(--mcl-muted); font: 500 clamp(15px, 1.15vw, 18px)/1.55 Inter, Arial, sans-serif; }
 .mcl-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 34px; }
@@ -57,13 +55,6 @@ html[data-meduc-theme="light"] .mcl {
 .mcl-frame, .mcl-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 .mcl-close { position: absolute; top: 14px; right: 14px; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid #ffffff59; border-radius: 50%; background: #000000b3; color: #fff; font: 400 28px/1 Inter, Arial, sans-serif; cursor: pointer; }
 
-/* Key points */
-.mcl-points { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 40px; margin: clamp(40px, 4vw, 64px) 0 0; padding: 0; list-style: none; }
-.mcl-point { padding: 24px 0 0; border-top: 1px solid var(--mcl-point-line); }
-.mcl-point-number { color: var(--mcl-red); font: 700 12px/1.4 Inter, Arial, sans-serif; letter-spacing: .16em; }
-.mcl .mcl-point-title { margin: 10px 0 0; color: var(--mcl-ink); font: 700 clamp(18px, 1.5vw, 22px)/1.3 Inter, Arial, sans-serif; letter-spacing: -.02em; }
-.mcl-point-text { margin: 10px 0 0; color: var(--mcl-muted); font: 400 15px/1.6 Inter, Arial, sans-serif; }
-
 /* Phones and tablets: the picture on top, fading down into the text. */
 @media (max-width: 900px) {
   .mcl-shell { width: calc(100% - 32px); }
@@ -72,10 +63,8 @@ html[data-meduc-theme="light"] .mcl {
   .mcl-banner:not(.mcl-banner--text)::after { inset: 0 0 auto; height: calc((100vw - 32px) * .75); background: linear-gradient(180deg, rgb(var(--mcl-bg) / 0) 55%, rgb(var(--mcl-bg)) 100%); }
   .mcl-copy { position: relative; inset: auto; width: 100%; margin-top: -48px; padding: 0 8px; }
   .mcl-banner--text .mcl-copy { margin-top: 0; }
-  .mcl .mcl-title { margin-top: 20px; font-size: clamp(30px, 8.5vw, 40px); }
+  .mcl .mcl-title { margin-top: 20px; font-size: clamp(38px, 10vw, 52px); }
   .mcl-player { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; }
   .mcl-frame { height: auto; aspect-ratio: 16 / 9; }
-  .mcl-points { grid-template-columns: 1fr; gap: 0; margin-top: 44px; }
-  .mcl-point { padding: 20px 0 22px; }
 }
 @media (prefers-reduced-motion: reduce) { .mcl-button { transition: none; } }
