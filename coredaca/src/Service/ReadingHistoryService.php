@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use App\Lib\LessonQuizzes;
 
 /** Resolve public CMS records; never trust titles, destinations or file URLs posted by a browser. */
 class ReadingHistoryService
@@ -15,6 +16,7 @@ class ReadingHistoryService
     {
         $ids=array_values(array_unique(array_filter(array_map('intval',$ids),function($id){return $id>0;})));
         if (!$ids) return [];
+        if (in_array($kind,['course','exam_course'],true)) return $this->courses($kind,$ids);
         $table=TableRegistry::get('Articles');
         $rows=$table->queryListArticles(['get_categories'=>true,FILTER=>[LANG=>$this->lang,STATUS=>1,'ids'=>$ids,'id_categories'=>$kind==='blog'?[45,113]:[48]]])->where(['Articles.draft'=>0])->enableHydration(false)->toList();
         $result=[];
@@ -37,6 +39,48 @@ class ReadingHistoryService
             if ($image && !preg_match('~^https?://~i',$image)) $image=rtrim(CDN_URL,'/').'/'.ltrim($image,'/');
             if ($image && !preg_match('~^https?://~i',$image)) $image='';
             $result[(int)$a['id']]=['article_id'=>(int)$a['id'],'kind'=>$kind,'title'=>$title,'topic'=>$topic,'image'=>$image,'url'=>'/'.ltrim($url,'/'),'files'=>$this->files($a)];
+        }
+        return $result;
+    }
+
+    /** Public course metadata only. The history key's kind separates regular courses from exam preparation. */
+    private function courses(string $kind,array $ids): array
+    {
+        $table=TableRegistry::get('Products');
+        $rows=$table->queryListProducts(['get_categories'=>true,'get_attributes'=>true,
+            FILTER=>[LANG=>$this->lang,STATUS=>1,STATUS_ITEM=>1,'draft'=>'0','ids'=>$ids,'id_categories'=>[50]]])->where(['Products.draft'=>0])->limit(3)->toList();
+        $examCategories=TableRegistry::get('Categories')->getAllChildCategoryId(125);
+        $result=[];
+        foreach ($rows as $row) {
+            $course=$table->formatDataProductDetail($row,$this->lang);
+            $exam=(int)$course['main_category_id']===125 || (bool)array_intersect(array_keys($course['categories']??[]),$examCategories);
+            if ($exam!==($kind==='exam_course')) continue;
+            $url=trim((string)($course['url']??''));$name=$this->plain((string)($course['name']??''));
+            if (!$name || !$url || preg_match('~^(?:[a-z][a-z0-9+.-]*:|//)~i',$url)) continue;
+            $url='/'.ltrim($url,'/');
+            $lessons=json_decode($course['attributes']['danhsachtiethoc']['value']??'',true);
+            $chapters=$count=$video=$quiz=0;
+            foreach (is_array($lessons)?$lessons:[] as $lesson) {
+                if (!is_array($lesson) || empty($lesson['name_'.$this->lang])) continue;
+                if (($lesson['chapter_'.$this->lang]??'')==='y') { $chapters++;continue; }
+                $count++;
+                $youtube=preg_replace('/[^\w-].*$/s','',trim((string)($lesson['youtube_id_'.$this->lang]??'')));
+                if (!$video && ($lesson['trial_'.$this->lang]??'')==='y' && strlen($youtube)===11) $video=$count;
+                foreach (LessonQuizzes::of($lesson,$this->lang) as $exercise) if (!$quiz && $exercise['free']) $quiz=$count;
+            }
+            $preview=$exam?$quiz:($video?:$quiz);
+            $previewUrl=$preview?$url.'?bai='.$preview.'&tab='.($exam||!$video?'quiz':'video'):$url;
+            $first=$course['items'][0]??[];$price=(float)($first['price']??0);$old=0;
+            if (!empty($first['apply_special']) && (float)($first['price_special']??0)>0 && (float)$first['price_special']<$price) {
+                $old=$price;$price=(float)$first['price_special'];
+            }
+            $image=(string)(array_values($course['all_images']??[])[0]??'');
+            if ($image && !preg_match('~^https?://~i',$image)) $image=rtrim(CDN_URL,'/').'/'.ltrim($image,'/');
+            if ($image && !preg_match('~^https?://~i',$image)) $image='';
+            $id=(int)$course['id'];
+            $result[$id]=['article_id'=>$id,'kind'=>$kind,'title'=>$name,'image'=>$image,'url'=>$url,
+                'chapters'=>$chapters,'lessons'=>$count,'price'=>$price,'old_price'=>$old,
+                'preview_url'=>$previewUrl,'preview_label'=>$preview?($exam?'Luyện thi miễn phí':'Học thử miễn phí'):'Xem lại khoá học'];
         }
         return $result;
     }

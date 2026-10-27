@@ -8,6 +8,8 @@ use Cake\Http\CallbackStream;
 
 class ReadingHistoryController extends AppController
 {
+    private const KINDS = ['blog','document','course','exam_course'];
+
     public function initialize(): void { parent::initialize();$this->get_structure_layout=false; }
     private function customer(): int
     {
@@ -25,7 +27,7 @@ class ReadingHistoryController extends AppController
     {
         if (!$this->request->is('get')) return $this->json(405);
         $kind=$this->request->getQuery('kind');
-        if (!in_array($kind,['blog','document'],true)) return $this->json(400,[],'Loại nội dung không hợp lệ.');
+        if (!in_array($kind,self::KINDS,true)) return $this->json(400,[],'Loại nội dung không hợp lệ.');
         $customer=$this->customer();$service=new ReadingHistoryService(LANGUAGE);
         if ($customer) $items=$service->recent($customer,$kind);
         else {
@@ -43,7 +45,8 @@ class ReadingHistoryController extends AppController
         if (!$customer) return $this->json(401,[],'Bạn chưa đăng nhập.');
         if ((int)$this->request->getData('expected_customer_id')!==$customer) return $this->json(409,[],'Tài khoản đã thay đổi.');
         $kind=$this->request->getData('kind');$action=$this->request->getData('action');$id=(int)$this->request->getData('article_id');
-        if (!in_array($kind,['blog','document'],true) || !in_array($action,['visit','progress'],true) || $id<1) return $this->json(400);
+        if (!in_array($kind,self::KINDS,true) || !in_array($action,['visit','progress'],true) || $id<1) return $this->json(400);
+        if (in_array($kind,['course','exam_course'],true) && $action!=='visit') return $this->json(400);
         $service=new ReadingHistoryService(LANGUAGE);$articles=$service->articles($kind,[$id]);
         if (!isset($articles[$id])) return $this->json(404,[],'Nội dung hiện chưa khả dụng.');
         if ($action==='visit') $service->visit($customer,$kind,$id);
