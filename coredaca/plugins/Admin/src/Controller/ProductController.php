@@ -42,7 +42,7 @@ class ProductController extends AppController {
         $this->js_page = [
             '/assets/plugins/global/lightbox/lightbox.min.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js',
-            '/assets/js/pages/list_product.js?v=20261012-exams'
+            '/assets/js/pages/list_product.js?v=20261028-word-link'
         ];
         
         $this->set('path_menu', 'product');

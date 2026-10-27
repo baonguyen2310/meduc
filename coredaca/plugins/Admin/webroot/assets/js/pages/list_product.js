@@ -214,9 +214,10 @@ var nhListProduct = function() {
 					var url = typeof(row.url) != _UNDEFINED && row.url != null ? row.url : '';
 					var urlEdit = adminPath + '/product/update/' + row.id + `?cate=${cate}`;
 					var urlDetail = adminPath + '/product/detail/' + row.id;
+					var examLink = Number(cate) === 125 || Number(row.main_category_id) === 125 ? '<div class="mt-2 mb-2"><a href="' + urlDetail + '" class="btn btn-sm btn-outline-brand">Xem đề / Tải Word</a></div>' : '';
 					if (row.exam_staff_only) {
 						return '<div class="kt-user-card-v2__details"><a href="' + urlDetail + '" class="d-block kt-user-card-v2__name">' + $('<span>').text(name).html() + '</a>' +
-							'<div class="mt-2"><a href="' + urlDetail + '" class="text-info mr-3">Xem danh sách đề</a><a href="' + urlEdit + '" class="text-muted">Chỉnh sửa / phân công</a></div></div>';
+							'<div class="mt-2"><a href="' + urlDetail + '" class="text-info mr-3">Xem đề / Tải Word</a><a href="' + urlEdit + '" class="text-muted">Chỉnh sửa / phân công</a></div></div>';
 					}
 
 					var preView = ''
@@ -226,7 +227,7 @@ var nhListProduct = function() {
 					return '\
 						<div class="kt-user-card-v2 kt-user-card-v2--uncircle">\
 							<div class="kt-user-card-v2__details">\
-								<a href="/'+ url +'" target="_blank" class="d-inline kt-user-card-v2__name">'+ name +'</a>' + preView + '\
+								<a href="/'+ url +'" target="_blank" class="d-inline kt-user-card-v2__name">'+ name +'</a>' + preView + examLink + '\
 								<span class="d-block kt-user-card-v2__desc action-entire">\
 									<a href="' + urlEdit + '" class="text-info action-item">'+ nhMain.getLabel('sua') +'</a>\
 									<a href="javascript:;" class="action-item text-danger nh-delete" data-id="'+ row.id +'">'+ nhMain.getLabel('xoa') +'</a>\
