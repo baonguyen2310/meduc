@@ -28,8 +28,8 @@ html[data-meduc-theme="light"] .mlp {
 .mlp .mlp-title { margin: 0; color: var(--mlp-ink); font: 400 clamp(52px, 5.1vw, 76px)/1.12 Anton, Impact, sans-serif; letter-spacing: -.01em; text-wrap: balance; }
 .mlp .mlp-title span { color: var(--mlp-red); }
 .mlp-intro p { max-width: 360px; margin: 0; color: var(--mlp-muted); font: 400 15px/1.7 Inter, Arial, sans-serif; }
-.mlp .mlp-all { display: inline-block; margin-top: 18px; color: var(--mlp-red) !important; font: 700 13px/1.4 Inter, Arial, sans-serif; text-decoration: none; }
-.mlp .mlp-all:hover { text-decoration: underline; text-underline-offset: 4px; }
+.mlp .mlp-all { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; max-width: 100%; margin-top: 18px; padding: 13px 22px; border-radius: 6px; background: var(--mlp-red); color: #fff !important; font: 700 14px/1.4 Inter, Arial, sans-serif; text-decoration: none; transition: filter .18s; }
+.mlp .mlp-all:hover { filter: brightness(1.1); }
 
 /* Stages on a timeline: a dot above each card, and a line from each dot to the next card. */
 .mlp-stages { --mlp-gap: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--mlp-gap); margin: 0; padding: 38px 0 0; list-style: none; }
