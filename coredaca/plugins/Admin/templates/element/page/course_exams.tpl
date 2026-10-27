@@ -29,7 +29,7 @@
                         {if !empty($lesson.quiz_id)}
                             <div class="mx-actions">
                                 <button type="button" class="mx-open" data-exam-open="{$lesson.quiz_id}" aria-label="Xem {$lesson.name|escape}">Xem đề <span aria-hidden="true">↗</span></button>
-                                {if !empty($course_exam_download)}<button type="button" class="mx-word" data-exam-word="{$lesson.quiz_id}" hidden style="display:none" title="Tải đề và đáp án dạng Word"><i class="la la-download" aria-hidden="true"></i> Word</button>{/if}
+                                {if !empty($course_exam_download)}<button type="button" class="mx-word" data-exam-word="{$lesson.quiz_id}" title="Tải đề và đáp án dạng Word"><i class="la la-download" aria-hidden="true"></i> Word</button>{/if}
                             </div>
                         {else}<span class="mx-muted">{if !empty($lesson.pending)}Chưa có câu hỏi{else}Chưa có bài tập{/if}</span>{/if}
                     </article>
@@ -43,6 +43,6 @@
         <header class="mx-dialog-head"><div><span class="mx-eyebrow">MEDUC · XEM ĐỀ & LÀM THỬ</span><h2 id="mx-dialog-title">Đang tải đề…</h2><p data-exam-summary></p></div><button type="button" class="mx-close" data-exam-close aria-label="Đóng">×</button></header>
         <div class="mx-modebar"><div class="mx-tabs" role="tablist" aria-label="Chế độ xem đề"><button type="button" role="tab" data-exam-mode="view" aria-selected="true">Xem đề</button><button type="button" role="tab" data-exam-mode="practice" aria-selected="false">Làm thử</button></div><span class="mx-muted" data-exam-mode-note>Xem câu hỏi, đáp án và giải thích</span></div>
         <div class="mx-dialog-main"><aside class="mx-question-nav" aria-label="Đi đến câu hỏi"><h3>Câu hỏi</h3><div data-exam-nav></div><p data-exam-progress></p></aside><div class="mx-question-scroll" data-exam-scroll><div data-exam-questions class="mx-questions"></div></div></div>
-        <footer class="mx-dialog-foot"><div data-exam-result role="status">Chọn “Làm thử” để tự kiểm tra kiến thức.</div><div class="mx-foot-actions"><button type="button" class="mx-word" data-exam-modal-word hidden style="display:none"><i class="la la-download" aria-hidden="true"></i> Tải Word</button><button type="button" class="mx-primary" data-exam-grade hidden>Chấm điểm</button></div></footer>
+        <footer class="mx-dialog-foot"><div data-exam-result role="status">Chọn “Làm thử” để tự kiểm tra kiến thức.</div><div class="mx-foot-actions"><button type="button" class="mx-word" data-exam-modal-word{if empty($course_exam_download)} hidden{/if}><i class="la la-download" aria-hidden="true"></i> Tải Word</button><button type="button" class="mx-primary" data-exam-grade hidden>Chấm điểm</button></div></footer>
     </dialog>
 </section>
