@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.css?v=20261028-2" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.js?v=20261015" defer></script>
 
 <main class="mab" id="meduc-about">
@@ -69,13 +69,14 @@
     <section class="mab-section mab-name" id="ten-goi" aria-labelledby="name-title" data-about-chapter>
         <div class="mab-shell">
             <div class="mab-section-heading">
+                <p class="mab-eyebrow">02 / MỘT CÁI TÊN, MỘT ĐỊNH HƯỚNG</p>
                 {if !empty($website.company_logo)}
                     <div class="mab-name-logo">
                         <img{if $meduc_brand} class="mab-name-wordmark--light"{/if} src="{$this->Utilities->getWebsiteImageUrl($website.company_logo)|escape}" alt="MedUC" loading="lazy" decoding="async" />
                         {if $meduc_brand}<img class="mab-name-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg" alt="MedUC" loading="lazy" decoding="async" />{/if}
                     </div>
                 {/if}
-                <p class="mab-eyebrow">02 / MỘT CÁI TÊN, MỘT ĐỊNH HƯỚNG</p><h2 id="name-title">MEDUC<br><span>NGHĨA LÀ GÌ?</span></h2><p>MEDICAL · ULTIMATE · CENTER</p>
+                <h2 id="name-title"><span>NGHĨA LÀ GÌ?</span></h2><p>MEDICAL · ULTIMATE · CENTER</p>
             </div>
             <div class="mab-name-grid">
                 <article><span class="mab-letter">MED</span><h3>Medical</h3><p>{$text.ten_goi_med|default:'Chuyên sâu lĩnh vực Y khoa.'|escape}</p></article>

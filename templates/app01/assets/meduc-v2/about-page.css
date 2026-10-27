@@ -61,7 +61,7 @@ html[data-meduc-theme="light"] .mab .mab-button--primary { background:#de2334; }
 .mab-name .mab-section-heading { margin-inline:auto; }
 .mab-name .mab-section-heading>p:last-child:not(.mab-eyebrow) { margin-inline:auto; }
 .mab-name-logo { display:flex; justify-content:center; margin:0 auto 28px; }
-.mab-name-logo img { display:block; width:clamp(150px,16vw,210px); max-width:100%; height:auto; }
+.mab-name-logo img { display:block; width:clamp(210px,24vw,300px); max-width:85%; height:auto; }
 .mab-name-logo .mab-name-wordmark--light { display:none; }
 html[data-meduc-theme="light"] .mab-name-logo .mab-name-wordmark--light { display:block; }
 html[data-meduc-theme="light"] .mab-name-logo .mab-name-wordmark--dark { display:none; }
