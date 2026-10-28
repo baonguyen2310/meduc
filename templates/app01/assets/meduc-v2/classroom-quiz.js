@@ -143,6 +143,7 @@
     expandButton.setAttribute("aria-label", expanded ? "Thu nhỏ vùng làm bài" : "Phóng to vùng làm bài");
     expandButton.title = expanded ? "Thu nhỏ vùng làm bài" : "Phóng to vùng làm bài";
     expandButton.setAttribute("aria-pressed", String(expanded));
+    requestAnimationFrame(revealCurrentMapCell);
     expandButton.innerHTML = expanded
       ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h5a1 1 0 0 0 1-1V3m12 6h-5a1 1 0 0 1-1-1V3M3 15h5a1 1 0 0 1 1 1v5m12-6h-5a1 1 0 0 0-1 1v5"/></svg>'
       : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H4a1 1 0 0 0-1 1v5m12-6h5a1 1 0 0 1 1 1v5M3 15v5a1 1 0 0 0 1 1h5m12-6v5a1 1 0 0 1-1 1h-5"/></svg>';
@@ -337,6 +338,7 @@
       cell.addEventListener("click", () => jumpToQuestion(attempt, index));
       map.append(cell);
     });
+    requestAnimationFrame(revealCurrentMapCell);
   }
 
   function renderResult(attempt) {
@@ -704,6 +706,22 @@
     }
   }
 
+  // Keep the active number visible in the horizontal mobile question strip.
+  // Scroll only the strip, so tracking a question never moves the page or answer column.
+  function revealCurrentMapCell() {
+    const cell = map.querySelector(".is-current");
+    if (!cell || !map.clientWidth || map.scrollWidth <= map.clientWidth + 1) return;
+    const strip = map.getBoundingClientRect();
+    const item = cell.getBoundingClientRect();
+    if (item.left >= strip.left + 8 && item.right <= strip.right - 8) return;
+    const left = map.scrollLeft + item.left - strip.left - (map.clientWidth - item.width) / 2;
+    map.scrollTo({
+      left: Math.max(0, Math.min(left, map.scrollWidth - map.clientWidth)),
+      behavior: reducedMotion ? "auto" : "smooth"
+    });
+  }
+  window.addEventListener("resize", () => requestAnimationFrame(revealCurrentMapCell));
+
   // Actions
   function setCurrentQuestion(attempt, index) {
     attempt.index = index;
@@ -712,6 +730,7 @@
       if (position === index) cell.setAttribute("aria-current", "true");
       else cell.removeAttribute("aria-current");
     });
+    revealCurrentMapCell();
   }
   function choose(attempt, index, value) {
     attempt.answers.set(index, value);
