@@ -394,6 +394,7 @@
       const buySource = root.querySelector(".mcr-intro-side .mcr-btn--primary");
       if (buySource) {
         const buy = buySource.cloneNode(true);
+        buy.classList.remove("mcr-btn--block");
         buy.textContent = "Đăng ký khóa học";
         buy.addEventListener("click", () => setExpanded(false));
         postActions.append(buy);
