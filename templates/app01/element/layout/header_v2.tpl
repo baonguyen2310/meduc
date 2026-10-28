@@ -1,4 +1,5 @@
 {strip}
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261028-1" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261028-no-price" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261028-no-price" defer></script>
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}

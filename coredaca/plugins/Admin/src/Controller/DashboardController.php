@@ -25,6 +25,8 @@ class DashboardController extends AppController {
             '/assets/plugins/custom/flot/flot.bundle.js'
         ];
 
+        $this->set('theme_usage', \App\Service\ThemeUsage::summary());
+
         $this->set('path_menu', 'dashboard');
         $this->set('lang', $this->lang);
         $this->set('title_for_layout', __d('admin', 'tong_quan_he_thong'));

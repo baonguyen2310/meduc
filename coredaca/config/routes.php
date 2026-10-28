@@ -36,6 +36,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/language/active', ['controller' => 'Language', 'action' => 'activeLanguage']);
     $builder->connect('/currency/active', ['controller' => 'Currency', 'action' => 'activeCurrency']);
 
+    $builder->connect('/theme-usage/record', ['controller'=>'ThemeUsage','action'=>'record']);
+
     // Private reading history and published PDF attachment reader.
     $builder->connect('/reading-history', ['controller'=>'ReadingHistory','action'=>'index']);
     $builder->connect('/reading-history/save', ['controller'=>'ReadingHistory','action'=>'save']);

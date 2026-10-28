@@ -9,6 +9,7 @@
 </div>
 
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid entire-dashboard">
+    {$this->element('../Dashboard/theme_usage')}
     <div class="row">
         {if !empty($plugins[{PRODUCT}])}
             <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
