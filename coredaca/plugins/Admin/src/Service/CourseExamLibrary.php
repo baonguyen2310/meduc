@@ -10,6 +10,9 @@ use Cake\Http\Exception\NotFoundException;
 
 class CourseExamLibrary
 {
+    // Temporarily hide exam Word exports in the admin UI and download endpoint.
+    public const WORD_DOWNLOAD_ENABLED = false;
+
     public static function isImportedCourse(int $id): bool
     {
         return (bool)ConnectionManager::get('default')->execute(

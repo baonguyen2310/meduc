@@ -42,7 +42,7 @@ class ProductController extends AppController {
         $this->js_page = [
             '/assets/plugins/global/lightbox/lightbox.min.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js',
-            '/assets/js/pages/list_product.js?v=20261028-word-link'
+            '/assets/js/pages/list_product.js?v=20261028-hide-word'
         ];
         
         $this->set('path_menu', 'product');
@@ -1071,7 +1071,7 @@ class ProductController extends AppController {
         $this->set('course_lessons', CourseExamLibrary::lessons($id));
         $this->set('course_exam_id', $id);
         $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
-        $this->set('course_exam_download', !$this->teacherCourseOnly);
+        $this->set('course_exam_download', CourseExamLibrary::WORD_DOWNLOAD_ENABLED && !$this->teacherCourseOnly);
         $this->css_page[]='/assets/css/course-exams.css?v=20261018-4';
         $this->js_page[]='/assets/js/pages/course-exams.js?v=20261018-3';
     }

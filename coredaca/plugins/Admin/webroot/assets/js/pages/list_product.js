@@ -214,10 +214,10 @@ var nhListProduct = function() {
 					var url = typeof(row.url) != _UNDEFINED && row.url != null ? row.url : '';
 					var urlEdit = adminPath + '/product/update/' + row.id + `?cate=${cate}`;
 					var urlDetail = adminPath + '/product/detail/' + row.id;
-					var examLink = Number(cate) === 125 || Number(row.main_category_id) === 125 ? '<div class="mt-2 mb-2"><a href="' + urlDetail + '" class="btn btn-sm btn-outline-brand">Xem đề / Tải Word</a></div>' : '';
+					var examLink = Number(cate) === 125 || Number(row.main_category_id) === 125 ? '<div class="mt-2 mb-2"><a href="' + urlDetail + '" class="btn btn-sm btn-outline-brand">Xem đề</a></div>' : '';
 					if (row.exam_staff_only) {
 						return '<div class="kt-user-card-v2__details"><a href="' + urlDetail + '" class="d-block kt-user-card-v2__name">' + $('<span>').text(name).html() + '</a>' +
-							'<div class="mt-2"><a href="' + urlDetail + '" class="text-info mr-3">Xem đề / Tải Word</a><a href="' + urlEdit + '" class="text-muted">Chỉnh sửa / phân công</a></div></div>';
+							'<div class="mt-2"><a href="' + urlDetail + '" class="text-info mr-3">Xem đề</a><a href="' + urlEdit + '" class="text-muted">Chỉnh sửa / phân công</a></div></div>';
 					}
 
 					var preView = ''

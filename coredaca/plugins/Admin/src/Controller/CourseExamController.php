@@ -8,6 +8,7 @@ use Admin\Service\TeacherCourseAccess;
 use App\Service\ExamWordExporter;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\UnauthorizedException;
 
 class CourseExamController extends AppController
@@ -43,6 +44,7 @@ class CourseExamController extends AppController
 
     public function word($courseId=null,$quizId=null)
     {
+        if (!CourseExamLibrary::WORD_DOWNLOAD_ENABLED) throw new NotFoundException('Không tìm thấy trang.');
         if (!$this->manager) throw new ForbiddenException('Chỉ quản trị viên được tải Word.');
         $this->requireCourse((int)$courseId);
         $data=CourseExamLibrary::exam((int)$courseId,(int)$quizId);
