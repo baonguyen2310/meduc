@@ -419,7 +419,8 @@
   }));
   $$("[data-mcr-start]").forEach((button) => button.addEventListener("click", (event) => {
     event.preventDefault();
-    selectLesson(Number(button.dataset.mcrStart), { autoplay: true });
+    selectLesson(Number(button.dataset.mcrStart), { autoplay: !examPrep });
+    if (examPrep) selectTab("quiz");
   }));
   $("[data-mcr-play-lesson]").addEventListener("click", () => { if (current) play(current); });
   $("[data-mcr-prev]").addEventListener("click", () => current && selectLesson(current.number - 1));
@@ -518,6 +519,7 @@
   }
 
   renderProgress();
+  selectTab(examPrep ? "quiz" : "video");
   const initial = Number(new URLSearchParams(location.search).get("bai"));
   const defaultLesson = byNumber.get(readStore().last) || lessons.find((lesson) => canWatch(lesson) || lesson.quiz) || lessons[0];
   const selected = byNumber.has(initial) ? initial : defaultLesson?.number;

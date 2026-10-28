@@ -132,7 +132,7 @@
     	                                data-lesson-name="{$item.name_vi}"
     	                                data-lesson-code="{$item.code}"
     	                            >
-                                        {if !empty($item.review_vi) && $item.review_vi == "y"}Làm đề tổng ôn{else}Kiểm tra{/if}
+                                        {if !empty($item.review_vi) && $item.review_vi == "y"}Làm đề thi thử{else}Kiểm tra{/if}
                                     </a>
                                 {/if}
                             {/if}

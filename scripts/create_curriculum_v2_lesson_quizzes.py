@@ -87,8 +87,8 @@ def target_state(cur, subjects, version):
 def ensure_quiz(cur, lesson, subject, questions, existing, now):
     source_id = lesson['id']
     expected = encoded(questions)
-    title = ('Đề Tổng ôn' if lesson['lesson_kind'] == 'review' else 'Bài tập 1')
-    title += ' · ' + lesson['name']
+    title = ('Đề thi thử · Thi thử' if lesson['lesson_kind'] == 'review'
+             else 'Bài tập 1 · ' + lesson['name'])
     if source_id in existing:
         row = existing[source_id]
         quiz_id = row['quiz_id']
