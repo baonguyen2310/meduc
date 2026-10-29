@@ -116,7 +116,8 @@ body.meduc-header-v2 .category-topic.form-fixed { top: calc(var(--mhi-header-h, 
 /* After login, member.js swaps in Member/mini.tpl (a Bootstrap dropdown). */
 .mhi-member #member-info { display: grid; place-items: center; width: 40px; height: 40px; padding: 0 !important; border: 1px solid var(--mhi-line) !important; border-radius: 50%; background: var(--mhi-panel) !important; color: var(--mhi-ink) !important; font-size: 18px !important; box-shadow: none !important; }
 .mhi-member #member-info:hover { border-color: var(--mhi-red) !important; }
-.mhi-member .dropdown-menu { right:0; left:auto; font-size: 14px; }
+.mhi-member .dropdown-menu { --bs-position:end; right:0; left:auto; width:280px; min-width:0; max-width:calc(100vw - 24px); font-size:14px; }
+.mhi-member .dropdown-item { white-space:normal; overflow-wrap:anywhere; }
 .mhi-cart { position: relative; display: grid; place-items: center; width: 34px; height: 40px; }
 .mhi-cart svg { width: 23px; height: 23px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .mhi-cart-count { position: absolute; top: 2px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--mhi-red); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }

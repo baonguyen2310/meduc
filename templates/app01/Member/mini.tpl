@@ -11,7 +11,7 @@
         </a>
 	{/if}
 
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="member-info">
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="member-info">
         <div class="dropdown-item border-bottom p-10">
             <i class="iconsax isax-lg isax-tag-user mr-5"></i>
             Mã học viên: {$member_info.code}
