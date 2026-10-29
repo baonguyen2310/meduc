@@ -150,19 +150,13 @@
 
                                 {if $access_product}
                                     <li class="kt-menu__item">
-                                        <a href="{$link_product}?cate=50" class="kt-menu__link">
+                                        <a href="{$link_product}?cate=50&amp;course_kind=knowledge" class="kt-menu__link">
                                             <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
                                                 <span></span>
                                             </i>
                                             <span class="kt-menu__link-text">
                                                 Danh sách
                                             </span>
-                                        </a>
-                                    </li>
-                                    <li class="kt-menu__item">
-                                        <a href="{$link_product}?cate=125" class="kt-menu__link">
-                                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                            <span class="kt-menu__link-text">Khóa luyện thi</span>
                                         </a>
                                     </li>
                                 {/if}

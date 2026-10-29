@@ -34,6 +34,13 @@ class ProductController extends AppController {
             $this->render('teacher_list');
             return;
         }
+        $category = (int)$this->request->getQuery('cate');
+        $requestedKind = $this->request->getQuery('course_kind');
+        $validKind = is_string($requestedKind) && isset(\App\Service\CourseTypes::LABELS[$requestedKind]);
+        $courseList = !$category || in_array($category, [50,125], true) || $validKind;
+        $activeKind = $courseList ? ($validKind ? $requestedKind : ($category === 125 ? 'quiz' : 'knowledge')) : null;
+        $this->set('active_course_kind', $activeKind);
+        $this->set('active_course_label', $activeKind ? \App\Service\CourseTypes::LABELS[$activeKind] : null);
         $this->css_page = [
             '/assets/plugins/global/lightbox/lightbox.css',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css'
@@ -42,7 +49,7 @@ class ProductController extends AppController {
         $this->js_page = [
             '/assets/plugins/global/lightbox/lightbox.min.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js',
-            '/assets/js/pages/list_product.js?v=20261029-course-types'
+            '/assets/js/pages/list_product.js?v=20261030-admin-types'
         ];
         
         $this->set('path_menu', 'product');

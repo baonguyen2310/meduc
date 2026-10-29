@@ -2,7 +2,7 @@
     <div class="kt-container  kt-container--fluid ">
         <div class="kt-subheader__main">
             <h3 class="kt-subheader__title">
-                Danh sách: <span class="ml-5"></span>
+                Danh sách: <span class="ml-5">{$active_course_label|default:''|escape}</span>
             </h3>
         </div>
         <div class="kt-subheader__toolbar">
@@ -43,12 +43,14 @@
     <div class="kt-portlet nh-portlet">
 
         <div class="kt-portlet__body">
-            <nav class="d-flex flex-wrap mb-4" style="gap:8px" aria-label="Loại khoá học">
-                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=knowledge">Khoá ôn kiến thức</a>
-                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=exam_solution">Khoá chữa đề</a>
-                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=quiz">Khoá trắc nghiệm</a>
-                {if !empty($auth_user.supper_admin) || $auth_user.role_id == 1}<a class="btn btn-sm btn-outline-dark" href="{ADMIN_PATH}/product/list?course_kind=fa">Fa · chỉ admin</a>{/if}
+            {if !empty($active_course_kind)}
+            <nav class="d-flex flex-wrap mb-4" style="gap:8px" aria-label="Loại khoá học" data-course-kind-filter="{$active_course_kind|escape}">
+                <a class="btn btn-sm {if $active_course_kind == 'knowledge'}btn-brand{else}btn-outline-brand{/if}" href="{ADMIN_PATH}/product?cate=50&amp;course_kind=knowledge"{if $active_course_kind == 'knowledge'} aria-current="page"{/if}>Khoá ôn kiến thức</a>
+                <a class="btn btn-sm {if $active_course_kind == 'exam_solution'}btn-brand{else}btn-outline-brand{/if}" href="{ADMIN_PATH}/product?cate=50&amp;course_kind=exam_solution"{if $active_course_kind == 'exam_solution'} aria-current="page"{/if}>Khoá chữa đề</a>
+                <a class="btn btn-sm {if $active_course_kind == 'quiz'}btn-brand{else}btn-outline-brand{/if}" href="{ADMIN_PATH}/product?cate=50&amp;course_kind=quiz"{if $active_course_kind == 'quiz'} aria-current="page"{/if}>Khoá trắc nghiệm</a>
+                {if !empty($auth_user.supper_admin) || $auth_user.role_id == 1}<a class="btn btn-sm {if $active_course_kind == 'fa'}btn-dark{else}btn-outline-dark{/if}" href="{ADMIN_PATH}/product?cate=50&amp;course_kind=fa"{if $active_course_kind == 'fa'} aria-current="page"{/if}>Fa · chỉ admin</a>{/if}
             </nav>
+            {/if}
             {$this->element('../Product/search_advanced')}
 
             <div id="nh-group-action" class="kt-form kt-form--label-align-right kt-margin-t-20 collapse">

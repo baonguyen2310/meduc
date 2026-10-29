@@ -13,18 +13,23 @@ if(!$.isEmptyObject(listLanguage)){
 	htmlListLang += '</div>';
 }
 
+const selectedCourseKind = () => document.querySelector('[data-course-kind-filter]')?.getAttribute('data-course-kind-filter') || '';
+
 const addCate = () => {
-	const urlParams = new URLSearchParams(window.location.search);
-	const cate = urlParams.get("cate");
-
-	const btnAdd = document.querySelector("#kt_subheader .kt-subheader__toolbar .btn");
-	btnAdd.href = btnAdd.href + `?cate=${cate}`;
-
-	const titlePage = document.querySelector("#kt_subheader .kt-subheader__main .kt-subheader__title span");
-	const id_categories = document.querySelector("#id_categories");
-	const text = id_categories.querySelector(`option[value="${cate}"]`).innerText;
-	titlePage.innerText = text;
-}
+    const urlParams = new URLSearchParams(window.location.search);
+    const cate = urlParams.get('cate') || (selectedCourseKind() ? '50' : '');
+    const btnAdd = document.querySelector('#kt_subheader .kt-subheader__toolbar .btn');
+    if (btnAdd && cate) {
+        const url = new URL(btnAdd.href, location.origin);
+        url.searchParams.set('cate', cate);
+        btnAdd.href = url.href;
+    }
+    // Course titles are rendered with the active type, independently of the category name.
+    if (selectedCourseKind()) return;
+    const titlePage = document.querySelector('#kt_subheader .kt-subheader__title span');
+    const option = document.querySelector('#id_categories')?.querySelector(`option[value="${cate}"]`);
+    if (titlePage && option) titlePage.innerText = option.innerText;
+};
 
 var quickUpload = {
 	idModal: '#quick-upload',
@@ -132,7 +137,7 @@ var quickUpload = {
 
 var nhListProduct = function() {
 	const urlParams = new URLSearchParams(window.location.search);
-	const cate = urlParams.get("cate");
+	const cate = urlParams.get('cate') || (selectedCourseKind() ? '50' : '');
 
 	var options = {
 		data: {
@@ -159,7 +164,7 @@ var nhListProduct = function() {
 		},
 
 		data_filter: {
-			course_kind: new URLSearchParams(location.search).get('course_kind') || '',
+			course_kind: selectedCourseKind(),
 			lang: nhMain.lang,
 			keyword: $('#nh-keyword').val(),
 			status: $('#nh-status').val(),
@@ -549,7 +554,7 @@ var nhListProduct = function() {
                 var nhExport = typeof($(this).attr('nh-export')) != _UNDEFINED ? $(this).attr('nh-export') : '';
 
                 var data_filter = {
-                    course_kind: new URLSearchParams(location.search).get('course_kind') || '',
+                    course_kind: selectedCourseKind(),
 					lang: nhMain.lang,
 					keyword: $('#nh-keyword').val(),
 					status: $('[name=status]').val(),
