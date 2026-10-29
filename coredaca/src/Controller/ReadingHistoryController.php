@@ -8,7 +8,7 @@ use Cake\Http\CallbackStream;
 
 class ReadingHistoryController extends AppController
 {
-    private const KINDS = ['blog','document','course','exam_course'];
+    private const KINDS = ['blog','document','course','exam_course','solution'];
 
     public function initialize(): void { parent::initialize();$this->get_structure_layout=false; }
     private function customer(): int
@@ -46,7 +46,7 @@ class ReadingHistoryController extends AppController
         if ((int)$this->request->getData('expected_customer_id')!==$customer) return $this->json(409,[],'Tài khoản đã thay đổi.');
         $kind=$this->request->getData('kind');$action=$this->request->getData('action');$id=(int)$this->request->getData('article_id');
         if (!in_array($kind,self::KINDS,true) || !in_array($action,['visit','progress'],true) || $id<1) return $this->json(400);
-        if (in_array($kind,['course','exam_course'],true) && $action!=='visit') return $this->json(400);
+        if (in_array($kind,['course','exam_course','solution'],true) && $action!=='visit') return $this->json(400);
         $service=new ReadingHistoryService(LANGUAGE);$articles=$service->articles($kind,[$id]);
         if (!isset($articles[$id])) return $this->json(404,[],'Nội dung hiện chưa khả dụng.');
         if ($action==='visit') $service->visit($customer,$kind,$id);

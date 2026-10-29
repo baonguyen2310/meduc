@@ -34,6 +34,14 @@ class AppController extends Controller
             return $this->redirect('/trac-nghiem' . ($query !== '' ? '?' . $query : ''), 301);
         }
 
+        if (rtrim($this->getRequest()->getUri()->getPath(), '/') === '/khoa-hoc'
+            && $this->getRequest()->getQuery('loai') === 'exam_solution') {
+            $query = $this->getRequest()->getQueryParams();
+            unset($query['loai']);
+            $this->get_structure_layout = false;
+            return $this->redirect('/khoa-chua-de' . ($query ? '?' . http_build_query($query) : ''), 301);
+        }
+
         $settings = TableRegistry::get('Settings')->getSettingWebsite();
 
         // redirect 301
@@ -341,6 +349,13 @@ class AppController extends Controller
         if(empty($path)){
             $path = !empty($this->request->getUri()) ? urldecode($this->request->getUri()->getPath()) : null;
         }   
+
+        // Reuse the course catalogue's CMS layout/data without duplicating its category or courses.
+        if (trim((string)$path, '/') === 'khoa-chua-de') {
+            $page = $this->getPageByUrl('/khoa-hoc');
+            $page['url'] = 'khoa-chua-de';
+            return $page;
+        }
 
         $url = $this->clearPrefixAndSuffixUrl($path);
         $result = ['url' => $url];
@@ -735,6 +750,12 @@ class AppController extends Controller
                 'url <>' => '',
                 'template_code' => CODE_TEMPLATE 
             ])->select(['lang', 'url'])->toList();
+        }
+        if (rtrim($this->getRequest()->getUri()->getPath(), '/') === '/khoa-chua-de') {
+            $seo_info['title'] = 'Khoá chữa đề | MedUC';
+            $seo_info['description'] = 'Học cùng giảng viên qua video chữa đề: phân tích câu hỏi, nắm kiến thức trọng tâm và hiểu cách giải theo từng môn.';
+            $alternate = [];
+            $breadcrumb = [['name'=>'Trang chủ','url'=>'/'],['name'=>'Khoá chữa đề','url'=>'/khoa-chua-de']];
         }
         $seo_info['alternate'] = $alternate;
         

@@ -16,7 +16,7 @@ class ReadingHistoryService
     {
         $ids=array_values(array_unique(array_filter(array_map('intval',$ids),function($id){return $id>0;})));
         if (!$ids) return [];
-        if (in_array($kind,['course','exam_course'],true)) return $this->courses($kind,$ids);
+        if (in_array($kind,['course','exam_course','solution'],true)) return $this->courses($kind,$ids);
         $table=TableRegistry::get('Articles');
         $rows=$table->queryListArticles(['get_categories'=>true,FILTER=>[LANG=>$this->lang,STATUS=>1,'ids'=>$ids,'id_categories'=>$kind==='blog'?[45,113]:[48]]])->where(['Articles.draft'=>0])->enableHydration(false)->toList();
         $result=[];
@@ -46,15 +46,15 @@ class ReadingHistoryService
     /** Public course metadata only. The history key's kind separates regular courses from exam preparation. */
     private function courses(string $kind,array $ids): array
     {
+        $courseKind=['course'=>'knowledge','exam_course'=>'quiz','solution'=>'exam_solution'][$kind]??null;
+        if (!$courseKind) return [];
         $table=TableRegistry::get('Products');
         $rows=$table->queryListProducts(['get_categories'=>true,'get_attributes'=>true,
-            FILTER=>[LANG=>$this->lang,STATUS=>1,STATUS_ITEM=>1,'draft'=>'0','ids'=>$ids,'id_categories'=>[50]]])->where(['Products.draft'=>0])->limit(3)->toList();
-        $examCategories=TableRegistry::get('Categories')->getAllChildCategoryId(125);
+            FILTER=>[LANG=>$this->lang,STATUS=>1,STATUS_ITEM=>1,'draft'=>'0','ids'=>$ids,'id_categories'=>[50]]])->where(['Products.draft'=>0,'Products.course_kind'=>$courseKind])->limit(3)->toList();
         $result=[];
         foreach ($rows as $row) {
             $course=$table->formatDataProductDetail($row,$this->lang);
-            $exam=(int)$course['main_category_id']===125 || (bool)array_intersect(array_keys($course['categories']??[]),$examCategories);
-            if ($exam!==($kind==='exam_course')) continue;
+            $exam=$courseKind==='quiz';
             $url=trim((string)($course['url']??''));$name=$this->plain((string)($course['name']??''));
             if (!$name || !$url || preg_match('~^(?:[a-z][a-z0-9+.-]*:|//)~i',$url)) continue;
             $url='/'.ltrim($url,'/');
@@ -68,8 +68,8 @@ class ReadingHistoryService
                 if (!$video && ($lesson['trial_'.$this->lang]??'')==='y' && strlen($youtube)===11) $video=$count;
                 foreach (LessonQuizzes::of($lesson,$this->lang) as $exercise) if (!$quiz && $exercise['free']) $quiz=$count;
             }
-            $preview=$exam?$quiz:($video?:$quiz);
-            $previewUrl=$preview?$url.'?bai='.$preview.'&tab='.($exam||!$video?'quiz':'video'):$url;
+            $preview=$exam?$quiz:$video;
+            $previewUrl=$preview?$url.'?bai='.$preview.'&tab='.($exam?'quiz':'video'):$url;
             $first=$course['items'][0]??[];$price=(float)($first['price']??0);$old=0;
             if (!empty($first['apply_special']) && (float)($first['price_special']??0)>0 && (float)$first['price_special']<$price) {
                 $old=$price;$price=(float)$first['price_special'];
@@ -80,7 +80,7 @@ class ReadingHistoryService
             $id=(int)$course['id'];
             $result[$id]=['article_id'=>$id,'kind'=>$kind,'title'=>$name,'image'=>$image,'url'=>$url,
                 'chapters'=>$chapters,'lessons'=>$count,'price'=>$price,'old_price'=>$old,
-                'preview_url'=>$previewUrl,'preview_label'=>$preview?($exam?'Luyện thi miễn phí':'Học thử miễn phí'):'Xem lại khoá học'];
+                'preview_url'=>$previewUrl,'preview_label'=>$preview?($exam?'Làm thử trắc nghiệm':'Học thử miễn phí'):($kind==='solution'?'Xem lại khoá chữa đề':'Xem lại khoá học')];
         }
         return $result;
     }
@@ -104,7 +104,17 @@ class ReadingHistoryService
 
     public function recent(int $customer,string $kind): array
     {
-        $rows=ConnectionManager::get('default')->execute('SELECT article_id,progress,visited_at FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind ORDER BY visited_at DESC,id DESC LIMIT 3',['customer'=>$customer,'kind'=>$kind])->fetchAll('assoc');
+        $courseKind=['course'=>'knowledge','exam_course'=>'quiz','solution'=>'exam_solution'][$kind]??null;
+        if ($courseKind) {
+            // Old solution visits shared the course key; include them only for this same owner and type.
+            $kinds=$kind==='solution' ? "('solution','course')" : ($kind==='course' ? "('course')" : "('exam_course')");
+            $rows=ConnectionManager::get('default')->execute("SELECT h.article_id,'{}' AS progress,MAX(h.visited_at) AS visited_at
+                FROM customer_reading_history h JOIN products p ON p.id=h.article_id
+                WHERE h.customer_id=:customer AND h.kind IN $kinds AND p.course_kind=:type
+                GROUP BY h.article_id ORDER BY visited_at DESC,MAX(h.id) DESC LIMIT 3",['customer'=>$customer,'type'=>$courseKind])->fetchAll('assoc');
+        } else {
+            $rows=ConnectionManager::get('default')->execute('SELECT article_id,progress,visited_at FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind ORDER BY visited_at DESC,id DESC LIMIT 3',['customer'=>$customer,'kind'=>$kind])->fetchAll('assoc');
+        }
         $articles=$this->articles($kind,array_column($rows,'article_id'));
         $items=[];
         foreach ($rows as $row) {

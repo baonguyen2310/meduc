@@ -10,6 +10,7 @@
 {$website = $this->Setting->getWebsiteInfo()}
 {* Khóa luyện thi (/trac-nghiem, "Luyện thi" in the header): each course is a subject whose lesson holds its exams. *}
 {$exam_prep = $catalog.exam_prep}
+{$solution = $catalog.course_kind == 'exam_solution'}
 {$hero_courses = []}{$hero_course_ids = []}
 {if !$exam_prep && PAGE_CATEGORY_ID == 50}
     {foreach from = $catalog.groups item = hero_group}
@@ -26,10 +27,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261029-course-types" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/catalog-heroes.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/catalog-heroes.css?v=20261029-solution" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261028-2" defer></script>
 
-<main class="mcl" id="course-catalog">
+<main class="mcl" id="course-catalog" data-course-kind="{$catalog.course_kind|escape}">
     {if $exam_prep}
         <section class="mcl-catalog-hero mcl-catalog-hero--exam {if PAGE_CATEGORY_ID != 125}mcl-catalog-hero--category{/if}" aria-labelledby="catalog-title">
             <div class="mcl-shell">
@@ -45,20 +46,28 @@
             </div>
         </section>
     {else}
-        <section class="mcl-catalog-hero mcl-catalog-hero--course {if PAGE_CATEGORY_ID != 50 || empty($hero_courses)}mcl-catalog-hero--category{/if}" aria-labelledby="catalog-title">
+        <section class="mcl-catalog-hero mcl-catalog-hero--course {if PAGE_CATEGORY_ID != 50 || (!$solution && empty($hero_courses))}mcl-catalog-hero--category{/if}" aria-labelledby="catalog-title">
             <div class="mcl-shell mcl-course-hero-inner">
                 <div class="mcl-course-hero-copy">
-                    <p class="mcl-eyebrow">KHÓA HỌC MEDUC / TỪ CƠ BẢN ĐẾN CHUYÊN SÂU</p>
+                    <p class="mcl-eyebrow">{if $solution}KHOÁ CHỮA ĐỀ MEDUC / HIỂU ĐỀ · VỮNG CÁCH GIẢI{else}KHÓA HỌC MEDUC / TỪ CƠ BẢN ĐẾN CHUYÊN SÂU{/if}</p>
                     {if PAGE_CATEGORY_ID == 50}
                         <h1 class="mcl-catalog-title" id="catalog-title">{if $catalog.course_kind == 'exam_solution'}HIỂU CÁCH GIẢI.<span>VỮNG CÁCH LÀM.</span>{else}{$text.tieu_de_1|default:'CHỌN KHÓA HỌC.'|escape}<span>{$text.tieu_de_2|default:'ĐÚNG CHẶNG ĐƯỜNG.'|escape}</span>{/if}</h1>
                     {else}
                         <a class="mcl-back" href="/khoa-hoc">← Tất cả khóa học</a>
                         <h1 class="mcl-catalog-title" id="catalog-title">{$catalog.category_name|escape}</h1>
                     {/if}
-                    <p class="mcl-catalog-intro">{$text.mo_ta|default:'Tìm môn học phù hợp với năm học và mục tiêu của bạn. Xem lộ trình, chọn khóa học và bắt đầu cùng MedUC.'|escape}</p>
-                    <div class="mcl-course-hero-actions"><a class="mcl-register" href="#course-listing">Học thử miễn phí <span aria-hidden="true">↓</span></a><span><strong>{$catalog.total}</strong> khóa học đang mở</span></div>
+                    <p class="mcl-catalog-intro">{if $solution}Theo dõi giảng viên phân tích từng câu, nhận diện kiến thức trọng tâm và hiểu cách xử lý đề. Học cách giải, rồi tự tin vận dụng.{else}{$text.mo_ta|default:'Tìm môn học phù hợp với năm học và mục tiêu của bạn. Xem lộ trình, chọn khóa học và bắt đầu cùng MedUC.'|escape}{/if}</p>
+                    <div class="mcl-course-hero-actions"><a class="mcl-register" href="#course-listing">{if $solution}Luyện thi miễn phí{else}Học thử miễn phí{/if} <span aria-hidden="true">↓</span></a><span>{if $solution && $catalog.total == 0}Video chữa đề theo từng môn học{else}<strong>{$catalog.total}</strong> {if $solution}khoá chữa đề{else}khóa học{/if} đang mở{/if}</span></div>
                 </div>
-                {if PAGE_CATEGORY_ID == 50 && !empty($hero_courses)}
+                {if $solution}
+                    <div class="mcl-course-hero-art mcl-solution-art" aria-label="Học qua video chữa đề cùng giảng viên MedUC">
+                        <span class="mcl-course-art-backdrop" aria-hidden="true"></span>
+                        <div class="mcl-solution-paper mcl-solution-paper--question" aria-hidden="true"><span class="mcl-solution-step">01 / ĐỌC ĐÚNG ĐỀ</span><strong>Tìm từ khoá.<br>Hiểu câu hỏi.</strong><i></i><i></i><i></i><span class="mcl-solution-answer">A <b></b></span><span class="mcl-solution-answer is-chosen">B <b></b><em>✓</em></span><span class="mcl-solution-answer">C <b></b></span></div>
+                        <div class="mcl-solution-paper mcl-solution-paper--method" aria-hidden="true"><span class="mcl-solution-step">02 / HIỂU CÁCH GIẢI</span><strong>Kết nối<br>kiến thức.</strong><span class="mcl-solution-path"><b>Câu hỏi</b><em>↓</em><b>Khái niệm</b><em>↓</em><b>Cách giải</b></span></div>
+                        <div class="mcl-solution-photo"><img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback/lop-lam-sang.jpg" alt="Giảng viên MedUC hướng dẫn trong buổi học" fetchpriority="high" decoding="async"><div><span>HỌC QUA VIDEO CHỮA ĐỀ</span><strong>Hiểu cách làm.<br>Nhớ cách giải.</strong></div><span class="mcl-solution-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 9 6-9 6z"/></svg></span></div>
+                        <span class="mcl-course-art-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m10 8 6 4-6 4Z"/></svg>XEM CÁCH GIẢI.<br>HIỂU CÁCH LÀM.</span>
+                    </div>
+                {elseif PAGE_CATEGORY_ID == 50 && !empty($hero_courses)}
                     <div class="mcl-course-hero-art" aria-label="Khám phá các khóa học MedUC">
                         <span class="mcl-course-art-backdrop" aria-hidden="true"></span>
                         {foreach from = $hero_courses item = hero_course key = hero_index}
@@ -74,9 +83,9 @@
     <nav class="mcl-year-nav" aria-label="Danh mục theo năm học">
         <div class="mcl-shell mcl-year-links">
             {if $exam_prep}<a href="/trac-nghiem" {if PAGE_CATEGORY_ID == 125}aria-current="page"{/if}>Tất cả môn</a>
-            {else}<a href="/khoa-hoc{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>{/if}
+            {else}<a href="{$catalog.catalog_url|escape}" {if $catalog.selected_id == 50}aria-current="page"{/if}>{if $solution}Tất cả khoá chữa đề{else}Tất cả khóa học{/if}</a>{/if}
             {foreach from = $catalog.nav_groups item = category}
-                <a href="{$this->Utilities->checkInternalUrl($category.url)|escape}{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>
+                <a href="{if $solution}/khoa-chua-de?nam={$category.id}{else}{$this->Utilities->checkInternalUrl($category.url)|escape}{/if}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>
             {/foreach}
         </div>
     </nav>
@@ -86,7 +95,7 @@
             <label class="mcl-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="mcl-sr-only">Tìm khóa học trong danh sách</span><input type="search" id="catalog-search" placeholder="{if $exam_prep}Tìm môn hoặc module...{else}Tìm tên khóa học hoặc môn học...{/if}" value="{$keyword|escape}" autocomplete="off" /><button type="button" data-catalog-clear aria-label="Xóa từ khóa tìm kiếm" hidden>×</button></label>
             <label class="mcl-sort">Sắp xếp<select id="catalog-sort"><option value="default">Theo MedUC</option><option value="name">Tên A–Z</option><option value="price-up">Học phí thấp đến cao</option><option value="price-down">Học phí cao đến thấp</option></select></label>
         </div>
-        <p class="mcl-result" role="status" aria-live="polite" aria-atomic="true" data-catalog-status {if $exam_prep}data-catalog-noun="môn luyện thi"{/if}>Hiển thị {$catalog.total} {if $exam_prep}môn luyện thi{else}khóa học đang mở{/if}</p>
+        <p class="mcl-result" role="status" aria-live="polite" aria-atomic="true" data-catalog-status {if $exam_prep}data-catalog-noun="môn luyện thi"{elseif $solution}data-catalog-noun="khoá chữa đề"{/if}>Hiển thị {$catalog.total} {if $exam_prep}môn luyện thi{else}khóa học đang mở{/if}</p>
 
         {foreach from = $catalog.groups item = group key = group_index}
             <section class="mcl-group" data-course-group data-course-group-id="{$group.id}" data-course-layout="list" aria-labelledby="course-group-{$group.id}">
@@ -108,7 +117,7 @@
                 </div>
             </section>
         {/foreach}
-        <div class="mcl-empty" data-catalog-empty {if $catalog.total > 0}hidden{/if}><span aria-hidden="true">↗</span><h2>Chưa tìm thấy khóa học phù hợp.</h2><p>Thử tên môn khác hoặc xem lại danh sách đầy đủ.</p><button type="button" data-catalog-reset hidden>Xóa tìm kiếm</button><a href="/khoa-hoc">Xem tất cả khóa học →</a></div>
+        <div class="mcl-empty" data-catalog-empty {if $catalog.total > 0}hidden{/if}><span aria-hidden="true">↗</span><h2>{if $solution && $catalog.total == 0}Khoá chữa đề đang được cập nhật.{else}Chưa tìm thấy khóa học phù hợp.{/if}</h2><p>{if $solution && $catalog.total == 0}Các video chữa đề theo môn sẽ xuất hiện tại đây.{else}Thử tên môn khác hoặc xem lại danh sách đầy đủ.{/if}</p><button type="button" data-catalog-reset hidden>Xóa tìm kiếm</button><a href="{$catalog.catalog_url|escape}">{if $solution}Xem tất cả khoá chữa đề{else}Xem tất cả khóa học{/if} →</a></div>
         {if $catalog.total > 0}<p class="mcl-list-note">{if $exam_prep}Phân nhóm theo giai đoạn học; một môn có thể thuộc nhiều năm tùy chương trình của trường. Mỗi môn giữ nguyên lộ trình chương, bài học và phần tổng ôn.{else}Khóa học được xếp theo danh mục năm học của MedUC. Một khóa có thể thuộc nhiều nhóm.{/if}</p>{/if}
     </section>
 

@@ -48,7 +48,13 @@ class ProductHelper extends Helper
             uasort($years, function ($a, $b) { return strnatcasecmp($a['name'], $b['name']); });
             $year_ids = array_keys($years);
         }
-        $kind = $exam_catalog ? 'quiz' : ($this->getView()->getRequest()->getQuery('loai') === 'exam_solution' ? 'exam_solution' : 'knowledge');
+        $request = $this->getView()->getRequest();
+        $solution = rtrim($request->getUri()->getPath(), '/') === '/khoa-chua-de' || $request->getQuery('loai') === 'exam_solution';
+        $kind = $exam_catalog ? 'quiz' : ($solution ? 'exam_solution' : 'knowledge');
+        if ($solution && !$exam_catalog && $request->getQuery('nam') !== null) {
+            $year = (int)$request->getQuery('nam');
+            if (in_array($year, array_map('intval', (array)$year_ids), true)) $selected_id = $year;
+        }
         $groups = [];
         foreach ((array) $year_ids as $id) {
             $id = (int) $id;
@@ -116,6 +122,7 @@ class ProductHelper extends Helper
             'total' => count($unique),
             'selected_id' => $selected_id,
             'exam_prep' => $exam_catalog,
+            'catalog_url' => $kind === 'exam_solution' ? '/khoa-chua-de' : ($exam_catalog ? '/trac-nghiem' : '/khoa-hoc'),
             'course_kind' => $kind,
             'course_label' => \App\Service\CourseTypes::LABELS[$kind],
             'category_name' => $categories[$selected_id]['name'] ?? 'Khóa học MedUC',

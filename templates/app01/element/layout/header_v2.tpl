@@ -1,7 +1,7 @@
 {strip}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261028-1" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261028-no-price" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261028-no-price" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261029-solution-2" defer></script>
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
 {$header_member = $this->Member->getMemberInfo()}
@@ -12,7 +12,7 @@
 {* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
 {$nav_courses = [
   ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
-  ['url' => '/khoa-hoc?loai=exam_solution', 'label' => 'Khoá chữa đề', 'icon' => 'pulse']
+  ['url' => '/khoa-chua-de', 'label' => 'Khoá chữa đề', 'icon' => 'pulse']
 ]}
 {$nav_secondary = [
   ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
