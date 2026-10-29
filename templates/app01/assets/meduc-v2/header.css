@@ -109,14 +109,14 @@ body.meduc-header-v2 .category-topic.form-fixed { top: calc(var(--mhi-header-h, 
 .mhi-search .wrap-suggestion .old-price { color: var(--mhi-muted); font-weight: 400; text-decoration: line-through; }
 
 .mhi-utility { display: flex; align-items: center; gap: 5px; margin-left: auto; padding-left: 0; white-space: nowrap; font-size: 14px; }
-.mhi-member { margin-inline: 7px; }
+.mhi-member { flex:none; margin-inline: 4px 0; }
 .mhi-utility a:hover { color: var(--mhi-red); }
 .mhi-member { display: flex; align-items: center; }
 .mhi-login { display: flex; align-items: center; }
 /* After login, member.js swaps in Member/mini.tpl (a Bootstrap dropdown). */
 .mhi-member #member-info { display: grid; place-items: center; width: 40px; height: 40px; padding: 0 !important; border: 1px solid var(--mhi-line) !important; border-radius: 50%; background: var(--mhi-panel) !important; color: var(--mhi-ink) !important; font-size: 18px !important; box-shadow: none !important; }
 .mhi-member #member-info:hover { border-color: var(--mhi-red) !important; }
-.mhi-member .dropdown-menu { font-size: 14px; }
+.mhi-member .dropdown-menu { right:0; left:auto; font-size: 14px; }
 .mhi-cart { position: relative; display: grid; place-items: center; width: 34px; height: 40px; }
 .mhi-cart svg { width: 23px; height: 23px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .mhi-cart-count { position: absolute; top: 2px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--mhi-red); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
@@ -168,7 +168,7 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
 /* Compact main row keeps account, both carts and the theme switch within reach. */
 @media (max-width: 991.98px) {
   .mhi { --mhi-network-h: 0px; }
-  .mhi-network, .mhi-browse-wrap, .mhi-header-main > a.mhi-header-cta, .mhi-login-text { display: none !important; }
+  .mhi-network, .mhi-browse-wrap, .mhi-main-link, .mhi-header-main > a.mhi-header-cta, .mhi-login-text { display: none !important; }
   .mhi-search-toggle, .mhi-menu-toggle, .mhi-login-icon { display: grid !important; }
   .mhi-header-main { position: relative; gap: 4px; height: 64px; }
   .mhi-brand { margin-right: auto; }
@@ -176,7 +176,7 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
   .mhi-search { display: none; }
   .mhi-header-wrap.is-search-open .mhi-search { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60; display: flex; max-width: none; box-shadow: 0 14px 48px var(--mhi-shadow); }
   .mhi-utility { order: 0; gap: 3px; margin-left: 0; padding-left: 0; }
-  .mhi-utility .mhi-member { order: 0; margin-inline: 0; }
+  .mhi-header-main > .mhi-member { margin-inline: 0; }
   .mhi-utility .mhi-cart { order: 1; width: 34px; }
   .mhi-utility .mhi-theme-toggle { order: 2; width: 36px; height: 36px; margin-left: 2px; }
   .mhi-search-toggle, .mhi-menu-toggle { width: 34px; }

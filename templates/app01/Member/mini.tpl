@@ -1,11 +1,11 @@
 {assign member_info value = $this->Member->getMemberInfo()}
 <div class="dropdown show">
     {if !empty(DEVICE)}
-	    <a class="btn-action-header" title="{__d('template', 'tai_khoan')}" href="javascript:;" role="button" id="member-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    <a class="btn-action-header" title="{__d('template', 'tai_khoan')}" href="javascript:;" role="button" aria-label="Tài khoản" id="member-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="iconsax isax-user"></i>
         </a>
     {else}
-        <a class="btn btn-primary py-5 px-10 fs-15" title="{$member_info.full_name}" href="javascript:;" role="button" id="member-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-primary py-5 px-10 fs-15" title="{$member_info.full_name}" href="javascript:;" role="button" aria-label="Tài khoản" id="member-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="iconsax isax-user"></i>
             {*$member_info.full_name|truncate:15:'...':true:true*}
         </a>

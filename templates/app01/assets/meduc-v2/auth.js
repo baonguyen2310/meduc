@@ -97,13 +97,8 @@
       if (result.data?.customer_id && window.nhMain?.dataInit) nhMain.dataInit.member = result.data;
       if (window.nhMember?.login) nhMember.login.reloadMiniMember();
       document.querySelectorAll("[nh-mini-member]").forEach((element) => { element.hidden = false; });
-      document.querySelectorAll('.mhi-header-cta[data-ma-open]').forEach((button) => {
-        const link = document.createElement("a");
-        link.className = button.className;
-        link.href = "/khoa-hoc-da-dang-ky";
-        link.textContent = button.textContent;
-        button.replaceWith(link);
-      });
+      document.querySelectorAll('.mhi-header-cta[data-ma-open]').forEach((button) => { button.hidden = true; });
+      document.querySelectorAll('[data-ma-member-link]').forEach((link) => { link.hidden = false; });
       modal.querySelectorAll('input[name="password"], input[name="verify_password"]').forEach((input) => { input.value = ""; });
       completedSinceOpen = true;
       $(modal).modal("hide");

@@ -56,6 +56,7 @@ html[data-meduc-theme="light"] .mcr {
 .mcr-layout { display: grid; grid-template-columns: 380px minmax(0, 1fr); overflow: clip; border: 1px solid var(--mcr-line); border-radius: 16px; background: var(--mcr-panel); }
 .mcr-sidebar { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 88px); overflow-y: auto; overscroll-behavior: contain; background: var(--mcr-side); scrollbar-width: thin; }
 .mcr-outline-actions { position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 18px; background:var(--mcr-side); }
+.mcr .mcr-outline-actions--quiz > .mcr-mock-exam { flex:1; min-width:0; text-align:center; }
 .mcr-outline-actions h3 { margin:0; color:var(--mcr-ink); font:700 15px/1.4 Inter,Arial,sans-serif; }
 .mcr .mcr-mock-exam { position:relative; isolation:isolate; overflow:hidden; flex:none; min-height:38px; padding:8px 14px; border:1px solid transparent; border-radius:8px; background:linear-gradient(110deg,#bd1939,var(--mcr-red),#e72b50); color:#fff; box-shadow:0 4px 12px rgb(212 33 61 / .2); font:700 13px/1.2 Inter,Arial,sans-serif; cursor:pointer; transition:filter .2s,box-shadow .2s; }
 .mcr .mcr-mock-exam:hover { filter:brightness(1.1); box-shadow:0 5px 16px rgb(212 33 61 / .28); }

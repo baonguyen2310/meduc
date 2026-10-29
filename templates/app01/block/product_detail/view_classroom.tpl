@@ -196,8 +196,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261029-course-types" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261029-course-types-2" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261029-outline-exams-2" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261029-outline-exams" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
@@ -316,8 +316,10 @@
         <div class="mcr-layout" data-mcr-classroom>
             {* Course outline *}
             <aside class="mcr-sidebar" aria-label="Lộ trình học">
-                <div class="mcr-outline-actions">
-                    <h3>Chương trình học</h3>
+                <div class="mcr-outline-actions{if $quiz_course} mcr-outline-actions--quiz{/if}">
+                    {if $quiz_course}
+                        <button type="button" class="mcr-mock-exam" data-mcr-lesson-exams>Đề theo bài</button>
+                    {else}<h3>Chương trình học</h3>{/if}
                     {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử</button>{/if}
                 </div>
                 <div class="mcr-outline">
@@ -335,7 +337,7 @@
                                 {foreach from = $lessons item = lesson}
                                     {if $lesson.chapter != $chapter_key}{continue}{/if}
                                     <li>
-                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-trial="{if $lesson.trial}1{else}0{/if}" data-free-quiz="{if $lesson.free_quiz}1{else}0{/if}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
+                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-review="{if $lesson.review}1{else}0{/if}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-trial="{if $lesson.trial}1{else}0{/if}" data-free-quiz="{if $lesson.free_quiz}1{else}0{/if}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
                                             <span class="mcr-lesson-number">{$lesson.number|string_format:'%02d'}</span>
                                             <span class="mcr-lesson-title">{$lesson.title|escape}</span>
                                             {if $lesson.access == 'trial' || $lesson.free_quiz}

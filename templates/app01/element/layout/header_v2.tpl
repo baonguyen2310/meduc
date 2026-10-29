@@ -12,10 +12,7 @@
 {* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
 {$nav_courses = [
   ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
-  ['url' => '/khoa-hoc?loai=exam_solution', 'label' => 'Khoá chữa đề', 'icon' => 'pulse'],
-  ['url' => '/khoa-hoc-sinh-vien-nam-1-nam-2', 'label' => 'Sinh viên năm 1 – năm 2', 'icon' => 'book'],
-  ['url' => '/khoa-hoc-sinh-vien-nam-3-nam-4', 'label' => 'Sinh viên năm 3 – năm 4', 'icon' => 'pulse'],
-  ['url' => '/khoa-hoc-noi-tru-sau-dai-hoc', 'label' => 'Nội trú – Sau đại học', 'icon' => 'users']
+  ['url' => '/khoa-hoc?loai=exam_solution', 'label' => 'Khoá chữa đề', 'icon' => 'pulse']
 ]}
 {$nav_secondary = [
   ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
@@ -32,15 +29,13 @@
 {$nav_exam_categories = $this->Category->getListCategories({PRODUCT}, {LANGUAGE}, [{FILTER} => ['parent_id' => 125], {SORT} => [{FIELD} => 'position', {SORT} => 'asc']])}
 {$nav_book_categories = $this->Category->getListCategories({PRODUCT}, {LANGUAGE}, [{FILTER} => ['parent_id' => 79], {SORT} => [{FIELD} => 'position', {SORT} => 'asc']])}
 {foreach from = $nav_exam_categories item = category}{$nav_exam_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
-{foreach from = $nav_book_categories item = category}{$nav_book_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
+{foreach from = $nav_book_categories item = category}{if count($nav_book_items) >= 4}{break}{/if}{$nav_book_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
 {$nav_main = [
-  ['id' => 'browse', 'label' => 'Khoá học', 'url' => '/khoa-hoc', 'all' => 'Xem tất cả khóa học', 'items' => $nav_courses],
+  ['id' => 'browse', 'label' => 'Khoá học', 'url' => '/khoa-hoc', 'items' => $nav_courses],
   ['id' => 'practice', 'label' => 'Trắc nghiệm', 'url' => '/khoa-luyen-thi', 'all' => 'Xem tất cả môn trắc nghiệm', 'items' => $nav_exam_items],
   ['id' => 'books', 'label' => 'Sách', 'url' => '/sach-y-khoa', 'all' => 'Xem tất cả sách', 'items' => $nav_book_items],
-  ['id' => 'gift', 'label' => 'Gift', 'items' => [
-    ['url' => '/blog', 'label' => 'Blog', 'icon' => 'journal'],
-    ['url' => '/tai-lieu-hoc-tap', 'label' => 'Tài liệu', 'icon' => 'document']
-  ]]
+  ['id' => 'blog', 'label' => 'Blog', 'url' => '/blog'],
+  ['id' => 'documents', 'label' => 'Tài liệu', 'url' => '/tai-lieu-hoc-tap']
 ]}
 
 <div class="mhi mhi-header-wrap" id="meduc-header">
@@ -89,9 +84,9 @@
       <button class="mhi-icon-button mhi-search-toggle" id="mhi-search-toggle" type="button" aria-label="Tìm kiếm" aria-expanded="false" aria-controls="mhi-search-form"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-search" /></svg></button>
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
         {foreach from = $nav_main item = group}
+          {if isset($group.items)}
           <div class="mhi-browse-wrap" data-mhi-dropdown>
             <button class="mhi-browse-button{if $group.id == 'browse'} mhi-course-button{/if}" id="mhi-{$group.id}-button" type="button" aria-expanded="false" aria-controls="mhi-{$group.id}-menu">
-              {if $group.id == 'gift'}<svg class="mhi-icon mhi-gift-icon" aria-hidden="true"><use href="#mhi-icon-gift" /></svg>{/if}
               {$group.label|escape}<svg class="mhi-icon mhi-chevron" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg>
             </button>
             <nav class="mhi-browse-menu" id="mhi-{$group.id}-menu" aria-label="Danh mục {$group.label|escape}" hidden>
@@ -101,10 +96,10 @@
               {if !empty($group.all)}<a class="mhi-browse-all" href="{$group.url|escape}">{$group.all|escape}<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>{/if}
             </nav>
           </div>
+          {else}
+            <a class="mhi-browse-button mhi-main-link" href="{$group.url|escape}">{$group.label|escape}</a>
+          {/if}
         {/foreach}
-        <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
-          {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
-        </div>
         <a class="mhi-cart" data-course-cart-open data-course-cart-legacy="{$header_course_cart.total_quantity|default:0}" href="/bang-bao-gia" title="Giỏ hàng khóa học" aria-label="Giỏ hàng khóa học" aria-haspopup="dialog">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
           <span data-course-cart-count class="mhi-cart-count">{$header_course_cart.total_quantity|default:0}</span>
@@ -118,7 +113,10 @@
           <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
         </button>
       </nav>
-      {if !empty($header_member)}<a class="mhi-header-cta" href="/khoa-hoc-da-dang-ky">Bắt đầu học</a>{else}<button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal">Bắt đầu học</button>{/if}
+      <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
+        {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
+      </div>
+      <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Bắt đầu học</button>
       <button class="mhi-icon-button mhi-menu-toggle" id="mhi-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mhi-drawer">
         <svg class="mhi-icon" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -133,11 +131,15 @@
         <button class="mhi-icon-button" type="button" data-mhi-drawer-close aria-label="Đóng menu"><svg class="mhi-icon" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
       </div>
       {foreach from = $nav_main item = group}
+        {if isset($group.items)}
         <details class="mhi-drawer-group" data-mhi-main-group="{$group.id}">
-          <summary class="mhi-drawer-link">{if $group.id == 'gift'}<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-gift" /></svg>{/if}{$group.label|escape}<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg></summary>
+          <summary class="mhi-drawer-link">{$group.label|escape}<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg></summary>
           {foreach from = $group.items item = link}<a class="mhi-drawer-sublink" href="{$link.url|escape}">{$link.label|escape}</a>{/foreach}
           {if !empty($group.all)}<a class="mhi-drawer-sublink mhi-drawer-all" href="{$group.url|escape}">{$group.all|escape} →</a>{/if}
         </details>
+        {else}
+          <a class="mhi-drawer-link" href="{$group.url|escape}">{$group.label|escape}</a>
+        {/if}
       {/foreach}
       <p class="mhi-drawer-label">Về MedUC</p>
       {foreach from = $nav_secondary item = link}
@@ -151,7 +153,8 @@
           <svg class="mhi-icon mhi-moon" aria-hidden="true"><use href="#mhi-icon-moon" /></svg>
           <span>Đổi giao diện sáng/tối</span>
         </button>
-        {if !empty($header_member)}<a class="mhi-header-cta" href="/khoa-hoc-da-dang-ky">Bắt đầu học</a>{else}<button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal">Bắt đầu học</button>{/if}
+        <a class="mhi-header-cta" data-ma-member-link href="/khoa-hoc-da-dang-ky"{if empty($header_member)} hidden{/if}>Khoá học của tôi</a>
+        <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Bắt đầu học</button>
       </div>
     </nav>
   </div>

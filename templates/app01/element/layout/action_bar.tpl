@@ -40,6 +40,7 @@
                         <svg class="mhb-icon mhb-icon--always" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg>
                         <span>Blog</span>
                     </a>
+                    <a class="mhb-button mhb-button--secondary" href="/khoa-luyen-thi"><svg class="mhb-icon mhb-icon--always" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM9 5.5H6V21h12V5.5h-3M9 13h6M9 17h4"/></svg><span>Trắc nghiệm</span></a>
                 </div>
             </div>
         </nav>

@@ -407,6 +407,14 @@
     target?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   });
 
+  $("[data-mcr-lesson-exams]")?.addEventListener("click", () => {
+    const lesson = lessons.find((item) => item.link.dataset.review !== "1");
+    if (!lesson) return;
+    selectLesson(lesson.number, { scroll: false });
+    selectTab("quiz");
+    lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+  });
+
   $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
     const number = Number(event.currentTarget.dataset.mcrMockExam);
     if (!byNumber.has(number)) return;

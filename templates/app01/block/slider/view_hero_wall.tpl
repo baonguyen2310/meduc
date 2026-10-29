@@ -99,6 +99,7 @@
                         <nav class="mhw-gift-menu" id="mhw-gift-menu" aria-label="Quà tặng miễn phí" hidden>
                             <a href="/blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg><span>Blog</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
                             <a href="/tai-lieu-hoc-tap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg><span>Tài liệu</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
+                            <a href="/khoa-luyen-thi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM9 5.5H6V21h12V5.5h-3M9 13h6M9 17h4"/></svg><span>Trắc nghiệm</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
                         </nav>
                     </div>
                 </div>

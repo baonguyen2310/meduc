@@ -6,7 +6,7 @@
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/css/fonts.css" rel="stylesheet">
   {$this->element('layout/css')}
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261022-logo-smaller-1" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261029-header-simple" rel="stylesheet">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261018-1" defer></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261021-1" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261021-7" rel="stylesheet">
@@ -14,7 +14,7 @@
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261022-6" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261028-1" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261029-avatar" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261028-preview" defer></script>
   <script src="/bang-bao-gia/lien-ket.js" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261022-7" defer></script>
