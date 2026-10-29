@@ -27,6 +27,13 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
+        // Preserve old catalogue bookmarks and their filters after the public URL rename.
+        if (rtrim($this->getRequest()->getUri()->getPath(), '/') === '/khoa-luyen-thi') {
+            $query = $this->getRequest()->getUri()->getQuery();
+            $this->get_structure_layout = false;
+            return $this->redirect('/trac-nghiem' . ($query !== '' ? '?' . $query : ''), 301);
+        }
+
         $settings = TableRegistry::get('Settings')->getSettingWebsite();
 
         // redirect 301

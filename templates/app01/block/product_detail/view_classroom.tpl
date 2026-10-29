@@ -208,7 +208,7 @@
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
-            <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/khoa-luyen-thi">Trắc nghiệm</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
+            <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/trac-nghiem">Trắc nghiệm</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
         {if $quiz_course}
         <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm thử 30 câu miễn phí ở bài tập 1; đăng ký một lần để mở bài tập 2 của toàn môn.</p></header>

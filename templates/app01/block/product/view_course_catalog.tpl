@@ -8,7 +8,7 @@
 {$keyword = $this->getRequest()->getQuery('keyword')}
 {if !is_string($keyword)}{$keyword = ''}{/if}
 {$website = $this->Setting->getWebsiteInfo()}
-{* Khóa luyện thi (/khoa-luyen-thi, "Luyện thi" in the header): each course is a subject whose lesson holds its exams. *}
+{* Khóa luyện thi (/trac-nghiem, "Luyện thi" in the header): each course is a subject whose lesson holds its exams. *}
 {$exam_prep = $catalog.exam_prep}
 {$hero_courses = []}{$hero_course_ids = []}
 {if !$exam_prep && PAGE_CATEGORY_ID == 50}
@@ -35,7 +35,7 @@
             <div class="mcl-shell">
                 <p class="mcl-eyebrow mcl-exam-eyebrow"><span aria-hidden="true"></span> TRẮC NGHIỆM MEDUC / LUYỆN TẬP THEO MÔN</p>
                 {if PAGE_CATEGORY_ID != 125}
-                    <a class="mcl-back" href="/khoa-luyen-thi">← Tất cả môn luyện thi</a>
+                    <a class="mcl-back" href="/trac-nghiem">← Tất cả môn luyện thi</a>
                     <h1 class="mcl-catalog-title" id="catalog-title">{$catalog.category_name|escape}</h1>
                 {else}
                     <h1 class="mcl-catalog-title" id="catalog-title">LUYỆN ĐỀ THEO MÔN.<span>VỮNG VÀNG MÙA THI.</span></h1>
@@ -73,7 +73,7 @@
 
     <nav class="mcl-year-nav" aria-label="Danh mục theo năm học">
         <div class="mcl-shell mcl-year-links">
-            {if $exam_prep}<a href="/khoa-luyen-thi" {if PAGE_CATEGORY_ID == 125}aria-current="page"{/if}>Tất cả môn</a>
+            {if $exam_prep}<a href="/trac-nghiem" {if PAGE_CATEGORY_ID == 125}aria-current="page"{/if}>Tất cả môn</a>
             {else}<a href="/khoa-hoc{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>{/if}
             {foreach from = $catalog.nav_groups item = category}
                 <a href="{$this->Utilities->checkInternalUrl($category.url)|escape}{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>

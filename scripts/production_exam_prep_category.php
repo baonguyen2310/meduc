@@ -12,7 +12,7 @@ $db = new PDO(
 );
 
 const CATEGORY_ID = 125;
-const CATEGORY_SLUG = 'khoa-luyen-thi';
+const CATEGORY_SLUG = 'trac-nghiem';
 const CATEGORY_NAME = 'Khóa luyện thi';
 
 $db->beginTransaction();
@@ -60,7 +60,7 @@ try {
     }
 
     $db->commit();
-    echo "Category 125: Khóa học > Khóa luyện thi (khoa-luyen-thi)\n";
+    echo "Category 125: Khóa học > Khóa luyện thi (trac-nghiem)\n";
 } catch (Throwable $e) {
     $db->rollBack();
     fwrite(STDERR, $e->getMessage() . "\n");

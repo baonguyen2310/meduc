@@ -32,7 +32,7 @@
 {foreach from = $nav_book_categories item = category}{if count($nav_book_items) >= 4}{break}{/if}{$nav_book_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
 {$nav_main = [
   ['id' => 'browse', 'label' => 'Khoá học', 'url' => '/khoa-hoc', 'items' => $nav_courses],
-  ['id' => 'practice', 'label' => 'Trắc nghiệm', 'url' => '/khoa-luyen-thi', 'all' => 'Xem tất cả môn trắc nghiệm', 'items' => $nav_exam_items],
+  ['id' => 'practice', 'label' => 'Trắc nghiệm', 'url' => '/trac-nghiem', 'all' => 'Xem tất cả môn trắc nghiệm', 'items' => $nav_exam_items],
   ['id' => 'books', 'label' => 'Sách', 'url' => '/sach-y-khoa', 'all' => 'Xem tất cả sách', 'items' => $nav_book_items],
   ['id' => 'blog', 'label' => 'Blog', 'url' => '/blog'],
   ['id' => 'documents', 'label' => 'Tài liệu', 'url' => '/tai-lieu-hoc-tap']

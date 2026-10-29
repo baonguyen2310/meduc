@@ -13,7 +13,7 @@ class ProductHelper extends Helper
 {
     public function courseKind($id) { return \App\Service\CourseTypes::kind((int)$id); }
 
-    // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /khoa-luyen-thi.
+    // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /trac-nghiem.
     const EXAM_PREP_CATEGORY_ID = 125;
 
     /** Khóa học có phải khóa luyện thi (thuộc danh mục 125) không
