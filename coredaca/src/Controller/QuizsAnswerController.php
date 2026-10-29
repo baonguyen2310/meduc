@@ -42,6 +42,7 @@ class QuizsAnswerController extends AppController {
         // Even a free quiz starts only after account authentication; never send guest question/answer data.
         $quiz = !empty($access['allowed']) && !empty($member['id']) ? \App\Lib\QuizQuestions::load(intval($quiz_id), LANGUAGE) : null;
         $status = empty($access['found']) ? 404 : (empty($access['allowed']) ? 403 : (empty($member['id']) ? 401 : (empty($quiz) ? 404 : 200)));
+        if ($status === 200) $quiz['mode'] = $access['mode'] ?? 'exam';
         $body = $status === 200 ? [CODE => SUCCESS, DATA => $quiz] : [CODE => ERROR, MESSAGE => $status === 401
             ? 'Đăng nhập hoặc đăng ký tài khoản để làm bài tập miễn phí. Bạn không cần mua khóa học để làm thử.'
             : ($status === 403 ? 'Bài tập này dành cho học viên đã đăng ký khóa học.' : 'Không tìm thấy bài tập.')];

@@ -611,3 +611,15 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 .mcq-explain-option-detail { flex: 1; }
 
 .mcq-explain-body .mcq-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }
+
+/* Practice reveals each answer immediately; mock exams keep the full-paper workspace. */
+.mcq-practice-hint { margin:0 0 18px; color:var(--mcr-muted); font-size:13px; }
+.mcq-practice-nav { display:flex; justify-content:space-between; gap:12px; padding-top:20px; border-top:1px solid var(--mcr-line); }
+.mcq-practice-nav button:disabled { opacity:.4; cursor:default; }
+.mcq-practice-feedback { margin:18px 0 0; padding:12px 16px; border-radius:8px; background:var(--mcr-soft-button); font-weight:600; }
+.mcq-practice-feedback.is-correct { color:#79dba4; background:rgb(34 163 90 / .12); }
+.mcq-practice-feedback.is-wrong { color:#ff94a5; background:var(--mcr-red-soft); }
+html[data-meduc-theme="light"] .mcq-practice-feedback.is-correct { color:#16804b; }
+html[data-meduc-theme="light"] .mcq-practice-feedback.is-wrong { color:#bf2944; }
+
+.mcq-practice-feedback:focus { outline: none; }

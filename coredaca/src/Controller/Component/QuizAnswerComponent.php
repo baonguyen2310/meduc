@@ -121,7 +121,10 @@ class QuizAnswerComponent extends Component
         $free = null;
         foreach (LessonQuizzes::lessons(!empty($lessons['value']) ? $lessons['value'] : null) as $lesson) {
             foreach (LessonQuizzes::of($lesson) as $quiz) {
-                if ($quiz['id'] === $quiz_id) $free = (int)$slot['slot'] === 1;
+                if ($quiz['id'] === $quiz_id) {
+                    $free = (int)$slot['slot'] === 1;
+                    $result['mode'] = ($lesson['review_vi'] ?? '') === 'y' ? 'exam' : 'practice';
+                }
             }
         }
         if (is_null($free)) return $result;

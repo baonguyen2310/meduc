@@ -1,7 +1,8 @@
 /* Quiz flow in the course classroom's "Bài tập" tab (block/product_detail/view_classroom.tpl).
    It replaces the Bootstrap modal built by assets/js/custom.js, whose close button reloaded the page:
-   - all questions in a scrollable column, a right-side question map, and a countdown when time is limited;
-   - submitting (or running out of time) shows the score, then each question with the right answer and the explanation;
+   - lesson practice shows one question at a time and locks the first choice before revealing feedback;
+   - mock exams show all questions and reveal answers only after submission;
+   - both modes keep the question map, timer and saved history;
    - a signed-in student's result is saved to /quizs-answer/add with the same fields as before.
    A lesson may have several quizzes: separate History and Start actions. History contains attempts and a per-quiz wrong-answer notebook.
    A quiz's questions load from /khoa-hoc/bai-tap/{course}/{quiz} when it starts
@@ -46,6 +47,8 @@
     node.type = "button";
     return node;
   }
+
+  const isPractice = attempt => attempt.quiz.mode === "practice";
 
   // Attempts
   function newAttempt(quiz, lesson) {
@@ -204,7 +207,9 @@
     const total = attempt.quiz.questions.length;
     const count = lessonQuizCount(attempt.lesson.number);
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
-    kicker.textContent = count > 1 && place >= 0 ? `Bài tập ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `Bài tập · Buổi ${attempt.lesson.number}`;
+    const label = isPractice(attempt) ? "Đề theo bài" : "Đề thi thử";
+    kicker.textContent = count > 1 && place >= 0 ? `${label} ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `${label} · Buổi ${attempt.lesson.number}`;
+    submitButton.textContent = isPractice(attempt) ? "Hoàn thành bài" : "Nộp bài";
     back.hidden = false;
     back.textContent = "← Lịch sử bài tập";
     barMeta.hidden = false;
@@ -225,7 +230,8 @@
     const questions = attempt.quiz.questions;
     const question = questions[index];
     const chosen = attempt.answers.get(index);
-    const reviewing = attempt.state !== "doing";
+    const instant = isPractice(attempt) && attempt.state === "doing" && chosen !== undefined;
+    const reviewing = attempt.state !== "doing" || instant;
     const wrap = el("div", `mcq-question${inline && reviewing ? " mcq-review-question" : ""}`);
     wrap.dataset.mcqQuestion = String(index);
     wrap.append(el("p", "mcq-count", `Câu ${index + 1} / ${questions.length}`));
@@ -248,8 +254,8 @@
       option.classList.toggle("is-selected", chosen === value);
       if (reviewing) {
         option.disabled = true;
-        if (value === question.answer) option.classList.add("is-correct");
-        else if (chosen === value) option.classList.add("is-wrong");
+        if (question.answer > 0 && value === question.answer) option.classList.add("is-correct");
+        else if (question.answer > 0 && chosen === value) option.classList.add("is-wrong");
       }
       const letter = el("span", "mcq-letter", letters[position] || String(value));
       const body = el("span", "mcq-option-text");
@@ -259,6 +265,17 @@
       options.append(option);
     });
     wrap.append(options);
+
+    if (instant) {
+      const known = question.answer > 0;
+      const correct = known && chosen === question.answer;
+      const position = question.options.findIndex(([value]) => value === question.answer);
+      const message = !known ? "Câu này chưa có đáp án để đối chiếu." : correct ? "Chính xác!" : `Chưa đúng. Đáp án đúng: ${letters[position] || question.answer}.`;
+      const feedback = el("p", `mcq-practice-feedback ${!known ? "is-unknown" : correct ? "is-correct" : "is-wrong"}`, message);
+      feedback.setAttribute("role", "status");
+      feedback.setAttribute("tabindex", "-1");
+      wrap.append(feedback);
+    }
 
     if (reviewing) {
       if (chosen === undefined) wrap.append(el("p", "mcq-skipped", attempt.incompleteHistory ? "Bài nộp cũ không lưu được lựa chọn của câu này; bạn vẫn có thể xem đáp án và lời giải." : "Bạn chưa trả lời câu này."));
@@ -298,7 +315,7 @@
       }
     }
 
-    if (reviewing && window.MeducQuizConfidence) wrap.append(window.MeducQuizConfidence.create({ attempt, productId, index, question }));
+    if (attempt.state !== "doing" && window.MeducQuizConfidence) wrap.append(window.MeducQuizConfidence.create({ attempt, productId, index, question }));
 
     const nav = el("div", "mcq-nav");
     if (reviewing) {
@@ -314,7 +331,22 @@
 
   function renderQuestions(attempt) {
     const list = el("div", "mcq-question-list");
-    attempt.quiz.questions.forEach((question, index) => list.append(buildQuestion(attempt, index, true)));
+    if (isPractice(attempt) && attempt.state === "doing") {
+      list.append(el("p", "mcq-practice-hint", "Luyện từng câu · Chọn đáp án để xem lời giải ngay."));
+      list.append(buildQuestion(attempt, attempt.index));
+      const navigation = el("div", "mcq-practice-nav");
+      const previous = button("mcr-btn mcr-btn--ghost", "← Câu trước");
+      previous.disabled = attempt.index === 0;
+      previous.addEventListener("click", () => jumpToQuestion(attempt, attempt.index - 1));
+      const last = attempt.index === attempt.quiz.questions.length - 1;
+      const next = button("mcr-btn mcr-btn--primary", last ? "Hoàn thành bài" : "Câu tiếp theo →");
+      next.disabled = !attempt.answers.has(attempt.index);
+      next.addEventListener("click", () => last ? askSubmit(attempt) : jumpToQuestion(attempt, attempt.index + 1));
+      navigation.append(previous, next);
+      list.append(navigation);
+    } else {
+      attempt.quiz.questions.forEach((question, index) => list.append(buildQuestion(attempt, index, true)));
+    }
     stage.replaceChildren(list);
     mapPanel.hidden = false;
   }
@@ -325,8 +357,8 @@
     attempt.quiz.questions.forEach((question, index) => {
       const cell = button("mcq-cell", String(index + 1));
       const chosen = attempt.answers.get(index);
-      if (attempt.state !== "doing") {
-        cell.classList.add(chosen === undefined ? (attempt.incompleteHistory ? "is-unknown" : "is-skipped") : chosen === question.answer ? "is-correct" : "is-wrong");
+      if (attempt.state !== "doing" || (isPractice(attempt) && chosen !== undefined)) {
+        cell.classList.add(chosen === undefined ? (attempt.incompleteHistory ? "is-unknown" : "is-skipped") : question.answer <= 0 ? "is-unknown" : chosen === question.answer ? "is-correct" : "is-wrong");
       } else if (chosen !== undefined) {
         cell.classList.add("is-answered");
       }
@@ -735,10 +767,18 @@
     revealCurrentMapCell();
   }
   function choose(attempt, index, value) {
+    if (attempt.state !== "doing" || (isPractice(attempt) && attempt.answers.has(index))) return;
     attempt.answers.set(index, value);
     attempt.confirming = false;
     renderConfirm(attempt);
     progress.textContent = `Đã làm ${attempt.answers.size}/${attempt.quiz.questions.length}`;
+    if (isPractice(attempt)) {
+      setCurrentQuestion(attempt, index);
+      renderQuestions(attempt);
+      renderMap(attempt);
+      stage.querySelector(".mcq-practice-feedback")?.focus({preventScroll:true});
+      return;
+    }
     const card = stage.querySelector(`[data-mcq-question="${index}"]`);
     card?.querySelectorAll(".mcq-option").forEach((option, position) => {
       const selected = attempt.quiz.questions[index].options[position][0] === value;
@@ -750,6 +790,13 @@
   }
   function jumpToQuestion(attempt, index, animate = true) {
     if (index < 0 || index >= attempt.quiz.questions.length) return;
+    if (isPractice(attempt) && attempt.state === "doing") {
+      setCurrentQuestion(attempt, index);
+      renderQuestions(attempt);
+      stage.scrollTop = 0;
+      stage.querySelector(".mcq-practice-feedback, .mcq-option:not([disabled])")?.focus({preventScroll:true});
+      return;
+    }
     const card = stage.querySelector(`[data-mcq-question="${index}"]`);
     if (!card) return;
     setCurrentQuestion(attempt, index);
