@@ -9,13 +9,14 @@
 {/if}
 {$current_path = $this->getRequest()->getPath()}
 {* An exam-prep course suggests other exam-prep courses; any other course suggests courses only. *}
-{$exam_prep = $this->Product->isExamPrepCourse(PAGE_RECORD_ID)}
+{$current_kind = $this->Product->courseKind(PAGE_RECORD_ID)}
+{$exam_prep = $current_kind == 'quiz'}
 {$courses = []}
 {if !empty($data_block.data)}
     {foreach from = $data_block.data item = course}
         {if empty($course.url) || "/{$course.url}" == $current_path}{continue}{/if}
-        {$course_exam_prep = !empty($course.categories[125]) || (!empty($course.main_category_id) && $course.main_category_id == 125)}
-        {if $course_exam_prep != $exam_prep}{continue}{/if}
+        {* Shared year categories do not imply the same course type. *}
+        {if $course.course_kind != $current_kind}{continue}{/if}
         {if count($courses) >= 12}{break}{/if}
         {$courses[] = $course}
     {/foreach}

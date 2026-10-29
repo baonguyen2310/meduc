@@ -41,16 +41,16 @@ class ProductHelper extends Helper
             if ($ancestor === self::EXAM_PREP_CATEGORY_ID) { $exam_catalog = true; break; }
             $ancestor = (int) $categories[$ancestor]['parent_id'];
         }
-        if ($exam_catalog) {
+        $request = $this->getView()->getRequest();
+        $solution = rtrim($request->getUri()->getPath(), '/') === '/khoa-chua-de' || $request->getQuery('loai') === 'exam_solution';
+        if ($exam_catalog || $solution) {
             $years = array_filter($categories, function ($category) {
                 return (int) $category['parent_id'] === self::EXAM_PREP_CATEGORY_ID && !empty($category['status']);
             });
             uasort($years, function ($a, $b) { return strnatcasecmp($a['name'], $b['name']); });
             $year_ids = array_keys($years);
         }
-        $request = $this->getView()->getRequest();
-        $solution = rtrim($request->getUri()->getPath(), '/') === '/khoa-chua-de' || $request->getQuery('loai') === 'exam_solution';
-        $kind = $exam_catalog ? 'quiz' : ($solution ? 'exam_solution' : 'knowledge');
+        $kind = $solution ? 'exam_solution' : ($exam_catalog ? 'quiz' : 'knowledge');
         if ($solution && !$exam_catalog && $request->getQuery('nam') !== null) {
             $year = (int)$request->getQuery('nam');
             if (in_array($year, array_map('intval', (array)$year_ids), true)) $selected_id = $year;
@@ -68,15 +68,12 @@ class ProductHelper extends Helper
         }
         $nav_groups = $groups;
         $selected_year = isset($groups[$selected_id]) ? $selected_id : null;
-        // Keep the full exam catalogue unique; year links provide the grouped views.
-        if ($exam_catalog && $selected_id === self::EXAM_PREP_CATEGORY_ID) $groups = [];
         $unique = [];
         $other = [];
         foreach ((array) $courses as $course) {
             if (empty($course['id']) || isset($unique[$course['id']])) continue;
             if (($course['course_kind'] ?? \App\Service\CourseTypes::kind((int)$course['id'])) !== $kind) continue;
             $exam_prep = $kind === 'quiz';
-            if ($exam_prep !== $exam_catalog) continue;
             if ($selected_year !== null && !isset($course['categories'][$selected_year])) continue;
             $unique[$course['id']] = true;
             $attrs = $course['attributes'] ?? [];
@@ -114,6 +111,14 @@ class ProductHelper extends Helper
             }
             unset($group);
             if (!$matched) $other[] = $course;
+        }
+        if ($exam_catalog || $solution) {
+            // A year page's input contains only that year; keep links to the other populated years.
+            $available = ConnectionManager::get('default')->execute(
+                'SELECT DISTINCT cp.category_id FROM categories_product cp JOIN products p ON p.id=cp.product_id WHERE p.course_kind=:kind AND p.deleted=0 AND p.status=1 AND COALESCE(p.draft,0)=0',
+                ['kind'=>$kind]
+            )->fetchAll('assoc');
+            $nav_groups = array_intersect_key($nav_groups, array_flip(array_column($available,'category_id')));
         }
         if ($other) $groups['other'] = ['id' => 'other', 'name' => $exam_catalog ? 'Luyện đề theo môn' : 'Khóa học khác', 'url' => null, 'courses' => $other];
         return [

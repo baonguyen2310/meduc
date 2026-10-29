@@ -1,0 +1,6023 @@
+{
+  "version": "selected-32-v1-20261029",
+  "source_sha256": "997af3bcdbce435e9150557b012f1aba6aa4dd2e0a87b3a2415b86fe282348b0",
+  "subjects": [
+    {
+      "subject_code": "MV2-S004",
+      "subject_name": "Giải phẫu học",
+      "student_year": 1,
+      "lessons": [
+        {
+          "id": "MV2-S004-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Đại cương và hệ vận động",
+          "title": "Thuật ngữ, tư thế, mặt phẳng và định hướng giải phẫu"
+        },
+        {
+          "id": "MV2-S004-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Đại cương và hệ vận động",
+          "title": "Xương, khớp và nguyên lý vận động"
+        },
+        {
+          "id": "MV2-S004-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Đại cương và hệ vận động",
+          "title": "Chi trên: xương, khớp và cơ"
+        },
+        {
+          "id": "MV2-S004-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Đại cương và hệ vận động",
+          "title": "Chi trên: mạch máu, thần kinh và định khu"
+        },
+        {
+          "id": "MV2-S004-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Đại cương và hệ vận động",
+          "title": "Chi dưới: xương, khớp, cơ, mạch và thần kinh"
+        },
+        {
+          "id": "MV2-S004-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Đầu, cổ và thần kinh",
+          "title": "Sọ, nền sọ và các lỗ nền sọ"
+        },
+        {
+          "id": "MV2-S004-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Đầu, cổ và thần kinh",
+          "title": "Cơ, mạch máu, thần kinh đầu mặt và các tam giác cổ"
+        },
+        {
+          "id": "MV2-S004-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Đầu, cổ và thần kinh",
+          "title": "Tủy sống, màng não và dịch não tủy"
+        },
+        {
+          "id": "MV2-S004-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Đầu, cổ và thần kinh",
+          "title": "Thân não, dây thần kinh sọ, tiểu não và đại não"
+        },
+        {
+          "id": "MV2-S004-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Đầu, cổ và thần kinh",
+          "title": "Đường dẫn truyền, hệ tự chủ, mắt và tai"
+        },
+        {
+          "id": "MV2-S004-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Ngực",
+          "title": "Thành ngực, cơ hoành và trung thất"
+        },
+        {
+          "id": "MV2-S004-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Ngực",
+          "title": "Tim, buồng tim và van tim"
+        },
+        {
+          "id": "MV2-S004-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Ngực",
+          "title": "Hệ dẫn truyền, mạch vành và mạch lớn"
+        },
+        {
+          "id": "MV2-S004-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Ngực",
+          "title": "Mũi, hầu, thanh quản và khí phế quản"
+        },
+        {
+          "id": "MV2-S004-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Ngực",
+          "title": "Phổi, màng phổi và phân thùy"
+        },
+        {
+          "id": "MV2-S004-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Bụng",
+          "title": "Thành bụng, ống bẹn, phúc mạc và khoang bụng"
+        },
+        {
+          "id": "MV2-S004-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Bụng",
+          "title": "Miệng, tuyến nước bọt, thực quản và dạ dày"
+        },
+        {
+          "id": "MV2-S004-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Bụng",
+          "title": "Ruột non, ruột già, trực tràng và hậu môn"
+        },
+        {
+          "id": "MV2-S004-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Bụng",
+          "title": "Gan, đường mật và túi mật"
+        },
+        {
+          "id": "MV2-S004-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Bụng",
+          "title": "Tụy, lách và mạch máu bụng"
+        },
+        {
+          "id": "MV2-S004-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Thận, thượng thận và niệu quản"
+        },
+        {
+          "id": "MV2-S004-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Bàng quang và niệu đạo"
+        },
+        {
+          "id": "MV2-S004-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Cơ quan sinh dục nam"
+        },
+        {
+          "id": "MV2-S004-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Cơ quan sinh dục nữ"
+        },
+        {
+          "id": "MV2-S004-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Chậu hông, đáy chậu và liên quan ứng dụng"
+        }
+      ],
+      "slug": "giai-phau-hoc"
+    },
+    {
+      "subject_code": "MV2-S007",
+      "subject_name": "Hóa sinh",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S007-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cơ sở hóa sinh",
+          "title": "Nước, pH và hệ đệm"
+        },
+        {
+          "id": "MV2-S007-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cơ sở hóa sinh",
+          "title": "Acid amin, peptide và cấu trúc protein"
+        },
+        {
+          "id": "MV2-S007-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cơ sở hóa sinh",
+          "title": "Enzyme, động học và chất ức chế"
+        },
+        {
+          "id": "MV2-S007-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cơ sở hóa sinh",
+          "title": "Vitamin, coenzyme và khoáng chất"
+        },
+        {
+          "id": "MV2-S007-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cơ sở hóa sinh",
+          "title": "Năng lượng, ATP, chuỗi hô hấp và stress oxy hóa"
+        },
+        {
+          "id": "MV2-S007-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Glucid và lipid",
+          "title": "Cấu trúc glucid và tiêu hóa, hấp thu"
+        },
+        {
+          "id": "MV2-S007-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Glucid và lipid",
+          "title": "Đường phân, tân tạo đường và chuyển hóa glycogen"
+        },
+        {
+          "id": "MV2-S007-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Glucid và lipid",
+          "title": "Chu trình pentose phosphate và các đường đơn khác"
+        },
+        {
+          "id": "MV2-S007-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Glucid và lipid",
+          "title": "Cấu trúc lipid, lipoprotein và vận chuyển"
+        },
+        {
+          "id": "MV2-S007-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Glucid và lipid",
+          "title": "Oxy hóa, tổng hợp acid béo, cholesterol và thể ceton"
+        },
+        {
+          "id": "MV2-S007-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Protein, máu và acid nucleic",
+          "title": "Chuyển hóa acid amin, amoniac và ure"
+        },
+        {
+          "id": "MV2-S007-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Protein, máu và acid nucleic",
+          "title": "Heme, hemoglobin và bilirubin"
+        },
+        {
+          "id": "MV2-S007-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Protein, máu và acid nucleic",
+          "title": "Protein huyết tương và chức năng"
+        },
+        {
+          "id": "MV2-S007-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Protein, máu và acid nucleic",
+          "title": "Nucleotide, purine và pyrimidine"
+        },
+        {
+          "id": "MV2-S007-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Protein, máu và acid nucleic",
+          "title": "Nhân đôi, phiên mã, dịch mã và điều hòa gen"
+        },
+        {
+          "id": "MV2-S007-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Điều hòa và cơ quan",
+          "title": "Chu trình Krebs và phối hợp chuyển hóa no – đói"
+        },
+        {
+          "id": "MV2-S007-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Điều hòa và cơ quan",
+          "title": "Hormone và cơ chế tín hiệu"
+        },
+        {
+          "id": "MV2-S007-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Điều hòa và cơ quan",
+          "title": "Hóa sinh gan"
+        },
+        {
+          "id": "MV2-S007-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Điều hòa và cơ quan",
+          "title": "Hóa sinh thận và nước tiểu"
+        },
+        {
+          "id": "MV2-S007-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Điều hòa và cơ quan",
+          "title": "Hóa sinh cơ, thần kinh và dấu ấn tim"
+        },
+        {
+          "id": "MV2-S007-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Xét nghiệm ứng dụng",
+          "title": "Nước, điện giải và cân bằng acid – base"
+        },
+        {
+          "id": "MV2-S007-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Xét nghiệm ứng dụng",
+          "title": "Đường huyết, HbA1c và rối loạn lipid"
+        },
+        {
+          "id": "MV2-S007-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Xét nghiệm ứng dụng",
+          "title": "Xét nghiệm gan, vàng da và tổn thương tế bào"
+        },
+        {
+          "id": "MV2-S007-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Xét nghiệm ứng dụng",
+          "title": "Creatinine, eGFR và đánh giá chức năng thận"
+        },
+        {
+          "id": "MV2-S007-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Xét nghiệm ứng dụng",
+          "title": "Sai số tiền phân tích, bệnh phẩm và đọc bảng kết quả"
+        }
+      ],
+      "slug": "hoa-sinh"
+    },
+    {
+      "subject_code": "MV2-S029",
+      "subject_name": "Ngoại khoa",
+      "student_year": 4,
+      "lessons": [
+        {
+          "id": "MV2-S029-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nguyên tắc ngoại khoa",
+          "title": "Bệnh án ngoại và đánh giá trước mổ"
+        },
+        {
+          "id": "MV2-S029-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nguyên tắc ngoại khoa",
+          "title": "Vô khuẩn, tiệt khuẩn và nhiễm trùng ngoại"
+        },
+        {
+          "id": "MV2-S029-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nguyên tắc ngoại khoa",
+          "title": "Vết thương, liền thương và xử trí mô mềm"
+        },
+        {
+          "id": "MV2-S029-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nguyên tắc ngoại khoa",
+          "title": "Sốc chấn thương, chảy máu và hồi sức"
+        },
+        {
+          "id": "MV2-S029-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nguyên tắc ngoại khoa",
+          "title": "Dịch, dinh dưỡng và biến chứng sau mổ"
+        },
+        {
+          "id": "MV2-S029-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Bụng cấp",
+          "title": "Khám bụng và hình ảnh bụng cấp"
+        },
+        {
+          "id": "MV2-S029-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Bụng cấp",
+          "title": "Viêm ruột thừa và viêm phúc mạc"
+        },
+        {
+          "id": "MV2-S029-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Bụng cấp",
+          "title": "Tắc ruột và tắc ruột sơ sinh"
+        },
+        {
+          "id": "MV2-S029-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Bụng cấp",
+          "title": "Thủng tạng rỗng và chấn thương bụng"
+        },
+        {
+          "id": "MV2-S029-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Bụng cấp",
+          "title": "Bệnh đường mật và viêm tụy"
+        },
+        {
+          "id": "MV2-S029-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Tiêu hóa và ngoại nhi",
+          "title": "Thoát vị thành bụng và thoát vị nghẹt"
+        },
+        {
+          "id": "MV2-S029-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Tiêu hóa và ngoại nhi",
+          "title": "Bệnh thực quản và ung thư dạ dày"
+        },
+        {
+          "id": "MV2-S029-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Tiêu hóa và ngoại nhi",
+          "title": "Đại trực tràng, hậu môn và rò hậu môn"
+        },
+        {
+          "id": "MV2-S029-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Tiêu hóa và ngoại nhi",
+          "title": "Lồng ruột, Hirschsprung và dị dạng hậu môn trực tràng"
+        },
+        {
+          "id": "MV2-S029-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Tiêu hóa và ngoại nhi",
+          "title": "Khối u gan, tụy, bóng Vater và nguyên tắc ung thư ngoại"
+        },
+        {
+          "id": "MV2-S029-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Chấn thương chỉnh hình",
+          "title": "Khám gãy xương, hình ảnh và phân loại"
+        },
+        {
+          "id": "MV2-S029-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Chấn thương chỉnh hình",
+          "title": "Gãy hở, chèn ép khoang và nhiễm trùng xương"
+        },
+        {
+          "id": "MV2-S029-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Chấn thương chỉnh hình",
+          "title": "Gãy chi trên và tổn thương bàn tay"
+        },
+        {
+          "id": "MV2-S029-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Chấn thương chỉnh hình",
+          "title": "Gãy cổ xương đùi, xương đùi và chi dưới"
+        },
+        {
+          "id": "MV2-S029-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Chấn thương chỉnh hình",
+          "title": "Trật khớp, tổn thương gân và thần kinh ngoại biên"
+        },
+        {
+          "id": "MV2-S029-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ngực, mạch máu và thần kinh",
+          "title": "Chấn thương ngực, mảng sườn và dẫn lưu"
+        },
+        {
+          "id": "MV2-S029-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ngực, mạch máu và thần kinh",
+          "title": "Bệnh mạch ngoại biên, phình mạch và thiếu máu chi"
+        },
+        {
+          "id": "MV2-S029-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ngực, mạch máu và thần kinh",
+          "title": "Chấn thương sọ não và máu tụ nội sọ"
+        },
+        {
+          "id": "MV2-S029-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ngực, mạch máu và thần kinh",
+          "title": "Chấn thương cột sống, tủy và khối u thần kinh"
+        },
+        {
+          "id": "MV2-S029-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ngực, mạch máu và thần kinh",
+          "title": "Bỏng: phân độ, diện tích và hồi sức"
+        },
+        {
+          "id": "MV2-S029-REF-L26",
+          "order": 26,
+          "group_order": 6,
+          "group": "Tiết niệu và tích hợp",
+          "title": "Sỏi thận, niệu quản và tắc nghẽn"
+        },
+        {
+          "id": "MV2-S029-REF-L27",
+          "order": 27,
+          "group_order": 6,
+          "group": "Tiết niệu và tích hợp",
+          "title": "Bí tiểu và bệnh tuyến tiền liệt"
+        },
+        {
+          "id": "MV2-S029-REF-L28",
+          "order": 28,
+          "group_order": 6,
+          "group": "Tiết niệu và tích hợp",
+          "title": "U thận, bàng quang và tiểu máu"
+        },
+        {
+          "id": "MV2-S029-REF-L29",
+          "order": 29,
+          "group_order": 6,
+          "group": "Tiết niệu và tích hợp",
+          "title": "Chấn thương thận, bàng quang và niệu đạo"
+        },
+        {
+          "id": "MV2-S029-REF-L30",
+          "order": 30,
+          "group_order": 6,
+          "group": "Tiết niệu và tích hợp",
+          "title": "Phân tích ca ngoại khoa và quyết định can thiệp"
+        }
+      ],
+      "slug": "ngoai-khoa"
+    },
+    {
+      "subject_code": "MV2-S001",
+      "subject_name": "Sinh học - Di truyền",
+      "student_year": 1,
+      "lessons": [
+        {
+          "id": "MV2-S001-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Tế bào",
+          "title": "Tế bào nhân sơ, nhân thực và phương pháp nghiên cứu"
+        },
+        {
+          "id": "MV2-S001-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Tế bào",
+          "title": "Màng tế bào và vận chuyển qua màng"
+        },
+        {
+          "id": "MV2-S001-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Tế bào",
+          "title": "Lưới nội chất, Golgi, lysosome và peroxisome"
+        },
+        {
+          "id": "MV2-S001-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Tế bào",
+          "title": "Ty thể, bộ xương tế bào và kết nối tế bào"
+        },
+        {
+          "id": "MV2-S001-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Tế bào",
+          "title": "Nhân, chromatin và tổ chức nhiễm sắc thể"
+        },
+        {
+          "id": "MV2-S001-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Thông tin và hoạt động tế bào",
+          "title": "Cấu trúc DNA, RNA và mã di truyền"
+        },
+        {
+          "id": "MV2-S001-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Thông tin và hoạt động tế bào",
+          "title": "Nhân đôi DNA và sửa chữa"
+        },
+        {
+          "id": "MV2-S001-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Thông tin và hoạt động tế bào",
+          "title": "Phiên mã, dịch mã và điều hòa biểu hiện gen"
+        },
+        {
+          "id": "MV2-S001-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Thông tin và hoạt động tế bào",
+          "title": "Truyền tín hiệu, thụ thể và tương tác tế bào"
+        },
+        {
+          "id": "MV2-S001-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Thông tin và hoạt động tế bào",
+          "title": "Chu kỳ tế bào, nguyên phân, giảm phân và chết tế bào"
+        },
+        {
+          "id": "MV2-S001-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Di truyền cơ bản",
+          "title": "Quy luật Mendel và giải bài toán phả hệ"
+        },
+        {
+          "id": "MV2-S001-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Di truyền cơ bản",
+          "title": "Di truyền liên kết giới và ty thể"
+        },
+        {
+          "id": "MV2-S001-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Di truyền cơ bản",
+          "title": "Liên kết gen, hoán vị và tổ hợp"
+        },
+        {
+          "id": "MV2-S001-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Di truyền cơ bản",
+          "title": "Di truyền đa yếu tố và tương tác gen – môi trường"
+        },
+        {
+          "id": "MV2-S001-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Di truyền cơ bản",
+          "title": "Di truyền quần thể và Hardy–Weinberg"
+        },
+        {
+          "id": "MV2-S001-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Bất thường và bệnh di truyền",
+          "title": "Đột biến gen và hậu quả lên protein"
+        },
+        {
+          "id": "MV2-S001-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Bất thường và bệnh di truyền",
+          "title": "Lệch bội và đa bội"
+        },
+        {
+          "id": "MV2-S001-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Bất thường và bệnh di truyền",
+          "title": "Bất thường cấu trúc nhiễm sắc thể"
+        },
+        {
+          "id": "MV2-S001-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Bất thường và bệnh di truyền",
+          "title": "Bệnh đơn gen và liên hệ kiểu gen – kiểu hình"
+        },
+        {
+          "id": "MV2-S001-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Bất thường và bệnh di truyền",
+          "title": "Di truyền ung thư, dấu ấn di truyền và bất hoạt X"
+        },
+        {
+          "id": "MV2-S001-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng y học",
+          "title": "Lập và phân tích bộ nhiễm sắc thể"
+        },
+        {
+          "id": "MV2-S001-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng y học",
+          "title": "PCR, giải trình tự và xét nghiệm phân tử cơ bản"
+        },
+        {
+          "id": "MV2-S001-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng y học",
+          "title": "Sàng lọc trước sinh, sơ sinh và chẩn đoán trước sinh"
+        },
+        {
+          "id": "MV2-S001-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng y học",
+          "title": "Tư vấn di truyền, nguy cơ tái diễn và xét nghiệm gia đình"
+        },
+        {
+          "id": "MV2-S001-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng y học",
+          "title": "Tế bào gốc, công nghệ sinh học và ứng dụng tái tạo"
+        }
+      ],
+      "slug": "sinh-hoc-di-truyen"
+    },
+    {
+      "subject_code": "MV2-S028",
+      "subject_name": "Nội khoa",
+      "student_year": 4,
+      "lessons": [
+        {
+          "id": "MV2-S028-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Tiếp cận người bệnh",
+          "title": "Bệnh án, triệu chứng và khám nội khoa"
+        },
+        {
+          "id": "MV2-S028-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Tiếp cận người bệnh",
+          "title": "Xét nghiệm, hình ảnh và lập chẩn đoán phân biệt"
+        },
+        {
+          "id": "MV2-S028-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Tiếp cận người bệnh",
+          "title": "Đau ngực, khó thở và phù"
+        },
+        {
+          "id": "MV2-S028-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Tiếp cận người bệnh",
+          "title": "Sốt kéo dài, sụt cân và thiếu máu"
+        },
+        {
+          "id": "MV2-S028-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Tiếp cận người bệnh",
+          "title": "Sốc, ngừng tuần hoàn và ngộ độc thường gặp"
+        },
+        {
+          "id": "MV2-S028-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Tim mạch",
+          "title": "Tăng huyết áp"
+        },
+        {
+          "id": "MV2-S028-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Tim mạch",
+          "title": "Hội chứng vành và bệnh mạch vành"
+        },
+        {
+          "id": "MV2-S028-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Tim mạch",
+          "title": "Suy tim và phù phổi cấp"
+        },
+        {
+          "id": "MV2-S028-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Tim mạch",
+          "title": "Rối loạn nhịp và điện tâm đồ"
+        },
+        {
+          "id": "MV2-S028-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Tim mạch",
+          "title": "Bệnh van tim, nội tâm mạc và màng tim"
+        },
+        {
+          "id": "MV2-S028-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Hô hấp",
+          "title": "Hen và COPD"
+        },
+        {
+          "id": "MV2-S028-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Hô hấp",
+          "title": "Viêm phổi, áp xe phổi và giãn phế quản"
+        },
+        {
+          "id": "MV2-S028-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Hô hấp",
+          "title": "Lao phổi và chẩn đoán phân biệt"
+        },
+        {
+          "id": "MV2-S028-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Hô hấp",
+          "title": "Tràn dịch, tràn khí và bệnh màng phổi"
+        },
+        {
+          "id": "MV2-S028-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Hô hấp",
+          "title": "Suy hô hấp, khí máu và hô hấp ký"
+        },
+        {
+          "id": "MV2-S028-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tiêu hóa",
+          "title": "Trào ngược, loét dạ dày và H. pylori"
+        },
+        {
+          "id": "MV2-S028-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tiêu hóa",
+          "title": "Xuất huyết tiêu hóa"
+        },
+        {
+          "id": "MV2-S028-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tiêu hóa",
+          "title": "Viêm gan, xơ gan và tăng áp cửa"
+        },
+        {
+          "id": "MV2-S028-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tiêu hóa",
+          "title": "Viêm tụy và bệnh đường mật"
+        },
+        {
+          "id": "MV2-S028-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tiêu hóa",
+          "title": "Tiêu chảy, kém hấp thu và bệnh ruột"
+        },
+        {
+          "id": "MV2-S028-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Thận và nội tiết",
+          "title": "Tổn thương thận cấp và bệnh thận mạn"
+        },
+        {
+          "id": "MV2-S028-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Thận và nội tiết",
+          "title": "Viêm cầu thận, hội chứng thận hư và nhiễm trùng tiểu"
+        },
+        {
+          "id": "MV2-S028-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Thận và nội tiết",
+          "title": "Nước, điện giải và acid – base"
+        },
+        {
+          "id": "MV2-S028-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Thận và nội tiết",
+          "title": "Đái tháo đường và biến chứng"
+        },
+        {
+          "id": "MV2-S028-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Thận và nội tiết",
+          "title": "Bệnh giáp, thượng thận và rối loạn chuyển hóa"
+        },
+        {
+          "id": "MV2-S028-REF-L26",
+          "order": 26,
+          "group_order": 6,
+          "group": "Cơ xương khớp và huyết học",
+          "title": "Viêm khớp dạng thấp, lupus và bệnh tự miễn"
+        },
+        {
+          "id": "MV2-S028-REF-L27",
+          "order": 27,
+          "group_order": 6,
+          "group": "Cơ xương khớp và huyết học",
+          "title": "Gout, thoái hóa khớp và loãng xương"
+        },
+        {
+          "id": "MV2-S028-REF-L28",
+          "order": 28,
+          "group_order": 6,
+          "group": "Cơ xương khớp và huyết học",
+          "title": "Thiếu máu, thalassemia và tan máu"
+        },
+        {
+          "id": "MV2-S028-REF-L29",
+          "order": 29,
+          "group_order": 6,
+          "group": "Cơ xương khớp và huyết học",
+          "title": "Xuất huyết, tiểu cầu và đông máu"
+        },
+        {
+          "id": "MV2-S028-REF-L30",
+          "order": 30,
+          "group_order": 6,
+          "group": "Cơ xương khớp và huyết học",
+          "title": "Bạch cầu cấp, bạch cầu mạn và tăng sinh tủy"
+        }
+      ],
+      "slug": "noi-khoa"
+    },
+    {
+      "subject_code": "MV2-S006",
+      "subject_name": "Sinh lý học",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S006-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Tế bào, máu và cơ",
+          "title": "Nội môi và vận chuyển qua màng"
+        },
+        {
+          "id": "MV2-S006-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Tế bào, máu và cơ",
+          "title": "Điện thế màng, điện thế hoạt động và synap"
+        },
+        {
+          "id": "MV2-S006-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Tế bào, máu và cơ",
+          "title": "Co cơ vân, cơ trơn và cơ tim"
+        },
+        {
+          "id": "MV2-S006-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Tế bào, máu và cơ",
+          "title": "Hồng cầu, hemoglobin, nhóm máu và vận chuyển khí"
+        },
+        {
+          "id": "MV2-S006-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Tế bào, máu và cơ",
+          "title": "Bạch cầu, tiểu cầu, cầm máu và đông máu"
+        },
+        {
+          "id": "MV2-S006-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Thần kinh và giác quan",
+          "title": "Phản xạ, cảm giác và dẫn truyền đau"
+        },
+        {
+          "id": "MV2-S006-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Thần kinh và giác quan",
+          "title": "Điều khiển vận động, tiểu não và các bó dẫn truyền"
+        },
+        {
+          "id": "MV2-S006-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Thần kinh và giác quan",
+          "title": "Thần kinh tự chủ"
+        },
+        {
+          "id": "MV2-S006-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Thần kinh và giác quan",
+          "title": "Thị giác, thính giác và tiền đình"
+        },
+        {
+          "id": "MV2-S006-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Thần kinh và giác quan",
+          "title": "Năng lượng, chuyển hóa và điều nhiệt"
+        },
+        {
+          "id": "MV2-S006-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Tim mạch và hô hấp",
+          "title": "Chu kỳ tim, cung lượng tim và ECG"
+        },
+        {
+          "id": "MV2-S006-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Tim mạch và hô hấp",
+          "title": "Huyết áp, sức cản và điều hòa tuần hoàn"
+        },
+        {
+          "id": "MV2-S006-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Tim mạch và hô hấp",
+          "title": "Vi tuần hoàn và các tuần hoàn đặc biệt"
+        },
+        {
+          "id": "MV2-S006-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Tim mạch và hô hấp",
+          "title": "Thông khí, thể tích phổi và hô hấp ký"
+        },
+        {
+          "id": "MV2-S006-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Tim mạch và hô hấp",
+          "title": "Khuếch tán khí, vận chuyển khí và điều hòa hô hấp"
+        },
+        {
+          "id": "MV2-S006-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Thận và tiêu hóa",
+          "title": "Lọc cầu thận và huyết động thận"
+        },
+        {
+          "id": "MV2-S006-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Thận và tiêu hóa",
+          "title": "Tái hấp thu, bài tiết và cô đặc nước tiểu"
+        },
+        {
+          "id": "MV2-S006-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Thận và tiêu hóa",
+          "title": "Điều hòa nước, điện giải và acid – base"
+        },
+        {
+          "id": "MV2-S006-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Thận và tiêu hóa",
+          "title": "Vận động, bài tiết và điều hòa tiêu hóa"
+        },
+        {
+          "id": "MV2-S006-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Thận và tiêu hóa",
+          "title": "Tiêu hóa, hấp thu, chức năng gan và tụy"
+        },
+        {
+          "id": "MV2-S006-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Nội tiết và sinh sản",
+          "title": "Hormone, thụ thể và trục dưới đồi – tuyến yên"
+        },
+        {
+          "id": "MV2-S006-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Nội tiết và sinh sản",
+          "title": "Tuyến giáp, cận giáp và điều hòa calci"
+        },
+        {
+          "id": "MV2-S006-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Nội tiết và sinh sản",
+          "title": "Tuyến thượng thận và stress"
+        },
+        {
+          "id": "MV2-S006-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Nội tiết và sinh sản",
+          "title": "Insulin, glucagon và đường huyết"
+        },
+        {
+          "id": "MV2-S006-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Nội tiết và sinh sản",
+          "title": "Sinh dục nam, chu kỳ nữ, thai nghén và tiết sữa"
+        }
+      ],
+      "slug": "sinh-ly-hoc"
+    },
+    {
+      "subject_code": "MV2-S008",
+      "subject_name": "Sinh lý bệnh - Miễn dịch",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S008-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Bệnh sinh đại cương",
+          "title": "Bệnh nguyên, bệnh sinh và vòng xoắn bệnh lý"
+        },
+        {
+          "id": "MV2-S008-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Bệnh sinh đại cương",
+          "title": "Tổn thương tế bào và thích nghi"
+        },
+        {
+          "id": "MV2-S008-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Bệnh sinh đại cương",
+          "title": "Viêm, trung gian viêm và liền thương"
+        },
+        {
+          "id": "MV2-S008-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Bệnh sinh đại cương",
+          "title": "Sốt và rối loạn điều nhiệt"
+        },
+        {
+          "id": "MV2-S008-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Bệnh sinh đại cương",
+          "title": "Stress và đáp ứng toàn thân"
+        },
+        {
+          "id": "MV2-S008-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Chuyển hóa và dịch",
+          "title": "Rối loạn chuyển hóa glucid"
+        },
+        {
+          "id": "MV2-S008-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Chuyển hóa và dịch",
+          "title": "Rối loạn lipid và protein"
+        },
+        {
+          "id": "MV2-S008-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Chuyển hóa và dịch",
+          "title": "Rối loạn nước và phù"
+        },
+        {
+          "id": "MV2-S008-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Chuyển hóa và dịch",
+          "title": "Rối loạn điện giải"
+        },
+        {
+          "id": "MV2-S008-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Chuyển hóa và dịch",
+          "title": "Rối loạn acid – base"
+        },
+        {
+          "id": "MV2-S008-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Sinh lý bệnh cơ quan",
+          "title": "Rối loạn tạo máu và cầm máu"
+        },
+        {
+          "id": "MV2-S008-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Sinh lý bệnh cơ quan",
+          "title": "Suy tim, sốc và rối loạn huyết áp"
+        },
+        {
+          "id": "MV2-S008-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Sinh lý bệnh cơ quan",
+          "title": "Suy hô hấp và thiếu oxy"
+        },
+        {
+          "id": "MV2-S008-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Sinh lý bệnh cơ quan",
+          "title": "Rối loạn tiêu hóa, gan và vàng da"
+        },
+        {
+          "id": "MV2-S008-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Sinh lý bệnh cơ quan",
+          "title": "Suy thận và rối loạn bài tiết"
+        },
+        {
+          "id": "MV2-S008-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Đáp ứng miễn dịch",
+          "title": "Tế bào, cơ quan và miễn dịch bẩm sinh"
+        },
+        {
+          "id": "MV2-S008-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Đáp ứng miễn dịch",
+          "title": "Kháng nguyên, trình diện và MHC"
+        },
+        {
+          "id": "MV2-S008-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Đáp ứng miễn dịch",
+          "title": "Kháng thể và đáp ứng dịch thể"
+        },
+        {
+          "id": "MV2-S008-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Đáp ứng miễn dịch",
+          "title": "Lympho T và miễn dịch tế bào"
+        },
+        {
+          "id": "MV2-S008-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Đáp ứng miễn dịch",
+          "title": "Bổ thể, cytokine và điều hòa miễn dịch"
+        },
+        {
+          "id": "MV2-S008-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Miễn dịch bệnh lý và ứng dụng",
+          "title": "Quá mẫn typ I và dị ứng"
+        },
+        {
+          "id": "MV2-S008-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Miễn dịch bệnh lý và ứng dụng",
+          "title": "Quá mẫn typ II, III và IV"
+        },
+        {
+          "id": "MV2-S008-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Miễn dịch bệnh lý và ứng dụng",
+          "title": "Tự miễn và dung nạp"
+        },
+        {
+          "id": "MV2-S008-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Miễn dịch bệnh lý và ứng dụng",
+          "title": "Suy giảm miễn dịch, ghép và ung thư"
+        },
+        {
+          "id": "MV2-S008-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Miễn dịch bệnh lý và ứng dụng",
+          "title": "Vaccine, phản ứng kháng nguyên – kháng thể và xét nghiệm"
+        }
+      ],
+      "slug": "sinh-ly-benh-mien-dich"
+    },
+    {
+      "subject_code": "MV2-S005",
+      "subject_name": "Mô phôi",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S005-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Kính hiển vi, xử lý mô và đọc tiêu bản"
+        },
+        {
+          "id": "MV2-S005-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Biểu mô phủ, tuyến và liên kết tế bào"
+        },
+        {
+          "id": "MV2-S005-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Mô liên kết, sụn và xương"
+        },
+        {
+          "id": "MV2-S005-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Mô cơ"
+        },
+        {
+          "id": "MV2-S005-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Mô thần kinh và hệ thần kinh"
+        },
+        {
+          "id": "MV2-S005-REF-L06",
+          "order": 6,
+          "group_order": 1,
+          "group": "Mô cơ bản",
+          "title": "Máu, tạo huyết và cơ quan lympho"
+        },
+        {
+          "id": "MV2-S005-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Tim, mạch máu và da"
+        },
+        {
+          "id": "MV2-S005-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Đường hô hấp và phổi"
+        },
+        {
+          "id": "MV2-S005-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Ống tiêu hóa"
+        },
+        {
+          "id": "MV2-S005-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Gan, tụy và tuyến nước bọt"
+        },
+        {
+          "id": "MV2-S005-REF-L11",
+          "order": 11,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Thận và đường tiết niệu"
+        },
+        {
+          "id": "MV2-S005-REF-L12",
+          "order": 12,
+          "group_order": 2,
+          "group": "Mô cơ quan",
+          "title": "Tuyến nội tiết"
+        },
+        {
+          "id": "MV2-S005-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Mô sinh sản và giác quan",
+          "title": "Tinh hoàn và đường sinh dục nam"
+        },
+        {
+          "id": "MV2-S005-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Mô sinh sản và giác quan",
+          "title": "Buồng trứng, tử cung và đường sinh dục nữ"
+        },
+        {
+          "id": "MV2-S005-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Mô sinh sản và giác quan",
+          "title": "Tuyến vú và biến đổi theo nội tiết"
+        },
+        {
+          "id": "MV2-S005-REF-L16",
+          "order": 16,
+          "group_order": 3,
+          "group": "Mô sinh sản và giác quan",
+          "title": "Mắt và tai"
+        },
+        {
+          "id": "MV2-S005-REF-L17",
+          "order": 17,
+          "group_order": 3,
+          "group": "Mô sinh sản và giác quan",
+          "title": "Đọc tiêu bản cơ quan và phân biệt mô gần giống"
+        },
+        {
+          "id": "MV2-S005-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Phôi đại cương",
+          "title": "Giao tử, thụ tinh và phân cắt"
+        },
+        {
+          "id": "MV2-S005-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Phôi đại cương",
+          "title": "Làm tổ và đĩa phôi hai lá"
+        },
+        {
+          "id": "MV2-S005-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Phôi đại cương",
+          "title": "Ba lá phôi, gấp phôi và mào thần kinh"
+        },
+        {
+          "id": "MV2-S005-REF-L21",
+          "order": 21,
+          "group_order": 4,
+          "group": "Phôi đại cương",
+          "title": "Nhau, màng thai và dây rốn"
+        },
+        {
+          "id": "MV2-S005-REF-L22",
+          "order": 22,
+          "group_order": 4,
+          "group": "Phôi đại cương",
+          "title": "Thời kỳ nhạy cảm, tác nhân gây quái thai và dị tật"
+        },
+        {
+          "id": "MV2-S005-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Tim, mạch máu và hệ hô hấp"
+        },
+        {
+          "id": "MV2-S005-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Ruột, gan, tụy và các rối loạn xoay ruột"
+        },
+        {
+          "id": "MV2-S005-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Hệ tiết niệu và di tích phôi"
+        },
+        {
+          "id": "MV2-S005-REF-L26",
+          "order": 26,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Sinh dục và biệt hóa giới tính"
+        },
+        {
+          "id": "MV2-S005-REF-L27",
+          "order": 27,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Mặt, cổ, chi và các cung mang"
+        },
+        {
+          "id": "MV2-S005-REF-L28",
+          "order": 28,
+          "group_order": 5,
+          "group": "Phôi cơ quan",
+          "title": "Thần kinh, mắt, tai và tiếp cận hình dị tật"
+        }
+      ],
+      "slug": "mo-phoi"
+    },
+    {
+      "subject_code": "MV2-S013",
+      "subject_name": "Dược lý học",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S013-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Đường dùng, dạng thuốc và sinh khả dụng"
+        },
+        {
+          "id": "MV2-S013-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Hấp thu, phân bố, chuyển hóa và thải trừ"
+        },
+        {
+          "id": "MV2-S013-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Thụ thể, quan hệ liều – đáp ứng và cơ chế tác dụng"
+        },
+        {
+          "id": "MV2-S013-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Tác dụng bất lợi, tương tác và đề kháng"
+        },
+        {
+          "id": "MV2-S013-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Điều chỉnh liều, theo dõi nồng độ và nhóm người bệnh đặc biệt"
+        },
+        {
+          "id": "MV2-S013-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Thần kinh và đau",
+          "title": "Thuốc giao cảm và đối giao cảm"
+        },
+        {
+          "id": "MV2-S013-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Thần kinh và đau",
+          "title": "Gây mê, gây tê và giãn cơ"
+        },
+        {
+          "id": "MV2-S013-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Thần kinh và đau",
+          "title": "An thần, chống động kinh và thuốc tâm thần"
+        },
+        {
+          "id": "MV2-S013-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Thần kinh và đau",
+          "title": "Opioid, paracetamol và NSAID"
+        },
+        {
+          "id": "MV2-S013-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Thần kinh và đau",
+          "title": "Corticoid, kháng histamine và thuốc gout"
+        },
+        {
+          "id": "MV2-S013-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Chống nhiễm trùng",
+          "title": "Nguyên tắc kháng sinh và beta-lactam"
+        },
+        {
+          "id": "MV2-S013-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Chống nhiễm trùng",
+          "title": "Macrolide, aminoglycoside, tetracycline và các nhóm khác"
+        },
+        {
+          "id": "MV2-S013-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Chống nhiễm trùng",
+          "title": "Quinolone, sulfonamide và xử lý kháng thuốc"
+        },
+        {
+          "id": "MV2-S013-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Chống nhiễm trùng",
+          "title": "Thuốc lao, kháng nấm và kháng virus"
+        },
+        {
+          "id": "MV2-S013-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Chống nhiễm trùng",
+          "title": "Thuốc giun sán, đơn bào và sốt rét"
+        },
+        {
+          "id": "MV2-S013-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tim, phổi và tiêu hóa",
+          "title": "Thuốc điều trị tăng huyết áp, lợi tiểu và hệ renin–angiotensin"
+        },
+        {
+          "id": "MV2-S013-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tim, phổi và tiêu hóa",
+          "title": "Thuốc suy tim, đau thắt ngực và chống loạn nhịp"
+        },
+        {
+          "id": "MV2-S013-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tim, phổi và tiêu hóa",
+          "title": "Thuốc tác động đông máu, chống kết tập và hạ lipid"
+        },
+        {
+          "id": "MV2-S013-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tim, phổi và tiêu hóa",
+          "title": "Thuốc hen, COPD và ho"
+        },
+        {
+          "id": "MV2-S013-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tim, phổi và tiêu hóa",
+          "title": "Thuốc dạ dày, chống nôn và điều hòa nhu động"
+        },
+        {
+          "id": "MV2-S013-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Nội tiết và thực hành kê đơn",
+          "title": "Insulin và thuốc hạ đường huyết"
+        },
+        {
+          "id": "MV2-S013-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Nội tiết và thực hành kê đơn",
+          "title": "Thuốc tuyến giáp và tuyến thượng thận"
+        },
+        {
+          "id": "MV2-S013-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Nội tiết và thực hành kê đơn",
+          "title": "Hormone sinh dục và tránh thai"
+        },
+        {
+          "id": "MV2-S013-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Nội tiết và thực hành kê đơn",
+          "title": "Calci, vitamin D và thuốc loãng xương"
+        },
+        {
+          "id": "MV2-S013-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Nội tiết và thực hành kê đơn",
+          "title": "Phân tích đơn, phối hợp thuốc và tư vấn sử dụng"
+        }
+      ],
+      "slug": "duoc-ly-hoc"
+    },
+    {
+      "subject_code": "MV2-S030",
+      "subject_name": "Sản phụ khoa",
+      "student_year": 4,
+      "lessons": [
+        {
+          "id": "MV2-S030-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Thai kỳ bình thường",
+          "title": "Chẩn đoán thai, tuổi thai và ngày dự sinh"
+        },
+        {
+          "id": "MV2-S030-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Thai kỳ bình thường",
+          "title": "Thay đổi sinh lý mẹ và dinh dưỡng thai kỳ"
+        },
+        {
+          "id": "MV2-S030-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Thai kỳ bình thường",
+          "title": "Khám thai và quản lý thai"
+        },
+        {
+          "id": "MV2-S030-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Thai kỳ bình thường",
+          "title": "Siêu âm, sàng lọc và đánh giá phát triển thai"
+        },
+        {
+          "id": "MV2-S030-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Thai kỳ bình thường",
+          "title": "Ngôi, thế, khung chậu và cơ chế sinh"
+        },
+        {
+          "id": "MV2-S030-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Chuyển dạ và hậu sản",
+          "title": "Các giai đoạn chuyển dạ và theo dõi tiến triển"
+        },
+        {
+          "id": "MV2-S030-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Chuyển dạ và hậu sản",
+          "title": "Tim thai, cơn gò và biểu đồ chuyển dạ"
+        },
+        {
+          "id": "MV2-S030-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Chuyển dạ và hậu sản",
+          "title": "Sinh thường và xử trí giai đoạn ba"
+        },
+        {
+          "id": "MV2-S030-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Chuyển dạ và hậu sản",
+          "title": "Mổ lấy thai và can thiệp sản khoa"
+        },
+        {
+          "id": "MV2-S030-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Chuyển dạ và hậu sản",
+          "title": "Hậu sản, tiết sữa và chăm sóc sơ sinh ban đầu"
+        },
+        {
+          "id": "MV2-S030-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thai bệnh lý",
+          "title": "Sẩy thai, thai lưu và thai ngoài tử cung"
+        },
+        {
+          "id": "MV2-S030-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thai bệnh lý",
+          "title": "Thai trứng và bệnh nguyên bào nuôi"
+        },
+        {
+          "id": "MV2-S030-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thai bệnh lý",
+          "title": "Tăng huyết áp, tiền sản giật và sản giật"
+        },
+        {
+          "id": "MV2-S030-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thai bệnh lý",
+          "title": "Đái tháo đường, thiếu máu và bệnh nội khoa trong thai kỳ"
+        },
+        {
+          "id": "MV2-S030-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thai bệnh lý",
+          "title": "Nhiễm trùng, bất đồng nhóm máu và dự phòng"
+        },
+        {
+          "id": "MV2-S030-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Thai nguy cơ và cấp cứu",
+          "title": "Sinh non, dọa sinh non và ối vỡ non"
+        },
+        {
+          "id": "MV2-S030-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Thai nguy cơ và cấp cứu",
+          "title": "Thai chậm tăng trưởng, đa ối và thiểu ối"
+        },
+        {
+          "id": "MV2-S030-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Thai nguy cơ và cấp cứu",
+          "title": "Nhau tiền đạo và nhau bong non"
+        },
+        {
+          "id": "MV2-S030-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Thai nguy cơ và cấp cứu",
+          "title": "Băng huyết, vỡ tử cung và hồi sức"
+        },
+        {
+          "id": "MV2-S030-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Thai nguy cơ và cấp cứu",
+          "title": "Nhiễm khuẩn hậu sản và dấu hiệu chuyển tuyến"
+        },
+        {
+          "id": "MV2-S030-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Phụ khoa cơ bản",
+          "title": "Bệnh án, khám phụ khoa và dụng cụ"
+        },
+        {
+          "id": "MV2-S030-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Phụ khoa cơ bản",
+          "title": "Chu kỳ kinh, rối loạn kinh và mãn kinh"
+        },
+        {
+          "id": "MV2-S030-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Phụ khoa cơ bản",
+          "title": "Viêm âm đạo, cổ tử cung và vùng chậu"
+        },
+        {
+          "id": "MV2-S030-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Phụ khoa cơ bản",
+          "title": "Tránh thai và chăm sóc sau đình chỉ thai"
+        },
+        {
+          "id": "MV2-S030-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Phụ khoa cơ bản",
+          "title": "Vô sinh, hiếm muộn và xét nghiệm ban đầu"
+        },
+        {
+          "id": "MV2-S030-REF-L26",
+          "order": 26,
+          "group_order": 6,
+          "group": "Phụ khoa bệnh lý",
+          "title": "U xơ tử cung và lạc nội mạc tử cung"
+        },
+        {
+          "id": "MV2-S030-REF-L27",
+          "order": 27,
+          "group_order": 6,
+          "group": "Phụ khoa bệnh lý",
+          "title": "Khối phần phụ và u buồng trứng"
+        },
+        {
+          "id": "MV2-S030-REF-L28",
+          "order": 28,
+          "group_order": 6,
+          "group": "Phụ khoa bệnh lý",
+          "title": "HPV, Pap và tổn thương cổ tử cung"
+        },
+        {
+          "id": "MV2-S030-REF-L29",
+          "order": 29,
+          "group_order": 6,
+          "group": "Phụ khoa bệnh lý",
+          "title": "Ung thư phụ khoa, bệnh vú và sa tạng chậu"
+        },
+        {
+          "id": "MV2-S030-REF-L30",
+          "order": 30,
+          "group_order": 6,
+          "group": "Phụ khoa bệnh lý",
+          "title": "Phân tích ca đau vùng chậu hoặc ra huyết bất thường"
+        }
+      ],
+      "slug": "san-phu-khoa"
+    },
+    {
+      "subject_code": "MV2-S031",
+      "subject_name": "Nhi khoa",
+      "student_year": 4,
+      "lessons": [
+        {
+          "id": "MV2-S031-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nền tảng và dinh dưỡng",
+          "title": "Đặc điểm các lứa tuổi và khám trẻ"
+        },
+        {
+          "id": "MV2-S031-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nền tảng và dinh dưỡng",
+          "title": "Tăng trưởng, phát triển và biểu đồ"
+        },
+        {
+          "id": "MV2-S031-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nền tảng và dinh dưỡng",
+          "title": "Sữa mẹ, ăn bổ sung và nhu cầu dinh dưỡng"
+        },
+        {
+          "id": "MV2-S031-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nền tảng và dinh dưỡng",
+          "title": "Suy dinh dưỡng, còi xương và thiếu vi chất"
+        },
+        {
+          "id": "MV2-S031-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nền tảng và dinh dưỡng",
+          "title": "Nguyên tắc dùng thuốc và an toàn ở trẻ"
+        },
+        {
+          "id": "MV2-S031-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Sơ sinh",
+          "title": "Chăm sóc sơ sinh và trẻ non tháng"
+        },
+        {
+          "id": "MV2-S031-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Sơ sinh",
+          "title": "Hồi sức và suy hô hấp sơ sinh"
+        },
+        {
+          "id": "MV2-S031-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Sơ sinh",
+          "title": "Vàng da sơ sinh"
+        },
+        {
+          "id": "MV2-S031-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Sơ sinh",
+          "title": "Nhiễm trùng sơ sinh"
+        },
+        {
+          "id": "MV2-S031-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Sơ sinh",
+          "title": "Hạ đường huyết, hạ thân nhiệt và rối loạn thường gặp"
+        },
+        {
+          "id": "MV2-S031-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Hô hấp và nhiễm trùng",
+          "title": "Viêm đường hô hấp trên và thanh quản"
+        },
+        {
+          "id": "MV2-S031-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Hô hấp và nhiễm trùng",
+          "title": "Viêm tiểu phế quản và viêm phổi"
+        },
+        {
+          "id": "MV2-S031-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Hô hấp và nhiễm trùng",
+          "title": "Hen và khò khè"
+        },
+        {
+          "id": "MV2-S031-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Hô hấp và nhiễm trùng",
+          "title": "Sốt xuất huyết và tay chân miệng"
+        },
+        {
+          "id": "MV2-S031-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Hô hấp và nhiễm trùng",
+          "title": "Sởi, bạch hầu, tiêm chủng và bệnh có vaccine"
+        },
+        {
+          "id": "MV2-S031-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tiêu hóa và thận",
+          "title": "Tiêu chảy, mất nước và bù dịch"
+        },
+        {
+          "id": "MV2-S031-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tiêu hóa và thận",
+          "title": "Nôn, táo bón và đau bụng"
+        },
+        {
+          "id": "MV2-S031-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tiêu hóa và thận",
+          "title": "Tiêu chảy kéo dài và kém hấp thu"
+        },
+        {
+          "id": "MV2-S031-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tiêu hóa và thận",
+          "title": "Nhiễm trùng tiểu"
+        },
+        {
+          "id": "MV2-S031-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tiêu hóa và thận",
+          "title": "Viêm cầu thận và hội chứng thận hư"
+        },
+        {
+          "id": "MV2-S031-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Tim, máu và nội tiết",
+          "title": "Tim bẩm sinh tím và không tím"
+        },
+        {
+          "id": "MV2-S031-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Tim, máu và nội tiết",
+          "title": "Suy tim, thấp tim và Kawasaki"
+        },
+        {
+          "id": "MV2-S031-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Tim, máu và nội tiết",
+          "title": "Thiếu máu, thalassemia và tan máu"
+        },
+        {
+          "id": "MV2-S031-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Tim, máu và nội tiết",
+          "title": "Xuất huyết giảm tiểu cầu, hemophilia và bạch cầu cấp"
+        },
+        {
+          "id": "MV2-S031-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Tim, máu và nội tiết",
+          "title": "Suy giáp, thượng thận và đái tháo đường ở trẻ"
+        },
+        {
+          "id": "MV2-S031-REF-L26",
+          "order": 26,
+          "group_order": 6,
+          "group": "Thần kinh và cấp cứu",
+          "title": "Co giật, động kinh và sốt co giật"
+        },
+        {
+          "id": "MV2-S031-REF-L27",
+          "order": 27,
+          "group_order": 6,
+          "group": "Thần kinh và cấp cứu",
+          "title": "Viêm màng não, viêm não và rối loạn ý thức"
+        },
+        {
+          "id": "MV2-S031-REF-L28",
+          "order": 28,
+          "group_order": 6,
+          "group": "Thần kinh và cấp cứu",
+          "title": "Sốc, nhiễm khuẩn huyết và hồi sức trẻ"
+        },
+        {
+          "id": "MV2-S031-REF-L29",
+          "order": 29,
+          "group_order": 6,
+          "group": "Thần kinh và cấp cứu",
+          "title": "Ngộ độc và tai nạn thường gặp"
+        },
+        {
+          "id": "MV2-S031-REF-L30",
+          "order": 30,
+          "group_order": 6,
+          "group": "Thần kinh và cấp cứu",
+          "title": "IMCI, phân loại nặng và quyết định chuyển viện"
+        }
+      ],
+      "slug": "nhi-khoa"
+    },
+    {
+      "subject_code": "MV2-S003",
+      "subject_name": "Lý sinh",
+      "student_year": 1,
+      "lessons": [
+        {
+          "id": "MV2-S003-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Đo lường và cơ học",
+          "title": "Đơn vị, thứ nguyên, sai số và đồ thị"
+        },
+        {
+          "id": "MV2-S003-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Đo lường và cơ học",
+          "title": "Lực, cân bằng và đòn bẩy cơ thể"
+        },
+        {
+          "id": "MV2-S003-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Đo lường và cơ học",
+          "title": "Công, năng lượng và chuyển động"
+        },
+        {
+          "id": "MV2-S003-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Đo lường và cơ học",
+          "title": "Đàn hồi, cơ và mô sinh học"
+        },
+        {
+          "id": "MV2-S003-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Đo lường và cơ học",
+          "title": "Áp suất, Bernoulli, Poiseuille và huyết động"
+        },
+        {
+          "id": "MV2-S003-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Nhiệt và vận chuyển",
+          "title": "Nhiệt lượng, nhiệt dung và truyền nhiệt"
+        },
+        {
+          "id": "MV2-S003-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Nhiệt và vận chuyển",
+          "title": "Nhiệt động lực học, entropy và hệ sống"
+        },
+        {
+          "id": "MV2-S003-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Nhiệt và vận chuyển",
+          "title": "Chuyển hóa năng lượng và điều nhiệt"
+        },
+        {
+          "id": "MV2-S003-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Nhiệt và vận chuyển",
+          "title": "Khuếch tán, thẩm thấu và màng"
+        },
+        {
+          "id": "MV2-S003-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Nhiệt và vận chuyển",
+          "title": "Khí, sức căng bề mặt và cơ học hô hấp"
+        },
+        {
+          "id": "MV2-S003-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Điện và thần kinh",
+          "title": "Điện trường, dòng điện và tính dẫn điện mô"
+        },
+        {
+          "id": "MV2-S003-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Điện và thần kinh",
+          "title": "Mạch xoay chiều, pha và công suất thiết bị"
+        },
+        {
+          "id": "MV2-S003-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Điện và thần kinh",
+          "title": "Điện thế sinh học, ECG, EEG và EMG"
+        },
+        {
+          "id": "MV2-S003-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Điện và thần kinh",
+          "title": "Kích thích điện, TENS và an toàn điện"
+        },
+        {
+          "id": "MV2-S003-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Điện và thần kinh",
+          "title": "Cảm giác đau, điều biến đau và cơ sở ứng dụng phục hồi"
+        },
+        {
+          "id": "MV2-S003-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Sóng và quang học",
+          "title": "Dao động, sóng và âm học"
+        },
+        {
+          "id": "MV2-S003-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Sóng và quang học",
+          "title": "Siêu âm, Doppler và ứng dụng điều trị"
+        },
+        {
+          "id": "MV2-S003-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Sóng và quang học",
+          "title": "Khúc xạ, thấu kính và quang học mắt"
+        },
+        {
+          "id": "MV2-S003-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Sóng và quang học",
+          "title": "Tật khúc xạ và dụng cụ quang học"
+        },
+        {
+          "id": "MV2-S003-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Sóng và quang học",
+          "title": "Laser và tương tác ánh sáng với mô"
+        },
+        {
+          "id": "MV2-S003-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Bức xạ và tạo ảnh",
+          "title": "Nguyên tử, hạt nhân và năng lượng liên kết"
+        },
+        {
+          "id": "MV2-S003-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Bức xạ và tạo ảnh",
+          "title": "Phân rã, hoạt độ và dược chất phóng xạ"
+        },
+        {
+          "id": "MV2-S003-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Bức xạ và tạo ảnh",
+          "title": "Liều hấp thụ, liều tương đương và bảo vệ bức xạ"
+        },
+        {
+          "id": "MV2-S003-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Bức xạ và tạo ảnh",
+          "title": "Tia X, CT và hệ số suy giảm"
+        },
+        {
+          "id": "MV2-S003-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Bức xạ và tạo ảnh",
+          "title": "Cộng hưởng từ và so sánh phương thức tạo ảnh"
+        }
+      ],
+      "slug": "ly-sinh"
+    },
+    {
+      "subject_code": "MV2-S002",
+      "subject_name": "Hóa học",
+      "student_year": 1,
+      "lessons": [
+        {
+          "id": "MV2-S002-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nguyên tử và liên kết",
+          "title": "Cấu tạo nguyên tử và số lượng tử"
+        },
+        {
+          "id": "MV2-S002-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nguyên tử và liên kết",
+          "title": "Cấu hình electron và bảng tuần hoàn"
+        },
+        {
+          "id": "MV2-S002-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nguyên tử và liên kết",
+          "title": "Liên kết và lai hóa"
+        },
+        {
+          "id": "MV2-S002-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nguyên tử và liên kết",
+          "title": "Hình học phân tử và tương tác yếu"
+        },
+        {
+          "id": "MV2-S002-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nguyên tử và liên kết",
+          "title": "Phức chất, phối trí và từ tính"
+        },
+        {
+          "id": "MV2-S002-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Dung dịch và cân bằng",
+          "title": "Nồng độ, đương lượng và pha dung dịch"
+        },
+        {
+          "id": "MV2-S002-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Dung dịch và cân bằng",
+          "title": "Cân bằng hóa học"
+        },
+        {
+          "id": "MV2-S002-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Dung dịch và cân bằng",
+          "title": "Acid, base và tính pH"
+        },
+        {
+          "id": "MV2-S002-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Dung dịch và cân bằng",
+          "title": "Dung dịch đệm, thủy phân và chuẩn độ"
+        },
+        {
+          "id": "MV2-S002-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Dung dịch và cân bằng",
+          "title": "Tính chất tập hợp, thẩm thấu và keo"
+        },
+        {
+          "id": "MV2-S002-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Hóa lý và vô cơ",
+          "title": "Nhiệt động học và chiều phản ứng"
+        },
+        {
+          "id": "MV2-S002-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Hóa lý và vô cơ",
+          "title": "Động học và xúc tác"
+        },
+        {
+          "id": "MV2-S002-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Hóa lý và vô cơ",
+          "title": "Phản ứng oxy hóa – khử"
+        },
+        {
+          "id": "MV2-S002-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Hóa lý và vô cơ",
+          "title": "Điện hóa và thế điện cực"
+        },
+        {
+          "id": "MV2-S002-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Hóa lý và vô cơ",
+          "title": "Nguyên tố vô cơ, ion và vai trò y sinh"
+        },
+        {
+          "id": "MV2-S002-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Hữu cơ cơ bản",
+          "title": "Danh pháp, nhóm chức và đồng phân"
+        },
+        {
+          "id": "MV2-S002-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Hữu cơ cơ bản",
+          "title": "Cấu trạng, lập thể và cyclohexan"
+        },
+        {
+          "id": "MV2-S002-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Hữu cơ cơ bản",
+          "title": "Hydrocarbon, phản ứng cộng và thế"
+        },
+        {
+          "id": "MV2-S002-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Hữu cơ cơ bản",
+          "title": "Alcohol, phenol và ether"
+        },
+        {
+          "id": "MV2-S002-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Hữu cơ cơ bản",
+          "title": "Aldehyde, ketone và hợp chất carbonyl"
+        },
+        {
+          "id": "MV2-S002-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Hữu cơ ứng dụng",
+          "title": "Acid carboxylic và dẫn xuất"
+        },
+        {
+          "id": "MV2-S002-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Hữu cơ ứng dụng",
+          "title": "Amine, amide và dị vòng"
+        },
+        {
+          "id": "MV2-S002-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Hữu cơ ứng dụng",
+          "title": "Glucid: cấu trúc và phản ứng"
+        },
+        {
+          "id": "MV2-S002-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Hữu cơ ứng dụng",
+          "title": "Lipid, acid amin và peptide ở mức hóa học"
+        },
+        {
+          "id": "MV2-S002-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Hữu cơ ứng dụng",
+          "title": "Nhận diện chuỗi phản ứng và bài tính tổng hợp"
+        }
+      ],
+      "slug": "hoa-hoc"
+    },
+    {
+      "subject_code": "MV2-S011",
+      "subject_name": "Ký sinh trùng",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S011-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Đại cương và xét nghiệm",
+          "title": "Vật chủ, ký sinh và tương quan sinh học"
+        },
+        {
+          "id": "MV2-S011-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Đại cương và xét nghiệm",
+          "title": "Chu kỳ, đường lây và dịch tễ"
+        },
+        {
+          "id": "MV2-S011-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Đại cương và xét nghiệm",
+          "title": "Lấy bệnh phẩm, soi trực tiếp và tập trung"
+        },
+        {
+          "id": "MV2-S011-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Đại cương và xét nghiệm",
+          "title": "Huyết thanh học, PCR và diễn giải kết quả"
+        },
+        {
+          "id": "MV2-S011-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Đại cương và xét nghiệm",
+          "title": "Nguyên tắc điều trị, phòng bệnh và nhận diện ảnh"
+        },
+        {
+          "id": "MV2-S011-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Giun",
+          "title": "Giun đũa, giun tóc và giun kim"
+        },
+        {
+          "id": "MV2-S011-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Giun",
+          "title": "Giun móc, giun mỏ và thiếu máu"
+        },
+        {
+          "id": "MV2-S011-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Giun",
+          "title": "Giun lươn và tăng nhiễm"
+        },
+        {
+          "id": "MV2-S011-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Giun",
+          "title": "Toxocara, Gnathostoma và giun ở mô"
+        },
+        {
+          "id": "MV2-S011-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Giun",
+          "title": "Giun xoắn, giun chỉ và chẩn đoán phân biệt"
+        },
+        {
+          "id": "MV2-S011-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Sán",
+          "title": "Sán lá gan lớn và nhỏ"
+        },
+        {
+          "id": "MV2-S011-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Sán",
+          "title": "Sán lá phổi và sán lá ruột"
+        },
+        {
+          "id": "MV2-S011-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Sán",
+          "title": "Sán dây bò và lợn trưởng thành"
+        },
+        {
+          "id": "MV2-S011-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Sán",
+          "title": "Ấu trùng sán dây lợn và nang sán"
+        },
+        {
+          "id": "MV2-S011-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Sán",
+          "title": "Nhận diện trứng, đốt sán và mẫu bệnh phẩm"
+        },
+        {
+          "id": "MV2-S011-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Đơn bào",
+          "title": "Amip đường ruột và amip tự do"
+        },
+        {
+          "id": "MV2-S011-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Đơn bào",
+          "title": "Giardia và Cryptosporidium"
+        },
+        {
+          "id": "MV2-S011-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Đơn bào",
+          "title": "Trichomonas và đơn bào sinh dục"
+        },
+        {
+          "id": "MV2-S011-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Đơn bào",
+          "title": "Toxoplasma và nhiễm bẩm sinh"
+        },
+        {
+          "id": "MV2-S011-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Đơn bào",
+          "title": "Plasmodium: chu kỳ, hình thể và chẩn đoán sốt rét"
+        },
+        {
+          "id": "MV2-S011-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng và tiết túc",
+          "title": "Sốt rét: bệnh sinh, phòng ngừa và nguyên tắc điều trị"
+        },
+        {
+          "id": "MV2-S011-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng và tiết túc",
+          "title": "Muỗi, ruồi, bọ chét và vector"
+        },
+        {
+          "id": "MV2-S011-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng và tiết túc",
+          "title": "Ve, mò, mạt, ghẻ và tiết túc khác"
+        },
+        {
+          "id": "MV2-S011-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng và tiết túc",
+          "title": "Ký sinh trùng cơ hội và hội chứng theo cơ quan"
+        },
+        {
+          "id": "MV2-S011-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng và tiết túc",
+          "title": "Luyện đọc ảnh chạy trạm và chọn xét nghiệm phù hợp"
+        }
+      ],
+      "slug": "ky-sinh-trung"
+    },
+    {
+      "subject_code": "MV2-S010",
+      "subject_name": "Vi sinh học",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S010-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Hình thái, cấu trúc và phân loại vi khuẩn"
+        },
+        {
+          "id": "MV2-S010-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Sinh trưởng, chuyển hóa và hệ vi sinh thường trú"
+        },
+        {
+          "id": "MV2-S010-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Di truyền, độc lực và cơ chế gây bệnh"
+        },
+        {
+          "id": "MV2-S010-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Kháng sinh, kháng thuốc và kháng sinh đồ"
+        },
+        {
+          "id": "MV2-S010-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Đại cương",
+          "title": "Khử khuẩn, tiệt khuẩn và an toàn sinh học"
+        },
+        {
+          "id": "MV2-S010-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Vi khuẩn thường gặp",
+          "title": "Tụ cầu"
+        },
+        {
+          "id": "MV2-S010-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Vi khuẩn thường gặp",
+          "title": "Liên cầu, phế cầu và enterococcus"
+        },
+        {
+          "id": "MV2-S010-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Vi khuẩn thường gặp",
+          "title": "Não mô cầu và lậu cầu"
+        },
+        {
+          "id": "MV2-S010-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Vi khuẩn thường gặp",
+          "title": "Enterobacterales, Salmonella và Shigella"
+        },
+        {
+          "id": "MV2-S010-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Vi khuẩn thường gặp",
+          "title": "Tả, Campylobacter và H. pylori"
+        },
+        {
+          "id": "MV2-S010-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Vi khuẩn đặc biệt",
+          "title": "Pseudomonas, Acinetobacter và nhiễm khuẩn bệnh viện"
+        },
+        {
+          "id": "MV2-S010-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Vi khuẩn đặc biệt",
+          "title": "Haemophilus, Bordetella và vi khuẩn hô hấp"
+        },
+        {
+          "id": "MV2-S010-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Vi khuẩn đặc biệt",
+          "title": "Lao và mycobacteria"
+        },
+        {
+          "id": "MV2-S010-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Vi khuẩn đặc biệt",
+          "title": "Bạch hầu, than và vi khuẩn kỵ khí"
+        },
+        {
+          "id": "MV2-S010-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Vi khuẩn đặc biệt",
+          "title": "Xoắn khuẩn, Mycoplasma, Chlamydia và Rickettsia"
+        },
+        {
+          "id": "MV2-S010-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Virus và nấm",
+          "title": "Cấu trúc, nhân lên và hậu quả nhiễm virus"
+        },
+        {
+          "id": "MV2-S010-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Virus và nấm",
+          "title": "Virus hô hấp và enterovirus"
+        },
+        {
+          "id": "MV2-S010-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Virus và nấm",
+          "title": "Viêm gan và dấu ấn huyết thanh"
+        },
+        {
+          "id": "MV2-S010-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Virus và nấm",
+          "title": "HIV, herpesvirus và papillomavirus"
+        },
+        {
+          "id": "MV2-S010-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Virus và nấm",
+          "title": "Dengue, viêm não Nhật Bản và nấm gây bệnh"
+        },
+        {
+          "id": "MV2-S010-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Chẩn đoán thực hành",
+          "title": "Lấy, bảo quản và vận chuyển bệnh phẩm"
+        },
+        {
+          "id": "MV2-S010-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Chẩn đoán thực hành",
+          "title": "Nhuộm Gram, kháng acid và soi"
+        },
+        {
+          "id": "MV2-S010-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Chẩn đoán thực hành",
+          "title": "Nuôi cấy, phân lập và định danh"
+        },
+        {
+          "id": "MV2-S010-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Chẩn đoán thực hành",
+          "title": "Đọc kháng sinh đồ, miễn dịch và xét nghiệm phân tử"
+        },
+        {
+          "id": "MV2-S010-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Chẩn đoán thực hành",
+          "title": "Chọn phương pháp vi sinh theo hội chứng"
+        }
+      ],
+      "slug": "vi-sinh-hoc"
+    },
+    {
+      "subject_code": "MV2-S020",
+      "subject_name": "Hệ Tim mạch",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S020-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phôi tim và tuần hoàn thai"
+        },
+        {
+          "id": "MV2-S020-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Buồng tim, van tim và màng tim"
+        },
+        {
+          "id": "MV2-S020-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Mạch vành và mạch lớn"
+        },
+        {
+          "id": "MV2-S020-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Mô tim, mạch và vi tuần hoàn"
+        },
+        {
+          "id": "MV2-S020-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Giải phẫu ứng dụng, mặt cắt siêu âm và hình ảnh"
+        },
+        {
+          "id": "MV2-S020-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Điện thế, hệ dẫn truyền và phát nhịp"
+        },
+        {
+          "id": "MV2-S020-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Chu kỳ tim, tiền gánh, hậu gánh và cung lượng"
+        },
+        {
+          "id": "MV2-S020-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Huyết áp, sức cản và phản xạ điều hòa"
+        },
+        {
+          "id": "MV2-S020-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Tuần hoàn vành, phổi và tĩnh mạch"
+        },
+        {
+          "id": "MV2-S020-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Sinh lý gắng sức và thay đổi tư thế"
+        },
+        {
+          "id": "MV2-S020-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thăm khám",
+          "title": "Đau ngực, khó thở, hồi hộp và phù"
+        },
+        {
+          "id": "MV2-S020-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thăm khám",
+          "title": "Khám tim, âm tim, âm thổi và mạch"
+        },
+        {
+          "id": "MV2-S020-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thăm khám",
+          "title": "ECG: trục, dẫn truyền và nhịp"
+        },
+        {
+          "id": "MV2-S020-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thăm khám",
+          "title": "ECG thiếu máu cơ tim và nhồi máu"
+        },
+        {
+          "id": "MV2-S020-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thăm khám",
+          "title": "Siêu âm, X-quang và xét nghiệm tim mạch"
+        },
+        {
+          "id": "MV2-S020-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Cơ chế bệnh",
+          "title": "Tăng huyết áp và tổn thương cơ quan"
+        },
+        {
+          "id": "MV2-S020-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Cơ chế bệnh",
+          "title": "Xơ vữa, thiếu máu cơ tim và huyết khối"
+        },
+        {
+          "id": "MV2-S020-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Cơ chế bệnh",
+          "title": "Suy tim và tái cấu trúc"
+        },
+        {
+          "id": "MV2-S020-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Cơ chế bệnh",
+          "title": "Bệnh van, cơ tim và màng tim"
+        },
+        {
+          "id": "MV2-S020-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Cơ chế bệnh",
+          "title": "Loạn nhịp, rối loạn dẫn truyền và ngừng tuần hoàn"
+        },
+        {
+          "id": "MV2-S020-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Dược và tình huống",
+          "title": "Thuốc huyết áp, lợi tiểu và suy tim"
+        },
+        {
+          "id": "MV2-S020-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Dược và tình huống",
+          "title": "Thuốc mạch vành và chống huyết khối"
+        },
+        {
+          "id": "MV2-S020-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Dược và tình huống",
+          "title": "Thuốc chống loạn nhịp và hạ lipid"
+        },
+        {
+          "id": "MV2-S020-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Dược và tình huống",
+          "title": "Sốc tim, phù phổi và cấp cứu ban đầu"
+        },
+        {
+          "id": "MV2-S020-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Dược và tình huống",
+          "title": "Nguy cơ tim mạch, bệnh mạch ngoại biên và dự phòng"
+        }
+      ],
+      "slug": "he-tim-mach"
+    },
+    {
+      "subject_code": "MV2-S014",
+      "subject_name": "Huyết học",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S014-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Máu và tạo máu",
+          "title": "Thành phần, chức năng máu và huyết tương"
+        },
+        {
+          "id": "MV2-S014-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Máu và tạo máu",
+          "title": "Tủy xương, tế bào gốc và sinh máu"
+        },
+        {
+          "id": "MV2-S014-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Máu và tạo máu",
+          "title": "Hồng cầu, màng và chuyển hóa"
+        },
+        {
+          "id": "MV2-S014-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Máu và tạo máu",
+          "title": "Hemoglobin, sắt và vận chuyển khí"
+        },
+        {
+          "id": "MV2-S014-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Máu và tạo máu",
+          "title": "Bạch cầu và đáp ứng bảo vệ"
+        },
+        {
+          "id": "MV2-S014-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Xét nghiệm cơ sở",
+          "title": "Công thức máu và các chỉ số hồng cầu"
+        },
+        {
+          "id": "MV2-S014-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Xét nghiệm cơ sở",
+          "title": "Phết máu ngoại biên và hình thái"
+        },
+        {
+          "id": "MV2-S014-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Xét nghiệm cơ sở",
+          "title": "Hồng cầu lưới và khảo sát tủy"
+        },
+        {
+          "id": "MV2-S014-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Xét nghiệm cơ sở",
+          "title": "Đánh giá thiếu máu theo cơ chế và kích thước"
+        },
+        {
+          "id": "MV2-S014-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Xét nghiệm cơ sở",
+          "title": "Nhóm máu ABO, Rh và miễn dịch truyền máu"
+        },
+        {
+          "id": "MV2-S014-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thiếu máu",
+          "title": "Thiếu sắt và thiếu máu viêm mạn"
+        },
+        {
+          "id": "MV2-S014-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thiếu máu",
+          "title": "Thiếu vitamin B12, folate và hồng cầu khổng lồ"
+        },
+        {
+          "id": "MV2-S014-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thiếu máu",
+          "title": "Tan máu và xét nghiệm tan máu"
+        },
+        {
+          "id": "MV2-S014-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thiếu máu",
+          "title": "Thalassemia và bệnh hemoglobin"
+        },
+        {
+          "id": "MV2-S014-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thiếu máu",
+          "title": "Thiếu G6PD, bệnh màng và suy tủy"
+        },
+        {
+          "id": "MV2-S014-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Cầm máu và đông máu",
+          "title": "Tiểu cầu, kết dính và kết tập"
+        },
+        {
+          "id": "MV2-S014-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Cầm máu và đông máu",
+          "title": "Các đường đông máu và tiêu sợi huyết"
+        },
+        {
+          "id": "MV2-S014-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Cầm máu và đông máu",
+          "title": "PT, aPTT, fibrinogen và đọc xét nghiệm"
+        },
+        {
+          "id": "MV2-S014-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Cầm máu và đông máu",
+          "title": "Giảm tiểu cầu, hemophilia và von Willebrand"
+        },
+        {
+          "id": "MV2-S014-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Cầm máu và đông máu",
+          "title": "Huyết khối, DIC và thuốc tác động cầm máu"
+        },
+        {
+          "id": "MV2-S014-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Tích hợp",
+          "title": "Tăng, giảm bạch cầu và phản ứng viêm"
+        },
+        {
+          "id": "MV2-S014-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Tích hợp",
+          "title": "Nhận diện ban đầu bạch cầu cấp và mạn"
+        },
+        {
+          "id": "MV2-S014-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Tích hợp",
+          "title": "Hạch, lách, lymphoma và bệnh tương bào cơ bản"
+        },
+        {
+          "id": "MV2-S014-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Tích hợp",
+          "title": "Chế phẩm máu, chỉ định và tai biến truyền máu"
+        },
+        {
+          "id": "MV2-S014-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Tích hợp",
+          "title": "Phân tích ca thiếu máu hoặc xuất huyết"
+        }
+      ],
+      "slug": "huyet-hoc"
+    },
+    {
+      "subject_code": "MV2-S009",
+      "subject_name": "Giải phẫu bệnh",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S009-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Tổn thương và đáp ứng",
+          "title": "Phương pháp giải phẫu bệnh và xử lý bệnh phẩm"
+        },
+        {
+          "id": "MV2-S009-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Tổn thương và đáp ứng",
+          "title": "Thích nghi, thoái hóa và tổn thương tế bào"
+        },
+        {
+          "id": "MV2-S009-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Tổn thương và đáp ứng",
+          "title": "Hoại tử, apoptosis và vôi hóa"
+        },
+        {
+          "id": "MV2-S009-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Tổn thương và đáp ứng",
+          "title": "Rối loạn tuần hoàn, huyết khối và nhồi máu"
+        },
+        {
+          "id": "MV2-S009-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Tổn thương và đáp ứng",
+          "title": "Phù, sung huyết, xuất huyết và sốc"
+        },
+        {
+          "id": "MV2-S009-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Viêm và u",
+          "title": "Viêm cấp và tế bào viêm"
+        },
+        {
+          "id": "MV2-S009-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Viêm và u",
+          "title": "Viêm mạn, viêm hạt và nhiễm trùng đặc hiệu"
+        },
+        {
+          "id": "MV2-S009-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Viêm và u",
+          "title": "Lành thương, tái tạo và xơ hóa"
+        },
+        {
+          "id": "MV2-S009-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Viêm và u",
+          "title": "U lành, u ác và cơ chế sinh ung"
+        },
+        {
+          "id": "MV2-S009-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Viêm và u",
+          "title": "Xâm nhập, di căn, độ mô học và giai đoạn"
+        },
+        {
+          "id": "MV2-S009-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Tim phổi và tiêu hóa",
+          "title": "Bệnh lý mạch và tim"
+        },
+        {
+          "id": "MV2-S009-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Tim phổi và tiêu hóa",
+          "title": "Bệnh viêm, tắc nghẽn và u phổi"
+        },
+        {
+          "id": "MV2-S009-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Tim phổi và tiêu hóa",
+          "title": "Bệnh thực quản và dạ dày"
+        },
+        {
+          "id": "MV2-S009-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Tim phổi và tiêu hóa",
+          "title": "Bệnh ruột non, đại tràng và ruột thừa"
+        },
+        {
+          "id": "MV2-S009-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Tim phổi và tiêu hóa",
+          "title": "Bệnh gan, đường mật và tụy"
+        },
+        {
+          "id": "MV2-S009-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Bệnh cầu thận, ống thận và mô kẽ"
+        },
+        {
+          "id": "MV2-S009-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tiết niệu và sinh dục",
+          "title": "U thận, đường niệu và tuyến tiền liệt"
+        },
+        {
+          "id": "MV2-S009-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Bệnh cổ tử cung và thân tử cung"
+        },
+        {
+          "id": "MV2-S009-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Bệnh buồng trứng và nguyên bào nuôi"
+        },
+        {
+          "id": "MV2-S009-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tiết niệu và sinh dục",
+          "title": "Tổn thương lành và ác tính tuyến vú"
+        },
+        {
+          "id": "MV2-S009-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Các cơ quan và đọc hình",
+          "title": "Bệnh tuyến giáp và nội tiết thường gặp"
+        },
+        {
+          "id": "MV2-S009-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Các cơ quan và đọc hình",
+          "title": "Bệnh da, mô mềm và xương"
+        },
+        {
+          "id": "MV2-S009-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Các cơ quan và đọc hình",
+          "title": "Bệnh hạch, lách và mô tạo máu cơ bản"
+        },
+        {
+          "id": "MV2-S009-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Các cơ quan và đọc hình",
+          "title": "Đọc hình đại thể, vi thể và chọn chẩn đoán"
+        },
+        {
+          "id": "MV2-S009-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Các cơ quan và đọc hình",
+          "title": "Phân tích ca liên hệ hình thái và diễn tiến"
+        }
+      ],
+      "slug": "giai-phau-benh"
+    },
+    {
+      "subject_code": "MV2-S023",
+      "subject_name": "Hệ Thận - Tiết niệu",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S023-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phôi hệ tiết niệu và dị tật"
+        },
+        {
+          "id": "MV2-S023-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Giải phẫu thận và mạch thận"
+        },
+        {
+          "id": "MV2-S023-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Nephron, cầu thận và hàng rào lọc"
+        },
+        {
+          "id": "MV2-S023-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Niệu quản, bàng quang và niệu đạo"
+        },
+        {
+          "id": "MV2-S023-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Mô học, thần kinh và cơ chế tiểu tiện"
+        },
+        {
+          "id": "MV2-S023-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Lưu lượng máu thận và tự điều hòa"
+        },
+        {
+          "id": "MV2-S023-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Lọc cầu thận, độ thanh thải và eGFR"
+        },
+        {
+          "id": "MV2-S023-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Tái hấp thu, bài tiết ở các đoạn ống"
+        },
+        {
+          "id": "MV2-S023-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Cô đặc, pha loãng nước tiểu và ADH"
+        },
+        {
+          "id": "MV2-S023-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Điều hòa natri, thể tích và hệ renin – angiotensin"
+        },
+        {
+          "id": "MV2-S023-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Hằng định nội môi",
+          "title": "Điều hòa kali và điện giải khác"
+        },
+        {
+          "id": "MV2-S023-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Hằng định nội môi",
+          "title": "Acid – base và bù trừ tại thận"
+        },
+        {
+          "id": "MV2-S023-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Hằng định nội môi",
+          "title": "Rối loạn nước, natri và thể tích"
+        },
+        {
+          "id": "MV2-S023-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Hằng định nội môi",
+          "title": "Khí máu, toan – kiềm và khoảng trống anion"
+        },
+        {
+          "id": "MV2-S023-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Hằng định nội môi",
+          "title": "Hormone thận, erythropoietin và vitamin D"
+        },
+        {
+          "id": "MV2-S023-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Protein niệu, tiểu máu và xét nghiệm nước tiểu"
+        },
+        {
+          "id": "MV2-S023-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Hội chứng viêm cầu thận và thận hư"
+        },
+        {
+          "id": "MV2-S023-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Tổn thương thận cấp"
+        },
+        {
+          "id": "MV2-S023-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Bệnh thận mạn và biến chứng"
+        },
+        {
+          "id": "MV2-S023-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Nhiễm trùng tiểu, viêm thận – bể thận"
+        },
+        {
+          "id": "MV2-S023-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Sỏi và tắc nghẽn đường niệu"
+        },
+        {
+          "id": "MV2-S023-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Rối loạn tiểu tiện và bệnh đường niệu dưới"
+        },
+        {
+          "id": "MV2-S023-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Thuốc lợi tiểu và cơ chế tác dụng"
+        },
+        {
+          "id": "MV2-S023-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Thuốc độc thận, chỉnh liều và nguyên tắc điều trị"
+        },
+        {
+          "id": "MV2-S023-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Phân tích ca thận niệu và chỉ định thăm dò"
+        }
+      ],
+      "slug": "he-than-tiet-nieu"
+    },
+    {
+      "subject_code": "MV2-S016",
+      "subject_name": "Tiếng Anh chuyên ngành",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S016-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Thuật ngữ",
+          "title": "Tiền tố, hậu tố và gốc từ y khoa"
+        },
+        {
+          "id": "MV2-S016-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Thuật ngữ",
+          "title": "Số nhiều, viết tắt và cấu tạo thuật ngữ"
+        },
+        {
+          "id": "MV2-S016-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Thuật ngữ",
+          "title": "Tư thế, hướng và các vùng cơ thể"
+        },
+        {
+          "id": "MV2-S016-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Thuật ngữ",
+          "title": "Từ vựng tế bào, mô và cơ quan"
+        },
+        {
+          "id": "MV2-S016-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Thuật ngữ",
+          "title": "Mô tả triệu chứng, dấu hiệu và mức độ"
+        },
+        {
+          "id": "MV2-S016-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Ngữ pháp dùng trong đề",
+          "title": "Thì hiện tại và mô tả chức năng"
+        },
+        {
+          "id": "MV2-S016-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Ngữ pháp dùng trong đề",
+          "title": "Quá khứ, hiện tại hoàn thành và bệnh sử"
+        },
+        {
+          "id": "MV2-S016-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Ngữ pháp dùng trong đề",
+          "title": "Câu bị động trong thủ thuật và xét nghiệm"
+        },
+        {
+          "id": "MV2-S016-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Ngữ pháp dùng trong đề",
+          "title": "Câu hỏi, lời nói gián tiếp và khai thác bệnh sử"
+        },
+        {
+          "id": "MV2-S016-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Ngữ pháp dùng trong đề",
+          "title": "Mệnh đề quan hệ, điều kiện và động từ tình thái"
+        },
+        {
+          "id": "MV2-S016-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Từ vựng theo hệ",
+          "title": "Tim mạch và máu"
+        },
+        {
+          "id": "MV2-S016-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Từ vựng theo hệ",
+          "title": "Hô hấp"
+        },
+        {
+          "id": "MV2-S016-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Từ vựng theo hệ",
+          "title": "Tiêu hóa"
+        },
+        {
+          "id": "MV2-S016-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Từ vựng theo hệ",
+          "title": "Tiết niệu và sinh sản"
+        },
+        {
+          "id": "MV2-S016-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Từ vựng theo hệ",
+          "title": "Thần kinh, nội tiết và hệ vận động"
+        },
+        {
+          "id": "MV2-S016-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Giao tiếp và đọc hiểu",
+          "title": "Hỏi bệnh, tiền sử và thuốc đang dùng"
+        },
+        {
+          "id": "MV2-S016-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Giao tiếp và đọc hiểu",
+          "title": "Khám bệnh và hướng dẫn người bệnh"
+        },
+        {
+          "id": "MV2-S016-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Giao tiếp và đọc hiểu",
+          "title": "Xét nghiệm, chẩn đoán và kết quả"
+        },
+        {
+          "id": "MV2-S016-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Giao tiếp và đọc hiểu",
+          "title": "Điều trị, liều dùng và tác dụng không mong muốn"
+        },
+        {
+          "id": "MV2-S016-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Giao tiếp và đọc hiểu",
+          "title": "Nhập viện, xuất viện và hẹn tái khám"
+        },
+        {
+          "id": "MV2-S016-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Dạng bài thi",
+          "title": "Điền từ theo ngữ cảnh y khoa"
+        },
+        {
+          "id": "MV2-S016-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Dạng bài thi",
+          "title": "Chọn cấu trúc ngữ pháp và sửa lỗi"
+        },
+        {
+          "id": "MV2-S016-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Dạng bài thi",
+          "title": "Hoàn thành hội thoại bác sĩ – người bệnh"
+        },
+        {
+          "id": "MV2-S016-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Dạng bài thi",
+          "title": "Đọc đoạn văn: ý chính, chi tiết và suy luận"
+        },
+        {
+          "id": "MV2-S016-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Dạng bài thi",
+          "title": "Diễn đạt tương đương và nối thông tin trong văn bản"
+        }
+      ],
+      "slug": "tieng-anh-chuyen-nganh"
+    },
+    {
+      "subject_code": "MV2-S022",
+      "subject_name": "Hệ Tiêu hóa",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S022-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phôi ống tiêu hóa và dị tật"
+        },
+        {
+          "id": "MV2-S022-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Khoang miệng, răng, lưỡi và tuyến nước bọt"
+        },
+        {
+          "id": "MV2-S022-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Thực quản và dạ dày"
+        },
+        {
+          "id": "MV2-S022-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Ruột non, ruột già, trực tràng và hậu môn"
+        },
+        {
+          "id": "MV2-S022-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phúc mạc, mạc treo, mạch và thần kinh"
+        },
+        {
+          "id": "MV2-S022-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Mô học và cơ quan phụ",
+          "title": "Mô học ống tiêu hóa và tế bào chuyên biệt"
+        },
+        {
+          "id": "MV2-S022-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Mô học và cơ quan phụ",
+          "title": "Mô học gan và tuần hoàn cửa"
+        },
+        {
+          "id": "MV2-S022-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Mô học và cơ quan phụ",
+          "title": "Đường mật, túi mật và lưu thông mật"
+        },
+        {
+          "id": "MV2-S022-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Mô học và cơ quan phụ",
+          "title": "Tụy ngoại tiết, nội tiết và liên quan"
+        },
+        {
+          "id": "MV2-S022-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Mô học và cơ quan phụ",
+          "title": "Hệ thần kinh ruột và điều hòa hormone"
+        },
+        {
+          "id": "MV2-S022-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Vận động và bài tiết",
+          "title": "Nhai, nuốt và nước bọt"
+        },
+        {
+          "id": "MV2-S022-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Vận động và bài tiết",
+          "title": "Vận động, làm rỗng và bài tiết dạ dày"
+        },
+        {
+          "id": "MV2-S022-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Vận động và bài tiết",
+          "title": "Dịch tụy và enzyme tiêu hóa"
+        },
+        {
+          "id": "MV2-S022-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Vận động và bài tiết",
+          "title": "Dịch mật và chu trình muối mật"
+        },
+        {
+          "id": "MV2-S022-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Vận động và bài tiết",
+          "title": "Vận động ruột, phản xạ và đại tiện"
+        },
+        {
+          "id": "MV2-S022-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tiêu hóa và hấp thu",
+          "title": "Tiêu hóa, hấp thu glucid"
+        },
+        {
+          "id": "MV2-S022-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tiêu hóa và hấp thu",
+          "title": "Tiêu hóa, hấp thu protein"
+        },
+        {
+          "id": "MV2-S022-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tiêu hóa và hấp thu",
+          "title": "Tiêu hóa, hấp thu lipid"
+        },
+        {
+          "id": "MV2-S022-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tiêu hóa và hấp thu",
+          "title": "Hấp thu vitamin, khoáng, nước và điện giải"
+        },
+        {
+          "id": "MV2-S022-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tiêu hóa và hấp thu",
+          "title": "Hệ vi sinh, hàng rào niêm mạc và miễn dịch ruột"
+        },
+        {
+          "id": "MV2-S022-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Gan, bilirubin và cơ chế vàng da"
+        },
+        {
+          "id": "MV2-S022-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Acid, H. pylori và loét dạ dày"
+        },
+        {
+          "id": "MV2-S022-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Cơ chế nôn, tiêu chảy và kém hấp thu"
+        },
+        {
+          "id": "MV2-S022-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Thuốc tác động acid, vận động và hấp thu"
+        },
+        {
+          "id": "MV2-S022-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Tích hợp cấu trúc – chức năng qua ca tiêu hóa"
+        }
+      ],
+      "slug": "he-tieu-hoa"
+    },
+    {
+      "subject_code": "MV2-S037",
+      "subject_name": "Răng Hàm Mặt",
+      "student_year": 5,
+      "lessons": [
+        {
+          "id": "MV2-S037-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cơ sở",
+          "title": "Giải phẫu răng, bộ răng và mô quanh răng"
+        },
+        {
+          "id": "MV2-S037-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cơ sở",
+          "title": "Mọc răng, khớp cắn và biến chứng"
+        },
+        {
+          "id": "MV2-S037-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cơ sở",
+          "title": "Khám răng miệng và đọc phim cơ bản"
+        },
+        {
+          "id": "MV2-S037-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cơ sở",
+          "title": "Mảng bám, nước bọt và yếu tố nguy cơ"
+        },
+        {
+          "id": "MV2-S037-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cơ sở",
+          "title": "Liên quan bệnh răng miệng và toàn thân"
+        },
+        {
+          "id": "MV2-S037-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Bệnh răng và quanh răng",
+          "title": "Sâu răng: cơ chế, nhận diện và dự phòng"
+        },
+        {
+          "id": "MV2-S037-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Bệnh răng và quanh răng",
+          "title": "Viêm tủy và chẩn đoán phân biệt đau răng"
+        },
+        {
+          "id": "MV2-S037-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Bệnh răng và quanh răng",
+          "title": "Hoại tử tủy, viêm quanh chóp và áp xe"
+        },
+        {
+          "id": "MV2-S037-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Bệnh răng và quanh răng",
+          "title": "Viêm lợi"
+        },
+        {
+          "id": "MV2-S037-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Bệnh răng và quanh răng",
+          "title": "Viêm quanh răng và mất răng"
+        },
+        {
+          "id": "MV2-S037-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Viêm nhiễm và tổn thương",
+          "title": "Nhiễm trùng do răng và viêm mô tế bào"
+        },
+        {
+          "id": "MV2-S037-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Viêm nhiễm và tổn thương",
+          "title": "Viêm xương hàm và biến chứng"
+        },
+        {
+          "id": "MV2-S037-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Viêm nhiễm và tổn thương",
+          "title": "Loét miệng, herpes và tổn thương niêm mạc"
+        },
+        {
+          "id": "MV2-S037-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Viêm nhiễm và tổn thương",
+          "title": "Nang và u lành vùng hàm mặt"
+        },
+        {
+          "id": "MV2-S037-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Viêm nhiễm và tổn thương",
+          "title": "Dấu hiệu nghi ung thư miệng và chuyển chuyên khoa"
+        },
+        {
+          "id": "MV2-S037-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Chấn thương và can thiệp",
+          "title": "Sơ cứu chấn thương hàm mặt"
+        },
+        {
+          "id": "MV2-S037-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Chấn thương và can thiệp",
+          "title": "Chấn thương răng và phần mềm"
+        },
+        {
+          "id": "MV2-S037-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Chấn thương và can thiệp",
+          "title": "Gãy xương hàm trên và Le Fort"
+        },
+        {
+          "id": "MV2-S037-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Chấn thương và can thiệp",
+          "title": "Gãy xương hàm dưới và trật khớp"
+        },
+        {
+          "id": "MV2-S037-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Chấn thương và can thiệp",
+          "title": "Nhổ răng, chảy máu và tai biến thường gặp"
+        },
+        {
+          "id": "MV2-S037-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Dự phòng và tích hợp",
+          "title": "Dị tật khe hở và phối hợp chăm sóc"
+        },
+        {
+          "id": "MV2-S037-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Dự phòng và tích hợp",
+          "title": "Vệ sinh răng miệng và fluor"
+        },
+        {
+          "id": "MV2-S037-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Dự phòng và tích hợp",
+          "title": "Chăm sóc ở trẻ, thai phụ và người bệnh nền"
+        },
+        {
+          "id": "MV2-S037-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Dự phòng và tích hợp",
+          "title": "Thuốc, giảm đau và sử dụng kháng sinh hợp lý"
+        },
+        {
+          "id": "MV2-S037-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Dự phòng và tích hợp",
+          "title": "Tiếp cận đau, sưng hoặc chấn thương vùng miệng"
+        }
+      ],
+      "slug": "rang-ham-mat"
+    },
+    {
+      "subject_code": "MV2-S021",
+      "subject_name": "Hệ Hô hấp",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S021-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phôi hệ hô hấp và dị tật"
+        },
+        {
+          "id": "MV2-S021-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Đường hô hấp trên và thanh quản"
+        },
+        {
+          "id": "MV2-S021-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Khí quản, phế quản và phân thùy"
+        },
+        {
+          "id": "MV2-S021-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phổi, màng phổi và mạch máu"
+        },
+        {
+          "id": "MV2-S021-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Mô học đường dẫn khí và màng phế nang"
+        },
+        {
+          "id": "MV2-S021-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Cơ học hô hấp, áp suất và compliance"
+        },
+        {
+          "id": "MV2-S021-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Thể tích phổi và hô hấp ký"
+        },
+        {
+          "id": "MV2-S021-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Thông khí phế nang và khoảng chết"
+        },
+        {
+          "id": "MV2-S021-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Khuếch tán, tỷ lệ thông khí – tưới máu"
+        },
+        {
+          "id": "MV2-S021-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Sinh lý",
+          "title": "Vận chuyển khí và điều hòa hô hấp"
+        },
+        {
+          "id": "MV2-S021-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thăm dò và cơ chế",
+          "title": "Khó thở, ho, khạc đàm và ho máu"
+        },
+        {
+          "id": "MV2-S021-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thăm dò và cơ chế",
+          "title": "X-quang ngực và hình ảnh cơ bản"
+        },
+        {
+          "id": "MV2-S021-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thăm dò và cơ chế",
+          "title": "Khí máu, thiếu oxy và suy hô hấp"
+        },
+        {
+          "id": "MV2-S021-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thăm dò và cơ chế",
+          "title": "Miễn dịch, hàng rào và vi sinh đường thở"
+        },
+        {
+          "id": "MV2-S021-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thăm dò và cơ chế",
+          "title": "Tắc nghẽn, hạn chế và rối loạn trao đổi khí"
+        },
+        {
+          "id": "MV2-S021-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Hen và tăng phản ứng phế quản"
+        },
+        {
+          "id": "MV2-S021-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "COPD và khí phế thũng"
+        },
+        {
+          "id": "MV2-S021-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Viêm phổi và nhiễm trùng hô hấp"
+        },
+        {
+          "id": "MV2-S021-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "Lao, nấm và bệnh cơ hội"
+        },
+        {
+          "id": "MV2-S021-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Bệnh học",
+          "title": "U phổi, màng phổi và bệnh mô kẽ cơ bản"
+        },
+        {
+          "id": "MV2-S021-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Thuốc giãn phế quản và chống viêm"
+        },
+        {
+          "id": "MV2-S021-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Kháng sinh và nguyên tắc điều trị nhiễm trùng"
+        },
+        {
+          "id": "MV2-S021-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Tràn dịch, tràn khí và cấp cứu màng phổi"
+        },
+        {
+          "id": "MV2-S021-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Oxy liệu pháp và hỗ trợ hô hấp cơ bản"
+        },
+        {
+          "id": "MV2-S021-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Tích hợp ca hô hấp và phân tích xét nghiệm"
+        }
+      ],
+      "slug": "he-ho-hap"
+    },
+    {
+      "subject_code": "MV2-S024",
+      "subject_name": "Hệ Da - Cơ - Xương - Khớp",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S024-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Mô và cấu trúc",
+          "title": "Da, phần phụ và hàng rào bảo vệ"
+        },
+        {
+          "id": "MV2-S024-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Mô và cấu trúc",
+          "title": "Mô xương, sụn, khớp và tái tạo"
+        },
+        {
+          "id": "MV2-S024-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Mô và cấu trúc",
+          "title": "Cơ vân, gân và co cơ"
+        },
+        {
+          "id": "MV2-S024-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Mô và cấu trúc",
+          "title": "Chi trên: định khu, vận động và thần kinh"
+        },
+        {
+          "id": "MV2-S024-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Mô và cấu trúc",
+          "title": "Chi dưới, cột sống và liên quan ứng dụng"
+        },
+        {
+          "id": "MV2-S024-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Bản vận động và dẫn truyền thần kinh – cơ"
+        },
+        {
+          "id": "MV2-S024-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Cơ học vận động và đòn bẩy"
+        },
+        {
+          "id": "MV2-S024-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Calcium, phosphate và chuyển hóa xương"
+        },
+        {
+          "id": "MV2-S024-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Lành xương, mất xương và tuổi"
+        },
+        {
+          "id": "MV2-S024-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Chức năng",
+          "title": "Điều nhiệt, cảm giác và chức năng da"
+        },
+        {
+          "id": "MV2-S024-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Xương khớp",
+          "title": "Khám cơ xương khớp và đọc phim"
+        },
+        {
+          "id": "MV2-S024-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Xương khớp",
+          "title": "Gãy xương, trật khớp và chèn ép khoang"
+        },
+        {
+          "id": "MV2-S024-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Xương khớp",
+          "title": "Thoái hóa khớp và loãng xương"
+        },
+        {
+          "id": "MV2-S024-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Xương khớp",
+          "title": "Viêm khớp, gout và cơ chế tự miễn"
+        },
+        {
+          "id": "MV2-S024-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Xương khớp",
+          "title": "Viêm xương, u xương và đau cột sống"
+        },
+        {
+          "id": "MV2-S024-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Da liễu cơ sở",
+          "title": "Tổn thương cơ bản và khám da"
+        },
+        {
+          "id": "MV2-S024-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Da liễu cơ sở",
+          "title": "Nhiễm trùng, nấm và ký sinh trên da"
+        },
+        {
+          "id": "MV2-S024-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Da liễu cơ sở",
+          "title": "Viêm da, dị ứng và chàm"
+        },
+        {
+          "id": "MV2-S024-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Da liễu cơ sở",
+          "title": "Vảy nến, rối loạn sắc tố và phần phụ"
+        },
+        {
+          "id": "MV2-S024-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Da liễu cơ sở",
+          "title": "U da và dấu hiệu ác tính"
+        },
+        {
+          "id": "MV2-S024-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Giảm đau, chống viêm và tác dụng phụ"
+        },
+        {
+          "id": "MV2-S024-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Thuốc xương khớp và thuốc bôi da"
+        },
+        {
+          "id": "MV2-S024-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Yếu cơ, chấn thương thần kinh và phục hồi"
+        },
+        {
+          "id": "MV2-S024-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Bỏng, vết thương và chăm sóc da"
+        },
+        {
+          "id": "MV2-S024-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Ca tích hợp hình ảnh, cơ chế và lựa chọn xử trí"
+        }
+      ],
+      "slug": "he-da-co-xuong-khop"
+    },
+    {
+      "subject_code": "MV2-S042",
+      "subject_name": "Điều dưỡng cơ bản",
+      "student_year": 2,
+      "lessons": [
+        {
+          "id": "MV2-S042-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Vai trò điều dưỡng, giao tiếp và đạo đức"
+        },
+        {
+          "id": "MV2-S042-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Nhu cầu người bệnh và mô hình chăm sóc"
+        },
+        {
+          "id": "MV2-S042-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Nhận định, chẩn đoán điều dưỡng và kế hoạch"
+        },
+        {
+          "id": "MV2-S042-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Thực hiện, lượng giá và ghi chép"
+        },
+        {
+          "id": "MV2-S042-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "An toàn người bệnh, định danh và phòng té ngã"
+        },
+        {
+          "id": "MV2-S042-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Theo dõi",
+          "title": "Nhiệt độ và điều nhiệt"
+        },
+        {
+          "id": "MV2-S042-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Theo dõi",
+          "title": "Mạch, huyết áp và tuần hoàn"
+        },
+        {
+          "id": "MV2-S042-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Theo dõi",
+          "title": "Nhịp thở, SpO2 và dấu hiệu suy hô hấp"
+        },
+        {
+          "id": "MV2-S042-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Theo dõi",
+          "title": "Đau, ý thức và các thang đánh giá"
+        },
+        {
+          "id": "MV2-S042-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Theo dõi",
+          "title": "Cân bằng dịch, dinh dưỡng và bài tiết"
+        },
+        {
+          "id": "MV2-S042-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Chăm sóc cơ bản",
+          "title": "Tiếp nhận, chuyển và cho người bệnh ra viện"
+        },
+        {
+          "id": "MV2-S042-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Chăm sóc cơ bản",
+          "title": "Tư thế, vận chuyển và vận động"
+        },
+        {
+          "id": "MV2-S042-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Chăm sóc cơ bản",
+          "title": "Vệ sinh, giường bệnh và phòng loét tỳ đè"
+        },
+        {
+          "id": "MV2-S042-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Chăm sóc cơ bản",
+          "title": "Dinh dưỡng, nuôi ăn và an toàn khi ăn"
+        },
+        {
+          "id": "MV2-S042-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Chăm sóc cơ bản",
+          "title": "Chăm sóc tiểu tiện, đại tiện và vệ sinh cá nhân"
+        },
+        {
+          "id": "MV2-S042-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Kỹ thuật và kiểm soát nhiễm khuẩn",
+          "title": "Rửa tay, phòng hộ và cách ly"
+        },
+        {
+          "id": "MV2-S042-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Kỹ thuật và kiểm soát nhiễm khuẩn",
+          "title": "Làm sạch, khử khuẩn và tiệt khuẩn"
+        },
+        {
+          "id": "MV2-S042-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Kỹ thuật và kiểm soát nhiễm khuẩn",
+          "title": "Dùng thuốc: kiểm tra, đường dùng và theo dõi"
+        },
+        {
+          "id": "MV2-S042-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Kỹ thuật và kiểm soát nhiễm khuẩn",
+          "title": "Tiêm, truyền, bơm tiêm điện và tính tốc độ"
+        },
+        {
+          "id": "MV2-S042-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Kỹ thuật và kiểm soát nhiễm khuẩn",
+          "title": "Lấy bệnh phẩm, băng bó và chăm sóc vết thương"
+        },
+        {
+          "id": "MV2-S042-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Tích hợp thực hành",
+          "title": "Oxy, hút đàm và chăm sóc hô hấp cơ bản"
+        },
+        {
+          "id": "MV2-S042-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Tích hợp thực hành",
+          "title": "Theo dõi phản ứng thuốc và tai biến thủ thuật"
+        },
+        {
+          "id": "MV2-S042-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Tích hợp thực hành",
+          "title": "Hỗ trợ người bệnh trước và sau thủ thuật"
+        },
+        {
+          "id": "MV2-S042-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Tích hợp thực hành",
+          "title": "Chăm sóc cuối đời và hỗ trợ gia đình"
+        },
+        {
+          "id": "MV2-S042-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Tích hợp thực hành",
+          "title": "Tình huống ưu tiên chăm sóc và báo động bất thường"
+        }
+      ],
+      "slug": "dieu-duong-co-ban"
+    },
+    {
+      "subject_code": "MV2-S026",
+      "subject_name": "Hệ Thần kinh",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S026-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Neuron, tế bào đệm và synapse"
+        },
+        {
+          "id": "MV2-S026-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Phôi thần kinh, ống thần kinh và dị tật"
+        },
+        {
+          "id": "MV2-S026-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Tủy sống và rễ thần kinh"
+        },
+        {
+          "id": "MV2-S026-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Thân não, dây thần kinh sọ và tiểu não"
+        },
+        {
+          "id": "MV2-S026-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc",
+          "title": "Đại não, gian não, hạch nền và hệ viền"
+        },
+        {
+          "id": "MV2-S026-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Dẫn truyền và chức năng",
+          "title": "Điện thế hoạt động và dẫn truyền"
+        },
+        {
+          "id": "MV2-S026-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Dẫn truyền và chức năng",
+          "title": "Chất dẫn truyền, thụ thể và điều hòa"
+        },
+        {
+          "id": "MV2-S026-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Dẫn truyền và chức năng",
+          "title": "Cảm giác thân thể và đường đau"
+        },
+        {
+          "id": "MV2-S026-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Dẫn truyền và chức năng",
+          "title": "Vận động, bó tháp và phản xạ"
+        },
+        {
+          "id": "MV2-S026-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Dẫn truyền và chức năng",
+          "title": "Hệ tự chủ và chức năng tạng"
+        },
+        {
+          "id": "MV2-S026-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Chức năng cao và giác quan",
+          "title": "Thị giác và đường thị giác"
+        },
+        {
+          "id": "MV2-S026-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Chức năng cao và giác quan",
+          "title": "Thính giác, tiền đình và thăng bằng"
+        },
+        {
+          "id": "MV2-S026-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Chức năng cao và giác quan",
+          "title": "Ngôn ngữ, trí nhớ và chức năng vỏ não"
+        },
+        {
+          "id": "MV2-S026-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Chức năng cao và giác quan",
+          "title": "Giấc ngủ, thức tỉnh và ý thức"
+        },
+        {
+          "id": "MV2-S026-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Chức năng cao và giác quan",
+          "title": "Điều hòa hành vi và cảm xúc cơ bản"
+        },
+        {
+          "id": "MV2-S026-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Khám và định khu",
+          "title": "Khám thần kinh và hội chứng khu trú"
+        },
+        {
+          "id": "MV2-S026-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Khám và định khu",
+          "title": "Dây sọ và định khu thân não"
+        },
+        {
+          "id": "MV2-S026-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Khám và định khu",
+          "title": "Liệt trung ương, ngoại biên và tủy"
+        },
+        {
+          "id": "MV2-S026-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Khám và định khu",
+          "title": "Màng não, dịch não tủy và tuần hoàn não"
+        },
+        {
+          "id": "MV2-S026-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Khám và định khu",
+          "title": "Hình ảnh thần kinh và định khu tổn thương"
+        },
+        {
+          "id": "MV2-S026-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Đột quỵ và thiếu máu não"
+        },
+        {
+          "id": "MV2-S026-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Co giật, động kinh và thuốc cơ bản"
+        },
+        {
+          "id": "MV2-S026-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Hôn mê, tăng áp lực nội sọ và chấn thương"
+        },
+        {
+          "id": "MV2-S026-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Thuốc an thần, giảm đau và tác động thần kinh"
+        },
+        {
+          "id": "MV2-S026-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Liên hệ bệnh học",
+          "title": "Ca tích hợp đường dẫn truyền – dấu khám – vị trí"
+        }
+      ],
+      "slug": "he-than-kinh"
+    },
+    {
+      "subject_code": "MV2-S015",
+      "subject_name": "Xác suất - Thống kê y học",
+      "student_year": 1,
+      "lessons": [
+        {
+          "id": "MV2-S015-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Dữ liệu",
+          "title": "Quần thể, mẫu, tham số và thống kê"
+        },
+        {
+          "id": "MV2-S015-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Dữ liệu",
+          "title": "Loại biến và thang đo"
+        },
+        {
+          "id": "MV2-S015-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Dữ liệu",
+          "title": "Chọn mẫu, sai lệch và dữ liệu thiếu"
+        },
+        {
+          "id": "MV2-S015-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Dữ liệu",
+          "title": "Bảng tần số và biểu đồ"
+        },
+        {
+          "id": "MV2-S015-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Dữ liệu",
+          "title": "Trung tâm, phân tán và mô tả phân phối"
+        },
+        {
+          "id": "MV2-S015-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Xác suất",
+          "title": "Biến cố, xác suất có điều kiện và Bayes"
+        },
+        {
+          "id": "MV2-S015-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Xác suất",
+          "title": "Biến ngẫu nhiên và kỳ vọng"
+        },
+        {
+          "id": "MV2-S015-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Xác suất",
+          "title": "Nhị thức, Poisson và ứng dụng"
+        },
+        {
+          "id": "MV2-S015-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Xác suất",
+          "title": "Phân phối chuẩn và chuẩn hóa"
+        },
+        {
+          "id": "MV2-S015-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Xác suất",
+          "title": "Phân phối mẫu và sai số chuẩn"
+        },
+        {
+          "id": "MV2-S015-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Ước lượng và kiểm định",
+          "title": "Ước lượng điểm và khoảng tin cậy"
+        },
+        {
+          "id": "MV2-S015-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Ước lượng và kiểm định",
+          "title": "Giả thuyết, p-value và mức ý nghĩa"
+        },
+        {
+          "id": "MV2-S015-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Ước lượng và kiểm định",
+          "title": "Sai lầm loại I, II và lực kiểm định"
+        },
+        {
+          "id": "MV2-S015-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Ước lượng và kiểm định",
+          "title": "Chọn phép kiểm theo thiết kế và biến"
+        },
+        {
+          "id": "MV2-S015-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Ước lượng và kiểm định",
+          "title": "Đọc kết quả và phân biệt ý nghĩa thống kê – thực tiễn"
+        },
+        {
+          "id": "MV2-S015-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "So sánh và liên hệ",
+          "title": "Kiểm định một trung bình và một tỷ lệ"
+        },
+        {
+          "id": "MV2-S015-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "So sánh và liên hệ",
+          "title": "Hai trung bình độc lập và Levene"
+        },
+        {
+          "id": "MV2-S015-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "So sánh và liên hệ",
+          "title": "So sánh cặp trước – sau"
+        },
+        {
+          "id": "MV2-S015-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "So sánh và liên hệ",
+          "title": "Chi bình phương, Fisher và bảng chéo"
+        },
+        {
+          "id": "MV2-S015-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "So sánh và liên hệ",
+          "title": "ANOVA, điều kiện áp dụng và kiểm định phi tham số cơ bản"
+        },
+        {
+          "id": "MV2-S015-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng y học và SPSS",
+          "title": "Tương quan và hồi quy tuyến tính"
+        },
+        {
+          "id": "MV2-S015-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng y học và SPSS",
+          "title": "RR, OR và khoảng tin cậy"
+        },
+        {
+          "id": "MV2-S015-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng y học và SPSS",
+          "title": "Độ nhạy, độ đặc hiệu và dự báo xét nghiệm"
+        },
+        {
+          "id": "MV2-S015-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng y học và SPSS",
+          "title": "Đọc bảng SPSS nhiều câu dùng chung"
+        },
+        {
+          "id": "MV2-S015-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng y học và SPSS",
+          "title": "Thiết kế phân tích và viết kết luận từ số liệu"
+        }
+      ],
+      "slug": "xac-suat-thong-ke-y-hoc"
+    },
+    {
+      "subject_code": "MV2-S025",
+      "subject_name": "Hệ Nội tiết - Chuyển hóa",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S025-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Hormone, thụ thể và truyền tín hiệu"
+        },
+        {
+          "id": "MV2-S025-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Feedback, nhịp tiết và xét nghiệm nội tiết"
+        },
+        {
+          "id": "MV2-S025-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "Vùng dưới đồi – tuyến yên"
+        },
+        {
+          "id": "MV2-S025-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "GH, prolactin và rối loạn liên quan"
+        },
+        {
+          "id": "MV2-S025-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nền tảng",
+          "title": "ADH, cân bằng nước và rối loạn tuyến yên sau"
+        },
+        {
+          "id": "MV2-S025-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Giáp và calcium",
+          "title": "Giải phẫu, mô học và tổng hợp hormone giáp"
+        },
+        {
+          "id": "MV2-S025-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Giáp và calcium",
+          "title": "Điều hòa giáp và đọc xét nghiệm"
+        },
+        {
+          "id": "MV2-S025-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Giáp và calcium",
+          "title": "Cường giáp và nguyên tắc điều trị"
+        },
+        {
+          "id": "MV2-S025-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Giáp và calcium",
+          "title": "Suy giáp, viêm giáp và nhân giáp"
+        },
+        {
+          "id": "MV2-S025-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Giáp và calcium",
+          "title": "Cận giáp, vitamin D và chuyển hóa calcium"
+        },
+        {
+          "id": "MV2-S025-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thượng thận",
+          "title": "Vỏ, tủy thượng thận và steroid"
+        },
+        {
+          "id": "MV2-S025-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thượng thận",
+          "title": "Trục ACTH – cortisol và đáp ứng stress"
+        },
+        {
+          "id": "MV2-S025-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thượng thận",
+          "title": "Suy thượng thận và tăng sản thượng thận"
+        },
+        {
+          "id": "MV2-S025-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thượng thận",
+          "title": "Cường cortisol, aldosterone và catecholamine"
+        },
+        {
+          "id": "MV2-S025-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thượng thận",
+          "title": "Thuốc glucocorticoid và hậu quả sử dụng"
+        },
+        {
+          "id": "MV2-S025-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tụy và đường huyết",
+          "title": "Insulin, glucagon và chuyển hóa no – đói"
+        },
+        {
+          "id": "MV2-S025-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tụy và đường huyết",
+          "title": "Cơ chế, phân loại và chẩn đoán đái tháo đường"
+        },
+        {
+          "id": "MV2-S025-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tụy và đường huyết",
+          "title": "Thuốc hạ đường huyết và insulin"
+        },
+        {
+          "id": "MV2-S025-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tụy và đường huyết",
+          "title": "Hạ đường huyết, toan ceton và tăng áp lực thẩm thấu"
+        },
+        {
+          "id": "MV2-S025-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tụy và đường huyết",
+          "title": "Biến chứng mạn và theo dõi đái tháo đường"
+        },
+        {
+          "id": "MV2-S025-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Chuyển hóa và tích hợp",
+          "title": "Lipid, béo phì và hội chứng chuyển hóa"
+        },
+        {
+          "id": "MV2-S025-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Chuyển hóa và tích hợp",
+          "title": "Dinh dưỡng, năng lượng và điều hòa cân nặng"
+        },
+        {
+          "id": "MV2-S025-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Chuyển hóa và tích hợp",
+          "title": "Trục sinh dục và rối loạn hormone cơ bản"
+        },
+        {
+          "id": "MV2-S025-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Chuyển hóa và tích hợp",
+          "title": "Loãng xương và rối loạn khoáng"
+        },
+        {
+          "id": "MV2-S025-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Chuyển hóa và tích hợp",
+          "title": "Phân tích ca và chọn xét nghiệm theo trục nội tiết"
+        }
+      ],
+      "slug": "he-noi-tiet-chuyen-hoa"
+    },
+    {
+      "subject_code": "MV2-S027",
+      "subject_name": "Hệ Sinh sản",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S027-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Cấu trúc và phát triển",
+          "title": "Phát triển giới tính và cơ quan sinh dục"
+        },
+        {
+          "id": "MV2-S027-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Cấu trúc và phát triển",
+          "title": "Giải phẫu sinh dục nam"
+        },
+        {
+          "id": "MV2-S027-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Cấu trúc và phát triển",
+          "title": "Giải phẫu sinh dục nữ và đáy chậu"
+        },
+        {
+          "id": "MV2-S027-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Cấu trúc và phát triển",
+          "title": "Mô học tinh hoàn, đường dẫn và tuyến phụ"
+        },
+        {
+          "id": "MV2-S027-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Cấu trúc và phát triển",
+          "title": "Mô học buồng trứng, tử cung, cổ tử cung và vú"
+        },
+        {
+          "id": "MV2-S027-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Sinh lý sinh sản",
+          "title": "Trục sinh dục và steroid"
+        },
+        {
+          "id": "MV2-S027-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Sinh lý sinh sản",
+          "title": "Sinh tinh, tinh dịch và chức năng tinh trùng"
+        },
+        {
+          "id": "MV2-S027-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Sinh lý sinh sản",
+          "title": "Phát triển nang noãn và tạo noãn"
+        },
+        {
+          "id": "MV2-S027-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Sinh lý sinh sản",
+          "title": "Chu kỳ buồng trứng, nội mạc và phóng noãn"
+        },
+        {
+          "id": "MV2-S027-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Sinh lý sinh sản",
+          "title": "Dậy thì, mãn kinh và biến đổi theo tuổi"
+        },
+        {
+          "id": "MV2-S027-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Thụ tinh và thai",
+          "title": "Thụ tinh, phân cắt và làm tổ"
+        },
+        {
+          "id": "MV2-S027-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Thụ tinh và thai",
+          "title": "Nhau thai, màng thai và tuần hoàn thai"
+        },
+        {
+          "id": "MV2-S027-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Thụ tinh và thai",
+          "title": "Hormone và thích nghi của mẹ"
+        },
+        {
+          "id": "MV2-S027-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Thụ tinh và thai",
+          "title": "Cơ chế chuyển dạ và tiết sữa"
+        },
+        {
+          "id": "MV2-S027-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Thụ tinh và thai",
+          "title": "Dị tật sinh dục và nguyên tắc phòng ngừa"
+        },
+        {
+          "id": "MV2-S027-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Di truyền và hỗ trợ",
+          "title": "Nhiễm sắc thể giới và rối loạn biệt hóa"
+        },
+        {
+          "id": "MV2-S027-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Di truyền và hỗ trợ",
+          "title": "Đột biến, dấu ấn di truyền và bất thường sinh sản"
+        },
+        {
+          "id": "MV2-S027-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Di truyền và hỗ trợ",
+          "title": "Sàng lọc, chẩn đoán di truyền trước sinh"
+        },
+        {
+          "id": "MV2-S027-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Di truyền và hỗ trợ",
+          "title": "Vô sinh, khảo sát noãn và tinh dịch"
+        },
+        {
+          "id": "MV2-S027-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Di truyền và hỗ trợ",
+          "title": "IVF, ICSI và hỗ trợ sinh sản cơ bản"
+        },
+        {
+          "id": "MV2-S027-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Tránh thai: cơ chế và lựa chọn"
+        },
+        {
+          "id": "MV2-S027-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Rối loạn kinh, phóng noãn và hormone"
+        },
+        {
+          "id": "MV2-S027-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Nhiễm trùng sinh dục và lây truyền"
+        },
+        {
+          "id": "MV2-S027-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Bệnh lý cơ quan sinh sản ở mức cơ chế"
+        },
+        {
+          "id": "MV2-S027-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Ứng dụng",
+          "title": "Đọc hình, biểu đồ hormone và ca tích hợp"
+        }
+      ],
+      "slug": "he-sinh-san"
+    },
+    {
+      "subject_code": "MV2-S059",
+      "subject_name": "Da và giác quan",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S059-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Da",
+          "title": "Phôi, mô học da và phần phụ"
+        },
+        {
+          "id": "MV2-S059-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Da",
+          "title": "Hàng rào, cảm giác và điều nhiệt"
+        },
+        {
+          "id": "MV2-S059-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Da",
+          "title": "Tổn thương da cơ bản và thăm khám"
+        },
+        {
+          "id": "MV2-S059-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Da",
+          "title": "Viêm, dị ứng, nhiễm trùng và bệnh phần phụ"
+        },
+        {
+          "id": "MV2-S059-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Da",
+          "title": "Rối loạn sắc tố, u da và nguyên tắc chăm sóc"
+        },
+        {
+          "id": "MV2-S059-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Mắt: cơ sở",
+          "title": "Hốc mắt, nhãn cầu và cơ vận nhãn"
+        },
+        {
+          "id": "MV2-S059-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Mắt: cơ sở",
+          "title": "Giác mạc, thủy tinh thể, võng mạc và môi trường trong suốt"
+        },
+        {
+          "id": "MV2-S059-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Mắt: cơ sở",
+          "title": "Quang học, khúc xạ và điều tiết"
+        },
+        {
+          "id": "MV2-S059-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Mắt: cơ sở",
+          "title": "Đường thị giác, thị trường và phản xạ"
+        },
+        {
+          "id": "MV2-S059-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Mắt: cơ sở",
+          "title": "Đo thị lực và khám mắt cơ bản"
+        },
+        {
+          "id": "MV2-S059-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Ứng dụng mắt và răng miệng",
+          "title": "Mắt đỏ, viêm kết mạc và giác mạc"
+        },
+        {
+          "id": "MV2-S059-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Ứng dụng mắt và răng miệng",
+          "title": "Giảm thị lực, nhãn áp và dấu hiệu cấp cứu"
+        },
+        {
+          "id": "MV2-S059-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Ứng dụng mắt và răng miệng",
+          "title": "Chấn thương, dị vật, bỏng mắt và bảo vệ mắt"
+        },
+        {
+          "id": "MV2-S059-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Ứng dụng mắt và răng miệng",
+          "title": "Răng, bộ răng, mọc răng và cấu tạo mô răng"
+        },
+        {
+          "id": "MV2-S059-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Ứng dụng mắt và răng miệng",
+          "title": "Sâu răng, bệnh tủy và bệnh quanh chóp"
+        },
+        {
+          "id": "MV2-S059-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Tai và thăng bằng",
+          "title": "Tai ngoài, tai giữa và tai trong"
+        },
+        {
+          "id": "MV2-S059-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Tai và thăng bằng",
+          "title": "Cơ chế nghe và dẫn truyền âm"
+        },
+        {
+          "id": "MV2-S059-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Tai và thăng bằng",
+          "title": "Tiền đình và giữ thăng bằng"
+        },
+        {
+          "id": "MV2-S059-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Tai và thăng bằng",
+          "title": "Khám tai, thính lực và phân loại nghe kém"
+        },
+        {
+          "id": "MV2-S059-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Tai và thăng bằng",
+          "title": "Viêm tai, chóng mặt và dấu hiệu cần chuyển viện"
+        },
+        {
+          "id": "MV2-S059-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Mũi, họng và giác quan khác",
+          "title": "Mũi, xoang và khứu giác"
+        },
+        {
+          "id": "MV2-S059-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Mũi, họng và giác quan khác",
+          "title": "Miệng, lưỡi và vị giác"
+        },
+        {
+          "id": "MV2-S059-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Mũi, họng và giác quan khác",
+          "title": "Hầu, thanh quản và chức năng"
+        },
+        {
+          "id": "MV2-S059-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Mũi, họng và giác quan khác",
+          "title": "Viêm mũi xoang, họng và tắc nghẽn đường thở"
+        },
+        {
+          "id": "MV2-S059-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Mũi, họng và giác quan khác",
+          "title": "Ca tích hợp triệu chứng da, mắt và tai mũi họng"
+        }
+      ],
+      "slug": "da-va-giac-quan"
+    },
+    {
+      "subject_code": "MV2-S061",
+      "subject_name": "Bệnh học Nội - Ngoại khoa",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S061-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nền tảng và cấp cứu",
+          "title": "Triệu chứng, hội chứng và nguyên tắc chẩn đoán"
+        },
+        {
+          "id": "MV2-S061-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nền tảng và cấp cứu",
+          "title": "Viêm, nhiễm trùng và đáp ứng toàn thân"
+        },
+        {
+          "id": "MV2-S061-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nền tảng và cấp cứu",
+          "title": "Nước, điện giải và acid – base"
+        },
+        {
+          "id": "MV2-S061-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nền tảng và cấp cứu",
+          "title": "Sốc, chảy máu và ưu tiên cấp cứu"
+        },
+        {
+          "id": "MV2-S061-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nền tảng và cấp cứu",
+          "title": "Đánh giá, chăm sóc trước và sau mổ"
+        },
+        {
+          "id": "MV2-S061-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Tim và hô hấp",
+          "title": "Tăng huyết áp và bệnh mạch vành"
+        },
+        {
+          "id": "MV2-S061-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Tim và hô hấp",
+          "title": "Suy tim, rối loạn nhịp và phù phổi"
+        },
+        {
+          "id": "MV2-S061-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Tim và hô hấp",
+          "title": "Hen và COPD"
+        },
+        {
+          "id": "MV2-S061-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Tim và hô hấp",
+          "title": "Viêm phổi, lao và bệnh màng phổi"
+        },
+        {
+          "id": "MV2-S061-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Tim và hô hấp",
+          "title": "Suy hô hấp và biến chứng lồng ngực"
+        },
+        {
+          "id": "MV2-S061-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Tiêu hóa nội khoa",
+          "title": "Trào ngược, loét và xuất huyết tiêu hóa"
+        },
+        {
+          "id": "MV2-S061-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Tiêu hóa nội khoa",
+          "title": "Viêm gan, xơ gan và suy gan"
+        },
+        {
+          "id": "MV2-S061-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Tiêu hóa nội khoa",
+          "title": "Bệnh mật và viêm tụy"
+        },
+        {
+          "id": "MV2-S061-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Tiêu hóa nội khoa",
+          "title": "Tiêu chảy, táo bón và rối loạn hấp thu"
+        },
+        {
+          "id": "MV2-S061-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Tiêu hóa nội khoa",
+          "title": "Đái tháo đường, hạ đường huyết và bệnh nội tiết thường gặp"
+        },
+        {
+          "id": "MV2-S061-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Ngoại bụng và tiết niệu",
+          "title": "Viêm ruột thừa và viêm phúc mạc"
+        },
+        {
+          "id": "MV2-S061-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Ngoại bụng và tiết niệu",
+          "title": "Tắc ruột, thủng tạng và thoát vị"
+        },
+        {
+          "id": "MV2-S061-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Ngoại bụng và tiết niệu",
+          "title": "Bệnh hậu môn, trực tràng và ung thư tiêu hóa cơ bản"
+        },
+        {
+          "id": "MV2-S061-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Ngoại bụng và tiết niệu",
+          "title": "Sỏi, bí tiểu và nhiễm trùng tiết niệu"
+        },
+        {
+          "id": "MV2-S061-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Ngoại bụng và tiết niệu",
+          "title": "Suy thận và theo dõi chức năng thận"
+        },
+        {
+          "id": "MV2-S061-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Chấn thương và tích hợp",
+          "title": "Gãy xương, trật khớp và chèn ép khoang"
+        },
+        {
+          "id": "MV2-S061-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Chấn thương và tích hợp",
+          "title": "Chấn thương sọ não, tủy và đánh giá ý thức"
+        },
+        {
+          "id": "MV2-S061-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Chấn thương và tích hợp",
+          "title": "Chấn thương ngực, bụng và đa chấn thương"
+        },
+        {
+          "id": "MV2-S061-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Chấn thương và tích hợp",
+          "title": "Bỏng, vết thương và nhiễm trùng ngoại"
+        },
+        {
+          "id": "MV2-S061-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Chấn thương và tích hợp",
+          "title": "Nhận diện biến chứng và chuyển thông tin giữa các nhóm chăm sóc"
+        }
+      ],
+      "slug": "benh-hoc-noi-ngoai-khoa"
+    },
+    {
+      "subject_code": "MV2-S072",
+      "subject_name": "Hệ Nội tiết - Sinh sản",
+      "student_year": 3,
+      "lessons": [
+        {
+          "id": "MV2-S072-REF-L01",
+          "order": 1,
+          "group_order": 1,
+          "group": "Nội tiết cơ sở",
+          "title": "Hormone, thụ thể, feedback và tín hiệu"
+        },
+        {
+          "id": "MV2-S072-REF-L02",
+          "order": 2,
+          "group_order": 1,
+          "group": "Nội tiết cơ sở",
+          "title": "Dưới đồi, tuyến yên và các trục"
+        },
+        {
+          "id": "MV2-S072-REF-L03",
+          "order": 3,
+          "group_order": 1,
+          "group": "Nội tiết cơ sở",
+          "title": "Tuyến giáp: cấu trúc, chức năng và bệnh"
+        },
+        {
+          "id": "MV2-S072-REF-L04",
+          "order": 4,
+          "group_order": 1,
+          "group": "Nội tiết cơ sở",
+          "title": "Cận giáp, calcium và chuyển hóa xương"
+        },
+        {
+          "id": "MV2-S072-REF-L05",
+          "order": 5,
+          "group_order": 1,
+          "group": "Nội tiết cơ sở",
+          "title": "Thượng thận, catecholamine và steroid"
+        },
+        {
+          "id": "MV2-S072-REF-L06",
+          "order": 6,
+          "group_order": 2,
+          "group": "Chuyển hóa và bệnh nội tiết",
+          "title": "Tụy nội tiết và điều hòa đường huyết"
+        },
+        {
+          "id": "MV2-S072-REF-L07",
+          "order": 7,
+          "group_order": 2,
+          "group": "Chuyển hóa và bệnh nội tiết",
+          "title": "Đái tháo đường và biến chứng"
+        },
+        {
+          "id": "MV2-S072-REF-L08",
+          "order": 8,
+          "group_order": 2,
+          "group": "Chuyển hóa và bệnh nội tiết",
+          "title": "Rối loạn tuyến yên và cân bằng nước"
+        },
+        {
+          "id": "MV2-S072-REF-L09",
+          "order": 9,
+          "group_order": 2,
+          "group": "Chuyển hóa và bệnh nội tiết",
+          "title": "Bệnh giáp, thượng thận và đọc xét nghiệm"
+        },
+        {
+          "id": "MV2-S072-REF-L10",
+          "order": 10,
+          "group_order": 2,
+          "group": "Chuyển hóa và bệnh nội tiết",
+          "title": "Dược nội tiết và nguyên tắc sử dụng hormone"
+        },
+        {
+          "id": "MV2-S072-REF-L11",
+          "order": 11,
+          "group_order": 3,
+          "group": "Sinh sản cơ sở",
+          "title": "Phôi sinh dục và biệt hóa giới tính"
+        },
+        {
+          "id": "MV2-S072-REF-L12",
+          "order": 12,
+          "group_order": 3,
+          "group": "Sinh sản cơ sở",
+          "title": "Cơ quan sinh dục nam và sinh tinh"
+        },
+        {
+          "id": "MV2-S072-REF-L13",
+          "order": 13,
+          "group_order": 3,
+          "group": "Sinh sản cơ sở",
+          "title": "Cơ quan sinh dục nữ và tạo noãn"
+        },
+        {
+          "id": "MV2-S072-REF-L14",
+          "order": 14,
+          "group_order": 3,
+          "group": "Sinh sản cơ sở",
+          "title": "Chu kỳ kinh, phóng noãn và điều hòa"
+        },
+        {
+          "id": "MV2-S072-REF-L15",
+          "order": 15,
+          "group_order": 3,
+          "group": "Sinh sản cơ sở",
+          "title": "Thụ tinh, làm tổ và phát triển nhau thai"
+        },
+        {
+          "id": "MV2-S072-REF-L16",
+          "order": 16,
+          "group_order": 4,
+          "group": "Thai và ứng dụng",
+          "title": "Hormone thai kỳ và thích nghi của mẹ"
+        },
+        {
+          "id": "MV2-S072-REF-L17",
+          "order": 17,
+          "group_order": 4,
+          "group": "Thai và ứng dụng",
+          "title": "Chuyển dạ, hậu sản và tiết sữa"
+        },
+        {
+          "id": "MV2-S072-REF-L18",
+          "order": 18,
+          "group_order": 4,
+          "group": "Thai và ứng dụng",
+          "title": "Dậy thì, mãn kinh và rối loạn kinh"
+        },
+        {
+          "id": "MV2-S072-REF-L19",
+          "order": 19,
+          "group_order": 4,
+          "group": "Thai và ứng dụng",
+          "title": "Tránh thai và hỗ trợ sinh sản"
+        },
+        {
+          "id": "MV2-S072-REF-L20",
+          "order": 20,
+          "group_order": 4,
+          "group": "Thai và ứng dụng",
+          "title": "Vô sinh, di truyền và dị tật cơ bản"
+        },
+        {
+          "id": "MV2-S072-REF-L21",
+          "order": 21,
+          "group_order": 5,
+          "group": "Bệnh lý và tích hợp",
+          "title": "Viêm nhiễm sinh dục và bệnh lây truyền"
+        },
+        {
+          "id": "MV2-S072-REF-L22",
+          "order": 22,
+          "group_order": 5,
+          "group": "Bệnh lý và tích hợp",
+          "title": "HPV, tổn thương cổ tử cung và sàng lọc"
+        },
+        {
+          "id": "MV2-S072-REF-L23",
+          "order": 23,
+          "group_order": 5,
+          "group": "Bệnh lý và tích hợp",
+          "title": "Bệnh tử cung, buồng trứng và tuyến vú"
+        },
+        {
+          "id": "MV2-S072-REF-L24",
+          "order": 24,
+          "group_order": 5,
+          "group": "Bệnh lý và tích hợp",
+          "title": "Bệnh tinh hoàn, tuyến tiền liệt và sinh dục nam"
+        },
+        {
+          "id": "MV2-S072-REF-L25",
+          "order": 25,
+          "group_order": 5,
+          "group": "Bệnh lý và tích hợp",
+          "title": "Ca tích hợp mô học, xét nghiệm và cơ chế bệnh"
+        }
+      ],
+      "slug": "he-noi-tiet-sinh-san"
+    }
+  ]
+}

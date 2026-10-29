@@ -122,7 +122,9 @@ class CoursePricing
     /** Price lists for regular courses and exam preparation must stay separate. */
     public static function courseKinds(): array
     {
-        $rows=self::db()->execute("SELECT p.id, CASE WHEN p.main_category_id=125 OR EXISTS (
+        $rows=self::db()->execute("SELECT p.id, CASE WHEN p.course_kind IN ('quiz','fa') THEN 'exam_prep'
+            WHEN p.course_kind IN ('knowledge','exam_solution') THEN 'course'
+            WHEN p.main_category_id=125 OR EXISTS (
             SELECT 1 FROM categories c WHERE c.id=p.main_category_id AND c.path_id LIKE '%|125|%'
             ) OR EXISTS (SELECT 1 FROM categories_product cp JOIN categories c ON c.id=cp.category_id
             WHERE cp.product_id=p.id AND (c.id=125 OR c.path_id LIKE '%|125|%'))
@@ -144,10 +146,11 @@ class CoursePricing
         return $exam ? 'exam_prep' : 'course';
     }
 
-    public static function acceptsCategories(int $listId,array $ids): bool
+    public static function acceptsCategories(int $listId,array $ids,?string $courseKind=null): bool
     {
         $list=self::get($listId);
-        return $list && $list['course_type']===self::categoryKind($ids);
+        $kind=$courseKind !== null ? (in_array($courseKind,['quiz','fa'],true) ? 'exam_prep' : 'course') : self::categoryKind($ids);
+        return $list && $list['course_type']===$kind;
     }
 
     public static function save(int $id, array $data): int

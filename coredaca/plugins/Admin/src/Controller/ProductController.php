@@ -1125,14 +1125,15 @@ class ProductController extends AppController {
             if ($course_kind === 'fa' && !\App\Service\CourseTypes::admin()) throw new ForbiddenException('Fa chỉ dành cho admin.');
         }
         if (\App\Service\CourseTypes::kind((int)$id) === 'fa' && $course_kind !== 'fa') $this->responseJson([MESSAGE=>'Môn Fa phải giữ loại Fa.']);
-        if ($course_kind === 'quiz' && !in_array(125,$category_ids,true)) $category_ids[]=125;
-        if (in_array($course_kind,['knowledge','exam_solution'],true)) {
+        // Quiz and solution courses share student-year categories; their type controls behaviour.
+        if (in_array($course_kind,['quiz','exam_solution'],true) && !in_array(125,$category_ids,true)) $category_ids[]=125;
+        if ($course_kind === 'knowledge') {
             $category_ids=array_values(array_filter($category_ids,static function($v){return $v!==125 && !in_array($v,range(991,996),true);}));
             if (!$category_ids) $category_ids=[50];
         }
         if (isset($data['course_price_assignment'])) {
             $price_list_id = (int)($data['course_price_list_id'] ?? 0);
-            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCategories($price_list_id, $category_ids))) {
+            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCategories($price_list_id, $category_ids, $course_kind))) {
                 $this->responseJson([MESSAGE => 'Bảng báo giá không hợp lệ hoặc sản phẩm không phải khóa học.']);
             }
         }
