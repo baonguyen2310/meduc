@@ -83,3 +83,7 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
   .mhb-icon:not(.mhb-icon--always) { display: block; }
   .mhb-gift-menu { min-width: 180px; bottom: calc(100% + 10px); }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mhb, .mhb.is-shown, body.mhb-ready .contact-fixed, body.mhb-ready .rn-progress-parent { transition:none; }
+}

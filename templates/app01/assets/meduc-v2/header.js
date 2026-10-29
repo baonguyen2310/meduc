@@ -73,6 +73,37 @@
     });
   });
 
+  // The bottom shortcuts and the header share one state, rather than separate scroll thresholds.
+  const primaryNav = $("[data-mhi-primary-nav]");
+  const infoNav = $("[data-mhi-info-nav]");
+  const desktopNav = window.matchMedia("(min-width: 992px)");
+  function syncNavigation() {
+    if (!primaryNav || !infoNav) return;
+    const actionBar = document.querySelector("#meduc-action-bar");
+    const active = desktopNav.matches && !!actionBar?.classList.contains("is-shown")
+      && getComputedStyle(actionBar).display !== "none";
+    if (root.classList.contains("is-info-nav") === active) return;
+    const focused = document.activeElement;
+    const moveToInfo = active && (primaryNav.contains(focused) || network.contains(focused));
+    const moveToPrimary = !active && infoNav.contains(focused);
+    closeDropdowns();
+    root.classList.toggle("is-info-nav", active);
+    primaryNav.inert = active;
+    primaryNav.setAttribute("aria-hidden", String(active));
+    infoNav.inert = !active;
+    infoNav.setAttribute("aria-hidden", String(!active));
+    network.inert = active;
+    network.setAttribute("aria-hidden", String(active));
+    if (moveToInfo) {
+      const match = [...infoNav.querySelectorAll("a")].find(link => link.href === focused.href);
+      (match || infoNav.querySelector("a"))?.focus({preventScroll:true});
+    } else if (moveToPrimary) primaryNav.querySelector("button, a")?.focus({preventScroll:true});
+  }
+  document.addEventListener("meduc:action-bar", syncNavigation);
+  desktopNav.addEventListener("change", syncNavigation);
+  window.addEventListener("pageshow", syncNavigation);
+  syncNavigation();
+
   const searchToggle = $("#mhi-search-toggle");
   const searchForm = $("#mhi-search-form");
   function setSearch(open) {

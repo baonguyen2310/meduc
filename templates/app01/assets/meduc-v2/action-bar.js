@@ -8,7 +8,7 @@
   // The page keeps room for the bar, and floating buttons move above it, using its real height.
   const setHeight = () => root.style.setProperty("--mhb-h", `${bar.offsetHeight}px`);
   setHeight();
-  if ("ResizeObserver" in window) new ResizeObserver(setHeight).observe(bar);
+  if ("ResizeObserver" in window) new ResizeObserver(() => { setHeight(); scheduleUpdate(); }).observe(bar);
   document.body.classList.add("mhb-ready");
 
   const giftBox = bar.querySelector(".mhb-gift");
@@ -29,17 +29,27 @@
     }
   });
 
-  // Like MasterClass, the bar appears once the page has scrolled a little.
-  const showAfter = 320;
-  let shown = false;
+  // A small gap between show/hide thresholds avoids flicker around the boundary.
+  const showAfter = 320, hideBefore = 280;
+  let shown = false, pendingFrame = false;
   function update() {
-    const next = window.scrollY > showAfter;
+    pendingFrame = false;
+    const visible = getComputedStyle(bar).display !== "none" && bar.offsetHeight > 0;
+    const next = visible && window.scrollY > (shown ? hideBefore : showAfter);
     if (next === shown) return;
     shown = next;
     bar.classList.toggle("is-shown", shown);
     document.body.classList.toggle("mhb-on", shown);
     if (!shown) setGift(false);
+    document.dispatchEvent(new CustomEvent("meduc:action-bar", {detail:{shown}}));
   }
-  window.addEventListener("scroll", update, { passive: true });
+  function scheduleUpdate() {
+    if (pendingFrame) return;
+    pendingFrame = true;
+    requestAnimationFrame(update);
+  }
+  window.addEventListener("scroll", scheduleUpdate, {passive:true});
+  window.addEventListener("resize", scheduleUpdate);
+  window.addEventListener("pageshow", scheduleUpdate);
   update();
 })();

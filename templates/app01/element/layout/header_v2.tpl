@@ -23,6 +23,15 @@
   ['url' => '/class-rank', 'label' => 'Xếp hạng']
 ]}
 
+{* Compact labels for the main row once the bottom shortcuts are visible. *}
+{$nav_scrolled = [
+  ['url' => '/doi-ngu-giang-vien', 'label' => 'Giảng viên'],
+  ['url' => '/phuong-phap-hoc', 'label' => 'Phương pháp'],
+  ['url' => '/phan-hoi-hoc-vien', 'label' => 'Phản hồi'],
+  ['url' => '/lo-trinh-hoc', 'label' => 'Lộ trình'],
+  ['url' => '/class-rank', 'label' => 'Xếp hạng']
+]}
+
 {* Product categories are shared with Admin and the year-filtered catalogue. *}
 {$nav_exam_items = []}
 {$nav_book_items = []}
@@ -83,6 +92,8 @@
       </form>
       <button class="mhi-icon-button mhi-search-toggle" id="mhi-search-toggle" type="button" aria-label="Tìm kiếm" aria-expanded="false" aria-controls="mhi-search-form"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-search" /></svg></button>
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
+        <div class="mhi-nav-swap">
+        <div class="mhi-main-nav" data-mhi-primary-nav>
         {foreach from = $nav_main item = group}
           {if isset($group.items)}
           <div class="mhi-browse-wrap" data-mhi-dropdown>
@@ -100,6 +111,11 @@
             <a class="mhi-browse-button mhi-main-link" href="{$group.url|escape}">{$group.label|escape}</a>
           {/if}
         {/foreach}
+        </div>
+        <div class="mhi-scrolled-nav" data-mhi-info-nav role="navigation" aria-label="Về MedUC" aria-hidden="true" inert>
+          {foreach from = $nav_scrolled item = link}<a class="mhi-browse-button mhi-main-link" href="{$link.url|escape}">{$link.label|escape}</a>{/foreach}
+        </div>
+        </div>
         <a class="mhi-cart" data-course-cart-open data-course-cart-legacy="{$header_course_cart.total_quantity|default:0}" href="/bang-bao-gia" title="Giỏ hàng khóa học" aria-label="Giỏ hàng khóa học" aria-haspopup="dialog">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
           <span data-course-cart-count class="mhi-cart-count">{$header_course_cart.total_quantity|default:0}</span>

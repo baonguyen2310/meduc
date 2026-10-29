@@ -109,6 +109,16 @@ body.meduc-header-v2 .category-topic.form-fixed { top: calc(var(--mhi-header-h, 
 .mhi-search .wrap-suggestion .old-price { color: var(--mhi-muted); font-weight: 400; text-decoration: line-through; }
 
 .mhi-utility { display: flex; align-items: center; gap: 5px; margin-left: auto; padding-left: 0; white-space: nowrap; font-size: 14px; }
+/* Both navigation layers reserve the same space: the logo, search and account never jump. */
+.mhi-nav-swap { display:grid; align-items:center; }
+.mhi-main-nav, .mhi-scrolled-nav { grid-area:1 / 1; display:flex; align-items:center; min-height:44px; transition:opacity .2s ease, transform .28s cubic-bezier(.2,.7,.2,1), visibility 0s; }
+.mhi-main-nav { gap:5px; }
+.mhi-scrolled-nav { justify-content:space-between; gap:5px; opacity:0; visibility:hidden; pointer-events:none; transform:translateY(-12px); font-size:inherit; font-weight:600; transition-delay:0s,0s,.28s; }
+.mhi-scrolled-nav a { color:var(--mhi-ink); }
+.mhi-scrolled-nav a:hover { color:var(--mhi-red); }
+.mhi-header-wrap.is-info-nav .mhi-main-nav { opacity:0; visibility:hidden; pointer-events:none; transform:translateY(12px); transition-delay:0s,0s,.28s; }
+.mhi-header-wrap.is-info-nav .mhi-scrolled-nav { opacity:1; visibility:visible; pointer-events:auto; transform:translateY(0); transition-delay:.04s,0s,0s; }
+
 .mhi-member { flex:none; margin-inline: 4px 0; }
 .mhi-utility a:hover { color: var(--mhi-red); }
 .mhi-member { display: flex; align-items: center; }
@@ -169,6 +179,7 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
 /* Compact main row keeps account, both carts and the theme switch within reach. */
 @media (max-width: 991.98px) {
   .mhi { --mhi-network-h: 0px; }
+  .mhi-nav-swap { display:none !important; }
   .mhi-network, .mhi-browse-wrap, .mhi-main-link, .mhi-header-main > a.mhi-header-cta, .mhi-login-text { display: none !important; }
   .mhi-search-toggle, .mhi-menu-toggle, .mhi-login-icon { display: grid !important; }
   .mhi-header-main { position: relative; gap: 4px; height: 64px; }
@@ -211,3 +222,7 @@ html[data-meduc-theme="light"] .mhi-brand--meduc .mhi-brand-wordmark--light { di
 
 .mhi-header-cta:focus { outline:none !important; }
 .mhi-header-cta:focus-visible { box-shadow:0 0 0 2px var(--mhi-bg),0 0 0 4px var(--mhi-red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mhi-main-nav, .mhi-scrolled-nav { transition:none !important; transform:none !important; }
+}
