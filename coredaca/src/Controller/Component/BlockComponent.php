@@ -467,6 +467,7 @@ class BlockComponent extends Component
 
                 $data_product = [
                     'id' => !empty($product['id']) ? intval($product['id']) : null,
+                    'course_kind' => $product['course_kind'] ?? null,
                     'name' => !empty($product['ProductsContent']['name']) ? $product['ProductsContent']['name'] : null,
                     'description' => !empty($product['ProductsContent']['description']) ? $product['ProductsContent']['description'] : null,
                     'url_video' => !empty($product['url_video']) ? $product['url_video'] : null,

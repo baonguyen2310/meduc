@@ -14,8 +14,11 @@ class ExamWordExporter
     private $relationships = [];
     private $nextImageId = 2;
 
-    public function create(array $data, callable $loadImage): string
+    public function create(array $data, callable $loadImage, string $answers = 'end'): string
     {
+        if (!in_array($answers,['inline','end'],true)) throw new \InvalidArgumentException('Vị trí đáp án không hợp lệ.');
+        $this->paragraphs = $this->media = $this->relationships = [];
+        $this->nextImageId = 2;
         $exam = $data['exam'];
         $this->paragraph('MEDUC · BỘ ĐỀ Y KHOA', 'Kicker');
         $this->paragraph($this->plain($exam['name'] ?? 'Bộ đề'), 'Title');
@@ -46,34 +49,15 @@ class ExamWordExporter
             foreach ($question['rubrics'] ?? [] as $rubric) {
                 if (!empty($rubric['criteria'])) $this->paragraph('Yêu cầu: ' . $this->plain($rubric['criteria']), 'Option');
             }
+            if ($answers === 'inline') $this->answer($question, $index);
         }
 
+        if ($answers === 'end') {
         $this->paragraphs[] = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
         $this->paragraph('ĐÁP ÁN VÀ GIẢI THÍCH', 'Title');
         foreach ($data['questions'] ?? [] as $index => $question) {
-            $correct = [];
-            foreach ($question['options'] ?? [] as $option) {
-                if (!empty($option['is_correct'])) {
-                    $correct[] = (string)($option['key'] ?? '');
-                }
-            }
-            $missingChoice = empty($question['options']) && (($question['question_type'] ?? '') === 'MULTIPLE_CHOICE'
-                || (empty($question['explanation']) && empty($question['rubrics'])));
-            $answerLabel = $correct ? implode(', ', $correct)
-                : ($missingChoice ? 'Thiếu lựa chọn và đáp án trong dữ liệu nguồn'
-                    : (!empty($question['options']) ? 'Chưa có đáp án trong dữ liệu nguồn'
-                        : 'Tự luận · xem lời giải hoặc đáp án tham khảo bên dưới'));
-            $this->paragraph('Câu ' . ($index + 1) . ': ' . $answerLabel, 'Heading2');
-            if (!empty($question['explanation'])) {
-                $this->content($question['explanation']);
-            }
-            if (!empty($question['rubric']['sample_answer'])) {
-                $this->paragraph('Gợi ý trả lời:', 'Meta');
-                $this->content($question['rubric']['sample_answer']);
-            }
-            foreach ($question['rubrics'] ?? [] as $rubric) {
-                if (!empty($rubric['sample_answer'])) $this->content($rubric['sample_answer']);
-            }
+            $this->answer($question, $index);
+        }
         }
 
         $path = tempnam(sys_get_temp_dir(), 'meduc-docx-');
@@ -120,6 +104,33 @@ class ExamWordExporter
         }
         $zip->close();
         return $path;
+    }
+
+    private function answer(array $question, int $index): void
+    {
+            $correct = [];
+            foreach ($question['options'] ?? [] as $option) {
+                if (!empty($option['is_correct'])) {
+                    $correct[] = (string)($option['key'] ?? '');
+                }
+            }
+            $missingChoice = empty($question['options']) && (($question['question_type'] ?? '') === 'MULTIPLE_CHOICE'
+                || (empty($question['explanation']) && empty($question['rubrics'])));
+            $answerLabel = $correct ? implode(', ', $correct)
+                : ($missingChoice ? 'Thiếu lựa chọn và đáp án trong dữ liệu nguồn'
+                    : (!empty($question['options']) ? 'Chưa có đáp án trong dữ liệu nguồn'
+                        : 'Tự luận · xem lời giải hoặc đáp án tham khảo bên dưới'));
+            $this->paragraph('Câu ' . ($index + 1) . ': ' . $answerLabel, 'Heading2');
+            if (!empty($question['explanation'])) {
+                $this->content($question['explanation']);
+            }
+            if (!empty($question['rubric']['sample_answer'])) {
+                $this->paragraph('Gợi ý trả lời:', 'Meta');
+                $this->content($question['rubric']['sample_answer']);
+            }
+            foreach ($question['rubrics'] ?? [] as $rubric) {
+                if (!empty($rubric['sample_answer'])) $this->content($rubric['sample_answer']);
+            }
     }
 
     private function content($html): void

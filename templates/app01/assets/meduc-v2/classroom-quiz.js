@@ -388,16 +388,18 @@
     }
 
     const postActions = el("div", "mcq-post-actions");
+    const quizCourse = root.dataset.mcrKind === "quiz";
+    const trialComplete = total === 30 && attempt.answers.size === 30;
     if (root.dataset.mcrLicensed === "1") {
       const course = button("mcr-btn mcr-btn--primary", "Về khóa học");
       course.addEventListener("click", () => { setExpanded(false); root.dispatchEvent(new CustomEvent("mcr:overview")); });
       postActions.append(course);
-    } else {
-      const buySource = root.querySelector(".mcr-intro-side .mcr-btn--primary");
+    } else if (!quizCourse || trialComplete) {
+      const buySource = quizCourse ? root.querySelector("[data-mcr-quiz-purchase]")?.content.firstElementChild : root.querySelector(".mcr-intro-side .mcr-btn--primary");
       if (buySource) {
         const buy = buySource.cloneNode(true);
         buy.classList.remove("mcr-btn--block");
-        buy.textContent = "Đăng ký khóa học";
+        if (!quizCourse) buy.textContent = "Đăng ký khóa học";
         buy.addEventListener("click", () => setExpanded(false));
         postActions.append(buy);
       }

@@ -19,7 +19,7 @@ class ClassroomController extends AppController
         $this->autoRender=false;
         if (!$this->request->is('get')) return $this->json(405,[],'Phương thức không hợp lệ.');
         $productId=(int)$productId;
-        $product=ConnectionManager::get('default')->execute('SELECT id FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0',['id'=>$productId])->fetch('assoc');
+        $product=ConnectionManager::get('default')->execute('SELECT id FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0 AND COALESCE(course_kind,"")<>"fa"',['id'=>$productId])->fetch('assoc');
         if (!$product || !in_array($productId,TableRegistry::get('CourseEnrollments')->courseIds(),true)) return $this->json(404,[],'Không tìm thấy khóa học.');
         $member=$this->request->getSession()->read(MEMBER)?:[];
         $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->select(['id','code'])->enableHydration(false)->first() : null;

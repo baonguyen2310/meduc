@@ -25,22 +25,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261028-sticky" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261029-course-types" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/catalog-heroes.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261028-2" defer></script>
 
 <main class="mcl" id="course-catalog">
+    <nav class="mcl-shell mcl-kind-nav" aria-label="Loại khoá học">
+        <a href="/khoa-hoc"{if $catalog.course_kind == 'knowledge'} aria-current="page"{/if}>Khoá ôn kiến thức</a>
+        <a href="/khoa-hoc?loai=exam_solution"{if $catalog.course_kind == 'exam_solution'} aria-current="page"{/if}>Khoá chữa đề</a>
+        <a href="/khoa-luyen-thi"{if $catalog.course_kind == 'quiz'} aria-current="page"{/if}>Khoá trắc nghiệm</a>
+    </nav>
     {if $exam_prep}
         <section class="mcl-catalog-hero mcl-catalog-hero--exam {if PAGE_CATEGORY_ID != 125}mcl-catalog-hero--category{/if}" aria-labelledby="catalog-title">
             <div class="mcl-shell">
-                <p class="mcl-eyebrow mcl-exam-eyebrow"><span aria-hidden="true"></span> LUYỆN THI MEDUC / ĐỀ THI CÁC TRƯỜNG Y</p>
+                <p class="mcl-eyebrow mcl-exam-eyebrow"><span aria-hidden="true"></span> TRẮC NGHIỆM MEDUC / LUYỆN TẬP THEO MÔN</p>
                 {if PAGE_CATEGORY_ID != 125}
                     <a class="mcl-back" href="/khoa-luyen-thi">← Tất cả môn luyện thi</a>
                     <h1 class="mcl-catalog-title" id="catalog-title">{$catalog.category_name|escape}</h1>
                 {else}
                     <h1 class="mcl-catalog-title" id="catalog-title">LUYỆN ĐỀ THEO MÔN.<span>VỮNG VÀNG MÙA THI.</span></h1>
                 {/if}
-                <p class="mcl-catalog-intro">Luyện tập theo chương, bài học và tổng ôn. Chọn môn phù hợp với năm học để bắt đầu lộ trình luyện thi cùng MedUC.</p>
+                <p class="mcl-catalog-intro">Mỗi bài có 30 câu làm thử miễn phí. Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.</p>
                 <div class="mcl-exam-hero-meta"><span><strong>{$catalog.total}</strong> môn luyện thi</span><span aria-hidden="true">/</span><a href="#course-listing">Chọn môn luyện thi <span aria-hidden="true">↓</span></a></div>
             </div>
         </section>
@@ -50,7 +55,7 @@
                 <div class="mcl-course-hero-copy">
                     <p class="mcl-eyebrow">KHÓA HỌC MEDUC / TỪ CƠ BẢN ĐẾN CHUYÊN SÂU</p>
                     {if PAGE_CATEGORY_ID == 50}
-                        <h1 class="mcl-catalog-title" id="catalog-title">{$text.tieu_de_1|default:'CHỌN KHÓA HỌC.'|escape}<span>{$text.tieu_de_2|default:'ĐÚNG CHẶNG ĐƯỜNG.'|escape}</span></h1>
+                        <h1 class="mcl-catalog-title" id="catalog-title">{if $catalog.course_kind == 'exam_solution'}HIỂU CÁCH GIẢI.<span>VỮNG CÁCH LÀM.</span>{else}{$text.tieu_de_1|default:'CHỌN KHÓA HỌC.'|escape}<span>{$text.tieu_de_2|default:'ĐÚNG CHẶNG ĐƯỜNG.'|escape}</span>{/if}</h1>
                     {else}
                         <a class="mcl-back" href="/khoa-hoc">← Tất cả khóa học</a>
                         <h1 class="mcl-catalog-title" id="catalog-title">{$catalog.category_name|escape}</h1>
@@ -74,9 +79,9 @@
     <nav class="mcl-year-nav" aria-label="Danh mục theo năm học">
         <div class="mcl-shell mcl-year-links">
             {if $exam_prep}<a href="/khoa-luyen-thi" {if PAGE_CATEGORY_ID == 125}aria-current="page"{/if}>Tất cả môn</a>
-            {else}<a href="/khoa-hoc" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>{/if}
+            {else}<a href="/khoa-hoc{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if PAGE_CATEGORY_ID == 50}aria-current="page"{/if}>Tất cả khóa học</a>{/if}
             {foreach from = $catalog.nav_groups item = category}
-                <a href="{$this->Utilities->checkInternalUrl($category.url)|escape}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>
+                <a href="{$this->Utilities->checkInternalUrl($category.url)|escape}{if $catalog.course_kind == 'exam_solution'}?loai=exam_solution{/if}" {if $catalog.selected_id == $category.id}aria-current="page"{/if}>{$category.name|escape}</a>
             {/foreach}
         </div>
     </nav>

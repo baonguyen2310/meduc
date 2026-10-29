@@ -218,7 +218,9 @@ class ProductsTable extends AppTable
             break;
         }
 
-        $where = ['Products.deleted' => 0];    
+        $fields[] = 'Products.course_kind';
+        $where = ['Products.deleted' => 0];
+        if (isset(\App\Service\CourseTypes::LABELS[$filter['course_kind'] ?? ''])) $where['Products.course_kind'] = $filter['course_kind'];
         
         //contain
         if(!$get_empty_name){
@@ -558,6 +560,7 @@ class ProductsTable extends AppTable
 
         $result = [
             'id' => !empty($data['id']) ? intval($data['id']) : null,
+            'course_kind' => $data['course_kind'] ?? null,
             'brand_id' => !empty($data['brand_id']) ? intval($data['brand_id']) : null,
             'brand_name' => null,
             'brand_url' => null,

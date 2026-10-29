@@ -6,7 +6,7 @@
             </h3>
         </div>
         <div class="kt-subheader__toolbar">
-            <a href="{ADMIN_PATH}/product/add" class="btn btn-sm btn-brand">
+            <a href="{ADMIN_PATH}/product/add?cate=50" class="btn btn-sm btn-brand">
                 <i class="la la-plus"></i>
                 Thêm mới
             </a>
@@ -43,6 +43,12 @@
     <div class="kt-portlet nh-portlet">
 
         <div class="kt-portlet__body">
+            <nav class="d-flex flex-wrap mb-4" style="gap:8px" aria-label="Loại khoá học">
+                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=knowledge">Khoá ôn kiến thức</a>
+                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=exam_solution">Khoá chữa đề</a>
+                <a class="btn btn-sm btn-outline-brand" href="{ADMIN_PATH}/product/list?course_kind=quiz">Khoá trắc nghiệm</a>
+                {if !empty($auth_user.supper_admin) || $auth_user.role_id == 1}<a class="btn btn-sm btn-outline-dark" href="{ADMIN_PATH}/product/list?course_kind=fa">Fa · chỉ admin</a>{/if}
+            </nav>
             {$this->element('../Product/search_advanced')}
 
             <div id="nh-group-action" class="kt-form kt-form--label-align-right kt-margin-t-20 collapse">

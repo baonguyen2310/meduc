@@ -154,19 +154,20 @@
     $('[data-exam-result]').replaceChildren(plain('strong', total ? right+' / '+total+' câu đúng' : 'Đề này cần tự đối chiếu', 'mx-result-strong'), plain('span', (total?' · '+Math.round(100*right/total)+'%':'')+(unanswered?' · '+unanswered+' câu chưa trả lời':'')+(selfReview?' · '+selfReview+' câu tự đối chiếu':'')+(incomplete?' · '+incomplete+' câu thiếu dữ liệu nguồn':'')));
   });
 
-  async function download(id, button) {
+  async function download(id, button, placement = 'end') {
     if (library.dataset.download !== '1') return;
     const old=button.textContent; button.disabled=true;button.textContent='Đang tạo Word…';
     try {
-      const response=await fetch(base+'/course-exam/word/'+course+'/'+id,{credentials:'same-origin'});
+      const response=await fetch(base+'/course-exam/word/'+course+'/'+id+'?answers='+placement,{credentials:'same-origin'});
       if(!response.ok || !(response.headers.get('content-type')||'').includes('wordprocessingml')) {
         const failure=(response.headers.get('content-type')||'').includes('application/json') ? await response.json() : {};
         throw Error(failure.error || 'Không tải được Word. Vui lòng thử lại.');
       }
-      const blob=await response.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='meduc-de-'+id+'.docx';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
+      const blob=await response.blob();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='meduc-de-'+id+'-'+placement+'.docx';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
     } catch(failure) { error(failure.message); if(dialog.open)$('[data-exam-result]').textContent=failure.message; }
     finally {button.disabled=false;button.textContent=old;}
   }
-  library.addEventListener('click', event => {const target=event.target.closest('[data-exam-open],[data-exam-word]');if(!target)return;target.hasAttribute('data-exam-open')?open(target.dataset.examOpen):download(target.dataset.examWord,target);});
+  library.addEventListener('click', event => {const target=event.target.closest('[data-exam-open],[data-exam-word]');if(!target)return;target.hasAttribute('data-exam-open')?open(target.dataset.examOpen):download(target.dataset.examWord,target,target.dataset.answers || 'end');});
+  $('[data-exam-modal-inline]')?.addEventListener('click', event => {if(current)download(quizId,event.currentTarget,'inline');});
   $('[data-exam-modal-word]').addEventListener('click', event => {if(current)download(quizId,event.currentTarget);});
 })();

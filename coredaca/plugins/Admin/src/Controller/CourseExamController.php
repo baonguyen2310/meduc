@@ -29,6 +29,7 @@ class CourseExamController extends AppController
     private function requireCourse(int $courseId): void
     {
         if (!TeacherCourseAccess::isCourse($courseId)) throw new ForbiddenException('Không tìm thấy khóa học.');
+        if (!$this->manager && \App\Service\CourseTypes::kind($courseId) === 'fa') throw new ForbiddenException('Fa chỉ dành cho admin.');
         if (!$this->manager && !TeacherCourseAccess::isAssigned((int)$this->Auth->user('id'),$courseId)) {
             throw new ForbiddenException('Khóa học chưa được phân công cho giáo viên này.');
         }
@@ -44,21 +45,23 @@ class CourseExamController extends AppController
 
     public function word($courseId=null,$quizId=null)
     {
-        if (!CourseExamLibrary::WORD_DOWNLOAD_ENABLED) throw new NotFoundException('Không tìm thấy trang.');
+        if (\App\Service\CourseTypes::kind((int)$courseId) !== 'fa') throw new NotFoundException('Không tìm thấy trang.');
+        $placement = (string)$this->request->getQuery('answers', 'end');
+        if (!in_array($placement, ['inline','end'], true)) throw new \Cake\Http\Exception\BadRequestException('Vị trí đáp án không hợp lệ.');
         if (!$this->manager) throw new ForbiddenException('Chỉ quản trị viên được tải Word.');
         $this->requireCourse((int)$courseId);
         $data=CourseExamLibrary::exam((int)$courseId,(int)$quizId);
         @set_time_limit(120);
         try {
             $images=$this->loadImages($data['questions']);
-            $path=(new ExamWordExporter())->create($data,static function($hash)use($images){return $images[$hash]??null;});
+            $path=(new ExamWordExporter())->create($data,static function($hash)use($images){return $images[$hash]??null;},$placement);
         } catch (\RuntimeException $error) {
             return $this->response->withStatus(503)->withType('application/json')->withHeader('Cache-Control','private, no-store')
                 ->withStringBody(json_encode(['error'=>$error->getMessage()],JSON_UNESCAPED_UNICODE));
         }
         try { $bytes=file_get_contents($path); } finally { @unlink($path); }
         return $this->response->withType('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-            ->withHeader('Content-Disposition','attachment; filename="meduc-de-'.(int)$quizId.'.docx"')
+            ->withHeader('Content-Disposition','attachment; filename="meduc-de-'.(int)$quizId.'-'.$placement.'.docx"')
             ->withHeader('Cache-Control','private, no-store')->withStringBody($bytes);
     }
 

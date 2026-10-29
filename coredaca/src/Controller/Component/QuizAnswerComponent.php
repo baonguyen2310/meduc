@@ -54,12 +54,7 @@ class QuizAnswerComponent extends Component
         $answers = !empty($data['answers']) && is_string($data['answers']) ? $data['answers'] : '[]';
         $score = $this->gradeAnswers($quiz_id, json_decode($answers, true));
         if (empty($score)) {
-            $score = [
-                'answer_total' => intval($data['answer_total'] ?? 0),
-                'answer_correct' => intval($data['answer_correct'] ?? 0),
-                'answer_wrong' => intval($data['answer_wrong'] ?? 0),
-                'answer_correct_percent' => floatval($data['answer_correct_percent'] ?? 0)
-            ];
+            return $this->System->getResponse([MESSAGE => 'Dữ liệu bài làm không hợp lệ. Vui lòng thử lại.']);
         }
 
         $data_save = array_merge([
@@ -110,6 +105,13 @@ class QuizAnswerComponent extends Component
     {
         $result = ['found' => false, 'allowed' => false, 'class_room_id' => 0];
         if (empty($product_id) || empty($quiz_id)) return $result;
+        if (\App\Service\CourseTypes::kind((int)$product_id) !== 'quiz'
+            || !\App\Service\CourseTypes::publicCourse((int)$product_id)
+            || \App\Service\CourseTypes::privateQuiz((int)$quiz_id)) return $result;
+        $slot = \App\Service\CourseTypes::slot((int)$product_id, (int)$quiz_id);
+        if (!$slot) return $result;
+        $quiz = \App\Lib\QuizQuestions::load((int)$quiz_id);
+        if (!$quiz || ((int)$slot['slot'] === 1 && count($quiz['questions']) !== 30)) return $result;
 
         $lessons = TableRegistry::get('ProductsAttribute')->find()->where([
             'product_id' => $product_id,
@@ -119,7 +121,7 @@ class QuizAnswerComponent extends Component
         $free = null;
         foreach (LessonQuizzes::lessons(!empty($lessons['value']) ? $lessons['value'] : null) as $lesson) {
             foreach (LessonQuizzes::of($lesson) as $quiz) {
-                if ($quiz['id'] === $quiz_id) $free = $free || $quiz['free'];
+                if ($quiz['id'] === $quiz_id) $free = (int)$slot['slot'] === 1;
             }
         }
         if (is_null($free)) return $result;
@@ -150,11 +152,9 @@ class QuizAnswerComponent extends Component
             if (!is_array($answer) || !isset($answer['index']) || !is_numeric($answer['index'])) return null;
         }
 
-        $attribute = TableRegistry::get('QuizsAttribute')->find()->where([
-            'quiz_id' => $quiz_id,
-            'attribute_id' => QuizQuestions::QUESTIONS_ATTRIBUTE
-        ])->select(['value'])->first();
-        $questions = QuizQuestions::fromValue(!empty($attribute['value']) ? $attribute['value'] : null);
+        // Access was checked above. Course quizzes are deliberately hidden from standalone ORM queries.
+        $quiz = QuizQuestions::load((int)$quiz_id);
+        $questions = $quiz['questions'] ?? [];
         if (empty($questions)) return null;
 
         $correct = 0;

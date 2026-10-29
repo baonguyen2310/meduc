@@ -170,3 +170,8 @@ html[data-meduc-theme="light"] .mcl .mcl-register { background:#de2334; }
 }
 @media(max-width:640px) { .mcl-group .mcl-course-list { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) { .mcl *, .mcl *::before, .mcl *::after { transition:none !important; } }
+
+/* Three public course types share the same catalogue. */
+.mcl-kind-nav { display:flex; flex-wrap:wrap; gap:10px; padding-top:24px; padding-bottom:16px; }
+.mcl-kind-nav a { padding:11px 18px; border:1px solid var(--mcl-line,#dedee4); border-radius:10px; color:inherit; font-weight:700; }
+.mcl-kind-nav a[aria-current="page"] { background:#d61c3b; color:#fff; border-color:#d61c3b; }

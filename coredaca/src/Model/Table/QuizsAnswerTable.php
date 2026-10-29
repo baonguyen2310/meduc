@@ -16,6 +16,7 @@ class QuizsAnswerTable extends AppTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->addBehavior('StaffExamVisibility', ['scope'=>'course','field'=>'product_id']);
         $this->setTable('quizs_answer');
 
         $this->setPrimaryKey('id');

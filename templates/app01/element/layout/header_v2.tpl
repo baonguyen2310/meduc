@@ -11,6 +11,8 @@
 
 {* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
 {$nav_courses = [
+  ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
+  ['url' => '/khoa-hoc?loai=exam_solution', 'label' => 'Khoá chữa đề', 'icon' => 'pulse'],
   ['url' => '/khoa-hoc-sinh-vien-nam-1-nam-2', 'label' => 'Sinh viên năm 1 – năm 2', 'icon' => 'book'],
   ['url' => '/khoa-hoc-sinh-vien-nam-3-nam-4', 'label' => 'Sinh viên năm 3 – năm 4', 'icon' => 'pulse'],
   ['url' => '/khoa-hoc-noi-tru-sau-dai-hoc', 'label' => 'Nội trú – Sau đại học', 'icon' => 'users']
@@ -33,7 +35,7 @@
 {foreach from = $nav_book_categories item = category}{$nav_book_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
 {$nav_main = [
   ['id' => 'browse', 'label' => 'Khoá học', 'url' => '/khoa-hoc', 'all' => 'Xem tất cả khóa học', 'items' => $nav_courses],
-  ['id' => 'practice', 'label' => 'Luyện thi', 'url' => '/khoa-luyen-thi', 'all' => 'Xem tất cả môn luyện thi', 'items' => $nav_exam_items],
+  ['id' => 'practice', 'label' => 'Trắc nghiệm', 'url' => '/khoa-luyen-thi', 'all' => 'Xem tất cả môn trắc nghiệm', 'items' => $nav_exam_items],
   ['id' => 'books', 'label' => 'Sách', 'url' => '/sach-y-khoa', 'all' => 'Xem tất cả sách', 'items' => $nav_book_items],
   ['id' => 'gift', 'label' => 'Gift', 'items' => [
     ['url' => '/blog', 'label' => 'Blog', 'icon' => 'journal'],

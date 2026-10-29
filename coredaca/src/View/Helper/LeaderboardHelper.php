@@ -29,7 +29,7 @@ class LeaderboardHelper extends Helper
         $rows = $this->db()->execute(
             "SELECT a.product_id AS id, pc.name, l.url, a.attempts
              FROM (SELECT product_id, COUNT(*) AS attempts FROM quizs_answer WHERE deleted = 0 AND product_id > 0 GROUP BY product_id) a
-             JOIN products p ON p.id = a.product_id AND p.deleted = 0
+             JOIN products p ON p.id = a.product_id AND p.deleted = 0 AND p.course_kind = 'quiz'
              LEFT JOIN products_content pc ON pc.product_id = a.product_id AND pc.lang = :lang
              LEFT JOIN links l ON l.foreign_id = a.product_id AND l.type = 'product_detail' AND l.lang = :lang AND l.deleted = 0
              ORDER BY a.attempts DESC",
@@ -65,7 +65,7 @@ class LeaderboardHelper extends Helper
             "SELECT p.id, pc.name, l.url FROM products p
              LEFT JOIN products_content pc ON pc.product_id = p.id AND pc.lang = :lang
              LEFT JOIN links l ON l.foreign_id = p.id AND l.type = 'product_detail' AND l.lang = :lang AND l.deleted = 0
-             WHERE p.deleted = 0 AND p.id IN (" . implode(',', $ids) . ")",
+             WHERE p.deleted = 0 AND p.course_kind = 'quiz' AND p.id IN (" . implode(',', $ids) . ")",
             ['lang' => LANGUAGE]
         )->fetchAll('assoc');
         $by_id = [];

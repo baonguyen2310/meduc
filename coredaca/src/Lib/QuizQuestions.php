@@ -30,7 +30,7 @@ final class QuizQuestions
              LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions
              LEFT JOIN quizs_attribute minutes ON minutes.quiz_id = q.id AND minutes.attribute_id = :minutes
-             WHERE q.id = :id AND q.deleted = 0
+             WHERE q.id = :id AND q.deleted = 0 AND q.fa_only = 0
                AND NOT EXISTS (SELECT 1 FROM quiz_exam_metadata m WHERE m.quiz_id = q.id AND m.staff_only = 1)
              LIMIT 1",
             ['id' => $quizId, 'lang' => $lang, 'questions' => self::QUESTIONS_ATTRIBUTE, 'minutes' => self::MINUTES_ATTRIBUTE]

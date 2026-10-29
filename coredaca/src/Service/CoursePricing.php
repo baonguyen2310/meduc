@@ -41,7 +41,7 @@ class CoursePricing
             (SELECT MIN(i.id) FROM products_item i WHERE i.product_id=p.id AND i.deleted=0 AND i.status=1) AS item_id
             FROM products p JOIN products_content pc ON pc.product_id=p.id AND pc.lang='vi'
             LEFT JOIN links l ON l.foreign_id=p.id AND l.type='product_detail' AND l.lang='vi'
-            WHERE p.course_price_list_id=:id AND p.deleted=0 AND p.status=1 AND COALESCE(p.draft,0)=0
+            WHERE p.course_price_list_id=:id AND COALESCE(p.course_kind,'')<>'fa' AND p.deleted=0 AND p.status=1 AND COALESCE(p.draft,0)=0
             ORDER BY p.position,p.id", ['id'=>$id])->fetchAll('assoc');
         foreach ($rows as &$row) {
             $years=[];

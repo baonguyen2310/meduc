@@ -351,6 +351,15 @@
                     </div>
                 </div>
                                   
+                <div class="form-group"><label for="course-kind">Loại khoá học</label>
+                    <select id="course-kind" name="course_kind" class="form-control">
+                        <option value="knowledge"{if empty($product.course_kind) || $product.course_kind == 'knowledge'} selected{/if}>Khoá ôn kiến thức</option>
+                        <option value="exam_solution"{if !empty($product.course_kind) && $product.course_kind == 'exam_solution'} selected{/if}>Khoá chữa đề</option>
+                        <option value="quiz"{if !empty($product.course_kind) && $product.course_kind == 'quiz'} selected{/if}>Khoá trắc nghiệm</option>
+                        {if !empty($auth_user.supper_admin) || $auth_user.role_id == 1}<option value="fa"{if !empty($product.course_kind) && $product.course_kind == 'fa'} selected{/if}>Fa · chỉ admin</option>{/if}
+                    </select>
+                    <small class="form-text text-muted">Áp dụng cho sản phẩm thuộc danh mục khoá học. Hai loại video không có bài tập. Trắc nghiệm tự tạo 2 bài tập cho mỗi bài khi lưu: bài 1 miễn phí (30 câu), bài 2 trả phí một lần theo môn. Đề Fa giữ riêng trong admin.</small>
+                </div>
                 {if !empty($show_teacher_assignment)}
                     <div class="form-group"><label for="course-price-list">Bảng báo giá</label><input type="hidden" name="course_price_assignment" value="1">{$this->Form->select('course_price_list_id', $course_price_options, ['id'=>'course-price-list','empty'=>'Chưa gán bảng báo giá','default'=>$course_price_list_id,'class'=>'form-control'])}<small class="form-text text-muted">Mỗi môn thuộc một bảng báo giá. <a href="{ADMIN_PATH}/course-prices">Quản lý bảng báo giá</a></small></div>
                     <div class="row">
@@ -552,7 +561,7 @@
                 <div class="kt-portlet__body">
                     {foreach from = $attributes_product item = attribute key = attribute_id}
                         {if $attribute.code == 'anhtongquan' && empty($show_teacher_assignment)}{continue}{/if}
-                        {if !empty($course_is_exam_prep) && $attribute.code == 'danhsachtiethoc'}
+                        {if !empty($course_is_fa) && $attribute.code == 'danhsachtiethoc'}
                             <input type="hidden" name="course_lessons_readonly" value="1">
                             {continue}
                         {/if}

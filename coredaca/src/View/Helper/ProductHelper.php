@@ -11,6 +11,8 @@ use Cake\Datasource\ConnectionManager;
 
 class ProductHelper extends Helper
 {
+    public function courseKind($id) { return \App\Service\CourseTypes::kind((int)$id); }
+
     // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /khoa-luyen-thi.
     const EXAM_PREP_CATEGORY_ID = 125;
 
@@ -21,11 +23,7 @@ class ProductHelper extends Helper
     public function isExamPrepCourse($product_id = null)
     {
         if (empty($product_id)) return false;
-        return (bool) ConnectionManager::get('default')->execute(
-            'SELECT 1 FROM products p WHERE p.id = :id AND (p.main_category_id = :category
-               OR EXISTS (SELECT 1 FROM categories_product cp WHERE cp.product_id = p.id AND cp.category_id = :category)) LIMIT 1',
-            ['id' => (int) $product_id, 'category' => self::EXAM_PREP_CATEGORY_ID]
-        )->fetch('assoc');
+        return \App\Service\CourseTypes::kind((int)$product_id) === 'quiz';
     }
 
     /** Group public products by their actual year-category memberships.
@@ -50,6 +48,7 @@ class ProductHelper extends Helper
             uasort($years, function ($a, $b) { return strnatcasecmp($a['name'], $b['name']); });
             $year_ids = array_keys($years);
         }
+        $kind = $exam_catalog ? 'quiz' : ($this->getView()->getRequest()->getQuery('loai') === 'exam_solution' ? 'exam_solution' : 'knowledge');
         $groups = [];
         foreach ((array) $year_ids as $id) {
             $id = (int) $id;
@@ -69,7 +68,8 @@ class ProductHelper extends Helper
         $other = [];
         foreach ((array) $courses as $course) {
             if (empty($course['id']) || isset($unique[$course['id']])) continue;
-            $exam_prep = isset($course['categories'][self::EXAM_PREP_CATEGORY_ID]);
+            if (($course['course_kind'] ?? \App\Service\CourseTypes::kind((int)$course['id'])) !== $kind) continue;
+            $exam_prep = $kind === 'quiz';
             if ($exam_prep !== $exam_catalog) continue;
             if ($selected_year !== null && !isset($course['categories'][$selected_year])) continue;
             $unique[$course['id']] = true;
@@ -97,7 +97,7 @@ class ProductHelper extends Helper
                 'exam_prep' => $exam_prep,
                 'exams' => $exam_prep ? count(LessonQuizzes::ids(is_array($lessons) ? $lessons : [])) : 0,
                 'preview_lesson' => $exam_prep ? ($first_free_quiz ?: $first_quiz ?: 1) : ($first_trial_video ?: $first_free_quiz ?: 1),
-                'preview_tab' => $exam_prep || (!$first_trial_video && $first_free_quiz) ? 'quiz' : 'video',
+                'preview_tab' => $exam_prep ? 'quiz' : 'video',
                 'summary' => mb_strlen($summary) > 190 ? mb_substr($summary, 0, 187) . '…' : $summary,
             ];
             $matched = false;
@@ -116,6 +116,8 @@ class ProductHelper extends Helper
             'total' => count($unique),
             'selected_id' => $selected_id,
             'exam_prep' => $exam_catalog,
+            'course_kind' => $kind,
+            'course_label' => \App\Service\CourseTypes::LABELS[$kind],
             'category_name' => $categories[$selected_id]['name'] ?? 'Khóa học MedUC',
         ];
     }
@@ -297,6 +299,7 @@ class ProductHelper extends Helper
             $query->where(['Quizs.id IN' => $quizIds]);
             // đề chỉ dành cho nội bộ (quiz_exam_metadata.staff_only) không mở cho học viên
             $query->where(['Quizs.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)']);
+            $query->where('Quizs.fa_only=0 AND Quizs.course_only=0');
         }
 
         return $query->toList();
@@ -308,9 +311,9 @@ class ProductHelper extends Helper
      *
      * {$quizzes = $this->Product->getLessonQuizzes($item)}
     */
-    public function getLessonQuizzes($lesson = [])
+    public function getLessonQuizzes($lesson = [], $kind = null)
     {
-        return LessonQuizzes::of($lesson);
+        return $kind === null ? LessonQuizzes::of($lesson) : \App\Service\CourseTypes::quizzes($lesson, $kind);
     }
 
     /** Bài tập của trang khóa học (block/product_detail/view_classroom.tpl)
@@ -327,7 +330,7 @@ class ProductHelper extends Helper
     public function getCourseQuizData($params = [], $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
-        $ids = LessonQuizzes::ids(!empty($params['lesson_list']) ? $params['lesson_list'] : []);
+        $ids = \App\Service\CourseTypes::kind((int)($params['product_id'] ?? 0)) === 'quiz' ? LessonQuizzes::ids($params['lesson_list'] ?? []) : [];
         $result = ['info' => []];
         if (!$ids) return $result;
 
@@ -337,13 +340,13 @@ class ProductHelper extends Helper
              LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
              LEFT JOIN quizs_attribute minutes ON minutes.quiz_id = q.id AND minutes.attribute_id = :minutes
-             WHERE q.deleted = 0 AND q.id IN (" . implode(',', array_map('intval', $ids)) . ")
+             WHERE q.deleted = 0 AND q.fa_only = 0 AND q.id IN (" . implode(',', array_map('intval', $ids)) . ")
                AND q.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)",
             ['lang' => $lang, 'questions' => QuizQuestions::QUESTIONS_ATTRIBUTE, 'minutes' => QuizQuestions::MINUTES_ATTRIBUTE]
         )->fetchAll('assoc');
 
         foreach ($rows as $row) {
-            if ((int) $row['count'] < 1) continue;
+            // Empty draft slots remain visible with a disabled start button.
             $id = (int) $row['id'];
             $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes']];
         }

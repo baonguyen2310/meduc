@@ -42,7 +42,7 @@ class ProductController extends AppController {
         $this->js_page = [
             '/assets/plugins/global/lightbox/lightbox.min.js',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js',
-            '/assets/js/pages/list_product.js?v=20261028-hide-word'
+            '/assets/js/pages/list_product.js?v=20261029-course-types'
         ];
         
         $this->set('path_menu', 'product');
@@ -752,10 +752,10 @@ class ProductController extends AppController {
     {        
         $categoryId = (int)$this->request->getQuery('cate');
         $this->set('show_teacher_assignment', in_array($categoryId, [50, 125], true));
-        $this->set('initial_category_id', $categoryId === 125 ? 125 : null);
+        $this->set('initial_category_id', in_array($categoryId,[50,125],true) ? $categoryId : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
-        $this->set('course_price_options', \App\Service\CoursePricing::options(\App\Service\CoursePricing::categoryKind([$categoryId])));
+        $this->set('course_price_options', \App\Service\CoursePricing::options());
         $this->set('course_price_list_id', 0);
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
         $attributes_product = !empty($all_attributes[PRODUCT]) ? $all_attributes[PRODUCT] : [];
@@ -784,7 +784,7 @@ class ProductController extends AppController {
         $this->set('length_unit', Configure::read('LENGTH_UNIT'));
         $this->set('weight_unit', Configure::read('WEIGTH_UNIT'));
         $this->set('position', !empty($max_record->id) ? $max_record->id + 1 : 1);
-        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khóa luyện thi'] : []);
+        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khoá trắc nghiệm'] : ($categoryId === 50 ? [50 => 'Khoá học'] : []));
 
         $this->css_page = [
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css',
@@ -795,7 +795,7 @@ class ProductController extends AppController {
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
-            '/assets/js/pages/lesson_quizzes.js',
+            '/assets/js/pages/lesson_quizzes.js?v=20261029-course-types',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 
@@ -807,7 +807,7 @@ class ProductController extends AppController {
     public function update($id = null)
     {
         $is_course = TeacherCourseAccess::isCourse((int)$id);
-        $this->set('course_price_options', \App\Service\CoursePricing::options(\App\Service\CoursePricing::courseKind((int)$id)));
+        $this->set('course_price_options', \App\Service\CoursePricing::options());
         $this->set('course_price_list_id', \App\Service\CoursePricing::courseListId((int)$id));
         $this->set('show_teacher_assignment', $is_course);
         $this->set('teacher_options', $is_course ? TeacherCourseAccess::teacherOptions() : []);
@@ -929,7 +929,7 @@ class ProductController extends AppController {
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
-            '/assets/js/pages/lesson_quizzes.js',
+            '/assets/js/pages/lesson_quizzes.js?v=20261029-course-types',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 
@@ -1068,12 +1068,14 @@ class ProductController extends AppController {
     private function prepareCourseExams(int $id): void
     {
         if (!defined('MEDUC_EXAM_STAFF') || !MEDUC_EXAM_STAFF || !TeacherCourseAccess::isCourse($id)) return;
+        if (in_array(\App\Service\CourseTypes::kind($id), ['knowledge','exam_solution'], true)) return;
         $this->set('course_lessons', CourseExamLibrary::lessons($id));
         $this->set('course_exam_id', $id);
         $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
-        $this->set('course_exam_download', CourseExamLibrary::WORD_DOWNLOAD_ENABLED && !$this->teacherCourseOnly);
+        $this->set('course_is_fa', \App\Service\CourseTypes::kind($id) === 'fa');
+        $this->set('course_exam_download', \App\Service\CourseTypes::admin() && \App\Service\CourseTypes::kind($id) === 'fa');
         $this->css_page[]='/assets/css/course-exams.css?v=20261018-4';
-        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261018-3';
+        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261029-course-types';
     }
 
     public function save($id = null)
@@ -1114,6 +1116,19 @@ class ProductController extends AppController {
         }
         if ($teacher_ids && !TeacherCourseAccess::hasCourseCategory($category_ids)) {
             $this->responseJson([MESSAGE => 'Vui lòng chọn danh mục khóa học để phân công giáo viên.']);
+        }
+        $course_kind = null;
+        if (TeacherCourseAccess::hasCourseCategory($category_ids)) {
+            $course_kind = $data['course_kind'] ?? (\App\Service\CourseTypes::kind((int)$id) ?: 'knowledge');
+            if (!isset(\App\Service\CourseTypes::LABELS[$course_kind])) $this->responseJson([MESSAGE=>'Loại khoá học không hợp lệ.']);
+            if (\App\Service\CourseTypes::kind((int)$id) === 'fa' && $course_kind !== 'fa') $this->responseJson([MESSAGE=>'Môn Fa phải giữ riêng. Hãy tạo môn mới cho học viên.']);
+            if ($course_kind === 'fa' && !\App\Service\CourseTypes::admin()) throw new ForbiddenException('Fa chỉ dành cho admin.');
+        }
+        if (\App\Service\CourseTypes::kind((int)$id) === 'fa' && $course_kind !== 'fa') $this->responseJson([MESSAGE=>'Môn Fa phải giữ loại Fa.']);
+        if ($course_kind === 'quiz' && !in_array(125,$category_ids,true)) $category_ids[]=125;
+        if (in_array($course_kind,['knowledge','exam_solution'],true)) {
+            $category_ids=array_values(array_filter($category_ids,static function($v){return $v!==125 && !in_array($v,range(991,996),true);}));
+            if (!$category_ids) $category_ids=[50];
         }
         if (isset($data['course_price_assignment'])) {
             $price_list_id = (int)($data['course_price_list_id'] ?? 0);
@@ -1391,6 +1406,7 @@ class ProductController extends AppController {
         }
 
         $data_save = [
+            'course_kind' => $course_kind,
             'brand_id' => !empty($data['brand_id']) ? intval($data['brand_id']) : null,
             'url_video' => $url_video,
             'type_video' => $type_video,

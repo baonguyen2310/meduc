@@ -67,7 +67,7 @@ class CourseEnrollmentsTable extends AppTable
     {
         $rows = $this->getConnection()->execute(
             "SELECT p.id FROM products p
-             WHERE p.deleted = 0 AND (
+             WHERE p.deleted = 0 AND COALESCE(p.course_kind,'')<>'fa' AND (
                p.main_category_id = :category OR EXISTS (
                  SELECT 1 FROM categories c WHERE c.id = p.main_category_id AND c.path_id LIKE :path
                ) OR EXISTS (
@@ -105,7 +105,7 @@ class CourseEnrollmentsTable extends AppTable
     {
         $customer_id = intval($customer_id);
         $product_id = intval($product_id);
-        if (empty($customer_id) || empty($product_id)) return false;
+        if (empty($customer_id) || empty($product_id) || \App\Service\CourseTypes::kind($product_id)==='fa') return false;
 
         $entity = $this->find()->where(['customer_id' => $customer_id, 'product_id' => $product_id])->first();
         $data = array_merge(['status' => 1, 'deleted' => 0], $fields, ['customer_id' => $customer_id, 'product_id' => $product_id]);

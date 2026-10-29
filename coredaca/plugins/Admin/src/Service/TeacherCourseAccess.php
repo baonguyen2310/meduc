@@ -83,7 +83,7 @@ class TeacherCourseAccess
             'SELECT 1 FROM teacher_course_access WHERE user_id = :user_id AND product_id = :product_id LIMIT 1',
             ['user_id' => $userId, 'product_id' => $productId]
         )->fetch('assoc');
-        return (bool)$row && self::isCourse($productId);
+        return (bool)$row && self::isCourse($productId) && \App\Service\CourseTypes::kind($productId) !== 'fa';
     }
 
     public static function assignedCourses(int $userId): array
@@ -94,7 +94,7 @@ class TeacherCourseAccess
              INNER JOIN products p ON p.id = t.product_id AND p.deleted = 0
              INNER JOIN products_content pc ON pc.product_id = p.id AND pc.lang = 'vi'
              LEFT JOIN exam_prep_courses e ON e.product_id = p.id
-             WHERE t.user_id = :user_id AND (
+             WHERE t.user_id = :user_id AND COALESCE(p.course_kind,'') <> 'fa' AND (
                p.main_category_id = 50 OR EXISTS (
                  SELECT 1 FROM categories c
                  WHERE c.id = p.main_category_id AND c.path_id LIKE '%|50|%'

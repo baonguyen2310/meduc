@@ -111,7 +111,7 @@
     if (player && typeof player.stopVideo === "function") {
       try { player.stopVideo(); } catch (error) { /* player not ready yet */ }
     }
-    if (!player) playerHolder.replaceChildren();
+    if (!player) playerHolder?.replaceChildren();
   }
   async function play(lesson, authorized = false) {
     if (!canWatch(lesson)) return;
@@ -239,11 +239,11 @@
       root.dataset.mcrClassRoom = String(Number(access.class_room_id) || 0);
       lessons.forEach(lesson => {lesson.access=licensed?'open':lesson.trial?'trial':'locked';lesson.quiz=licensed?lesson.quizzes>0:lesson.freeQuiz;});
       $$('[data-mcr-quiz-start], [data-mcr-quiz-history]').forEach(button => {
-        const open=licensed || button.dataset.mcrQuizFree==='1';
+        const open=button.dataset.mcrQuizReady!=='0' && (licensed || button.dataset.mcrQuizFree==='1');
         button.hidden=!open;
         const card=button.closest('.mcr-quiz-card');
         card.classList.toggle('is-locked',!open);
-        const enroll=card.querySelector('[data-mcr-quiz-enroll]');if(enroll)enroll.hidden=open;
+        const enroll=card.querySelector('[data-mcr-quiz-enroll]');if(enroll)enroll.hidden=open || button.dataset.mcrQuizReady==='0';
       });
       root.dispatchEvent(new CustomEvent('mcr:access',{detail:access}));
       return access;
@@ -290,6 +290,7 @@
   // Tabs
   const tabs = $$("[data-mcr-tab]");
   function selectTab(name, focus = false) {
+    if (!tabs.some(tab => tab.dataset.mcrTab === name)) return;
     tabs.forEach((tab) => {
       const active = tab.dataset.mcrTab === name;
       tab.setAttribute("aria-selected", String(active));
@@ -322,6 +323,7 @@
   // Views
   let current = null;
   function setLessonStage(lesson) {
+    if (root.dataset.mcrKind === "quiz") return;
     if (examPrep && !lesson.video) {
       // Exam-prep courses have no videos yet: a placeholder, with a way to the lesson's exams.
       const quizButton = $("[data-mcr-goto-quiz-soon]");
@@ -370,9 +372,9 @@
 
     // Keep the active lesson available to screen readers without repeating its heading visually.
     $("[data-mcr-heading]").textContent = lesson.title;
-    $("[data-mcr-position]").textContent = `${pad(lesson.number)} / ${pad(total)}`;
-    $("[data-mcr-prev]").disabled = lesson.number <= 1;
-    $("[data-mcr-next]").disabled = lesson.number >= total;
+    const position = $("[data-mcr-position]"); if (position) position.textContent = `${pad(lesson.number)} / ${pad(total)}`;
+    const previous = $("[data-mcr-prev]"); if (previous) previous.disabled = lesson.number <= 1;
+    const next = $("[data-mcr-next]"); if (next) next.disabled = lesson.number >= total;
     $$("[data-mcr-files]").forEach((block) => { block.hidden = Number(block.dataset.mcrFiles) !== lesson.number; });
     $$("[data-mcr-quiz]").forEach((block) => { block.hidden = Number(block.dataset.mcrQuiz) !== lesson.number; });
 
@@ -391,7 +393,7 @@
     stopPlayer();
     selectOverview("about");
     if (push) history.pushState({ mcrLesson: 0 }, "", addressFor(0));
-    overview.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+    (overview || $("#mcr-learning"))?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   }
   // Result screens can return to the course information without a sidebar introduction button.
   root.addEventListener("mcr:overview", () => showIntro());
@@ -422,9 +424,9 @@
     selectLesson(Number(button.dataset.mcrStart), { autoplay: !examPrep });
     if (examPrep) selectTab("quiz");
   }));
-  $("[data-mcr-play-lesson]").addEventListener("click", () => { if (current) play(current); });
-  $("[data-mcr-prev]").addEventListener("click", () => current && selectLesson(current.number - 1));
-  $("[data-mcr-next]").addEventListener("click", () => current && selectLesson(current.number + 1));
+  $("[data-mcr-play-lesson]")?.addEventListener("click", () => { if (current) play(current); });
+  $("[data-mcr-prev]")?.addEventListener("click", () => current && selectLesson(current.number - 1));
+  $("[data-mcr-next]")?.addEventListener("click", () => current && selectLesson(current.number + 1));
   window.addEventListener("popstate", () => {
     const number = Number(new URLSearchParams(location.search).get("bai"));
     if (byNumber.has(number)) selectLesson(number, { push: false }); else showIntro({ push: false });

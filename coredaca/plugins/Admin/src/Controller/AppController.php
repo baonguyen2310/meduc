@@ -101,6 +101,7 @@ class AppController extends Controller {
 
         if($this->Auth->user('id')){
             if (!empty($this->Auth->user('supper_admin'))) {
+                if (!defined('MEDUC_FA_ADMIN')) define('MEDUC_FA_ADMIN', true);
                 if (!defined('MEDUC_EXAM_STAFF')) define('MEDUC_EXAM_STAFF', true);
                 return;
             }
@@ -109,6 +110,7 @@ class AppController extends Controller {
                 throw new ForbiddenException('Tài khoản không còn hoạt động.');
             }
 
+            if (!defined('MEDUC_FA_ADMIN')) define('MEDUC_FA_ADMIN', (int)$account['role_id'] === 1);
             $this->teacherCourseOnly = $account['role_name'] === 'Giáo viên';
             if (!defined('MEDUC_EXAM_STAFF')) define('MEDUC_EXAM_STAFF', $this->teacherCourseOnly || (int)$account['role_id'] === 1);
             if ($this->teacherCourseOnly) {

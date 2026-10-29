@@ -140,13 +140,14 @@ class ProductComponent extends Component
                 }
             }
 
+            \App\Service\CourseTypes::syncLessons((int)$save->id);
             $conn->commit();            
             return $this->System->getResponse([
                 CODE => SUCCESS, 
                 DATA => $save
             ]);
 
-        }catch (Exception $e) {
+        }catch (\Throwable $e) {
             $conn->rollback();
             return $this->System->getResponse([MESSAGE => $e->getMessage()]);
         }

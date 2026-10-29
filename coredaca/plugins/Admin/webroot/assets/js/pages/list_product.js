@@ -159,6 +159,7 @@ var nhListProduct = function() {
 		},
 
 		data_filter: {
+			course_kind: new URLSearchParams(location.search).get('course_kind') || '',
 			lang: nhMain.lang,
 			keyword: $('#nh-keyword').val(),
 			status: $('#nh-status').val(),
@@ -548,6 +549,7 @@ var nhListProduct = function() {
                 var nhExport = typeof($(this).attr('nh-export')) != _UNDEFINED ? $(this).attr('nh-export') : '';
 
                 var data_filter = {
+                    course_kind: new URLSearchParams(location.search).get('course_kind') || '',
 					lang: nhMain.lang,
 					keyword: $('#nh-keyword').val(),
 					status: $('[name=status]').val(),

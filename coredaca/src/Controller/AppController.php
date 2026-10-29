@@ -156,6 +156,11 @@ class AppController extends Controller
             }
             $page_info = !empty($page['page_info']) ? $page['page_info'] : [];
 
+            // Fa is admin-only, including known old URLs and cache-backed page rendering.
+            if (($type === PRODUCT_DETAIL && \App\Service\CourseTypes::kind((int)$page_record_id) === 'fa')
+                || ($type === QUIZ_DETAIL && (\App\Service\CourseTypes::privateQuiz((int)$page_record_id) || \App\Service\CourseTypes::courseQuiz((int)$page_record_id)))) {
+                throw new \Cake\Http\Exception\NotFoundException();
+            }
             define('PAGE_URL', $url);
             define('PAGE_RECORD_ID', $page_record_id);
             define('PAGE_TAG_ID', $tag_id);
