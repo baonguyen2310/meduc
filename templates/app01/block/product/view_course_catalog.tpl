@@ -30,12 +30,6 @@
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261028-2" defer></script>
 
 <main class="mcl" id="course-catalog">
-    {if !$exam_prep}
-    <nav class="mcl-shell mcl-kind-nav" aria-label="Loại khoá học">
-        <a href="/khoa-hoc"{if $catalog.course_kind == 'knowledge'} aria-current="page"{/if}>Khoá ôn kiến thức</a>
-        <a href="/khoa-hoc?loai=exam_solution"{if $catalog.course_kind == 'exam_solution'} aria-current="page"{/if}>Khoá chữa đề</a>
-    </nav>
-    {/if}
     {if $exam_prep}
         <section class="mcl-catalog-hero mcl-catalog-hero--exam {if PAGE_CATEGORY_ID != 125}mcl-catalog-hero--category{/if}" aria-labelledby="catalog-title">
             <div class="mcl-shell">
