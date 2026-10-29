@@ -50,7 +50,7 @@ class CoursePriceController extends AppController
         foreach(CoursePricing::lists(true) as $l) {
             $courses=CoursePricing::courses((int)$l['id']);
             $packages=CoursePricing::packages((int)$l['id']);
-            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],
+            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],'label'=>$l['course_label'],'catalog_url'=>$l['catalog_url'],
                 'courses'=>array_map('intval',array_column($courses,'id')),
                 'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount']];},$packages)];
             foreach($courses as $c) $map[$c['id']]='/bang-bao-gia/'.$l['slug'].'?mon='.$c['id'];
@@ -70,7 +70,7 @@ class CoursePriceController extends AppController
         $boards=[];
         foreach(CoursePricing::lists(true) as $l) {
             $courses=CoursePricing::courses((int)$l['id'],true);
-            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],
+            $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],'label'=>$l['course_label'],'catalog_url'=>$l['catalog_url'],
                 'courses'=>array_map('intval',array_column($courses,'id')),
                 'course_data'=>array_map(function($c){return ['id'=>(int)$c['id'],'name'=>$c['name'],'url'=>$c['url'],'image'=>$c['image']];},$courses),
                 'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount'],'price'=>(int)$p['price']];},CoursePricing::packages((int)$l['id']))];

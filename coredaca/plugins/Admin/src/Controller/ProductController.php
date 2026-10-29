@@ -1140,7 +1140,7 @@ class ProductController extends AppController {
         }
         if (isset($data['course_price_assignment'])) {
             $price_list_id = (int)($data['course_price_list_id'] ?? 0);
-            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCategories($price_list_id, $category_ids, $course_kind))) {
+            if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCourseKind($price_list_id, $course_kind))) {
                 $this->responseJson([MESSAGE => 'Bảng báo giá không hợp lệ hoặc sản phẩm không phải khóa học.']);
             }
         }

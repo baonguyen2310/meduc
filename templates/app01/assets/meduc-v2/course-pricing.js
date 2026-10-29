@@ -34,7 +34,7 @@
     let plan = null, draft = [], busy = false;
     let authenticated = page.dataset.member === '1', pendingPlan = null, opener = null;
     let previousOverflow = '';
-    const allPath = page.dataset.courseType === 'exam_prep' ? '/trac-nghiem' : '/khoa-hoc';
+    const allPath = page.dataset.catalogUrl || ({knowledge:'/khoa-hoc',exam_solution:'/khoa-chua-de',quiz:'/trac-nghiem'}[page.dataset.courseType] || '/khoa-hoc');
     const contextUrl = path => { const url = new URL(path || '/', location.origin + '/'); url.searchParams.set('bang_gia',listId);url.searchParams.set('goi',plan.id);return url.pathname + url.search; };
     function persist() { cart?.set(listId,chosen); }
     persist();

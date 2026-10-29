@@ -64,7 +64,7 @@
     {/if}
 
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
-    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261029-solution-page" defer></script>
+    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261030-three-price-types" defer></script>
     <script src="/bang-bao-gia/lien-ket.js" defer></script>
 
     {* The sign-in dialog is present on every page, so its styles are shared. *}
