@@ -85,7 +85,7 @@
             <h2 id="roadmap-practice-title">HỌC ĐẾN ĐÂU.<br><span>LUYỆN ĐẾN ĐÓ.</span></h2>
             <p>Làm bài. Xem lời giải. Ôn phần chưa chắc.</p>
             <ol class="mlr-practice-flow" aria-label="Các bước luyện đề"><li>Chọn môn</li><li>Làm bài tập</li><li>Xem lời giải</li></ol>
-            <a class="mlr-button" href="/trac-nghiem">Chọn môn luyện thi <span aria-hidden="true">→</span></a>
+            <a class="mlr-button" href="/khoa-hoc?loai=exam_solution">Chọn môn luyện thi <span aria-hidden="true">→</span></a>
         </div>
     </section>
 

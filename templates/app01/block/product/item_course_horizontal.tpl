@@ -1,7 +1,7 @@
 {strip}
 {$course_url = $this->Utilities->checkInternalUrl($course.url)}
 {$preview_label = "Học thử miễn phí"}
-{if $course.catalog_meta.exam_prep}{$preview_label = "Luyện thi miễn phí"}{/if}
+{if $course.catalog_meta.exam_prep}{$preview_label = "Làm thử trắc nghiệm"}{/if}
 {$current_price = $course.price|default:0}
 {if !empty($course.apply_special) && !empty($course.price_special)}{$current_price = $course.price_special}{/if}
 <article class="mcl-card" data-course-card data-course-id="{$course.id}" data-course-name="{$course.name|escape}" data-course-price="{$current_price}" data-course-order="{$course_index}" nh-product="{$course.id}" nh-product-item-id="{$course.items[0].id|default:''}">

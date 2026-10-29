@@ -18,7 +18,7 @@
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
                 <span>Khoá học</span>
             </a>
-            <a class="mhb-button mhb-button--primary" href="/trac-nghiem">
+            <a class="mhb-button mhb-button--primary" href="/khoa-hoc?loai=exam_solution">
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M9 5.5H6V21h12V5.5h-3"/><path d="m9 14 2 2 4-4"/></svg>
                 <span>Luyện thi</span>
             </a>
