@@ -114,3 +114,7 @@ html[data-meduc-theme="light"] .mgv {
   .mgv[data-mrail] .mgv-cta,
   .mgv[data-mrail] .mgv-note { display: none; }
 }
+
+/* Portrait uploads use their original framing rather than the old course-poster zoom. */
+.mgv .mgv-card.mgv-card--portrait .mgv-photo img,
+.mft .mgv-card.mgv-card--portrait .mgv-photo img { object-position:50% 0%; transform:none; }

@@ -228,3 +228,5 @@ html[data-meduc-theme="light"] .mft-list-cta { background:#de2334; }
 .mft-load-more { display:flex; justify-content:center; margin-top:28px; }
 .mft-load-more .mft-button { border:1px solid transparent; cursor:pointer; }
 .mft-load-more[hidden] { display:none; }
+
+.mft-portrait--portrait img, .mft-dossier-photo--portrait img { object-position:50% 0%; transform:none; }

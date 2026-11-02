@@ -52,7 +52,7 @@
     </article>
     {if !empty($profile_mode)}
         <template id="mft-profile-{$index}">
-            <div class="mft-dossier-photo{if $course_url == ''} mft-dossier-photo--centered{/if}">
+            <div class="mft-dossier-photo{if $course_url == ''} mft-dossier-photo--centered{/if}{if $item.class_item|default:'' == 'mgv-card--portrait'} mft-dossier-photo--portrait{/if}">
                 {if $photo != ''}<img src="{$photo|escape}" alt="Chân dung {$display_name|escape}" />{/if}
                 <span>MEDUC / ĐỘI NGŨ</span>
             </div>

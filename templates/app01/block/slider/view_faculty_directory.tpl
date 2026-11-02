@@ -4,9 +4,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261015-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty.css?v=20261102-portrait" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback-page.css?v=20261015" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261028-3" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.css?v=20261102-portrait" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261028-1" defer></script>
 
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-application.css?v=20261028-1" rel="stylesheet">
@@ -27,7 +27,7 @@
                     {$photo = $teacher.image|default:''}
                     {if $photo == ''}{continue}{/if}
                     {if $teacher.image_source == 'cdn'}{$photo = "{CDN_URL}{$this->Utilities->getThumbs($teacher.image, 720)}"}{/if}
-                    <div class="mft-portrait mft-portrait--{$index}"><img src="{$photo|escape}" alt="" decoding="async" fetchpriority="{if $index == 0}high{else}auto{/if}" /></div>
+                    <div class="mft-portrait mft-portrait--{$index}{if $teacher.class_item|default:'' == 'mgv-card--portrait'} mft-portrait--portrait{/if}"><img src="{$photo|escape}" alt="" decoding="async" fetchpriority="{if $index == 0}high{else}auto{/if}" /></div>
                 {/foreach}
                 <span class="mft-portrait-caption">CHUYÊN MÔN VỮNG. ĐỒNG HÀNH TẬN TÂM.</span>
             </div>
