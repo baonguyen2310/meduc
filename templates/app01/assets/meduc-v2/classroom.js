@@ -37,6 +37,7 @@
 
   const overview = $("[data-mcr-overview]");
   const lessonView = $('[data-mcr-view="lesson"]');
+  const mockPending = $("[data-mcr-mock-pending]");
   const stages = Object.fromEntries($$("[data-mcr-stage]").map((stage) => [stage.dataset.mcrStage, stage]));
   const poster = $("[data-mcr-poster]");
   const playerHolder = $("[data-mcr-player]");
@@ -363,6 +364,7 @@
     const lesson = byNumber.get(number);
     if (!lesson) { showIntro({ push }); return; }
     stopPlayer();
+    if (mockPending) mockPending.hidden = true;
     current = lesson;
     markCurrent(lesson.link);
     const chapter = lesson.link.closest("details");
@@ -417,7 +419,10 @@
 
   $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
     const number = Number(event.currentTarget.dataset.mcrMockExam);
-    if (!byNumber.has(number)) return;
+    if (!byNumber.has(number)) {
+      if (mockPending) mockPending.hidden = false;
+      return;
+    }
     selectLesson(number, { scroll: false });
     selectTab("quiz");
     lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });

@@ -635,3 +635,7 @@ html[data-meduc-theme="light"] .mcq-practice-feedback.is-wrong { color:#bf2944; 
 .mcr-unit-heading > span { color:var(--mcr-red); font:700 11px/1.4 Inter,Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .mcr-unit-heading > strong { color:var(--mcr-ink); font:700 14px/1.5 Inter,Arial,sans-serif; }
 .mcr-chapter--in-unit > summary { padding-left:24px; }
+
+/* Keep mock-exam navigation available before exams are populated. */
+.mcr-outline-actions--quiz { flex-wrap:wrap; }
+.mcr-mock-pending { flex-basis:100%; margin:0; color:var(--mcr-muted); font:500 12px/1.5 Inter,Arial,sans-serif; }
