@@ -103,7 +103,7 @@ def read_curriculum(db):
 
 def lesson_json(chapter, lesson):
     return {'code': lesson['code'], 'name_vi': lesson['name'], 'chapter_vi': 'n',
-            'review_vi': 'y' if lesson['lesson_kind'] == 'review' else 'n',
+            'lesson_type': 'final' if lesson['lesson_kind'] == 'review' else 'regular', 'tags': [],
             'trial_vi': 'n', 'quiz_id_vi': '', 'youtube_id_vi': '',
             'description_vi': '', 'files': '', 'filestwo': ''}
 
@@ -112,7 +112,7 @@ def course_json(chapters, by_chapter):
     result = []
     for c in chapters:
         result.append({'code': c['code'], 'name_vi': c['name'], 'chapter_vi': 'y',
-                       'review_vi': 'n', 'trial_vi': 'n', 'quiz_id_vi': '',
+                       'trial_vi': 'n', 'quiz_id_vi': '',
                        'youtube_id_vi': '', 'description_vi': '', 'files': '', 'filestwo': ''})
         result.extend(lesson_json(c, l) for l in by_chapter[c['id']])
     return result

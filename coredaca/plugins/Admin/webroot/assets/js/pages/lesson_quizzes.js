@@ -10,6 +10,11 @@ var nhLessonQuizzes = {
 
   init: function () {
     var self = this;
+    function defaults(item) {
+      var type = item.find('[data-name="lesson_type"]');
+      if (!type.val()) type.val('regular');
+    }
+    $('[data-attribute-code="danhsachtiethoc"] .wrap-item').each(function () { defaults($(this)); });
     var widgets = $("[data-lesson-quizzes]");
     if (!widgets.length) return;
 
@@ -25,7 +30,10 @@ var nhLessonQuizzes = {
       new MutationObserver(function (changes) {
         changes.forEach(function (change) {
           change.addedNodes.forEach(function (node) {
-            if (node.nodeType === 1) $(node).find("[data-lesson-quizzes]").each(function () { self.render($(this)); });
+            if (node.nodeType === 1) {
+              defaults($(node));
+              $(node).find("[data-lesson-quizzes]").each(function () { self.render($(this)); });
+            }
           });
         });
       }).observe(list, { childList: true });

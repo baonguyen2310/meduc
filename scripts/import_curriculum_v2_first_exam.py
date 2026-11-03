@@ -116,7 +116,7 @@ def target_course(cur, subject_code, review_code):
             'Target course visibility is inconsistent')
     lessons = json.loads(course['value'])
     matches = [i for i,l in enumerate(lessons) if l['code'] == review_code]
-    require(len(matches) == 1 and lessons[matches[0]]['review_vi'] == 'y',
+    require(len(matches) == 1 and lessons[matches[0]].get('lesson_type', 'regular') != 'regular',
             'Target review lesson is missing')
     return course, lessons, matches[0]
 

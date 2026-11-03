@@ -76,7 +76,7 @@ while(!gzeof($input)){
     }
     $stored=sql('SELECT value FROM quizs_attribute WHERE quiz_id=? AND attribute_id=18 LIMIT 1',[$id])->fetchColumn();
     if(!is_string($stored) || json_decode($stored,true)!==$e['questions'])throw new RuntimeException('Question integrity mismatch '.$id);
-    $curriculum[$m['import_topic']][]=['code'=>'review_'.$m['source_exam_id'],'name_vi'=>$e['name'],'chapter_vi'=>'n','review_vi'=>'y','trial_vi'=>'n','quiz_id_vi'=>(string)$id,'description_vi'=>'','files'=>''];
+    $curriculum[$m['import_topic']][]=['code'=>'review_'.$m['source_exam_id'],'name_vi'=>$e['name'],'chapter_vi'=>'n','lesson_type'=>'final','tags'=>[],'trial_vi'=>'n','quiz_id_vi'=>(string)$id,'description_vi'=>'','files'=>''];
     $total++;$questions+=count($e['questions']);
     if($total%250===0)echo 'Checked '.$total.PHP_EOL;
 }

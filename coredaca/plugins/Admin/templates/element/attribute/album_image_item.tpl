@@ -106,21 +106,23 @@
 
             {if $code == 'danhsachtiethoc'}
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-                {if !empty($languages)}
-                    {foreach from = $languages item = language key = k_lang}
-                        <div class="form-group">
-                            <label>
-                                Đề tổng ôn?
-                            </label>
-
-                            {assign var = key_review value = "review_{$k_lang}"}
-                            <select name="" data-name="review_{$k_lang}" class="form-control form-control-sm">
-                                <option value="n" {if !empty($album.$key_review) && $album.$key_review=="n"}selected{/if}>Không</option>
-                                <option value="y" {if !empty($album.$key_review) && $album.$key_review=="y"}selected{/if}>Có</option>
-                            </select>
-                        </div>
-                    {/foreach}
-                {/if}
+                <div class="form-group">
+                    <label>Loại bài</label>
+                    {$lesson_type = $album.lesson_type|default:'regular'}
+                    <select name="" data-name="lesson_type" class="form-control form-control-sm">
+                        <option value="regular" {if $lesson_type == 'regular'}selected{/if}>Bài thường</option>
+                        <option value="midterm" {if $lesson_type == 'midterm'}selected{/if}>Giữa kỳ</option>
+                        <option value="final" {if $lesson_type == 'final'}selected{/if}>Cuối kỳ</option>
+                        <option value="practical" {if $lesson_type == 'practical'}selected{/if}>Thực hành</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Tag của bài</label>
+                    <input name="" data-name="tags" class="form-control form-control-sm" type="text" value="{if !empty($album.tags)}{if is_array($album.tags)}{implode(', ', $album.tags)|escape}{else}{$album.tags|escape}{/if}{/if}" placeholder="Ví dụ: Quan trọng, Cần ôn lại">
+                    <span class="form-text text-muted">Ngăn cách các tag bằng dấu phẩy. Bài thường hiện đáp án từng câu; Giữa kỳ, Cuối kỳ, Thực hành hiện đáp án sau khi nộp.</span>
+                </div>
             </div>
             {/if}
 

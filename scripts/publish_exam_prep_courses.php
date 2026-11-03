@@ -81,8 +81,8 @@ foreach ($courses as $course) {
     $new_lessons = null;
     if (!restructured($lessons) && $ids) {
         $new_lessons = [
-            ['code' => 'tong_on', 'name_vi' => 'Tổng ôn', 'chapter_vi' => 'y', 'trial_vi' => 'n', 'review_vi' => 'n', 'quiz_id_vi' => '', 'youtube_id_vi' => '', 'description_vi' => '', 'files' => '', 'filestwo' => ''],
-            ['code' => 'bai_tong_on', 'name_vi' => 'Bài tổng ôn', 'chapter_vi' => 'n', 'trial_vi' => 'n', 'review_vi' => 'y', 'quiz_id_vi' => (string)$ids[0],
+            ['code' => 'tong_on', 'name_vi' => 'Tổng ôn', 'chapter_vi' => 'y', 'trial_vi' => 'n', 'quiz_id_vi' => '', 'youtube_id_vi' => '', 'description_vi' => '', 'files' => '', 'filestwo' => ''],
+            ['code' => 'bai_tong_on', 'name_vi' => 'Bài tổng ôn', 'chapter_vi' => 'n', 'trial_vi' => 'n', 'lesson_type' => 'final', 'tags' => [], 'quiz_id_vi' => (string)$ids[0],
              'quizzes_vi' => encoded(array_map(function ($id, $index) { return ['id' => $id, 'free' => $index === 0 ? 'y' : 'n']; }, $ids, array_keys($ids))),
              'youtube_id_vi' => '', 'description_vi' => '', 'files' => '', 'filestwo' => '']
         ];

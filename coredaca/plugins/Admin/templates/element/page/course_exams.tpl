@@ -24,7 +24,11 @@
                                     {if isset($lesson.metadata.question_count)}<span>{$lesson.metadata.question_count} câu</span>{/if}
                                 </div>
                                 {if !empty($lesson.metadata.source_category_name)}<div class="mx-category">{$lesson.metadata.source_category_name|escape}</div>{/if}
-                            {elseif $lesson.review}<div class="mx-meta"><span>Đề tổng ôn</span></div>{/if}
+                            {/if}
+                            <div class="mx-meta">
+                                {if $lesson.exam}<span>{$lesson.type_label|escape}</span>{/if}
+                                {foreach from=$lesson.tags item=tag}<span>{$tag|escape}</span>{/foreach}
+                            </div>
                         </div>
                         {if !empty($lesson.quiz_id)}
                             <div class="mx-actions">

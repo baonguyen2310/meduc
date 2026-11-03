@@ -80,10 +80,10 @@
             	        </h2>
                     </div>
     	        {else}
-                    <div class="accordion-item" data-review="{if !empty($item.review_vi) && $item.review_vi == 'y'}1{else}0{/if}">
+                    <div class="accordion-item" data-exam="{if in_array($item.lesson_type|default:'regular', ['midterm', 'final', 'practical'])}1{else}0{/if}">
     	                <div class="inner-head">
     	                    <h3>
-                            {if !empty($item.review_vi) && $item.review_vi == "y"}
+                            {if in_array($item.lesson_type|default:'regular', ['midterm', 'final', 'practical'])}
                                     <i class="iconsax isax-document-text isax-lg"></i>
                                 {else}
                                     <i class="iconsax isax-video isax-lg"></i>
@@ -132,7 +132,7 @@
     	                                data-lesson-name="{$item.name_vi}"
     	                                data-lesson-code="{$item.code}"
     	                            >
-                                        {if !empty($item.review_vi) && $item.review_vi == "y"}Làm đề thi thử{else}Kiểm tra{/if}
+                                        {if in_array($item.lesson_type|default:'regular', ['midterm', 'final', 'practical'])}Làm đề thi thử{else}Kiểm tra{/if}
                                     </a>
                                 {/if}
                             {/if}

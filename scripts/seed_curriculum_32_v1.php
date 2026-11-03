@@ -66,10 +66,10 @@ try {
                         if ($group!==$l['group_order']) {
                             $group=$l['group_order'];$outline[]=['name_vi'=>$l['group'],'chapter_vi'=>'y','code'=>$s['subject_code'].'-V1-C'.$group];
                         }
-                        $outline[]=['name_vi'=>$l['title'],'code'=>$l['id'],'review_vi'=>'n','curriculum_version'=>$input['version']];
+                        $outline[]=['name_vi'=>$l['title'],'code'=>$l['id'],'lesson_type'=>'regular','tags'=>[],'curriculum_version'=>$input['version']];
                     }
                     $outline[]=['name_vi'=>'Thi thử','chapter_vi'=>'y','code'=>$s['subject_code'].'-V1-C-REVIEW'];
-                    $outline[]=['name_vi'=>'Thi thử','code'=>$s['subject_code'].'-REF-REVIEW','review_vi'=>'y','trial_vi'=>'y'];
+                    $outline[]=['name_vi'=>'Thi thử','code'=>$s['subject_code'].'-REF-REVIEW','lesson_type'=>'final','tags'=>[],'trial_vi'=>'y'];
                 }
                 insert32('products_attribute',['product_id'=>$id,'attribute_id'=>11,'value'=>json32($outline)]);
                 CourseTypes::syncLessons($id);

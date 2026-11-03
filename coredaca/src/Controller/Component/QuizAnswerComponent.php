@@ -123,7 +123,7 @@ class QuizAnswerComponent extends Component
             foreach (LessonQuizzes::of($lesson) as $quiz) {
                 if ($quiz['id'] === $quiz_id) {
                     $free = (int)$slot['slot'] === 1;
-                    $result['mode'] = ($lesson['review_vi'] ?? '') === 'y' ? 'exam' : 'practice';
+                    $result['mode'] = \App\Lib\LessonMetadata::isExam($lesson) ? 'exam' : 'practice';
                 }
             }
         }

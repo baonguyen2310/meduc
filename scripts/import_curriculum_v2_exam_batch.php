@@ -44,7 +44,7 @@ try{
    check(trim($q['ai_general_explanation'])!=='' && in_array($q['difficulty_level'],['easy','medium','upper_medium','hard'],true),'Incomplete enrichment');
    foreach($q['options'] as $o)check(trim($o['ai_explanation'])!=='','Missing option explanation');
    $code=$q['ai_lesson_code'];
-   if($code){check(isset($byCode[$code]) && ($outline[$byCode[$code]]['review_vi']??'n')!=='y','Lesson outside course');$newByLesson[$code][]=$q;}
+   if($code){check(isset($byCode[$code]) && ($outline[$byCode[$code]]['lesson_type']??'regular')==='regular','Lesson outside course');$newByLesson[$code][]=$q;}
    else check($q['ai_lesson_match']==='none','Missing lesson match state');
    $originalKeys[$qid]=$key;
   }

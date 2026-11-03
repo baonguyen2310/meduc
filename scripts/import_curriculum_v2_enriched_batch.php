@@ -62,7 +62,7 @@ try{
    foreach($q['options'] as $o)check(trim($o['ai_explanation'])!=='','Missing option explanation');
    foreach($q['images']??[] as $image)check(is_array($image)&&(bool)preg_match('/^[a-f0-9]{64}$/D',(string)($image['url_hash']??'')),'Invalid media reference');
    $code=$q['ai_lesson_code'];
-   if($code){check(isset($byCode[$code])&&($outline[$byCode[$code]]['review_vi']??'n')!=='y','Lesson outside course');$byLesson[$code][]=$q;}
+   if($code){check(isset($byCode[$code])&&($outline[$byCode[$code]]['lesson_type']??'regular')==='regular','Lesson outside course');$byLesson[$code][]=$q;}
    else check($q['ai_lesson_match']==='none','Invalid lesson match');
   }
  }

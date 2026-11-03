@@ -40,6 +40,11 @@ class AttributeComponent extends Component
             if(empty($input_type)) continue;
 
             $value = !empty($data[$code]) ? $data[$code] : null;
+            if ($type === PRODUCT && $code === 'danhsachtiethoc' && is_array($value)) {
+                $value = array_map(static function ($lesson) {
+                    return is_array($lesson) ? \App\Lib\LessonMetadata::normalize($lesson) : $lesson;
+                }, $value);
+            }
             switch ($input_type) {
                 case NUMERIC:
                     $value = !empty($value) ? floatval(str_replace(',', '', $value)) : 0;

@@ -408,7 +408,7 @@
   });
 
   $("[data-mcr-lesson-exams]")?.addEventListener("click", () => {
-    const lesson = lessons.find((item) => item.link.dataset.review !== "1");
+    const lesson = lessons.find((item) => (item.link.dataset.lessonType || "regular") === "regular");
     if (!lesson) return;
     selectLesson(lesson.number, { scroll: false });
     selectTab("quiz");

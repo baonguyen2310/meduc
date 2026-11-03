@@ -70,6 +70,7 @@
 {$exam_prep = $quiz_course}
 {$first_open = 0}
 {$review_lesson_number = 0}
+{$lesson_type_labels = ['regular' => 'Bài thường', 'midterm' => 'Giữa kỳ', 'final' => 'Cuối kỳ', 'practical' => 'Thực hành']}
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
     {$item_title = $item.name_vi|trim}
@@ -114,12 +115,14 @@
     {if $first_open == 0 && (($video != '' && $open) || $open_quiz)}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
-    {$review = !empty($item.review_vi) && $item.review_vi == 'y'}
+    {$lesson_type = $item.lesson_type|default:'regular'}
+    {$lesson_tags = $item.tags|default:[]}
+    {$review = in_array($lesson_type, ['midterm', 'final', 'practical'])}
     {if $review}{$review_lesson_number = $number}{/if}
     {$code = ''}
     {if !empty($item.code)}{$code = $item.code}{/if}
 
-    {$lessons[] = ['number' => $number, 'title' => $item_title, 'chapter' => $chapter_index, 'video' => $video, 'access' => $access, 'trial' => $trial, 'open' => $open, 'files' => $files, 'quizzes' => $quizzes, 'open_quiz' => $open_quiz, 'free_quiz' => $free_quiz, 'quiz_pending' => count($lesson_quizzes) > count($quizzes), 'review' => $review, 'code' => $code]}
+    {$lessons[] = ['number' => $number, 'title' => $item_title, 'chapter' => $chapter_index, 'video' => $video, 'access' => $access, 'trial' => $trial, 'open' => $open, 'files' => $files, 'quizzes' => $quizzes, 'open_quiz' => $open_quiz, 'free_quiz' => $free_quiz, 'quiz_pending' => count($lesson_quizzes) > count($quizzes), 'exam' => $review, 'lesson_type' => $lesson_type, 'tags' => $lesson_tags, 'code' => $code]}
 {/foreach}
 {$lesson_count = count($lessons)}
 
@@ -196,13 +199,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261030-quiz-modes" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261029-outline-exams" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261103-lesson-metadata" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261103-lesson-metadata" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
 {/if}
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261030-quiz-modes" defer></script>{/if}
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261103-lesson-metadata" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
@@ -337,9 +340,14 @@
                                 {foreach from = $lessons item = lesson}
                                     {if $lesson.chapter != $chapter_key}{continue}{/if}
                                     <li>
-                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-review="{if $lesson.review}1{else}0{/if}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-trial="{if $lesson.trial}1{else}0{/if}" data-free-quiz="{if $lesson.free_quiz}1{else}0{/if}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
+                                        <a class="mcr-lesson" href="?bai={$lesson.number}" data-mcr-lesson="{$lesson.number}" data-lesson-type="{$lesson.lesson_type|escape}" data-video="{$lesson.video}" data-access="{$lesson.access}" data-trial="{if $lesson.trial}1{else}0{/if}" data-free-quiz="{if $lesson.free_quiz}1{else}0{/if}" data-title="{$lesson.title|escape}" data-chapter="{$chapter_title|escape}" data-quiz="{if $lesson.open_quiz}1{else}0{/if}" data-quizzes="{count($lesson.quizzes)}">
                                             <span class="mcr-lesson-number">{$lesson.number|string_format:'%02d'}</span>
-                                            <span class="mcr-lesson-title">{$lesson.title|escape}</span>
+                                            <span class="mcr-lesson-title">{$lesson.title|escape}
+                                                {if $lesson.exam || !empty($lesson.tags)}<span class="mcr-lesson-labels">
+                                                    {if $lesson.exam}<span class="mcr-lesson-label mcr-lesson-label--type">{$lesson_type_labels[$lesson.lesson_type]|escape}</span>{/if}
+                                                    {foreach from=$lesson.tags item=tag}<span class="mcr-lesson-label">{$tag|escape}</span>{/foreach}
+                                                </span>{/if}
+                                            </span>
                                             {if $lesson.access == 'trial' || $lesson.free_quiz}
                                                 <span class="mcr-tag mcr-tag--free">Free</span>
                                             {else}
@@ -480,9 +488,9 @@
                                             {$quiz_info = $course_quizzes.info[$quiz.id]}
                                             <div class="mcr-quiz-card{if !$quiz.open} is-locked{/if}">
                                                 <div>
-                                                    <p class="mcr-quiz-kicker">{if $lesson.review}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
+                                                    <p class="mcr-quiz-kicker">{if $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
                                                     <h3>{$quiz_info.name|escape}</h3>
-                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $lesson.review}Nộp bài để xem điểm và lời giải.{else}Làm từng câu, xem đáp án và lời giải ngay.{/if}{else}Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.{/if}</p>
+                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $lesson.exam}Nộp bài để xem điểm và lời giải.{else}Làm từng câu, xem đáp án và lời giải ngay.{/if}{else}Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.{/if}</p>
                                                 </div>
                                                 <div class="mcr-quiz-actions">
                                                 <button type="button" class="mcr-btn mcr-btn--ghost" data-mcr-quiz-ready="{if $quiz.ready}1{else}0{/if}" data-mcr-quiz-history="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Lịch sử</button>

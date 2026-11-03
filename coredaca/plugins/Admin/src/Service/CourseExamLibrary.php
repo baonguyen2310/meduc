@@ -55,7 +55,10 @@ class CourseExamLibrary
                 if (count($quizIds)>1) $name.=' · đề '.($place+1).(!empty($info[$quizId]['name']) ? ': '.$info[$quizId]['name'] : '');
                 $result[]=[
                     'position'=>$index+1, 'name'=>$name,
-                    'chapter'=>($lesson['chapter_vi']??'')==='y', 'review'=>($lesson['review_vi']??'')==='y',
+                    'chapter'=>($lesson['chapter_vi']??'')==='y', 'exam'=>\App\Lib\LessonMetadata::isExam($lesson),
+                    'lesson_type'=>\App\Lib\LessonMetadata::type($lesson),
+                    'type_label'=>\App\Lib\LessonMetadata::label($lesson),
+                    'tags'=>\App\Lib\LessonMetadata::tags($lesson),
                     'quiz_id'=>!empty($info[$quizId]['stored_questions'])?$quizId:0,
                     'pending'=>isset($info[$quizId]) && empty($info[$quizId]['stored_questions']),
                     'metadata'=>$info[$quizId]??[],
