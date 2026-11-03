@@ -25,7 +25,7 @@ try {
         $before = $outline;
         foreach ($outline as &$lesson) {
             if (!is_array($lesson)) continue;
-            if (($lesson['chapter_vi'] ?? '') !== 'y') {
+            if (!\App\Lib\LessonMetadata::isGroup($lesson)) {
                 if (empty($lesson['lesson_type']) && ($lesson['review_vi'] ?? '') === 'y') {
                     $lesson['lesson_type'] = 'final';
                     $counts['converted_mock_exams']++;
@@ -33,7 +33,7 @@ try {
                 $counts['lessons']++;
             }
             $lesson = \App\Lib\LessonMetadata::normalize($lesson);
-            if (($lesson['chapter_vi'] ?? '') !== 'y') {
+            if (!\App\Lib\LessonMetadata::isGroup($lesson)) {
                 $type = $lesson['lesson_type'];
                 $counts['types'][$type] = ($counts['types'][$type] ?? 0) + 1;
             }

@@ -53,7 +53,7 @@ final class CourseTypes
         if ($kind!=='quiz') return; // Preserve legacy video exercises in storage, but do not expose them.
         $used=[];
         foreach ($lessons as &$lesson) {
-            if (($lesson['chapter_vi']??'')==='y') continue;
+            if (\App\Lib\LessonMetadata::isGroup($lesson)) continue;
             $quizzes=LessonQuizzes::of($lesson);
             if(count($quizzes)>2) throw new InvalidArgumentException('Mỗi bài của khoá trắc nghiệm chỉ có 2 bài tập.');
             for($i=0;$i<2;$i++) {

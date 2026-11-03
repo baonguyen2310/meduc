@@ -7,6 +7,21 @@ use InvalidArgumentException;
 /** Metadata belongs to a lesson, independently of its quizzes and free/paid access. */
 final class LessonMetadata
 {
+    public const OUTLINE_TYPES = ['unit'=>'Học phần', 'chapter'=>'Chương', 'lesson'=>'Bài học'];
+
+    /** Older courses still use chapter_xx; học phần is optional. */
+    public static function outlineType(array $item, string $lang = 'vi'): string
+    {
+        $kind = $item['outline_type'] ?? '';
+        if (is_string($kind) && isset(self::OUTLINE_TYPES[$kind])) return $kind;
+        return ($item['chapter_'.$lang] ?? '') === 'y' ? 'chapter' : 'lesson';
+    }
+
+    public static function isGroup(array $item, string $lang = 'vi'): bool
+    {
+        return self::outlineType($item, $lang) !== 'lesson';
+    }
+
     public const TYPES = [
         'regular' => 'Bài thường',
         'midterm' => 'Giữa kỳ',
@@ -22,7 +37,7 @@ final class LessonMetadata
 
     public static function isExam(array $lesson): bool
     {
-        return self::type($lesson) !== 'regular';
+        return !self::isGroup($lesson) && self::type($lesson) !== 'regular';
     }
 
     public static function label(array $lesson): string
@@ -55,7 +70,13 @@ final class LessonMetadata
         foreach (array_keys($lesson) as $key) {
             if (strpos((string)$key, 'review_') === 0) unset($lesson[$key]);
         }
-        if (($lesson['chapter_vi'] ?? '') === 'y') {
+        $kind = $lesson['outline_type'] ?? '';
+        if ($kind !== '' && (!is_string($kind) || !isset(self::OUTLINE_TYPES[$kind]))) {
+            throw new InvalidArgumentException('Loại mục trong lộ trình không hợp lệ.');
+        }
+        $lesson['outline_type'] = self::outlineType($lesson);
+        $lesson['chapter_vi'] = $lesson['outline_type'] === 'chapter' ? 'y' : 'n';
+        if (self::isGroup($lesson)) {
             unset($lesson['lesson_type'], $lesson['tags']);
             return $lesson;
         }

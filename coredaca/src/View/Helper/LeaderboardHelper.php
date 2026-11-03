@@ -234,7 +234,8 @@ class LeaderboardHelper extends Helper
         $chapter_of = [];
         $chapter = 'Bài học';
         foreach ($lessons as $lesson) {
-            if (($lesson['chapter_vi'] ?? null) === 'y') {
+            if (\App\Lib\LessonMetadata::outlineType($lesson) === 'unit') continue;
+            if (\App\Lib\LessonMetadata::isGroup($lesson)) {
                 $chapter = trim((string)($lesson['name_vi'] ?? '')) ?: $chapter;
                 continue;
             }

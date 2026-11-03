@@ -82,7 +82,8 @@ class ProductHelper extends Helper
             $first_trial_video = $first_free_quiz = $first_quiz = 0;
             foreach (is_array($lessons) ? $lessons : [] as $lesson) {
                 if (!is_array($lesson) || empty($lesson['name_' . $lang])) continue;
-                if (($lesson['chapter_' . $lang] ?? '') === 'y') { $chapters++; continue; }
+                if (\App\Lib\LessonMetadata::outlineType($lesson, $lang) === 'unit') continue;
+                if (\App\Lib\LessonMetadata::isGroup($lesson, $lang)) { $chapters++; continue; }
                 $lesson_count++;
                 $video = preg_replace('/[^\w-].*$/s', '', trim((string) ($lesson['youtube_id_' . $lang] ?? '')));
                 if (!$first_trial_video && ($lesson['trial_' . $lang] ?? '') === 'y' && strlen($video) === 11) $first_trial_video = $lesson_count;
@@ -326,6 +327,11 @@ class ProductHelper extends Helper
     public function getLessonQuizzes($lesson = [], $kind = null)
     {
         return $kind === null ? LessonQuizzes::of($lesson) : \App\Service\CourseTypes::quizzes($lesson, $kind);
+    }
+
+    public function getLessonOutlineType($item, $lang = 'vi')
+    {
+        return \App\Lib\LessonMetadata::outlineType(is_array($item) ? $item : [], $lang);
     }
 
     /** Bài tập của trang khóa học (block/product_detail/view_classroom.tpl)

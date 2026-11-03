@@ -86,7 +86,8 @@ class CoursePricing
                 $chapters=$lessons=0;
                 foreach ((array)json_decode((string)$curriculum['value'],true) as $lesson) {
                     if (!is_array($lesson) || empty($lesson['name_vi'])) continue;
-                    if (($lesson['chapter_vi']??'')==='y') $chapters++; else $lessons++;
+                    if (\App\Lib\LessonMetadata::outlineType($lesson)==='unit') continue;
+                    if (\App\Lib\LessonMetadata::isGroup($lesson)) $chapters++; else $lessons++;
                 }
                 $meta[(int)$curriculum['product_id']]=['chapters'=>$chapters,'lessons'=>$lessons];
             }

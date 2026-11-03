@@ -11,6 +11,9 @@ var nhLessonQuizzes = {
   init: function () {
     var self = this;
     function defaults(item) {
+      var outline = item.find('[data-name="outline_type"]');
+      if (outline.length && !outline.val()) outline.val('lesson');
+      item.find('.nh-lesson-only').toggle(!outline.length || outline.val() === 'lesson');
       var type = item.find('[data-name="lesson_type"]');
       if (!type.val()) type.val('regular');
     }
@@ -21,6 +24,11 @@ var nhLessonQuizzes = {
     widgets.each(function () { self.render($(this)); });
     self.loadInfo(widgets);
     self.events();
+    $(document).on('change', '[data-name="outline_type"]', function () {
+      var item = $(this).closest('.wrap-item');
+      defaults(item);
+      item.find('[data-lesson-quizzes]').each(function () { self.render($(this)); });
+    });
     $('#course-kind').on('change', function () {
       $('[data-lesson-quizzes]').each(function () {self.render($(this));});
     });
@@ -71,7 +79,8 @@ var nhLessonQuizzes = {
   render: function (widget, list) {
     var self = this;
     var kind = $('#course-kind').val();
-    widget.toggle(kind !== 'knowledge' && kind !== 'exam_solution');
+    var outline = widget.closest('.wrap-item').find('[data-name="outline_type"]').val() || 'lesson';
+    widget.toggle(outline === 'lesson' && kind !== 'knowledge' && kind !== 'exam_solution');
     list = list || self.read(widget);
     widget.find('.nh-lesson-quiz-add').toggle(kind !== 'quiz' || list.length < 2);
     var holder = widget.find("[data-lesson-quizzes-list]").empty();

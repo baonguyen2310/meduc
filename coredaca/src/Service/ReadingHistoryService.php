@@ -62,7 +62,8 @@ class ReadingHistoryService
             $chapters=$count=$video=$quiz=0;
             foreach (is_array($lessons)?$lessons:[] as $lesson) {
                 if (!is_array($lesson) || empty($lesson['name_'.$this->lang])) continue;
-                if (($lesson['chapter_'.$this->lang]??'')==='y') { $chapters++;continue; }
+                if (\App\Lib\LessonMetadata::outlineType($lesson,$this->lang)==='unit') continue;
+                if (\App\Lib\LessonMetadata::isGroup($lesson,$this->lang)) { $chapters++;continue; }
                 $count++;
                 $youtube=preg_replace('/[^\w-].*$/s','',trim((string)($lesson['youtube_id_'.$this->lang]??'')));
                 if (!$video && ($lesson['trial_'.$this->lang]??'')==='y' && strlen($youtube)===11) $video=$count;

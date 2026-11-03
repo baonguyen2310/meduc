@@ -71,7 +71,10 @@
         <div class="accordion-list">
             {foreach from = $danhsachtiethoc key = key item = item}
                 
-                {if !empty($item.chapter_vi) && ($item.chapter_vi == "y")}
+                {$outline_type = $this->Product->getLessonOutlineType($item)}
+                {if $outline_type == 'unit'}
+                    <div class="accordion-chapter"><h2>Học phần · {$item.name_vi|escape}</h2></div>
+                {elseif $outline_type == 'chapter'}
                     <div class="accordion-chapter">
             	        <h2>
             	            {if !empty($item.name_vi)}

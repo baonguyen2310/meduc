@@ -18,9 +18,22 @@ expect(count($lesson['tags']) === 2, 'Tags must split, trim and deduplicate.');
 expect(LessonMetadata::normalize(['tags'=>''])['tags'] === [], 'Clearing tags must save an empty list.');
 expect(LessonMetadata::normalize(['lesson_type'=>''])['lesson_type'] === 'regular', 'New cloned lesson must default to regular.');
 $chapter = LessonMetadata::normalize(['chapter_vi'=>'y', 'lesson_type'=>'final', 'tags'=>['X'], 'review_vi'=>'n']);
-expect($chapter === ['chapter_vi'=>'y'], 'Chapters must not become exam lessons.');
+expect($chapter === ['chapter_vi'=>'y', 'outline_type'=>'chapter'], 'Chapters must not become exam lessons.');
 try {
     LessonMetadata::normalize(['lesson_type'=>'invalid']);
     throw new RuntimeException('Invalid type was accepted.');
 } catch (InvalidArgumentException $expected) {}
 echo "Lesson type, quiz mode, tags and preservation checks passed.\n";
+
+foreach (['unit','chapter'] as $kind) {
+    $group = ['outline_type'=>$kind, 'lesson_type'=>'final', 'quizzes_vi'=>'[{"id":99,"free":"y"}]'];
+    expect(LessonMetadata::isGroup($group), 'Grouping row was treated as a lesson.');
+    expect(!LessonMetadata::isExam($group), 'Grouping row was treated as an exam.');
+    require_once dirname(__DIR__).'/coredaca/src/Lib/LessonQuizzes.php';
+    expect(\App\Lib\LessonQuizzes::of($group) === [], 'Grouping row has exercises.');
+    $normalized = LessonMetadata::normalize($group);
+    expect(!isset($normalized['lesson_type']), 'Grouping row retained a lesson type.');
+}
+expect(LessonMetadata::outlineType(['chapter_vi'=>'y']) === 'chapter', 'Old chapter compatibility lost.');
+expect(LessonMetadata::outlineType([]) === 'lesson', 'Old lesson compatibility lost.');
+echo "Optional unit/chapter/lesson hierarchy checks passed.\n";

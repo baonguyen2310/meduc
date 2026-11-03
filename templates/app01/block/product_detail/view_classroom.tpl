@@ -59,6 +59,9 @@
 {if !is_array($raw_lessons)}{$raw_lessons = []}{/if}
 {* Quizzes of the lessons: name and size of each; classroom-quiz.js loads the questions when a quiz starts. *}
 {$course_quizzes = $this->Product->getCourseQuizData(['lesson_list' => $raw_lessons, 'product_id' => $product.id])}
+{$units = []}
+{$unit_index = -1}
+{$chapter_units = []}
 {$chapters = []}
 {$lessons = []}
 {$chapter_index = -1}
@@ -74,14 +77,23 @@
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
     {$item_title = $item.name_vi|trim}
-    {if !empty($item.chapter_vi) && $item.chapter_vi == 'y'}
+    {$outline_type = $this->Product->getLessonOutlineType($item)}
+    {if $outline_type == 'unit'}
+        {$units[] = $item_title}
+        {$unit_index = count($units) - 1}
+        {$chapter_index = -1}
+        {continue}
+    {/if}
+    {if $outline_type == 'chapter'}
         {$chapters[] = $item_title}
         {$chapter_index = count($chapters) - 1}
+        {$chapter_units[$chapter_index] = $unit_index}
         {continue}
     {/if}
     {if $chapter_index < 0}
         {$chapters[] = 'Bài học'}
-        {$chapter_index = 0}
+        {$chapter_index = count($chapters) - 1}
+        {$chapter_units[$chapter_index] = $unit_index}
     {/if}
 
     {$video = ''}
@@ -199,13 +211,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261103-lesson-metadata" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261103-lesson-metadata" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261103-course-units" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261103-course-units" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
 {/if}
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261103-lesson-metadata" defer></script>{/if}
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261103-course-units" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
@@ -326,11 +338,20 @@
                     {if $exam_prep && $review_lesson_number > 0}<button type="button" class="mcr-mock-exam" data-mcr-mock-exam="{$review_lesson_number}">Thi thử</button>{/if}
                 </div>
                 <div class="mcr-outline">
+                    {$previous_unit = -2}
                     {foreach from = $chapters key = chapter_key item = chapter_title}
                         {$chapter_size = 0}
                         {foreach from = $lessons item = lesson}{if $lesson.chapter == $chapter_key}{$chapter_size = $chapter_size + 1}{/if}{/foreach}
                         {if $chapter_size == 0}{continue}{/if}
-                        <details class="mcr-chapter" open>
+                        {$chapter_unit = $chapter_units[$chapter_key]|default:-1}
+                        {if $chapter_unit >= 0 && $chapter_unit != $previous_unit}
+                            <div class="mcr-unit-heading" role="heading" aria-level="3">
+                                <span>Học phần {$chapter_unit + 1}</span>
+                                <strong>{$units[$chapter_unit]|escape}</strong>
+                            </div>
+                        {/if}
+                        {$previous_unit = $chapter_unit}
+                        <details class="mcr-chapter{if $chapter_unit >= 0} mcr-chapter--in-unit{/if}" open>
                             <summary>
                                 <span class="mcr-chapter-number">{($chapter_key + 1)|string_format:'%02d'}</span>
                                 <span class="mcr-chapter-title">{$chapter_title|escape}<small>{$chapter_size} bài</small></span>

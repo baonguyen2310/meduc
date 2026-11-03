@@ -1,0 +1,267 @@
+{
+  "version": "ceo-anatomy-20261103",
+  "subject_code": "MV2-S004",
+  "name": "Giải phẫu học",
+  "units": [
+    {
+      "number": 1,
+      "name": "Giải phẫu Cơ - Xương - Khớp - Thần kinh (GP 1)",
+      "chapters": [
+        {
+          "number": 1,
+          "name": "Đại cương & Chi trên (HMU & UMP)",
+          "lessons": [
+            {
+              "number": 1,
+              "name": "Đại cương Giải phẫu: Thuật ngữ, tư thế, mặt phẳng và định hướng giải phẫu.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 2,
+              "name": "Đại cương về Xương, Khớp và Cơ.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 3,
+              "name": "Xương - Khớp - Cơ Chi trên (Đai vai, cánh tay, cẳng tay, bàn tay).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 4,
+              "name": "Mạch máu, Thần kinh & Định khu Chi trên (Đám rối thần kinh cánh tay, tam giác nách, hố khuỷu, ống cổ tay).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "name": "Chi dưới & Thân mình",
+          "lessons": [
+            {
+              "number": 5,
+              "name": "Xương - Khớp - Cơ Chi dưới (Đai hông, đùi, cẳng chân, bàn chân).",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 6,
+              "name": "Mạch máu, Thần kinh & Định khu Chi dưới (Tam giác đùi, ống cơ khép, hố khoeo, ống cổ chân).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 7,
+              "name": "Xương - Khớp - Cơ Thân mình (Cột sống, lồng ngực và các nhóm cơ lưng - ngực).",
+              "lesson_type": "regular",
+              "tags": []
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Đầu - Mặt - Cổ (Phần trọng tâm thi)",
+          "lessons": [
+            {
+              "number": 8,
+              "name": "Khối Xương sọ, Nền sọ và các lỗ nền sọ (Cực kỳ hay thi trắc nghiệm & lâm sàng).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 9,
+              "name": "Cơ mặt, cơ nhai và các Tam giác cổ (Tam giác cảnh, tam giác dưới hàm...).",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 10,
+              "name": "Mạch máu & Thần kinh vùng Đầu - Mặt - Cổ (Động mạch cảnh, tĩnh mạch cảnh, các nhánh dây thần kinh).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Hệ Thần kinh & Mắt - Tai",
+          "lessons": [
+            {
+              "number": 11,
+              "name": "Tủy sống, màng não - tủy và Dịch não tủy.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 12,
+              "name": "Thân não, Tiểu não và 12 đôi Dây thần kinh sọ (Trọng tâm lớn nhất của GP Thần kinh).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 13,
+              "name": "Gian não, Đoan não và Đường dẫn truyền thần kinh.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 14,
+              "name": "Mắt, Tai & Cơ quan thị giác - thính giác.",
+              "lesson_type": "regular",
+              "tags": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Giải phẫu Hệ cơ quan (Module Y cơ sở / GP 2)",
+      "chapters": [
+        {
+          "number": 5,
+          "name": "Ngực & Hệ Tuần hoàn - Hô hấp",
+          "lessons": [
+            {
+              "number": 15,
+              "name": "Thành ngực, Cơ hoành và Trung thất.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 16,
+              "name": "Tim: Hình thể ngoài, hình thể trong, buồng tim và van tim.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 17,
+              "name": "Mạch máu tim (Động mạch vành) & Mạch máu lớn vùng ngực.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 18,
+              "name": "Đường hô hấp trên: Mũi, Hầu, Thanh quản, Khí - Phế quản.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 19,
+              "name": "Phổi, Màng phổi và Phân thùy phế quản - phổi (Cơ sở cho Chẩn đoán hình ảnh & Nội/Ngoại hô hấp).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "name": "Bụng & Hệ Tiêu hóa",
+          "lessons": [
+            {
+              "number": 20,
+              "name": "Thành bụng, Ống bẹn và Phúc mạc (Trọng tâm Ngoại khoa: Thoát vị bẹn, viêm phúc mạc).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 21,
+              "name": "Ống tiêu hóa trên: Ổ miệng, Tuyến nước bọt, Thực quản và Dạ dày.",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 22,
+              "name": "Ruột non, Ruột già, Trực tràng và Hậu môn (Đặc biệt là Ruột thừa & Trực tràng).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 23,
+              "name": "Gan, Hệ thống Đường mật, Túi mật và Lách.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 24,
+              "name": "Tụy và Hệ thống Mạch máu vùng bụng (Động mạch thân tạng, ĐM mạc treo tràng trên/dưới).",
+              "lesson_type": "regular",
+              "tags": []
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "name": "Tiết niệu & Sinh dục - Chậu hông",
+          "lessons": [
+            {
+              "number": 25,
+              "name": "Thận, Tuyến thượng thận và Niệu quản.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 26,
+              "name": "Bàng quang và Niệu đạo (Nam & Nữ).",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 27,
+              "name": "Cơ quan sinh dục Nam (Tinh hoàn, ống dẫn tinh, tuyến tiền liệt...).",
+              "lesson_type": "regular",
+              "tags": []
+            },
+            {
+              "number": 28,
+              "name": "Cơ quan sinh dục Nữ (Buồng trứng, vòi tử cung, tử cung, âm đạo).",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            },
+            {
+              "number": 29,
+              "name": "Chậu hông, Đáy chậu và Mạch máu - Thần kinh chậu hông.",
+              "lesson_type": "regular",
+              "tags": [
+                "Trọng tâm"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

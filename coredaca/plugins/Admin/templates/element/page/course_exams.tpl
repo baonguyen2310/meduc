@@ -10,7 +10,9 @@
         <div class="mx-tools"><label class="mx-search"><i class="la la-search" aria-hidden="true"></i><input type="search" data-exam-search placeholder="Tìm tên đề{if !empty($course_is_exam_prep)}, trường, năm…{else}…{/if}" aria-label="Tìm trong danh sách bài"></label><span data-exam-visible></span></div>
         <div class="mx-lessons">
             {foreach from=$course_lessons item=lesson}
-                {if $lesson.chapter}
+                {if $lesson.unit}
+                    <h2 class="mx-chapter">Học phần · {$lesson.name|escape}</h2>
+                {elseif $lesson.chapter}
                     <h3 class="mx-chapter">{$lesson.name|escape}</h3>
                 {else}
                     <article class="mx-lesson" data-exam-row>

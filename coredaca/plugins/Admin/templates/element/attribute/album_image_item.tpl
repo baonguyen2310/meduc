@@ -69,24 +69,32 @@
             </div>
 
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-                {if !empty($languages)}
-                    {foreach from = $languages item = language key = k_lang}
-                        <div class="form-group">
-                            <label>
-                                Tiêu đề chương?
-                            </label>
-
-                            {assign var = key_chapter value = "chapter_{$k_lang}"}
+                {if $code == 'danhsachtiethoc'}
+                    {$outline_type = $album.outline_type|default:''}
+                    {if $outline_type == ''}{if !empty($album.chapter_vi) && $album.chapter_vi == 'y'}{$outline_type = 'chapter'}{else}{$outline_type = 'lesson'}{/if}{/if}
+                    <div class="form-group">
+                        <label>Loại mục lộ trình</label>
+                        <select name="" data-name="outline_type" class="form-control form-control-sm">
+                            <option value="lesson" {if $outline_type == 'lesson'}selected{/if}>Bài học</option>
+                            <option value="chapter" {if $outline_type == 'chapter'}selected{/if}>Chương</option>
+                            <option value="unit" {if $outline_type == 'unit'}selected{/if}>Học phần</option>
+                        </select>
+                        <span class="form-text text-muted">Sắp xếp Học phần → Chương → Bài. Có thể bỏ qua Học phần.</span>
+                    </div>
+                {else}
+                    {foreach from=$languages item=language key=k_lang}
+                        {$key_chapter = "chapter_{$k_lang}"}
+                        <div class="form-group"><label>Tiêu đề chương?</label>
                             <select name="" data-name="chapter_{$k_lang}" class="form-control form-control-sm">
-                                <option value="n" {if !empty($album.$key_chapter) && $album.$key_chapter=="n"}selected{/if}>Không</option>
-                                <option value="y" {if !empty($album.$key_chapter) && $album.$key_chapter=="y"}selected{/if}>Có</option>
+                                <option value="n">Không</option>
+                                <option value="y" {if !empty($album.$key_chapter) && $album.$key_chapter == 'y'}selected{/if}>Có</option>
                             </select>
                         </div>
                     {/foreach}
                 {/if}
             </div>
 
-            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+            <div class="col-lg-2 col-md-4 col-sm-6 col-12 nh-lesson-only">
                 {if !empty($languages)}
                     {foreach from = $languages item = language key = k_lang}
                         <div class="form-group">
@@ -105,7 +113,7 @@
             </div>
 
             {if $code == 'danhsachtiethoc'}
-            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+            <div class="col-lg-2 col-md-4 col-sm-6 col-12 nh-lesson-only">
                 <div class="form-group">
                     <label>Loại bài</label>
                     {$lesson_type = $album.lesson_type|default:'regular'}
@@ -117,7 +125,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 nh-lesson-only">
                 <div class="form-group">
                     <label>Tag của bài</label>
                     <input name="" data-name="tags" class="form-control form-control-sm" type="text" value="{if !empty($album.tags)}{if is_array($album.tags)}{implode(', ', $album.tags)|escape}{else}{$album.tags|escape}{/if}{/if}" placeholder="Ví dụ: Quan trọng, Cần ôn lại">
@@ -174,7 +182,7 @@
             {/if}
         {/if}
         
-        <div class="row">
+        <div class="row nh-lesson-only">
             <div class="col-lg-12 col-12 d-none">
                 {if !empty($languages)}
                     {foreach from = $languages item = language key = k_lang}
@@ -229,7 +237,7 @@
             </div>
         </div>
         
-        <div class="row">
+        <div class="row nh-lesson-only">
             <div class="col-xl-6 col-lg-6">
                 <label>
                     File Video

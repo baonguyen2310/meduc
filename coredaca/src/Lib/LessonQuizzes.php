@@ -15,7 +15,7 @@ final class LessonQuizzes
     /** [['id' => int, 'free' => bool], ...] for one lesson; chapters have none. */
     public static function of($lesson, string $lang = 'vi'): array
     {
-        if (!is_array($lesson) || ($lesson['chapter_' . $lang] ?? null) === 'y') return [];
+        if (!is_array($lesson) || LessonMetadata::isGroup($lesson, $lang)) return [];
 
         $list = $lesson['quizzes_' . $lang] ?? null;
         if (is_string($list) && trim($list) !== '') $list = json_decode($list, true);
