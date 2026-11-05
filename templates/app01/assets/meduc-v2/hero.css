@@ -128,3 +128,6 @@ html[data-meduc-theme="light"] .mhw {
 @media (prefers-reduced-motion: reduce) {
   .mhw-track { animation: none; }
 }
+
+/* Keep the top of newly uploaded portraits visible in every wall tile. */
+.mhw-tile--portrait img { object-position:50% 0%; }

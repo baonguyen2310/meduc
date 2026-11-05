@@ -40,8 +40,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261022-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261105-portrait-framing" rel="stylesheet">
 
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-photos.js?v=20261105-portrait-framing" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.js?v=20261022-1" defer></script>
 
 <section class="mhw">

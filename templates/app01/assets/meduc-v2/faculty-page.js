@@ -91,6 +91,7 @@
     if (!template) return;
     opener = button;
     content.replaceChildren(template.content.cloneNode(true));
+    window.MeducFacultyPhotos?.refresh(content);
     dialog.showModal();
     document.documentElement.classList.add('mft-profile-open');
     content.scrollTop = 0;
