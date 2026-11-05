@@ -68,3 +68,15 @@ html[data-meduc-theme="light"] .mcl {
   .mcl-frame { height: auto; aspect-ratio: 16 / 9; }
 }
 @media (prefers-reduced-motion: reduce) { .mcl-button { transition: none; } }
+
+/* Diagrams keep their complete content; the adjacent copy never covers their labels. */
+.mcl-banner.mcl-banner--diagram { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); align-items:center; gap:clamp(24px,4vw,56px); height:auto; overflow:visible; }
+.mcl-banner--diagram .mcl-media { position:relative; inset:auto; width:100%; aspect-ratio:3/2; overflow:hidden; border-radius:12px; background:#fff; }
+.mcl-banner--diagram .mcl-media img { width:100%; height:auto; object-fit:contain; }
+.mcl-banner.mcl-banner--diagram::after { display:none; }
+.mcl-banner--diagram .mcl-copy { position:static; inset:auto; width:auto; margin:0; padding:20px 0; }
+.mcl-diagram-link { display:block; width:100%; }
+@media(max-width:900px) {
+  .mcl-banner.mcl-banner--diagram { grid-template-columns:minmax(0,1fr); gap:24px; }
+  .mcl-banner--diagram .mcl-copy { padding:0 8px; }
+}

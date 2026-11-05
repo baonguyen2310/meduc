@@ -3,13 +3,14 @@
    Optional copy/photos: anh_vi_sao, mo_ta_anh_vi_sao, anh_ap_dung,
    ap_dung_tieu_de_1, ap_dung_tieu_de_2, ap_dung_mo_ta. *}
 {$text = $data_extend.locale[{LANGUAGE}]|default:[]}
+{$full_picture = !empty($text.anh_day_du)}
 {$picture = $this->Utilities->replaceVariableSystem($text.anh|default:'/templates/app01/assets/meduc-v2/method/study-editorial.jpg')}
 {$why_picture = $this->Utilities->replaceVariableSystem($text.anh_vi_sao|default:'/templates/app01/assets/meduc-v2/feedback/hoc-vien-meduc.jpg')}
 {$apply_picture = $this->Utilities->replaceVariableSystem($text.anh_ap_dung|default:'/templates/app01/assets/meduc-v2/feedback/lop-lam-sang.jpg')}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261028-3" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261106-complete-image" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.js?v=20261028-1" defer></script>
 
 <main class="mmp" id="meduc-method">
@@ -20,9 +21,10 @@
             <p class="mmp-lead">{$text.mo_ta|default:'Học Y bắt đầu từ điều cần hiểu: bản chất của vấn đề, mối liên hệ giữa các kiến thức và cách vận dụng vào từng câu hỏi, từng tình huống.'|escape}</p>
             <div class="mmp-actions"><a class="mmp-button mmp-button--primary" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a><a class="mmp-text-link" href="#vi-sao">Xem cách học <span aria-hidden="true">↓</span></a></div>
         </div>
-        <figure class="mmp-hero-visual">
-            <img src="{$picture|escape}" alt="{$text.mo_ta_anh|default:'Hình minh họa sinh viên trao đổi kiến thức y khoa'|escape}" fetchpriority="high" decoding="async" width="1024" height="1024">
-            <figcaption><span>CORE LEARNING</span><p>Từ một câu hỏi.<br>Đến cả một khái niệm.</p></figcaption>
+        <figure class="mmp-hero-visual{if $full_picture} mmp-hero-visual--diagram{/if}">
+            {if $full_picture}<a href="{$picture|escape}" target="_blank" rel="noopener" aria-label="Xem ảnh phương pháp học đầy đủ">{/if}
+            <img src="{$picture|escape}" alt="{$text.mo_ta_anh|default:'Hình minh họa sinh viên trao đổi kiến thức y khoa'|escape}" fetchpriority="high" decoding="async"{if $full_picture} width="1536" height="1024"{else} width="1024" height="1024"{/if}>
+            {if $full_picture}</a>{else}<figcaption><span>CORE LEARNING</span><p>Từ một câu hỏi.<br>Đến cả một khái niệm.</p></figcaption>{/if}
         </figure>
     </section>
 

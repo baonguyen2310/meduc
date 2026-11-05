@@ -11,6 +11,7 @@
     {assign var = text value = $data_extend.locale[{LANGUAGE}]}
 {/if}
 
+{$full_picture = !empty($text.anh_day_du)}
 {$picture = ''}
 {if !empty($text.anh)}{$picture = $this->Utilities->replaceVariableSystem($text.anh|trim)}{/if}
 
@@ -25,17 +26,19 @@
 {if $picture == '' && $video_id != ''}{$picture = "https://i.ytimg.com/vi/{$video_id}/maxresdefault.jpg"}{/if}
 
 
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method.css?v=20261106-complete-image" rel="stylesheet">
 {if $video_id != ''}
     <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method.js?v=20261015" defer></script>
 {/if}
 
 <section class="mcl" {if !empty($text.tieu_de)}aria-labelledby="mcl-title"{/if}>
     <div class="mcl-shell">
-        <div class="mcl-banner{if $picture == ''} mcl-banner--text{/if}">
+        <div class="mcl-banner{if $picture == ''} mcl-banner--text{/if}{if $full_picture} mcl-banner--diagram{/if}">
             {if $picture != ''}
                 <div class="mcl-media">
-                    <img src="{$picture|escape}" alt="" loading="lazy" decoding="async" />
+                    {if $full_picture}<a class="mcl-diagram-link" href="{$picture|escape}" target="_blank" rel="noopener" aria-label="Xem ảnh phương pháp học đầy đủ">{/if}
+                    <img src="{$picture|escape}" alt="{$text.mo_ta_anh|default:''|escape}" loading="lazy" decoding="async" />
+                    {if $full_picture}</a>{/if}
                 </div>
             {/if}
             <div class="mcl-copy">

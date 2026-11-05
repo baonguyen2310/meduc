@@ -129,3 +129,9 @@ html[data-meduc-theme="light"] .mmp { --mp-bg:#fff; --mp-panel:#f5f5f7; --mp-ink
 @media(prefers-reduced-motion:reduce) { .mmp .mmp-button { transition:none; } }
 
 @media(max-width:650px) { .mmp-core-grid { grid-template-columns:1fr; } }
+
+/* An uploaded teaching diagram is readable in full, without the editorial photo overlay. */
+.mmp .mmp-hero-visual.mmp-hero-visual--diagram { aspect-ratio:3/2; background:#fff; }
+.mmp-hero-visual--diagram::after { display:none; }
+.mmp-hero-visual--diagram a { display:block; width:100%; }
+.mmp-hero-visual--diagram img { width:100%; height:auto; object-fit:contain; }
