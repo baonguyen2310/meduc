@@ -395,6 +395,7 @@
                             {else}
                                 <button type="button" role="tab" id="mcr-tab-video" aria-controls="mcr-panel-video" aria-selected="true" data-mcr-tab="video">{if $course_kind == 'exam_solution'}Video chữa bài{else}Video{/if}</button>
                                 <button type="button" role="tab" id="mcr-tab-files" aria-controls="mcr-panel-files" aria-selected="false" tabindex="-1" data-mcr-tab="files">Tài liệu</button>
+                                <button type="button" role="tab" id="mcr-tab-quiz" aria-controls="mcr-panel-quiz" aria-selected="false" tabindex="-1" data-mcr-tab="quiz">Bài tập</button>
                                 <a class="mcr-tab-jump" href="#mcr-course-title" data-mcr-back-to-intro>Giới thiệu</a>
                             {/if}
                         </div>
@@ -491,7 +492,6 @@
                     </div>
 
                     {/if}
-                    {if $quiz_course}
                     <div class="mcr-panel" id="mcr-panel-quiz" role="tabpanel" aria-labelledby="mcr-tab-quiz" data-mcr-panel="quiz"{if !$exam_prep} hidden{/if}>
                         {foreach from = $lessons item = lesson}
                             <div class="mcr-resource" data-mcr-quiz="{$lesson.number}" hidden>
@@ -512,14 +512,14 @@
                                                 <div>
                                                     <p class="mcr-quiz-kicker">{if $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
                                                     <h3>{$quiz_info.name|escape}</h3>
-                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $lesson.exam}Nộp bài để xem điểm và lời giải.{else}Làm từng câu, xem đáp án và lời giải ngay.{/if}{else}Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.{/if}</p>
+                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $quiz_course && !$lesson.exam}Làm từng câu, xem đáp án và lời giải ngay.{else}Nộp bài để xem điểm và lời giải.{/if}{else}{if $quiz_course}Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.{else}Đăng ký khoá học để làm bài tập này.{/if}{/if}</p>
                                                 </div>
                                                 <div class="mcr-quiz-actions">
                                                 <button type="button" class="mcr-btn mcr-btn--ghost" data-mcr-quiz-ready="{if $quiz.ready}1{else}0{/if}" data-mcr-quiz-history="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Lịch sử</button>
                                                 <button type="button" class="mcr-btn mcr-btn--primary" data-mcr-quiz-ready="{if $quiz.ready}1{else}0{/if}" data-mcr-quiz-start="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Làm bài</button>
                                                 <a data-mcr-quiz-enroll {if $quiz.open || !$quiz.ready}hidden{/if} class="mcr-btn mcr-btn--ghost" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>
                                                         <svg class="mcr-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg>
-                                                        Mở toàn môn · {$price_text}
+                                                        {if $quiz_course}Mở toàn môn{else}Đăng ký khoá học{/if} · {$price_text}
                                                     </a>
                                                 </div>
                                             </div>
@@ -573,8 +573,6 @@
                         </details>
                         <a class="mcr-quiz-rank" href="/class-rank?khoa={$product.id}">Bảng xếp hạng và chỉ số tiến bộ của bạn <span aria-hidden="true">→</span></a>
                     </div>
-
-                    {/if}
 
                 </div>
             </div>

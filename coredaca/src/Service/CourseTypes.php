@@ -28,9 +28,10 @@ final class CourseTypes
     {
         return (bool)ConnectionManager::get('default')->execute("SELECT 1 FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0 AND COALESCE(course_kind,'')<>'fa'",['id'=>$id])->fetchColumn(0);
     }
-    /** First quiz is always free, second always paid; legacy checkbox values cannot override this. */
+    /** Video courses keep their saved exercise access; quiz courses use one free and one paid slot. */
     public static function quizzes(array $lesson, ?string $kind): array
     {
+        if (in_array($kind, ['knowledge', 'exam_solution'], true)) return LessonQuizzes::of($lesson);
         if ($kind !== 'quiz') return [];
         $rows=array_slice(LessonQuizzes::of($lesson),0,2);
         foreach ($rows as $i=>&$row) $row['free']=$i===0;
@@ -50,7 +51,7 @@ final class CourseTypes
             if ($ids) $db->execute('UPDATE quizs SET fa_only=1 WHERE id IN ('.implode(',',$ids).')');
             return;
         }
-        if ($kind!=='quiz') return; // Preserve legacy video exercises in storage, but do not expose them.
+        if ($kind!=='quiz') return; // Video courses retain their attached exercises and saved free/paid flags.
         $used=[];
         foreach ($lessons as &$lesson) {
             if (\App\Lib\LessonMetadata::isGroup($lesson)) continue;

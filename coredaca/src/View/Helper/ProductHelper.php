@@ -348,7 +348,8 @@ class ProductHelper extends Helper
     public function getCourseQuizData($params = [], $lang = null)
     {
         $lang = $lang ?: LANGUAGE;
-        $ids = \App\Service\CourseTypes::kind((int)($params['product_id'] ?? 0)) === 'quiz' ? LessonQuizzes::ids($params['lesson_list'] ?? []) : [];
+        $kind = \App\Service\CourseTypes::kind((int)($params['product_id'] ?? 0));
+        $ids = in_array($kind, ['knowledge', 'exam_solution', 'quiz'], true) ? LessonQuizzes::ids($params['lesson_list'] ?? []) : [];
         $result = ['info' => []];
         if (!$ids) return $result;
 
@@ -359,8 +360,9 @@ class ProductHelper extends Helper
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
              LEFT JOIN quizs_attribute minutes ON minutes.quiz_id = q.id AND minutes.attribute_id = :minutes
              WHERE q.deleted = 0 AND q.fa_only = 0 AND q.id IN (" . implode(',', array_map('intval', $ids)) . ")
+               AND (q.course_only = 0 OR :quiz_course = 1)
                AND q.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)",
-            ['lang' => $lang, 'questions' => QuizQuestions::QUESTIONS_ATTRIBUTE, 'minutes' => QuizQuestions::MINUTES_ATTRIBUTE]
+            ['lang' => $lang, 'questions' => QuizQuestions::QUESTIONS_ATTRIBUTE, 'minutes' => QuizQuestions::MINUTES_ATTRIBUTE, 'quiz_course' => $kind === 'quiz' ? 1 : 0]
         )->fetchAll('assoc');
 
         foreach ($rows as $row) {

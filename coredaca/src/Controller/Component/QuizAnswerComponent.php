@@ -105,13 +105,19 @@ class QuizAnswerComponent extends Component
     {
         $result = ['found' => false, 'allowed' => false, 'class_room_id' => 0];
         if (empty($product_id) || empty($quiz_id)) return $result;
-        if (\App\Service\CourseTypes::kind((int)$product_id) !== 'quiz'
+        $kind = \App\Service\CourseTypes::kind((int)$product_id);
+        if (!in_array($kind, ['knowledge', 'exam_solution', 'quiz'], true)
             || !\App\Service\CourseTypes::publicCourse((int)$product_id)
             || \App\Service\CourseTypes::privateQuiz((int)$quiz_id)) return $result;
-        $slot = \App\Service\CourseTypes::slot((int)$product_id, (int)$quiz_id);
-        if (!$slot) return $result;
+        $slot = null;
+        if ($kind === 'quiz') {
+            $slot = \App\Service\CourseTypes::slot((int)$product_id, (int)$quiz_id);
+            if (!$slot) return $result;
+        } elseif (\App\Service\CourseTypes::courseQuiz((int)$quiz_id)) {
+            return $result; // Exclusive quiz-course exercises cannot be opened through a video course.
+        }
         $quiz = \App\Lib\QuizQuestions::load((int)$quiz_id);
-        // A populated first exercise is free regardless of the lesson's question count.
+        // Every attached exercise needs actual questions before it can be opened.
         if (!$quiz) return $result;
 
         $lessons = TableRegistry::get('ProductsAttribute')->find()->where([
@@ -121,10 +127,10 @@ class QuizAnswerComponent extends Component
 
         $free = null;
         foreach (LessonQuizzes::lessons(!empty($lessons['value']) ? $lessons['value'] : null) as $lesson) {
-            foreach (LessonQuizzes::of($lesson) as $quiz) {
-                if ($quiz['id'] === $quiz_id) {
-                    $free = (int)$slot['slot'] === 1;
-                    $result['mode'] = \App\Lib\LessonMetadata::isExam($lesson) ? 'exam' : 'practice';
+            foreach (LessonQuizzes::of($lesson) as $lessonQuiz) {
+                if ($lessonQuiz['id'] === (int)$quiz_id) {
+                    $free = ($free ?? false) || ($kind === 'quiz' ? (int)$slot['slot'] === 1 : $lessonQuiz['free']);
+                    $result['mode'] = $kind === 'quiz' && !\App\Lib\LessonMetadata::isExam($lesson) ? 'practice' : 'exam';
                 }
             }
         }
