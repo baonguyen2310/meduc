@@ -17,5 +17,6 @@
         <button type="submit" nh-btn-action="submit" class="ma-submit">Đăng nhập <span aria-hidden="true">→</span></button>
         <input type="hidden" name="redirect" value="{if !empty($redirect)}{$redirect|escape}{/if}">
     </form>
+    {$this->element('../Member/element_google_signin')}
     <p class="ma-switch">Chưa có tài khoản? <a href="/member/register" data-ma-open="register">Đăng ký ngay</a></p>
 </div>

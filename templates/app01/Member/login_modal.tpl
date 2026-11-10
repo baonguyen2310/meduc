@@ -22,6 +22,9 @@
                 <section data-ma-panel="reset" aria-label="Đặt lại mật khẩu" hidden>
                     {$this->element('../Member/element_reset_form', ['reset_form_id' => 'ma-modal-reset', 'reset_readonly' => true])}
                 </section>
+                <section data-ma-panel="profile" aria-label="Bổ sung thông tin học viên" hidden>
+                    {$this->element('../Member/element_google_profile')}
+                </section>
                 <section data-ma-panel="verify" aria-label="Xác thực email đăng ký" hidden>
                     <form class="ma-form" data-ma-verify action="/member/ajax-verify-email" method="post">
                         <div class="ma-field"><label for="ma-modal-email">Email đã đăng ký</label><div class="input-group ma-input"><input id="ma-modal-email" name="email" type="email" autocomplete="email" readonly required maxlength="255"></div></div>

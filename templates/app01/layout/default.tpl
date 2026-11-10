@@ -68,8 +68,8 @@
     <script src="/bang-bao-gia/lien-ket.js" defer></script>
 
     {* The sign-in dialog is present on every page, so its styles are shared. *}
-    <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261021-7" rel="stylesheet">
-    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261029-avatar" defer></script>
+    <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
+    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>
 
     {assign var = embed_code value = []}
     {if !empty($data_init.embed_code)}

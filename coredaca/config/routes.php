@@ -95,6 +95,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/member/login', ['controller' => 'Member', 'action' => 'login']);
     $builder->connect('/member/ajax-login', ['controller' => 'Member', 'action' => 'ajaxLogin']);
     $builder->connect('/member/social-login', ['controller' => 'Member', 'action' => 'socialLogin']);
+    $builder->connect('/member/google-options', ['controller' => 'Member', 'action' => 'googleOptions']);
+    $builder->connect('/member/complete-google-profile', ['controller' => 'Member', 'action' => 'completeGoogleProfile']);
     $builder->connect('/member/register', ['controller' => 'Member', 'action' => 'register']);
     $builder->connect('/member/ajax-register', ['controller' => 'Member', 'action' => 'ajaxRegister']);
     $builder->connect('/member/dashboard', ['controller' => 'Member', 'action' => 'dashboard']);

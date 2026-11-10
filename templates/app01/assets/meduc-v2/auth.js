@@ -43,6 +43,7 @@
     }
 
     const copy = {
+      profile: ["Hoàn tất thông tin học viên.", "Bổ sung thông tin bên dưới để tiếp tục cùng MedUC. Những thông tin đã có sẽ được điền sẵn."],
       login: ["Chào mừng trở lại.", "Đăng nhập để tiếp tục hành trình học Y."],
       forgot: ["Quên mật khẩu?", "Nhập email đã đăng ký. MedUC sẽ gửi mã OTP để bạn đặt lại mật khẩu."],
       reset: ["Đặt mật khẩu mới.", "Nhập mã OTP từ email và chọn mật khẩu mới cho tài khoản của bạn."],
@@ -58,11 +59,13 @@
         tab.tabIndex = selected ? 0 : -1;
       });
       modal.classList.toggle("is-register", view === "register");
+      modal.classList.toggle("is-profile", view === "profile");
       modal.querySelector('[role="tablist"]').hidden = !["login", "register"].includes(view);
       modal.querySelector(".ma-eyebrow").textContent = view === "verify" ? "BƯỚC 2 / 2 · XÁC THỰC EMAIL" : view === "forgot" ? "KHÔI PHỤC TÀI KHOẢN / 01" : view === "reset" ? "KHÔI PHỤC TÀI KHOẢN / 02" : "TÀI KHOẢN MEDUC";
       modal.querySelector("#ma-modal-title").textContent = copy[view][0];
       modal.querySelector("#ma-modal-description").textContent = contextMessage && ["login", "register"].includes(view) ? contextMessage : copy[view][1];
       modal.querySelector(".modal-body").scrollTop = 0;
+      if (["login", "register"].includes(view)) renderGoogleButtons();
       if (focus) modal.querySelector('[data-ma-panel="' + view + '"] input:not([type="hidden"]):not([readonly])')?.focus({preventScroll:true});
     }
     function openAuth(view = "login", trigger = null, options = {}) {
@@ -116,7 +119,9 @@
           return true;
         }
         const data = response.data || {};
-        if (data.wait_active || data.waiting_confirm) {
+        if (data.profile_required) {
+          showGoogleProfile(data);
+        } else if (data.wait_active || data.waiting_confirm) {
           if (outsideRegister) openAuth("verify", form.querySelector('[type="submit"]'));
           activate(data.email, data, data.waiting_confirm ? response.message : "");
         } else {
@@ -126,6 +131,110 @@
         return true;
       }
     };
+
+    const profileForm = modal.querySelector("[data-ma-google-profile]");
+    let profileInFlight = false;
+    let googleSetup = null;
+    let googleSdk = null;
+    let googleInFlight = false;
+
+    function showGoogleProfile(data) {
+      profileForm.reset();
+      profileForm.elements.profile_token.value = data.profile_token || "";
+      ["email", "full_name", "phone", "school_name", "student_year"].forEach((field) => {
+        profileForm.elements[field].value = data.profile?.[field] || "";
+      });
+      profileForm.querySelector(".ma-status").hidden = true;
+      if (!modal.classList.contains("show")) openAuth("profile");
+      else showView("profile", true);
+    }
+    const accountRequest = (url, data = {}) => new Promise((resolve, reject) => {
+      nhMain.callAjax({url, data}).done((response) => {
+        if (response?.code === "success") resolve(response);
+        else reject(new Error(response?.message || "Không thể thực hiện. Vui lòng thử lại."));
+      }).fail(() => reject(new Error("Không thể kết nối. Vui lòng thử lại.")));
+    });
+    function googleStatus(message) {
+      document.querySelectorAll("[data-ma-google-status]").forEach((element) => {
+        element.textContent = message || "";
+        element.hidden = !message;
+      });
+    }
+    function resetGoogleButtons() {
+      googleSetup = null;
+      document.querySelectorAll("[data-ma-google]").forEach((element) => {
+        delete element.dataset.googleRendered;
+        element.replaceChildren();
+      });
+    }
+    async function googleCredential(response) {
+      if (googleInFlight) return;
+      googleInFlight = true;
+      googleStatus("");
+      try {
+        const result = await accountRequest("/member/social-login", {type:"google", credential:response.credential});
+        if (result.data?.profile_required) showGoogleProfile(result.data);
+        else completeAuth("google", result);
+        resetGoogleButtons();
+      } catch (error) {
+        googleStatus(error.message);
+        resetGoogleButtons();
+        renderGoogleButtons();
+      } finally {
+        googleInFlight = false;
+      }
+    }
+    function loadGoogleSdk() {
+      if (window.google?.accounts?.id) return Promise.resolve();
+      if (!googleSdk) googleSdk = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = () => { googleSdk = null; script.remove(); reject(new Error("Chưa tải được Google. Vui lòng thử lại hoặc đăng nhập bằng email.")); };
+        document.head.appendChild(script);
+      });
+      return googleSdk;
+    }
+    async function renderGoogleButtons() {
+      const buttons = [...document.querySelectorAll("[data-ma-google]")].filter((element) => element.offsetWidth > 0 && !element.dataset.googleRendered);
+      if (!buttons.length) return;
+      try {
+        if (!googleSetup) googleSetup = (async () => {
+          const [result] = await Promise.all([accountRequest("/member/google-options"), loadGoogleSdk()]);
+          google.accounts.id.initialize({client_id:result.data.client_id, nonce:result.data.nonce,
+            callback:googleCredential, auto_select:false, ux_mode:"popup"});
+        })();
+        await googleSetup;
+        googleStatus("");
+        buttons.forEach((element) => {
+          if (!element.isConnected || !element.offsetWidth || element.dataset.googleRendered) return;
+          google.accounts.id.renderButton(element, {type:"standard", theme:"outline", size:"large", text:"continue_with",
+            shape:"rectangular", locale:"vi", width:Math.min(400, Math.max(200, Math.floor(element.offsetWidth)))});
+          element.dataset.googleRendered = "true";
+        });
+      } catch (error) {
+        googleSetup = null;
+        googleStatus(error.message);
+      }
+    }
+    profileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (profileInFlight || !profileForm.reportValidity()) return;
+      profileInFlight = true;
+      const submit = profileForm.querySelector('[type="submit"]');
+      submit.disabled = true;
+      profileForm.querySelector(".ma-status").hidden = true;
+      try {
+        completeAuth("google", await accountRequest(profileForm.action, $(profileForm).serialize()));
+      } catch (error) {
+        setStatus(profileForm, error.message);
+      } finally {
+        profileInFlight = false;
+        submit.disabled = false;
+      }
+    });
+    $(renderGoogleButtons);
 
     // Public links to either account page use the same dialog. Direct page URLs still work.
     document.addEventListener("click", (event) => {
@@ -171,6 +280,7 @@
       showView(requestedView || "login");
       requestedView = null;
     }).on("shown.bs.modal", () => {
+      renderGoogleButtons();
       const redirect = loginForm.querySelector('input[name="redirect"]');
       if (redirect) redirect.value = location.pathname + location.search + location.hash;
       modal.querySelector("[data-ma-panel]:not([hidden]) input:not([type=hidden]):not([readonly])")?.focus({preventScroll:true});

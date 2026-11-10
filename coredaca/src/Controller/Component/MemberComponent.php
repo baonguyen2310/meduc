@@ -11,6 +11,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Utility\Security;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use App\Lib\AccountProfile;
 
 class MemberComponent extends Component
 {
@@ -189,15 +190,11 @@ class MemberComponent extends Component
            return $this->System->getResponse([MESSAGE => __d('template', 'tai_khoan_cua_ban_hien_dang_bi_khoa')]);   
         }
 
-        if(!empty($account['status']) && $account['status'] == 2){
-            return $this->System->getResponse([
-                CODE => SUCCESS,
-                DATA => [
-                    'username'=> $username,
-                    'email' => !empty($account['Customer']['email']) ? $account['Customer']['email'] : null,
-                    'wait_active' => true
-                ]
-            ]); 
+        if ((int)$account['status'] === 2) {
+            // The signup policy no longer requires email OTP; apply it on successful password login too.
+            ConnectionManager::get('default')->execute(
+                'UPDATE customers_account SET status=1 WHERE id=? AND status=2 AND deleted=0', [$account['id']]
+            );
         }
 
         $customer_id = !empty($account['customer_id']) ? intval($account['customer_id']) : null;
@@ -217,6 +214,9 @@ class MemberComponent extends Component
         }
 
         $session = $this->controller->getRequest()->getSession();
+        $session->renew();
+        $session->delete('Meduc.GoogleProfile');
+        $session->delete('Meduc.GoogleNonce');
         $session->delete(MEMBER);
         $session->write(MEMBER, $customer_info);
         
@@ -231,243 +231,69 @@ class MemberComponent extends Component
 
     public function socialLogin($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
-        if (empty($data)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
-        }      
-
-        $social_id = !empty($data['social_id']) ? $data['social_id'] : null;
-        $type = !empty($data['type']) ? $data['type'] : null;
-        $full_name = !empty($data['full_name']) ? $data['full_name'] : null;
-        $email = !empty($data['email']) ? $data['email'] : '';
-        $picture = !empty($data['picture']) ? $data['picture'] : null;
-        $redirect = !empty($data['redirect']) ? $data['redirect'] : null;        
-        if (in_array($type, ['google', 'facebook'], true)) {
-            return $this->System->getResponse([MESSAGE => 'Đăng nhập mạng xã hội đã được tắt. Vui lòng dùng tài khoản MedUC.']);
+        if (!$this->controller->getRequest()->is('post') || !is_array($data) ||
+            !is_string($data['type'] ?? null) || $data['type'] !== 'google') {
+            return $this->System->getResponse([MESSAGE => 'Hình thức đăng nhập này đã được tắt. Vui lòng dùng Google hoặc tài khoản MedUC.']);
         }
-        if(empty($social_id) || empty($type) || !in_array($type, ['apple'])){
-            return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
-        }
-
-        $table = TableRegistry::get('Customers');
-        $account_table = TableRegistry::get('CustomersAccount');
-
-        $session = $this->controller->getRequest()->getSession();
-        $session->delete(MEMBER);
-
-        $account = $account_table->loginSocial($social_id, $type);
-        $customer_id = !empty($account['customer_id']) ? intval($account['customer_id']) : null;
-
-        $action = 'login';
-        if(empty($customer_id)){
-            // nếu thêm mới tài khoản thì bắt buộc phải có full_name
-            if(empty($full_name)){
-                return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
-            }
-
-            $action = 'add';
-
-            $check_email = $table->find()->where(['deleted' => 0, 'email' => $email])->select(['id'])->first();
-            if (!empty($check_email['id'])) {
-                $action = 'update';
-                $customer_id = intval($check_email['id']);
-            }
-
-            switch ($action) {
-                case 'add':
-                    $avatar = null;
-                    if(!empty($picture)){                       
-                        $upload = $this->Upload->uploadToCdnByUrl($picture, CUSTOMER);
-                        $result_upload = !empty($upload[DATA]) ? $upload[DATA] : [];
-                        if(!empty($upload[CODE]) && $upload[CODE] == SUCCESS && !empty($result_upload['url'])){
-                            $avatar = $result_upload['url'];
-                        }
-                    }
-                    
-                    $data_save = [
-                        'username' => $type . $social_id,
-                        'password' => $this->Utilities->generateRandomString(),
-                        'full_name' => $full_name,
-                        'email' => $email,
-                        'avatar' => $avatar,
-                        'status_account' => 1
-                    ];
-  
-                    $add_customer = $this->Customer->saveCustomer($data_save);
-                    $new_customer = !empty($add_customer[DATA]) ? $add_customer[DATA] : null;
-                    $customer_id = !empty($new_customer['id']) ? intval($new_customer['id']) : null;
-
-                    if($email) {
-                        $this->sendInfoAccount($new_customer['full_name'], $new_customer['email'], $new_customer['code']);
-                    }
-
-                    $update_social_id = $account_table->updateSocialId($customer_id, $social_id, $type);
-                    if(!$update_social_id){
-                        return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_tai_khoan')]);
-                    }
-                break;
-                
-                case 'update':
-
-                    $update_social_id = $account_table->updateSocialId($customer_id, $social_id, $type);
-                    if(!$update_social_id){
-                        return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_tai_khoan')]);
-                    }
-                break;
-            }            
-        }
-
-        if(empty($customer_id)){
-            return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_tai_khoan')]);
-        }
-
-        $customer_info = $table->getDetailCustomer($customer_id, [
-            'get_account' => true,
-            'get_default_address' => true
-        ]);    
-
-        $customer_info = $table->formatDataCustomerDetail($customer_info);
-        if(empty($customer_info)){
-            return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_tai_khoan')]);
-        }
-
-        $session->write(MEMBER, $customer_info);
-
-        return $this->System->getResponse([
-            CODE => SUCCESS,
-            DATA => [
-                'action' => $action,
-                'redirect' => $redirect
-            ],
-            MESSAGE => __d('template', 'dang_nhap_thanh_cong')
-        ]);
+        // Never accept social_id/email/profile assertions supplied by the browser.
+        return $this->controller->loadComponent('GoogleSignIn')->login($data);
     }
 
     public function register($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
-        if (!$this->controller->getRequest()->is('post') || empty($data)) {
+        $api = !empty($options['api']);
+        if (!$this->controller->getRequest()->is('post') || !is_array($data) || !$data) {
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
-
-        $data['username'] = !empty($data['username']) ? trim(strip_tags($data['username'])) : null;
-        $data['full_name'] = !empty($data['full_name']) ? trim(strip_tags($data['full_name'])) : null;
-        $data['password'] = !empty($data['password']) ? $data['password'] : null;
-        $data['verify_password'] = !empty($data['verify_password']) ? $data['verify_password'] : null;
-        $data['email'] = !empty($data['email']) ? trim(strip_tags($data['email'])) : null;
-        $data['phone'] = !empty($data['phone']) ? trim(strip_tags($data['phone'])) : null;
-        
-        if(empty($data['full_name'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_ten_tai_khoan')]);
+        $email = is_string($data['email'] ?? null) ? strtolower(trim($data['email'])) : '';
+        if (strlen($email) > 255 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập địa chỉ email hợp lệ.']);
         }
-
-        if(empty($data['username'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_tai_khoan_dang_ky')]);
+        $password = is_string($data['password'] ?? null) ? $data['password'] : '';
+        if (mb_strlen($password) < 6 || mb_strlen($password) > 255) {
+            return $this->System->getResponse([MESSAGE => 'Mật khẩu cần có từ 6 đến 255 ký tự.']);
         }
-
-        if(empty($data['password'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_mat_khau')]);
-        }
-
-        if(empty($data['verify_password'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_xac_nhan_mat_khau')]);
-        }
-
-        if($data['password'] != $data['verify_password']){
+        if ($password !== ($data['verify_password'] ?? null)) {
             return $this->System->getResponse([MESSAGE => __d('template', 'xac_nhan_mat_khau_khong_chinh_xac')]);
         }
-
-        if(empty($data['phone'])) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_so_dien_thoai')]);
+        try {
+            $profile = AccountProfile::validate($data);
+        } catch (\InvalidArgumentException $e) {
+            return $this->System->getResponse([MESSAGE => $e->getMessage()]);
         }
-
-        $data['school_name'] = isset($data['school_name']) && is_string($data['school_name'])
-            ? trim(strip_tags($data['school_name'])) : '';
-        $data['student_year'] = isset($data['student_year']) && is_scalar($data['student_year'])
-            ? trim((string)$data['student_year']) : '';
-
-        if ($data['school_name'] === '' || preg_match('/^\s*$/u', $data['school_name'])) {
-            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập trường học.']);
+        if (!$api) {
+            $captcha = $this->ReCaptcha->check($data[TOKEN_RECAPTCHA] ?? null);
+            if ($captcha[CODE] !== SUCCESS) return $captcha;
         }
-        if (mb_strlen($data['school_name']) > 255) {
-            return $this->System->getResponse([MESSAGE => 'Tên trường không được quá 255 ký tự.']);
+        $conn = ConnectionManager::get('default');
+        $lock = 'meduc-account-' . substr(hash('sha256', $email), 0, 45);
+        if ((int)$conn->execute('SELECT GET_LOCK(?,5) acquired', [$lock])->fetch('assoc')['acquired'] !== 1) {
+            return $this->System->getResponse([MESSAGE => 'Đang xử lý đăng ký. Vui lòng thử lại.']);
         }
-        if (!in_array($data['student_year'], ['1', '2', '3', '4', '5', '6', 'graduate'], true)) {
-            return $this->System->getResponse([MESSAGE => 'Vui lòng chọn năm sinh viên hợp lệ.']);
-        }
-
-        // The browser sends ISO dates; the shared customer saver expects dd/mm/yyyy.
-        $birthday = isset($data['birthday']) && is_string($data['birthday']) ? trim($data['birthday']) : '';
-        $data['birthday'] = null;
-        if ($birthday !== '') {
-            $format = preg_match('/^\d{4}-\d{2}-\d{2}$/D', $birthday) ? 'Y-m-d' : 'd/m/Y';
-            $date = \DateTimeImmutable::createFromFormat('!' . $format, $birthday);
-            if (!$date || $date->format($format) !== $birthday ||
-                $date > new \DateTimeImmutable('today') || $date->getTimestamp() < -2147483648) {
-                return $this->System->getResponse([MESSAGE => 'Ngày sinh không hợp lệ hoặc ở trong tương lai.']);
+        try {
+            if (TableRegistry::get('Customers')->checkEmailAccountExist($email) ||
+                TableRegistry::get('CustomersAccount')->checkExistUsername($email)) {
+                return $this->System->getResponse([MESSAGE => 'Email này đã được đăng ký. Vui lòng đăng nhập hoặc chọn Quên mật khẩu.']);
             }
-            $data['birthday'] = $date->format('d/m/Y');
+            // New form accounts use their email as username; no registration email is sent.
+            $result = $this->Customer->saveCustomer($profile + [
+                'username' => $email, 'email' => $email, 'password' => $password,
+                'status_account' => 1, 'email_verified' => 0
+            ]);
+            if (($result[CODE] ?? null) !== SUCCESS) return $result;
+            return $this->controller->loadComponent('GoogleSignIn')->signIn((int)$result[DATA]['id']);
+        } catch (\Throwable $e) {
+            $this->log('Account registration failed.', 'error');
+            return $this->System->getResponse([MESSAGE => 'Không thể hoàn tất đăng ký. Vui lòng thử đăng nhập hoặc liên hệ hỗ trợ.']);
+        } finally {
+            $conn->execute('SELECT RELEASE_LOCK(?)', [$lock]);
         }
-
-        if (empty($data['email']) || mb_strlen($data['email']) > 255 || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            return $this->System->getResponse([MESSAGE => 'Vui lòng nhập địa chỉ email hợp lệ để nhận mã OTP.']);
-        }
-
-        // check recaptcha
-        if(!$api){
-            $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-            $check_recaptcha = $this->ReCaptcha->check($token);
-            if($check_recaptcha[CODE] != SUCCESS){
-                return $this->System->getResponse([MESSAGE => $check_recaptcha[MESSAGE]]);
-            }
-        }
-
-        $username_exist = TableRegistry::get('CustomersAccount')->checkExistUsername($data['username']);
-        if($username_exist){
-            return $this->System->getResponse([MESSAGE => __d('template', 'tai_khoan_da_duoc_dang_ky')]);
-        }
-
-        $data_save = [
-            'status_account' => 2, // Email OTP is required for every new self-registration.
-            'full_name' => !empty($data['full_name']) ? trim($data['full_name']) : null,
-            'username' => !empty($data['username']) ? trim($data['username']) : null,
-            'password' => !empty($data['password']) ? $data['password'] : null,
-            'email' => !empty($data['email']) ? trim($data['email']) : null,
-            'phone' => !empty($data['phone']) ? trim($data['phone']) : null,
-            'birthday' => !empty($data['birthday']) ? trim($data['birthday']) : null,
-            'school_name' => $data['school_name'],
-            'student_year' => $data['student_year'],
-            'sex' => !empty($data['sex']) ? trim($data['sex']) : null,
-            'city_id' => !empty($data['city_id']) ? intval($data['city_id']) : null,
-            'district_id' => !empty($data['district_id']) ? intval($data['district_id']) : null,
-            'ward_id' => !empty($data['ward_id']) ? intval($data['ward_id']) : null,
-            'address' => !empty($data['address']) ? trim($data['address']) : null,
-            'address_name' => __d('template', 'mac_dinh'),
-            'is_default' => 1
-        ];
-        
-        $result = $this->Customer->saveCustomer($data_save);
-        if ($result[CODE] !== SUCCESS) return $result;
-        $customerId = (int)$result[DATA]['id'];
-        $this->controller->getRequest()->getSession()->delete(MEMBER);
-        $sent = $this->controller->loadComponent('RegistrationOtp')->send($customerId);
-        $emailSent = !empty($sent[CODE]) && $sent[CODE] === SUCCESS;
-        return $this->System->getResponse([
-            CODE => SUCCESS,
-            MESSAGE => $sent[MESSAGE],
-            DATA => [
-                'waiting_confirm' => true, 'email' => $data['email'], 'email_sent' => $emailSent,
-                'resend_after' => !empty($sent[DATA]['resend_after']) ? $sent[DATA]['resend_after'] : 0,
-                'expires_in' => 600
-            ]
-        ]);
     }
 
     public function updateProfile($data = [], $options = [])
     {
         $api = !empty($options['api']) ? true : false;
+        unset($data['email_verified']); // Verification state is owned by server-side identity checks.
 
         if (!$this->controller->getRequest()->is('post') || empty($data)) {
             return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
@@ -1195,6 +1021,8 @@ class MemberComponent extends Component
     {
         $session = $this->controller->getRequest()->getSession();        
         $session->delete(CONTACT);
+        $session->delete('Meduc.GoogleProfile');
+        $session->delete('Meduc.GoogleNonce');
         $session->delete(MEMBER);
         $session->delete(COUPON);
         $session->delete(POINT);    
@@ -1489,64 +1317,8 @@ class MemberComponent extends Component
 
     public function registerByNumberPhone($data = [], $options = [])
     {
-        $api = !empty($options['api']) ? true : false;
-
-        if (!$this->controller->getRequest()->is('post') || empty($data)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
-        }
-
-        // check recaptcha
-        if(!$api){
-            $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
-            $check_recaptcha = $this->ReCaptcha->check($token);
-            if($check_recaptcha[CODE] != SUCCESS){
-                return $this->System->getResponse([MESSAGE => $check_recaptcha[MESSAGE]]);
-            }
-        }
-
-        $full_name = !empty($data['full_name']) ? $data['full_name'] : null;
-        $phone = !empty($data['phone']) ? $data['phone'] : null;
-        $username = $phone;
-        $password = strtolower($this->Utilities->generateRandomNumber(8));
-        
-        if(empty($full_name)) {
-            return $this->System->getResponse([MESSAGE => __d('template', 'vui_long_nhap_ten')]);
-        }
-
-        if(empty($phone)){
-            return $this->System->getResponse([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
-        }
-
-        $username_exist = TableRegistry::get('CustomersAccount')->checkExistUsername($phone);
-        if($username_exist){
-            return $this->System->getResponse([MESSAGE => __d('template', 'so_dien_thoai_da_duoc_dang_ky')]);
-        }        
-
-        $data_save = [
-            'full_name' => $full_name,
-            'username' => $username,
-            'password' => $password,
-            'phone' => $phone,
-            'status_account' => 1
-        ];
-        
-        $result = $this->Customer->saveCustomer($data_save);
-        if(!empty($result[CODE]) && $result[CODE] == ERROR) {
-            return $this->System->getResponse([MESSAGE => $result[MESSAGE]]);
-        }
-
-        $this->SmsBrandname->sendSms([
-            'phone' => $phone,
-            'message' => __d('template', 'mat_khau_tai_khoan_cua_ban_la_{0}', $password)
-        ]);
-
-        return $this->System->getResponse([
-            CODE => SUCCESS,
-            DATA => [
-                'customer_id' => !empty($result[DATA]['Account']['customer_id']) ? $result[DATA]['Account']['customer_id'] : null
-            ],
-            MESSAGE => __d('template', 'tai_khoan_cua_ban_da_duoc_dang_ky_thanh_cong')
-        ]);
+        // All new self-registrations now require an email and the same student profile.
+        return $this->register($data, $options);
     }
 
     public function customerLogin($data = [], $options = [])

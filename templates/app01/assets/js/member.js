@@ -167,36 +167,10 @@ var nhMember = {
 				});
 			});
 
-			$(document).on('click', '[nh-btn-login-social="google"]', function(e){
-				if(typeof(auth2) == _UNDEFINED || typeof(auth2.signIn) == _UNDEFINED && typeof(auth2.signIn) != 'function'){
-					nhMain.showLog('Chưa khai báo thư viện Google');
-					return false;
-				}
-
-				var formElement = $(this).closest('form[nh-form="member-login"]');
-				if(formElement.length == 0) return false;
-
-				auth2.signIn({
-	                scope: 'profile email'
-	            }).then(function (response) {
-	            	var profile = response.getBasicProfile();
-
-	            	var picture = nhMain.utilities.notEmpty(profile.getImageUrl()) != _UNDEFINED ? profile.getImageUrl().replace('s96-c', 's1024-c', true) : null;
-	            	var redirect = formElement.find(['input[name="redirect"]']).val();
-	            	var data = {};
-
-	                var data = {
-	                    social_id: profile.getId(),
-	                    type: 'google',
-	                    full_name: profile.getName(),
-	                    email: profile.getEmail(),
-	                    picture: picture,
-	                    redirect: nhMain.utilities.notEmpty(redirect) ? redirect : null
-	                }
-
-	                self.socialLogin(data);
-	            });
-			});
+            $(document).on('click', '[nh-btn-login-social="google"]', function(e) {
+                e.preventDefault();
+                if (window.meducAuth) window.meducAuth.open('login', this);
+            });
 		},
 		socialLogin: function(data = {}, callback = null){
 			var self = this;
@@ -263,25 +237,15 @@ var nhMember = {
 			
 			nhMain.validation.phoneVn();
 
-			$.validator.addMethod('regexUser', function(username, element) {
-				return username.match(/^[a-zA-Z0-9]+$/);
-			}, nhMain.getLabel('tai_khoan_khong_duoc_chua_ky_tu_dac_biet'));
-
 			$('form[nh-form="member-register"]').each(function(index) {
 				var formElement = $(this);
 
 			  	var validator = formElement.validate({
 					ignore: ':hidden',
 					rules: {
-						username: {
-							required: true,
-							minlength: 6,
-							maxlength: 255,
-							regexUser: true
-						},
 						full_name: {
 							required: true,
-							minlength: 6,
+							minlength: 2,
 							maxlength: 255
 						},
 						phone: {
@@ -294,7 +258,7 @@ var nhMember = {
 						email: {
 							required: true,
 							email: true,
-							minlength: 10,
+							minlength: 6,
 							maxlength: 255
 						},
 
@@ -326,11 +290,6 @@ var nhMember = {
 						}
 					},
 					messages: {
-						username: {
-		                    required: nhMain.getLabel('vui_long_nhap_tai_khoan'),
-		                    minlength: nhMain.getLabel('tai_khoan_nhap_qua_ngan'),
-		                    maxlength: nhMain.getLabel('tai_khoan_nhap_qua_dai')
-		                },
 
 		                phone: {
 		                	required: nhMain.getLabel('vui_long_nhap_so_dien_thoai'),

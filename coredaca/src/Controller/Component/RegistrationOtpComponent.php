@@ -145,6 +145,7 @@ class RegistrationOtpComponent extends Component
             $activated = $conn->execute('UPDATE customers_account SET status=1 WHERE id=? AND customer_id=? AND status=2 AND deleted=0',
                 [$account['account_id'], $customerId]);
             if ($activated->rowCount() !== 1) throw new \RuntimeException('Cannot activate account');
+            $conn->execute('UPDATE customers SET email_verified=1 WHERE id=? AND deleted=0 AND email=?', [$customerId, $email]);
             // Invalidate any legacy activation codes for this email too.
             $conn->execute('UPDATE email_token SET status=1 WHERE email=? AND type=? AND status=0', [$email, 'active_account']);
             $table = TableRegistry::get('Customers');

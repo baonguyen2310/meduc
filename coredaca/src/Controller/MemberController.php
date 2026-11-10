@@ -115,6 +115,20 @@ class MemberController extends AppController
         $this->responseJson($result);
     }
 
+    public function googleOptions()
+    {
+        $this->autoRender = false;
+        if (!$this->getRequest()->is('post')) $this->responseJson([MESSAGE => 'Phương thức không hợp lệ.']);
+        $this->responseJson($this->loadComponent('GoogleSignIn')->options());
+    }
+
+    public function completeGoogleProfile()
+    {
+        $this->autoRender = false;
+        if (!$this->getRequest()->is('post')) $this->responseJson([MESSAGE => 'Phương thức không hợp lệ.']);
+        $this->responseJson($this->loadComponent('GoogleSignIn')->completeProfile($this->request->getData()));
+    }
+
     public function register() 
     {
         $this->set('title_for_layout', __d('template', 'dang_ky_tai_khoan'));

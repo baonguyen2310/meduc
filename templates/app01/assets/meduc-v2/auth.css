@@ -136,3 +136,9 @@ html[data-meduc-theme="light"] .ma .ma-input input[type="date"] { color-scheme:l
 .ma .ma-input .ma-otp-code { text-align:center; font-size:26px; font-weight:700; letter-spacing:10px; padding-left:24px; }
 .ma [data-ma-verify] .ma-hint { margin:0 0 18px; }
 body.ma-auth-open .rn-progress-parent { visibility:hidden !important; pointer-events:none !important; }
+
+/* Google uses its official sign-in control inside the same account dialog. */
+.ma-google-button { min-height:44px; display:flex; align-items:center; justify-content:center; width:100%; }
+.ma-google .ma-status { margin-top:12px; }
+.ma-modal.is-profile .modal-dialog { max-width:640px; }
+@media(max-width:760px) { .ma-modal.is-profile .modal-dialog { max-width:none; } }

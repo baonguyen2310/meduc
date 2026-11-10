@@ -144,6 +144,7 @@ class PasswordResetOtpComponent extends Component
             $saved = $conn->execute('SELECT id FROM customers_account WHERE id=? AND customer_id=? AND status=1 AND deleted=0 AND password=?',
                 [$account['account_id'], $customerId, Security::hash($password, 'md5', false)])->fetch('assoc');
             if (!$saved) throw new \RuntimeException('Cannot update account password');
+            $conn->execute('UPDATE customers SET email_verified=1 WHERE id=? AND deleted=0 AND email=?', [$customerId, $email]);
             $conn->execute('UPDATE email_token SET status=1 WHERE customer_id=? AND type IN (?,?) AND status=0',
                 [$customerId, self::TYPE, 'forgot_password']);
             return $this->System->getResponse([
