@@ -24,3 +24,6 @@
 .mx-answer-option-detail { flex: 1; }
 
 .mx-answer-body .mx-markdown :is(p,li,strong,b,em,i,span) { color: inherit; }
+.mx-question-metadata { display: flex; flex-wrap: wrap; gap: 6px; margin: -3px 0 14px; }
+.mx-question-badge { display: inline-flex; padding: 4px 9px; border: 1px solid #e1e5ec; border-radius: 6px; background: #f5f6f8; color: #5d6779; font-size: 12px; font-weight: 600; line-height: 1.4; }
+.mx-question-badge--difficulty_level { border-color: #c7d2fe; background: #eef2ff; color: #4f46e5; }

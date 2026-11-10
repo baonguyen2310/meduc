@@ -40,6 +40,16 @@ final class QuestionMetadata
         return $question;
     }
 
+    /** Display only classifications that were actually saved on the question. */
+    public static function labels(array $question): array
+    {
+        $question = self::normalize($question);
+        return array_filter([
+            'difficulty_level' => self::LEVELS[$question['difficulty_level'] ?? ''] ?? null,
+            'question_category' => self::CATEGORIES[$question['question_category'] ?? ''] ?? null,
+        ], static function ($label) { return $label !== null; });
+    }
+
     /** Merge the small legacy editor into the full question, preserving source, images and AI explanations.
      * Original indexes distinguish repeated/missing legacy codes even after sorting. New cloned rows clear the index.
      * Staff-only imported exams expose only metadata; their questions, answers and ordering stay untouched. */

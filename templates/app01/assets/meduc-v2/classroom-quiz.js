@@ -234,7 +234,19 @@
     const reviewing = attempt.state !== "doing" || instant;
     const wrap = el("div", `mcq-question${inline && reviewing ? " mcq-review-question" : ""}`);
     wrap.dataset.mcqQuestion = String(index);
-    wrap.append(el("p", "mcq-count", `Câu ${index + 1} / ${questions.length}`));
+    const heading = el("div", "mcq-question-heading");
+    heading.append(el("p", "mcq-count", `Câu ${index + 1} / ${questions.length}`));
+    const metadata = el("div", "mcq-question-metadata");
+    [["difficulty_level", "Mức độ"], ["question_category", "Loại câu hỏi"]].forEach(([field, title]) => {
+      const label = question.metadata_labels?.[field];
+      if (!label) return;
+      const badge = el("span", `mcq-question-badge mcq-question-badge--${field}`, label);
+      badge.title = `${title}: ${label}`;
+      badge.setAttribute("aria-label", badge.title);
+      metadata.append(badge);
+    });
+    if (metadata.childElementCount) heading.append(metadata);
+    wrap.append(heading);
     const text = el("div", "mcq-text");
     text.innerHTML = dropNumber(question.question);
     wrap.append(text);

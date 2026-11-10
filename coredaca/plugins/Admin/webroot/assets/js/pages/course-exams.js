@@ -46,6 +46,16 @@
       const label = plain('div', '', 'mx-question-label'); label.append(plain('span', 'Câu ' + (index + 1)));
       label.append(plain('span', missingChoice ? 'Thiếu lựa chọn và đáp án' : missingAnswer ? 'Chưa có đáp án' : q.options.length ? (correct.length > 1 ? 'Chọn nhiều đáp án' : 'Trắc nghiệm') : 'Tự luận · tự đối chiếu'));
       question.append(label);
+      const metadata = plain('div', '', 'mx-question-metadata');
+      [['difficulty_level', 'Mức độ'], ['question_category', 'Loại câu hỏi']].forEach(([field, title]) => {
+        const text = q.metadata_labels?.[field];
+        if (!text) return;
+        const badge = plain('span', text, 'mx-question-badge mx-question-badge--' + field);
+        badge.title = title + ': ' + text;
+        badge.setAttribute('aria-label', badge.title);
+        metadata.append(badge);
+      });
+      if (metadata.childElementCount) question.append(metadata);
       const content = plain('div', '', 'mx-question-content'); content.innerHTML = q.content; question.append(content);
       (q.images || []).forEach(image => { const img = document.createElement('img'); img.src = image.url; img.alt = 'Hình minh hoạ câu ' + (index + 1); img.loading = 'lazy'; question.append(img); });
       q.options.forEach(option => {

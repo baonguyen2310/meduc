@@ -105,7 +105,11 @@ class CourseExamLibrary
                 $hash=(string)($image['url_hash']??'');
                 if (preg_match('/^[a-f0-9]{64}$/D',$hash)) $images[]=['url_hash'=>$hash,'url'=>'https://meduc.duckdns.org/api/media/'.$hash];
             }
+            $metadata = \App\Lib\QuestionMetadata::normalize($q);
             $questions[]=['id'=>$i+1,'question_type'=>(string)($q['question_type']??''),
+                'question_category'=>$metadata['question_category']??null,
+                'difficulty_level'=>$metadata['difficulty_level']??null,
+                'metadata_labels'=>\App\Lib\QuestionMetadata::labels($metadata),
                 'content'=>self::safeHtml((string)($q['name_vi']??'')),
                 'explanation'=>\App\Lib\QuizExplanation::render($q['answer_detail_vi']??''),
                 'explanation_parts'=>QuizQuestions::explanationParts($q),

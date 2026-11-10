@@ -217,13 +217,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261103-mock-button" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261110-question-labels" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261110-subscription-expiry" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
 {/if}
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261103-mock-button" defer></script>{/if}
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261110-question-labels" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-access-expires="{$course_access.expires_at|default:0}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">

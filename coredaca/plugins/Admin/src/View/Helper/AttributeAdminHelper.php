@@ -22,6 +22,11 @@ class AttributeAdminHelper extends Helper
         return \App\Lib\QuestionMetadata::CATEGORIES;
     }
 
+    public function questionMetadataLabels(array $question = []): array
+    {
+        return \App\Lib\QuestionMetadata::labels($question);
+    }
+
     public function questionLevels(): array
     {
         return \App\Lib\QuestionMetadata::LEVELS;

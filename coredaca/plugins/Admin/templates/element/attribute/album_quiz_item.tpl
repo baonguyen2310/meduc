@@ -14,6 +14,9 @@
         </div>
 
         <div class="kt-portlet__head-toolbar">
+            {foreach from=$this->AttributeAdmin->questionMetadataLabels($album) key=metadata_field item=metadata_label}
+                <span class="badge badge-light mr-2 px-2 py-1" title="{if $metadata_field == 'difficulty_level'}Mức độ{else}Loại câu hỏi{/if}: {$metadata_label|escape}">{$metadata_label|escape}</span>
+            {/foreach}
             <div class="kt-portlet__head-group">
                 {if empty($metadata_only)}
                 <span class="btn btn-sm btn-icon btn-danger btn-icon-md m-0 btn-delete-item">

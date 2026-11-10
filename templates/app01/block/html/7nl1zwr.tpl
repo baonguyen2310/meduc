@@ -43,6 +43,7 @@
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 my-15 order-md-1 order-2">
                                 {foreach from = $resultQuiz.questionsAnswers key = key item = question}
                                     <div class="form-quiz__item" id="target-{$key}">
+                                        {$this->element('question_metadata', ['question' => $question])}
                                         <h5 class="form-quiz__item-title">{$question.name_vi}</h5>
                                         {if !empty($question.description_vi)}
                                             <div class="form-quiz__item-desc">

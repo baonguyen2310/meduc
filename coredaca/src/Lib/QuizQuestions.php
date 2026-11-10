@@ -77,6 +77,7 @@ final class QuizQuestions
             $metadata = QuestionMetadata::normalize($item);
             $question['question_category'] = $metadata['question_category'] ?? null;
             $question['difficulty_level'] = $metadata['difficulty_level'] ?? null;
+            $question['metadata_labels'] = QuestionMetadata::labels($metadata);
             // Bind self-assessment to the displayed question, including repeated legacy codes.
             $question['key'] = hash('sha256', json_encode([$question['code'], $question['question'], $question['options']], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE));
             $questions[] = $question;

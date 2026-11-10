@@ -684,6 +684,11 @@ class UtilitiesHelper extends Helper
         return $result;
     }
 
+    public function questionMetadataLabels(array $question = []): array
+    {
+        return \App\Lib\QuestionMetadata::labels($question);
+    }
+
     /** Lấy ra chi tiết kết quả bài làm của học viên
      * 
      * $member_code: id học viên

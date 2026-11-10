@@ -1081,8 +1081,8 @@ class ProductController extends AppController {
         $this->set('course_is_exam_prep', CourseExamLibrary::isExamPrep($id));
         $this->set('course_is_fa', \App\Service\CourseTypes::kind($id) === 'fa');
         $this->set('course_exam_download', \App\Service\CourseTypes::admin() && \App\Service\CourseTypes::kind($id) === 'fa');
-        $this->css_page[]='/assets/css/course-exams.css?v=20261018-4';
-        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261029-course-types';
+        $this->css_page[]='/assets/css/course-exams.css?v=20261110-question-labels';
+        $this->js_page[]='/assets/js/pages/course-exams.js?v=20261110-question-labels';
     }
 
     public function save($id = null)
