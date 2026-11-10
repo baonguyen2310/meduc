@@ -300,11 +300,11 @@
                                 {if $course_ownership != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16"/></svg>Sở hữu</dt><dd>{$course_ownership|escape}</dd></div>{/if}
                             </dl>
                             {if !$licensed}
-                                <section class="mcr-assurance" aria-label="Cam kết hoàn học phí">
-                                    <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết hoàn học phí</h3>
+                                <section class="mcr-assurance" aria-label="Cam kết đổi môn miễn phí">
+                                    <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết đổi môn miễn phí</h3>
                                     <ul>
-                                        <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>hoàn 100% học phí.</strong></li>
-                                        <li>Hoàn thành <strong>80% khoá học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>hoàn 100% học phí.</strong></li>
+                                        <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>Đổi sang môn khác miễn phí.</strong></li>
+                                        <li>Hoàn thành <strong>80% khoá học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>Đổi sang môn khác miễn phí.</strong></li>
                                     </ul>
                                 </section>
                             {/if}
