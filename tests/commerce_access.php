@@ -61,6 +61,7 @@ try{
  Notices::purchase((int)$p['order_id'],'reported',$send,'meducv3.duckdns.org');commerceExpect(count($delivered)===2,'Missing buyer or admin purchase email.');
  Notices::purchase((int)$p['order_id'],'reported',$send,'meducv3.duckdns.org');commerceExpect(count($delivered)===2,'Report email was duplicated.');
  Notices::purchase((int)$p['order_id'],'approved',$send,'meducv3.duckdns.org');commerceExpect(count($delivered)===4,'Approval email missing.');
+ Notices::purchase((int)$partial['order_id'],'approved',$send,'meducv3.duckdns.org');commerceExpect(count($delivered)===4,'Partial receipt sent a misleading access-approved email.');
  commerceExpect($delivered[0]['to_email']==='baonguyencoder97@gmail.com'&&strpos($delivered[0]['content'],'/duyet-thanh-toan/')!==false&&strpos($delivered[1]['content'],'/duyet-thanh-toan/')===false,'Admin approval link or recipient incorrect.');
  $checks[]='buyer_admin_mail_outbox_idempotent_scoped_approval_link';
  Notices::purchase((int)$credit['order_id'],'reported',function(){throw new RuntimeException('Simulated transport timeout');},'meducv3.duckdns.org');

@@ -23,6 +23,7 @@ final class CommerceNotifications
     private static function queuePurchase(int $id,string $event,callable $send,string $host):void {
         $p=CommercePurchases::get($id);if(!$p||!$p['reported_at'])return;
         $approved=$event==='approved';$origin=self::origin($host);
+        if($approved&&(!$p['approved_at']||!CommercePurchases::paid($p)))return;
         $names=CommercePurchases::db()->execute("SELECT pc.name FROM orders_item i JOIN products_content pc ON pc.product_id=i.product_id AND pc.lang='vi' WHERE i.order_id=?",[$id])->fetchAll('assoc');
         $facts=['Mã đơn'=>$p['order_code'],'Gói mua'=>$p['package_name'],'Sản phẩm'=>$p['kind']==='document'?'Lượt tải tài liệu':implode(', ',array_column($names,'name')),
             'Người mua'=>$p['full_name'],'Email'=>$p['email'],'Số điện thoại'=>$p['phone'],'Tổng thanh toán'=>number_format((int)$p['amount'],0,',','.').'đ'];
