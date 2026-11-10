@@ -23,8 +23,8 @@
       group.section.dataset.courseLayout = layout === 'grid' ? 'grid' : 'list';
       for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.catalogLayout === group.section.dataset.courseLayout));
     }
-    let desktopLayout = 'list';
-    try { desktopLayout = localStorage.getItem(key) === 'grid' ? 'grid' : 'list'; } catch (_) { /* Keep the desktop default. */ }
+    let desktopLayout = 'grid';
+    try { desktopLayout = localStorage.getItem(key) === 'list' ? 'list' : 'grid'; } catch (_) { /* Keep the desktop default. */ }
     const switcher = group.section.querySelector('[data-layout-switch]');
     function syncLayout() {
       setLayout(mobileLayout.matches ? 'grid' : desktopLayout);
