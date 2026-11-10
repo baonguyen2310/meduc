@@ -18,16 +18,16 @@
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
                 <span>Khoá học</span>
             </a>
-            <a class="mhb-button mhb-button--primary" href="/khoa-chua-de">
+            <a class="mhb-button mhb-button--primary" href="/trac-nghiem">
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M9 5.5H6V21h12V5.5h-3"/><path d="m9 14 2 2 4-4"/></svg>
-                <span>Luyện thi</span>
+                <span>Trắc nghiệm</span>
             </a>
-            <a class="mhb-button mhb-button--secondary" href="/sach-y-khoa">
+            <a class="mhb-button mhb-button--primary" href="/sach-y-khoa">
                 <svg class="mhb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v16M12 5C8 3 5 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-3-1-6-1-10 1Z"/></svg>
                 <span>Sách</span>
             </a>
             <div class="mhb-gift">
-                <button class="mhb-button mhb-button--outline" type="button" aria-expanded="false" aria-controls="mhb-gift-menu">
+                <button class="mhb-button mhb-button--primary" type="button" aria-expanded="false" aria-controls="mhb-gift-menu">
                     <svg class="mhb-icon mhb-icon--always" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C10.5 5 7 4.5 7 7c0 1.5 2 1 5 1Zm0 0c1.5-3 5-3.5 5-1 0 1.5-2 1-5 1Z"/></svg>
                     <span>Quà tặng</span>
                 </button>
