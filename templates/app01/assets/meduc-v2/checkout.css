@@ -15,7 +15,7 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 
 /* Compact VietQR: keep the code large, and wrap the bank details below in narrow panels. */
 .mco .mco-qr-panel--compact{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:24px}
-.mco-qr-panel--compact .mco-qr-image{flex:0 1 300px;min-width:0;max-width:100%}
-.mco-qr-panel--compact .mco-qr-image>img{max-width:none}
-.mco-qr-panel--compact .mco-bank-copy{flex:1 1 220px;min-width:0}
-@media(max-width:640px){.mco-qr-panel--compact .mco-bank-copy{flex-basis:100%}}
+.mco .mco-qr-panel--compact .mco-qr-image{flex:0 1 300px;min-width:0;max-width:100%}
+.mco .mco-qr-panel--compact .mco-qr-image>img{max-width:none}
+.mco .mco-qr-panel--compact .mco-bank-copy{flex:1 1 220px;min-width:0}
+@media(max-width:640px){.mco .mco-qr-panel--compact .mco-bank-copy{flex-basis:100%}}
