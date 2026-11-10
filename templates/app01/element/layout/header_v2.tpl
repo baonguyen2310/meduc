@@ -132,7 +132,7 @@
       <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
         {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
       </div>
-      <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Bắt đầu học</button>
+      <button class="mhi-header-cta" type="button" data-ma-open="register" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng ký</button>
       <button class="mhi-icon-button mhi-menu-toggle" id="mhi-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mhi-drawer">
         <svg class="mhi-icon" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -170,7 +170,7 @@
           <span>Đổi giao diện sáng/tối</span>
         </button>
         <a class="mhi-header-cta" data-ma-member-link href="/khoa-hoc-da-dang-ky"{if empty($header_member)} hidden{/if}>Khoá học của tôi</a>
-        <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Bắt đầu học</button>
+        <button class="mhi-header-cta" type="button" data-ma-open="register" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng ký</button>
       </div>
     </nav>
   </div>
