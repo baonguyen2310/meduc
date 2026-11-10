@@ -21,7 +21,7 @@
       <section class="mds-checkout" data-download-qr aria-labelledby="download-payment-title">
         <h2 id="download-payment-title">Thanh toán chuyển khoản</h2>
         {$order_info = ['total'=>9999,'debt'=>9999]}{$payment_reference = '—'}
-        {include file='../Order/meduc_payment.tpl'}
+        {include file='../Order/meduc_payment.tpl' payment_purpose='document'}
         <button class="mds-button" type="button" data-download-transfer>Đã chuyển khoản</button>
         <p class="mds-help">MedUC sẽ kiểm tra giao dịch và xác nhận thủ công. Nút trên chỉ gửi thông báo, chưa mở quyền tải.</p>
       </section>
