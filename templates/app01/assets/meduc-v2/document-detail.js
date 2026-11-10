@@ -4,8 +4,10 @@
     const files=[...page.querySelectorAll('[data-document-file]')],viewer=page.querySelector('[data-document-viewer]'),preview=page.querySelector('[data-document-preview]');
     const placeholder=page.querySelector('[data-document-placeholder]'),unavailable=page.querySelector('[data-document-unavailable]'),start=page.querySelector('[data-document-start]'),status=page.querySelector('[data-document-reader-status]'),fullscreen=page.querySelector('[data-document-fullscreen]');
     const dialog=page.querySelector('[data-document-dialog]'),retry=page.querySelector('[data-document-retry]');
+    const actionBar=document.getElementById('meduc-action-bar'),actionMarker=document.createComment('Document reader action bar position');
     const positions=new Map();let active=0,loaded=-1,instance=null,sequence=0,userActed=false,loadController,expanded=false,lastFocus;
     const marker=document.createComment('Document reader position');if(viewer)viewer.before(marker);
+    if(actionBar)actionBar.before(actionMarker);
     function labelExpanded(open){
         if(!fullscreen)return;
         fullscreen.setAttribute('aria-label',open?'Đóng trình đọc':'Phóng to trình đọc');
@@ -15,6 +17,7 @@
     function restoreReader(){
         if(!expanded)return;
         expanded=false;marker.after(viewer);document.body.classList.remove('meduc-document-reading');labelExpanded(false);
+        if(actionBar)actionMarker.after(actionBar);
         if(preview.classList.contains('mdp-host')&&!preview.hidden&&unavailable.hidden){preview.hidden=true;placeholder.hidden=false;start.firstChild.textContent=`Tiếp tục từ trang ${positions.get(active)||1} `;}
         window.meducReading?.flush(true);lastFocus?.focus({preventScroll:true});
     }
@@ -26,6 +29,8 @@
     function expand(opener){
         if(!viewer||!dialog||expanded)return;
         lastFocus=opener||document.activeElement;dialog.append(viewer);
+        // Keep the existing navigation interactive inside the modal's top layer.
+        if(actionBar)dialog.append(actionBar);
         if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
         if(loaded===active&&preview.childElementCount&&unavailable.hidden){preview.hidden=false;placeholder.hidden=true;}
         expanded=true;document.body.classList.add('meduc-document-reading');labelExpanded(true);fullscreen?.focus({preventScroll:true});

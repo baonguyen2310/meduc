@@ -98,6 +98,7 @@ body.meduc-document-reading { overflow:hidden!important; }
 .mdd-reader-dialog .mdd-preview iframe { height:100%; min-height:100%; }
 .mdd-reader-dialog .mdd-reader-placeholder,.mdd-reader-dialog .mdd-reader-unavailable { flex:1; min-height:0; overflow:auto; }
 .mdd-reader-dialog .mdd-reader-status { flex:none; padding-bottom:max(10px,env(safe-area-inset-bottom)); }
+.mdd-reader-dialog > .mhb { position:relative; inset:auto; flex:none; width:100%; transform:none; visibility:visible; transition:none; }
 .mdd-information { padding-block:65px; background:var(--mdd-hero); border-block:1px solid var(--mdd-line); }
 .mdd-information-layout { display:grid; grid-template-columns:300px minmax(0,1fr); gap:65px; align-items:start; }
 .mdd-information-label { position:sticky; top:calc(var(--mhi-header-h,66px) + 30px); }

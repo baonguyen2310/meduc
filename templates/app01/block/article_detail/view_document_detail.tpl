@@ -9,11 +9,11 @@
 {if !empty($article.attributes.combo_course_in_doc.value)}{$course_ids = json_decode($article.attributes.combo_course_in_doc.value, true)}{if is_array($course_ids) && !empty($course_ids)}{$courses = $this->Product->getProducts(['filter' => ['ids' => $course_ids], 'limit' => 3])}{/if}{/if}
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261015" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.css?v=20261028-reader" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.css?v=20261110-reader-actions" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.css?v=20261028-scroll" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/pdf-reader.js?v=20261028-scroll-2" defer></script>
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261028-scroll-2" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261110-reader-actions" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261110-unified-checkout" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261110-unified-checkout" defer></script>
 <main class="mdd" id="document-detail-page" data-reading-item="document" data-reading-id="{$document.id}" data-reading-title="{$document.title|escape}" data-reading-topic="{$document.subject|escape}" data-reading-image="{if !empty($document.image)}{CDN_URL}{$document.image|escape}{/if}">
