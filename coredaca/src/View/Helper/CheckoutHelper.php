@@ -24,9 +24,9 @@ class CheckoutHelper extends Helper
                 'bank_branch' => 'CN NAM HUE - PGD AN VAN DUONG',
                 'account_holder' => 'HO KINH DOANH NHA SACH MEDUCBO',
                 'account_number' => '109886529080',
-                'qr_file' => 'bank-qr-meducbo.png',
-                'qr_width' => 592, 'qr_height' => 1280,
-                'qr_download' => 'MedUCBO-QR-ngan-hang.png'
+                'qr_file' => 'bank-qr-meducbo-vietqr.png',
+                'qr_width' => 540, 'qr_height' => 660, 'qr_compact' => true,
+                'qr_download' => 'MedUCBO-VietQR.png'
             ];
         }
         $gateways = TableRegistry::get('PaymentsGateway')->getList(LANGUAGE);

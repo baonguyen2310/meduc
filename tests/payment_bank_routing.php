@@ -35,7 +35,7 @@ expectBank($old['account_number'] === $legacy['account_number'] && $old['account
 foreach (['book', 'document', 'quiz'] as $purpose) {
     $bank = $helper->bank($purpose);
     expectBank($bank['account_number'] === '109886529080' && $bank['account_holder'] === 'HO KINH DOANH NHA SACH MEDUCBO' &&
-        $bank['qr_file'] === 'bank-qr-meducbo.png', 'Incorrect bank for ' . $purpose);
+        $bank['qr_file'] === 'bank-qr-meducbo-vietqr.png', 'Incorrect bank for ' . $purpose);
     $size = getimagesize($root . '/templates/app01/assets/meduc-v2/payment/' . $bank['qr_file']);
     expectBank($size && $size[0] === $bank['qr_width'] && $size[1] === $bank['qr_height'], 'QR metadata differs from the supplied image.');
 }
@@ -65,9 +65,10 @@ foreach ($cases as [$purpose, $order, $bookstore]) {
     $view->loadHelper('Checkout');
     $html = $view->payment(['payment_purpose' => $purpose, 'order_info' => $order, 'payment_reference' => 'PAYMENT CHECK']);
     $number = $bookstore ? '109886529080' : $legacy['account_number'];
-    $file = $bookstore ? 'bank-qr-meducbo.png' : 'bank-qr.jpg';
+    $file = $bookstore ? 'bank-qr-meducbo-vietqr.png' : 'bank-qr.jpg';
     expectBank(strpos($html, '<strong>' . $number . '</strong>') !== false && strpos($html, 'data-copy="' . $number . '"') !== false &&
         substr_count($html, '/payment/' . $file . '"') === 2, 'Rendered bank text, copy action and QR disagree.');
+    expectBank((strpos($html, 'mco-qr-panel--compact') !== false) === $bookstore, 'Compact QR layout leaked into the original course payment.');
 }
 echo json_encode(['passed' => ['legacy_course_account_preserved', 'books_documents_quiz_use_meducbo',
     'knowledge_and_solution_invoices_preserved', 'quiz_and_book_invoices_routed', 'supplied_qr_dimensions_match',

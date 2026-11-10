@@ -12,3 +12,10 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 .mco-transfer-amount{display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-top:23px;padding-top:19px;border-top:1px solid var(--co-line)}.mco-transfer-amount>span{font-size:10px;color:var(--co-muted)}.mco-transfer-amount>strong{font-size:21px;font-weight:600;letter-spacing:-.035em}.mco-transfer-ref{margin-top:14px}.mco-course-payment .product-order-info-right-bottom{border:0!important;padding:0!important;margin:0!important;font-size:11px}.mco-course-payment .color-hover{color:var(--co-ink)!important}.mco-course-payment .product-order-info-right-bottom>div:last-of-type .price-amount{font-size:21px}.mco-course-payment .currency-symbol{font-size:11px}.mco-course-info .mco-panel>.mco-cart-item:nth-child(2),.mco-course-payment .mco-panel>.mco-cart-item:nth-child(2){border-top:0;padding-top:0}
 
 .mco-course-payment .mco-totals>.product-order-info-right-bottom{display:block}.mco-course-payment .product-order-info-right-bottom>div{display:flex;justify-content:space-between;gap:20px;margin-bottom:16px}.mco-course-payment .product-order-info-right-bottom>.separation-dash{display:block;border-top:1px solid var(--co-line);margin-block:20px}.mco-course-payment .product-order-info-right-bottom .price-amount{white-space:nowrap}
+
+/* Compact VietQR: keep the code large, and wrap the bank details below in narrow panels. */
+.mco .mco-qr-panel--compact{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:24px}
+.mco-qr-panel--compact .mco-qr-image{flex:0 1 300px;min-width:0;max-width:100%}
+.mco-qr-panel--compact .mco-qr-image>img{max-width:none}
+.mco-qr-panel--compact .mco-bank-copy{flex:1 1 220px;min-width:0}
+@media(max-width:640px){.mco-qr-panel--compact .mco-bank-copy{flex-basis:100%}}
