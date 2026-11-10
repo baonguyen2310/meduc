@@ -69,7 +69,9 @@ foreach ($cases as [$purpose, $order, $bookstore]) {
     expectBank(strpos($html, '<strong>' . $number . '</strong>') !== false && strpos($html, 'data-copy="' . $number . '"') !== false &&
         substr_count($html, '/payment/' . $file . '"') === 2, 'Rendered bank text, copy action and QR disagree.');
     expectBank((strpos($html, 'mco-qr-panel--compact') !== false) === $bookstore, 'Compact QR layout leaked into the original course payment.');
+    expectBank((stripos($html, 'momo') === false) === $bookstore, 'MoMo visibility does not match the payment type.');
+    expectBank($bookstore ? strpos($html, 'role="region"') !== false : strpos($html, 'role="tablist"') !== false, 'Bank-only payment has an invalid tab relationship.');
 }
 echo json_encode(['passed' => ['legacy_course_account_preserved', 'books_documents_quiz_use_meducbo',
     'knowledge_and_solution_invoices_preserved', 'quiz_and_book_invoices_routed', 'supplied_qr_dimensions_match',
-    'unknown_and_course_invoices_keep_existing_account', 'rendered_account_copy_and_qr_match'], 'database_writes' => 0], JSON_PRETTY_PRINT) . "\n";
+    'unknown_and_course_invoices_keep_existing_account', 'rendered_account_copy_and_qr_match', 'momo_removed_from_books_documents_quiz_only'], 'database_writes' => 0], JSON_PRETTY_PRINT) . "\n";

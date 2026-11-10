@@ -26,13 +26,13 @@ class CheckoutHelper extends Helper
                 'account_number' => '109886529080',
                 'qr_file' => 'bank-qr-meducbo-vietqr.png',
                 'qr_width' => 540, 'qr_height' => 660, 'qr_compact' => true,
-                'qr_download' => 'MedUCBO-VietQR.png'
+                'qr_download' => 'MedUCBO-VietQR.png', 'show_momo' => false
             ];
         }
         $gateways = TableRegistry::get('PaymentsGateway')->getList(LANGUAGE);
         return array_merge($gateways['bank']['config'][0] ?? [], [
             'qr_file' => 'bank-qr.jpg', 'qr_width' => 893, 'qr_height' => 1306,
-            'qr_download' => 'MedUC-QR-ngan-hang.jpg'
+            'qr_download' => 'MedUC-QR-ngan-hang.jpg', 'show_momo' => true
         ]);
     }
 
