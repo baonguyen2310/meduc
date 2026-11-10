@@ -21,18 +21,15 @@
       el, id: el.dataset.package, count: Number(el.dataset.count), amount: Number(el.dataset.amount), name: el.dataset.name
     }]));
     const picker = page.querySelector('[data-course-dialog]');
-    const checkout = page.querySelector('[data-checkout-dialog]');
     const search = picker.querySelector('[data-course-search]');
     const year = picker.querySelector('[data-year-filter]');
-    const form = checkout.querySelector('[data-price-form]');
-    const error = checkout.querySelector('[data-price-error]');
-    const submit = checkout.querySelector('[data-checkout]');
+    const error = page.querySelector('[data-price-error]');
     const firstSelected = chosen.find(id => byId.get(id)?.years?.length);
     const preferredYear = page.dataset.recommendedYear || byId.get(firstSelected)?.years?.[0] || '';
     const money = n => new Intl.NumberFormat('vi-VN').format(n) + 'đ';
     const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
     let plan = null, draft = [], busy = false;
-    let authenticated = page.dataset.member === '1', pendingPlan = null, opener = null;
+    let opener = null;
     let previousOverflow = '';
     const allPath = page.dataset.catalogUrl || ({knowledge:'/khoa-hoc',exam_solution:'/khoa-chua-de',quiz:'/trac-nghiem'}[page.dataset.courseType] || '/khoa-hoc');
     const contextUrl = path => { const url = new URL(path || '/', location.origin + '/'); url.searchParams.set('bang_gia',listId);url.searchParams.set('goi',plan.id);return url.pathname + url.search; };
@@ -42,7 +39,6 @@
       const next=stored();if (JSON.stringify(next)===JSON.stringify(chosen)) return;
       chosen=next;updateCards();
       if (picker.open) {draft=[...chosen];renderCourses();}
-      if (checkout.open && !busy) {closeDialog(checkout,false);openPicker(plan.id);}
     });
 
     function openDialog(dialog, trigger) {
@@ -57,7 +53,7 @@
       document.body.style.overflow = previousOverflow;
       if (restore && opener?.isConnected) opener.focus({preventScroll:true});
     }
-    [picker, checkout].forEach(dialog => {
+    [picker].forEach(dialog => {
       dialog.addEventListener('cancel', event => { event.preventDefault(); if (!busy) closeDialog(dialog); });
       dialog.addEventListener('click', event => {
         if (event.target.closest('[data-close-dialog]')) { if (!busy) closeDialog(dialog); return; }
@@ -150,44 +146,17 @@
     search.addEventListener('input', renderCourses); year.addEventListener('change', renderCourses);
     picker.querySelector('[data-apply-courses]').addEventListener('click', () => { chosen = [...draft]; persist(); updateCards(); closeDialog(picker); });
 
-    function openCheckout(id, trigger) {
-      const p = plans.get(String(id)); if (!p) return;
-      if (chosen.length !== p.count) { openPicker(id, trigger); return; }
-      plan = p;
-      if (!authenticated) { pendingPlan = id; window.meducAuth?.open('login', trigger); return; }
-      checkout.querySelector('[data-checkout-name]').textContent = p.name;
-      checkout.querySelector('[data-checkout-price]').textContent = money(p.amount);
-      const list = checkout.querySelector('[data-checkout-courses]'); list.replaceChildren();
-      chosen.forEach(id => { const li = document.createElement('li'); li.textContent = byId.get(id).name; list.append(li); });
-      error.textContent = ''; openDialog(checkout, trigger);
+    async function openCheckout(id, trigger) {
+      const p=plans.get(String(id));if(!p||busy)return;
+      if(chosen.length!==p.count){openPicker(id,trigger);return;}
+      busy=true;error.textContent='';trigger && (trigger.disabled=true);
+      try {await cart.checkout(listId,p.id,[...chosen],trigger);}
+      catch(e){error.textContent=e.message || 'Chưa tạo được đơn thanh toán.';}
+      finally{busy=false;trigger && (trigger.disabled=false);}
     }
-    page.querySelectorAll('[data-edit-plan]').forEach(b => b.addEventListener('click', () => openPicker(b.dataset.editPlan, b)));
-    page.querySelectorAll('[data-register-plan]').forEach(b => b.addEventListener('click', () => openCheckout(b.dataset.registerPlan, b)));
-    checkout.querySelector('[data-back-to-courses]').addEventListener('click', () => { if (busy) return; const id = plan.id; closeDialog(checkout, false); openPicker(id, plans.get(id).el.querySelector('[data-edit-plan]')); });
-    window.addEventListener('meduc:authenticated', () => {
-      authenticated = true;
-      if (!pendingPlan) return;
-      const id = pendingPlan; pendingPlan = null;
-      const auth = document.getElementById('login-modal');
-      if (window.jQuery && auth && auth.style.display !== 'none') window.jQuery(auth).one('hidden.bs.modal', () => openCheckout(id));
-      else openCheckout(id);
-    });
-    form.addEventListener('submit', async event => {
-      event.preventDefault(); if (busy || !plan) return;
-      if (chosen.length !== plan.count) { error.textContent = 'Vui lòng chọn đủ số môn của gói.'; return; }
-      busy = true; submit.disabled = true; error.textContent = '';
-      try {
-        const body = new FormData(form); body.append('package_id', plan.id); body.append('token', page.querySelector('[data-price-token]').value);
-        chosen.forEach(id => body.append('course_ids[]', id));
-        const response = await fetch('/bang-bao-gia/dang-ky', {method:'POST', body, credentials:'same-origin', headers:{'X-CSRF-Token':document.documentElement.getAttribute('csrf-token'),'X-Requested-With':'XMLHttpRequest'}});
-        const result = await response.json();
-        if (response.status === 401) { authenticated = false; pendingPlan = plan.id; busy = false; closeDialog(checkout, false); window.meducAuth?.open('login'); return; }
-        if (!response.ok || result.code !== 'success') throw new Error(result.message || 'Chưa đăng ký được.');
-        cart?.set(listId,[]);
-        location.href = result.data.redirect;
-      } catch (e) { error.textContent = e.message || 'Kết nối gián đoạn. Vui lòng thử lại.'; }
-      finally { busy = false; submit.disabled = false; }
-    });
+    page.querySelectorAll('[data-edit-plan]').forEach(b=>b.addEventListener('click',()=>openPicker(b.dataset.editPlan,b)));
+    page.querySelectorAll('[data-register-plan]').forEach(b=>b.addEventListener('click',()=>openCheckout(b.dataset.registerPlan,b)));
+    window.addEventListener('meduc:checkout-error',event=>{error.textContent=event.detail.message;});
     updateCards();
   });
 })();

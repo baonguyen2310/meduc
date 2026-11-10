@@ -19,3 +19,72 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 .mco .mco-qr-panel--compact .mco-qr-image>img{max-width:none}
 .mco .mco-qr-panel--compact .mco-bank-copy{flex:1 1 220px;min-width:0}
 @media(max-width:640px){.mco .mco-qr-panel--compact .mco-bank-copy{flex-basis:100%}}
+
+/* Shared checkout: editable contact and items on the left, payment on the right. */
+.mco-unified{font-size:15px;min-height:65vh}
+.mco-unified .mco-shell{width:min(92%,1280px);padding-bottom:72px}
+.mco-unified .mco-checkout-heading{margin:12px 0 32px}
+.mco-unified .mco-checkout-heading h1{font:700 clamp(30px,3.2vw,44px)/1.2 Inter,Arial,sans-serif;letter-spacing:-.045em;text-transform:none}
+.mco-unified .mco-kicker{font-size:11px;margin-bottom:10px}
+.mco-unified .mco-layout{grid-template-columns:minmax(0,1.5fr) minmax(330px,1fr);gap:28px}
+.mco-unified .mco-panel{padding:28px;border-radius:14px}
+.mco-unified .mco-panel-heading{margin-bottom:24px}
+.mco-unified .mco-panel-heading h2{font-size:20px;font-weight:700}
+.mco-unified .mco-panel-heading>a{font-size:13px}
+.mco-unified .mco-fields{gap:22px 18px}
+.mco-unified .mco-field>label{font-size:14px;margin-bottom:8px}
+.mco-unified .mco-field>input{height:50px;font-size:16px;border-radius:8px!important}
+.mco-unified .mco-field>input[readonly]{color:var(--co-muted)!important;cursor:default}
+.mco-unified .mco-field-note{display:block;margin-top:7px;font-size:12px;color:var(--co-muted);line-height:1.5}
+.mco-unified .mco-sidebar{position:static}
+.mco-unified .mco-payment .mco-panel-heading{margin-bottom:6px}
+.mco-unified .mco-order-code{font-size:12px;margin:0 0 22px;overflow-wrap:anywhere}
+.mco-unified .mco-qr-tabs{gap:10px;margin-bottom:22px;display:flex}
+.mco-unified .mco-qr-tabs>button{flex:1;padding:12px 8px;font-size:14px;font-weight:600;white-space:nowrap}
+.mco-unified .mco-qr-panel,.mco-unified .mco-qr-panel--compact{display:flex;flex-direction:column;gap:16px;align-items:stretch}
+.mco-unified .mco-qr-image,.mco-unified .mco-qr-panel--compact .mco-qr-image{flex:none;width:min(100%,260px);max-width:260px;margin:0 auto;border:1px solid var(--co-line)}
+.mco-unified .mco-qr-image>img{width:100%;max-width:none;max-height:340px;object-fit:contain}
+.mco-unified .mco-qr-panel--compact .mco-bank-copy{flex:none}
+.mco-unified .mco-bank-copy .mco-kicker,.mco-unified .mco-bank-copy h3{display:none}
+.mco-unified .mco-bank-copy dl>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;margin:0 0 8px}
+.mco-unified .mco-bank-copy dt{font-size:12px;line-height:1.6}
+.mco-unified .mco-bank-copy dd{font-size:12px;line-height:1.6;margin:0;overflow-wrap:anywhere}
+.mco-unified .mco-bank-copy dd strong{font-size:14px}
+.mco-unified .mco-bank-copy .mco-button--quiet{margin-top:3px;min-height:34px;font-size:11px}
+.mco-unified .mco-transfer-ref{margin-top:18px;padding:13px}
+.mco-unified .mco-transfer-ref>span{font-size:12px}
+.mco-unified .mco-transfer-ref>strong{font-size:14px;font-weight:600}
+.mco-unified .mco-copy{font-size:11px}
+.mco-unified .mco-transfer>[data-transfer-help]{font-size:11px}
+.mco-unified .mco-checkout-total{margin-top:24px;padding-top:22px;border-top:1px solid var(--co-line)}
+.mco-unified .mco-checkout-total>span{font-size:13px;color:var(--co-muted)}
+.mco-unified .mco-checkout-total>div{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 14px;margin-top:5px}
+.mco-unified .mco-checkout-total strong{font-size:30px;line-height:1.4;letter-spacing:-.04em;color:var(--co-red);font-weight:700}
+.mco-unified .mco-checkout-total del{font-size:16px;color:var(--co-muted);white-space:nowrap}
+.mco-unified .mco-complete{justify-content:center;width:100%;font-size:16px;border-radius:8px;min-height:52px;margin-top:20px}
+.mco-unified .mco-payment-note{font-size:13px;margin:18px 0 0;line-height:1.7}
+.mco-unified .mco-help{font-size:12px}
+.mco-unified .mco-cart-item{grid-template-columns:90px minmax(0,1fr);padding:24px 0}
+.mco-unified .mco-cart-item:first-child,.mco-unified .mco-panel>.mco-cart-item:nth-child(2){padding-top:0}
+.mco-unified .mco-cart-picture{width:90px;height:112px}
+.mco-unified .mco-cart-copy h3{font-size:16px;font-weight:600;margin-bottom:12px}
+.mco-unified .mco-item-prices strong{font-size:17px}
+.mco-unified .mco-item-prices del{font-size:13px}
+.mco-unified .mco-item-bottom{gap:18px}
+.mco-unified .mco-quantity{height:36px}
+.mco-unified .mco-quantity>button,.mco-unified .mco-quantity>input{height:34px;font-size:15px}
+.mco-unified .mco-remove{font-size:12px!important}
+.mco-unified .mco-document-item h3{font-size:18px;font-family:inherit;font-weight:600;line-height:1.6;margin:0}
+.mco-unified .mco-notice{background:var(--co-soft);border:1px solid var(--co-line);padding:14px 18px;border-radius:8px;margin:0 0 24px;font-size:14px}
+.mco-unified .mco-notice:empty{display:none}
+.mco-unified [data-error]{color:var(--co-red)}
+.mco-unified .mco-cod-panel{background:var(--co-soft);padding:24px 20px;border:1px solid var(--co-line);border-radius:8px;font-size:14px;line-height:1.8}
+.mco-unified .mco-cod-panel p{margin:12px 0 0;color:var(--co-muted)}
+.mco-unified .mco-auth-gate{max-width:550px;margin:35px auto}
+.mco-unified .mco-auth-gate .mco-button{justify-content:center;margin-top:20px}
+@media(max-width:950px){.mco-unified .mco-layout{grid-template-columns:minmax(0,1.3fr) minmax(310px,1fr);gap:20px}.mco-unified .mco-panel{padding:22px}.mco-unified .mco-fields{grid-template-columns:1fr}}
+@media(max-width:760px){.mco-unified .mco-shell{width:calc(100% - 32px);padding-bottom:45px}.mco-unified .mco-layout{grid-template-columns:minmax(0,1fr)}.mco-unified .mco-checkout-heading{margin:8px 0 26px}.mco-unified .mco-panel{padding:22px 18px}.mco-unified .mco-cart-item{grid-template-columns:68px minmax(0,1fr);gap:14px}.mco-unified .mco-cart-picture{width:68px;height:94px}.mco-unified .mco-cart-copy h3{font-size:15px}.mco-unified .mco-item-prices{flex-wrap:wrap}.mco-unified .mco-bank-copy dl>div{grid-template-columns:90px minmax(0,1fr)}.mco-unified .mco-checkout-total strong{font-size:29px}}
+
+.mco .mco-payment-details{min-width:0;width:100%;font-size:12px;color:var(--co-muted)}
+.mco .mco-payment-details>summary{cursor:pointer;list-style-position:inside;padding:6px 0}
+.mco .mco-payment-details[open]>.mco-bank-copy{margin-top:14px;color:var(--co-ink)}

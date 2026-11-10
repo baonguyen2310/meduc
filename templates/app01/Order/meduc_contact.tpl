@@ -1,0 +1,8 @@
+{$contact_prefix = $contact_prefix|default:'checkout'}
+{$contact_data = $checkout_contact|default:[]}
+<div class="mco-fields" data-checkout-contact>
+  <div class="mco-field mco-field--full form-group"><label for="{$contact_prefix|escape}-name">Họ và tên <span>*</span></label><input id="{$contact_prefix|escape}-name" name="full_name" autocomplete="name" required maxlength="255" value="{$contact_data.full_name|default:''|escape}" placeholder="Họ và tên của bạn"></div>
+  <div class="mco-field form-group"><label for="{$contact_prefix|escape}-phone">Số điện thoại <span>*</span></label><input id="{$contact_prefix|escape}-phone" name="phone" type="tel" autocomplete="tel" required maxlength="22" value="{$contact_data.phone|default:''|escape}" placeholder="Số điện thoại liên hệ"></div>
+  <div class="mco-field form-group"><label for="{$contact_prefix|escape}-email">Email</label><input id="{$contact_prefix|escape}-email" name="email" type="email" autocomplete="email" readonly required value="{$contact_data.email|default:''|escape}" aria-describedby="{$contact_prefix|escape}-email-note"><small id="{$contact_prefix|escape}-email-note" class="mco-field-note">Email của tài khoản đang đăng nhập.</small></div>
+  {if !empty($shipping_contact)}<div class="mco-field mco-field--full form-group"><label for="{$contact_prefix|escape}-address">Địa chỉ nhận hàng <span>*</span></label><input id="{$contact_prefix|escape}-address" name="address" autocomplete="street-address" required maxlength="512" value="{$contact_data.address|default:''|escape}" placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố"></div>{/if}
+</div>

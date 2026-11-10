@@ -1,30 +1,31 @@
 {include file='../Order/meduc_assets.tpl'}
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261028-hover-3" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261028-2" defer></script>
-<main class="mco mds-payment" data-document-payment="{$purchase_code|escape}">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261110-unified-checkout" defer></script>
+<main class="mco mco-unified" data-document-payment="{$purchase_code|escape}">
   <div class="mco-shell">
-    <p class="mco-kicker">MEDUC / TÀI LIỆU HỌC TẬP</p>
-    <h1>MUA LƯỢT TẢI.</h1>
-    <p class="mds-lead">9.999đ cho một lượt tải một tệp. Đọc trực tuyến vẫn miễn phí.</p>
-    <p class="mds-notice" role="status" aria-live="polite" data-download-message>Đang kiểm tra lượt tải…</p>
-    <div class="mds-login" data-download-login hidden><p>Đăng nhập tài khoản đã mua để tiếp tục.</p><button class="mds-button" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
-    <div class="mds-payment-grid" data-download-private hidden>
-      <section class="mds-invoice" aria-labelledby="download-invoice-title">
-        <p class="mco-kicker">MỘT TỆP / MỘT LƯỢT TẢI</p>
-        <h2 id="download-invoice-title" data-download-title></h2>
-        <p class="mds-filename" data-download-filename></p>
-        <dl class="mds-order-facts"><div><dt>Mã đơn</dt><dd data-download-order></dd></div><div><dt>Giá lượt tải</dt><dd class="mds-price">9.999đ</dd></div><div><dt>Trạng thái</dt><dd data-download-state></dd></div></dl>
-        <button class="mds-button" type="button" data-download-file hidden>Tải tệp đã mua ↓</button>
-        <p class="mds-help">Sau khi thanh toán được xác nhận, lượt tải được giữ trong tài khoản cho đến khi sử dụng. Khi bắt đầu tải, bạn có thể thử lại trong 30 phút nếu mạng bị gián đoạn.</p>
-        <a class="mds-back" data-download-back href="/tai-lieu-hoc-tap">← Về tài liệu</a>
-      </section>
-      <section class="mds-checkout" data-download-qr aria-labelledby="download-payment-title">
-        <h2 id="download-payment-title">Thanh toán chuyển khoản</h2>
+    <nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/tai-lieu-hoc-tap">Tài liệu học tập</a><span>/</span><span>Thanh toán</span></nav>
+    <header class="mco-checkout-heading"><p class="mco-kicker">MEDUC / THANH TOÁN</p><h1>Hoàn tất mua tài liệu.</h1></header>
+    <p class="mco-notice" role="status" aria-live="polite" data-download-message>Đang kiểm tra lượt tải…</p>
+    <div class="mco-panel mco-auth-gate" data-download-login hidden><p>Đăng nhập để tiếp tục thanh toán.</p><button class="mco-button mco-button--primary" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
+    <form class="mco-layout" data-download-private hidden>
+      <div class="mco-main">
+        <section class="mco-panel"><div class="mco-panel-heading"><h2>Thông tin của bạn</h2></div>{include file='../Order/meduc_contact.tpl' shipping_contact=false}</section>
+        <section class="mco-panel mds-invoice"><div class="mco-panel-heading"><h2>Tài liệu đã chọn</h2></div>
+          <article class="mco-document-item"><h3 data-download-title></h3><p class="mco-help" data-download-filename></p><p class="mco-help">1 lượt tải · 9.999đ</p></article>
+          <p class="mco-order-code">Mã đơn <strong data-download-order></strong></p><p class="mco-help" data-download-state></p>
+          <button class="mco-button mco-button--primary" type="button" data-download-file hidden>Tải tệp đã mua</button>
+          <p class="mco-help">Sau khi thanh toán được xác nhận, lượt tải được lưu trong tài khoản. Bạn có thể thử tải lại trong 30 phút nếu mạng gián đoạn.</p>
+          <a class="mco-text-link" data-download-back href="/tai-lieu-hoc-tap">← Về tài liệu</a>
+        </section>
+      </div>
+      <aside class="mco-sidebar" data-download-qr><section class="mco-panel mco-payment">
+        <div class="mco-panel-heading"><h2>Thanh toán</h2></div>
         {$order_info = ['total'=>9999,'debt'=>9999]}{$payment_reference = '—'}
-        {include file='../Order/meduc_payment.tpl' payment_purpose='document'}
-        <button class="mds-button" type="button" data-download-transfer>Đã chuyển khoản</button>
-        <p class="mds-help">MedUC sẽ kiểm tra giao dịch và xác nhận thủ công. Nút trên chỉ gửi thông báo, chưa mở quyền tải.</p>
-      </section>
-    </div>
+        {include file='../Order/meduc_payment.tpl' payment_purpose='document' allow_cod=false}
+        <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong>9.999đ</strong></div></div>
+        <p class="mco-payment-note">Sau khi chuyển khoản, nhấn hoàn tất để MedUC kiểm tra và xác nhận thanh toán.</p>
+        <button class="mco-button mco-button--primary mco-complete" type="submit" data-download-transfer>Hoàn tất thanh toán</button>
+      </section></aside>
+    </form>
+    <p class="mco-toast" role="status" aria-live="polite" data-checkout-status></p>
   </div>
 </main>

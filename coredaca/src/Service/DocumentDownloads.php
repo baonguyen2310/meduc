@@ -42,7 +42,7 @@ class DocumentDownloads
     }
     private function selectSql(): string
     {
-        return "SELECT p.*,o.code order_code,o.total order_total,o.status order_status,o.deleted order_deleted,c.customer_id order_customer,
+        return "SELECT p.*,o.code order_code,o.total order_total,o.status order_status,o.deleted order_deleted,c.customer_id order_customer,c.full_name,c.phone,
           COALESCE((SELECT SUM(CASE WHEN t.type=1 THEN t.amount ELSE -t.amount END) FROM payments t WHERE t.foreign_id=p.order_id AND t.foreign_type='order' AND t.status=1),0) confirmed
           FROM document_download_purchases p JOIN orders o ON o.id=p.order_id JOIN orders_contact c ON c.order_id=o.id ";
     }

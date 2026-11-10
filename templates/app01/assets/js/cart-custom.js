@@ -66,7 +66,8 @@ if(btnAddCart) {
         
         sessionStorage.setItem("cart", JSON.stringify(dataCart));
         
-        window.location.href = linkRedirect;
+        if (window.MeducCheckout) window.MeducCheckout.go(linkRedirect, btnAddCart).catch(() => { window.location.href = linkRedirect; });
+        else window.location.href = linkRedirect;
     });
 }
 // Hết Nút thêm sản phẩm vào giỏ hàng

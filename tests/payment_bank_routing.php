@@ -63,14 +63,15 @@ $cases = [['book', [], true], ['document', [], true],
 foreach ($cases as [$purpose, $order, $bookstore]) {
     $view = new PaymentBankView();
     $view->loadHelper('Checkout');
-    $html = $view->payment(['payment_purpose' => $purpose, 'order_info' => $order, 'payment_reference' => 'PAYMENT CHECK']);
+    $html = $view->payment(['payment_purpose' => $purpose, 'order_info' => $order, 'payment_reference' => 'PAYMENT CHECK', 'allow_cod'=>$purpose==='book']);
+    expectBank((strpos($html, 'id="qr-cod-tab"') !== false) === ($purpose==='book'), 'COD shown outside book checkout.');
     $number = $bookstore ? '109886529080' : $legacy['account_number'];
     $file = $bookstore ? 'bank-qr-meducbo-vietqr.png' : 'bank-qr.jpg';
     expectBank(strpos($html, '<strong>' . $number . '</strong>') !== false && strpos($html, 'data-copy="' . $number . '"') !== false &&
         substr_count($html, '/payment/' . $file . '"') === 2, 'Rendered bank text, copy action and QR disagree.');
     expectBank((strpos($html, 'mco-qr-panel--compact') !== false) === $bookstore, 'Compact QR layout leaked into the original course payment.');
     expectBank((stripos($html, 'momo') === false) === $bookstore, 'MoMo visibility does not match the payment type.');
-    expectBank($bookstore ? strpos($html, 'role="region"') !== false : strpos($html, 'role="tablist"') !== false, 'Bank-only payment has an invalid tab relationship.');
+    expectBank(strpos($html, 'role="tablist"') !== false && strpos($html, 'role="tabpanel"') !== false, 'Payment tabs have an invalid relationship.');
 }
 echo json_encode(['passed' => ['legacy_course_account_preserved', 'books_documents_quiz_use_meducbo',
     'knowledge_and_solution_invoices_preserved', 'quiz_and_book_invoices_routed', 'supplied_qr_dimensions_match',

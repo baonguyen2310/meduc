@@ -67,11 +67,36 @@
       if (error.status === 401) authenticate(trigger, index); else message(error.message, true);
     } finally { busy = false; updateButtons(); }
   }
+  let priceDialog=null, selectedOffer=null, offerOpener=null;
+  async function choosePlan(index,trigger){
+    if(busy)return;
+    try{
+      await refreshDetail();
+      const file=context.files.find(item=>item.index===index);
+      if(!file||file.unavailable)throw new Error('Tệp này chưa hỗ trợ mua lượt tải.');
+      if(file.purchase&&['pending','available','active'].includes(file.purchase.state)){buy(index,trigger);return;}
+      selectedOffer=index;offerOpener=trigger;
+      detail.querySelector('[data-document-dialog][open] [data-document-fullscreen]')?.click();
+      if(!priceDialog){
+        priceDialog=document.createElement('dialog');priceDialog.className='mds-price-dialog';priceDialog.setAttribute('aria-labelledby','mds-price-title');
+        priceDialog.innerHTML='<button type="button" class="mds-price-close" aria-label="Đóng bảng giá">×</button><p class="mds-price-kicker">MEDUC / BẢNG GIÁ TÀI LIỆU</p><h2 id="mds-price-title">Chọn lượt tải.</h2><p data-offer-file></p><article><h3>1 lượt tải</h3><strong>9.999đ</strong><p>Tải một tệp tài liệu về thiết bị của bạn.</p><button type="button" class="mds-buy" data-offer-purchase>Chọn mua</button></article>';
+        document.body.append(priceDialog);
+        const close=()=>{priceDialog.close();offerOpener?.focus({preventScroll:true});};
+        priceDialog.querySelector('.mds-price-close').addEventListener('click',close);
+        priceDialog.addEventListener('cancel',event=>{event.preventDefault();close();});
+        priceDialog.querySelector('[data-offer-purchase]').addEventListener('click',()=>{priceDialog.close();buy(selectedOffer,offerOpener);});
+      }
+      priceDialog.querySelector('[data-offer-file]').textContent=file.name;
+      priceDialog.showModal();
+    }catch(error){message(error.message,true);}
+  }
   let paymentData = null;
   const labels = {pending:'Chờ thanh toán',available:'Đã thanh toán · Sẵn sàng tải',active:'Đã mở lượt tải',used:'Lượt tải đã sử dụng',cancelled:'Đơn đã huỷ',revoked:'Thanh toán không còn hiệu lực'};
   function paintPayment(data) {
     paymentData = data;
     query('[data-download-login]').hidden = true; query('[data-download-private]').hidden = false;
+    window.MeducCheckout?.fill(payment,data.contact||{});
+    payment.querySelectorAll('[data-checkout-contact] input').forEach(input=>{input.readOnly=input.name==='email'||data.reported||data.state!=='pending';});
     query('[data-download-title]').textContent = data.document_title;
     query('[data-download-filename]').textContent = data.file_name;
     query('[data-download-order]').textContent = data.order_code;
@@ -84,8 +109,8 @@
     query('[data-download-qr]').hidden = data.state !== 'pending';
     const transfer = query('[data-download-transfer]');
     transfer.disabled = data.reported || busy;
-    transfer.textContent = data.reported ? 'Đang chờ xác nhận' : 'Đã chuyển khoản';
-    message(data.state === 'pending' ? data.reported ? 'Đã nhận thông báo chuyển khoản. MedUC sẽ kiểm tra và mở lượt tải sau khi xác nhận.' : 'Chuyển khoản 9.999đ với đúng nội dung mã đơn dưới đây, rồi bấm “Đã chuyển khoản”.' : ready ? 'Thanh toán đã được xác nhận. Bạn có thể tải đúng tệp đã mua.' : data.state === 'used' ? 'Lượt tải này đã sử dụng và hết thời gian thử lại. Về tài liệu để mua lượt mới.' : 'Lượt tải này hiện không khả dụng.', ['cancelled','revoked'].includes(data.state));
+    transfer.textContent = data.reported ? 'Đang chờ xác nhận' : 'Hoàn tất thanh toán';
+    message(data.state === 'pending' ? data.reported ? 'Đã nhận thông báo chuyển khoản. MedUC sẽ kiểm tra và mở lượt tải sau khi xác nhận.' : 'Chuyển khoản 9.999đ với đúng nội dung mã đơn dưới đây, rồi bấm “Hoàn tất thanh toán”.' : ready ? 'Thanh toán đã được xác nhận. Bạn có thể tải đúng tệp đã mua.' : data.state === 'used' ? 'Lượt tải này đã sử dụng và hết thời gian thử lại. Về tài liệu để mua lượt mới.' : 'Lượt tải này hiện không khả dụng.', ['cancelled','revoked'].includes(data.state));
   }
   async function refreshPayment(quiet = false) {
     try { paintPayment(await api('status/' + payment.dataset.documentPayment)); }
@@ -97,23 +122,26 @@
   if (detail) {
     detail.addEventListener('click', (event) => {
       const button = event.target.closest('[data-download-buy]');
-      if (button) buy(button.dataset.downloadBuy === 'selected' ? selectedIndex() : Number(button.dataset.downloadBuy), button);
+      if (button) choosePlan(button.dataset.downloadBuy === 'selected' ? selectedIndex() : Number(button.dataset.downloadBuy), button);
     });
     new MutationObserver(updateButtons).observe(detail, {subtree:true,attributes:true,attributeFilter:['aria-current']});
     refreshDetail().catch((error) => message(error.message, true));
   } else {
-    payment.addEventListener('click', async (event) => {
-      const transfer = event.target.closest('[data-download-transfer]');
-      const start = event.target.closest('[data-download-file]');
-      if ((!transfer && !start) || busy) return;
-      busy = true; (transfer || start).disabled = true;
-      try {
-        if (transfer) paintPayment(await api('transfer/' + payment.dataset.documentPayment, {}));
-        else { const ticket = await api('start/' + payment.dataset.documentPayment, {}); download(ticket.url); message('Đã bắt đầu tải. Bạn có thể thử lại trong 30 phút.'); }
-      } catch (error) {
-        if (error.status === 401) { query('[data-download-private]').hidden = true; authenticate(start || transfer, 'payment'); }
-        else message(error.message, true);
-      } finally { busy = false; if (start) start.disabled = false; if (transfer) transfer.disabled = !!paymentData?.reported; }
+    async function transferPayment(event){
+      event.preventDefault();const form=query('[data-download-private]');
+      if(busy||paymentData?.reported||!form.reportValidity())return;
+      const transfer=query('[data-download-transfer]');busy=true;transfer.disabled=true;
+      try{paintPayment(await api('transfer/'+payment.dataset.documentPayment,Object.fromEntries(new FormData(form))));}
+      catch(error){if(error.status===401){form.hidden=true;authenticate(transfer,'payment');}else message(error.message,true);}
+      finally{busy=false;transfer.disabled=!!paymentData?.reported;}
+    }
+    query('[data-download-private]').addEventListener('submit',transferPayment);
+    payment.addEventListener('click',async event=>{
+      const start=event.target.closest('[data-download-file]');if(!start||busy)return;
+      busy=true;start.disabled=true;
+      try{const ticket=await api('start/'+payment.dataset.documentPayment,{});download(ticket.url);message('Đã bắt đầu tải. Bạn có thể thử lại trong 30 phút.');}
+      catch(error){if(error.status===401){query('[data-download-private]').hidden=true;authenticate(start,'payment');}else message(error.message,true);}
+      finally{busy=false;start.disabled=false;}
     });
     refreshPayment();
     setInterval(() => { if (!document.hidden && !busy && paymentData?.state === 'pending') refreshPayment(true); }, 5000);

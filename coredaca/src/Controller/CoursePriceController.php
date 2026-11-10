@@ -31,13 +31,12 @@ class CoursePriceController extends AppController
             $recommended_year=(string)($source['years'][0]??'');
         }
         $catalog_json=json_encode(array_values($courses),JSON_UNESCAPED_UNICODE|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT);
-        $token=$this->registrationToken();
         $blocks=[];
         foreach (['6bcghom','fcm8r16','mv6ky0z','awlj4fk'] as $code) {
             $b=TableRegistry::get('TemplatesBlock')->getInfoBlock($code);
             if (!empty($b['status'])) { $b['data_block']=$this->loadComponent('Block')->getDataBlock($b); $blocks[$code]=$b; }
         }
-        $this->set(compact('lists','list','packages','courses','from','member','customer','token','blocks','recommended_year','catalog_json'));
+        $this->set(compact('lists','list','packages','courses','from','member','customer','blocks','recommended_year','catalog_json'));
         $this->set('title_for_layout',($list?$list['name']:'Bảng báo giá').' | MedUC');
         $this->set('data_init',['device'=>DEVICE,'member'=>$member,'template'=>['code'=>CODE_TEMPLATE,'url'=>URL_TEMPLATE]]);
         $this->viewBuilder()->setLayout('course_pricing');
@@ -105,8 +104,7 @@ class CoursePriceController extends AppController
             $quote=CoursePricing::quote((int)($data['package_id']??0),is_array($data['course_ids']??null)?$data['course_ids']:[]);
             $customer=TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first();
             if (!$customer) return $this->json(401,'Tài khoản không còn hoạt động.');
-            $phone=trim((string)($data['phone']??$customer['phone']??''));
-            if (!preg_match('/^[+0-9][0-9 .()-]{7,20}$/',$phone)) return $this->json(422,'Vui lòng nhập số điện thoại hợp lệ.');
+            $phone=trim((string)($customer['phone']??''));
             $items=[]; $n=count($quote['courses']); $remaining=$quote['amount'];
             foreach($quote['courses'] as $i=>$c) {
                 $price=$i===$n-1 ? $remaining : intdiv($quote['amount'],$n); $remaining-=$price;

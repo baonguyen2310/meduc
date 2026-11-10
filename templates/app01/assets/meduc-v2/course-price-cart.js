@@ -43,9 +43,48 @@
     choosePackage(list,pack) {const value=read();value.packages[String(list)]=Number(pack);save(value);},
     active() { return read().active; },
     stop() { const value = read(); value.active = null; save(value); },
+    checkout,
     configure(config) { setup(config);setupCart(config); }
   };
   window.addEventListener('storage', event => { if (event.key === key) window.dispatchEvent(new CustomEvent('meduc:course-cart')); });
+
+  let pendingCheckout = null, submitting = false;
+  async function checkout(listId, packageId, selection, trigger) {
+    if (submitting) return false;
+    submitting = true;
+    try {
+      const response = await fetch('/bang-bao-gia/phien-dang-ky?checkout=1', {credentials:'same-origin',cache:'no-store'});
+      const result = await response.json();
+      if (!response.ok || result.code !== 'success') throw new Error(result.message || 'Chưa kiểm tra được gói học.');
+      const context = result.data;
+      if (!context.member) {
+        pendingCheckout = {listId,packageId,selection:[...selection],trigger};
+        window.meducAuth?.open('login',trigger);
+        return false;
+      }
+      const body = new FormData();body.append('package_id',packageId);body.append('token',context.token);
+      selection.forEach(id=>body.append('course_ids[]',id));
+      const order = await fetch('/bang-bao-gia/dang-ky', {method:'POST',credentials:'same-origin',body,
+        headers:{'X-CSRF-Token':document.documentElement.getAttribute('csrf-token') || '', 'X-Requested-With':'XMLHttpRequest'}});
+      const saved = await order.json();
+      if (order.status === 401) {
+        pendingCheckout = {listId,packageId,selection:[...selection],trigger};
+        window.meducAuth?.open('login',trigger);return false;
+      }
+      if (!order.ok || saved.code !== 'success') throw new Error(saved.message || 'Chưa tạo được đơn thanh toán.');
+      api.set(listId,[]);location.assign(saved.data.redirect);return true;
+    } finally { submitting = false; }
+  }
+  window.addEventListener('meduc:authenticated', () => {
+    if (!pendingCheckout) return;
+    const pending = pendingCheckout;pendingCheckout = null;
+    const resume=()=>checkout(pending.listId,pending.packageId,pending.selection,pending.trigger).catch(error=>
+      window.dispatchEvent(new CustomEvent('meduc:checkout-error',{detail:{message:error.message}})));
+    const auth=document.getElementById('login-modal');
+    if (window.jQuery && auth && auth.style.display !== 'none') window.jQuery(auth).one('hidden.bs.modal',resume);
+    else resume();
+  });
+  window.addEventListener('meduc:auth-closed',event=>{if (!event.detail?.authenticated) pendingCheckout=null;});
 
   function setup(config) {
     const params = new URLSearchParams(location.search);
@@ -121,7 +160,7 @@
   function setupCart(config) {
     const triggers=[...document.querySelectorAll('[data-course-cart-open]')];
     if (!triggers.length) return;
-    let boards=config.boards, context=null, pending=null, confirmation=null, busy=false, view='cart';
+    let boards=config.boards, context=null, busy=false, view='cart';
     let legacyUnknown=Number(triggers[0].dataset.courseCartLegacy || 0), previousOverflow='', opener=null;
     const money=value=>new Intl.NumberFormat('vi-VN').format(value)+'đ';
     const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
@@ -216,48 +255,19 @@
     }
     async function startCheckout(boardId){
       if(busy)return;
-      view='loading';ensureOpen(triggers[0]);loading('Đang kiểm tra gói học…');
-      try{
-        await refreshContext(true);if(!dialog.open)return;
-        const board=boards.find(b=>b.id===Number(boardId));if(!board)throw new Error('Bảng giá không còn mở.');
-        const ids=idsFor(board),pack=packageFor(board,ids);
-        if(!pack||ids.length!==pack.count){view='cart';renderCart();return;}
-        api.choosePackage(board.id,pack.id);
-        if(!context.member){pending=board.id;view='cart';closeDialog(false);if(window.meducAuth)window.meducAuth.open('login',triggers[0]);else{ensureOpen(triggers[0]);renderCart();showError('Vui lòng đăng nhập để tiếp tục.');}return;}
-        confirmation={board,pack,ids:[...ids],token:context.token};view='confirm';renderConfirmation();
-      }catch(error){view='cart';if(dialog.open){renderCart();showError(error.message);}}
-    }
-    function renderConfirmation(){
-      const {board,pack,ids}=confirmation;title.textContent='Kiểm tra đăng ký.';body.replaceChildren();foot.hidden=true;
-      const summary=node('div','mpc-confirm-summary');summary.append(node('p','mpc-eyebrow',board.name),node('h3','',pack.name),priceDisplay(pack,'mpc-confirm-price'));body.append(summary);
-      const courses=new Map(board.course_data.map(c=>[String(c.id),c]));ids.forEach(id=>body.append(courseRow(board,courses.get(id),false)));
-      const form=node('form','mpc-confirm-form'), label=node('label','','Số điện thoại liên hệ'), phone=node('input');phone.name='phone';phone.type='tel';phone.autocomplete='tel';phone.required=true;phone.value=context.phone||'';phone.placeholder='Nhập số điện thoại';label.append(phone);form.append(label,node('p','mpc-confirm-note','Bạn sẽ chọn phương thức thanh toán ở bước tiếp theo.'));
-      const error=node('p','mpc-cart-error');error.setAttribute('role','alert');form.append(error);
-      const actions=node('div','mpc-confirm-actions');actions.append(button('← Quay lại giỏ','mpc-link-button',()=>{if(!busy){view='cart';renderCart();}}));const submit=node('button','mpc-primary','Tiếp tục thanh toán →');submit.type='submit';actions.append(submit);form.append(actions);body.append(form);
-      form.addEventListener('submit',async event=>{
-        event.preventDefault();if(busy)return;
-        if(JSON.stringify(idsFor(board))!==JSON.stringify(ids)){view='cart';renderCart();showError('Các môn đã thay đổi. Vui lòng kiểm tra lại gói học.');return;}
-        busy=true;submit.disabled=true;close.disabled=true;error.textContent='';
-        try{
-          const data=new FormData(form);data.append('package_id',pack.id);data.append('token',confirmation.token);ids.forEach(id=>data.append('course_ids[]',id));
-          const response=await fetch('/bang-bao-gia/dang-ky',{method:'POST',credentials:'same-origin',body:data,headers:{'X-CSRF-Token':document.documentElement.getAttribute('csrf-token'),'X-Requested-With':'XMLHttpRequest'}});
-          const result=await response.json();
-          if(response.status===401){busy=false;close.disabled=false;await startCheckout(board.id);return;}
-          if(!response.ok||result.code!=='success')throw new Error(result.message||'Chưa tạo được đơn đăng ký.');
-          api.set(board.id,[]);location.href=result.data.redirect;
-        }catch(e){error.textContent=e.message||'Kết nối gián đoạn. Vui lòng thử lại.';}
-        finally{busy=false;submit.disabled=false;close.disabled=false;}
-      });
+      const board=boards.find(b=>b.id===Number(boardId));if(!board)return;
+      const ids=idsFor(board),pack=packageFor(board,ids);
+      if(!pack||ids.length!==pack.count){showError('Vui lòng chọn đủ số môn của gói.');return;}
+      busy=true;closeDialog(false);
+      try { await api.checkout(board.id,pack.id,ids,triggers[0]); }
+      catch(error){ensureOpen(triggers[0]);renderCart();showError(error.message);}
+      finally{busy=false;}
     }
     window.addEventListener('meduc:course-cart',()=>{
       updateBadge();if(!dialog.open||busy)return;
       if(view==='cart')renderCart();
-      else if(view==='confirm'&&confirmation&&(JSON.stringify(idsFor(confirmation.board))!==JSON.stringify(confirmation.ids)||packageFor(confirmation.board,idsFor(confirmation.board))?.id!==confirmation.pack.id)){view='cart';renderCart();showError('Các môn hoặc gói học đã thay đổi. Vui lòng kiểm tra lại.');}
     });
-    window.addEventListener('meduc:authenticated',()=>{
-      if(!pending)return;const boardId=pending;pending=null;const auth=document.getElementById('login-modal');
-      if(window.jQuery&&auth&&auth.style.display!=='none')window.jQuery(auth).one('hidden.bs.modal',()=>startCheckout(boardId));else startCheckout(boardId);
-    });
+    window.addEventListener('meduc:checkout-error',event=>{ensureOpen(triggers[0]);renderCart();showError(event.detail.message);});
     updateBadge();if(legacyUnknown)refreshContext().catch(()=>{});
   }
 })();

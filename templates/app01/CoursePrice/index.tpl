@@ -27,8 +27,8 @@
       {/foreach}
       </div>
     </section>
-    <p class="mpr-under-note">Chọn gói, thêm môn bạn cần và kiểm tra thông tin trước khi thanh toán.</p>
-    <input type="hidden" data-price-token value="{$token|escape}">
+    <p class="mpr-under-note">Chọn gói và môn bạn cần để tiếp tục thanh toán.</p>
+    <p class="mpr-error" data-price-error role="alert"></p>
     <script type="application/json" data-price-catalog>{$catalog_json}</script>
 
     <dialog class="mpr-dialog" data-course-dialog aria-labelledby="mpr-dialog-title">
@@ -38,13 +38,6 @@
       <div class="mpr-dialog-foot"><div><strong data-dialog-count aria-live="polite"></strong><p class="mpr-error" data-dialog-error role="status"></p></div><button class="mpr-btn" type="button" data-apply-courses>Lưu lựa chọn <span aria-hidden="true">→</span></button></div>
     </dialog>
 
-    <dialog class="mpr-dialog mpr-confirm-dialog" data-checkout-dialog aria-labelledby="mpr-confirm-title">
-      <form data-price-form>
-        <div class="mpr-dialog-head"><div><p class="mpr-eyebrow">ĐĂNG KÝ HỌC</p><h2 id="mpr-confirm-title">Kiểm tra lựa chọn.</h2></div><button class="mpr-dialog-close" type="button" data-close-dialog aria-label="Đóng cửa sổ đăng ký">×</button></div>
-        <div class="mpr-dialog-body"><div class="mpr-confirm-total"><span data-checkout-name></span><strong data-checkout-price></strong></div><ul class="mpr-confirm-courses" data-checkout-courses></ul><div class="mpr-contact"><label for="mpr-phone">Số điện thoại liên hệ</label><input id="mpr-phone" name="phone" type="tel" autocomplete="tel" value="{$customer.phone|default:''|escape}" placeholder="Nhập số điện thoại của bạn" required><p>Bạn sẽ chọn phương thức thanh toán ở bước tiếp theo.</p></div><p class="mpr-error" data-price-error role="alert"></p></div>
-        <div class="mpr-dialog-foot"><button class="mpr-text-button" type="button" data-back-to-courses>Đổi môn</button><button class="mpr-btn" type="submit" data-checkout>Tiếp tục thanh toán <span aria-hidden="true">→</span></button></div>
-      </form>
-    </dialog>
     {else}<p class="mpr-empty">Bảng giá đang được cập nhật. <a href="/khoa-hoc">Khám phá khóa học →</a></p>{/if}
   </div>
 </main>

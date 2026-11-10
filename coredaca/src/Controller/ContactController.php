@@ -29,6 +29,21 @@ class ContactController extends AppController {
             $this->responseJson([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
 
+        if (($data['form_code'] ?? '') === '61CQ0U3H9I') {
+            $member = $this->request->getSession()->read(MEMBER) ?: [];
+            $customer = \App\Service\CheckoutContact::customer((int)($member['id'] ?? 0));
+            if (!$customer) {
+                return $this->response->withStatus(401)->withType('application/json')->withHeader('Cache-Control','private, no-store')
+                    ->withStringBody(json_encode([CODE=>ERROR,MESSAGE=>'Vui lòng đăng nhập để tiếp tục thanh toán.'],JSON_UNESCAPED_UNICODE));
+            }
+            try {
+                $data = array_merge($data, \App\Service\CheckoutContact::validate($data, $customer, true));
+            } catch (\InvalidArgumentException $e) {
+                $this->responseJson([MESSAGE=>$e->getMessage()]);
+                return;
+            }
+        }
+
         // check recaptcha
         $token = !empty($data[TOKEN_RECAPTCHA]) ? $data[TOKEN_RECAPTCHA] : null;
         $check_recaptcha = $this->loadComponent('ReCaptcha')->check($token);
@@ -119,6 +134,7 @@ class ContactController extends AppController {
             
             // Trạng thái đơn hàng mặc định
             $data_value["orderStatus"] = 'initial';
+            $data_value['customer_id'] = (int)$customer['id'];
         }
 
         $data_save = [

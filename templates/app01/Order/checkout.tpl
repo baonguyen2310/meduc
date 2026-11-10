@@ -1,21 +1,30 @@
 {strip}
 {$this->element('../Order/meduc_assets')}
-{$message=$this->Utilities->getParamsByKey('message')}
-{$contact=$order_info.contact|default:[]}
-{capture assign=payment_reference}{$contact.full_name|default:''}{foreach from=$order_info.items item=item} _ {$item.name}{/foreach}{/capture}
-<main class="mco mco-course-payment"><div class="mco-shell">
-<nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/khoa-hoc">Khóa học</a><span>/</span><span>Thanh toán</span></nav>
-<header class="mco-heading"><div><p class="mco-kicker">MEDUC / THANH TOÁN KHÓA HỌC</p><h1>SẴN SÀNG CHO<br><span>BƯỚC TIẾP THEO.</span></h1><p>Quét mã QR hoặc chuyển khoản để hoàn tất đăng ký.</p></div><ol class="mco-steps" aria-label="Các bước đăng ký"><li><b>01</b>Thông tin</li><li aria-current="step"><b>02</b>Thanh toán</li><li><b>03</b>Hoàn tất</li></ol></header>
-{if !empty($message)}<p class="mco-error" role="alert">{$message|escape}</p>{/if}
-<div class="mco-layout"><div class="mco-main"><section class="mco-panel"><div class="mco-panel-heading"><h2><span>01</span>Khóa học đăng ký</h2></div>{$this->element('../Order/meduc_products')}</section>
-<section class="mco-panel"><div class="mco-panel-heading"><h2><span>02</span>Phương thức thanh toán</h2></div>
-<form id="form-checkout" method="post"><nav class="mco-gateways" aria-label="Phương thức thanh toán">{foreach from=$payment_gateway item=gateway key=code name=gateways}<a nh-gateway-item="{$code|escape}" href="#payment-{$code|escape}" class="{if $smarty.foreach.gateways.first}active{/if}"><img src="{URL_TEMPLATE}assets/img/payment/{$code|escape}.png" alt="">{$gateway.name|default:$code|escape}</a>{/foreach}</nav>
-{foreach from=$payment_gateway item=gateway key=code name=panels}<div id="payment-{$code|escape}" data-gateway-panel="{$code|escape}" class="tab-pane {if $smarty.foreach.panels.first}active{/if}">
-{if $code == {BANK}}{$this->element('../Order/meduc_payment', ['payment_reference'=>$payment_reference, 'payment_purpose'=>'order', 'order_info'=>$order_info])}{elseif !empty($gateway.content)}<p class="mco-help">{$gateway.content|strip_tags|escape}</p>{/if}
-<div class="mco-confirm"><p class="mco-payment-note">{if $code == {BANK}}Chỉ nhấn “Hoàn tất thanh toán” sau khi đã chuyển khoản. MedUC sẽ kiểm tra và xác nhận thanh toán của bạn.{else}Tiếp tục để thanh toán qua {$gateway.name|default:$code|escape}.{/if}</p><button type="button" class="mco-button mco-button--primary" nh-btn-action="checkout">Hoàn tất thanh toán <span aria-hidden="true">→</span></button></div>
-</div>{/foreach}
-<input type="hidden" name="payment_gateway" value=""><input type="hidden" name="affiliateCode" id="affiliate-code"><input type="hidden" name="code" value="{$order_info.code|default:''|escape}"></form></section></div>
-<aside class="mco-sidebar"><div class="mco-summary"><p class="mco-kicker">THÔNG TIN ĐĂNG KÝ</p><h2>Hành trình của bạn.</h2><p class="mco-order-code">Mã đơn <strong>{$order_info.code|default:''|escape}</strong></p><div class="mco-totals">{$this->element('../Order/element_items')}</div><div class="mco-contact-summary"><strong>{$contact.full_name|default:''|escape}</strong><p>{$contact.phone|default:''|escape}</p><p>{$contact.email|default:''|escape}</p>{if !empty($order_info.note)}<p>{$order_info.note|escape}</p>{/if}</div></div><div class="mco-support"><span>Cần hỗ trợ thanh toán?</span><a href="tel:0339308997">0339 308 997 ↗</a><p>MedUC đồng hành cùng bạn.</p></div></aside></div>
-<p class="mco-toast" role="status" aria-live="polite" data-checkout-status></p>
-</div></main>
+<main class="mco mco-unified mco-course-payment" data-order-checkout>
+  <div class="mco-shell">
+    <nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/">Trang chủ</a><span>/</span><span>Thanh toán</span></nav>
+    <header class="mco-checkout-heading"><p class="mco-kicker">MEDUC / THANH TOÁN</p><h1>Hoàn tất đăng ký.</h1></header>
+    {if !empty($checkout_login_required)}
+      <div class="mco-panel mco-auth-gate" data-checkout-login><p>Đăng nhập để tiếp tục thanh toán đơn hàng của bạn.</p><button class="mco-button mco-button--primary" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
+    {else}
+      {$prices = $this->Checkout->prices($order_info)}
+      <form class="mco-layout" data-order-payment-form>
+        <div class="mco-main">
+          <section class="mco-panel"><div class="mco-panel-heading"><h2>Thông tin của bạn</h2></div>{$this->element('../Order/meduc_contact', ['shipping_contact'=>false])}</section>
+          <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn</h2><a href="/bang-bao-gia">Chọn thêm</a></div>{$this->element('../Order/meduc_products')}</section>
+        </div>
+        <aside class="mco-sidebar"><section class="mco-panel mco-payment">
+          <div class="mco-panel-heading"><h2>Thanh toán</h2></div><p class="mco-order-code">Mã đơn <strong>{$order_info.code|escape}</strong></p>
+          {$this->element('../Order/meduc_payment', ['payment_reference'=>$order_info.code, 'payment_purpose'=>'order', 'order_info'=>$order_info, 'allow_cod'=>false])}
+          <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong>{$prices.amount|number_format:0:',':'.'}đ</strong>{if $prices.original>$prices.amount}<del>{$prices.original|number_format:0:',':'.'}đ</del>{/if}</div></div>
+          <p class="mco-payment-note">Sau khi chuyển khoản, nhấn hoàn tất để MedUC kiểm tra và xác nhận thanh toán.</p>
+          <p class="mco-error" data-order-payment-error role="alert" hidden></p>
+          <button type="submit" class="mco-button mco-button--primary mco-complete">Hoàn tất thanh toán</button>
+        </section></aside>
+        <input type="hidden" name="code" value="{$order_info.code|escape}"><input type="hidden" name="payment_gateway" value="bank"><input type="hidden" name="affiliateCode" id="affiliate-code">
+      </form>
+    {/if}
+    <p class="mco-toast" role="status" aria-live="polite" data-checkout-status></p>
+  </div>
+</main>
 {/strip}

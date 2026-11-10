@@ -20,6 +20,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     ]));
     $builder->applyMiddleware('csrf');
 
+    $builder->connect('/checkout/customer', ['controller'=>'Checkout','action'=>'customer']);
+
     // Course price lists and quantity packages.
     $builder->connect('/bang-bao-gia/dang-ky', ['controller'=>'CoursePrice','action'=>'create']);
     $builder->connect('/bang-bao-gia/phien-dang-ky', ['controller'=>'CoursePrice','action'=>'checkoutContext']);

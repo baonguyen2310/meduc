@@ -9,6 +9,15 @@ use App\Service\CoursePricing;
 class CheckoutHelper extends Helper
 {
     public function catalog(): array { return BookCheckout::catalog(); }
+    public function prices(array $order): array
+    {
+        $amount = (float)($order['total'] ?? 0);
+        $row = empty($order['id']) ? [] : TableRegistry::get('Orders')->find()->select(['course_price_snapshot'])
+            ->where(['id'=>(int)$order['id']])->enableHydration(false)->first();
+        $snapshot = json_decode((string)($row['course_price_snapshot'] ?? ''), true) ?: [];
+        $original = (float)($snapshot['package']['price'] ?? $order['total_origin'] ?? $amount);
+        return ['amount'=>$amount, 'original'=>max($original, $amount)];
+    }
     public function confirmation(): array
     {
         $order = $this->getView()->getRequest()->getSession()->read('MeducBookOrder');

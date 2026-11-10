@@ -15,9 +15,10 @@
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261030-three-price-types" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/checkout-entry.js?v=20261110-unified-checkout" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261110-unified-checkout" defer></script>
   <script src="/bang-bao-gia/lien-ket.js" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261030-three-price-types" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261110-unified-checkout" defer></script>
 </head>
 <body class="meduc-header-v2 mpr-body">
 {$this->element('layout/header_v2')}

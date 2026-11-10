@@ -6,6 +6,7 @@ use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 use App\Lib\Payment\NhPayment;
+use App\Service\CheckoutContact;
 
 class OrderController extends AppController {
 
@@ -152,6 +153,14 @@ class OrderController extends AppController {
 
     public function checkout() 
     {
+        $member = $this->request->getSession()->read(MEMBER) ?: [];
+        $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
+        $this->response = $this->response->withHeader('Cache-Control', 'private, no-store');
+        if (!$customer) {
+            $this->set('checkout_login_required', true);
+            $this->set('title_for_layout', 'Thanh toán | MedUC');
+            return;
+        }
         $params = $this->request->getQueryParams();
 
         $code = !empty($params['code']) ? $params['code'] : null;
@@ -165,6 +174,9 @@ class OrderController extends AppController {
         // get info order
         $table = TableRegistry::get('Orders');
         $order = $table->findByCode($code)->select('id')->first();
+        if (!$order || !TableRegistry::get('OrdersContact')->exists(['order_id'=>$order['id'], 'customer_id'=>$customer['id']])) {
+            return $this->showErrorPage([MESSAGE=>'Không tìm thấy đơn hàng của bạn.', 'title'=>'Thanh toán']);
+        }
         $order_info = $table->getDetailOrder($order['id'], [
             'get_items' => true,
             'get_contact' => true
@@ -222,6 +234,7 @@ class OrderController extends AppController {
         }
 
         $this->set('order_info', $order_info);
+        $this->set('checkout_contact', CheckoutContact::profile($customer, $order_info['contact'] ?? []));
         $this->set('payment_gateway', $payment_gateway);
         $this->set('title_for_layout', __d('template', 'thanh_toan_don_hang'));
     }
@@ -232,6 +245,21 @@ class OrderController extends AppController {
         $this->autoRender = false;
 
         $data = !empty($this->request->getData()) ? $this->request->getData() : [];
+
+        $member = $this->request->getSession()->read(MEMBER) ?: [];
+        $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
+        if (!$customer) {
+            return $this->response->withStatus(401)->withType('application/json')->withHeader('Cache-Control','private, no-store')
+                ->withStringBody(json_encode([CODE=>ERROR,MESSAGE=>'Vui lòng đăng nhập để tiếp tục thanh toán.'],JSON_UNESCAPED_UNICODE));
+        }
+        try {
+            $order = TableRegistry::get('Orders')->find()->where(['code'=>(string)($data['code'] ?? ''), 'deleted'=>0])->first();
+            if (!$order || $order['status'] !== DRAFT) throw new \InvalidArgumentException('Đơn hàng này không còn chờ thanh toán.');
+            if (($data['payment_gateway'] ?? '') !== BANK) throw new \InvalidArgumentException('Vui lòng chọn phương thức thanh toán hợp lệ.');
+            CheckoutContact::save((int)$order['id'], $customer, $data);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseJson([MESSAGE=>$e->getMessage()]);
+        }
         
         $result = $this->loadComponent('OrderFrontend')->checkout($data);
         $this->responseJson($result);

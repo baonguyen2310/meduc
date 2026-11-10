@@ -6,6 +6,7 @@ use App\Service\DocumentDownloads;
 use App\Service\ReadingHistoryService;
 use Cake\ORM\TableRegistry;
 use Cake\Http\CallbackStream;
+use App\Service\CheckoutContact;
 
 class DocumentDownloadController extends AppController
 {
@@ -78,7 +79,7 @@ class DocumentDownloadController extends AppController
         if(!$this->request->is('get'))return $this->json(405,'Phương thức không hợp lệ.');
         $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập để xem lượt tải đã mua.');
         $service=new DocumentDownloads(LANGUAGE);$purchase=$service->owned((string)$code,(int)$customer['id']);
-        return $purchase?$this->json(200,'',$service->publicData($purchase)):$this->json(404,'Không tìm thấy lượt tải.');
+        return $purchase?$this->json(200,'',$service->publicData($purchase)+['contact'=>CheckoutContact::profile($customer, $purchase)]):$this->json(404,'Không tìm thấy lượt tải.');
     }
     public function transfer($code=null)
     {
@@ -86,8 +87,14 @@ class DocumentDownloadController extends AppController
         if(!$this->request->is('post'))return $this->json(405,'Phương thức không hợp lệ.');
         $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập.');
         try{
-            $service=new DocumentDownloads(LANGUAGE);$purchase=$service->report((string)$code,(int)$customer['id'],function($data){return $this->loadComponent('Admin.Payment')->savePayment($data);});
-            return $this->json(200,'Đã gửi thông tin. MedUC sẽ kiểm tra và xác nhận thanh toán.',$service->publicData($purchase));
+            $service=new DocumentDownloads(LANGUAGE);
+            $purchase=$service->owned((string)$code,(int)$customer['id']);
+            if (!$purchase) return $this->json(404,'Không tìm thấy lượt tải.');
+            $contact=$service->state($purchase)==='pending' && empty($purchase['transfer_reported_at'])
+                ? CheckoutContact::save((int)$purchase['order_id'], $customer, $this->request->getData())
+                : CheckoutContact::profile($customer, $purchase);
+            $purchase=$service->report((string)$code,(int)$customer['id'],function($data){return $this->loadComponent('Admin.Payment')->savePayment($data);});
+            return $this->json(200,'Đã gửi thông tin. MedUC sẽ kiểm tra và xác nhận thanh toán.',$service->publicData($purchase)+['contact'=>$contact]);
         }catch(\InvalidArgumentException $e){return $this->json(404,$e->getMessage());}
         catch(\Throwable $e){$this->log('Document transfer report: '.$e->getMessage(),'error');return $this->json(500,'Chưa gửi được thông tin chuyển khoản. Vui lòng thử lại.');}
     }
