@@ -12,6 +12,21 @@ class AttributeAdminHelper extends Helper
 {   
     public $helpers = ['Admin.UtilitiesAdmin'];
 
+    public function questionMetadata(array $question = []): array
+    {
+        return \App\Lib\QuestionMetadata::normalize($question);
+    }
+
+    public function questionCategories(): array
+    {
+        return \App\Lib\QuestionMetadata::CATEGORIES;
+    }
+
+    public function questionLevels(): array
+    {
+        return \App\Lib\QuestionMetadata::LEVELS;
+    }
+
     public function generateInput($params = [], $lang = null)
     {
         $input_type = !empty($params['input_type']) ? $params['input_type'] : null;
@@ -32,6 +47,7 @@ class AttributeAdminHelper extends Helper
             'required' => !empty($params['required']) ? 1 : 0,
             'options' =>!empty($params['options']) ? $params['options'] : [],
             'class' => !empty($params['class']) ? $params['class'] : null,
+            'metadata_only' => !empty($params['metadata_only']),
             'disabled' => !empty($params['disabled']) ? true : false
         ];
 

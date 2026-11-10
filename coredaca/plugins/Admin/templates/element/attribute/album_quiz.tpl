@@ -14,11 +14,12 @@
                     'code' => $code,
                     'languages' => $languages,
                     'album' => $album,
+                    'metadata_only' => !empty($metadata_only),
                     'filemanager_access_key' => $filemanager_access_key,
                     'index' => $index
                 ])}
             {/foreach}
-        {else}
+        {elseif empty($metadata_only)}
             {$this->element('Admin.attribute/album_quiz_item', [
                 'code' => $code,
                 'languages' => $languages,
@@ -28,10 +29,12 @@
             ])}
         {/if}
     </div>
+    {if empty($metadata_only)}
     <div class="form-group">
         <span id="add-item" class="btn btn-sm btn-success">
             <i class="fa fa-plus"></i>
             Thêm câu hỏi
         </span>
     </div>
+    {/if}
 </div>

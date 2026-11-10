@@ -671,8 +671,8 @@
                 <div class="kt-portlet__body">
                     {foreach from = $all_attributes item = attribute key = attribute_id}
                         {if !empty($quiz_exam_metadata.staff_only) && $attribute.code == 'danhsachcauhoi'}
-                            <p class="text-muted">Nội dung đề được giữ đầy đủ theo bản nhập. Vào khóa luyện thi tương ứng để xem đề hoặc làm thử.</p>
-                            {continue}
+                            <p class="text-muted">Nội dung và đáp án đề gốc được giữ nguyên. Có thể chỉnh phân loại và mức độ của từng câu bên dưới.</p>
+                            {$attribute.metadata_only = true}
                         {/if}
                         <div class="form-group">
                             <label>

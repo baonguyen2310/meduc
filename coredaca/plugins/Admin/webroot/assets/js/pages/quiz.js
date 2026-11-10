@@ -79,7 +79,33 @@ var nhQuiz = (function () {
           $(this).val(tinymce.get(dataId).getContent());
         });
 
-        nhMain.initSubmitForm(formEl, $(this));
+        // Send the question list as one JSON value, avoiding PHP's max_input_vars on long exams.
+        var questionRows = formEl.find('[attribute-code="danhsachcauhoi"] .list-item > .wrap-item');
+        var questionFields = questionRows.find('[data-name]');
+        var questionData = [];
+        questionRows.each(function () {
+          var question = {};
+          $(this).find('[data-name]').each(function () {
+            question[$(this).attr('data-name')] = $(this).val();
+          });
+          questionData.push(question);
+        });
+        var questionPayload = null;
+        var questionNames = [];
+        if (formEl.find('[attribute-code="danhsachcauhoi"]').length) {
+          questionPayload = $('<input type="hidden" name="question_items_json">').val(JSON.stringify(questionData)).appendTo(formEl);
+          questionFields.each(function () {
+            questionNames.push($(this).attr('name'));
+            $(this).removeAttr('name');
+          });
+        }
+        try {
+          // initSubmitForm serializes synchronously, before starting its AJAX request.
+          nhMain.initSubmitForm(formEl, $(this));
+        } finally {
+          questionFields.each(function (index) { if (questionNames[index] !== undefined) $(this).attr('name', questionNames[index]); });
+          if (questionPayload) questionPayload.remove();
+        }
       }
     });
 

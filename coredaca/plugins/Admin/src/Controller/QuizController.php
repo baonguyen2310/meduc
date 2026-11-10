@@ -161,7 +161,7 @@ class QuizController extends AppController {
         $this->js_page = [
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
-            '/assets/js/pages/quiz.js',
+            '/assets/js/pages/quiz.js?v=20261110-question-metadata',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 
@@ -213,7 +213,7 @@ class QuizController extends AppController {
         $this->js_page = [
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
-            '/assets/js/pages/quiz.js',
+            '/assets/js/pages/quiz.js?v=20261110-question-metadata',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
         $this->set('title_for_layout', __d('admin', 'cap_nhat_bai_viet'));
@@ -296,12 +296,32 @@ class QuizController extends AppController {
         }
 
         $existingExamMetadata = !empty($id) ? QuizExamMetadata::forQuiz((int)$id) : [];
-        if (!empty($existingExamMetadata['staff_only'])) {
-            // The legacy five-option editor cannot round-trip multiple-answer/essay questions.
+        if (isset($data['question_items_json'])) {
+            $questions = is_string($data['question_items_json']) ? json_decode($data['question_items_json'], true) : null;
+            if (!is_array($questions)) $this->responseJson([MESSAGE => 'Dữ liệu câu hỏi không hợp lệ.']);
+            $data['danhsachcauhoi'] = $questions;
+        }
+        if (isset($data['danhsachcauhoi']) || !empty($existingExamMetadata['staff_only'])) {
             $rawQuestions = ConnectionManager::get('default')->execute(
                 'SELECT value FROM quizs_attribute WHERE quiz_id=:id AND attribute_id=18 LIMIT 1', ['id'=>(int)$id]
             )->fetch('assoc');
-            if ($rawQuestions) $data['danhsachcauhoi'] = json_decode($rawQuestions['value'], true);
+            try {
+                $existingQuestions = [];
+                if ($rawQuestions && trim((string)$rawQuestions['value']) !== '') {
+                    $existingQuestions = json_decode($rawQuestions['value'], true);
+                    if (!is_array($existingQuestions)) throw new \InvalidArgumentException('Dữ liệu câu hỏi cũ bị lỗi. Chưa thể lưu đề để tránh mất nội dung.');
+                }
+                if (isset($data['danhsachcauhoi']) && !is_array($data['danhsachcauhoi'])) {
+                    throw new \InvalidArgumentException('Dữ liệu câu hỏi không hợp lệ.');
+                }
+                $data['danhsachcauhoi'] = \App\Lib\QuestionMetadata::forSave(
+                    $data['danhsachcauhoi'] ?? [],
+                    $existingQuestions,
+                    !empty($existingExamMetadata['staff_only'])
+                );
+            } catch (\InvalidArgumentException $e) {
+                $this->responseJson([MESSAGE => $e->getMessage()]);
+            }
         }
         $examMetadata = null;
         if (isset($data['exam_metadata'])) {

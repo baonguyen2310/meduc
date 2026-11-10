@@ -15,9 +15,11 @@
 
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-group">
+                {if empty($metadata_only)}
                 <span class="btn btn-sm btn-icon btn-danger btn-icon-md m-0 btn-delete-item">
                     <i class="la la-trash-o"></i>
                 </span>
+                {/if}
 
                 <span class="btn btn-sm btn-icon btn-info btn-icon-md m-0 btn-toggle-item">
                     <i class="la la-angle-down"></i>
@@ -29,7 +31,41 @@
     <div class="kt-portlet__body p-10 " style="{if !empty($album)}display: none;{/if}">
         {assign var = key_code value = "code"}
         {assign var = code_random value = substr(md5(mt_rand()), 0, 10)}
-        <input name="" data-name="code" value="{if !empty($album.$key_code)}{$album.$key_code}{else}{$code_random}{/if}" class="d-none" type="text">
+        <input name="" data-name="code" value="{if !empty($album)}{$album.$key_code|default:''|escape}{else}{$code_random}{/if}" class="d-none" type="text" {if !empty($metadata_only)}input-attribute="{ALBUM_QUIZ}"{/if}>
+
+        <input type="hidden" name="" data-name="_question_index" value="{if !empty($album)}{$index|escape}{/if}">
+        {assign var = question_metadata value = $this->AttributeAdmin->questionMetadata($album)}
+        {if !empty($metadata_only)}
+            <div class="mb-4">{$album.$key_first_name|escape}</div>
+        {/if}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="d-block">Phân loại câu hỏi
+                        <select name="" data-name="question_category" class="form-control form-control-sm mt-2">
+                            <option value="">Chưa phân loại</option>
+                            {foreach from = $this->AttributeAdmin->questionCategories() key = metadata_value item = metadata_label}
+                                <option value="{$metadata_value}" {if isset($question_metadata.question_category) && $question_metadata.question_category == $metadata_value}selected{/if}>{$metadata_label}</option>
+                            {/foreach}
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="d-block">Mức độ
+                        <select name="" data-name="difficulty_level" class="form-control form-control-sm mt-2">
+                            <option value="">Chưa xác định</option>
+                            {foreach from = $this->AttributeAdmin->questionLevels() key = metadata_value item = metadata_label}
+                                <option value="{$metadata_value}" {if isset($question_metadata.difficulty_level) && $question_metadata.difficulty_level == $metadata_value}selected{/if}>{$metadata_label}</option>
+                            {/foreach}
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        {if empty($metadata_only)}
 
         <div class="row">
             <div class="col-lg-12 col-12">
@@ -262,5 +298,6 @@
                 </div>
             </div>
         </div>
+        {/if}
     </div>
 </div>
