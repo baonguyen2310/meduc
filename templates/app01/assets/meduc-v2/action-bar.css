@@ -79,7 +79,7 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
   .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
   .mhb-info { display: none; }
   .mhb-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1; gap: 6px; }
-  .mhb-actions > .mhb-button, .mhb-gift > .mhb-button { flex-direction: column; gap: 3px; width: 100%; min-height: 54px; padding: 6px 4px; font-size: 12px; }
+  .mhb-actions > .mhb-button, .mhb-gift > .mhb-button { flex-direction: column; gap: 3px; width: 100%; min-height: 54px; padding: 6px 4px; font-size: clamp(10px, 3.1vw, 12px); }
   .mhb-icon:not(.mhb-icon--always) { display: block; }
   .mhb-gift-menu { min-width: 180px; bottom: calc(100% + 10px); }
 }
