@@ -10,7 +10,7 @@ use Cake\Mailer\Message;
 /** Deliver existing Cake mail templates through the Resend HTTPS API. */
 class ResendTransport extends AbstractTransport
 {
-    protected $_defaultConfig = ['apiKey' => '', 'timeout' => 10];
+    protected $_defaultConfig = ['apiKey' => '', 'timeout' => 10, 'idempotencyKey'=>''];
 
     public function send(Message $message): array
     {
@@ -80,10 +80,13 @@ class ResendTransport extends AbstractTransport
 
         $timeout = max(5, min(30, (int)$this->getConfig('timeout')));
         $handle = curl_init('https://api.resend.com/emails');
+        $headers = ['Authorization: Bearer ' . $apiKey, 'Content-Type: application/json'];
+        $key=(string)$this->getConfig('idempotencyKey');
+        if($key!==''&&preg_match('/^[a-zA-Z0-9_-]{1,200}$/',$key))$headers[]='Idempotency-Key: '.$key;
         curl_setopt_array($handle, [
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $body,
-            CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $apiKey, 'Content-Type: application/json'],
+            CURLOPT_HTTPHEADER => $headers,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => min(5, $timeout),
             CURLOPT_TIMEOUT => $timeout,

@@ -72,7 +72,7 @@ class CoursePriceController extends AppController
             $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],'label'=>$l['course_label'],'catalog_url'=>$l['catalog_url'],
                 'courses'=>array_map('intval',array_column($courses,'id')),
                 'course_data'=>array_map(function($c){return ['id'=>(int)$c['id'],'name'=>$c['name'],'url'=>$c['url'],'image'=>$c['image']];},$courses),
-                'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount'],'price'=>(int)$p['price']];},CoursePricing::packages((int)$l['id']))];
+                'packages'=>array_map(function($p){return ['id'=>(int)$p['id'],'name'=>$p['name'],'count'=>(int)$p['course_count'],'amount'=>(int)$p['amount'],'price'=>(int)$p['price'],'months'=>(int)$p['duration_months'],'credits'=>(int)$p['credit_count'],'bonus'=>(int)$p['bonus_count']];},CoursePricing::packages((int)$l['id']))];
         }
         $legacy=[];
         foreach((array)($session->read(CART)['items']??[]) as $itemId=>$item) {
@@ -104,23 +104,8 @@ class CoursePriceController extends AppController
             $quote=CoursePricing::quote((int)($data['package_id']??0),is_array($data['course_ids']??null)?$data['course_ids']:[]);
             $customer=TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first();
             if (!$customer) return $this->json(401,'Tài khoản không còn hoạt động.');
-            $phone=trim((string)($customer['phone']??''));
-            $items=[]; $n=count($quote['courses']); $remaining=$quote['amount'];
-            foreach($quote['courses'] as $i=>$c) {
-                $price=$i===$n-1 ? $remaining : intdiv($quote['amount'],$n); $remaining-=$price;
-                $items[]=['product_id'=>(int)$c['id'],'product_item_id'=>(int)$c['item_id'],'quantity'=>1,'price'=>$price,'vat_value'=>0];
-            }
-            $p=$quote['package'];
-            $payload=['type'=>ORDER,'source'=>WEBSITE,'status'=>DRAFT,'note'=>mb_substr('Bảng giá: '.$p['list_name'].' · '.$p['name'],0,250),
-                'contact'=>['customer_id'=>(int)$member['id'],'full_name'=>$customer['full_name'],'email'=>$customer['email'],'phone'=>$phone], 'items'=>$items];
-            $order=CoursePricing::db()->transactional(function() use($payload,$p,$quote) {
-                $result=$this->loadComponent('Admin.Order')->saveOrder($payload);
-                if (($result[CODE]??null)!==SUCCESS) throw new \RuntimeException($result[MESSAGE]??'Chưa tạo được đơn đăng ký.');
-                $o=$result[DATA];
-                CoursePricing::db()->update('orders',['course_price_package_id'=>(int)$p['id'],'course_price_snapshot'=>json_encode($quote,JSON_UNESCAPED_UNICODE)],['id'=>(int)$o['id']]);
-                return $o;
-            });
-            $url='/order/checkout?code='.rawurlencode($order['code']);
+            $purchase=\App\Service\CommercePurchases::create($customer,$quote,function($payload){return $this->loadComponent('Admin.Order')->saveOrder($payload);});
+            $url=$purchase['kind']==='document'?'/document-download/payment/'.$purchase['public_code']:'/order/checkout?code='.rawurlencode($purchase['order_code']);
             $done[$token]=['customer_id'=>(int)$member['id'],'redirect'=>$url]; $session->write('CoursePrice.completed',array_slice($done,-10,null,true));
             unset($tokens[$token]);$session->write('CoursePrice.tokens',$tokens);
             return $this->json(200,'Đã tạo đơn đăng ký.',['redirect'=>$url]);

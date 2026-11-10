@@ -12,6 +12,7 @@ use Cake\Datasource\ConnectionManager;
 class ProductHelper extends Helper
 {
     public function courseKind($id) { return \App\Service\CourseTypes::kind((int)$id); }
+    public function startingCourseOffer($id) { return \App\Service\CoursePricing::startingOffer((int)$id); }
 
     // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /trac-nghiem.
     const EXAM_PREP_CATEGORY_ID = 125;

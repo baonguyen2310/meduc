@@ -22,6 +22,8 @@ class OrderController extends AppController {
         // Document download invoices are private and use their own transfer-report flow.
         $code=(string)($this->request->getQuery('code')?:$this->request->getData('code')?:'');
         $download=\App\Service\DocumentDownloads::byOrderCode($code);
+        $commerce=\App\Service\CommercePurchases::installed()?\App\Service\CommercePurchases::db()->execute("SELECT public_code,customer_id FROM commerce_purchases p JOIN orders o ON o.id=p.order_id WHERE o.code=? AND p.kind='document'",[$code])->fetch('assoc'):null;
+        if($commerce)$download=['code'=>$commerce['public_code'],'customer_id'=>$commerce['customer_id']];
         if($download){
             $member=$this->request->getSession()->read(MEMBER)?:[];
             if(empty($member['id'])||(int)$member['id']!==(int)$download['customer_id']){

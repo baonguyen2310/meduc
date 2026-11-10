@@ -11,7 +11,9 @@
       const saved = cart?.get(listId);
       return saved !== null && saved !== undefined ? saved.filter(id => byId.has(id)) : [];
     }
-    let chosen = stored();
+    const kind=page.dataset.courseType;
+    let chosen=kind==='document'?[]:stored();
+    if(kind==='quiz')chosen=page.dataset.from&&byId.has(page.dataset.from)?[page.dataset.from]:chosen.slice(0,1);
     if (byId.has(page.dataset.from) && !chosen.includes(page.dataset.from)) chosen.push(page.dataset.from);
     if (page.dataset.from) {
       const url=new URL(location.href);url.searchParams.delete('mon');
@@ -66,14 +68,15 @@
 
     function updateCards() {
       plans.forEach(p => {
+        if(kind==='document')return;
         const overflow=chosen.length>p.count;
-        p.el.querySelector('[data-plan-count]').textContent = overflow ? `Đã chọn ${chosen.length} môn` : `Đã chọn ${chosen.length}/${p.count} môn`;
+        p.el.querySelector('[data-plan-count]').textContent = kind==='quiz'?(chosen.length?'Môn đã chọn':'Chọn 1 môn để luyện đề'):overflow ? `Đã chọn ${chosen.length} môn` : `Đã chọn ${chosen.length}/${p.count} môn`;
         let hint=p.el.querySelector('[data-plan-warning]');
         if (!hint) {hint=document.createElement('p');hint.className='mpr-choice-warning';hint.dataset.planWarning='';p.el.querySelector('.mpr-choice-head').after(hint);}
         hint.hidden=!overflow;hint.textContent=overflow ? `Gói này gồm ${p.count} môn. Bỏ bớt ${chosen.length-p.count} môn hoặc chọn gói lớn hơn.` : '';
         const edit = p.el.querySelector('[data-edit-plan]');
-        edit.textContent = chosen.length < p.count ? 'Chọn thêm +' : 'Thay đổi';
-        edit.setAttribute('aria-label', `${edit.textContent} môn cho ${p.name}`);
+        edit.textContent = kind==='quiz'?(chosen.length?'Đổi môn':'Chọn môn'):(chosen.length < p.count ? 'Chọn thêm +' : 'Thay đổi');
+        edit.setAttribute('aria-label', `${edit.textContent}${kind==='quiz'?'':' môn'} cho ${p.name}`);
         const area = p.el.querySelector('[data-plan-courses]');
         area.replaceChildren();
         chosen.forEach(id => {

@@ -224,17 +224,18 @@ class PaymentController extends AppController {
                 throw new Exception();
             }
 
-            if(!empty($foreign_id) && $foreign_type == ORDER && $status == 1){
+            if(!empty($foreign_id) && $foreign_type == ORDER){
                 $update_order = TableRegistry::get('Orders')->updateAfterPayment($foreign_id);
                 if (empty($update_order)){
                     throw new Exception();
                 }
 
                 // cộng điểm thưởng sau khi đơn hàng thành công
-                $this->loadComponent('Admin.CustomersPoint')->refundPointOrder($foreign_id);
+                if($status == 1) $this->loadComponent('Admin.CustomersPoint')->refundPointOrder($foreign_id);
             }
             
             $conn->commit();
+            if($foreign_type==ORDER&&$status==1)\App\Service\CommerceNotifications::purchase((int)$foreign_id,'approved',function($p){return $this->loadComponent('Email')->sendEmail($p);},$this->request->host());
             $this->responseJson([CODE => SUCCESS, MESSAGE => __d('admin', 'cap_nhat_thanh_cong')]);
 
         }catch (Exception $e) {

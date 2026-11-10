@@ -41,7 +41,7 @@
                 {else}
                     <h1 class="mcl-catalog-title" id="catalog-title">LUYỆN ĐỀ THEO MÔN.<span>VỮNG VÀNG MÙA THI.</span></h1>
                 {/if}
-                <p class="mcl-catalog-intro">Mỗi bài có 30 câu làm thử miễn phí. Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.</p>
+                <p class="mcl-catalog-intro">Làm thử bài tập 1 miễn phí. Chọn thời hạn để mở bài tập 2 của tất cả bài trong môn.</p>
                 <div class="mcl-exam-hero-meta"><span><strong>{$catalog.total}</strong> môn luyện thi</span><span aria-hidden="true">/</span><a href="#course-listing">Chọn môn luyện thi <span aria-hidden="true">↓</span></a></div>
             </div>
         </section>

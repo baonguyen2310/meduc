@@ -127,6 +127,7 @@ class CourseEnrollmentsTable extends AppTable
         if (empty($order_id)) return false;
 
         try {
+            if (\App\Service\CommercePurchases::syncOrder($order_id)) return true;
             $order = TableRegistry::get('Orders')->find()->where(['id' => $order_id])
                 ->select(['id', 'total', 'point_paid', 'point_promotion_paid', 'status', 'deleted'])->first();
             if (empty($order)) return false;

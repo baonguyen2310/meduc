@@ -156,7 +156,7 @@ class ContactController extends AppController {
                 throw new Exception();
             }
 
-            if(!empty($save) && !empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
+            if($form_code!=='61CQ0U3H9I' && !empty($save) && !empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
                 $settings = TableRegistry::get('Settings')->getSettingWebsite();
                 $email_management = !empty($settings['email']['email_administrator']) ? $settings['email']['email_administrator'] : null;
                 $params_email = [
@@ -187,6 +187,7 @@ class ContactController extends AppController {
                 // The confirmation page reads only this browser session's successfully saved order.
                 $this->request->getSession()->write('MeducBookOrder', $data_value);
             }
+            if($form_code==='61CQ0U3H9I')\App\Service\CommerceNotifications::book((int)$save['id'],function($p){return $this->loadComponent('Email')->sendEmail($p);},$this->request->host());
             $this->loadComponent('SendMessage')->send(CONTACT, $save['id']);
             
             $this->responseJson([

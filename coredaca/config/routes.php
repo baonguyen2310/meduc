@@ -20,6 +20,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     ]));
     $builder->applyMiddleware('csrf');
 
+    $builder->connect('/duyet-thanh-toan/:code/:signature', ['controller'=>'PurchaseApproval','action'=>'review'], ['pass'=>['code','signature'],'code'=>'[a-f0-9]{32}','signature'=>'[a-f0-9]{64}']);
+    $builder->connect('/document-download/start-credit', ['controller'=>'DocumentDownload','action'=>'startCredit']);
     $builder->connect('/checkout/customer', ['controller'=>'Checkout','action'=>'customer']);
 
     // Course price lists and quantity packages.

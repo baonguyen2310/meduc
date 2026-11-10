@@ -31,6 +31,7 @@ class CheckoutFixtureContact extends App\Controller\ContactController {
 class CheckoutFixtureMessages extends Cake\Controller\Component {
     public function check($token){return [CODE=>SUCCESS];}
     public function send(...$args){return [CODE=>SUCCESS];}
+    public function sendEmail(...$args){return [CODE=>SUCCESS];}
 }
 $db=ConnectionManager::get('default');$checks=[];$db->begin();
 try {

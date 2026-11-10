@@ -16,7 +16,7 @@ class CheckoutHelper extends Helper
             ->where(['id'=>(int)$order['id']])->enableHydration(false)->first();
         $snapshot = json_decode((string)($row['course_price_snapshot'] ?? ''), true) ?: [];
         $original = (float)($snapshot['package']['price'] ?? $order['total_origin'] ?? $amount);
-        return ['amount'=>$amount, 'original'=>max($original, $amount)];
+        return ['amount'=>$amount, 'original'=>max($original, $amount), 'package'=>$snapshot['package']??[]];
     }
     public function confirmation(): array
     {

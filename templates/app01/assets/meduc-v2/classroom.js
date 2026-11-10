@@ -12,6 +12,11 @@
   root.dataset.mcrReady = "1";
 
   let licensed = root.dataset.mcrLicensed === "1";
+  const accessExpires=Number(root.dataset.accessExpires||0);
+  if(licensed&&accessExpires>0){
+    const checkExpiry=()=>{if(Date.now()>=accessExpires*1000)location.reload();else setTimeout(checkExpiry,Math.min(86400000,accessExpires*1000-Date.now()+100));};
+    checkExpiry();document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()>=accessExpires*1000)location.reload();});
+  }
   const $ = (selector) => root.querySelector(selector);
   const $$ = (selector) => [...root.querySelectorAll(selector)];
   const pad = (number) => String(number).padStart(2, "0");

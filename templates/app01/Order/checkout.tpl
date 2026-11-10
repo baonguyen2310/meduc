@@ -11,7 +11,10 @@
       <form class="mco-layout" data-order-payment-form>
         <div class="mco-main">
           <section class="mco-panel"><div class="mco-panel-heading"><h2>Thông tin của bạn</h2></div>{$this->element('../Order/meduc_contact', ['shipping_contact'=>false])}</section>
-          <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn</h2><a href="/bang-bao-gia">Chọn thêm</a></div>{$this->element('../Order/meduc_products')}</section>
+          <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn</h2><a href="/bang-bao-gia">Chọn thêm</a></div>
+            {if !empty($prices.package.name)}<p class="mco-payment-note"><strong>{$prices.package.name|escape}</strong>{if !empty($prices.package.duration_months)} · Quyền học {$prices.package.duration_months} tháng, tính từ khi được duyệt.{/if}</p>{/if}
+            {$this->element('../Order/meduc_products')}
+          </section>
         </div>
         <aside class="mco-sidebar"><section class="mco-panel mco-payment">
           <div class="mco-panel-heading"><h2>Thanh toán</h2></div><p class="mco-order-code">Mã đơn <strong>{$order_info.code|escape}</strong></p>

@@ -206,6 +206,8 @@ class EmailComponent extends Component
                 break;
         }
         
+        if($smtp_host==='resend')TransportFactory::get('resend')->setConfig('idempotencyKey',(string)($params['idempotency_key']??''));
+
         // rewrite config template path
         Configure::write('App.paths.templates', $path_template);
         Configure::write('App.paths.locales', $path_template . 'locales' . DS);
@@ -229,7 +231,7 @@ class EmailComponent extends Component
             $mailer->setEmailFormat('html');
 
             if($send_try_content){
-                $mailer->deliver($content);
+                $delivery=$mailer->deliver($content);
             }else{
                 $mailer->viewBuilder()
                 ->setClassName('Smarty')
@@ -242,10 +244,10 @@ class EmailComponent extends Component
                     'token' => $token
                 ]);
 
-                $mailer->deliver();
+                $delivery=$mailer->deliver();
             }
 
-            return $this->System->getResponse([CODE=> SUCCESS, MESSAGE => 'Gửi email thành công']);
+            return $this->System->getResponse([CODE=> SUCCESS, MESSAGE => 'Gửi email thành công', DATA=>['provider_id'=>$delivery['resend_id']??null]]);
 
         } catch (Exception $e) {
             $this->log($e->getMessage(), 'error');

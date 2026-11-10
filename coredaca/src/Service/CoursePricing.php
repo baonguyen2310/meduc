@@ -8,8 +8,8 @@ use Cake\Utility\Text;
 /** A course belongs to one price list; quantity tiers belong to that list. */
 class CoursePricing
 {
-    public const LABELS = ['knowledge'=>'Khoá ôn kiến thức', 'exam_solution'=>'Khoá chữa đề', 'quiz'=>'Khoá trắc nghiệm'];
-    public const CATALOGS = ['knowledge'=>'/khoa-hoc', 'exam_solution'=>'/khoa-chua-de', 'quiz'=>'/trac-nghiem'];
+    public const LABELS = ['knowledge'=>'Khoá ôn kiến thức', 'exam_solution'=>'Khoá chữa đề', 'quiz'=>'Khoá trắc nghiệm', 'document'=>'Lượt tải tài liệu'];
+    public const CATALOGS = ['knowledge'=>'/khoa-hoc', 'exam_solution'=>'/khoa-chua-de', 'quiz'=>'/trac-nghiem', 'document'=>'/tai-lieu-hoc-tap'];
     // Keep old saved forms/price-list rows readable while the data migration rolls out.
     public static function normalizeKind(string $kind): string { return ['course'=>'knowledge','exam_prep'=>'quiz'][$kind] ?? $kind; }
     private static function formatList(array $row): array
@@ -41,6 +41,7 @@ class CoursePricing
         foreach ($rows as &$r) {
             $r['amount'] = $r['sale_price'] !== null ? (int)$r['sale_price'] : (int)$r['price'];
             $r['saving'] = (int)$r['price'] > $r['amount'] ? (int)round(100 * (1 - $r['amount'] / (int)$r['price'])) : 0;
+            $r['unit_label'] = !empty($r['credit_count']) ? $r['credit_count'].' lượt tải' : (!empty($r['duration_months']) && self::get($id)['course_type']==='quiz' ? ($r['duration_months']==12?'1 năm':$r['duration_months'].' tháng') : (!empty($r['bonus_count']) ? ((int)$r['course_count']-(int)$r['bonus_count']).' + '.$r['bonus_count'].' môn' : $r['course_count'].' môn'));
             $r['lines'] = array_values(array_filter(array_map('trim', preg_split('/\r?\n/', (string)$r['benefits']))));
         }
         return $rows;
@@ -106,12 +107,23 @@ class CoursePricing
         return (int)self::db()->execute('SELECT course_price_list_id FROM products WHERE id=:id AND deleted=0', ['id'=>$id])->fetchColumn(0);
     }
 
+    /** Advertise the single-subject package instead of the legacy SKU price. */
+    public static function startingOffer(int $product): ?array
+    {
+        return self::db()->execute("SELECT k.*,COALESCE(k.sale_price,k.price) amount FROM products p
+            JOIN course_price_lists l ON l.id=p.course_price_list_id AND l.status=1 AND l.course_type=p.course_kind
+            JOIN course_price_packages k ON k.price_list_id=l.id AND k.status=1 AND k.course_count=1
+            WHERE p.id=? AND p.deleted=0 AND p.status=1 AND COALESCE(p.draft,0)=0
+            ORDER BY COALESCE(k.sale_price,k.price),k.position,k.id LIMIT 1",[$product])->fetch('assoc')?:null;
+    }
+
     /** Validate the selected distinct courses and compute prices exclusively on the server. */
     public static function quote(int $packageId, array $selection): array
     {
-        $p = self::db()->execute('SELECT p.*,l.name AS list_name,l.slug AS list_slug FROM course_price_packages p
+        $p = self::db()->execute('SELECT p.*,l.name AS list_name,l.slug AS list_slug,l.course_type FROM course_price_packages p
             JOIN course_price_lists l ON l.id=p.price_list_id WHERE p.id=:id AND p.status=1 AND l.status=1', ['id'=>$packageId])->fetch('assoc');
         if (!$p) throw new \InvalidArgumentException('Gói học không còn mở đăng ký.');
+        $p['course_type']=self::normalizeKind($p['course_type']);
         $ids = array_map('intval', array_values($selection));
         if (count($ids) !== (int)$p['course_count'] || count(array_unique($ids)) !== count($ids) || in_array(0,$ids,true)) {
             throw new \InvalidArgumentException('Vui lòng chọn đúng ' . (int)$p['course_count'] . ' môn khác nhau.');
@@ -163,13 +175,17 @@ class CoursePricing
         $rows=[];
         foreach ($packages as $p) {
             $pn=trim((string)($p['name']??'')); if (!$pn) continue;
-            $count=filter_var($p['course_count']??null,FILTER_VALIDATE_INT);
+            $count=$kind==='document'?0:($kind==='quiz'?1:filter_var($p['course_count']??null,FILTER_VALIDATE_INT));
+            $months=isset($p['duration_months'])&&$p['duration_months']!==''?filter_var($p['duration_months'],FILTER_VALIDATE_INT):null;
+            $credits=$kind==='document'?filter_var($p['credit_count']??0,FILTER_VALIDATE_INT):0;
+            $bonus=(int)($p['bonus_count']??0);
+            if(($months!==null&&($months<1||$months>120))||($kind==='quiz'&&!$months)||($kind==='document'&&($credits<1||$credits>10000))||$bonus<0||$bonus>=$count&&$bonus>0)throw new \InvalidArgumentException('Kiểm tra thời hạn, lượt tải hoặc số môn tặng.');
             $price=filter_var($p['price']??null,FILTER_VALIDATE_INT);
             $sale=isset($p['sale_price']) && $p['sale_price']!=='' ? filter_var($p['sale_price'],FILTER_VALIDATE_INT) : null;
-            if (mb_strlen($pn)>120 || $count<1 || $count>1000 || $price===false || $price<1 || $price>999999999999 || ($sale!==null && ($sale===false || $sale<1 || $sale>$price))) throw new \InvalidArgumentException('Kiểm tra số môn và giá của gói ' . $pn . '. Giá ưu đãi phải lớn hơn 0 và không vượt giá gốc.');
+            if (mb_strlen($pn)>120 || ($kind!=='document' && $count<1) || $count>1000 || $price===false || $price<1 || $price>999999999999 || ($sale!==null && ($sale===false || $sale<1 || $sale>$price))) throw new \InvalidArgumentException('Kiểm tra số môn và giá của gói ' . $pn . '. Giá ưu đãi phải lớn hơn 0 và không vượt giá gốc.');
             $benefits=trim((string)($p['benefits']??''));
             if (mb_strlen($benefits)>5000) throw new \InvalidArgumentException('Quyền lợi gói tối đa 5.000 ký tự.');
-            $rows[]=['id'=>(int)($p['id']??0),'name'=>$pn,'course_count'=>$count,'price'=>$price,'sale_price'=>$sale,'benefits'=>$benefits,'recommended'=>empty($p['recommended'])?0:1,'position'=>(int)($p['position']??count($rows)),'status'=>empty($p['status'])?0:1];
+            $rows[]=['id'=>(int)($p['id']??0),'name'=>$pn,'course_count'=>$count,'duration_months'=>$months,'credit_count'=>$credits,'bonus_count'=>$bonus,'price'=>$price,'sale_price'=>$sale,'benefits'=>$benefits,'recommended'=>empty($p['recommended'])?0:1,'position'=>(int)($p['position']??count($rows)),'status'=>empty($p['status'])?0:1];
         }
         $courseIds=array_values(array_unique(array_filter(array_map('intval',is_array($data['course_ids']??null)?$data['course_ids']:[]))));
         $valid=TableRegistry::get('CourseEnrollments')->courseIds();

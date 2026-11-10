@@ -46,10 +46,16 @@
 {elseif !empty($first_item.price)}
     {$price = $first_item.price}
 {/if}
+{$entry_offer = $this->Product->startingCourseOffer($product.id)}
+{if $entry_offer}
+    {$price = $entry_offer.amount}{$old_price = 0}
+    {if $entry_offer.price > $entry_offer.amount}{$old_price = $entry_offer.price}{/if}
+{/if}
 {$discount = 0}
 {if $old_price > 0}{$discount = round(($old_price - $price) / $old_price * 100)}{/if}
 {$price_text = 'Liên hệ'}
 {if $price > 0}{$price_text = "{$price|number_format:0:',':'.'}đ"}{/if}
+{if $quiz_course && !empty($entry_offer.duration_months)}{$price_text = "{$price_text}/{$entry_offer.duration_months} tháng"}{/if}
 {$old_price_text = ''}
 {if $old_price > 0}{$old_price_text = "{$old_price|number_format:0:',':'.'}đ"}{/if}
 
@@ -212,7 +218,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261103-mock-button" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261103-mock-button" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261110-subscription-expiry" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
@@ -220,13 +226,13 @@
 {if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261103-mock-button" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
-<section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
+<section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-access-expires="{$course_access.expires_at|default:0}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
             <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/trac-nghiem">Trắc nghiệm</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
         {if $quiz_course}
-        <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; đăng ký một lần để mở bài tập 2 của toàn môn.</p></header>
+        <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; chọn thời hạn để mở bài tập 2 của toàn môn.</p></header>
         {else}
         <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">
             <header class="mcr-course-heading">
@@ -512,7 +518,7 @@
                                                 <div>
                                                     <p class="mcr-quiz-kicker">{if $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
                                                     <h3>{$quiz_info.name|escape}</h3>
-                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $quiz_course && !$lesson.exam}Làm từng câu, xem đáp án và lời giải ngay.{else}Nộp bài để xem điểm và lời giải.{/if}{else}{if $quiz_course}Đăng ký một lần để mở bài tập 2 của tất cả bài trong môn.{else}Đăng ký khoá học để làm bài tập này.{/if}{/if}</p>
+                                                    <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $quiz_course && !$lesson.exam}Làm từng câu, xem đáp án và lời giải ngay.{else}Nộp bài để xem điểm và lời giải.{/if}{else}{if $quiz_course}Chọn thời hạn để mở bài tập 2 của tất cả bài trong môn.{else}Đăng ký khoá học để làm bài tập này.{/if}{/if}</p>
                                                 </div>
                                                 <div class="mcr-quiz-actions">
                                                 <button type="button" class="mcr-btn mcr-btn--ghost" data-mcr-quiz-ready="{if $quiz.ready}1{else}0{/if}" data-mcr-quiz-history="{$quiz.id}" data-mcr-quiz-free="{if $quiz.free}1{else}0{/if}" {if !$quiz.open}hidden{/if} data-lesson="{$lesson.number}" data-lesson-title="{$lesson.title|escape}" data-lesson-code="{$lesson.code|escape}">Lịch sử</button>

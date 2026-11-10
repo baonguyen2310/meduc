@@ -11,14 +11,14 @@
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261021-1" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261022-6" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261110-commerce-access" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/checkout-entry.js?v=20261110-unified-checkout" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261110-unified-checkout" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/checkout-entry.js?v=20261110-commerce-access" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261110-commerce-access" defer></script>
   <script src="/bang-bao-gia/lien-ket.js" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261110-unified-checkout" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261110-commerce-access" defer></script>
 </head>
 <body class="meduc-header-v2 mpr-body">
 {$this->element('layout/header_v2')}

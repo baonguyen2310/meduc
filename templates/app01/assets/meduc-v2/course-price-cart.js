@@ -243,7 +243,7 @@
         const choices=node('div','mpc-package-choice'), field=node('label');field.textContent='Gói học';const select=node('select');select.setAttribute('aria-label',`Gói học cho ${board.name}`);
         board.packages.forEach(p=>{const option=node('option','',`${p.name} · ${money(p.amount)}`);option.value=String(p.id);option.selected=p.id===pack.id;select.append(option);});
         select.addEventListener('change',()=>api.choosePackage(board.id,Number(select.value)));field.append(select);choices.append(field);
-        const count=node('strong','mpc-group-count',ids.length<=pack.count?`Đã chọn ${ids.length}/${pack.count} môn`:`Đã chọn ${ids.length} môn · Gói ${pack.count} môn`);choices.append(count);group.append(choices);
+        const count=node('strong','mpc-group-count',board.kind==='quiz'?'Thời hạn bắt đầu khi admin duyệt':ids.length<=pack.count?`Đã chọn ${ids.length}/${pack.count} môn`:`Đã chọn ${ids.length} môn · Gói ${pack.count} môn`);choices.append(count);group.append(choices);
         if(ids.length!==pack.count)group.append(node('p','mpc-group-hint',ids.length<pack.count?`Chọn thêm ${pack.count-ids.length} môn hoặc đổi sang gói phù hợp.`:`Bỏ bớt ${ids.length-pack.count} môn hoặc đổi sang gói lớn hơn.`));
         const actions=node('div','mpc-group-actions');actions.append(link(catalogPath(board,pack),'Chọn thêm / đổi môn','mpc-link-button'));
         const total=node('div','mpc-group-payment');total.append(priceDisplay(pack));

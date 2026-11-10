@@ -7,6 +7,9 @@ use App\Service\ReadingHistoryService;
 use Cake\ORM\TableRegistry;
 use Cake\Http\CallbackStream;
 use App\Service\CheckoutContact;
+use App\Service\CommercePurchases;
+use App\Service\DocumentCredits;
+use App\Service\CommerceNotifications;
 
 class DocumentDownloadController extends AppController
 {
@@ -39,7 +42,7 @@ class DocumentDownloadController extends AppController
             }catch(\InvalidArgumentException $e){$files[]=['index'=>$index,'unavailable'=>true];}
         }
         if($owner)$session->write('DocumentDownload.tokens',array_slice(array_filter($tokens,function($t){return $t['expires']>=time();}),-40,null,true));
-        return $this->json(200,'',['customer_id'=>$owner,'price'=>DocumentDownloads::PRICE,'files'=>$files]);
+        return $this->json(200,'',['customer_id'=>$owner,'price'=>DocumentDownloads::PRICE,'balance'=>DocumentCredits::balance($owner),'packages'=>DocumentCredits::packages(),'files'=>$files]);
     }
     public function purchase()
     {
@@ -54,8 +57,10 @@ class DocumentDownloadController extends AppController
         try{
             $service=new DocumentDownloads(LANGUAGE);$file=$service->quote((int)$token['article'],(int)$token['index']);
             if(!hash_equals($token['file'],$file['file_key']))return $this->json(422,'Danh sách tệp đã thay đổi. Vui lòng tải lại trang.');
-            [$stream]=$this->upstream($file['file_url'],'HEAD');fclose($stream);
-            $purchase=$service->create($customer,$file,function($data){return $this->loadComponent('Admin.Order')->saveOrder($data);});
+            $quote=\App\Service\CoursePricing::quote((int)$this->request->getData('package_id'),[]);
+            if($quote['package']['course_type']!=='document')throw new \InvalidArgumentException('Vui lòng chọn gói lượt tải.');
+            $purchase=CommercePurchases::create($customer,$quote,function($data){return $this->loadComponent('Admin.Order')->saveOrder($data);},['document_url'=>$file['document_url']]);
+            $purchase['code']=$purchase['public_code'];
             $done[$nonce]=['customer'=>$owner,'code'=>$purchase['code']];$session->write('DocumentDownload.completed',array_slice($done,-20,null,true));
             unset($tokens[$nonce]);$session->write('DocumentDownload.tokens',$tokens);
             return $this->json(200,'Đã tạo đơn mua lượt tải.',['redirect'=>'/document-download/payment/'.$purchase['code']]);
@@ -67,7 +72,7 @@ class DocumentDownloadController extends AppController
         if(!DocumentDownloads::installed())return $this->json(503,'Dịch vụ mua lượt tải đang được cập nhật.');
         if(!is_string($code)||!preg_match('/^[a-f0-9]{32}$/',$code))return $this->response->withStatus(404)->withStringBody('Không tìm thấy lượt tải.');
         $customer=$this->customer();
-        if($customer&&!(new DocumentDownloads(LANGUAGE))->owned($code,(int)$customer['id']))return $this->response->withStatus(404)->withStringBody('Không tìm thấy lượt tải.');
+        if($customer&&!(new DocumentDownloads(LANGUAGE))->owned($code,(int)$customer['id'])&&!CommercePurchases::owned($code,(int)$customer['id']))return $this->response->withStatus(404)->withStringBody('Không tìm thấy lượt tải.');
         $this->set('purchase_code',$code);$this->set('title_for_layout','Mua lượt tải tài liệu | MedUC');
         $this->set('data_init',['device'=>DEVICE,'member'=>$this->request->getSession()->read(MEMBER)?:[],'template'=>['code'=>CODE_TEMPLATE,'url'=>URL_TEMPLATE]]);
         $this->viewBuilder()->setLayout('course_pricing');
@@ -78,6 +83,8 @@ class DocumentDownloadController extends AppController
         if(!DocumentDownloads::installed())return $this->json(503,'Dịch vụ mua lượt tải đang được cập nhật.');
         if(!$this->request->is('get'))return $this->json(405,'Phương thức không hợp lệ.');
         $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập để xem lượt tải đã mua.');
+        $new=CommercePurchases::owned((string)$code,(int)$customer['id']);
+        if($new&&$new['kind']==='document')return $this->json(200,'',DocumentCredits::publicPurchase($new)+['contact'=>CheckoutContact::profile($customer,$new)]);
         $service=new DocumentDownloads(LANGUAGE);$purchase=$service->owned((string)$code,(int)$customer['id']);
         return $purchase?$this->json(200,'',$service->publicData($purchase)+['contact'=>CheckoutContact::profile($customer, $purchase)]):$this->json(404,'Không tìm thấy lượt tải.');
     }
@@ -86,6 +93,25 @@ class DocumentDownloadController extends AppController
         if(!DocumentDownloads::installed())return $this->json(503,'Dịch vụ mua lượt tải đang được cập nhật.');
         if(!$this->request->is('post'))return $this->json(405,'Phương thức không hợp lệ.');
         $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập.');
+        $new=CommercePurchases::owned((string)$code,(int)$customer['id']);
+        if($new&&$new['kind']==='document'){
+            try{
+                CommercePurchases::db()->transactional(function()use($new,$customer){
+                    $p=CommercePurchases::get((int)$new['order_id'],true);
+                    if($p['order_status']===CANCEL||$p['order_deleted'])throw new \InvalidArgumentException('Đơn hàng đã huỷ.');
+                    if($p['reported_at'])return;
+                    CheckoutContact::save((int)$p['order_id'],$customer,$this->request->getData());
+                    $result=$this->loadComponent('Admin.Payment')->savePayment(['foreign_id'=>$p['order_id'],'foreign_type'=>ORDER,'object_type'=>CUSTOMER,'object_id'=>$customer['id'],'type'=>1,'amount'=>$p['amount'],'payment_method'=>BANK,'reference'=>$p['order_code'],'status'=>2]);
+                    if(($result[CODE]??null)!==SUCCESS)throw new \RuntimeException('Chưa lưu được giao dịch.');
+                    CommercePurchases::db()->update('orders',['status'=>NEW_ORDER,'updated'=>time()],['id'=>$p['order_id']]);
+                    CommercePurchases::report((int)$p['order_id']);
+                });
+                CommerceNotifications::purchase((int)$new['order_id'],'reported',function($data){return $this->loadComponent('Email')->sendEmail($data);},$this->request->host());
+                $new=CommercePurchases::get((int)$new['order_id']);
+                return $this->json(200,'Đã gửi thông tin thanh toán.',DocumentCredits::publicPurchase($new)+['contact'=>CheckoutContact::profile($customer,$new)]);
+            }catch(\InvalidArgumentException $e){return $this->json(422,$e->getMessage());}
+            catch(\Throwable $e){$this->log('Credit purchase report: '.$e->getMessage(),'error');return $this->json(500,'Chưa gửi được thông tin. Vui lòng thử lại.');}
+        }
         try{
             $service=new DocumentDownloads(LANGUAGE);
             $purchase=$service->owned((string)$code,(int)$customer['id']);
@@ -97,6 +123,12 @@ class DocumentDownloadController extends AppController
             return $this->json(200,'Đã gửi thông tin. MedUC sẽ kiểm tra và xác nhận thanh toán.',$service->publicData($purchase)+['contact'=>$contact]);
         }catch(\InvalidArgumentException $e){return $this->json(404,$e->getMessage());}
         catch(\Throwable $e){$this->log('Document transfer report: '.$e->getMessage(),'error');return $this->json(500,'Chưa gửi được thông tin chuyển khoản. Vui lòng thử lại.');}
+    }
+    public function startCredit(){
+        if(!$this->request->is('post'))return $this->json(405,'Phương thức không hợp lệ.');
+        $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập để tải tài liệu.');
+        try{$file=(new DocumentDownloads(LANGUAGE))->quote((int)$this->request->getData('article'),(int)$this->request->getData('index'));return $this->json(200,'',DocumentCredits::issue((int)$customer['id'],$file));}
+        catch(\InvalidArgumentException $e){return $this->json(402,$e->getMessage());}
     }
     public function start($code=null)
     {
@@ -112,14 +144,15 @@ class DocumentDownloadController extends AppController
         $this->autoRender=false;
         if(!$this->request->is(['get','head']))return $this->json(405,'Phương thức không hợp lệ.');
         $customer=$this->customer();if(!$customer)return $this->json(401,'Vui lòng đăng nhập để tải tệp đã mua.');
-        $service=new DocumentDownloads(LANGUAGE);$p=$service->ticket((string)$token,(int)$customer['id']);
+        $service=new DocumentDownloads(LANGUAGE);$p=$service->ticket((string)$token,(int)$customer['id'])?:DocumentCredits::ticket((string)$token,(int)$customer['id']);
         if(!$p)return $this->json(404,'Lượt tải không còn hiệu lực.');
         $range=$this->request->getHeaderLine('Range');
         if($range!==''&&(strlen($range)>80||!preg_match('/^bytes=(?:\d+-\d*|-\d+)$/',$range)))return $this->response->withStatus(416);
         try{
             [$stream,$status,$headers]=$this->upstream($p['file_url'],$this->request->is('head')?'HEAD':'GET',$range);
-            if(!$this->request->is('head'))$service->consume($p['code'],(string)$token,(int)$customer['id']);
-        }catch(\Throwable $e){if(isset($stream)&&is_resource($stream))fclose($stream);return $this->json(502,'Chưa tải được tệp. Lượt chưa dùng của bạn vẫn được giữ lại; vui lòng thử lại.');}
+            if(!$this->request->is('head')){if(!empty($p['credit_use']))DocumentCredits::consume((string)$token,(int)$customer['id']);else $service->consume($p['code'],(string)$token,(int)$customer['id']);}
+        }catch(\InvalidArgumentException $e){if(isset($stream)&&is_resource($stream))fclose($stream);return $this->json(402,$e->getMessage());}
+        catch(\Throwable $e){if(isset($stream)&&is_resource($stream))fclose($stream);return $this->json(502,'Chưa tải được tệp. Lượt chưa dùng của bạn vẫn được giữ lại; vui lòng thử lại.');}
         $ext=preg_replace('/[^a-z0-9]/i','',pathinfo($p['file_name'],PATHINFO_EXTENSION));
         $response=$this->response->withStatus($status)->withHeader('Content-Type',$headers['content-type']??'application/octet-stream')
             ->withHeader('Content-Disposition','attachment; filename="meduc-document-'.$p['article_id'].($ext?'.'.$ext:'').'"; filename*=UTF-8\'\''.rawurlencode($p['file_name']))

@@ -1,4 +1,4 @@
-<main class="mpr" id="course-price-root" data-price-page data-list-id="{$list.id|default:0}" data-list-slug="{$list.slug|escape}" data-course-type="{$list.course_type|escape}" data-catalog-url="{$list.catalog_url|escape}" data-from="{$from}" data-recommended-year="{$recommended_year|escape}" data-member="{if !empty($member.id)}1{else}0{/if}">
+<main class="mpr" id="course-price-root" data-price-page data-list-id="{$list.id|default:0}" data-list-slug="{$list.slug|escape}" data-course-type="{$list.course_type|escape}" data-quantity-mode="{if $list.course_type=='quiz'}months{elseif $list.course_type=='document'}credits{else}courses{/if}" data-catalog-url="{$list.catalog_url|escape}" data-from="{$from}" data-recommended-year="{$recommended_year|escape}" data-member="{if !empty($member.id)}1{else}0{/if}">
   <div class="mpr-shell">
     <div class="mpr-breadcrumb"><a href="/">Trang chủ</a><span>/</span><span>Bảng báo giá</span></div>
     {if count($lists)>1}<nav class="mpr-switch" aria-label="Chọn bảng báo giá">{foreach $lists as $l}<a href="/bang-bao-gia/{$l.slug|escape}" {if $list.id==$l.id}aria-current="page"{/if}>{$l.name|escape}</a>{/foreach}</nav>{/if}
@@ -9,25 +9,27 @@
     </header>
     {if $packages}
     <section aria-labelledby="mpr-packages-title">
-      <div class="mpr-section-head"><h2 id="mpr-packages-title">Chọn gói phù hợp.</h2><span>{$courses|count} môn để bạn lựa chọn</span></div>
+      <div class="mpr-section-head"><h2 id="mpr-packages-title">Chọn gói phù hợp.</h2><span>{if $list.course_type=='quiz'}Chọn thời hạn cho một môn{elseif $list.course_type=='document'}Lượt dùng chung cho mọi tài liệu{else}{$courses|count} môn để bạn lựa chọn{/if}</span></div>
       <div class="mpr-packages">
       {foreach $packages as $p}
         <article class="mpr-package{if $p.recommended} is-recommended{/if}" data-package="{$p.id}" data-count="{$p.course_count}" data-amount="{$p.amount}" data-name="{$p.name|escape}">
-          <div class="mpr-package-top"><span>{$p.name|escape}</span>{if $p.recommended}<span class="mpr-tag">Đề xuất</span>{/if}</div>
-          <h3>{$p.course_count} <span>môn học</span></h3>
+          <div class="mpr-package-top"><span>{$p.name|escape}</span>{if $p.recommended}<span class="mpr-tag">{if $p.bonus_count}ƯU ĐÃI TỐT NHẤT{else}TIẾT KIỆM NHẤT{/if}</span>{/if}</div>
+          <h3>{if $list.course_type=='quiz'}{if $p.duration_months==12}1 <span>năm</span>{else}{$p.duration_months} <span>tháng</span>{/if}{elseif $list.course_type=='document'}{$p.credit_count} <span>lượt tải</span>{elseif $p.bonus_count}{$p.course_count-$p.bonus_count}<span class="mpr-bonus"> + {$p.bonus_count}</span> <span>môn học</span>{else}{$p.course_count} <span>môn học</span>{/if}</h3>
           <div class="mpr-price">{$p.amount|number_format:0:',':'.'}<small>đ</small></div>
-          <div class="mpr-price-meta">{if $p.saving}<del>{$p.price|number_format:0:',':'.'}đ</del><span>Giảm {$p.saving}%</span>{else}<span>Học phí trọn gói</span>{/if}</div>
-          <ul>{foreach $p.lines as $line}<li>{$line|escape}</li>{/foreach}</ul>
-          <div class="mpr-choice">
+          <div class="mpr-price-meta">{if $p.saving}<del>{$p.price|number_format:0:',':'.'}đ</del><span class="mpr-saving">Tiết kiệm {$p.saving}%</span>{else}<span>{if $list.course_type=='document'}Thanh toán một lần{elseif $list.course_type=='quiz'}Trọn thời hạn đã chọn{else}Học phí trọn gói{/if}</span>{/if}</div>
+          {if $list.course_type=='knowledge' && $p.duration_months}<p class="mpr-duration">Quyền học {$p.duration_months} tháng</p>{/if}
+          <ul class="mpr-benefits">{foreach $p.lines as $line}<li><span class="mpr-benefit-check" aria-hidden="true">✓</span><span>{$line|escape}</span></li>{/foreach}</ul>
+          {if $list.course_type!='document'}<div class="mpr-choice">
             <div class="mpr-choice-head"><strong data-plan-count aria-live="polite">Đã chọn {if $from}1{else}0{/if}/{$p.course_count} môn</strong><button type="button" data-edit-plan="{$p.id}" aria-haspopup="dialog">Chọn thêm <span aria-hidden="true">+</span></button></div>
             <div class="mpr-plan-courses" data-plan-courses></div>
           </div>
-          <button class="mpr-btn{if !$p.recommended} mpr-btn--outline{/if}" type="button" data-register-plan="{$p.id}" {if $p.course_count>count($courses)}disabled{/if}>Đăng ký gói <span aria-hidden="true">→</span></button>
+          {/if}<button class="mpr-btn{if !$p.recommended} mpr-btn--outline{/if}" type="button" data-register-plan="{$p.id}" {if $p.course_count>count($courses)}disabled{/if}>Chọn mua gói <span aria-hidden="true">→</span></button>
         </article>
       {/foreach}
       </div>
     </section>
-    <p class="mpr-under-note">Chọn gói và môn bạn cần để tiếp tục thanh toán.</p>
+    {if $list.course_type=='knowledge'}<p class="mpr-guarantee"><strong>Cam kết hoàn 100% học phí</strong> nếu sau 3 ngày học không hiệu quả.</p>{/if}
+    <p class="mpr-under-note">{if $list.course_type=='quiz'}Thời hạn bắt đầu khi admin xác nhận thanh toán. Mỗi gói áp dụng cho một môn.{elseif $list.course_type=='document'}Admin duyệt để cộng lượt. Mỗi tệp tải thành công dùng 1 lượt; số dư không hết hạn.{else}Chọn gói và các môn bạn cần để tiếp tục thanh toán.{/if}</p>
     <p class="mpr-error" data-price-error role="alert"></p>
     <script type="application/json" data-price-catalog>{$catalog_json}</script>
 

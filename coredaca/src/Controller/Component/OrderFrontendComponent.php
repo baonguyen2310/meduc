@@ -727,8 +727,14 @@ class OrderFrontendComponent extends Component
 
             $conn->commit();
 
+            // Purchases notify both buyer and admin after the pending receipt is committed.
+            $commerce=\App\Service\CommercePurchases::get((int)$order_info['id']);
+            if($send_email&&$commerce){
+                \App\Service\CommercePurchases::report((int)$order_info['id']);
+                \App\Service\CommerceNotifications::purchase((int)$order_info['id'],'reported',function($p){return $this->Email->sendEmail($p);},$this->controller->getRequest()->host());
+            }
             //send email
-            if($send_email){
+            if($send_email&&!$commerce){
                 $email_contact = !empty($order_info['contact']['email']) ? $order_info['contact']['email'] : null;
                 if(!empty($email_contact)){
                     $params_email = [
