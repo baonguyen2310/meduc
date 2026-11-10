@@ -111,7 +111,8 @@ class QuizAnswerComponent extends Component
         $slot = \App\Service\CourseTypes::slot((int)$product_id, (int)$quiz_id);
         if (!$slot) return $result;
         $quiz = \App\Lib\QuizQuestions::load((int)$quiz_id);
-        if (!$quiz || ((int)$slot['slot'] === 1 && count($quiz['questions']) !== 30)) return $result;
+        // A populated first exercise is free regardless of the lesson's question count.
+        if (!$quiz) return $result;
 
         $lessons = TableRegistry::get('ProductsAttribute')->find()->where([
             'product_id' => $product_id,

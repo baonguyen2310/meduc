@@ -114,7 +114,7 @@
     {$free_quiz = false}
     {foreach from = $lesson_quizzes item = lesson_quiz}
         {if empty($course_quizzes.info[$lesson_quiz.id])}{continue}{/if}
-        {$quiz_ready = $course_quizzes.info[$lesson_quiz.id].count > 0 && (!$lesson_quiz.free || $course_quizzes.info[$lesson_quiz.id].count == 30)}
+        {$quiz_ready = $course_quizzes.info[$lesson_quiz.id].count > 0}
         {$quiz_open = ($licensed || $lesson_quiz.free) && $quiz_ready}
         {$quizzes[] = ['id' => $lesson_quiz.id, 'open' => $quiz_open, 'free' => $lesson_quiz.free, 'ready' => $quiz_ready]}
         {if $quiz_open}{$open_quiz = true}{$any_open_quiz = true}{/if}
@@ -226,7 +226,7 @@
             <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/trac-nghiem">Trắc nghiệm</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
         {if $quiz_course}
-        <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm thử 30 câu miễn phí ở bài tập 1; đăng ký một lần để mở bài tập 2 của toàn môn.</p></header>
+        <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; đăng ký một lần để mở bài tập 2 của toàn môn.</p></header>
         {else}
         <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">
             <header class="mcr-course-heading">
