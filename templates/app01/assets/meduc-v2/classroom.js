@@ -228,16 +228,27 @@
   let pendingStudy = null;
   let studyRequest = 0;
   let accessRequest = null;
+  let accessGeneration = 0;
+  let currentAccess = null;
   const accessError = document.createElement('p');
   accessError.className = 'mcr-empty'; accessError.hidden = true; accessError.setAttribute('role','alert');
   lessonView.querySelector('.mcr-toolbar').after(accessError);
-  async function refreshAccess() {
+  async function refreshAccess(fresh = false) {
+    if (fresh) {
+      accessGeneration++;
+      accessRequest = null;
+      currentAccess = null;
+    }
     if (accessRequest) return accessRequest;
-    accessRequest = (async () => {
+    const generation = accessGeneration;
+    const request = (async () => {
       const response = await fetch(`/khoa-hoc/trang-thai/${root.dataset.mcrProduct}`, {credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json'}});
       const body = await response.json().catch(() => null);
+      // A request sent with the pre-login cookie must not restore the old guest state.
+      if (generation !== accessGeneration) return accessRequest || currentAccess || refreshAccess();
       if (!response.ok || body?.code !== 'success') throw new Error('Chưa kiểm tra được tài khoản. Vui lòng thử lại.');
       const access = body.data;
+      currentAccess = access;
       licensed = access.licensed === true;
       root.dataset.mcrLicensed = licensed ? '1' : '0';
       root.dataset.mcrMember = String(Number(access.member_id) || 0);
@@ -253,8 +264,10 @@
       });
       root.dispatchEvent(new CustomEvent('mcr:access',{detail:access}));
       return access;
-    })().finally(() => {accessRequest=null;});
-    return accessRequest;
+    })();
+    accessRequest = request;
+    try { return await request; }
+    finally { if (accessRequest === request) accessRequest = null; }
   }
   function resumeStudy() {
     const pending=pendingStudy;
@@ -284,7 +297,7 @@
   window.addEventListener('meduc:authenticated',async () => {
     const pending=pendingStudy;
     try {
-      await refreshAccess();
+      await refreshAccess(true);
       if (pending && pendingStudy===pending) {pending.ready=true;resumeStudy();}
     } catch(error) {pendingStudy=null;accessError.textContent=error.message;accessError.hidden=false;}
   });
