@@ -55,7 +55,9 @@ try {
                 ensure(count($questionAttrs) === 1, 'Missing or duplicate question JSON.');
                 $oldQuestions = json_decode($questionAttrs[0]['value'], true, 512, JSON_THROW_ON_ERROR);
                 $attempts = (int)$db->execute('SELECT COUNT(*) FROM quizs_answer WHERE quiz_id=:id', ['id'=>$id])->fetchColumn(0);
-                ensure($oldQuestions === $questions || $attempts === 0, 'Cannot change a quiz with student history.');
+                // JSON encodes a rubric's 1.0 as 1; compare the persisted representation, not PHP scalar types.
+                $sameQuestions = js($oldQuestions) === js($questions);
+                ensure($sameQuestions || $attempts === 0, 'Cannot change a quiz with student history.');
                 $oldMeta = $db->execute('SELECT * FROM quiz_exam_metadata WHERE quiz_id=:id', ['id'=>$id])->fetch('assoc');
                 ensure(!$oldMeta || $oldMeta['source_system'] === 'meduc-subject-json' || !$oldQuestions, 'Would overwrite an unrelated quiz.');
                 $snapshot = ['quiz'=>$quiz,'attributes'=>$attrs,'content'=>$content[0],'metadata'=>$oldMeta?:null,'attempts'=>$attempts];
@@ -83,7 +85,7 @@ try {
             if ($snapshot) {
                 $m = $snapshot['metadata'];
                 $minutesAttr = array_values(array_filter($snapshot['attributes'],function($a){return (int)$a['attribute_id']===19;}));
-                $same = $oldQuestions === $questions && $snapshot['content']['name'] === $title && $m && $m['source_system']==='meduc-subject-json' && $m['source_hash']===$hash && (string)$m['school_name']===$school && (int)$m['staff_only']===0 && count($minutesAttr)===1 && (int)$minutesAttr[0]['value']===$minutes;
+                $same = $sameQuestions && $snapshot['content']['name'] === $title && $m && $m['source_system']==='meduc-subject-json' && $m['source_hash']===$hash && (string)$m['school_name']===$school && (int)$m['staff_only']===0 && count($minutesAttr)===1 && (int)$minutesAttr[0]['value']===$minutes;
             }
             if ($mode==='verify') ensure($same, 'Readback differs: '.$meta['code']);
             $plan = ['id'=>$id,'source_id'=>$sourceId,'code'=>$meta['code'],'lesson_code'=>$group['lesson_code'],'lesson_type'=>$group['lesson_type'],'slot'=>$index+1,'free'=>$free,'name'=>$title,'school'=>$school,'minutes'=>$minutes,'value'=>$value,'hash'=>$hash,'count'=>count($questions),'same'=>$same];
