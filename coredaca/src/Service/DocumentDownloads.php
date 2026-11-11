@@ -53,6 +53,9 @@ class DocumentDownloads
     }
     public function state(array $p): string
     {
+        // Imported purchases are consumed through DocumentCredits, never a second legacy entitlement.
+        $imported=CommercePurchases::get((int)$p['order_id']);
+        if($imported&&$imported['kind']==='document')return 'cancelled';
         if(!empty($p['order_deleted'])||$p['order_status']===CANCEL||(int)$p['order_customer']!==(int)$p['customer_id']||abs((float)$p['order_total']-self::PRICE)>0.001||(int)$p['amount']!==self::PRICE)return 'cancelled';
         if((float)$p['confirmed']<(int)$p['amount'])return empty($p['used_at'])?'pending':'revoked';
         if(empty($p['used_at']))return 'available';
@@ -68,6 +71,7 @@ class DocumentDownloads
     {
         if(!$customer)return null;
         $sql=$this->selectSql()." WHERE p.customer_id=:customer AND p.article_id=:article AND p.file_key=:file AND o.deleted=0 AND o.status<>'cancel'
+          AND NOT EXISTS (SELECT 1 FROM commerce_purchases cp WHERE cp.order_id=p.order_id)
           AND (p.used_at IS NULL OR p.token_expires_at>=:now)
           ORDER BY CASE WHEN confirmed>=p.amount AND p.used_at IS NOT NULL AND p.token_expires_at>=:active THEN 0 WHEN confirmed>=p.amount THEN 1 ELSE 2 END,p.id DESC LIMIT 1";
         $p=self::db()->execute($sql,['customer'=>$customer,'article'=>$file['article_id'],'file'=>$file['file_key'],'now'=>time(),'active'=>time()])->fetch('assoc');

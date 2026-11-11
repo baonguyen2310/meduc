@@ -5,6 +5,19 @@ var nhOrderDetail = (function () {
   var validator;
 
   var initSubmit = function () {
+    $(document).on('click', '[data-payment-approve]', function () {
+      var button = $(this);
+      if (button.prop('disabled') || !window.confirm('Xác nhận đã nhận đủ ' + button.attr('data-amount') + 'đ và duyệt thanh toán đơn này?')) return;
+      button.prop('disabled', true);
+      nhMain.callAjax({url: button.attr('data-link'), data: {approve_order: '1'}})
+        .done(function (response) {
+          if (response.code === _SUCCESS) location.reload();
+          else toastr.error(response.message || 'Chưa duyệt được thanh toán.');
+        })
+        .fail(function () { toastr.error('Không kết nối được. Vui lòng tải lại đơn và kiểm tra trước khi thử lại.'); })
+        .always(function () { button.prop('disabled', false); });
+    });
+
     $(document).on("click", ".btn-cancel-order", function (e) {
       $("#cancel-order-modal").modal("show");
     });

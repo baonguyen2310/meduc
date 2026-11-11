@@ -4,6 +4,15 @@
             <div class="col-12">
                 <div class="row align-items-center">
                     <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                        <select id="order_kind" name="order_kind" class="form-control form-control-sm" aria-label="Loại đơn hàng">
+                            <option value="">Tất cả loại đơn</option>
+                            <option value="knowledge">Khoá ôn kiến thức</option>
+                            <option value="exam_solution">Khoá chữa đề</option>
+                            <option value="quiz">Trắc nghiệm</option>
+                            <option value="document">Tài liệu</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
                         <div class="kt-input-icon kt-input-icon--left">
                             <input id="nh-keyword" name="keyword" type="text" class="form-control form-control-sm" placeholder="{__d('admin', 'khach_hang')}, {__d('admin', 'so_dien_thoai')}, {__d('admin', 'email')} ..." autocomplete="off">
                             <span class="kt-input-icon__icon kt-input-icon__icon--left">

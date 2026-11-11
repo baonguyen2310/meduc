@@ -61,7 +61,6 @@ var nhListOrder = function() {
 				width: 170,
 				autoHide: false,
 				template: function(row){
-					console.log(row);
 					var code = typeof(row.code) != _UNDEFINED && row.code != null ? row.code : '';
 					var source = typeof(row.source) != _UNDEFINED && row.source != null ? row.source : '';
 					var created = typeof(row.created) != _UNDEFINED && row.created != null ? row.created : '';
@@ -74,6 +73,18 @@ var nhListOrder = function() {
 					</div>';
 				}
 			},
+
+            {
+                field: 'payment_summary', title: 'Loại đơn / Thanh toán', sortable: false, width: 185,
+                template: function(row) {
+                    var payment = row.payment_summary || {};
+                    var allowed = {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Trắc nghiệm',document:'Tài liệu',fa:'Fa',other:'Sách / Khác'};
+                    var label = allowed[payment.kind] || allowed.other;
+                    var status = payment.paid ? 'Đã thanh toán' : (payment.status_label === 'Đã huỷ' ? 'Đã huỷ' : (payment.status_label === 'Chờ duyệt thanh toán' ? 'Chờ duyệt thanh toán' : 'Chưa thanh toán'));
+                    return '<div class="mb-2"><span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">' + label + '</span></div>' +
+                        '<span class="kt-badge ' + (payment.paid ? 'kt-badge--success' : 'kt-badge--warning') + ' kt-badge--inline kt-badge--pill">' + status + '</span>';
+                }
+            },
 			{
 				field: 'contact',
 				title: nhMain.getLabel('khach_hang'),
@@ -416,6 +427,9 @@ var nhListOrder = function() {
 			});
 
 			var datatable = $('.kt-datatable').KTDatatable(options);
+            $('#order_kind').on('change', function() {
+                datatable.search($(this).val(), 'order_kind');
+            });
 		    $('#nh_status').on('change', function() {
 		      	datatable.search($(this).val(), 'status');
 		    });		

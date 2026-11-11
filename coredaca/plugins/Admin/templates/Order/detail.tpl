@@ -11,9 +11,16 @@
         </div>
 
          <div class="kt-subheader__toolbar">
-            {if $order.orderStatus != "success"}
+            {if !empty($order_payment.can_approve)}
+                <button data-payment-approve data-link="{ADMIN_PATH}/order/payment-confirm/{$order.id}" data-amount="{$order_payment.remaining|number_format:0:'.':','}" type="button" class="btn btn-sm btn-brand">
+                    <i class="la la-check-circle"></i> Duyệt thanh toán
+                </button>
+            {elseif !empty($order_payment.paid)}
+                <span class="btn btn-sm btn-light-success disabled"><i class="la la-check-circle"></i> Đã thanh toán</span>
+            {/if}
+            {if !empty($order.affiliateCode) && !empty($order.affiliateAmount) && $order.orderStatus != "success"}
                 <button button-update-order data-link="/admin/order/update-order-status/{$order.id}" data-order-status="success" type="button" class="btn btn-sm btn-brand btn-success">
-                    Duyệt đơn Affiliate
+                    Duyệt hoa hồng Affiliate
                 </button>
             {/if}
             <a href="{$url_list}" class="btn btn-sm btn-default">
@@ -47,6 +54,17 @@
                         </div>
                     </div>
                     <div class="kt-portlet__body">
+                        {if !empty($order_payment)}
+                            <div class="d-flex flex-wrap align-items-center mb-4" style="gap:12px">
+                                <span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">{$order_payment.label|escape:'html'}</span>
+                                <span class="kt-badge {if $order_payment.paid}kt-badge--success{else}kt-badge--warning{/if} kt-badge--inline kt-badge--pill">{$order_payment.status_label|escape:'html'}</span>
+                                {if !empty($order_payment.package_name)}<strong>{$order_payment.package_name|escape:'html'}</strong>{/if}
+                                {if $order_payment.kind == 'document'}<span>{$order_payment.credit_count} lượt tải · Dùng cho tài liệu bất kỳ</span>{/if}
+                            </div>
+                            {if !empty($order_payment.legacy_document_title)}
+                                <p class="text-muted mb-4">Tài liệu đã chọn khi đặt đơn cũ: <strong>{$order_payment.legacy_document_title|escape:'html'}</strong></p>
+                            {/if}
+                        {/if}
                         <div class="row">
                             <div class="col-xl-6 col-lg-6">
                                 {* <div class="form-group form-group-xs row">

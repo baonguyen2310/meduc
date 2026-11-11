@@ -22,7 +22,7 @@ final class CommerceNotifications
     }
     private static function queuePurchase(int $id,string $event,callable $send,string $host):void {
         if(!in_array($event,['reported','approved'],true))return;
-        $p=CommercePurchases::get($id);if(!$p||!$p['reported_at'])return;
+        $p=CommercePurchases::get($id);if(!$p||(!$p['reported_at']&&$event!=='approved'))return;
         $approved=$event==='approved';$origin=self::origin($host);
         if($approved&&(!$p['approved_at']||!CommercePurchases::paid($p)))return;
         $names=CommercePurchases::db()->execute("SELECT pc.name FROM orders_item i JOIN products_content pc ON pc.product_id=i.product_id AND pc.lang='vi' WHERE i.order_id=?",[$id])->fetchAll('assoc');

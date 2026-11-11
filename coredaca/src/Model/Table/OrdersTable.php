@@ -192,6 +192,11 @@ class OrdersTable extends Table
             'Orders.deleted' => 0,
         ];
 
+        $order_kind = $filter['order_kind'] ?? '';
+        if (isset(\App\Service\OrderPayments::LABELS[$order_kind])) {
+            $where[] = new \Cake\Database\Expression\QueryExpression(\App\Service\OrderPayments::kindSql()." = '".$order_kind."'");
+        }
+
         if(!empty($type) && in_array($type, [ORDER, ORDER_RETURN, IMPORT, TRANSFER, RETAIL, OTHER_BILL])){
             $where['Orders.type'] = $type;
         }

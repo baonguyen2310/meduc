@@ -5,6 +5,42 @@ namespace App\Service;
 /** Download credits are allocated once, after the upstream file was opened successfully. */
 final class DocumentCredits
 {
+    /** Preserve old file selections; their paid entitlement becomes one shared download credit. */
+    public static function importLegacy(int $order): bool {
+        if(!DocumentDownloads::installed()||!CommercePurchases::installed())return false;
+        return CommercePurchases::db()->transactional(function()use($order){
+            $db=CommercePurchases::db();
+            $old=$db->execute('SELECT * FROM document_download_purchases WHERE order_id=?',[$order])->fetch('assoc');
+            if(!$old)return false;
+            $invoice=$db->execute('SELECT id,total,deleted FROM orders WHERE id=? FOR UPDATE',[$order])->fetch('assoc');
+            if(!$invoice||$invoice['deleted'])return false;
+            if(CommercePurchases::get($order))return false;
+            $owner=$db->execute('SELECT customer_id FROM orders_contact WHERE order_id=?',[$order])->fetchColumn(0);
+            if((int)$owner!==(int)$old['customer_id']||abs((float)$invoice['total']-(int)$old['amount'])>0.001)
+                throw new \InvalidArgumentException('Thông tin đơn tài liệu cũ không khớp.');
+            $now=time();
+            $db->insert('commerce_purchases',[
+                'order_id'=>$order,'public_code'=>$old['code'],'customer_id'=>$old['customer_id'],'kind'=>'document',
+                'package_id'=>0,'package_name'=>'1 lượt tải · Đơn tài liệu cũ','credit_count'=>1,
+                'amount'=>$old['amount'],'original_amount'=>$old['amount'],
+                'context_json'=>json_encode(['document_url'=>$old['document_url'],'legacy_document'=>[
+                    'title'=>$old['document_title'],'article_id'=>(int)$old['article_id'],'file_name'=>$old['file_name']]],JSON_UNESCAPED_UNICODE),
+                'reported_at'=>$old['transfer_reported_at'],'created_at'=>$old['created_at'],'updated_at'=>$now
+            ]);
+            if($old['used_at']){
+                $db->insert('document_credit_uses',[
+                    'code'=>$old['code'],'customer_id'=>$old['customer_id'],'grant_order_id'=>$order,
+                    'article_id'=>$old['article_id'],'file_index'=>$old['file_index'],'file_key'=>$old['file_key'],
+                    'file_name'=>$old['file_name'],'file_url'=>$old['file_url'],
+                    'download_token'=>$old['download_token']?:bin2hex(random_bytes(32)),
+                    'token_expires_at'=>$old['token_expires_at']?:0,'used_at'=>$old['used_at'],'created_at'=>$old['created_at']
+                ]);
+            }
+            CommercePurchases::syncOrder($order);
+            return true;
+        });
+    }
+
     public static function grants(int $customer):array {
         if(!$customer||!CommercePurchases::installed())return [];
         return CommercePurchases::db()->execute("SELECT p.order_id,p.credit_count-COALESCE((SELECT COUNT(*) FROM document_credit_uses u WHERE u.grant_order_id=p.order_id AND u.used_at IS NOT NULL),0) remaining

@@ -15,6 +15,8 @@ use App\Lib\Shipping\NhShipping;
 use Cake\Utility\Security;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use App\Service\OrderPayments;
+use App\Service\CommerceNotifications;
 
 class OrderController extends AppController {
 
@@ -25,7 +27,7 @@ class OrderController extends AppController {
 
     public function list()
     {
-        $this->js_page = '/assets/js/pages/list_order.js';
+        $this->js_page = '/assets/js/pages/list_order.js?v=20261111-admin-payment';
 
         $this->set('path_menu', 'order');  
         $this->set('title_for_layout', __d('admin', 'don_hang'));
@@ -96,9 +98,11 @@ class OrderController extends AppController {
 
         // parse data before output
         $orders = [];
+        $payment_summaries = OrderPayments::summaries(array_map(function($item) { return (int)$item['id']; }, $query_orders));
         if(!empty($query_orders)){
             foreach($query_orders as $item){
                 $order = $table->formatDataOrderDetail($item, $this->lang);
+                $order['payment_summary'] = $payment_summaries[(int)$order['id']] ?? [];
                 $orders[] = $order;
             }
         }
@@ -346,11 +350,12 @@ class OrderController extends AppController {
             '/assets/js/bill_customer.js',
             '/assets/js/bill_payment_confirm.js',
             '/assets/js/bill_shipping.js',
-            '/assets/js/pages/order_detail.js',
+            '/assets/js/pages/order_detail.js?v=20261111-admin-payment',
         ];
         
         $this->set('id', $id);
         $this->set('order', $order);
+        $this->set('order_payment', OrderPayments::summaries([(int)$id])[(int)$id] ?? []);
         $this->set('payments', $payments);
         $this->set('shippings', $shippings);
         $this->set('can_payment', $can_payment);
@@ -814,6 +819,22 @@ class OrderController extends AppController {
 
         if(empty($data) || !$this->getRequest()->is('post')){
             $this->responseJson([MESSAGE => __d('admin', 'du_lieu_khong_hop_le')]);
+        }
+
+        if (($data['approve_order'] ?? '') === '1') {
+            try {
+                $summary = OrderPayments::approve((int)$order_id, function($payment, $id) {
+                    return $this->loadComponent('Admin.Payment')->savePayment($payment, $id);
+                }, (int)$this->Auth->user('id'));
+            } catch (\Throwable $e) {
+                $message = $e instanceof \InvalidArgumentException ? $e->getMessage() : 'Chưa duyệt được thanh toán. Vui lòng thử lại.';
+                $this->log('Admin order approval '.$order_id.': '.$e->getMessage(), 'error');
+                $this->responseJson([CODE => ERROR, MESSAGE => $message]);
+            }
+            CommerceNotifications::purchase((int)$order_id, 'approved', function($mail) {
+                return $this->loadComponent('Email')->sendEmail($mail);
+            }, $this->request->host());
+            $this->responseJson([CODE => SUCCESS, MESSAGE => 'Đã duyệt thanh toán và cập nhật quyền sử dụng.', DATA => $summary]);
         }
 
         $orders_table = TableRegistry::get('Orders');
