@@ -13,7 +13,14 @@ use App\Service\OrderPayments as Approvals;
 use App\Service\CoursePricing;
 use Cake\ORM\TableRegistry;
 function approvalExpect($condition,$message){if(!$condition)throw new RuntimeException($message);}
-$db=Purchases::db();$db->begin();$checks=[];
+$db=Purchases::db();$checks=[];
+// A no-op import must allow its real outer transaction to commit (not just read uncommitted fixture data).
+$db->transactional(function(){
+    approvalExpect(Credits::importLegacy(0)===false,'A missing legacy purchase should remain a no-op.');
+    return true;
+});
+$checks[]='skipped_legacy_import_allows_parent_transaction_to_commit';
+$db->begin();
 try{
     $email='approval-fixture-'.bin2hex(random_bytes(6)).'@example.invalid';
     $db->insert('customers',['code'=>'APP-'.bin2hex(random_bytes(6)),'full_name'=>'Kiểm thử duyệt đơn','email'=>$email,'phone'=>'0912345678','status'=>1,'deleted'=>0,'created'=>time()]);

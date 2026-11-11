@@ -8,13 +8,15 @@ final class DocumentCredits
     /** Preserve old file selections; their paid entitlement becomes one shared download credit. */
     public static function importLegacy(int $order): bool {
         if(!DocumentDownloads::installed()||!CommercePurchases::installed())return false;
-        return CommercePurchases::db()->transactional(function()use($order){
+        // Cake treats a literal false callback result as rollback, including the parent approval.
+        // Use integer results inside the transaction and convert to the public boolean afterwards.
+        return (bool)CommercePurchases::db()->transactional(function()use($order){
             $db=CommercePurchases::db();
             $old=$db->execute('SELECT * FROM document_download_purchases WHERE order_id=?',[$order])->fetch('assoc');
-            if(!$old)return false;
+            if(!$old)return 0;
             $invoice=$db->execute('SELECT id,total,deleted FROM orders WHERE id=? FOR UPDATE',[$order])->fetch('assoc');
-            if(!$invoice||$invoice['deleted'])return false;
-            if(CommercePurchases::get($order))return false;
+            if(!$invoice||$invoice['deleted'])return 0;
+            if(CommercePurchases::get($order))return 0;
             $owner=$db->execute('SELECT customer_id FROM orders_contact WHERE order_id=?',[$order])->fetchColumn(0);
             if((int)$owner!==(int)$old['customer_id']||abs((float)$invoice['total']-(int)$old['amount'])>0.001)
                 throw new \InvalidArgumentException('Thông tin đơn tài liệu cũ không khớp.');
@@ -37,7 +39,7 @@ final class DocumentCredits
                 ]);
             }
             CommercePurchases::syncOrder($order);
-            return true;
+            return 1;
         });
     }
 
