@@ -21,6 +21,7 @@ final class CommerceNotifications
         catch(\Throwable $e){\Cake\Log\Log::error('Commerce email queue failed for order '.$id);}
     }
     private static function queuePurchase(int $id,string $event,callable $send,string $host):void {
+        if(!in_array($event,['reported','approved'],true))return;
         $p=CommercePurchases::get($id);if(!$p||!$p['reported_at'])return;
         $approved=$event==='approved';$origin=self::origin($host);
         if($approved&&(!$p['approved_at']||!CommercePurchases::paid($p)))return;
@@ -32,11 +33,12 @@ final class CommerceNotifications
         if($p['expires_at'])$facts['Có hiệu lực đến']=date('d/m/Y H:i',(int)$p['expires_at']);
         $approval=$origin.'/duyet-thanh-toan/'.$p['public_code'].'/'.CommercePurchases::approvalSignature($p);
         $customerUrl=$origin.($p['kind']==='document'?'/document-download/payment/'.$p['public_code']:'/khoa-hoc-da-dang-ky');
-        foreach(['admin'=>self::adminEmail(),'buyer'=>$p['email']] as $role=>$email){
+        $recipients=$approved?['buyer'=>$p['email']]:['admin'=>self::adminEmail()];
+        foreach($recipients as $role=>$email){
             if(!filter_var($email,FILTER_VALIDATE_EMAIL))continue;
-            $heading=$approved?'Thanh toán đã được duyệt':($role==='admin'?'Đơn hàng đang chờ duyệt':'MedUC đã nhận thông tin thanh toán');
-            $lead=$approved?'Quyền sử dụng của đơn hàng đã được cập nhật.':($role==='admin'?'Kiểm tra giao dịch rồi xác nhận để mở quyền cho người mua.':'MedUC sẽ kiểm tra chuyển khoản và mở quyền sau khi xác nhận.');
-            $body=self::html($heading,$lead,$facts,$role==='admin'&&!$approved?'Duyệt và mở quyền':'Xem đơn hàng',$role==='admin'?$approval:$customerUrl);
+            $heading=$approved?'Thanh toán đã được duyệt':'Đơn hàng đang chờ duyệt';
+            $lead=$approved?'Quyền sử dụng của đơn hàng đã được cập nhật.':'Kiểm tra giao dịch rồi xác nhận để mở quyền cho người mua.';
+            $body=self::html($heading,$lead,$facts,$approved?'Xem đơn hàng':'Duyệt và mở quyền',$approved?$customerUrl:$approval);
             self::queue('purchase:'.$id.':'.$event.':'.$role,$email,'[MedUC] '.$heading.' · '.$p['order_code'],$body,$send);
         }
     }
