@@ -147,11 +147,29 @@
     new MutationObserver(updateButtons).observe(detail, {subtree:true,attributes:true,attributeFilter:['aria-current']});
     refreshDetail().catch((error) => message(error.message, true));
   } else {
+    let confirmation = null;
+    function confirmRegistration() {
+      if (!confirmation) {
+        confirmation = document.createElement('dialog');
+        confirmation.className = 'mco-payment-confirmation';
+        confirmation.setAttribute('aria-labelledby', 'mco-payment-confirmation-title');
+        confirmation.setAttribute('aria-describedby', 'mco-payment-confirmation-message');
+        confirmation.innerHTML = '<span class="mco-payment-confirmation-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"/></svg></span><h2 id="mco-payment-confirmation-title">MedUC đã nhận được thông tin đăng ký của bạn.</h2><p id="mco-payment-confirmation-message">Chúng tôi đang kiểm tra trong giây lát.</p><button type="button" class="mco-button mco-button--primary" autofocus>OK</button>';
+        confirmation.querySelector('button').addEventListener('click', () => location.assign('/tai-lieu-hoc-tap'));
+        confirmation.addEventListener('cancel', event => event.preventDefault());
+        payment.append(confirmation);
+      }
+      if (!confirmation.open) confirmation.showModal();
+    }
     async function transferPayment(event){
       event.preventDefault();const form=query('[data-download-private]');
       if(busy||paymentData?.reported||!form.reportValidity())return;
       const transfer=query('[data-download-transfer]');busy=true;transfer.disabled=true;
-      try{paintPayment(await api('transfer/'+payment.dataset.documentPayment,Object.fromEntries(new FormData(form))));}
+      try{
+        const data=await api('transfer/'+payment.dataset.documentPayment,Object.fromEntries(new FormData(form)));
+        paintPayment(data);
+        if(data.reported)confirmRegistration();
+      }
       catch(error){if(error.status===401){form.hidden=true;authenticate(transfer,'payment');}else message(error.message,true);}
       finally{busy=false;transfer.disabled=!!paymentData?.reported;}
     }

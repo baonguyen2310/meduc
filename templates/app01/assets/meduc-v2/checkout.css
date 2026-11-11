@@ -88,3 +88,13 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 .mco .mco-payment-details{min-width:0;width:100%;font-size:12px;color:var(--co-muted)}
 .mco .mco-payment-details>summary{cursor:pointer;list-style-position:inside;padding:6px 0}
 .mco .mco-payment-details[open]>.mco-bank-copy{margin-top:14px;color:var(--co-ink)}
+
+/* Receipt acknowledgement after the document payment report has been saved. */
+.mco-payment-confirmation{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:calc(100vw - 32px);margin:auto;padding:36px 32px;border:1px solid var(--co-line);border-top:3px solid var(--co-red);border-radius:20px;background:var(--co-panel);color:var(--co-ink);text-align:center;box-shadow:0 24px 90px #0005}
+.mco-payment-confirmation::backdrop{background:#0009;backdrop-filter:blur(4px)}
+.mco-payment-confirmation-icon{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:var(--co-soft);color:var(--co-red)}
+.mco-payment-confirmation-icon svg{width:32px;height:32px}
+.mco-payment-confirmation h2{margin:0 0 14px;font-size:25px;font-weight:750;line-height:1.35}
+.mco-payment-confirmation p{margin:0 0 28px;color:var(--co-muted);font-size:16px;line-height:1.65}
+.mco-payment-confirmation .mco-button{display:inline-flex;min-width:144px;max-width:100%;min-height:48px;justify-content:center;border-radius:8px;font-size:15px}
+@media(max-width:575.98px){.mco-payment-confirmation{padding:28px 22px}.mco-payment-confirmation h2{font-size:22px}}
