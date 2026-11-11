@@ -49,6 +49,9 @@ class QuizAnswerComponent extends Component
         if (empty($access['allowed'])) {
             return $this->System->getResponse([MESSAGE => 'Bài tập này dành cho học viên đã đăng ký khóa học.']);
         }
+        if (($access['mode'] ?? '') === 'reference') {
+            return $this->System->getResponse([MESSAGE => 'Đề thực hành này dùng để xem đáp án, không nộp bài hay chấm điểm.']);
+        }
 
         // điểm do máy chủ chấm khi bài làm ghi vị trí câu hỏi (trình làm bài trên trang khóa học), nếu không giữ như gửi lên
         $answers = !empty($data['answers']) && is_string($data['answers']) ? $data['answers'] : '[]';
@@ -129,8 +132,9 @@ class QuizAnswerComponent extends Component
         foreach (LessonQuizzes::lessons(!empty($lessons['value']) ? $lessons['value'] : null) as $lesson) {
             foreach (LessonQuizzes::of($lesson) as $lessonQuiz) {
                 if ($lessonQuiz['id'] === (int)$quiz_id) {
-                    $free = ($free ?? false) || ($kind === 'quiz' ? (int)$slot['slot'] === 1 : $lessonQuiz['free']);
+                    $free = ($free ?? false) || ($kind === 'quiz' && !\App\Lib\LessonMetadata::isExam($lesson) ? (int)$slot['slot'] === 1 : $lessonQuiz['free']);
                     $result['mode'] = $kind === 'quiz' && !\App\Lib\LessonMetadata::isExam($lesson) ? 'practice' : 'exam';
+                    if (!empty($quiz['read_only'])) $result['mode'] = 'reference';
                 }
             }
         }
@@ -164,6 +168,7 @@ class QuizAnswerComponent extends Component
 
         // Access was checked above. Course quizzes are deliberately hidden from standalone ORM queries.
         $quiz = QuizQuestions::load((int)$quiz_id);
+        if (!empty($quiz['read_only'])) return null;
         $questions = $quiz['questions'] ?? [];
         if (empty($questions)) return null;
 

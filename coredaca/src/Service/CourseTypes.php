@@ -28,11 +28,12 @@ final class CourseTypes
     {
         return (bool)ConnectionManager::get('default')->execute("SELECT 1 FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0 AND COALESCE(course_kind,'')<>'fa'",['id'=>$id])->fetchColumn(0);
     }
-    /** Video courses keep their saved exercise access; quiz courses use one free and one paid slot. */
+    /** Regular quiz lessons use two slots. Exam lessons retain all attached exams and their access flags. */
     public static function quizzes(array $lesson, ?string $kind): array
     {
         if (in_array($kind, ['knowledge', 'exam_solution'], true)) return LessonQuizzes::of($lesson);
         if ($kind !== 'quiz') return [];
+        if (\App\Lib\LessonMetadata::isExam($lesson)) return LessonQuizzes::of($lesson);
         $rows=array_slice(LessonQuizzes::of($lesson),0,2);
         foreach ($rows as $i=>&$row) $row['free']=$i===0;
         return $rows;
@@ -56,8 +57,11 @@ final class CourseTypes
         foreach ($lessons as &$lesson) {
             if (\App\Lib\LessonMetadata::isGroup($lesson)) continue;
             $quizzes=LessonQuizzes::of($lesson);
-            if(count($quizzes)>2) throw new InvalidArgumentException('Mỗi bài của khoá trắc nghiệm chỉ có 2 bài tập.');
-            for($i=0;$i<2;$i++) {
+            $exam=\App\Lib\LessonMetadata::isExam($lesson);
+            if(!$exam && count($quizzes)>2) throw new InvalidArgumentException('Mỗi bài thường của khoá trắc nghiệm chỉ có 2 bài tập.');
+            if(count($quizzes)>255) throw new InvalidArgumentException('Một bài thi có tối đa 255 đề.');
+            $slotCount=$exam ? count($quizzes) : 2;
+            for($i=0;$i<$slotCount;$i++) {
                 $id=(int)($quizzes[$i]['id']??0);
                 if ($id) {
                     $q=$db->execute('SELECT id,fa_only FROM quizs WHERE id=:id AND deleted=0',['id'=>$id])->fetch('assoc');
@@ -74,11 +78,11 @@ final class CourseTypes
                 }
                 $db->execute('UPDATE quizs SET course_only=1 WHERE id=:id',['id'=>$id]);
                 $used[$id]=true;
-                $quizzes[$i]=['id'=>$id,'free'=>$i===0?'y':'n'];
+                $quizzes[$i]=['id'=>$id,'free'=>($exam ? !empty($quizzes[$i]['free']) : $i===0)?'y':'n'];
             }
             if (empty($lesson['code'])) $lesson['code']='lesson-'.bin2hex(random_bytes(8));
             $lesson['quizzes_vi']=json_encode($quizzes,JSON_UNESCAPED_UNICODE);
-            $lesson['quiz_id_vi']=(string)$quizzes[0]['id'];
+            $lesson['quiz_id_vi']=isset($quizzes[0]) ? (string)$quizzes[0]['id'] : '';
         }
         unset($lesson);
         $db->execute('DELETE FROM course_quiz_slots WHERE product_id=:id',['id'=>$productId]);

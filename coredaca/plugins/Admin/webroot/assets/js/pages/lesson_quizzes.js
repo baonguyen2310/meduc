@@ -32,6 +32,9 @@ var nhLessonQuizzes = {
     $('#course-kind').on('change', function () {
       $('[data-lesson-quizzes]').each(function () {self.render($(this));});
     });
+    $(document).on('change', '[data-name="lesson_type"]', function () {
+      $(this).closest('.wrap-item').find('[data-lesson-quizzes]').each(function () {self.render($(this));});
+    });
 
     // Buổi mới được thêm vào danh sách: vẽ lại danh sách đề của nó.
     document.querySelectorAll(".wrap-manager .list-item").forEach(function (list) {
@@ -79,13 +82,14 @@ var nhLessonQuizzes = {
   render: function (widget, list) {
     var self = this;
     var kind = $('#course-kind').val();
+    var exam = ['midterm', 'final', 'practical'].indexOf(widget.closest('.wrap-item').find('[data-name="lesson_type"]').val()) >= 0;
     var outline = widget.closest('.wrap-item').find('[data-name="outline_type"]').val() || 'lesson';
     widget.toggle(outline === 'lesson' && kind !== 'knowledge' && kind !== 'exam_solution');
     list = list || self.read(widget);
-    widget.find('.nh-lesson-quiz-add').toggle(kind !== 'quiz' || list.length < 2);
+    widget.find('.nh-lesson-quiz-add').toggle(kind !== 'quiz' || list.length < (exam ? 255 : 2));
     var holder = widget.find("[data-lesson-quizzes-list]").empty();
     if (!list.length) {
-      holder.append('<div class="nh-lesson-quiz-empty text-muted">Lưu khoá trắc nghiệm để tự tạo 2 bài tập cho bài này.</div>');
+      holder.append($('<div class="nh-lesson-quiz-empty text-muted"></div>').text(exam ? 'Thêm các đề cho bài thi này.' : 'Lưu khoá trắc nghiệm để tự tạo 2 bài tập cho bài này.'));
       return;
     }
     list.forEach(function (item, index) {
@@ -95,7 +99,7 @@ var nhLessonQuizzes = {
       text.append($("<strong></strong>").text(info && info.name ? info.name : "Đề #" + item.id));
       text.append($('<a target="_blank" rel="noopener" class="ml-3">Sửa câu hỏi</a>').attr('href', adminPath + '/quiz/update/' + item.id));
       var meta = ["Mã " + item.id];
-      if (kind === 'quiz') meta.push(index === 0 ? 'Miễn phí · cần đủ 30 câu' : 'Trả phí theo môn');
+      if (kind === 'quiz') meta.push((exam ? item.free : index === 0) ? 'Miễn phí' : 'Trả phí theo môn');
       if (info && info.count) meta.push(info.count + " câu");
       if (info === null) meta.push("không tìm thấy đề này");
       if (info && info.staff_only) meta.push("đề nội bộ, học viên chưa làm được");
@@ -103,7 +107,7 @@ var nhLessonQuizzes = {
       if (info === null || (info && info.staff_only)) row.addClass("is-warning");
 
       var free = $('<label class="nh-lesson-quiz-free kt-checkbox kt-checkbox--brand mb-0"><input type="checkbox" data-lesson-quiz-free> Làm thử miễn phí<span></span></label>');
-      free.find("input").prop("checked", kind === "quiz" ? index === 0 : item.free).prop("disabled", kind === "quiz");
+      free.find("input").prop("checked", kind === "quiz" && !exam ? index === 0 : item.free).prop("disabled", kind === "quiz" && !exam);
 
       var tools = $('<div class="nh-lesson-quiz-tools"></div>');
       tools.append(

@@ -355,11 +355,13 @@ class ProductHelper extends Helper
         if (!$ids) return $result;
 
         $rows = ConnectionManager::get('default')->execute(
-            "SELECT q.id, c.name, JSON_LENGTH(questions.value) AS count, minutes.value AS minutes
+            "SELECT q.id, c.name, JSON_LENGTH(questions.value) AS count, minutes.value AS minutes,
+                    m.school_name, m.source_quiz_type
              FROM quizs q
              LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
              LEFT JOIN quizs_attribute minutes ON minutes.quiz_id = q.id AND minutes.attribute_id = :minutes
+             LEFT JOIN quiz_exam_metadata m ON m.quiz_id = q.id
              WHERE q.deleted = 0 AND q.fa_only = 0 AND q.id IN (" . implode(',', array_map('intval', $ids)) . ")
                AND (q.course_only = 0 OR :quiz_course = 1)
                AND q.id NOT IN (SELECT quiz_id FROM quiz_exam_metadata WHERE staff_only = 1)",
@@ -369,7 +371,8 @@ class ProductHelper extends Helper
         foreach ($rows as $row) {
             // Empty draft slots remain visible with a disabled start button.
             $id = (int) $row['id'];
-            $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes']];
+            $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes'],
+                'school' => trim((string)($row['school_name'] ?? '')), 'read_only' => ($row['source_quiz_type'] ?? '') === 'TULUAN'];
         }
         return $result;
     }

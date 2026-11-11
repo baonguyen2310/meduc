@@ -49,6 +49,7 @@
   }
 
   const isPractice = attempt => attempt.quiz.mode === "practice";
+  const isReference = attempt => attempt.quiz.mode === "reference";
 
   // Attempts
   function newAttempt(quiz, lesson) {
@@ -93,7 +94,7 @@
   const bar = el("div", "mcq-bar");
   const back = button("mcq-back", "← Danh sách đề");
   back.addEventListener("click", () => {
-    if (view === "player" && selected) openHistory(selected);
+    if (view === "player" && selected && active && !isReference(active)) openHistory(selected);
     else showList();
   });
   const barTitle = el("div", "mcq-bar-title");
@@ -207,16 +208,18 @@
     const total = attempt.quiz.questions.length;
     const count = lessonQuizCount(attempt.lesson.number);
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
-    const label = isPractice(attempt) ? "Đề theo bài" : "Đề thi thử";
+    const label = isReference(attempt) ? "Đề thực hành · Xem đáp án" : isPractice(attempt) ? "Đề theo bài" : "Đề thi thử";
     kicker.textContent = count > 1 && place >= 0 ? `${label} ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `${label} · Buổi ${attempt.lesson.number}`;
     submitButton.textContent = isPractice(attempt) ? "Hoàn thành bài" : "Nộp bài";
     back.hidden = false;
-    back.textContent = "← Lịch sử bài tập";
+    back.textContent = isReference(attempt) ? "← Danh sách đề" : "← Lịch sử bài tập";
     barMeta.hidden = false;
+    progress.hidden = isReference(attempt);
+    timer.hidden = isReference(attempt);
     name.textContent = attempt.quiz.name;
     progress.textContent = attempt.state === "doing" ? `Đã làm ${attempt.answers.size}/${total}` : `${correctCount(attempt)}/${total} câu đúng`;
     submitButton.hidden = attempt.state !== "doing";
-    resultButton.hidden = attempt.state !== "review";
+    resultButton.hidden = attempt.state !== "review" || isReference(attempt);
     renderTimer();
     renderConfirm(attempt);
 
@@ -290,11 +293,11 @@
     }
 
     if (reviewing) {
-      if (chosen === undefined) wrap.append(el("p", "mcq-skipped", attempt.incompleteHistory ? "Bài nộp cũ không lưu được lựa chọn của câu này; bạn vẫn có thể xem đáp án và lời giải." : "Bạn chưa trả lời câu này."));
+      if (chosen === undefined && !question.read_only) wrap.append(el("p", "mcq-skipped", attempt.incompleteHistory ? "Bài nộp cũ không lưu được lựa chọn của câu này; bạn vẫn có thể xem đáp án và lời giải." : "Bạn chưa trả lời câu này."));
       const parts = question.explanation_parts;
-      if ((parts && parts.options && parts.options.length) || question.explain) {
+      if ((parts && parts.options && parts.options.length) || question.explain || question.answer_text) {
         const explain = el("div", "mcq-explain");
-        explain.append(el("p", "mcq-explain-title", "Lời giải"));
+        explain.append(el("p", "mcq-explain-title", question.read_only ? "Đáp án và giải thích" : "Lời giải"));
         const body = el("div", "mcq-explain-body");
         if (parts && parts.options && parts.options.length) {
           if (parts.concept) {
@@ -319,7 +322,7 @@
           body.append(list);
         } else {
           const legacy = el("div", "mcq-explain-legacy mcq-markdown");
-          legacy.innerHTML = question.explain;
+          legacy.innerHTML = question.explain || question.answer_text;
           body.append(legacy);
         }
         explain.append(body);
@@ -327,7 +330,7 @@
       }
     }
 
-    if (attempt.state !== "doing" && window.MeducQuizConfidence) wrap.append(window.MeducQuizConfidence.create({ attempt, productId, index, question }));
+    if (attempt.state !== "doing" && !isReference(attempt) && window.MeducQuizConfidence) wrap.append(window.MeducQuizConfidence.create({ attempt, productId, index, question }));
 
     const nav = el("div", "mcq-nav");
     if (reviewing) {
@@ -369,7 +372,7 @@
     attempt.quiz.questions.forEach((question, index) => {
       const cell = button("mcq-cell", String(index + 1));
       const chosen = attempt.answers.get(index);
-      if (attempt.state !== "doing" || (isPractice(attempt) && chosen !== undefined)) {
+      if (!isReference(attempt) && (attempt.state !== "doing" || (isPractice(attempt) && chosen !== undefined))) {
         cell.classList.add(chosen === undefined ? (attempt.incompleteHistory ? "is-unknown" : "is-skipped") : question.answer <= 0 ? "is-unknown" : chosen === question.answer ? "is-correct" : "is-wrong");
       } else if (chosen !== undefined) {
         cell.classList.add("is-answered");
@@ -914,7 +917,12 @@
 
   function start(quiz, lesson, fresh) {
     let attempt = attempts.get(quiz.id);
-    if (!attempt || fresh) {
+    if (quiz.mode === "reference") {
+      attempt = newAttempt(quiz, lesson);
+      attempt.state = "reference";
+      attempt.deadline = 0;
+    }
+    else if (!attempt || fresh) {
       attempt = newAttempt(quiz, lesson);
       attempts.set(quiz.id, attempt);
     }
@@ -948,7 +956,7 @@
     root.querySelectorAll("[data-mcr-quiz-start]").forEach((startButton) => {
       if (startButton.disabled) return;
       const attempt = attempts.get(Number(startButton.dataset.mcrQuizStart));
-      startButton.textContent = attempt && attempt.state === "doing" ? "Làm tiếp" : "Làm bài";
+      startButton.textContent = startButton.closest(".mcr-quiz-card")?.dataset.quizReference === "1" ? "Xem đáp án" : attempt && attempt.state === "doing" ? "Làm tiếp" : "Làm bài";
     });
   }
 

@@ -38,7 +38,8 @@ final class QuizQuestions
         if (!$row) return null;
         $questions = self::fromValue((string)$row['questions'], $lang);
         if (!$questions) return null;
-        return ['id' => (int)$row['id'], 'name' => trim((string)$row['name']), 'minutes' => (int)$row['minutes'], 'questions' => $questions];
+        $reference = count(array_filter($questions, function ($q) { return !empty($q['read_only']); })) === count($questions);
+        return ['id' => (int)$row['id'], 'name' => trim((string)$row['name']), 'minutes' => (int)$row['minutes'], 'read_only' => $reference, 'questions' => $questions];
     }
 
     /** [['code', 'question', 'note', 'options' => [[value, text]], 'answer', 'explain'], ...] */
@@ -64,7 +65,10 @@ final class QuizQuestions
                     if ($text !== '') $options[] = [$index + 1, $text];
                 }
             }
-            if (!$options) continue;
+            $reference = strtoupper((string)($item['question_type'] ?? '')) === 'TULUAN';
+            if ($reference) { $answer = 0; $options = []; }
+            $answerText = $reference ? QuizExplanation::render($item['answer_' . $lang] ?? '') : '';
+            if (!$options && (!$reference || $answerText === '')) continue;
             $question = [
                 'code' => (string)($item['code'] ?? ''),
                 'question' => self::clean($item['name_' . $lang]) . self::images($item['images'] ?? []),
@@ -73,6 +77,8 @@ final class QuizQuestions
                 'answer' => $answer,
                 'explain' => QuizExplanation::render($item['answer_detail_' . $lang] ?? ''),
                 'explanation_parts' => self::explanationParts($item),
+                'read_only' => $reference,
+                'answer_text' => $answerText,
             ];
             $metadata = QuestionMetadata::normalize($item);
             $question['question_category'] = $metadata['question_category'] ?? null;

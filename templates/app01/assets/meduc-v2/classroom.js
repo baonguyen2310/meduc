@@ -473,23 +473,58 @@
     button.replaceWith(frame);
   }));
 
-  // Accent-insensitive filtering for long exam lists inside a lesson.
+  // Exam library: combined search and school filter, with ten cards per page.
   const fold = (value) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
-  // Long quiz lists (exam-prep lessons hold dozens of exams): filter the cards by name, accents ignored.
   $$("[data-mcr-quiz-filter]").forEach((input) => {
     const holder = input.closest("[data-mcr-quiz]");
-    const cards = [...holder.querySelectorAll(".mcr-quiz-card")].map((card) => [card, fold(card.querySelector("h3")?.textContent || "")]);
+    const cards = [...holder.querySelectorAll(".mcr-quiz-card")];
     const count = holder.querySelector("[data-mcr-quiz-filter-count]");
-    input.addEventListener("input", () => {
-      const words = fold(input.value).split(/\s+/).filter(Boolean);
-      let shown = 0;
-      cards.forEach(([card, name]) => {
-        const match = words.every((word) => name.includes(word));
-        card.hidden = !match;
-        if (match) shown += 1;
-      });
-      if (count) count.textContent = words.length ? `${shown}/${cards.length} đề` : `${cards.length} đề`;
+    const school = holder.querySelector("[data-mcr-quiz-school]");
+    const pagination = holder.querySelector("[data-mcr-quiz-pagination]");
+    const schools = [...new Set(cards.map(card => card.dataset.quizSchool).filter(Boolean))];
+    schools.forEach(name => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      school?.append(option);
     });
+    if (school) school.hidden = schools.length === 0;
+    let page = 1;
+    const pageSize = 10;
+    function renderExams() {
+      const words = fold(input.value).split(/\s+/).filter(Boolean);
+      const filtered = cards.filter(card => (!school?.value || card.dataset.quizSchool === school.value) && words.every(word => fold(card.querySelector("h3")?.textContent || "").includes(word)));
+      const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      page = Math.max(1, Math.min(page, pages));
+      cards.forEach(card => { card.hidden = true; });
+      filtered.slice((page - 1) * pageSize, page * pageSize).forEach(card => { card.hidden = false; });
+      if (count) count.textContent = filtered.length ? `${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, filtered.length)} / ${filtered.length} đề` : "Không tìm thấy đề phù hợp";
+      if (!pagination) return;
+      pagination.replaceChildren();
+      pagination.hidden = pages <= 1;
+      const addPage = (label, number, disabled = false) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = label;
+        button.disabled = disabled;
+        button.setAttribute("aria-label", number < page ? `Trang trước: ${number}` : `Trang tiếp: ${number}`);
+        button.addEventListener("click", () => {
+          page = number;
+          renderExams();
+          input.scrollIntoView({block:"center", behavior: reducedMotion ? "auto" : "smooth"});
+          pagination.querySelector(number === pages ? "button:first-child" : "button:last-child")?.focus({preventScroll:true});
+        });
+        pagination.append(button);
+      };
+      addPage("← Trước", page - 1, page === 1);
+      const status = document.createElement("span");
+      status.textContent = `Trang ${page} / ${pages}`;
+      pagination.append(status);
+      addPage("Sau →", page + 1, page === pages);
+    }
+    input.addEventListener("input", () => { page = 1; renderExams(); });
+    school?.addEventListener("change", () => { page = 1; renderExams(); });
+    renderExams();
   });
 
   // The old FAQ, questions and written reviews no longer belong on the course detail page.

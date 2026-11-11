@@ -802,7 +802,7 @@ class ProductController extends AppController {
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
-            '/assets/js/pages/lesson_quizzes.js?v=20261103-course-units',
+            '/assets/js/pages/lesson_quizzes.js?v=20261111-exam-library',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 
@@ -936,7 +936,7 @@ class ProductController extends AppController {
             '/assets/plugins/custom/tinymce6/tinymce.min.js',
             '/assets/js/seo_analysis.js',
             '/assets/js/pages/product.js',
-            '/assets/js/pages/lesson_quizzes.js?v=20261103-course-units',
+            '/assets/js/pages/lesson_quizzes.js?v=20261111-exam-library',
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.js'
         ];
 

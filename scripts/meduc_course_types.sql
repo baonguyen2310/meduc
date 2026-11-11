@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS course_quiz_slots (
   quiz_id INT NOT NULL,
   PRIMARY KEY (product_id,lesson_code,slot),
   UNIQUE KEY quiz_owner (quiz_id),
-  CONSTRAINT slot_two_only CHECK (slot IN (1,2))
+  CONSTRAINT slot_positive CHECK (slot >= 1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 UPDATE products p JOIN curriculum_v2_courses c ON c.product_id=p.id SET p.course_kind='fa';
 UPDATE products p SET p.course_kind='knowledge'
