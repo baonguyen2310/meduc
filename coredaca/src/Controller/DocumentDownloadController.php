@@ -59,7 +59,10 @@ class DocumentDownloadController extends AppController
             if(!hash_equals($token['file'],$file['file_key']))return $this->json(422,'Danh sách tệp đã thay đổi. Vui lòng tải lại trang.');
             $quote=\App\Service\CoursePricing::quote((int)$this->request->getData('package_id'),[]);
             if($quote['package']['course_type']!=='document')throw new \InvalidArgumentException('Vui lòng chọn gói lượt tải.');
-            $purchase=CommercePurchases::create($customer,$quote,function($data){return $this->loadComponent('Admin.Order')->saveOrder($data);},['document_url'=>$file['document_url']]);
+            $purchase=CommercePurchases::create($customer,$quote,function($data){return $this->loadComponent('Admin.Order')->saveOrder($data);},[
+                'document_url'=>$file['document_url'],
+                'selected_document'=>['article_id'=>$file['article_id'],'file_index'=>$file['file_index'],'title'=>$file['document_title'],'file_name'=>$file['file_name'],'file_url'=>$file['file_url']]
+            ]);
             $purchase['code']=$purchase['public_code'];
             $done[$nonce]=['customer'=>$owner,'code'=>$purchase['code']];$session->write('DocumentDownload.completed',array_slice($done,-20,null,true));
             unset($tokens[$nonce]);$session->write('DocumentDownload.tokens',$tokens);

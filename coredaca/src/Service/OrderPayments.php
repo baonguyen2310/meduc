@@ -51,6 +51,35 @@ final class OrderPayments
         return $result;
     }
 
+    /** Read-only admin links: viewing/downloading a source file never consumes the buyer's credit. */
+    public static function documents(int $order): array
+    {
+        $db=CommercePurchases::db();
+        $selected=$db->execute('SELECT document_title title,file_name,file_url FROM document_download_purchases WHERE order_id=?',[$order])->fetch('assoc');
+        $title='';$files=[];
+        $purchase=CommercePurchases::get($order);
+        if(!$selected&&$purchase&&$purchase['kind']==='document'){
+            $context=json_decode((string)$purchase['context_json'],true)?:[];
+            $selected=$context['selected_document']??null;
+            // Earlier credit packages saved only the source document page, so list its available files.
+            if(!$selected&&!empty($context['document_url'])){
+                $path=ltrim((string)parse_url($context['document_url'],PHP_URL_PATH),'/');
+                $articleId=$db->execute('SELECT foreign_id FROM links WHERE url=? AND type=? AND lang=? AND deleted=0 LIMIT 1',[$path,ARTICLE_DETAIL,'vi'])->fetchColumn(0);
+                $article=$articleId?(new ReadingHistoryService('vi'))->articles('document',[(int)$articleId])[(int)$articleId]??null:null;
+                if($article){$title=$article['title'];foreach($article['files'] as $file)$files[]=['file_url'=>$file['url']];}
+            }
+        }
+        if($selected){$title=(string)($selected['title']??'');$files=[$selected];}
+        $links=[];
+        foreach($files as $file){
+            $url=str_replace(' ','%20',(string)($file['file_url']??''));
+            try{DocumentDownloads::validateSource($url);}catch(\InvalidArgumentException $e){continue;}
+            $name=(string)($file['file_name']??rawurldecode(basename((string)parse_url($url,PHP_URL_PATH))));
+            $links[$url]=['name'=>$name?:'Tài liệu','url'=>$url];
+        }
+        return ['title'=>$title,'files'=>array_values($links)];
+    }
+
     public static function approve(int $id,callable $savePayment,int $adminId): array
     {
         return CommercePurchases::db()->transactional(function()use($id,$savePayment,$adminId){

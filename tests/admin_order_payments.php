@@ -4,6 +4,8 @@ declare(strict_types=1);
 if(PHP_SAPI!=='cli'||($argv[1]??'')!=='--fixtures')exit(1);
 $root=dirname(__DIR__);define('SOURCE_DOMAIN',$root);require $root.'/config_database.php';require $root.'/coredaca/vendor/autoload.php';
 (new App\Application($root.'/coredaca/config'))->bootstrap();
+if(!defined('CDN_URL'))define('CDN_URL','https://cdn.meduc.vn');
+if(!defined('LANGUAGE'))define('LANGUAGE','vi');
 use App\Service\CommercePurchases as Purchases;
 use App\Service\DocumentCredits as Credits;
 use App\Service\DocumentDownloads as Downloads;
@@ -75,6 +77,8 @@ try{
     $service=new Downloads();$old=$service->create($customer,$file,$save);$oldId=(int)$old['order_id'];
     $before=$db->execute('SELECT * FROM document_download_purchases WHERE order_id=?',[$oldId])->fetch('assoc');
     $items=$db->execute('SELECT * FROM orders_item WHERE order_id=?',[$oldId])->fetchAll('assoc');
+    $links=Approvals::documents($oldId);
+    approvalExpect($links['title']===$file['document_title']&&$links['files'][0]['url']===$file['file_url']&&$links['files'][0]['name']===$file['file_name'],'Admin cannot download the original selected file.');
     $balance=Credits::balance($cid);Approvals::approve($oldId,$pay,0);
     approvalExpect(Credits::balance($cid)===$balance+1,'Old order did not grant exactly one shared credit.');
     approvalExpect(!Credits::importLegacy($oldId),'Legacy import duplicated a grant.');
@@ -92,5 +96,28 @@ try{
     $balance=Credits::balance($cid);Credits::importLegacy($usedId);
     approvalExpect(Credits::balance($cid)===$balance&&Credits::ticket($oldToken,$cid),'Used legacy credit was regranted or its retry window lost.');
     $checks[]='previously_used_legacy_purchase_is_not_granted_again';
+
+    $newDocument=$make('document');$newId=(int)$newDocument['order_id'];
+    $context=['selected_document'=>['title'=>'Tài liệu đặt mua','file_url'=>'https://meduc.vn/cdn/media/tai lieu.pdf','file_name'=>'tai lieu.pdf']];
+    $db->update('commerce_purchases',['context_json'=>json_encode($context)],['order_id'=>$newId]);
+    $wallet=Credits::balance($cid);$links=Approvals::documents($newId);
+    approvalExpect($links['files'][0]['url']==='https://meduc.vn/cdn/media/tai%20lieu.pdf'&&Credits::balance($cid)===$wallet&&!Purchases::get($newId)['approved_at'],'Admin download links consumed credit or approved an order.');
+    $context['selected_document']['file_url']='javascript:alert(1)';
+    $db->update('commerce_purchases',['context_json'=>json_encode($context)],['order_id'=>$newId]);
+    approvalExpect(Approvals::documents($newId)['files']===[],'Unsafe file URL rendered in admin.');
+    $source=$db->execute("SELECT l.url,l.foreign_id article_id FROM links l JOIN articles a ON a.id=l.foreign_id JOIN categories_article ca ON ca.article_id=a.id WHERE l.type=? AND l.lang='vi' AND l.deleted=0 AND a.deleted=0 AND a.status=1 AND a.draft=0 AND ca.category_id=48 AND a.files IS NOT NULL AND a.files<>'[]' LIMIT 1",[ARTICLE_DETAIL])->fetch('assoc');
+    if(!$source)throw new RuntimeException('No source document available for fallback fixture.');
+    $db->update('commerce_purchases',['context_json'=>json_encode(['document_url'=>'/'.$source['url']])],['order_id'=>$newId]);
+    approvalExpect(count(Approvals::documents($newId)['files'])>0,'Earlier credit order could not resolve its document files.');
+    $quoted=(new Downloads('vi'))->quote((int)$source['article_id'],0);$nonce=bin2hex(random_bytes(24));
+    $request=(new Cake\Http\ServerRequest())->withMethod('POST');$session=$request->getSession();$session->write(MEMBER,['id'=>$cid]);
+    $session->write('DocumentDownload.tokens',[$nonce=>['article'=>$quoted['article_id'],'index'=>0,'file'=>$quoted['file_key'],'customer'=>$cid,'expires'=>time()+600]]);
+    $package=CoursePricing::packages((int)$boards['document']['id'])[0];
+    $request=$request->withParsedBody(['nonce'=>$nonce,'expected_customer_id'=>$cid,'package_id'=>$package['id']]);
+    $created=json_decode((string)(new App\Controller\DocumentDownloadController($request))->purchase()->getBody(),true);
+    approvalExpect(($created['code']??'')==='success','Document checkout did not create the fixture order.');
+    $code=basename($created['data']['redirect']);$saved=Purchases::owned($code,$cid);$context=json_decode($saved['context_json'],true);
+    approvalExpect($context['selected_document']['file_url']===$quoted['file_url']&&Approvals::documents((int)$saved['order_id'])['files'][0]['name']===$quoted['file_name'],'New checkout did not retain the exact selected file.');
+    $checks[]='admin_document_links_support_old_and_new_orders_without_spending_credits';
     echo json_encode(['passed'=>$checks,'fixtures'=>'rolled back','external_email_or_payment'=>false],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)."\n";
 }finally{$db->rollback();}

@@ -64,6 +64,17 @@
                             {if !empty($order_payment.legacy_document_title)}
                                 <p class="text-muted mb-4">Tài liệu đã chọn khi đặt đơn cũ: <strong>{$order_payment.legacy_document_title|escape:'html'}</strong></p>
                             {/if}
+                            {if !empty($order_documents.files)}
+                                <div class="border rounded p-3 mb-4">
+                                    <strong class="d-block mb-2">Tài liệu của đơn hàng{if !empty($order_documents.title)}: {$order_documents.title|escape:'html'}{/if}</strong>
+                                    {foreach from=$order_documents.files item=document_file}
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between py-2" style="gap:12px">
+                                            <span style="overflow-wrap:anywhere">{$document_file.name|escape:'html'}</span>
+                                            <a class="btn btn-sm btn-outline-brand flex-shrink-0" href="{$document_file.url|escape:'html'}" target="_blank" rel="noopener noreferrer" download="{$document_file.name|escape:'html'}"><i class="la la-download"></i> Tải tài liệu</a>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            {/if}
                         {/if}
                         <div class="row">
                             <div class="col-xl-6 col-lg-6">

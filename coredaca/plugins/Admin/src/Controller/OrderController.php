@@ -356,6 +356,7 @@ class OrderController extends AppController {
         $this->set('id', $id);
         $this->set('order', $order);
         $this->set('order_payment', OrderPayments::summaries([(int)$id])[(int)$id] ?? []);
+        $this->set('order_documents', OrderPayments::documents((int)$id));
         $this->set('payments', $payments);
         $this->set('shippings', $shippings);
         $this->set('can_payment', $can_payment);
