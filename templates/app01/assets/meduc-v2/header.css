@@ -199,7 +199,7 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
 
 /* MedUC identity from the supplied MD logo; the SVG artwork stays unchanged. */
 .mhi-brand--meduc { min-height:44px; }
-.mhi-brand--meduc .mhi-brand-wordmark { width:92px; height:auto; max-height:44px; }
+.mhi-brand--meduc .mhi-brand-wordmark { width:72px; height:auto; max-height:34px; }
 .mhi-brand--meduc .mhi-brand-wordmark--light, .mhi-brand--meduc .mhi-brand-mark { display:none; }
 .mhi-brand--meduc .mhi-brand-wordmark--dark { display:block; }
 .mhi-brand--meduc img { filter:none; }
@@ -208,7 +208,7 @@ html[data-meduc-theme="light"] .mhi-brand--meduc .mhi-brand-wordmark--light { di
 @media (max-width:1279.98px) {
  .mhi-brand--meduc .mhi-brand-wordmark { width:58px; max-height:30px; }
 }
-@media (min-width:1280px) and (max-width:1399.98px) { .mhi-brand--meduc .mhi-brand-wordmark { width:88px; } }
+@media (min-width:1280px) and (max-width:1399.98px) { .mhi-brand--meduc .mhi-brand-wordmark { width:68px; } }
 
 @media (max-width: 374px) {
  .mhi-header-main { gap: 3px; }
