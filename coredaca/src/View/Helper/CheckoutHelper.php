@@ -18,6 +18,12 @@ class CheckoutHelper extends Helper
         $original = (float)($snapshot['package']['price'] ?? $order['total_origin'] ?? $amount);
         return ['amount'=>$amount, 'original'=>max($original, $amount), 'package'=>$snapshot['package']??[]];
     }
+    public function paymentCatalog(array $order): string
+    {
+        if (empty($order['id'])) return '/khoa-hoc';
+        $kind = CoursePricing::db()->execute('SELECT '.\App\Service\OrderPayments::kindSql().' AS kind FROM orders Orders WHERE Orders.id=?', [(int)$order['id']])->fetchColumn(0);
+        return CoursePricing::CATALOGS[CoursePricing::normalizeKind((string)$kind)] ?? '/khoa-hoc';
+    }
     public function confirmation(): array
     {
         $order = $this->getView()->getRequest()->getSession()->read('MeducBookOrder');

@@ -8,7 +8,7 @@
       <div class="mco-panel mco-auth-gate" data-checkout-login><p>Đăng nhập để tiếp tục thanh toán đơn hàng của bạn.</p><button class="mco-button mco-button--primary" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
     {else}
       {$prices = $this->Checkout->prices($order_info)}
-      <form class="mco-layout" data-order-payment-form>
+      <form class="mco-layout" data-order-payment-form data-payment-return="{$this->Checkout->paymentCatalog($order_info)|escape}">
         <div class="mco-main">
           <section class="mco-panel"><div class="mco-panel-heading"><h2>Thông tin của bạn</h2></div>{$this->element('../Order/meduc_contact', ['shipping_contact'=>false])}</section>
           <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn</h2><a href="/bang-bao-gia">Chọn thêm</a></div>

@@ -52,10 +52,10 @@
 	"/templates/{CODE_TEMPLATE}/assets/js/wishlist.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/compare.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/member.js",
-	"/templates/{CODE_TEMPLATE}/assets/js/contact.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/comment.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/pdf.min.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/webviewer.min.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/custom.js",
 	"/templates/{CODE_TEMPLATE}/assets/js/cart-custom.js"
 ], 'js')}
+<script src="/templates/{CODE_TEMPLATE}/assets/js/contact.js?v=20261112-unified-confirmation" defer></script>

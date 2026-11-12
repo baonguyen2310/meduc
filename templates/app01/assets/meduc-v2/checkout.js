@@ -2,6 +2,22 @@
  'use strict';
  const page=document.querySelector('.mco');
  if(!page)return;
+ let confirmation=null, confirmationReturn='/khoa-hoc';
+ const paymentCatalogs=new Set(['/khoa-hoc','/khoa-chua-de','/trac-nghiem','/tai-lieu-hoc-tap','/sach-y-khoa']);
+ window.MeducPaymentConfirmation={show({orderCode,returnUrl}){
+   confirmationReturn=paymentCatalogs.has(returnUrl)?returnUrl:'/khoa-hoc';
+   if(!confirmation){
+     confirmation=document.createElement('dialog');confirmation.className='mco-payment-confirmation';
+     confirmation.setAttribute('aria-labelledby','mco-payment-confirmation-title');
+     confirmation.setAttribute('aria-describedby','mco-payment-confirmation-message mco-payment-confirmation-support mco-payment-confirmation-code');
+     confirmation.innerHTML='<span class="mco-payment-confirmation-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 12 4 4 8-8"/></svg></span><h2 id="mco-payment-confirmation-title">MedUC đã nhận được thông tin đăng ký của bạn.</h2><p id="mco-payment-confirmation-message">Chúng tôi đang kiểm tra trong giây lát.</p><div class="mco-payment-confirmation-support" id="mco-payment-confirmation-support"><p>Vui lòng liên hệ số điện thoại</p><a class="mco-payment-confirmation-phone" href="tel:0973996822" aria-label="Gọi MedUC: 0973 996 822">0973 996 822</a><p>để được kích hoạt sớm nhất.</p></div><p class="mco-payment-confirmation-code" id="mco-payment-confirmation-code">Mã đơn hàng: <strong data-confirmation-order></strong></p><button type="button" class="mco-button mco-button--primary" autofocus>OK</button>';
+     confirmation.querySelector('button').addEventListener('click',()=>location.assign(confirmationReturn));
+     confirmation.addEventListener('cancel',event=>event.preventDefault());
+     page.append(confirmation);
+   }
+   confirmation.querySelector('[data-confirmation-order]').textContent=String(orderCode||'—');
+   if(!confirmation.open)confirmation.showModal();
+ }};
  let toastTimer;
  const announce=message=>{const status=page.querySelector('[data-checkout-status]');if(!status)return;status.textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{status.textContent='';},3500);};
  page.querySelectorAll('[data-qr-tab]').forEach(button=>{
@@ -24,9 +40,9 @@
  }));
  const orderForm=page.querySelector('[data-order-payment-form]');
  if(orderForm){
-   let saving=false;
+   let saving=false,completed=false;
    orderForm.addEventListener('submit',async event=>{
-     event.preventDefault();if(saving||!orderForm.reportValidity())return;
+     event.preventDefault();if(saving||completed||!orderForm.reportValidity())return;
      const submit=orderForm.querySelector('[type="submit"]'),error=orderForm.querySelector('[data-order-payment-error]');
      saving=true;submit.disabled=true;error.hidden=true;
      try{
@@ -35,9 +51,10 @@
        const result=await response.json();
        if(response.status===401){window.MeducCheckout.login(submit,()=>location.reload());return;}
        if(!response.ok||result.code!=='success')throw new Error(result.message||'Chưa hoàn tất được thanh toán.');
-       location.assign(result.data.url||('/order/success?code='+encodeURIComponent(result.data.code)));
+       window.MeducPaymentConfirmation.show({orderCode:result.data.code||orderForm.elements.code.value,returnUrl:orderForm.dataset.paymentReturn});
+       completed=true;
      }catch(e){error.textContent=e.message||'Kết nối gián đoạn. Vui lòng thử lại.';error.hidden=false;}
-     finally{saving=false;submit.disabled=false;}
+     finally{saving=false;submit.disabled=completed;}
    });
  }else if(page.hasAttribute('data-order-checkout')){
    window.MeducCheckout?.login(page.querySelector('[data-ma-open]'),()=>location.reload());

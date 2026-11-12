@@ -1,5 +1,5 @@
 {include file='../Order/meduc_assets.tpl'}
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261112-credit-counter" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261112-unified-confirmation" defer></script>
 <main class="mco mco-unified" data-document-payment="{$purchase_code|escape}">
   <div class="mco-shell">
     <nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/tai-lieu-hoc-tap">Tài liệu học tập</a><span>/</span><span>Thanh toán</span></nav>

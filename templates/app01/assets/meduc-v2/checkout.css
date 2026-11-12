@@ -89,12 +89,18 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 .mco .mco-payment-details>summary{cursor:pointer;list-style-position:inside;padding:6px 0}
 .mco .mco-payment-details[open]>.mco-bank-copy{margin-top:14px;color:var(--co-ink)}
 
-/* Receipt acknowledgement after the document payment report has been saved. */
+/* Shared acknowledgement after a payment report or book order has been saved. */
 .mco-payment-confirmation{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:calc(100vw - 32px);margin:auto;padding:36px 32px;border:1px solid var(--co-line);border-top:3px solid var(--co-red);border-radius:20px;background:var(--co-panel);color:var(--co-ink);text-align:center;box-shadow:0 24px 90px #0005}
 .mco-payment-confirmation::backdrop{background:#0009;backdrop-filter:blur(4px)}
 .mco-payment-confirmation-icon{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:var(--co-soft);color:var(--co-red)}
 .mco-payment-confirmation-icon svg{width:32px;height:32px}
 .mco-payment-confirmation h2{margin:0 0 14px;font-size:25px;font-weight:750;line-height:1.35}
 .mco-payment-confirmation p{margin:0 0 28px;color:var(--co-muted);font-size:16px;line-height:1.65}
+.mco-payment-confirmation .mco-payment-confirmation-support{margin:0 0 22px;padding:18px 12px;border:1px solid var(--co-line);border-radius:12px;background:var(--co-soft)}
+.mco-payment-confirmation .mco-payment-confirmation-support p{margin:0;font-size:14px}
+.mco-payment-confirmation .mco-payment-confirmation-phone{display:inline-block;margin:8px 0;color:var(--co-red);font:800 clamp(30px,5vw,38px)/1.25 Inter,Arial,sans-serif;letter-spacing:-.025em;text-decoration:none;white-space:nowrap}
+.mco-payment-confirmation .mco-payment-confirmation-phone:hover{text-decoration:underline;text-underline-offset:5px}
+.mco-payment-confirmation .mco-payment-confirmation-code{margin-bottom:24px;font-size:14px;overflow-wrap:anywhere}
+.mco-payment-confirmation .mco-payment-confirmation-code strong{color:var(--co-ink)}
 .mco-payment-confirmation .mco-button{display:inline-flex;min-width:144px;max-width:100%;min-height:48px;justify-content:center;border-radius:8px;font-size:15px}
 @media(max-width:575.98px){.mco-payment-confirmation{padding:28px 22px}.mco-payment-confirmation h2{font-size:22px}}

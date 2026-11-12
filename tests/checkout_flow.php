@@ -82,6 +82,7 @@ try {
         $view=new CheckoutFlowView();$view->loadHelper('Checkout');
         $orderInfo=TableRegistry::get('Orders')->formatDataOrderDetail(TableRegistry::get('Orders')->getDetailOrder($order['id'],['get_items'=>true,'get_contact'=>true]),LANGUAGE);
         $html=$view->page('Order/checkout.tpl',['order_info'=>$orderInfo,'checkout_contact'=>CheckoutContact::profile($customer,$orderInfo['contact'])]);
+        checkoutExpect(strpos($html,'data-payment-return="'.CoursePricing::CATALOGS[$kind].'"')!==false,'Payment confirmation returns to the wrong catalog for '.$kind);
         checkoutExpect(strpos($html,'data-order-payment-form')!==false&&strpos($html,' readonly ')!==false&&strpos($html,'Kiểm tra lựa chọn')===false,'Course checkout render is incorrect.');
         checkoutExpect((strpos($html,'qr-momo-tab')!==false)===($kind!=='quiz')&&strpos($html,'qr-cod-tab')===false,'Payment methods leaked to another course type.');
         $checks[]=$kind.'_direct_order_edit_contact_and_payment_render';

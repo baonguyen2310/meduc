@@ -69,8 +69,19 @@ var nhContact = {
 				            if (code == _SUCCESS) {
 				                switch (formCode) {
 				                    case '61CQ0U3H9I':
-				                        const dataCart = JSON.parse(sessionStorage.getItem("cart"));
-				                        window.location.href = `/dat-hang-thanh-cong?cartId=${dataCart.cartId}`;
+				                        var orderCode = formElement.find('[name="cartId"]').val();
+				                        try {
+				                            var dataCart = JSON.parse(sessionStorage.getItem("cart"));
+				                            if (dataCart && dataCart.cartId === orderCode) {
+				                                sessionStorage.removeItem("cart");
+				                                document.querySelectorAll('[nh-mini-cart-book-quantity]').forEach(function(counter) { counter.textContent = '0'; });
+				                            }
+				                        } catch (_) {}
+				                        if (window.MeducPaymentConfirmation) {
+				                            window.MeducPaymentConfirmation.show({orderCode: orderCode, returnUrl: '/sach-y-khoa'});
+				                        } else {
+				                            window.location.href = '/dat-hang-thanh-cong?cartId=' + encodeURIComponent(orderCode);
+				                        }
 				                        break;
 				                    default:
 				                        nhMain.showAlert(_SUCCESS, message);
