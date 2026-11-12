@@ -11,6 +11,9 @@ final class CommerceNotifications
         if(!filter_var($email,FILTER_VALIDATE_EMAIL))throw new \RuntimeException('Chưa cấu hình email quản trị.');return $email;
     }
     private static function esc($v):string {return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-8');}
+    private static function suppressAdminForBuyer(string $email):bool {
+        return strcasecmp(trim($email),'leetran2404@gmail.com')===0;
+    }
     public static function origin(string $host='meduc.vn'):string {return 'https://'.(in_array($host,['meduc.vn','meducv3.duckdns.org'],true)?$host:'meduc.vn');}
     private static function html(string $heading,string $lead,array $facts,string $action,string $url):string {
         $rows='';foreach($facts as $label=>$value)$rows.='<tr><td style="padding:12px 0;color:#6b7280;border-bottom:1px solid #e5e7eb">'.self::esc($label).'</td><td style="padding:12px 0 12px 16px;font-weight:600;text-align:right;border-bottom:1px solid #e5e7eb">'.self::esc($value).'</td></tr>';
@@ -35,6 +38,7 @@ final class CommerceNotifications
         $customerUrl=$origin.($p['kind']==='document'?'/document-download/payment/'.$p['public_code']:'/khoa-hoc-da-dang-ky');
         $recipients=$approved?['buyer'=>$p['email']]:['admin'=>self::adminEmail()];
         foreach($recipients as $role=>$email){
+            if($role==='admin'&&self::suppressAdminForBuyer((string)$p['email']))continue;
             if(!filter_var($email,FILTER_VALIDATE_EMAIL))continue;
             $heading=$approved?'Thanh toán đã được duyệt':'Đơn hàng đang chờ duyệt';
             $lead=$approved?'Quyền sử dụng của đơn hàng đã được cập nhật.':'Kiểm tra giao dịch rồi xác nhận để mở quyền cho người mua.';
@@ -53,6 +57,7 @@ final class CommerceNotifications
             'Tổng tiền sản phẩm'=>number_format((float)$data['totalPrice'],0,',','.').'đ','Thanh toán'=>$data['payment']==='cod'?'COD · Thanh toán khi nhận sách':'Chuyển khoản ngân hàng'];
         foreach(json_decode((string)$data['cartProducts'],true)?:[] as $i=>$product)$facts['Sách '.($i+1)]=($product['name']??'').' × '.($product['quantity']??1);
         foreach(['admin'=>self::adminEmail(),'buyer'=>$data['email']] as $role=>$email){
+            if($role==='admin'&&self::suppressAdminForBuyer((string)$data['email']))continue;
             $url=self::origin($host).($role==='admin'?'/admin/contact/detail/'.$id:'/dat-hang-thanh-cong?cartId='.rawurlencode($data['cartId']));
             self::queue('book:'.$id.':'.$role,$email,'[MedUC] Đơn sách '.$data['cartId'],self::html('Đã ghi nhận đơn sách','MedUC sẽ liên hệ xác nhận và chuẩn bị giao sách.',$facts,$role==='admin'?'Xem đơn sách':'Xem đơn hàng',$url),$send);
         }
