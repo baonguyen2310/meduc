@@ -75,8 +75,14 @@
       <a class="mhi-brand{if $meduc_brand} mhi-brand--meduc{/if}" href="/" aria-label="{$website_name|escape} — Trang chủ">
         {if !empty($website_info.company_logo)}
           {if $meduc_brand}
-            <img class="mhi-brand-wordmark mhi-brand-wordmark--light" src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}?v=20261112-logo-new" alt="{$website_name|escape}" decoding="async" />
-            <img class="mhi-brand-wordmark mhi-brand-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg?v=20261112-logo-new" alt="" aria-hidden="true" decoding="async" />
+            <picture class="mhi-brand-wordmark mhi-brand-wordmark--light">
+              <source media="(min-width:1280px)" srcset="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/md_lockup_mau.svg?v=20261112-lockup" />
+              <img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}?v=20261112-logo-new" alt="{$website_name|escape}" decoding="async" />
+            </picture>
+            <picture class="mhi-brand-wordmark mhi-brand-wordmark--dark">
+              <source media="(min-width:1280px)" srcset="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/md_lockup_nen-toi.svg?v=20261112-lockup" />
+              <img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg?v=20261112-logo-new" alt="" aria-hidden="true" decoding="async" />
+            </picture>
           {else}
             <img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{$website_name|escape}" decoding="async" />
           {/if}

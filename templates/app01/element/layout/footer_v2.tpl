@@ -110,8 +110,14 @@
             {if !empty($website_info.company_logo)}
                 {if $meduc_brand}
                     <a href="/" class="mfo-meduc-logo" aria-label="MedUC — Trang chủ">
-                        <img class="mfo-meduc-light" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-light.svg?v=20261112-logo-new" alt="" aria-hidden="true" loading="lazy" />
-                        <img class="mfo-meduc-dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-dark.svg?v=20261112-logo-new" alt="" aria-hidden="true" loading="lazy" />
+                        <picture class="mfo-meduc-light">
+                            <source media="(min-width:1280px)" srcset="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/md_lockup_mau.svg?v=20261112-lockup" />
+                            <img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-light.svg?v=20261112-logo-new" alt="" aria-hidden="true" loading="lazy" />
+                        </picture>
+                        <picture class="mfo-meduc-dark">
+                            <source media="(min-width:1280px)" srcset="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/md_lockup_nen-toi.svg?v=20261112-lockup" />
+                            <img src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-footer-dark.svg?v=20261112-logo-new" alt="" aria-hidden="true" loading="lazy" />
+                        </picture>
                     </a>
                 {else}
                     <a href="/" aria-label="Trang chủ"><img src="{$this->Utilities->getWebsiteImageUrl($website_info.company_logo)|escape}" alt="{if !empty($website_info.website_name)}{$website_info.website_name|escape}{else}MedUC{/if}" loading="lazy" /></a>

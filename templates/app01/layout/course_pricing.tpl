@@ -6,9 +6,9 @@
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/css/fonts.css" rel="stylesheet">
   {$this->element('layout/css')}
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-compact" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-lockup" rel="stylesheet">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261030-scroll-nav" defer></script>
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-new" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-lockup" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261110-commerce-access" rel="stylesheet">

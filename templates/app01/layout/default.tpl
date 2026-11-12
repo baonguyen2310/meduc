@@ -56,11 +56,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-compact" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-lockup" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261030-scroll-nav" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261110-quiz-shortcut" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261030-scroll-nav" defer></script>
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-new" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-lockup" rel="stylesheet">
     {/if}
 
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
