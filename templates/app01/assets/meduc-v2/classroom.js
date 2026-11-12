@@ -1,7 +1,8 @@
 /* Course page as a classroom (block/product_detail/view_classroom.tpl).
    - The course overview stays above the classroom. The outline selects a lesson; ?bai=N keeps the address
      in step so a lesson can be shared and the Back button works.
-   - Lesson videos play inside the page (YouTube IFrame API). Students continue to the next video after
+   - Lesson actions open the existing players in a large dialog. Video uses the YouTube IFrame API.
+     Students continue to the next video after
      a short countdown; visitors trying a free lesson see the sign-up card and may choose another free video.
    - The overview has independent tabs and an expandable description. Existing ratings and related courses move into their places (data-mcr-slot).
    - Progress (lessons watched, last lesson) is kept in this browser only. */
@@ -46,6 +47,43 @@
   const stages = Object.fromEntries($$("[data-mcr-stage]").map((stage) => [stage.dataset.mcrStage, stage]));
   const poster = $("[data-mcr-poster]");
   const playerHolder = $("[data-mcr-player]");
+  const studyModal = $("[data-mcr-study-modal]");
+  const studyClose = $("[data-mcr-study-close]");
+  let studyOpener = null;
+  function openStudyModal(trigger) {
+    if (!studyModal || !studyModal.hidden) return;
+    studyOpener = trigger || document.activeElement;
+    studyModal.hidden = false;
+    document.body.classList.add("mcr-study-open");
+    requestAnimationFrame(() => {
+      if (!studyModal.hidden && !document.body.classList.contains("ma-auth-open") && !$(".mcq.is-expanded")) studyClose.focus({preventScroll:true});
+    });
+  }
+  function closeStudyModal({updateUrl=true,focus=true} = {}) {
+    if (!studyModal || studyModal.hidden) return;
+    stopPlayer();
+    root.dispatchEvent(new CustomEvent("mcr:modal-close"));
+    studyModal.hidden = true;
+    lessonView.hidden = true;
+    document.body.classList.remove("mcr-study-open");
+    if (updateUrl) history.replaceState({mcrLesson:0}, "", addressFor(0));
+    if (focus && studyOpener?.isConnected) studyOpener.focus({preventScroll:true});
+  }
+  studyClose?.addEventListener("click", () => closeStudyModal());
+  studyModal?.addEventListener("click", event => {if (event.target === studyModal) closeStudyModal();});
+  document.addEventListener("keydown", event => {
+    if (!studyModal || studyModal.hidden || $(".mcq.is-expanded") || document.body.classList.contains("ma-auth-open") || $("#previewFile.show")) return;
+    if (event.key === "Escape") {event.preventDefault();closeStudyModal();return;}
+    if (event.key !== "Tab") return;
+    const controls = [...studyModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe')].filter(control => control.getClientRects().length);
+    const first=controls[0], last=controls[controls.length-1];
+    if (!first) return;
+    if (event.shiftKey && (document.activeElement===first || !studyModal.contains(document.activeElement))) {event.preventDefault();last.focus();}
+    else if (!event.shiftKey && (document.activeElement===last || !studyModal.contains(document.activeElement))) {event.preventDefault();first.focus();}
+  });
+  root.addEventListener("click", event => {
+    if (studyModal?.contains(event.target) && event.target.closest('[nh-btn-action="add-cart"], a[href="/order/info"]')) closeStudyModal({focus:false});
+  });
 
   // Progress in this browser: which lessons were played, and the last one opened.
   const storeKey = `meduc-classroom:${location.pathname}`;
@@ -129,7 +167,7 @@
     showStage("player");
     markWatched(lesson.number);
     const ready = await loadApi();
-    if (current !== lesson || $("[data-mcr-panel='video']").hidden) return;
+    if (current !== lesson || lessonView.hidden || $("[data-mcr-panel='video']").hidden) return;
     if (ready) {
       if (player && typeof player.loadVideoById === "function") {
         player.loadVideoById(lesson.video);
@@ -305,6 +343,7 @@
     if (!event.detail?.authenticated) {pendingStudy=null;studyRequest++;}
     else resumeStudy();
   });
+  root.addEventListener('mcr:modal-close', () => {pendingStudy=null;studyRequest++;});
 
   // Tabs
   const tabs = $$("[data-mcr-tab]");
@@ -378,12 +417,13 @@
     const item = link.getBoundingClientRect();
     if (item.top < box.top + 60 || item.bottom > box.bottom - 20) outline.scrollTop += item.top - box.top - box.height / 3;
   }
-  function selectLesson(number, { autoplay = false, push = true, scroll = true } = {}) {
+  function selectLesson(number, { autoplay = false, push = true, scroll = true, open = true, trigger = null } = {}) {
     const lesson = byNumber.get(number);
     if (!lesson) { showIntro({ push }); return; }
     stopPlayer();
     if (mockPending) mockPending.hidden = true;
     current = lesson;
+    if (open) openStudyModal(trigger);
     markCurrent(lesson.link);
     const chapter = lesson.link.closest("details");
     if (chapter) chapter.open = true;
@@ -392,6 +432,7 @@
 
     // Keep the active lesson available to screen readers without repeating its heading visually.
     $("[data-mcr-heading]").textContent = lesson.title;
+    const modalTitle = $("[data-mcr-study-title]"); if (modalTitle) modalTitle.textContent = lesson.title;
     const position = $("[data-mcr-position]"); if (position) position.textContent = `${pad(lesson.number)} / ${pad(total)}`;
     const previous = $("[data-mcr-prev]"); if (previous) previous.disabled = lesson.number <= 1;
     const next = $("[data-mcr-next]"); if (next) next.disabled = lesson.number >= total;
@@ -407,9 +448,10 @@
     }
     writeStore({ last: lesson.number });
     if (push) history.pushState({ mcrLesson: lesson.number }, "", addressFor(lesson.number));
-    if (scroll) lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
+    if (scroll && open) $(".mcr-main").scrollTop = 0;
   }
   function showIntro({ push = true } = {}) {
+    closeStudyModal({updateUrl:false,focus:false});
     stopPlayer();
     selectOverview("about");
     if (push) history.pushState({ mcrLesson: 0 }, "", addressFor(0));
@@ -432,7 +474,6 @@
     if (!lesson) return;
     selectLesson(lesson.number, { scroll: false });
     selectTab("quiz");
-    lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   });
 
   $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
@@ -443,12 +484,16 @@
     }
     selectLesson(number, { scroll: false });
     selectTab("quiz");
-    lessonView.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   });
 
   lessons.forEach((lesson) => lesson.link.addEventListener("click", (event) => {
     event.preventDefault();
-    selectLesson(lesson.number);
+    selectLesson(lesson.number, {trigger:lesson.link});
+    selectTab(examPrep ? "quiz" : "video");
+  }));
+  $$("[data-mcr-open-lesson]").forEach(button => button.addEventListener("click", () => {
+    selectLesson(Number(button.dataset.mcrOpenLesson), {trigger:button});
+    selectTab(button.dataset.mcrOpenTab);
   }));
   $$("[data-mcr-start]").forEach((button) => button.addEventListener("click", (event) => {
     event.preventDefault();
@@ -460,7 +505,7 @@
   $("[data-mcr-next]")?.addEventListener("click", () => current && selectLesson(current.number + 1));
   window.addEventListener("popstate", () => {
     const number = Number(new URLSearchParams(location.search).get("bai"));
-    if (byNumber.has(number)) selectLesson(number, { push: false }); else showIntro({ push: false });
+    if (byNumber.has(number)) selectLesson(number, { push: false }); else closeStudyModal({updateUrl:false});
   });
 
   // Intro video and student feedback videos play in place.
@@ -592,8 +637,8 @@
   const defaultLesson = byNumber.get(readStore().last) || lessons.find((lesson) => canWatch(lesson) || lesson.quiz) || lessons[0];
   const selected = byNumber.has(initial) ? initial : defaultLesson?.number;
   if (selected) {
-    selectLesson(selected, { push: false, scroll: false });
+    selectLesson(selected, { push: false, scroll: false, open:byNumber.has(initial) });
     if (new URLSearchParams(location.search).get("tab") === "quiz") selectTab("quiz");
-    if (byNumber.has(initial)) requestAnimationFrame(() => lessonView.scrollIntoView({ block: "start", behavior: "instant" }));
+    if (!byNumber.has(initial)) lessonView.hidden = true;
   }
 })();

@@ -26,6 +26,7 @@
   const percentText = (value) => `${value.toLocaleString("vi-VN", { maximumFractionDigits: 1 })}%`;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const inlineMobileQuery = matchMedia("(max-width: 767.98px)");
+  const lessonScroll = root.querySelector('[data-mcr-study-modal] .mcr-main');
   // Question texts usually start with their own "Câu 3." — the player already shows the number.
   const dropNumber = (html) => html.replace(/^(\s*<p>)?\s*Câu\s*\d+\s*[.:)]\s*/i, "$1");
 
@@ -826,7 +827,9 @@
   function trackVisibleQuestion() {
     if (view !== "player" || !active) return;
     const mobileInline = !host.classList.contains("is-expanded") && inlineMobileQuery.matches;
-    const top = mobileInline ? Math.min(180, window.innerHeight * 0.3) : stage.getBoundingClientRect().top + Math.min(160, stage.clientHeight * 0.3);
+    const top = mobileInline
+      ? (lessonScroll ? lessonScroll.getBoundingClientRect().top + Math.min(180, lessonScroll.clientHeight * 0.3) : Math.min(180, window.innerHeight * 0.3))
+      : stage.getBoundingClientRect().top + Math.min(160, stage.clientHeight * 0.3);
     const cards = stage.querySelectorAll("[data-mcq-question]");
     for (const card of cards) {
       if (card.getBoundingClientRect().bottom > top) {
@@ -846,6 +849,9 @@
   }
   stage.addEventListener("scroll", scheduleQuestionTracking, { passive: true });
   window.addEventListener("scroll", () => {
+    if (!host.classList.contains("is-expanded") && inlineMobileQuery.matches) scheduleQuestionTracking();
+  }, { passive: true });
+  lessonScroll?.addEventListener("scroll", () => {
     if (!host.classList.contains("is-expanded") && inlineMobileQuery.matches) scheduleQuestionTracking();
   }, { passive: true });
   function askSubmit(attempt) {
@@ -999,6 +1005,8 @@
     lessonNumber = event.detail.number;
     showList();
   });
+  // Closing the lesson dialog cancels pending loads; saved in-memory attempts remain resumable.
+  root.addEventListener("mcr:modal-close", showList);
 
   root.addEventListener('mcr:access',event => {
     const next=Number(event.detail.member_id)||0;
