@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/community.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-2" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/community.js?v=20261028-1" defer></script>
 <section class="mhi-community" aria-labelledby="mhi-community-title">
     <div class="mhi-community-shell">
@@ -36,7 +37,10 @@
             <div class="mhi-community-copy">
                 <p class="mhi-community-kicker">THÔNG TIN LIÊN HỆ · MEDUC</p>
                 <h2 id="mhi-community-title">KẾT NỐI<br>CÙNG MEDUC.</h2>
-                <p class="mhi-community-description">Theo dõi nội dung và trao đổi kiến thức Y khoa cùng cộng đồng MedUC trên YouTube, Facebook và Zalo.</p>
+                <div class="meduc-mascot-pair meduc-mascot-note meduc-mascot-community">
+                    <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-1.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+                    <p class="mhi-community-description">Theo dõi nội dung và trao đổi kiến thức Y khoa cùng cộng đồng MedUC trên YouTube, Facebook và Zalo.</p>
+                </div>
                 <div class="mhi-community-actions">
                     {if !empty($community_items[1].url)}<a class="mhi-community-primary" href="{$community_items[1].url|escape}" target="_blank" rel="noopener noreferrer">Tham gia nhóm Facebook</a>{/if}
                     {if !empty($community_items[3].url)}<a class="mhi-community-secondary" href="{$community_items[3].url|escape}" target="_blank" rel="noopener noreferrer">Nhóm học tập Zalo <span aria-hidden="true">→</span></a>{/if}
