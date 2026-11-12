@@ -104,17 +104,15 @@ html[data-meduc-theme="light"] .mcr-tag--free { color:#16824e; }
 .mcr .mcr-btn--block { width: 100%; margin-top: 10px; }
 
 /* Course information is a separate section above the classroom. */
-.mcr-course-overview { margin-top:18px; padding:30px; border:1px solid var(--mcr-line); border-radius:16px; background:var(--mcr-panel); scroll-margin-top:calc(var(--mhi-header-h,66px) + 16px); }
-.mcr-course-heading { margin-bottom:24px; }
+.mcr-course-overview { margin-top:0; padding:30px; border:1px solid var(--mcr-line); border-radius:16px; background:var(--mcr-panel); scroll-margin-top:calc(var(--mhi-header-h,66px) + 16px); }
+.mcr-course-heading { margin:18px 0 24px; }
 .mcr-course-eyebrow { margin:0 0 10px; color:var(--mcr-red); font:700 11px/1.3 Inter,Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; }
 .mcr .mcr-course-heading h1 { max-width:1100px; margin:0; color:var(--mcr-ink); font:800 clamp(26px,2.8vw,40px)/1.22 Inter,Arial,sans-serif; letter-spacing:-.035em; }
-.mcr-intro { display:grid; grid-template-columns:minmax(0,1fr) 400px; align-items:start; gap:36px; }
+.mcr-intro { min-width:0; }
 .mcr-intro-main { min-width:0; }
 .mcr-overview-image { display:block; width:100%; height:auto; margin-top:24px; border-radius:10px; }
 .mcr-overview-pending { margin-top:24px; }
 body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3rma"], body:has([data-mcr]) [nh-block="5y31vx8"] { display:none !important; }
-/* Keep registration in view alongside a long description or overview image. */
-.mcr-intro-side { position:sticky; top:calc(var(--mhi-header-h,66px) + 16px); align-self:start; max-height:calc(100dvh - var(--mhi-header-h,66px) - 32px); overflow-y:auto; scrollbar-width:thin; }
 .mcr-overview-tabs { display:flex; align-items:stretch; gap:30px; min-height:54px; border-bottom:1px solid var(--mcr-line); overflow-x:auto; scrollbar-width:none; scroll-margin-top:calc(var(--mhi-header-h,66px) + 12px); }
 .mcr-overview-tabs::-webkit-scrollbar { display:none; }
 .mcr-overview-tabs button, .mcr .mcr-overview-jump { flex:none; padding:12px 0 15px; border:0; border-bottom:3px solid transparent; background:none; color:var(--mcr-muted); font:700 16px/1.3 Inter,Arial,sans-serif; cursor:pointer; }
@@ -529,7 +527,6 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
 
 @media (max-width: 1500px) {
   .mcr-layout { grid-template-columns: 340px minmax(0, 1fr); }
-  .mcr-intro { grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; }
 }
 @media (max-width:1280px) {
   .mcr-toolbar { flex-direction:column-reverse; align-items:stretch; gap:4px; min-height:0; }
@@ -542,8 +539,6 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-outline-actions { position: static; }
   .mcr-lesson-view, .mcr-sidebar { scroll-margin-top:72px; }
   .mcr-course-overview { padding:24px; }
-  .mcr-intro { grid-template-columns:minmax(0,1fr); gap:24px; }
-  .mcr-intro-side { position:static; max-height:none; overflow:visible; }
 }
 @media (max-width: 767.98px) {
   /* On phones, the inline quiz and curriculum follow the page scroll. The expanded quiz keeps its own scroll area. */
@@ -651,8 +646,14 @@ html[data-meduc-theme="light"] .mcq-practice-feedback.is-wrong { color:#bf2944; 
 .mcr-outline-actions--quiz { flex-wrap:wrap; }
 .mcr-mock-pending { flex-basis:100%; margin:0; color:var(--mcr-muted); font:500 12px/1.5 Inter,Arial,sans-serif; }
 
-/* Spacious curriculum with a shared quote card; the existing lesson UI opens on demand. */
-.mcr-curriculum-layout { display:grid; grid-template-columns:minmax(0,1fr) 400px; align-items:start; gap:28px; }
+/* A single sticky price column spans the full overview and curriculum. Page scrolling stays natural. */
+.mcr-course-columns { display:grid; grid-template-columns:minmax(0,1fr) 400px; grid-template-areas:"overview price" "curriculum price"; align-items:start; gap:28px; }
+.mcr-course-columns--quiz { grid-template-areas:"curriculum price"; }
+.mcr-course-overview { grid-area:overview; min-width:0; }
+.mcr-course-curriculum { grid-area:curriculum; min-width:0; }
+.mcr-course-curriculum .mcr-learning-heading { margin-top:0; }
+.mcr-course-price { grid-area:price; position:sticky; top:calc(var(--mhi-header-h,66px) + 16px); align-self:start; max-height:calc(100dvh - var(--mhi-header-h,66px) - 32px); min-width:0; overflow-y:auto; scrollbar-width:thin; }
+.mcr-curriculum-layout { min-width:0; }
 .mcr-curriculum { position:static; max-height:none; min-width:0; overflow:visible; overscroll-behavior:auto; border:1px solid var(--mcr-line); border-radius:16px; background:var(--mcr-panel); }
 .mcr-curriculum .mcr-outline-actions { position:static; min-height:66px; padding:16px 22px; border-radius:16px 16px 0 0; background:var(--mcr-panel); }
 .mcr-curriculum .mcr-outline-actions h3 { font-size:17px; }
@@ -668,7 +669,6 @@ html[data-meduc-theme="light"] .mcq-practice-feedback.is-wrong { color:#bf2944; 
 .mcr .mcr-lesson-action:hover { border-color:var(--mcr-red); background:var(--mcr-red-soft); color:var(--mcr-red); }
 .mcr-lesson-action svg { width:16px; height:16px; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 .mcr .mcr-lesson-action--quiz { border-color:color-mix(in srgb,var(--mcr-red) 35%,var(--mcr-line)); color:var(--mcr-red); background:var(--mcr-red-soft); }
-.mcr-curriculum-price { position:sticky; top:calc(var(--mhi-header-h,66px) + 16px); max-height:calc(100dvh - var(--mhi-header-h,66px) - 32px); min-width:0; overflow-y:auto; scrollbar-width:thin; }
 .mcr-quote-note { margin:20px 0 0; color:var(--mcr-muted); font:400 14px/1.65 Inter,Arial,sans-serif; }
 
 /* Keep the page in place while video, documents, history and quizzes use their existing components. */
@@ -691,13 +691,14 @@ body.mcr-study-open { overflow:hidden; }
 body.mcr-study-open #login-modal, body.mcr-study-open #previewFile { z-index:13000 !important; }
 body.mcr-study-open .modal-backdrop { z-index:12500 !important; }
 @media(max-width:1199.98px) {
-  .mcr-curriculum-layout { grid-template-columns:minmax(0,1fr) 340px; gap:20px; }
+  .mcr-course-columns { grid-template-columns:minmax(0,1fr) 340px; gap:24px 20px; }
   .mcr-lesson-row { grid-template-columns:minmax(0,1fr); gap:6px; }
   .mcr-lesson-actions { justify-content:flex-start; padding:0 12px 4px 50px; }
 }
 @media(max-width:991.98px) {
-  .mcr-curriculum-layout { grid-template-columns:minmax(0,1fr); gap:24px; }
-  .mcr-curriculum-price { position:static; max-height:none; overflow:visible; }
+  .mcr-course-columns { grid-template-columns:minmax(0,1fr); grid-template-areas:"overview" "price" "curriculum"; gap:24px; }
+  .mcr-course-columns--quiz { grid-template-areas:"price" "curriculum"; }
+  .mcr-course-price { position:static; max-height:none; overflow:visible; }
   .mcr-curriculum .mcr-outline-actions { padding:14px 18px; }
   .mcr-study-modal { padding:8px; }
   .mcr-study-window { height:calc(100dvh - 16px); }

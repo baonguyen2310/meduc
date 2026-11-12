@@ -172,7 +172,7 @@
     {if !is_array($course_files)}{$course_files = []}{/if}
 {/if}
 
-{* Reuse the same quote in the overview and beside the curriculum. *}
+{* One registration card stays beside both the overview and curriculum. *}
 {capture name=mcr_quote}
                         <div class="mcr-buy">
                             {if !$licensed}
@@ -257,7 +257,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261112-curriculum-modal-2" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261112-single-price" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261112-curriculum-modal-2" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
@@ -271,14 +271,14 @@
         <nav class="mcr-breadcrumb" aria-label="Đường dẫn">
             <a href="/">Trang chủ</a><span aria-hidden="true">›</span>{if $exam_prep}<a href="/trac-nghiem">Trắc nghiệm</a>{else}<a href="/khoa-hoc">Khoá học</a>{/if}<span aria-hidden="true">›</span><span aria-current="page">{$product.name|escape}</span>
         </nav>
-        {if $quiz_course}
-        <header class="mcr-course-heading"><p class="mcr-course-eyebrow">Khoá trắc nghiệm</p><h1 id="mcr-course-title">{$product.name|escape}</h1><p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; chọn thời hạn để mở bài tập 2 của toàn môn.</p></header>
-        {else}
+        <header class="mcr-course-heading">
+            <p class="mcr-course-eyebrow">{if $quiz_course}Khoá trắc nghiệm{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
+            <h1 id="mcr-course-title">{$product.name|escape}</h1>
+            {if $quiz_course}<p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; chọn thời hạn để mở bài tập 2 của toàn môn.</p>{/if}
+        </header>
+        <div class="mcr-course-columns{if $quiz_course} mcr-course-columns--quiz{/if}">
+        {if !$quiz_course}
         <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">
-            <header class="mcr-course-heading">
-                <p class="mcr-course-eyebrow">{if $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
-                <h1 id="mcr-course-title">{$product.name|escape}</h1>
-            </header>
             <div class="mcr-intro">
                 <div class="mcr-intro-main">
                     <div class="mcr-overview-tabs" role="tablist" aria-label="Thông tin khoá học">
@@ -330,11 +330,12 @@
 
                     </div>
                 </div>
-                    <aside class="mcr-intro-side" aria-label="Đăng ký khoá học">{$smarty.capture.mcr_quote}</aside>
             </div>
         </section>
 
         {/if}
+        <aside class="mcr-course-price" aria-label="{if $quiz_course}Đăng ký trắc nghiệm{else}Đăng ký khoá học{/if}">{$smarty.capture.mcr_quote}</aside>
+        <div class="mcr-course-curriculum">
         <header class="mcr-learning-heading" id="mcr-learning">
             <div><p class="mcr-course-eyebrow">Học theo lộ trình</p><h2>Nội dung khoá học</h2></div>
             <span>{$lesson_count} bài học</span>
@@ -400,7 +401,8 @@
                     {/foreach}
                 </div>
             </aside>
-            <aside class="mcr-curriculum-price" aria-label="{if $quiz_course}Đăng ký trắc nghiệm{else}Đăng ký khoá học{/if}">{$smarty.capture.mcr_quote}</aside>
+        </div>
+        </div>
         </div>
 
         <div class="mcr-study-modal" data-mcr-study-modal role="dialog" aria-modal="true" aria-labelledby="mcr-study-title" tabindex="-1" hidden>
