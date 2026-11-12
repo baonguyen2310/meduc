@@ -1,0 +1,60 @@
+/* Original MedUC owls accompany the page copy without covering content or controls. */
+.meduc-mascot-pair {
+  --meduc-mascot-size: 132px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+.meduc-mascot-pair > .meduc-mascot-art {
+  display: block;
+  flex: 0 0 var(--meduc-mascot-size);
+  width: var(--meduc-mascot-size);
+  height: var(--meduc-mascot-size);
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}
+.meduc-mascot-copy { min-width: 0; }
+.meduc-mascot-note { margin-top: 26px; }
+.meduc-mascot-note > p { min-width: 0; margin: 0; }
+.mhw-copy > .meduc-mascot-note {
+  --meduc-mascot-size: 112px;
+  align-self: flex-start;
+  max-width: 490px;
+  margin-top: 18px;
+  gap: 12px;
+  text-align: left;
+}
+.mhw-copy > .meduc-mascot-note > .mhw-subtitle { margin: 0; }
+.meduc-mascot-identity {
+  --meduc-mascot-size: 160px;
+  justify-content: center;
+  gap: 28px;
+  margin: 0 auto 24px;
+}
+.meduc-mascot-identity > .mab-name-logo { flex: 0 1 auto; margin: 0; }
+.meduc-mascot-identity > .mab-name-logo img { width: 180px; max-width: 100%; }
+.meduc-mascot-outro { --meduc-mascot-size: 164px; }
+
+@media (max-width: 767.98px) {
+  .meduc-mascot-pair { --meduc-mascot-size: 100px; gap: 14px; }
+  .mhw-copy > .meduc-mascot-note {
+    --meduc-mascot-size: 88px;
+    align-self: center;
+    max-width: 380px;
+    gap: 8px;
+  }
+  .meduc-mascot-identity { --meduc-mascot-size: 128px; gap: 16px; }
+  .meduc-mascot-identity > .mab-name-logo img { width: 140px; }
+  .meduc-mascot-outro { --meduc-mascot-size: 108px; }
+  .mmp-outro .meduc-mascot-copy h2 { font-size: clamp(28px, 7.4vw, 40px); }
+  .mmp-outro .meduc-mascot-copy > p:last-child { margin-top: 14px; }
+}
+@media (max-width: 374px) {
+  .meduc-mascot-pair { --meduc-mascot-size: 84px; gap: 10px; }
+  .meduc-mascot-identity { --meduc-mascot-size: 112px; }
+  .meduc-mascot-identity > .mab-name-logo img { width: 120px; }
+}

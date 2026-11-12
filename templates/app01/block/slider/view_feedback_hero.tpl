@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback-page.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 
 <section class="mfb mfb-hero">
     <div class="mfb-shell mfb-hero-grid{if $picture == ''} mfb-hero-grid--text{/if}">
@@ -27,7 +28,12 @@
                     {if !empty($text.tieu_de_dong_2)}<span>{$text.tieu_de_dong_2|escape}</span>{/if}
                 </h1>
             {/if}
-            {if !empty($text.mo_ta)}<p class="mfb-hero-lead">{$text.mo_ta|escape|nl2br}</p>{/if}
+            {if !empty($text.mo_ta)}
+                <div class="meduc-mascot-pair meduc-mascot-note">
+                    <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-3.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+                    <p class="mfb-hero-lead">{$text.mo_ta|escape|nl2br}</p>
+                </div>
+            {/if}
             {if !empty($text.nut_chinh) || !empty($text.nut_phu)}
                 <div class="mfb-hero-actions">
                     {if !empty($text.nut_chinh)}

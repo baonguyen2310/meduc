@@ -11,6 +11,7 @@
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-page.js?v=20261105-portrait-framing" defer></script>
 
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-application.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-application.js?v=20261028-1" defer></script>
 
 <main class="mft" id="faculty-page">
@@ -160,7 +161,10 @@
     </section>
 
     <section class="mft-shell mft-outro">
-        <div><p class="mft-kicker">BƯỚC TIẾP CÙNG MEDUC</p><h2>Tìm người hướng dẫn.<br>Chọn hành trình của bạn.</h2></div>
+        <div class="meduc-mascot-pair meduc-mascot-outro">
+            <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-3.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+            <div class="meduc-mascot-copy"><p class="mft-kicker">BƯỚC TIẾP CÙNG MEDUC</p><h2>Tìm người hướng dẫn.<br>Chọn hành trình của bạn.</h2></div>
+        </div>
         <a class="mft-button mft-button--primary" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a>
     </section>
 

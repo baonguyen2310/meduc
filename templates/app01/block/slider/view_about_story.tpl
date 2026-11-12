@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.css?v=20261028-3" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/feedback-page.css?v=20261015" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/about-page.js?v=20261015" defer></script>
 
 <main class="mab" id="meduc-about">
@@ -71,9 +72,12 @@
             <div class="mab-section-heading">
                 <p class="mab-eyebrow">02 / MỘT CÁI TÊN, MỘT ĐỊNH HƯỚNG</p>
                 {if !empty($website.company_logo)}
+                    <div class="meduc-mascot-pair meduc-mascot-identity">
+                    <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-1.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
                     <div class="mab-name-logo">
                         <img{if $meduc_brand} class="mab-name-wordmark--light"{/if} src="{$this->Utilities->getWebsiteImageUrl($website.company_logo)|escape}{if $meduc_brand}?v=20261112-logo-new{/if}" alt="MedUC" loading="lazy" decoding="async" />
                         {if $meduc_brand}<img class="mab-name-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg?v=20261112-logo-new" alt="MedUC" loading="lazy" decoding="async" />{/if}
+                    </div>
                     </div>
                 {/if}
                 <h2 id="name-title"><span>NGHĨA LÀ GÌ?</span></h2>

@@ -15,6 +15,7 @@
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-page.css?v=20261028-2" rel="stylesheet">
 
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-nav.css?v=20261028-1" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/roadmap-nav.js?v=20261028-1" defer></script>
 
 <main class="mlr" id="meduc-roadmap">
@@ -23,7 +24,10 @@
             <div class="mlr-hero-copy">
                 <p class="mlr-eyebrow">LỘ TRÌNH HỌC · MEDUC</p>
                 <h1 id="roadmap-title">{$text.tieu_de_1|default:'TỪ CƠ BẢN.'|escape}<span>{$text.tieu_de_2|default:'ĐẾN CHUYÊN SÂU.'|escape}</span></h1>
-                <p class="mlr-lead">Chọn đúng điểm bắt đầu. Học chắc nền tảng, rồi đi sâu từng chặng.</p>
+                <div class="meduc-mascot-pair meduc-mascot-note">
+                    <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-2.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+                    <p class="mlr-lead">Chọn đúng điểm bắt đầu. Học chắc nền tảng, rồi đi sâu từng chặng.</p>
+                </div>
                 <div class="mlr-hero-actions"><a class="mlr-button" href="#cac-chang-hoc">Chọn chặng học <span aria-hidden="true">↓</span></a><a class="mlr-button mlr-button--secondary" href="/phuong-phap-hoc">Cách học tại MedUC</a></div>
             </div>
             <figure class="mlr-hero-picture">

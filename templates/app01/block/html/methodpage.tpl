@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.css?v=20261106-complete-image" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/method-page.js?v=20261028-1" defer></script>
 
 <main class="mmp" id="meduc-method">
@@ -80,7 +81,10 @@
     </section>
 
     <section class="mmp-shell mmp-outro" aria-labelledby="method-start-title">
-        <div><p class="mmp-eyebrow">THỬ MỘT CÁCH HỌC MỚI</p><h2 id="method-start-title">BẮT ĐẦU TỪ<br><span>MỘT BÀI HỌC.</span></h2><p>Chọn môn bạn đang cần. Học thử và tự cảm nhận cách MedUC giải thích kiến thức.</p></div>
+        <div class="meduc-mascot-pair meduc-mascot-outro">
+            <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-2.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+            <div class="meduc-mascot-copy"><p class="mmp-eyebrow">THỬ MỘT CÁCH HỌC MỚI</p><h2 id="method-start-title">BẮT ĐẦU TỪ<br><span>MỘT BÀI HỌC.</span></h2><p>Chọn môn bạn đang cần. Học thử và tự cảm nhận cách MedUC giải thích kiến thức.</p></div>
+        </div>
         <div class="mmp-outro-actions"><a class="mmp-button mmp-button--primary" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a><a class="mmp-text-link" href="/lo-trinh-hoc">Xem lộ trình học <span aria-hidden="true">→</span></a></div>
     </section>
 </main>

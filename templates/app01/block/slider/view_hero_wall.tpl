@@ -41,6 +41,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261105-portrait-framing" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand-mascot.css?v=20261112-1" rel="stylesheet">
 
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-photos.js?v=20261105-portrait-framing" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.js?v=20261022-1" defer></script>
@@ -73,7 +74,10 @@
                 </h1>
             {/if}
             {if !empty($text.mo_ta)}
-                <p class="mhw-subtitle">{$text.mo_ta|escape|nl2br}</p>
+                <div class="meduc-mascot-pair meduc-mascot-note">
+                    <img class="meduc-mascot-art" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/mascots/linh-vat-1.webp" alt="Linh vật cú mèo MedUC" width="800" height="800" loading="lazy" decoding="async" />
+                    <p class="mhw-subtitle">{$text.mo_ta|escape|nl2br}</p>
+                </div>
             {/if}
         </div>
         <div class="mhw-actions">
