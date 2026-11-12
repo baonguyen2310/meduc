@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use App\Service\CourseContributionMessage;
 use Psr\Http\Message\UploadedFileInterface;
 
 /** Suggestions remain separate from the source exams until an admin reviews them. */
@@ -113,13 +114,14 @@ class CourseContributionController extends AppController
         )));
         $localPreview = in_array($this->request->getUri()->getHost(), ['localhost', '127.0.0.1'], true);
         if (!$localPreview && $adminEmails) {
-            $safe = htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             try {
-                $mail = $this->loadComponent('Email')->sendEmail([
+                $contribution = ['id' => $id, 'product_id' => $productId, 'lesson_number' => $lesson,
+                    'quiz_id' => $quizId, 'question_number' => $question, 'type' => $type,
+                    'suggested_answer' => $answer, 'content' => $content];
+                $context = CourseContributionMessage::context($contribution, $this->request->getUri()->getHost(), LANGUAGE);
+                $mail = $this->loadComponent('Email')->sendEmail(array_merge([
                     'to_email' => $adminEmails, 'send_try_content' => true,
-                    'subject' => "MedUC: đóng góp mới #{$id}",
-                    'content' => "Có đóng góp mới #{$id} cho khóa {$productId} (" . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . ").<br>" . nl2br($safe) . "<br>Vào trang quản trị mục Đóng góp học viên để xem và xử lý.",
-                ]);
+                ], CourseContributionMessage::email($contribution, $context)));
                 if (($mail[CODE] ?? null) !== SUCCESS) $this->log("Could not email course contribution #{$id}", 'error');
             } catch (\Throwable $e) {
                 $this->log("Could not email course contribution #{$id}: " . $e->getMessage(), 'error');

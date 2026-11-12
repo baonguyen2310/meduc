@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use Admin\Service\TeacherCourseAccess;
+use App\Service\CourseContributionMessage;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
@@ -48,6 +49,7 @@ class CourseContributionController extends AppController
         foreach ($rows as &$row) {
             $files = json_decode((string)$row['photo_files'], true);
             $row['files'] = is_array($files) ? $files : [];
+            $row['context'] = CourseContributionMessage::context($row, $this->request->getUri()->getHost(), $this->lang ?: 'vi');
         }
         unset($row);
         $this->set(compact('rows', 'total', 'page', 'pages', 'status', 'type'));

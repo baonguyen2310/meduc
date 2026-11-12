@@ -36,7 +36,20 @@
             </div>
             <div class="kt-portlet__body">
                 <p><strong>{$row.full_name|default:'Học viên'|escape}</strong> · {$row.customer_code|escape} · {$row.email|escape} · {$row.created|date_format:'%d/%m/%Y %H:%M'}</p>
-                <p>Khóa <a href="{ADMIN_PATH}/product/update/{$row.product_id}">#{$row.product_id}</a>{if $row.lesson_number} · Buổi {$row.lesson_number}{/if}{if $row.quiz_id} · Đề #{$row.quiz_id}{/if}{if $row.question_number} · Câu {$row.question_number}{/if}</p>
+                <p><strong>Môn / Khóa học:</strong> <a href="{$row.context.course_admin_url|escape}">{$row.context.course_name|escape}</a></p>
+                {if !empty($row.context.unit_name)}<p><strong>Học phần:</strong> {$row.context.unit_name|escape}</p>{/if}
+                {if !empty($row.context.chapter_name)}<p><strong>Chương:</strong> {$row.context.chapter_name|escape}</p>{/if}
+                {if !empty($row.context.lesson_name)}<p><strong>Bài học:</strong> {$row.context.lesson_name|escape}</p>{elseif $row.lesson_number}<p><strong>Bài đã gửi:</strong> Bài số {$row.lesson_number}</p>{/if}
+                {if !empty($row.context.quiz_name)}<p><strong>Đề / Bài tập:</strong> {$row.context.quiz_name|escape}{if $row.question_number} · <strong>Câu {$row.question_number}</strong>{/if}</p>{/if}
+                {if !empty($row.context.lesson_url)}<p><a href="{$row.context.lesson_url|escape}" target="_blank" rel="noopener noreferrer">Mở bài học trên website →</a></p>{/if}
+                {if !empty($row.context.question_text) || !empty($row.context.options)}
+                    <section class="border rounded p-3 mb-3" style="background:#f7f8fa">
+                        <h4 style="font-size:16px">Câu {$row.question_number} trong đề</h4>
+                        <div style="white-space:pre-wrap;overflow-wrap:anywhere">{$row.context.question_text|escape}</div>
+                        {foreach from=$row.context.options item=option}<p class="mt-2 mb-1"><strong>{$option.label|escape}.</strong> {$option.text|escape}</p>{/foreach}
+                        {if !empty($row.context.correct_answer)}<p class="mt-3 mb-0"><strong>Đáp án hiện tại:</strong> {$row.context.correct_answer|escape}</p>{/if}
+                    </section>
+                {/if}
                 {if $row.suggested_answer}<p><strong>Đáp án đề xuất:</strong> {$row.suggested_answer|escape}</p>{/if}
                 <div class="border rounded p-3 mb-3" style="white-space:pre-wrap;overflow-wrap:anywhere">{$row.content|escape}</div>
                 {if !empty($row.files)}
