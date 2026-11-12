@@ -216,7 +216,7 @@
     function loading(text='Đang tải giỏ khóa học…'){body.replaceChildren(node('p','mpc-loading',text));}
     function showError(message){const error=node('p','mpc-cart-error',message);error.setAttribute('role','alert');body.prepend(error);}
     async function openCart(trigger){
-      view='loading';confirmation=null;title.textContent='Các môn bạn đã chọn.';ensureOpen(trigger);loading();
+      view='loading';title.textContent='Các môn bạn đã chọn.';ensureOpen(trigger);loading();
       try{await refreshContext();if(dialog.open){view='cart';renderCart();}}catch(error){if(dialog.open){view='cart';body.replaceChildren();showError(error.message);body.append(button('Thử lại','mpc-primary',()=>openCart(trigger)));}}
     }
     function courseRow(board,course,remove=true) {
@@ -230,7 +230,7 @@
       return row;
     }
     function renderCart(){
-      title.textContent='Các môn bạn đã chọn.';body.replaceChildren();foot.hidden=false;confirmation=null;
+      title.textContent='Các môn bạn đã chọn.';body.replaceChildren();foot.hidden=false;
       let groups=0;
       for(const board of boards){
         const ids=idsFor(board);if(!ids.length)continue;groups++;
@@ -258,7 +258,7 @@
       const board=boards.find(b=>b.id===Number(boardId));if(!board)return;
       const ids=idsFor(board),pack=packageFor(board,ids);
       if(!pack||ids.length!==pack.count){showError('Vui lòng chọn đủ số môn của gói.');return;}
-      busy=true;closeDialog(false);
+      closeDialog(false);busy=true;
       try { await api.checkout(board.id,pack.id,ids,triggers[0]); }
       catch(error){ensureOpen(triggers[0]);renderCart();showError(error.message);}
       finally{busy=false;}
