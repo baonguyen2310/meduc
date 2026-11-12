@@ -59,8 +59,8 @@ final class DocumentCredits
     public static function issue(int $customer,array $file):array {
         return CommercePurchases::db()->transactional(function()use($customer,$file){
             $db=CommercePurchases::db();$db->execute('SELECT id FROM customers WHERE id=? AND deleted=0 FOR UPDATE',[$customer])->fetch();
-            $active=$db->execute('SELECT * FROM document_credit_uses WHERE customer_id=? AND article_id=? AND file_key=? AND used_at IS NOT NULL AND token_expires_at>=? ORDER BY id DESC LIMIT 1',[$customer,$file['article_id'],$file['file_key'],time()])->fetch('assoc');
-            if($active&&self::ticket($active['download_token'],$customer))return self::link($active);
+            // Each explicit download action gets a new ticket, even for the same file.
+            // Range requests and interrupted-transfer retries reuse that ticket's URL instead.
             if(self::balance($customer)<1)throw new \InvalidArgumentException('Bạn đã hết lượt tải. Vui lòng chọn gói lượt tải.');
             $use=['code'=>bin2hex(random_bytes(16)),'customer_id'=>$customer,'article_id'=>$file['article_id'],'file_index'=>$file['file_index'],'file_key'=>$file['file_key'],
                 'file_name'=>$file['file_name'],'file_url'=>$file['file_url'],'download_token'=>bin2hex(random_bytes(32)),'token_expires_at'=>time()+DocumentDownloads::RETRY_SECONDS,'created_at'=>time()];
@@ -78,7 +78,10 @@ final class DocumentCredits
     }
     public static function consume(string $token,int $customer):void {
         CommercePurchases::db()->transactional(function()use($token,$customer){
-            $db=CommercePurchases::db();$db->execute('SELECT id FROM customers WHERE id=? FOR UPDATE',[$customer])->fetch();
+            $db=CommercePurchases::db();
+            // Customers is MyISAM on the legacy hosting; lock the InnoDB wallet rows instead.
+            // This serializes distinct tickets for one buyer before reading their remaining balance.
+            $db->execute("SELECT order_id FROM commerce_purchases WHERE customer_id=? AND kind='document' ORDER BY order_id FOR UPDATE",[$customer])->fetchAll('assoc');
             $use=$db->execute('SELECT * FROM document_credit_uses WHERE download_token=? AND customer_id=? AND token_expires_at>=? FOR UPDATE',[$token,$customer,time()])->fetch('assoc');
             if(!$use)throw new \InvalidArgumentException('Lượt tải không còn hiệu lực.');
             if($use['used_at']){if(!self::ticket($token,$customer))throw new \InvalidArgumentException('Lượt tải không còn hiệu lực.');return;}

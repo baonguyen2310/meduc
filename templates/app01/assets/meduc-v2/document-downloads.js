@@ -62,7 +62,7 @@
       } else if (file.purchase?.state === 'pending') location.assign(file.purchase.payment_url);
       else if(context.balance>0){
         const ticket=await api('start-credit',{article:detail.dataset.readingId,index});download(ticket.url);
-        message('Đang bắt đầu tải. Mỗi tệp dùng 1 lượt; bạn có thể thử lại trong 30 phút.');
+        message('Đang tải. Mỗi lần bấm tải mới dùng 1 lượt. Nếu bị gián đoạn, bạn có thể tiếp tục trong mục Tải xuống của trình duyệt trong 30 phút.');
         [1500,5000,12000].forEach(ms=>setTimeout(()=>refreshDetail().catch(()=>{}),ms));
       }else {
         const result = await api('purchase', {nonce:file.nonce, expected_customer_id:context.customer_id,package_id:selectedPackage});
