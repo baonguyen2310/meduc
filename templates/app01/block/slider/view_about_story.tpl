@@ -72,8 +72,8 @@
                 <p class="mab-eyebrow">02 / MỘT CÁI TÊN, MỘT ĐỊNH HƯỚNG</p>
                 {if !empty($website.company_logo)}
                     <div class="mab-name-logo">
-                        <img{if $meduc_brand} class="mab-name-wordmark--light"{/if} src="{$this->Utilities->getWebsiteImageUrl($website.company_logo)|escape}" alt="MedUC" loading="lazy" decoding="async" />
-                        {if $meduc_brand}<img class="mab-name-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg" alt="MedUC" loading="lazy" decoding="async" />{/if}
+                        <img{if $meduc_brand} class="mab-name-wordmark--light"{/if} src="{$this->Utilities->getWebsiteImageUrl($website.company_logo)|escape}{if $meduc_brand}?v=20261112-logo-new{/if}" alt="MedUC" loading="lazy" decoding="async" />
+                        {if $meduc_brand}<img class="mab-name-wordmark--dark" src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/brand/meduc-khai-mo-dark.svg?v=20261112-logo-new" alt="MedUC" loading="lazy" decoding="async" />{/if}
                     </div>
                 {/if}
                 <h2 id="name-title"><span>NGHĨA LÀ GÌ?</span></h2>

@@ -6,14 +6,14 @@
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/css/fonts.css" rel="stylesheet">
   {$this->element('layout/css')}
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261030-scroll-nav-2" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-new" rel="stylesheet">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261030-scroll-nav" defer></script>
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261021-1" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-new" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261110-commerce-access" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
-  <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}">
+  <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}{if strpos($website_info.favicon, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}?v=20261112-logo-new{/if}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/checkout-entry.js?v=20261110-commerce-access" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261110-commerce-access" defer></script>
