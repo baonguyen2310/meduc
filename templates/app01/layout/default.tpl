@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{LANGUAGE}" csrf-token="{$this->getRequest()->getAttribute('csrfToken')}">
+<html lang="{LANGUAGE}" data-meduc-theme-user="{$meduc_theme_state.customer_id|default:0}" data-meduc-theme-saved="{$meduc_theme_state.theme|default:'light'|escape}" csrf-token="{$this->getRequest()->getAttribute('csrfToken')}">
 <head>
     {assign var = title value = ""}
     {if !empty($seo_info.title)}
@@ -52,12 +52,12 @@
     {* Every page whose layout has a header gets the new header instead of the database header rows. *}
     {$use_header_v2 = !empty($page_code) && !empty($structure[{HEADER}])}
     {if $use_header_v2}
-        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
+        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261113-account-theme"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-lockup" rel="stylesheet">
-        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261030-scroll-nav" defer></script>
+        <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261113-account-theme" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261110-quiz-shortcut" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261030-scroll-nav" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-lockup" rel="stylesheet">

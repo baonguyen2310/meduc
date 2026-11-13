@@ -26,10 +26,11 @@
     });
   }
   updateThemeButtons();
+  window.addEventListener("meduc:theme-applied", updateThemeButtons);
   themeButtons.forEach((button) => button.addEventListener("click", () => {
     const next = document.documentElement.dataset.meducTheme === "light" ? "dark" : "light";
-    document.documentElement.dataset.meducTheme = next;
-    try { localStorage.setItem("meduc-theme", next); } catch (_) { /* Storage may be disabled. */ }
+    if (window.meducTheme) window.meducTheme.select(next);
+    else document.documentElement.dataset.meducTheme = next;
     updateThemeButtons();
   }));
 

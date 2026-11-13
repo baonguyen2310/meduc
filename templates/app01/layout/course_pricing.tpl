@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi" csrf-token="{$this->getRequest()->getAttribute('csrfToken')|escape}">
+<html lang="vi" data-meduc-theme-user="{$meduc_theme_state.customer_id|default:0}" data-meduc-theme-saved="{$meduc_theme_state.theme|default:'light'|escape}" csrf-token="{$this->getRequest()->getAttribute('csrfToken')|escape}">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{$title_for_layout|escape}</title>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261014"></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261113-account-theme"></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/css/fonts.css" rel="stylesheet">
   {$this->element('layout/css')}
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261112-logo-lockup" rel="stylesheet">
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261030-scroll-nav" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261113-account-theme" defer></script>
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261112-logo-lockup" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">

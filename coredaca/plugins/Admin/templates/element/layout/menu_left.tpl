@@ -26,6 +26,7 @@
 
             {if !empty($auth_user.supper_admin) || (!empty($auth_user.role_id) && $auth_user.role_id == 1)}
                 <li class="kt-menu__item"><a href="{ADMIN_PATH}/faculty-applications" class="kt-menu__link" path-menu="faculty-applications"><span class="kt-menu__link-icon"><i class="fas fa-user-tie"></i></span><span class="kt-menu__link-text">Ứng tuyển giảng viên</span></a></li>
+                <li class="kt-menu__item"><a href="{ADMIN_PATH}/theme-usage" class="kt-menu__link" path-menu="theme-usage"><span class="kt-menu__link-icon"><i class="fas fa-adjust"></i></span><span class="kt-menu__link-text">Giao diện sáng / tối</span></a></li>
                 <li class="kt-menu__item"><a href="{ADMIN_PATH}/course-prices" class="kt-menu__link" path-menu="course-prices"><span class="kt-menu__link-icon"><i class="fas fa-tags"></i></span><span class="kt-menu__link-text">Bảng báo giá</span></a></li>
                 <li class="kt-menu__item">
                     <a href="{ADMIN_PATH}/course-contributions" class="kt-menu__link" path-menu="course-contributions">

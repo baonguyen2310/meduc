@@ -4,7 +4,8 @@
     {if empty($theme_usage.installed)}
       <p class="mb-0 text-muted">Thống kê giao diện đang được cập nhật.</p>
     {else}
-      <p class="text-muted mb-4">Tổng cộng <strong class="text-dark">{$theme_usage.total|number_format:0:',':'.'} người</strong> được ghi nhận · Mỗi người được tính theo giao diện sử dụng gần nhất.</p>
+      <p class="text-muted mb-4">Tổng cộng <strong class="text-dark">{$theme_usage.total|number_format:0:',':'.'} người</strong> được ghi nhận · Mỗi tài khoản hoặc khách chưa định danh được tính một lần theo lựa chọn gần nhất.</p>
+      {if !empty($theme_usage.pending)}<p class="alert alert-light border">{$theme_usage.pending} bản ghi cũ đang chờ cập nhật khi người dùng quay lại; chưa tính vào số liệu sáng / tối mới.</p>{/if}
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="rounded p-4 h-100" style="background:#1b1d25;color:#fff">
@@ -21,7 +22,8 @@
           </div>
         </div>
       </div>
-      <p class="text-muted mb-0">Khách được tính theo trình duyệt; khi đăng nhập, lượt khách được gộp vào tài khoản. Một tài khoản trên nhiều thiết bị chỉ tính một lần. Số liệu bắt đầu từ khi bật tính năng, không khôi phục được dữ liệu trước đó.</p>
+      <p class="text-muted mb-0">Khách được tính theo trình duyệt; khi đăng nhập, lượt khách được gộp vào tài khoản. Một tài khoản trên nhiều thiết bị chỉ tính một lần. Mặc định sáng được áp dụng một lần khi quay lại. Các lựa chọn tiếp theo được lưu bình thường.</p>
+      <a class="btn btn-outline-primary mt-3" href="{ADMIN_PATH}/theme-usage">Xem tài khoản, trình duyệt và lịch sử thay đổi</a>
     {/if}
   </div>
 </section>

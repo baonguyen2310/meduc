@@ -399,6 +399,8 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/denied', ['plugin' => 'Admin', 'controller' => 'Error', 'action' => 'denied']);
     $builder->connect('/error', ['plugin' => 'Admin', 'controller' => 'Error', 'action' => 'error']);
 
+    $builder->connect('/theme-usage', ['plugin'=>'Admin','controller'=>'ThemeUsage','action'=>'index']);
+
     // dashboard
     $builder->connect('/main', ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'dashboard']);
     $builder->connect('/dashboard', ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'dashboard']);

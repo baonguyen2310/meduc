@@ -148,6 +148,13 @@ class AppController extends Controller
     {
         parent::beforeRender($event);
 
+        if (!$this->request->is('ajax')) {
+            $themeMember = $this->request->getSession()->read(MEMBER) ?: [];
+            try { $themeState = \App\Service\ThemeUsage::initial((int)($themeMember['id'] ?? 0)); }
+            catch (\Throwable $e) { $themeState = ['customer_id'=>(int)($themeMember['id'] ?? 0), 'theme'=>'light']; }
+            $this->set('meduc_theme_state', $themeState);
+        }
+
         if (!$this->request->is('ajax') && $this->get_structure_layout) {
             $error = null;
     
