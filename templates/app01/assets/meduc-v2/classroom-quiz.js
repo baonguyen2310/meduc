@@ -209,7 +209,7 @@
     const total = attempt.quiz.questions.length;
     const count = lessonQuizCount(attempt.lesson.number);
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
-    const label = isReference(attempt) ? "Đề thực hành · Xem đáp án" : isPractice(attempt) ? "Đề theo bài" : "Đề thi thử";
+    const label = isReference(attempt) ? "Đề thực hành · Xem đáp án" : isPractice(attempt) ? "Phần" : "Đề thi thử";
     kicker.textContent = count > 1 && place >= 0 ? `${label} ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `${label} · Buổi ${attempt.lesson.number}`;
     submitButton.textContent = isPractice(attempt) ? "Hoàn thành bài" : "Nộp bài";
     back.hidden = false;
@@ -974,6 +974,8 @@
       const error=new Error((body && body.message) || "Chưa tải được bài tập.");
       error.authenticationRequired=response.status===401;throw error;
     }
+    const card = root.querySelector(`[data-mcr-quiz-start="${id}"]`)?.closest(".mcr-quiz-card");
+    if (card?.dataset.quizPart) body.data.name = card.querySelector("h3").textContent.trim();
     quizzes[id] = body.data;
     return body.data;
   }

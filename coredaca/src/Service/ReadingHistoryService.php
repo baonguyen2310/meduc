@@ -11,6 +11,7 @@ class ReadingHistoryService
 {
     private $lang;
     public function __construct(string $lang) { $this->lang=$lang; }
+    public static function limit(string $kind): int { return $kind==='exam_course'?5:3; }
 
     public function articles(string $kind,array $ids): array
     {
@@ -50,7 +51,7 @@ class ReadingHistoryService
         if (!$courseKind) return [];
         $table=TableRegistry::get('Products');
         $rows=$table->queryListProducts(['get_categories'=>true,'get_attributes'=>true,
-            FILTER=>[LANG=>$this->lang,STATUS=>1,STATUS_ITEM=>1,'draft'=>'0','ids'=>$ids,'id_categories'=>[50]]])->where(['Products.draft'=>0,'Products.course_kind'=>$courseKind])->limit(3)->toList();
+            FILTER=>[LANG=>$this->lang,STATUS=>1,STATUS_ITEM=>1,'draft'=>'0','ids'=>$ids,'id_categories'=>[50]]])->where(['Products.draft'=>0,'Products.course_kind'=>$courseKind])->limit(self::limit($kind))->toList();
         $result=[];
         foreach ($rows as $row) {
             $course=$table->formatDataProductDetail($row,$this->lang);
@@ -105,6 +106,7 @@ class ReadingHistoryService
 
     public function recent(int $customer,string $kind): array
     {
+        $limit=self::limit($kind);
         $courseKind=['course'=>'knowledge','exam_course'=>'quiz','solution'=>'exam_solution'][$kind]??null;
         if ($courseKind) {
             // Old solution visits shared the course key; include them only for this same owner and type.
@@ -112,7 +114,7 @@ class ReadingHistoryService
             $rows=ConnectionManager::get('default')->execute("SELECT h.article_id,'{}' AS progress,MAX(h.visited_at) AS visited_at
                 FROM customer_reading_history h JOIN products p ON p.id=h.article_id
                 WHERE h.customer_id=:customer AND h.kind IN $kinds AND p.course_kind=:type
-                GROUP BY h.article_id ORDER BY visited_at DESC,MAX(h.id) DESC LIMIT 3",['customer'=>$customer,'type'=>$courseKind])->fetchAll('assoc');
+                GROUP BY h.article_id ORDER BY visited_at DESC,MAX(h.id) DESC LIMIT $limit",['customer'=>$customer,'type'=>$courseKind])->fetchAll('assoc');
         } else {
             $rows=ConnectionManager::get('default')->execute('SELECT article_id,progress,visited_at FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind ORDER BY visited_at DESC,id DESC LIMIT 3',['customer'=>$customer,'kind'=>$kind])->fetchAll('assoc');
         }
@@ -131,11 +133,11 @@ class ReadingHistoryService
     {
         $db=ConnectionManager::get('default');
         $db->transactional(function()use($db,$customer,$kind,$id){
-            // Serialize visits from multiple tabs before keeping exactly three records per kind.
+            // Serialize visits before retaining the configured number of records per kind.
             $db->execute('SELECT id FROM customers WHERE id=:id FOR UPDATE',['id'=>$customer])->fetch('assoc');
             $now=(int)floor(microtime(true)*1000);
             $db->execute('INSERT INTO customer_reading_history (customer_id,kind,article_id,progress,visited_at,updated_at) VALUES (:customer,:kind,:article,\'{}\',:visited,:updated) ON DUPLICATE KEY UPDATE visited_at=VALUES(visited_at)',['customer'=>$customer,'kind'=>$kind,'article'=>$id,'visited'=>$now,'updated'=>$now]);
-            $keep=$db->execute('SELECT id FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind ORDER BY visited_at DESC,id DESC LIMIT 3',['customer'=>$customer,'kind'=>$kind])->fetchAll('assoc');
+            $keep=$db->execute('SELECT id FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind ORDER BY visited_at DESC,id DESC LIMIT '.self::limit($kind),['customer'=>$customer,'kind'=>$kind])->fetchAll('assoc');
             $ids=implode(',',array_map('intval',array_column($keep,'id')));
             if ($ids) $db->execute('DELETE FROM customer_reading_history WHERE customer_id=:customer AND kind=:kind AND id NOT IN ('.$ids.')',['customer'=>$customer,'kind'=>$kind]);
         });

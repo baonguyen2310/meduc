@@ -32,7 +32,8 @@ class ReadingHistoryController extends AppController
         if ($customer) $items=$service->recent($customer,$kind);
         else {
             $raw=$this->request->getQuery('ids','');
-            $ids=is_string($raw)&&preg_match('/^\d*(?:,\d+){0,2}$/',$raw)?array_filter(array_map('intval',explode(',',$raw))):[];
+            $limit=ReadingHistoryService::limit($kind);
+            $ids=is_string($raw)&&preg_match('/^\d*(?:,\d+){0,'.($limit-1).'}$/',$raw)?array_filter(array_map('intval',explode(',',$raw))):[];
             $articles=$service->articles($kind,$ids);$items=[];
             foreach ($ids as $id) if (isset($articles[$id])) { $item=$articles[$id];unset($item['files']);$items[]=$item; }
         }

@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261029-course-types" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261113-quiz-five" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/catalog-heroes.css?v=20261029-solution" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261110-grid-default" defer></script>
 
@@ -41,7 +41,7 @@
                 {else}
                     <h1 class="mcl-catalog-title" id="catalog-title">LUYỆN ĐỀ THEO MÔN.<span>VỮNG VÀNG MÙA THI.</span></h1>
                 {/if}
-                <p class="mcl-catalog-intro">Làm thử bài tập 1 miễn phí. Chọn thời hạn để mở bài tập 2 của tất cả bài trong môn.</p>
+                <p class="mcl-catalog-intro">Làm thử phần 1 miễn phí. Chọn thời hạn để mở phần 2 của tất cả bài trong môn.</p>
                 <div class="mcl-exam-hero-meta"><span><strong>{$catalog.total}</strong> môn luyện thi</span><span aria-hidden="true">/</span><a href="#course-listing">Chọn môn luyện thi <span aria-hidden="true">↓</span></a></div>
             </div>
         </section>

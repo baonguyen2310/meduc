@@ -1,7 +1,7 @@
 {strip}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261113-account-theme" defer></script>
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261028-no-price" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261029-solution-2" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261113-quiz-five" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261113-quiz-five" defer></script>
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
 {$header_member = $this->Member->getMemberInfo()}
@@ -137,7 +137,7 @@
       <div class="mhi-member" nh-mini-member{if empty($header_member)} hidden{/if}>
         {if !empty($header_member)}{$this->element('../Member/mini')}{/if}
       </div>
-      <button class="mhi-header-cta" type="button" data-ma-open="register" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng ký</button>
+      <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng nhập</button>
       <button class="mhi-icon-button mhi-menu-toggle" id="mhi-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mhi-drawer">
         <svg class="mhi-icon" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -175,7 +175,7 @@
           <span>Đổi giao diện sáng/tối</span>
         </button>
         <a class="mhi-header-cta" data-ma-member-link href="/khoa-hoc-da-dang-ky"{if empty($header_member)} hidden{/if}>Khoá học của tôi</a>
-        <button class="mhi-header-cta" type="button" data-ma-open="register" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng ký</button>
+        <button class="mhi-header-cta" type="button" data-ma-open="login" aria-haspopup="dialog" aria-controls="login-modal"{if !empty($header_member)} hidden{/if}>Đăng nhập</button>
       </div>
     </nav>
   </div>

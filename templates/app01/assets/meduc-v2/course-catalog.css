@@ -175,3 +175,11 @@ html[data-meduc-theme="light"] .mcl .mcl-register { background:#de2334; }
 .mcl-kind-nav { display:flex; flex-wrap:wrap; gap:10px; padding-top:24px; padding-bottom:16px; }
 .mcl-kind-nav a { padding:11px 18px; border:1px solid var(--mcl-line,#dedee4); border-radius:10px; color:inherit; font-weight:700; }
 .mcl-kind-nav a[aria-current="page"] { background:#d61c3b; color:#fff; border-color:#d61c3b; }
+
+/* Five subjects per desktop row in the quiz catalogue. */
+@media (min-width:1200px) {
+  .mcl[data-course-kind="quiz"] .mcl-group[data-course-layout="grid"] .mcl-course-list { grid-template-columns:repeat(5,minmax(0,1fr)); gap:20px 16px; }
+  .mcl[data-course-kind="quiz"] .mcl-group[data-course-layout="grid"] .mcl-card-copy { padding:16px; }
+  .mcl[data-course-kind="quiz"] .mcl-group[data-course-layout="grid"] .mcl-card h3 { font-size:17px; }
+  .mcl[data-course-kind="quiz"] .mcl-group[data-course-layout="grid"] .mcl-register { padding:11px 12px; gap:8px; font-size:11px; white-space:normal; }
+}

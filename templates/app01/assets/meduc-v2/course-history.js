@@ -1,4 +1,4 @@
-/* The three most recently opened courses, kept separately for each public catalogue. */
+/* Recent courses are kept separately for each public catalogue. */
 (() => {
   'use strict';
   const detail=document.querySelector('[data-mcr-product]');
@@ -7,6 +7,7 @@
   const courseKind=detail?.dataset.mcrKind||catalog?.dataset.courseKind;
   const kind={knowledge:'course',exam_solution:'solution',quiz:'exam_course'}[courseKind];
   if(!kind)return;
+  const historyLimit=kind==='exam_course'?5:3;
   const copyByKind={
     course:{title:'KHOÁ HỌC VỪA XEM.',eyebrow:'HỌC TỪ CƠ BẢN ĐẾN CHUYÊN SÂU',label:'MEDUC / KHOÁ HỌC'},
     solution:{title:'KHOÁ CHỮA ĐỀ ĐÃ XEM.',eyebrow:'HIỂU CÁCH GIẢI · VỮNG CÁCH LÀM',label:'MEDUC / CHỮA ĐỀ'},
@@ -18,7 +19,7 @@
   let owner=null,generation=0,lastCheck=0,box;
   const node=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n;};
   function local(){
-    try{let rows=JSON.parse(localStorage.getItem(key)||'[]');if(kind==='solution'&&Array.isArray(rows)&&!rows.length)rows=JSON.parse(localStorage.getItem('meduc-reading:guest:v1:course')||'[]');return Array.isArray(rows)?rows.filter(r=>Number.isInteger(r.article_id)&&r.article_id>0).filter((r,i,a)=>a.findIndex(x=>x.article_id===r.article_id)===i).slice(0,3):[];}
+    try{let rows=JSON.parse(localStorage.getItem(key)||'[]');if(kind==='solution'&&Array.isArray(rows)&&!rows.length)rows=JSON.parse(localStorage.getItem('meduc-reading:guest:v1:course')||'[]');return Array.isArray(rows)?rows.filter(r=>Number.isInteger(r.article_id)&&r.article_id>0).filter((r,i,a)=>a.findIndex(x=>x.article_id===r.article_id)===i).slice(0,historyLimit):[];}
     catch(_){return [];}
   }
   function safeURL(value,image=false){
@@ -37,7 +38,7 @@
   function render(items){
     if(!box)return;
     const grid=box.querySelector('.mch-grid');grid.replaceChildren();
-    items.slice(0,3).forEach(course=>{
+    items.slice(0,historyLimit).forEach(course=>{
       const url=safeURL(course.url);if(!url)return;
       const card=node('article','mch-card');card.dataset.courseHistoryId=String(course.article_id);
       const cover=node('a','mch-cover');cover.href=url;cover.setAttribute('aria-label',`Xem ${course.title}`);
@@ -54,7 +55,7 @@
   async function boot(visit=false){
     const run=++generation,previous=owner;if(box)box.hidden=true;
     const browser=local();
-    const ids=(id?[{article_id:id},...browser]:browser).filter((r,i,a)=>a.findIndex(x=>x.article_id===r.article_id)===i).slice(0,3).map(r=>r.article_id);
+    const ids=(id?[{article_id:id},...browser]:browser).filter((r,i,a)=>a.findIndex(x=>x.article_id===r.article_id)===i).slice(0,historyLimit).map(r=>r.article_id);
     try{
       const res=await fetch(`/reading-history?kind=${kind}&ids=${ids.join(',')}`,{credentials:'same-origin',cache:'no-store',headers:{'X-Requested-With':'XMLHttpRequest'}});
       if(!res.ok)throw new Error('history');
@@ -66,7 +67,7 @@
           const saved=await fetch('/reading-history/save',{method:'POST',body,credentials:'same-origin',headers:{'X-CSRF-Token':document.documentElement.getAttribute('csrf-token')||'','X-Requested-With':'XMLHttpRequest'}});
           if(!saved.ok)throw new Error('visit');
         }else if(items.some(r=>r.article_id===id)){
-          try{localStorage.setItem(key,JSON.stringify([{article_id:id,visited_at:Date.now()},...items.filter(r=>r.article_id!==id).map(r=>({article_id:r.article_id,visited_at:r.visited_at||0}))].slice(0,3)));}catch(_){}
+          try{localStorage.setItem(key,JSON.stringify([{article_id:id,visited_at:Date.now()},...items.filter(r=>r.article_id!==id).map(r=>({article_id:r.article_id,visited_at:r.visited_at||0}))].slice(0,historyLimit)));}catch(_){}
         }
       }
       if(run!==generation)return;

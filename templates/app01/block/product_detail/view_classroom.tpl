@@ -198,7 +198,7 @@
                                     </ul>
                                 </section>
                             {/if}
-                            {if $quiz_course && !$licensed}<p class="mcr-quote-note">Làm miễn phí bài tập 1. Chọn gói để mở bài tập 2 của toàn môn trong thời hạn đăng ký.</p>{/if}
+                            {if $quiz_course && !$licensed}<p class="mcr-quote-note">Làm miễn phí phần 1. Chọn gói để mở phần 2 của toàn môn trong thời hạn đăng ký.</p>{/if}
                             <div class="mcr-buy-actions">
                                 {if !$licensed}
                                     <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>{if $quiz_course}Chọn gói trắc nghiệm{else}Đăng ký học ngay{/if}</a>
@@ -263,7 +263,7 @@
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
 {/if}
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261112-curriculum-modal-2" defer></script>{/if}
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261113-part-labels" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261017-3" defer></script>
 
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}" data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-access-expires="{$course_access.expires_at|default:0}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
@@ -274,7 +274,7 @@
         <header class="mcr-course-heading">
             <p class="mcr-course-eyebrow">{if $quiz_course}Khoá trắc nghiệm{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
             <h1 id="mcr-course-title">{$product.name|escape}</h1>
-            {if $quiz_course}<p>Mỗi bài có 2 bài tập. Làm miễn phí bài tập 1; chọn thời hạn để mở bài tập 2 của toàn môn.</p>{/if}
+            {if $quiz_course}<p>Mỗi bài có 2 phần. Làm miễn phí phần 1; chọn thời hạn để mở phần 2 của toàn môn.</p>{/if}
         </header>
         <div class="mcr-course-columns{if $quiz_course} mcr-course-columns--quiz{/if}">
         {if !$quiz_course}
@@ -533,10 +533,10 @@
                                     <div class="mcr-quiz-list">
                                         {foreach from = $lesson.quizzes item = quiz}
                                             {$quiz_info = $course_quizzes.info[$quiz.id]}
-                                            <div class="mcr-quiz-card{if !$quiz.open} is-locked{/if}" data-quiz-school="{$quiz_info.school|default:''|escape}" data-quiz-reference="{if $quiz_info.read_only}1{else}0{/if}">
+                                            <div class="mcr-quiz-card{if !$quiz.open} is-locked{/if}" data-quiz-part="{if $quiz_course && !$lesson.exam}{$quiz@iteration}{/if}" data-quiz-school="{$quiz_info.school|default:''|escape}" data-quiz-reference="{if $quiz_info.read_only}1{else}0{/if}">
                                                 <div>
-                                                    <p class="mcr-quiz-kicker">{if $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
-                                                    <h3>{$quiz_info.name|escape}</h3>
+                                                    <p class="mcr-quiz-kicker">{if $quiz_course && !$lesson.exam}Phần{elseif $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
+                                                    <h3>{if $quiz_course && !$lesson.exam}Phần {$quiz@iteration} · {$lesson.title|escape}{else}{$quiz_info.name|escape}{/if}</h3>
                                                     {if $quiz_info.school}<p class="mcr-quiz-school">{$quiz_info.school|escape}</p>{/if}
                                                     <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0 && !$quiz_info.read_only} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $quiz_info.read_only}Xem hình, đáp án và giải thích; không cần nộp bài.{elseif $quiz_course && !$lesson.exam}Làm từng câu, xem đáp án và lời giải ngay.{else}Nộp bài để xem điểm và lời giải.{/if}{else}{if $quiz_course}Đăng ký môn để mở các đề trả phí.{else}Đăng ký khoá học để làm bài tập này.{/if}{/if}</p>
                                                 </div>
@@ -606,7 +606,7 @@
             </div>
         </div>
         {if $quiz_course && !$licensed}
-        <template data-mcr-quiz-purchase><a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Mở bài tập 2 toàn môn · {$price_text}</a></template>
+        <template data-mcr-quiz-purchase><a class="mcr-btn mcr-btn--primary" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>Mở phần 2 toàn môn · {$price_text}</a></template>
         {/if}
         <div class="mcr-slot mcr-slot--related mcr-related-courses" data-mcr-slot="sw780fy"></div>
     </div>

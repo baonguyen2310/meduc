@@ -34,3 +34,11 @@ html[data-meduc-theme="light"] .mch .mch-action { background:#de2334; }
 html[data-meduc-theme="light"] .mch-cover-placeholder { background:linear-gradient(145deg,#f8f6f3,#ede9e5); }
 html[data-meduc-theme="light"] .mch-cover-placeholder small { color:#77716f; }
 html[data-meduc-theme="light"] .mch-cover-placeholder strong { color:#bd263a; }
+
+/* Match the five-column quiz catalogue without changing other history lists. */
+@media (min-width:1200px) {
+  .mch[data-course-history="exam_course"] .mch-grid { grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px; }
+  .mch[data-course-history="exam_course"] .mch-copy { padding:16px; }
+  .mch[data-course-history="exam_course"] .mch-card h3 { font-size:17px; }
+  .mch[data-course-history="exam_course"] .mch-action { padding:11px 12px; gap:8px; font-size:11px; }
+}
