@@ -60,6 +60,8 @@ html[data-meduc-theme="light"] .mcl { --mcl-bg:#fff; --mcl-surface:#fff; --mcl-i
 .mcl-cover:hover img { transform:scale(1.035); }
 .mcl-cover-placeholder { display:flex; flex:1; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:30px; color:#bb243a; font:400 37px/1.2 Anton,Impact,sans-serif; }
 .mcl-cover-placeholder>span { color:#626672; font:600 8px/1.5 Inter,Arial,sans-serif; letter-spacing:.14em; }
+.mcl-cover-placeholder--quiz { box-sizing:border-box; width:100%; padding:16px; gap:10px; text-align:center; }
+.mcl-cover-placeholder--quiz>strong { max-width:100%; font:400 clamp(18px,1.5vw,28px)/1.2 Anton,Impact,sans-serif; overflow-wrap:anywhere; }
 .mcl-card-copy { display:flex; flex-direction:column; min-width:0; padding:23px 25px 21px; }
 .mcl-card h3 { margin:0; font:600 clamp(18px,1.6vw,23px)/1.4 Inter,Arial,sans-serif; letter-spacing:-.035em; }
 .mcl-card h3 a { color:var(--mcl-ink); transition:color .2s; }

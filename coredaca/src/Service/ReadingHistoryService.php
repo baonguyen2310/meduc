@@ -71,7 +71,7 @@ class ReadingHistoryService
                 foreach (LessonQuizzes::of($lesson,$this->lang) as $exercise) if (!$quiz && $exercise['free']) $quiz=$count;
             }
             $preview=$exam?$quiz:$video;
-            $previewUrl=$preview?$url.'?bai='.$preview.'&tab='.($exam?'quiz':'video'):$url;
+            $previewUrl=$url;
             $first=$course['items'][0]??[];$price=(float)($first['price']??0);$old=0;
             if (!empty($first['apply_special']) && (float)($first['price_special']??0)>0 && (float)$first['price_special']<$price) {
                 $old=$price;$price=(float)$first['price_special'];

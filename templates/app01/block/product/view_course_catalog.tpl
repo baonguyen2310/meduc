@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261113-quiz-five" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.css?v=20261113-quiz-subject-covers" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/catalog-heroes.css?v=20261029-solution" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-catalog.js?v=20261110-grid-default" defer></script>
 

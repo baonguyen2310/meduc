@@ -1,7 +1,7 @@
 {strip}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261113-account-theme" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261113-quiz-five" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261113-quiz-five" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261113-detail-entry" defer></script>
 {* Site header ported from the main branch. The logo and website name come from Admin > Settings > Website information. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
 {$header_member = $this->Member->getMemberInfo()}
