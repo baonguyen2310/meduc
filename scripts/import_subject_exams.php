@@ -28,16 +28,28 @@ try {
     $oldExamLessons = [];
     foreach ($outline as $l) if (!LessonMetadata::isGroup($l) && LessonMetadata::isExam($l)) $oldExamLessons[$l['code']] = $l;
     $seenCodes = []; $seenIds = [];
-    foreach ($input['groups'] as $groupIndex=>$group) {
+    foreach ($input['groups'] as $groupIndex=>&$group) {
         ensure(in_array($group['lesson_type'], ['midterm','practical','final'], true), 'Invalid exam lesson type.');
         ensure(count($group['exams']) <= 255, 'Too many exams for one lesson.');
         $oldLesson = $oldExamLessons[$group['lesson_code']] ?? null;
+        if (!$oldLesson) {
+            $sameType = array_values(array_filter($oldExamLessons, function($l) use ($group) {
+                return LessonMetadata::type($l) === $group['lesson_type'];
+            }));
+            ensure(count($sameType) <= 1, 'Multiple existing exam lessons match the requested type.');
+            if ($sameType) {
+                $oldLesson = $sameType[0];
+                $group['lesson_code'] = $oldLesson['code'];
+            }
+        }
         $attached = $oldLesson ? LessonQuizzes::of($oldLesson) : [];
         $groupIds = [];
         foreach ($group['exams'] as $index=>$exam) {
             $meta = $exam['metadata']; $questions = $exam['questions'];
             ensure(!isset($seenCodes[$meta['code']]), 'Duplicate exam code.'); $seenCodes[$meta['code']] = true;
-            $sourceId = $productId*1000000 + ($groupIndex+1)*10000 + $index+1;
+            // Keep identities stable when an optional practical group is absent.
+            $sourceGroup = ['midterm'=>1, 'practical'=>2, 'final'=>3][$group['lesson_type']];
+            $sourceId = $productId*1000000 + $sourceGroup*10000 + $index+1;
             $existing = $db->execute("SELECT quiz_id FROM quiz_exam_metadata WHERE source_system='meduc-subject-json' AND source_exam_id=:s", ['s'=>$sourceId])->fetchColumn(0);
             $id = (int)$existing;
             if (!$id && isset($attached[$index])) $id = (int)$attached[$index]['id'];
@@ -65,10 +77,13 @@ try {
                 if ($oldLesson) $free = $attached[$index]['free'] ?? $free;
             }
             ensure(count($questions) === (int)$meta['total_questions'] && count($questions)>0, 'Question count mismatch.');
+            $questionTypes = array_values(array_unique(array_column($questions, 'question_type')));
+            ensure(count($questionTypes) === 1, 'Mixed question types are not supported.');
+            $quizType = $questionTypes[0] === 'TULUAN' ? 'TULUAN' : 'TRAC_NGHIEM';
             foreach ($questions as $position=>$question) {
                 ensure($question['ai_subject_code'] === $input['subject_code'] && (int)$question['order_index'] === $position+1, 'Subject/order mismatch.');
                 ensure(!empty($question['ai_general_explanation']), 'Missing concept.');
-                if ($group['lesson_type'] === 'practical') ensure($question['question_type'] === 'TULUAN' && !empty($question['answer_vi']), 'Invalid practical question.');
+                if ($question['question_type'] === 'TULUAN') ensure($group['lesson_type'] === 'practical' && !empty($question['answer_vi']), 'Invalid practical reference question.');
                 else {
                     ensure($question['question_type'] === 'MULTIPLE_CHOICE' && !empty($question['assembly_source']), 'Missing lesson source reference.');
                     $correct = []; foreach ($question['options'] as $i=>$option) { if ($option['is_correct']) $correct[]=$i+1; ensure(trim($option['ai_explanation']) !== '', 'Missing option explanation.'); }
@@ -85,15 +100,15 @@ try {
             if ($snapshot) {
                 $m = $snapshot['metadata'];
                 $minutesAttr = array_values(array_filter($snapshot['attributes'],function($a){return (int)$a['attribute_id']===19;}));
-                $same = $sameQuestions && $snapshot['content']['name'] === $title && $m && $m['source_system']==='meduc-subject-json' && $m['source_hash']===$hash && (string)$m['school_name']===$school && (int)$m['staff_only']===0 && count($minutesAttr)===1 && (int)$minutesAttr[0]['value']===$minutes;
+                $same = $sameQuestions && $snapshot['content']['name'] === $title && $m && $m['source_system']==='meduc-subject-json' && $m['source_hash']===$hash && (string)$m['school_name']===$school && $m['source_quiz_type']===$quizType && (int)$m['staff_only']===0 && count($minutesAttr)===1 && (int)$minutesAttr[0]['value']===$minutes;
             }
             if ($mode==='verify') ensure($same, 'Readback differs: '.$meta['code']);
-            $plan = ['id'=>$id,'source_id'=>$sourceId,'code'=>$meta['code'],'lesson_code'=>$group['lesson_code'],'lesson_type'=>$group['lesson_type'],'slot'=>$index+1,'free'=>$free,'name'=>$title,'school'=>$school,'minutes'=>$minutes,'value'=>$value,'hash'=>$hash,'count'=>count($questions),'same'=>$same];
+            $plan = ['id'=>$id,'source_id'=>$sourceId,'code'=>$meta['code'],'lesson_code'=>$group['lesson_code'],'lesson_type'=>$group['lesson_type'],'quiz_type'=>$quizType,'slot'=>$index+1,'free'=>$free,'name'=>$title,'school'=>$school,'minutes'=>$minutes,'value'=>$value,'hash'=>$hash,'count'=>count($questions),'same'=>$same];
             $plans[] = $plan; $groupIds[]=$id;
         }
         // Existing references may only be replaced by the exact imported exam set.
         foreach ($attached as $q) ensure(in_array($q['id'],$groupIds,true), 'Existing exam would be detached.');
-    }
+    } unset($group);
     foreach ($oldExamLessons as $code=>$l) ensure(in_array($code,array_column($input['groups'],'lesson_code'),true), 'Unexpected exam lesson would be removed.');
     foreach ($input['assets'] as $asset) {
         ensure((bool)preg_match('/^[a-f0-9]{64}\.(png|jpg|jpeg|webp)$/D',$asset['filename']) && $asset['relative_path']==='cdn/media/lesson-exercises/'.$asset['filename'], 'Invalid image path.');
@@ -137,7 +152,7 @@ try {
                     $db->execute('INSERT INTO quizs_attribute (quiz_id,attribute_id,value) VALUES (:id,18,:v),(:id,19,:t)',['id'=>$id,'v'=>$p['value'],'t'=>(string)$p['minutes']]);
                     $db->execute("INSERT INTO links (foreign_id,type,url,lang,created,updated,deleted) VALUES (:id,'quiz_detail',:url,'vi',:now,:now,0)",['id'=>$id,'url'=>'bai-tap-'.$productId.'-'.$id,'now'=>$now]);
                 }
-                $db->execute("INSERT INTO quiz_exam_metadata (quiz_id,source_system,source_exam_id,import_topic,school_name,source_quiz_type,curriculum_type,source_is_pro,question_count,source_question_count,source_hash,source_remote_id,imported_at,staff_only) VALUES (:id,'meduc-subject-json',:source,:topic,:school,:type,'subject',:pro,:count,:count,:hash,:code,NOW(),0) ON DUPLICATE KEY UPDATE source_system=VALUES(source_system),source_exam_id=VALUES(source_exam_id),import_topic=VALUES(import_topic),school_name=VALUES(school_name),source_quiz_type=VALUES(source_quiz_type),curriculum_type='subject',source_is_pro=VALUES(source_is_pro),question_count=VALUES(question_count),source_question_count=VALUES(source_question_count),source_hash=VALUES(source_hash),source_remote_id=VALUES(source_remote_id),staff_only=0",['id'=>$id,'source'=>$p['source_id'],'topic'=>$input['subject_code'],'school'=>$p['school'],'type'=>$p['lesson_type']==='practical'?'TULUAN':'TRAC_NGHIEM','pro'=>$p['free']?0:1,'count'=>$p['count'],'hash'=>$p['hash'],'code'=>$p['code']]);
+                $db->execute("INSERT INTO quiz_exam_metadata (quiz_id,source_system,source_exam_id,import_topic,school_name,source_quiz_type,curriculum_type,source_is_pro,question_count,source_question_count,source_hash,source_remote_id,imported_at,staff_only) VALUES (:id,'meduc-subject-json',:source,:topic,:school,:type,'subject',:pro,:count,:count,:hash,:code,NOW(),0) ON DUPLICATE KEY UPDATE source_system=VALUES(source_system),source_exam_id=VALUES(source_exam_id),import_topic=VALUES(import_topic),school_name=VALUES(school_name),source_quiz_type=VALUES(source_quiz_type),curriculum_type='subject',source_is_pro=VALUES(source_is_pro),question_count=VALUES(question_count),source_question_count=VALUES(source_question_count),source_hash=VALUES(source_hash),source_remote_id=VALUES(source_remote_id),staff_only=0",['id'=>$id,'source'=>$p['source_id'],'topic'=>$input['subject_code'],'school'=>$p['school'],'type'=>$p['quiz_type'],'pro'=>$p['free']?0:1,'count'=>$p['count'],'hash'=>$p['hash'],'code'=>$p['code']]);
                 $actual=QuizQuestions::load($id); ensure($actual && count($actual['questions'])===$p['count'],'Player readback failed.');
             } unset($p);
             $newOutline=[];

@@ -79,9 +79,18 @@ def build(data_dir, subject, public_base, remote_dir):
                 meta.update(answer_mode='show_answer_only', feedback_mode='reference', require_student_response=False)
             require(len(questions) == meta['total_questions'], 'Question count differs.')
             require(len({q['code'] for q in questions}) == len(questions), 'Duplicate question within exam.')
-            meta['duration_minutes'] = 0 if kind == 'practical' else int(meta.get('duration_minutes') or 30)
+            reference_only = all(q['question_type'] == 'TULUAN' for q in questions)
+            meta['duration_minutes'] = 0 if reference_only else int(meta.get('duration_minutes') or max(30, meta['total_questions']))
             exams.append({'metadata': meta, 'questions': questions, 'source_file': str(path),
                           'input_sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+        if not exams and kind == 'practical' and subject != 'giai-phau':
+            policy_file = data_dir / 'cau-truc-de' / subject / 'thuc-hanh.json'
+            policy = json.loads(policy_file.read_text()) if policy_file.is_file() else {}
+            target = policy.get('target_policy', {})
+            require(policy.get('analysis_status') == 'skipped_by_user' and
+                    target.get('exam_count') == 0 and target.get('if_applicable') is False,
+                    'Practical exams may be omitted only when explicitly skipped in the subject policy.')
+            continue
         require(bool(exams), f'No exams for {kind}.')
         if subject == 'giai-phau': require(len(exams) == {'midterm': 3, 'practical': 2, 'final': 90}[kind], 'Incomplete Anatomy batch.')
         groups.append({'lesson_type': kind, 'lesson_name': label, 'lesson_code': f'CEO5-20261110-{subject_code}-{suffix}', 'exams': exams})
