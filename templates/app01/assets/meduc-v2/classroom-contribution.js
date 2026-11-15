@@ -5,6 +5,51 @@
   const panel = root?.querySelector("[data-mcr-contribution]");
   const form = panel?.querySelector("[data-mcr-contribution-form]");
   if (!root || !panel) return;
+  const trigger = root.querySelector("[data-mcr-contribution-trigger]");
+  const closeButton = panel.querySelector("[data-mcr-contribution-close]");
+  const studyModal = root.querySelector("[data-mcr-study-modal]");
+  let opener = null;
+  let previousInert = false;
+  let previousAriaHidden = null;
+  const updateTrigger = () => trigger?.setAttribute("aria-expanded", String(!panel.hidden));
+  function closeContribution({restoreFocus = true} = {}) {
+    if (panel.hidden) return;
+    panel.hidden = true;
+    document.body.classList.remove("mcr-contribution-open");
+    if (studyModal) {
+      studyModal.inert = previousInert;
+      if (previousAriaHidden === null) studyModal.removeAttribute("aria-hidden");
+      else studyModal.setAttribute("aria-hidden", previousAriaHidden);
+    }
+    updateTrigger();
+    if (restoreFocus && opener?.isConnected && opener.getClientRects().length) opener.focus({preventScroll:true});
+  }
+  function openContribution() {
+    if (!panel.hidden) return;
+    opener = document.activeElement;
+    previousInert = studyModal?.inert || false;
+    previousAriaHidden = studyModal?.getAttribute("aria-hidden") ?? null;
+    panel.hidden = false;
+    document.body.classList.add("mcr-contribution-open");
+    updateTrigger();
+    closeButton?.focus({preventScroll:true});
+    if (studyModal) { studyModal.inert = true; studyModal.setAttribute("aria-hidden", "true"); }
+    panel.querySelector(".mcr-contribution-body").scrollTop = 0;
+  }
+  trigger?.addEventListener("click", () => root.dispatchEvent(new CustomEvent("mcr:contribute", {detail: {}})));
+  closeButton?.addEventListener("click", () => closeContribution());
+  panel.addEventListener("click", (event) => { if (event.target === panel) closeContribution(); });
+  root.addEventListener("mcr:modal-close", () => closeContribution({restoreFocus:false}));
+  document.addEventListener("keydown", (event) => {
+    if (panel.hidden || document.body.classList.contains("ma-auth-open")) return;
+    if (event.key === "Escape") { event.preventDefault(); closeContribution(); return; }
+    if (event.key !== "Tab") return;
+    const controls = [...panel.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled])')].filter(control => control.getClientRects().length);
+    const first = controls[0], last = controls[controls.length - 1];
+    if (!first) { event.preventDefault(); panel.focus(); return; }
+    if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+  });
 
   const lessonField = form?.querySelector("[data-contribution-lesson]");
   const typeField = form?.querySelector("[data-contribution-type]");
@@ -46,7 +91,7 @@
 
   root.addEventListener("mcr:lesson", (event) => syncLesson(event.detail.number));
   root.addEventListener("mcr:contribute", (event) => {
-    panel.open = true;
+    openContribution();
     if (form) {
       if (event.detail.type) typeField.value = event.detail.type;
       showFields();
@@ -54,8 +99,7 @@
       if (event.detail.questionNumber) questionField.value = String(event.detail.questionNumber);
       status.textContent = "";
     }
-    const top = window.scrollY + panel.getBoundingClientRect().top - 125;
-    window.scrollTo({ top, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+
     if (form) form.querySelector("textarea")?.focus({ preventScroll: true });
   });
 

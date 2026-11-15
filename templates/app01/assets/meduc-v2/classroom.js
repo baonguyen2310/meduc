@@ -1,5 +1,5 @@
 /* Course page as a classroom (block/product_detail/view_classroom.tpl).
-   - The course overview stays above the classroom. The outline selects a lesson; ?bai=N keeps the address
+   - The course overview stays above the classroom. Lesson action buttons select content; ?bai=N keeps the address
      in step so a lesson can be shared and the Back button works.
    - Lesson actions open the existing players in a large dialog. Video uses the YouTube IFrame API.
      Students continue to the next video after
@@ -23,6 +23,23 @@
   const pad = (number) => String(number).padStart(2, "0");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const narrow = () => matchMedia("(max-width: 991.98px)").matches;
+
+  // Chapter numbering is a display choice; stored chapter and lesson identities stay intact.
+  function toRoman(number) {
+    let remaining = Number(number);
+    if (!Number.isInteger(remaining) || remaining < 1 || remaining > 3999) return String(number);
+    let roman = "";
+    for (const [value, glyph] of [[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]]) {
+      while (remaining >= value) { roman += glyph; remaining -= value; }
+    }
+    return roman;
+  }
+  $$(".mcr-chapter").forEach((chapter) => {
+    const number = chapter.querySelector(".mcr-chapter-number");
+    const title = chapter.querySelector(".mcr-chapter-title");
+    if (number) number.textContent = toRoman(number.textContent.trim());
+    if (title) title.textContent = title.textContent.replace(/^(\s*(?:chương|chapter|module)\s*)(\d+)(?=\s|[.:)\-–—]|$)/iu, (_, prefix, value) => prefix + toRoman(value));
+  });
 
   const lessons = $$("[data-mcr-lesson]").map((link) => ({
     number: Number(link.dataset.mcrLesson),
@@ -72,7 +89,7 @@
   studyClose?.addEventListener("click", () => closeStudyModal());
   studyModal?.addEventListener("click", event => {if (event.target === studyModal) closeStudyModal();});
   document.addEventListener("keydown", event => {
-    if (!studyModal || studyModal.hidden || $(".mcq.is-expanded") || document.body.classList.contains("ma-auth-open") || $("#previewFile.show")) return;
+    if (!studyModal || studyModal.hidden || $(".mcq.is-expanded") || document.body.classList.contains("mcr-contribution-open") || document.body.classList.contains("ma-auth-open") || $("#previewFile.show")) return;
     if (event.key === "Escape") {event.preventDefault();closeStudyModal();return;}
     if (event.key !== "Tab") return;
     const controls = [...studyModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe')].filter(control => control.getClientRects().length);
@@ -119,7 +136,13 @@
   // Address: ?bai=N for a lesson, no parameter for the introduction; other parameters (e.g. ?a= affiliate) stay.
   function addressFor(number) {
     const url = new URL(location.href);
-    if (number) url.searchParams.set("bai", number); else url.searchParams.delete("bai");
+    if (number) {
+      url.searchParams.set("bai", number);
+      url.searchParams.set("tab", studyModal.dataset.mcrContent || (examPrep ? "quiz" : "video"));
+    } else {
+      url.searchParams.delete("bai");
+      url.searchParams.delete("tab");
+    }
     url.hash = "";
     return url.pathname + url.search;
   }
@@ -270,7 +293,7 @@
   let currentAccess = null;
   const accessError = document.createElement('p');
   accessError.className = 'mcr-empty'; accessError.hidden = true; accessError.setAttribute('role','alert');
-  lessonView.querySelector('.mcr-toolbar').after(accessError);
+  lessonView.prepend(accessError);
   async function refreshAccess(fresh = false) {
     if (fresh) {
       accessGeneration++;
@@ -345,17 +368,13 @@
   });
   root.addEventListener('mcr:modal-close', () => {pendingStudy=null;studyRequest++;});
 
-  // Tabs
-  const tabs = $$("[data-mcr-tab]");
+  // Lesson content
+  const panels = $$("[data-mcr-panel]");
   function selectTab(name, focus = false) {
-    if (!tabs.some(tab => tab.dataset.mcrTab === name)) return;
-    tabs.forEach((tab) => {
-      const active = tab.dataset.mcrTab === name;
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-      if (active && focus) tab.focus();
-    });
-    $$("[data-mcr-panel]").forEach((panel) => { panel.hidden = panel.dataset.mcrPanel !== name; });
+    if (!["video", "quiz"].includes(name) || !panels.some(panel => panel.dataset.mcrPanel === name)) return;
+    studyModal.dataset.mcrContent = name;
+    panels.forEach((panel) => { panel.hidden = panel.dataset.mcrPanel !== name; });
+    if (focus) studyClose.focus({preventScroll:true});
     if (name !== "video") {
       clearInterval(endTimer);
       if (player && typeof player.pauseVideo === "function") {
@@ -363,15 +382,6 @@
       }
     }
   }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => selectTab(tab.dataset.mcrTab));
-    tab.addEventListener("keydown", (event) => {
-      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
-      if (!step) return;
-      event.preventDefault();
-      selectTab(tabs[(index + step + tabs.length) % tabs.length].dataset.mcrTab, true);
-    });
-  });
   $("[data-mcr-goto-quiz]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-goto-quiz-error]")?.addEventListener("click", () => selectTab("quiz", true));
   $("[data-mcr-goto-quiz-novideo]")?.addEventListener("click", () => selectTab("quiz", true));
@@ -423,10 +433,10 @@
     stopPlayer();
     if (mockPending) mockPending.hidden = true;
     current = lesson;
+    if (open && examPrep) selectOutlineMode(isMockLesson(lesson) ? "mock" : "regular", { expand: true });
     if (open) openStudyModal(trigger);
     markCurrent(lesson.link);
-    const chapter = lesson.link.closest("details");
-    if (chapter) chapter.open = true;
+    for (let group = lesson.link.closest("details"); group; group = group.parentElement.closest("details")) group.open = true;
     revealInOutline(lesson.link);
     lessonView.hidden = false;
 
@@ -459,41 +469,46 @@
   }
   // Result screens can return to the course information without a sidebar introduction button.
   root.addEventListener("mcr:overview", () => showIntro());
-  $("[data-mcr-back-to-intro]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    showIntro();
-  });
   $("[data-mcr-outline-jump]")?.addEventListener("click", (event) => {
     event.preventDefault();
     const target = narrow() ? $(".mcr-sidebar") : $("#mcr-learning");
     target?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   });
 
-  $("[data-mcr-lesson-exams]")?.addEventListener("click", () => {
-    const lesson = lessons.find((item) => (item.link.dataset.lessonType || "regular") === "regular");
-    if (!lesson) return;
-    selectLesson(lesson.number, { scroll: false });
-    selectTab("quiz");
-  });
-
-  $("[data-mcr-mock-exam]")?.addEventListener("click", (event) => {
-    const number = Number(event.currentTarget.dataset.mcrMockExam);
-    if (!byNumber.has(number)) {
-      if (mockPending) mockPending.hidden = false;
-      return;
+  const isMockLesson = (lesson) => ["midterm", "final", "practical"].includes(lesson.link.dataset.lessonType);
+  function selectOutlineMode(mode, { expand = false } = {}) {
+    if (!examPrep) return;
+    const mock = mode === "mock";
+    root.dataset.mcrOutlineMode = mock ? "mock" : "regular";
+    $("[data-mcr-lesson-exams]")?.setAttribute("aria-pressed", String(!mock));
+    $("[data-mcr-mock-exam]")?.setAttribute("aria-pressed", String(mock));
+    let visible = 0;
+    lessons.forEach((lesson) => {
+      const row = lesson.link.closest(".mcr-lesson-row");
+      row.hidden = isMockLesson(lesson) !== mock;
+      if (!row.hidden) visible++;
+    });
+    $$(".mcr-chapter").forEach((chapter) => {
+      chapter.hidden = ![...chapter.querySelectorAll(".mcr-lesson-row")].some((row) => !row.hidden);
+      if (expand && !chapter.hidden) chapter.open = true;
+    });
+    $$(".mcr-unit").forEach((unit) => {
+      unit.hidden = ![...unit.querySelectorAll(".mcr-chapter")].some((chapter) => !chapter.hidden);
+      if (expand && !unit.hidden) unit.open = true;
+    });
+    if (mockPending) {
+      mockPending.hidden = visible > 0;
+      mockPending.textContent = mock ? "Đang cập nhật đề thi thử." : "Đang cập nhật đề theo bài.";
     }
-    selectLesson(number, { scroll: false });
-    selectTab("quiz");
-  });
+  }
+  $("[data-mcr-lesson-exams]")?.addEventListener("click", () => selectOutlineMode("regular", { expand: true }));
+  $("[data-mcr-mock-exam]")?.addEventListener("click", () => selectOutlineMode("mock", { expand: true }));
 
-  lessons.forEach((lesson) => lesson.link.addEventListener("click", (event) => {
-    event.preventDefault();
-    selectLesson(lesson.number, {trigger:lesson.link});
-    selectTab(examPrep ? "quiz" : "video");
-  }));
   $$("[data-mcr-open-lesson]").forEach(button => button.addEventListener("click", () => {
-    selectLesson(Number(button.dataset.mcrOpenLesson), {trigger:button});
-    selectTab(button.dataset.mcrOpenTab);
+    const panel = button.dataset.mcrOpenTab;
+    if (!["video", "quiz"].includes(panel)) return;
+    selectTab(panel);
+    selectLesson(Number(button.dataset.mcrOpenLesson), {trigger:button,autoplay:panel === "video"});
   }));
   $$("[data-mcr-start]").forEach((button) => button.addEventListener("click", (event) => {
     event.preventDefault();
@@ -504,7 +519,9 @@
   $("[data-mcr-prev]")?.addEventListener("click", () => current && selectLesson(current.number - 1));
   $("[data-mcr-next]")?.addEventListener("click", () => current && selectLesson(current.number + 1));
   window.addEventListener("popstate", () => {
-    const number = Number(new URLSearchParams(location.search).get("bai"));
+    const params = new URLSearchParams(location.search);
+    const number = Number(params.get("bai"));
+    selectTab(examPrep || params.get("tab") === "quiz" ? "quiz" : "video");
     if (byNumber.has(number)) selectLesson(number, { push: false }); else closeStudyModal({updateUrl:false});
   });
 
@@ -518,13 +535,13 @@
     button.replaceWith(frame);
   }));
 
-  // Exam library: combined search and school filter, with ten cards per page.
-  const fold = (value) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
-  $$("[data-mcr-quiz-filter]").forEach((input) => {
-    const holder = input.closest("[data-mcr-quiz]");
+  // Exam library: school picker with ten cards per page.
+  $$("[data-mcr-quiz-filter]").forEach((filter) => {
+    const holder = filter.closest("[data-mcr-quiz]");
     const cards = [...holder.querySelectorAll(".mcr-quiz-card")];
-    const count = holder.querySelector("[data-mcr-quiz-filter-count]");
-    const school = holder.querySelector("[data-mcr-quiz-school]");
+    const count = filter.querySelector("[data-mcr-quiz-filter-count]");
+    const school = filter.querySelector("[data-mcr-quiz-school]");
+    const picker = filter.querySelector("[data-mcr-school-picker]");
     const pagination = holder.querySelector("[data-mcr-quiz-pagination]");
     const schools = [...new Set(cards.map(card => card.dataset.quizSchool).filter(Boolean))];
     schools.forEach(name => {
@@ -533,17 +550,16 @@
       option.textContent = name;
       school?.append(option);
     });
-    if (school) school.hidden = schools.length === 0;
+    if (picker) picker.hidden = schools.length === 0;
     let page = 1;
     const pageSize = 10;
     function renderExams() {
-      const words = fold(input.value).split(/\s+/).filter(Boolean);
-      const filtered = cards.filter(card => (!school?.value || card.dataset.quizSchool === school.value) && words.every(word => fold(card.querySelector("h3")?.textContent || "").includes(word)));
+      const filtered = cards.filter(card => !school?.value || card.dataset.quizSchool === school.value);
       const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
       page = Math.max(1, Math.min(page, pages));
       cards.forEach(card => { card.hidden = true; });
       filtered.slice((page - 1) * pageSize, page * pageSize).forEach(card => { card.hidden = false; });
-      if (count) count.textContent = filtered.length ? `${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, filtered.length)} / ${filtered.length} đề` : "Không tìm thấy đề phù hợp";
+      if (count) count.textContent = filtered.length ? `${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, filtered.length)} / ${filtered.length} đề` : "Không có đề của trường này";
       if (!pagination) return;
       pagination.replaceChildren();
       pagination.hidden = pages <= 1;
@@ -556,7 +572,7 @@
         button.addEventListener("click", () => {
           page = number;
           renderExams();
-          input.scrollIntoView({block:"center", behavior: reducedMotion ? "auto" : "smooth"});
+          filter.scrollIntoView({block:"start", behavior: reducedMotion ? "auto" : "smooth"});
           pagination.querySelector(number === pages ? "button:first-child" : "button:last-child")?.focus({preventScroll:true});
         });
         pagination.append(button);
@@ -567,7 +583,6 @@
       pagination.append(status);
       addPage("Sau →", page + 1, page === pages);
     }
-    input.addEventListener("input", () => { page = 1; renderExams(); });
     school?.addEventListener("change", () => { page = 1; renderExams(); });
     renderExams();
   });
@@ -617,10 +632,29 @@
   const more = $("[data-mcr-description-toggle]");
   if (description && preview && more) {
     const clean = (text) => text.replace(/\s+/g, " ").trim();
-    const paragraph = [...description.querySelectorAll("p")].map((p) => clean(p.textContent)).find((text) => text.length > 80);
-    const excerpt = paragraph || clean(description.textContent);
-    preview.textContent = excerpt.length > 480 ? `${excerpt.slice(0, 480).replace(/\s+\S*$/, "")}…` : excerpt;
-    more.hidden = clean(description.textContent) === preview.textContent && !description.querySelector("img,table,ul,ol");
+    const paragraph = [...description.querySelectorAll("p")].find((p) => clean(p.textContent).length > 80);
+    const excerpt = document.createElement("div");
+    if (paragraph) excerpt.append(paragraph.cloneNode(true));
+    else excerpt.append(...[...description.childNodes].map((node) => node.cloneNode(true)));
+    // Keep the saved text formatting without duplicating media or element identities.
+    excerpt.querySelectorAll("script,style,iframe,img,video,audio,object,embed").forEach((node) => node.remove());
+    excerpt.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+    const walker = document.createTreeWalker(excerpt, NodeFilter.SHOW_TEXT);
+    let length = 0;
+    let node;
+    while ((node = walker.nextNode())) {
+      if (length + node.textContent.length > 480) {
+        const rest = document.createRange();
+        rest.setStart(node, 480 - length);
+        rest.setEnd(excerpt, excerpt.childNodes.length);
+        rest.deleteContents();
+        node.textContent = `${node.textContent.replace(/\s+\S*$/, "").trimEnd()}…`;
+        break;
+      }
+      length += node.textContent.length;
+    }
+    preview.replaceChildren(...excerpt.childNodes);
+    more.hidden = clean(description.textContent) === clean(preview.textContent) && !description.querySelector("img,table,ul,ol");
     more.addEventListener("click", () => {
       const expanded = more.getAttribute("aria-expanded") !== "true";
       more.setAttribute("aria-expanded", String(expanded));
@@ -632,13 +666,14 @@
   }
 
   renderProgress();
-  selectTab(examPrep ? "quiz" : "video");
-  const initial = Number(new URLSearchParams(location.search).get("bai"));
+  selectOutlineMode("regular");
+  const params = new URLSearchParams(location.search);
+  selectTab(examPrep || params.get("tab") === "quiz" ? "quiz" : "video");
+  const initial = Number(params.get("bai"));
   const defaultLesson = byNumber.get(readStore().last) || lessons.find((lesson) => canWatch(lesson) || lesson.quiz) || lessons[0];
   const selected = byNumber.has(initial) ? initial : defaultLesson?.number;
   if (selected) {
     selectLesson(selected, { push: false, scroll: false, open:byNumber.has(initial) });
-    if (new URLSearchParams(location.search).get("tab") === "quiz") selectTab("quiz");
     if (!byNumber.has(initial)) lessonView.hidden = true;
   }
 })();

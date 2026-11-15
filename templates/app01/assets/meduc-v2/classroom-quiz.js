@@ -94,10 +94,7 @@
   // Layout of the player
   const bar = el("div", "mcq-bar");
   const back = button("mcq-back", "← Danh sách đề");
-  back.addEventListener("click", () => {
-    if (view === "player" && selected && active && !isReference(active)) openHistory(selected);
-    else showList();
-  });
+  back.addEventListener("click", showList);
   const barTitle = el("div", "mcq-bar-title");
   const kicker = el("span", "mcq-kicker");
   const name = el("strong", "mcq-name");
@@ -130,8 +127,7 @@
   map.setAttribute("aria-label", "Chọn câu hỏi");
   mapPanel.append(mapHead, map);
   workspace.append(stage, mapPanel);
-  const playerPolicy = el("p", "mcq-policy", "Bộ đề được đội ngũ ThS, BSNT của MedUC tổng hợp, rà soát và giải đáp, có hỗ trợ một phần của AI. Nội dung có thể còn sai sót; MedUC trân trọng mọi góp ý về đề, đáp án và lộ trình học.");
-  host.append(bar, confirmBox, workspace, playerPolicy);
+  host.append(bar, confirmBox, workspace);
 
   function setExpanded(expanded) {
     host.classList.toggle("is-expanded", expanded);
@@ -155,6 +151,7 @@
   }
   expandButton.addEventListener("click", () => setExpanded(!host.classList.contains("is-expanded")));
   document.addEventListener("keydown", (event) => {
+    if (document.body.classList.contains("mcr-contribution-open")) return;
     if (event.key === "Escape" && host.classList.contains("is-expanded")) {
       event.preventDefault();
       setExpanded(false);
@@ -171,7 +168,6 @@
       }
     }
   });
-  root.addEventListener("mcr:contribute", () => setExpanded(false));
 
   function renderTimer() {
     const attempt = active;
@@ -213,7 +209,7 @@
     kicker.textContent = count > 1 && place >= 0 ? `${label} ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `${label} · Buổi ${attempt.lesson.number}`;
     submitButton.textContent = isPractice(attempt) ? "Hoàn thành bài" : "Nộp bài";
     back.hidden = false;
-    back.textContent = isReference(attempt) ? "← Danh sách đề" : "← Lịch sử bài tập";
+    back.textContent = "← Danh sách đề";
     barMeta.hidden = false;
     progress.hidden = isReference(attempt);
     timer.hidden = isReference(attempt);
@@ -1021,7 +1017,7 @@
 
   // Keyboard: 1–5 or A–E pick an answer, ← → move between questions.
   document.addEventListener("keydown", (event) => {
-    if (!active || host.hidden || active.state === "done" || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (document.body.classList.contains("mcr-contribution-open") || !active || host.hidden || active.state === "done" || event.altKey || event.ctrlKey || event.metaKey) return;
     const target = event.target;
     if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
     if (!host.contains(target) && target !== document.body) return;

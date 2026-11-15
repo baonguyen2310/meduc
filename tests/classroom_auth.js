@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../templates/app01/assets/meduc-v2/classroom.js'), 'utf8');
-const coordinator = source.slice(source.indexOf('  // Refresh identity after popup'), source.indexOf('  // Tabs\n'));
+const coordinator = source.slice(source.indexOf('  // Refresh identity after popup'), source.indexOf('  // Lesson content\n'));
 assert.ok(coordinator.includes('root.mcrStudyAccess'), 'Classroom auth coordinator not found');
 const flush = () => new Promise(resolve => setImmediate(resolve));
 function fixture() {
@@ -18,7 +18,7 @@ function fixture() {
   const context = {
     root, window, licensed: false, lessons: [], $$: () => [], CustomEvent,
     document: {createElement: () => ({setAttribute() {}}), getElementById: () => modal},
-    lessonView: {querySelector: () => ({after() {}})},
+    lessonView: {prepend() {}},
     fetch: () => new Promise(resolve => requests.push(data => resolve({ok: true, json: async () => ({code: 'success', data})}))),
   };
   vm.runInNewContext(coordinator, context);
