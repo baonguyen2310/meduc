@@ -179,7 +179,7 @@
     }
     if (attempt.deadline) {
       const left = Math.max(0, Math.ceil((attempt.deadline - Date.now()) / 1000));
-      timer.textContent = `Còn ${clock(left)}`;
+      timer.textContent = `${inlineMobileQuery.matches ? "" : "Còn "}${clock(left)}`;
       timer.classList.toggle("is-low", left <= 60);
     } else {
       timer.textContent = clock(Math.floor((Date.now() - attempt.started) / 1000));
@@ -207,7 +207,7 @@
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
     const label = isReference(attempt) ? "Đề thực hành · Xem đáp án" : isPractice(attempt) ? "Phần" : "Đề thi thử";
     kicker.textContent = count > 1 && place >= 0 ? `${label} ${place + 1}/${count} · Buổi ${attempt.lesson.number}` : `${label} · Buổi ${attempt.lesson.number}`;
-    submitButton.textContent = isPractice(attempt) ? "Hoàn thành bài" : "Nộp bài";
+    submitButton.textContent = "Nộp bài";
     back.hidden = false;
     back.textContent = "← Danh sách đề";
     barMeta.hidden = false;
@@ -351,7 +351,7 @@
       previous.disabled = attempt.index === 0;
       previous.addEventListener("click", () => jumpToQuestion(attempt, attempt.index - 1));
       const last = attempt.index === attempt.quiz.questions.length - 1;
-      const next = button("mcr-btn mcr-btn--primary", last ? "Hoàn thành bài" : "Câu tiếp theo →");
+      const next = button("mcr-btn mcr-btn--primary", last ? "Nộp bài" : "Câu tiếp theo →");
       next.disabled = !attempt.answers.has(attempt.index);
       next.addEventListener("click", () => last ? askSubmit(attempt) : jumpToQuestion(attempt, attempt.index + 1));
       navigation.append(previous, next);

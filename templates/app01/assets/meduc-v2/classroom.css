@@ -592,16 +592,16 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-quiz-card { align-items: stretch; flex-direction: column; }
   .mcr-quiz-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
   .mcr-quiz-actions [data-mcr-quiz-enroll] { grid-column:1 / -1; }
-  .mcq-bar-meta { flex-wrap:wrap; }
-  .mcq-submit-actions { margin-left:auto; }
   .mcq-history-tabs { gap:22px; }
   .mcq-notebook-item > summary { gap:10px; padding:14px; font-size:14px; }
-  .mcq-bar { flex-wrap: wrap; gap: 10px; padding: 12px 14px; }
-  /* Mobile questions keep only the back and submit controls in a compact row. */
+  /* Keep the countdown beside submission without restoring the tall mobile header. */
   .mcq-bar { flex-wrap:nowrap; gap:8px; padding:8px 12px; }
-  .mcq-bar :is(.mcq-bar-title,.mcq-progress,.mcq-timer,.mcq-to-result,.mcq-expand) { display:none; }
-  .mcq-bar-meta { width:auto; margin-left:auto; }
+  .mcq-bar :is(.mcq-bar-title,.mcq-progress,.mcq-to-result,.mcq-expand) { display:none; }
+  .mcq-bar-meta { width:auto; margin-left:auto; flex-wrap:nowrap; gap:6px; }
   .mcq-bar-meta:has(.mcq-submit[hidden]) { display:none; }
+  .mcq-bar .mcq-timer { flex:none; padding:8px 7px; font-size:12px; white-space:nowrap; }
+  .mcr .mcq-bar .mcq-back { padding:8px; font-size:12px; white-space:nowrap; }
+  .mcr .mcq-bar .mcq-submit { padding:8px 12px; font-size:13px; white-space:nowrap; }
   .mcq-submit-actions { margin-left:0; }
   .mcq-stage { padding: 20px 14px 4px; }
   .mcq-review-question { padding: 16px; }
