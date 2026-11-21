@@ -79,6 +79,7 @@
 {$exam_prep = $quiz_course}
 {$first_open = 0}
 {$review_lesson_number = 0}
+{$number = 0}
 {$lesson_type_labels = ['regular' => 'Bài thường', 'midterm' => 'Giữa kỳ', 'final' => 'Cuối kỳ', 'practical' => 'Thực hành']}
 {foreach from = $raw_lessons item = item}
     {if empty($item.name_vi)}{continue}{/if}
@@ -96,6 +97,10 @@
         {$chapter_units[$chapter_index] = $unit_index}
         {continue}
     {/if}
+    {* Keep the original lesson number used in links and quiz history. *}
+    {$number = $number + 1}
+    {$lesson_type = $item.lesson_type|default:'regular'}
+    {if $quiz_course && $lesson_type == 'practical'}{continue}{/if}
     {if $chapter_index < 0}
         {$chapters[] = 'Bài học'}
         {$chapter_index = count($chapters) - 1}
@@ -128,12 +133,10 @@
         {if $lesson_quiz.free && !$licensed}{$open_quizzes = $open_quizzes + 1}{/if}
     {/foreach}
     {$quiz_count = $quiz_count + count($quizzes)}
-    {$number = count($lessons) + 1}
     {if $video != '' && $trial && !$licensed}{$trial_videos = $trial_videos + 1}{/if}
     {if $first_open == 0 && (($video != '' && $open) || $open_quiz)}{$first_open = $number}{/if}
     {$access = 'locked'}
     {if $licensed}{$access = 'open'}{elseif $trial}{$access = 'trial'}{/if}
-    {$lesson_type = $item.lesson_type|default:'regular'}
     {$lesson_tags = $item.tags|default:[]}
     {$review = in_array($lesson_type, ['midterm', 'final', 'practical'])}
     {if $review}{$review_lesson_number = $number}{/if}
