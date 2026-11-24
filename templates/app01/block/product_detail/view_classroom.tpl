@@ -75,6 +75,7 @@
 {$open_quizzes = 0}
 {$any_open_quiz = false}
 {$quiz_count = 0}
+{$ready_exam_types = []}
 {* Exam-prep course (category 125): lessons hold their exercises; the review lesson holds source exams. *}
 {$exam_prep = $quiz_course}
 {$first_open = 0}
@@ -126,6 +127,9 @@
     {foreach from = $lesson_quizzes item = lesson_quiz}
         {if empty($course_quizzes.info[$lesson_quiz.id])}{continue}{/if}
         {$quiz_ready = $course_quizzes.info[$lesson_quiz.id].count > 0}
+        {if $quiz_course && $quiz_ready && empty($course_quizzes.info[$lesson_quiz.id].read_only)}
+            {$ready_exam_types[$lesson_quiz.id] = $lesson_type}
+        {/if}
         {$quiz_open = ($licensed || $lesson_quiz.free) && $quiz_ready}
         {$quizzes[] = ['id' => $lesson_quiz.id, 'open' => $quiz_open, 'free' => $lesson_quiz.free, 'ready' => $quiz_ready]}
         {if $quiz_open}{$open_quiz = true}{$any_open_quiz = true}{/if}
@@ -154,14 +158,13 @@
 {$course_duration = $attributes.thoiluong.value|default:''|strip_tags|trim}
 {$course_ownership = $attributes.sohuu.value|default:''|strip_tags|trim}
 {$course_lessons_text = $attributes.soluongbaihoc.value|default:''|strip_tags|trim}
-{$course_exercises_text = $attributes.soluongbaitap.value|default:''|strip_tags|regex_replace:'/\s+chữa\s+chi\s+tiết/iu':''|trim}
 {$course_lesson_number = $lesson_count}
 {if $course_lessons_text != '' && preg_match('/^[1-9][0-9]*(?:\s|$)/u', $course_lessons_text)}
     {$course_lesson_number = intval($course_lessons_text)}
 {/if}
 {if $course_lessons_text == '' && $lesson_count > 0}{$course_lessons_text = "{$lesson_count} bài học"}{/if}
 {$unit_price = 0}
-{if $price > 0 && $course_lesson_number > 0}{$unit_price = round($price / $course_lesson_number)}{/if}
+{if !$quiz_course && $price > 0 && $course_lesson_number > 0}{$unit_price = round($price / $course_lesson_number)}{/if}
 {$consult_url = 'https://zalo.me/0339308997'}
 {if !empty($text.link_zalo)}{$consult_url = $text.link_zalo}{/if}
 {$intro_video = ''}
@@ -175,44 +178,77 @@
     {if !is_array($course_files)}{$course_files = []}{/if}
 {/if}
 
+{$course_instructors = []}
+{$course_formats = []}
+{if !$quiz_course}
+    {$course_instructors = $this->Article->courseInstructorNames($attributes.thongtingiangvien.value|default:'')}
+    {if array_filter(array_column($lessons, 'video'))}
+        {if $course_kind == 'exam_solution'}
+            {$course_formats[] = 'Video chữa đề theo môn'}
+        {else}
+            {$course_formats[] = 'Video bài giảng theo lộ trình'}
+        {/if}
+    {/if}
+    {if $course_files || array_filter(array_column($lessons, 'files'))}{$course_formats[] = 'Tài liệu đi kèm'}{/if}
+    {if !empty($entry_offer.duration_months)}{$course_ownership = "{$entry_offer.duration_months} tháng"}{/if}
+{/if}
+
 {* One registration card stays beside both the overview and curriculum. *}
 {capture name=mcr_quote}
-                        <div class="mcr-buy">
-                            {if !$licensed}
-                                <div class="mcr-buy-heading"><p class="mcr-buy-eyebrow">{if $quiz_course}Gói đề thi{else}Học phí khoá học{/if}</p>{if $old_price_text != ''}<span class="mcr-discount">−{$discount}%</span>{/if}</div>
-                                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</p>
-                                {if $unit_price > 0}<p class="mcr-unit-cost"><span>Bình quân</span><strong>{$unit_price|number_format:0:',':'.'}đ/{if $exam_prep}bài{else}buổi{/if}</strong></p>{/if}
-                            {else}
-                                <p class="mcr-owned"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>{if $quiz_course}Bạn đã có quyền truy cập môn này{else}Bạn đã sở hữu khoá học này{/if}</p>
-                            {/if}
-                            <dl class="mcr-specs">
-                                {if $course_duration != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Thời lượng</dt><dd>{$course_duration|escape}</dd></div>{/if}
-                                {if $course_lessons_text != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg>Số lượng bài học</dt><dd>{$course_lessons_text|escape}</dd></div>{/if}
-
-                                {if $quiz_course}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></svg>Số lượng đề</dt><dd>{$quiz_count} đề</dd></div>{/if}
-                                {if $course_ownership != ''}<div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16"/></svg>Sở hữu</dt><dd>{$course_ownership|escape}</dd></div>{/if}
-                            </dl>
-                            {if !$licensed && !$quiz_course}
-                                <section class="mcr-assurance" aria-label="Cam kết đổi môn miễn phí">
-                                    <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết đổi môn miễn phí</h3>
-                                    <ul>
-                                        <li>Học <strong>3 ngày</strong> không hiệu quả, <strong>Đổi sang môn khác miễn phí.</strong></li>
-                                        <li>Hoàn thành <strong>80% khoá học</strong>, làm đúng <strong>80% bài tập</strong> nhưng thi dưới <strong>điểm B</strong>, <strong>Đổi sang môn khác miễn phí.</strong></li>
-                                    </ul>
-                                </section>
-                            {/if}
-                            {if $quiz_course && !$licensed}<p class="mcr-quote-note">Đã có hơn 500 học viên đăng kí học , hãy để Meduc giúp bạn Vững chuyên môn</p>{/if}
-                            <div class="mcr-buy-actions">
-                                {if !$licensed}
-                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>{if $quiz_course}Chọn gói đề thi{else}Đăng ký học ngay{/if}</a>
-                                    <a class="mcr-btn mcr-btn--ghost mcr-btn--block mcr-btn--zalo" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo</a>
-                                {else}
-                                    {if $first_open > 0}<a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span><span aria-hidden="true">→</span></a>{/if}
-                                    <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="/member/classroom">Lớp học của tôi</a>
-                                {/if}
-                            </div>
-                        </div>
-
+    <div class="mcr-buy">
+        {if $licensed}
+            <p class="mcr-owned"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>{if $quiz_course}Bạn đã có quyền truy cập môn này{else}Bạn đã sở hữu khoá học này{/if}</p>
+        {else}
+            <h2 class="mcr-buy-title">{if $quiz_course}Quyền lợi gói Đề thi{else}Quyền lợi khóa học{/if}</h2>
+        {/if}
+        {if $quiz_course}
+            {if $ready_exam_types}
+                {$exam_counts = array_count_values($ready_exam_types)}
+                <dl class="mcr-specs">
+                    {if !empty($exam_counts.regular)}<div><dt>Đề theo bài</dt><dd>{$exam_counts.regular} đề</dd></div>{/if}
+                    {if !empty($exam_counts.midterm)}<div><dt>Thi thử giữa kỳ</dt><dd>{$exam_counts.midterm} đề</dd></div>{/if}
+                    {if !empty($exam_counts.final)}<div><dt>Thi thử cuối kỳ</dt><dd>{$exam_counts.final} đề</dd></div>{/if}
+                </dl>
+            {else}
+                <p class="mcr-quote-note">Đề của môn này đang được cập nhật.</p>
+            {/if}
+        {else}
+            <dl class="mcr-specs">
+                {if $course_instructors}<div><dt>Giảng viên</dt><dd>{implode(', ', $course_instructors)|escape}</dd></div>{/if}
+                {if $course_lessons_text != ''}<div><dt>Số buổi</dt><dd>{$course_lessons_text|escape}</dd></div>{/if}
+                {if $course_formats}<div><dt>Nội dung</dt><dd>{implode(' · ', $course_formats)|escape}</dd></div>{/if}
+                {if $course_duration != ''}<div><dt>Thời lượng</dt><dd>{$course_duration|escape}</dd></div>{/if}
+                {if $course_ownership != ''}<div><dt>Quyền học</dt><dd>{$course_ownership|escape}</dd></div>{/if}
+            </dl>
+        {/if}
+        {if !$licensed}
+            {if !empty($entry_offer.lines)}
+                <ul class="mcr-plan-benefits">
+                    {foreach $entry_offer.lines as $line}<li><span aria-hidden="true">✓</span>{$line|escape}</li>{/foreach}
+                </ul>
+            {/if}
+            {if !$quiz_course}
+                <section class="mcr-assurance" aria-label="Cam kết học tập">
+                    <h3 class="mcr-assurance-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>Cam kết học tập</h3>
+                    {$this->element('course_price/guarantees')}
+                </section>
+            {/if}
+            <div class="mcr-buy-payment">
+                <div class="mcr-buy-heading"><p class="mcr-buy-eyebrow">{if $quiz_course}Giá gói Đề thi{else}Học phí khoá học{/if}</p>{if $old_price_text != ''}<span class="mcr-discount">−{$discount}%</span>{/if}</div>
+                <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</p>
+                {if $unit_price > 0}<p class="mcr-unit-cost"><span>Bình quân</span><strong>{$unit_price|number_format:0:',':'.'}đ/buổi</strong></p>{/if}
+            </div>
+        {/if}
+        <div class="mcr-buy-actions">
+            {if !$licensed}
+                <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>{if $quiz_course}Chọn gói đề thi{else}Đăng ký học ngay{/if}</a>
+                <a class="mcr-btn mcr-btn--ghost mcr-btn--block mcr-btn--zalo" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo</a>
+            {else}
+                {if $first_open > 0}<a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span><span aria-hidden="true">→</span></a>{/if}
+                <a class="mcr-btn mcr-btn--ghost mcr-btn--block" href="/member/classroom">Lớp học của tôi</a>
+            {/if}
+        </div>
+    </div>
 {/capture}
 
 {* Student feedback videos for the upper Phản hồi tab *}
@@ -260,7 +296,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261115-mobile-submit-timer" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261124-price-benefits" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261115-school-picker-only" defer></script>
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">

@@ -23,3 +23,82 @@
 @media(max-width:680px){.mpr-hero{padding:30px 0 34px}.mpr-packages{gap:22px;padding-top:0}.mpr-package{padding:28px 24px}.mpr-package.is-recommended{transform:none}.mpr-package .mpr-benefits{min-height:0}.mpr-package .mpr-price{font-size:39px}.mpr-package h3{font-size:40px}.mpr-guarantee{text-align:left;font-size:14px}}
 
 .mpr-duration{margin:12px 0 0;color:var(--mpr-muted,#6b7280);font-size:14px;font-weight:600}
+
+.mpr:not([data-course-type=document]) .mpr-hero { padding-block: clamp(22px, 3vw, 36px); }
+.mpr:not([data-course-type=document]) .mpr-lead:empty { display: none; }
+.mpr:not([data-course-type=document]) .mpr-section-head { margin-bottom: 20px; }
+
+.mpr-subject,
+.mpr-course-guarantee {
+  padding: 16px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.mpr-subject { margin-bottom: 24px; }
+.mpr-subject h2 { margin: 5px 0 14px; font-size: 23px; }
+.mpr-subject dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 12px 20px;
+  margin: 0;
+}
+.mpr-subject dt { margin-bottom: 3px; color: var(--muted); font-size: 13px; }
+.mpr-subject dd { margin: 0; font-size: 15px; font-weight: 650; overflow-wrap: anywhere; }
+
+.mpr-course-guarantee {
+  margin: 0 0 20px;
+  border-inline-start: 3px solid var(--red);
+}
+.mpr-course-guarantee h3 { margin: 0; font-size: 16px; }
+.mpr-course-guarantee ul {
+  display: grid;
+  gap: 5px 24px;
+  margin: 8px 0 0;
+  padding-inline-start: 19px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.mpr-course-guarantee strong { color: var(--ink); }
+
+.mpr:not([data-course-type=document]) .mpr-package .mpr-benefits {
+  min-height: 0;
+  margin: 18px 0 20px;
+  padding-top: 16px;
+}
+.mpr:not([data-course-type=document]) .mpr-package .mpr-benefits:empty { display: none; }
+.mpr:not([data-course-type=document]) .mpr-package .mpr-choice {
+  margin-bottom: 14px;
+  padding-top: 12px;
+}
+.mpr-package-payment {
+  display: grid;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0 16px;
+}
+.mpr-package .mpr-package-payment .mpr-price {
+  margin: 0;
+  font-size: clamp(27px, 3.5vw, 40px);
+}
+.mpr-package-payment .mpr-price-meta { min-height: 27px; margin: 0; }
+
+@media (min-width: 980px) {
+  .mpr-subject {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    align-items: center;
+    gap: 24px;
+  }
+  .mpr-subject h2 { margin-bottom: 0; }
+  .mpr-course-guarantee ul { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
+}
+
+@media (max-width: 680px) {
+  .mpr-subject,
+  .mpr-course-guarantee { padding: 16px; }
+  .mpr-subject h2 { font-size: 20px; }
+  .mpr-subject dl { grid-template-columns: 1fr; }
+}

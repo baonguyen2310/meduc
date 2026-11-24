@@ -76,6 +76,20 @@ class ArticleHelper extends Helper
         return $result;
     }
 
+    public function courseInstructorNames($attribute): array
+    {
+        $ids = json_decode((string)$attribute, true);
+        if (!is_array($ids)) return [];
+
+        $ids = array_values(array_unique(array_filter(array_map(static function ($id) {
+            return filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        }, $ids))));
+        if (!$ids) return [];
+
+        $articles = $this->getArticles(['filter' => ['ids' => $ids], 'limit' => count($ids)]);
+        return array_values(array_filter(array_column($articles, 'name')));
+    }
+
     /** Lấy chi tiết bài biết thông qua article_id
      * 
      * $article_id (*): ID bài viết(int)
