@@ -64,7 +64,7 @@ html[data-meduc-theme="light"] .mhb {
 /* Disclosures open above the bar. */
 .mhb-menu-wrap { position: relative; min-width: 0; }
 .mhb-menu { position: absolute; left: 0; bottom: calc(100% + 12px); z-index: 1; display: flex; flex-direction: column; gap: 8px; width: 204px; max-height: calc(100dvh - var(--mhb-h, 80px) - 24px); padding: 8px; overflow-y: auto; border: 1px solid var(--mhb-line); border-radius: 10px; background: var(--mhb-menu); box-shadow: 0 14px 48px var(--mhb-shadow); }
-.mhb-menu-wrap:nth-child(n+3) .mhb-menu { right: 0; left: auto; }
+.mhb-menu-wrap:last-child .mhb-menu { right: 0; left: auto; }
 .mhb-menu .mhb-button { flex: none; justify-content: flex-start; width: 100%; padding-inline: 11px; text-align: left; white-space: normal; }
 
 /* Keep space under the page and lift the floating contact and back-to-top buttons above the bar. */
@@ -76,14 +76,15 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
 @media (max-width: 1100px) {
   .mhb-shell { width: min(92%, 1440px); }
 }
-/* Phones and small tablets: four equal buttons with icons, like an app's bottom bar. */
+/* Three equal shortcuts on phones and small tablets. */
 @media (max-width: 767.98px) {
   .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
   .mhb-info { display: none; }
-  .mhb-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
+  .mhb-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
   .mhb-menu-wrap > .mhb-button { flex-direction: column; gap: 3px; width: 100%; height: 100%; min-height: 60px; padding: 6px 4px; font-size: clamp(10px, 2.9vw, 12px); text-align: center; white-space: normal; }
   .mhb-icon:not(.mhb-icon--always) { display: block; }
-  .mhb-menu { width: 192px; bottom: calc(100% + 10px); }
+  .mhb-menu { width: min(192px, calc(100vw - 16px)); bottom: calc(100% + 10px); }
+  .mhb-menu-wrap:nth-child(2) .mhb-menu { left: 50%; transform: translateX(-50%); }
   .mhb-menu .mhb-button { font-size: 14px; }
 }
 

@@ -37,13 +37,14 @@
     {/while}
 {/if}
 
+{include file='../../element/layout/catalog_navigation.tpl' scope=parent}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261105-portrait-framing" rel="stylesheet">
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.css?v=20261124-stable-navigation" rel="stylesheet">
 
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/faculty-photos.js?v=20261105-portrait-framing" defer></script>
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.js?v=20261022-1" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/hero.js?v=20261124-stable-navigation" defer></script>
 
 <section class="mhw">
     {if $photo_count > 0}
@@ -77,34 +78,25 @@
             {/if}
         </div>
         <div class="mhw-actions">
-            {if !empty($text.dong_phu)}
-                <p class="mhw-note">{$text.dong_phu|escape}</p>
-            {/if}
-            {* Course, exam, book and free-resource actions. *}
-            {if !empty($text.nut_chinh) || !empty($text.nut_chinh_2) || !empty($text.nut_phu)}
-                <div class="mhw-buttons">
-                    {if !empty($text.nut_chinh)}
-                        <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh)}{$text.link_nut_chinh|escape}{else}/khoa-hoc{/if}">{$text.nut_chinh|escape}</a>
-                    {/if}
-                    {if !empty($text.nut_chinh_2)}
-                        <a class="mhw-button mhw-button--primary" href="{if !empty($text.link_nut_chinh_2)}{$text.link_nut_chinh_2|escape}{else}/trac-nghiem{/if}">{$text.nut_chinh_2|escape}</a>
-                    {/if}
-                    {if !empty($text.nut_phu)}
-                        <a class="mhw-button mhw-button--secondary" href="{if !empty($text.link_nut_phu)}{$text.link_nut_phu|escape}{else}/sach-y-khoa{/if}">{$text.nut_phu|escape}</a>
-                    {/if}
-                    <div class="mhw-gift">
-                        <button class="mhw-button mhw-button--gift" type="button" aria-expanded="false" aria-controls="mhw-gift-menu">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8C10.5 5 7 4.5 7 7c0 1.5 2 1 5 1Zm0 0c1.5-3 5-3.5 5-1 0 1.5-2 1-5 1Z"/></svg>
-                            <span>Quà tặng miễn phí</span>
+            <div class="mhw-buttons">
+                {foreach from = $meduc_catalog_groups key = group_id item = group}
+                    <div class="mhw-category">
+                        <button class="mhw-button" type="button" aria-expanded="false" aria-controls="mhw-{$group_id|escape}-menu">
+                            {$group.label|escape}
+                            <svg class="mhw-chevron" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg>
                         </button>
-                        <nav class="mhw-gift-menu" id="mhw-gift-menu" aria-label="Quà tặng miễn phí" hidden>
-                            <a href="/blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/></svg><span>Blog</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
-                            <a href="/tai-lieu-hoc-tap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg><span>Tài liệu</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
-                            <a href="/trac-nghiem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM9 5.5H6V21h12V5.5h-3M9 13h6M9 17h4"/></svg><span>Trắc nghiệm</span><span class="mhw-gift-arrow" aria-hidden="true">→</span></a>
+                        <nav class="mhw-category-menu" id="mhw-{$group_id|escape}-menu" aria-label="Danh mục {$group.label|escape}" hidden>
+                            {foreach from = $group.items item = link}
+                                <a href="{$link.url|escape}">
+                                    <svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-{$link.icon|escape}" /></svg>
+                                    <span>{$link.label|escape}</span>
+                                    <svg class="mhi-icon mhw-category-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg>
+                                </a>
+                            {/foreach}
                         </nav>
                     </div>
-                </div>
-            {/if}
+                {/foreach}
+            </div>
             {if !empty($text.cam_ket)}
                 <p class="mhw-guarantee">{$text.cam_ket|escape}</p>
             {/if}

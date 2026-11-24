@@ -1,7 +1,7 @@
-/* Free gifts in the homepage hero. */
+/* Category menus in the homepage hero. */
 (() => {
   "use strict";
-  document.querySelectorAll(".mhw-gift").forEach((box) => {
+  document.querySelectorAll(".mhw-category").forEach((box) => {
     const button = box.querySelector("button");
     const menu = box.querySelector("nav");
     const links = [...menu.querySelectorAll("a")];

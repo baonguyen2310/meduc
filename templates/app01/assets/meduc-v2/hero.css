@@ -8,11 +8,8 @@
   --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade) / .98) 42%, rgb(var(--mhw-fade) / .82) 60%, rgb(var(--mhw-fade) / .35) 80%, rgb(var(--mhw-fade) / .45));
   --mhw-tile-ring: transparent;
   --mhw-ink: #fff;
-  --mhw-muted: rgb(255 255 255 / .7);
   --mhw-soft: rgb(255 255 255 / .8);
   --mhw-secondary: #3c3d42;
-  --mhw-secondary-hover: #4a4b51;
-  --mhw-secondary-ink: #fff;
   --mhw-tile-bg: #26272b;
   --mhw-menu-bg: #232427;
   --mhw-menu-line: #ffffff26;
@@ -41,11 +38,8 @@ html[data-meduc-theme="light"] .mhw {
   --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade)) 34%, rgb(var(--mhw-fade) / .92) 41%, rgb(var(--mhw-fade) / 0) 56%);
   --mhw-tile-ring: rgb(21 23 28 / .08);
   --mhw-ink: #15171c;
-  --mhw-muted: rgb(21 23 28 / .68);
   --mhw-soft: rgb(21 23 28 / .72);
   --mhw-secondary: #eceef2;
-  --mhw-secondary-hover: #e1e4ea;
-  --mhw-secondary-ink: #15171c;
   --mhw-tile-bg: #e9ebef;
   --mhw-menu-bg: #fff;
   --mhw-menu-line: #e0e3e7;
@@ -80,32 +74,25 @@ html[data-meduc-theme="light"] .mhw {
 .mhw-line2 { color: var(--mhw-red); font-size: 1.86em; line-height: 1.08; }
 .mhw-subtitle { max-width: 280px; margin: 16px auto 0; color: var(--mhw-ink); font-size: 16px; font-weight: 700; line-height: 1.5; }
 .mhw-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.mhw-note { margin: 0; color: var(--mhw-muted); font-size: 16px; line-height: 1.5; }
 .mhw-buttons { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-.mhw-button { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; line-height: 1.25; text-decoration: none !important; transition: filter .16s, background-color .16s; }
-.mhw-button--primary { background: var(--mhw-red); color: #fff !important; }
-.mhw-button--primary:hover { filter: brightness(1.1); }
-.mhw-button--secondary { background: var(--mhw-secondary); color: var(--mhw-secondary-ink) !important; }
-.mhw-button--secondary:hover { background: var(--mhw-secondary-hover); }
-.mhw-button--gift { width: 100%; background: transparent; font-family: inherit; cursor: pointer; gap: 8px; border: 1px solid var(--mhw-ink); padding-block: 11px; color: var(--mhw-ink) !important; }
-.mhw-button--gift:hover, .mhw-button--gift[aria-expanded="true"] { background: var(--mhw-secondary); }
-.mhw-button--gift:focus { outline: none !important; }
-.mhw-button--gift svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.mhw-gift { position: relative; min-width: 0; }
-.mhw-gift-menu { position: absolute; z-index: 5; right: 0; bottom: calc(100% + 8px); width: 100%; min-width: 200px; padding: 8px; border: 1px solid var(--mhw-menu-line); border-radius: 10px; background: var(--mhw-menu-bg); box-shadow: 0 12px 36px #0002; text-align: left; }
-.mhw-gift-menu[hidden] { display: none !important; }
-.mhw-gift-menu a { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 6px; color: var(--mhw-ink) !important; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none !important; }
-.mhw-gift-menu a:hover { background: var(--mhw-secondary); }
-.mhw-gift-menu svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.mhw-gift-arrow { margin-left: auto; font-size: 20px; }
-.mhw-button:focus-visible, .mhw-gift-menu a:focus-visible { outline: 2px solid var(--mhw-ink) !important; outline-offset: 3px; }
+.mhw-button { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; padding: 12px 20px; border: 0; border-radius: 8px; background: var(--mhw-red); color: #fff; font: 600 16px/1.25 Inter, Arial, sans-serif; cursor: pointer; transition: filter .16s; }
+.mhw-button:hover { filter: brightness(1.1); }
+.mhw-button[aria-expanded="true"] { filter: brightness(.9); }
+.mhw-chevron { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mhw-button[aria-expanded="true"] .mhw-chevron { transform: rotate(180deg); }
+.mhw-category { position: relative; }
+.mhw-category-menu { position: absolute; z-index: 5; inset-inline: 0; bottom: calc(100% + 8px); padding: 8px; border: 1px solid var(--mhw-menu-line); border-radius: 10px; background: var(--mhw-menu-bg); box-shadow: 0 12px 36px #0002; text-align: left; }
+.mhw-category-menu[hidden] { display: none !important; }
+.mhw-category-menu a { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 6px; color: var(--mhw-ink) !important; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none !important; }
+.mhw-category-menu a:hover { background: var(--mhw-secondary); }
+.mhw-category-menu a > svg { width: 20px; height: 20px; }
+.mhw-category-arrow { margin-left: auto; }
+.mhw-button:focus-visible, .mhw-category-menu a:focus-visible { outline: 2px solid var(--mhw-ink) !important; outline-offset: 3px; }
 .mhw-guarantee { margin: 0; color: var(--mhw-soft); font: 11px/1.38 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
 /* On phones the stacked text fills the lower half, so the light panel starts higher. */
 @media (max-width: 767.98px) {
-  .mhw-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mhw-button { min-height: 52px; padding: 10px 8px; font-size: 14px; gap: 6px; }
-  .mhw-button--gift svg { width: 18px; height: 18px; }
+  .mhw-button { padding-block: 10px; font-size: 15px; }
   html[data-meduc-theme="light"] .mhw { --mhw-overlay: linear-gradient(0deg, rgb(var(--mhw-fade)) 0, rgb(var(--mhw-fade)) 52%, rgb(var(--mhw-fade) / .92) 58%, rgb(var(--mhw-fade) / 0) 70%); }
 }
 @media (min-width: 768px) {
@@ -124,6 +111,9 @@ html[data-meduc-theme="light"] .mhw {
 }
 @media (min-width: 1101px) {
   .mhw-shell { width: min(83.333333%, 1440px); }
+}
+@media (max-height: 520px) {
+  .mhw-category-menu { position: static; margin-top: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mhw-track { animation: none; }
