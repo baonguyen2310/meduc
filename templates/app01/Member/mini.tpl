@@ -26,16 +26,6 @@
             Khóa học đang tham gia
         </a>
         
-        <a class="dropdown-item border-bottom p-10" href="/cac-khoa-hoc-nen-mua">
-            <i class="iconsax isax-lg isax-video-square mr-5"></i>
-            Các khoá học nên mua
-        </a>
-        
-        <a class="dropdown-item border-bottom p-10" href="/lich-su-lam-bai-tap">
-            <i class="iconsax isax-lg isax-archive-book mr-5"></i>
-            Lịch sử làm bài tập
-        </a>
-        
         <a class="dropdown-item border-bottom p-10" href="/member/aff/dashboard">
             <i class="iconsax isax-lg isax-note-2 mr-5"></i>
             Tiếp thị liên kết

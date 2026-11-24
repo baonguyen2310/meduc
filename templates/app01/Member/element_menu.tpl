@@ -56,19 +56,6 @@
             </a>
         </li>
         
-        <li>
-            <a href="/cac-khoa-hoc-nen-mua" class="color-black">
-                <i class="iconsax isax-2x isax-video-square"></i>
-                Các khoá học nên mua
-            </a>
-        </li>
-        
-        <li>
-            <a href="/lich-su-lam-bai-tap" class="color-black">
-                <i class="iconsax isax-2x isax-archive-book"></i>
-                Lịch sử làm bài tập
-            </a>
-        </li>
 
         {*<li class="{if $get_path == '/member/order' || strpos($get_path, '/member/order/detail/') === 0}active{/if}">
             <a href="/member/order" class="color-black">
