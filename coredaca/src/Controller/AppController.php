@@ -583,6 +583,10 @@ class AppController extends Controller
 
             $category_info = TableRegistry::get('Categories')->getDetailCategory($type, $category_id, LANGUAGE);
             $category_info = TableRegistry::get('Categories')->formatDataCategoryDetail($category_info);
+            if ($type === PRODUCT && ($category_info['url'] ?? '') === 'trac-nghiem') {
+                $category_info['name'] = 'Đề thi';
+                $category_info['seo_title'] = 'Đề thi | MedUC';
+            }
 
             // check category has parent id
             if(!empty($category_info['path_id'])){
@@ -591,6 +595,9 @@ class AppController extends Controller
                     $parent_info = TableRegistry::get('Categories')->getDetailCategory($type, $parent_id, LANGUAGE);
                     $parent_info = TableRegistry::get('Categories')->formatDataCategoryDetail($parent_info);
                     if(!empty($parent_info)){
+                        if ($type === PRODUCT && ($parent_info['url'] ?? '') === 'trac-nghiem') {
+                            $parent_info['name'] = 'Đề thi';
+                        }
                         $breadcrumb[] = [
                             'name' => !empty($parent_info['name']) ? $parent_info['name'] : null,
                             'url' => !empty($parent_info['url']) ? $parent_info['url'] : null
@@ -651,6 +658,10 @@ class AppController extends Controller
                 'keywords' => !empty($product_info['seo_keyword']) ? $product_info['seo_keyword'] : null,
                 'image' => !empty($product_info['all_images'][0]) ? $product_info['all_images'][0] : $company_logo
             ];
+
+            if (($product_info['course_kind'] ?? null) === 'quiz' && !empty($seo_info['title'])) {
+                $seo_info['title'] = preg_replace('/^trắc nghiệm(?=\s|$)/iu', 'Đề thi', $seo_info['title']) ?? $seo_info['title'];
+            }
 
             $rating_info = TableRegistry::get('Comments')->getSchemaRating($product_id);
             $product_info['ratings'] = !empty($rating_info) ? $rating_info : [];

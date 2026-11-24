@@ -9,9 +9,22 @@ class CoursePriceController extends AppController
 {
     public function initialize(): void { parent::initialize(); $this->get_structure_layout=false; }
 
+    private function priceListsForDisplay(): array
+    {
+        return array_map(static function (array $list): array {
+            if ($list['course_type'] === 'quiz') {
+                $list['course_label'] = 'Gói đề thi';
+                if (in_array($list['name'], ['Khoá trắc nghiệm', 'Khóa trắc nghiệm'], true)) {
+                    $list['name'] = 'Đề thi';
+                }
+            }
+            return $list;
+        }, CoursePricing::lists(true));
+    }
+
     public function index($slug=null)
     {
-        $lists=CoursePricing::lists(true);
+        $lists=$this->priceListsForDisplay();
         $from=(int)$this->request->getQuery('mon');
         if (!$slug && $from) {
             $l=CoursePricing::get(CoursePricing::courseListId($from));
@@ -46,7 +59,7 @@ class CoursePriceController extends AppController
     {
         $this->autoRender=false;
         $map=[]; $boards=[];
-        foreach(CoursePricing::lists(true) as $l) {
+        foreach($this->priceListsForDisplay() as $l) {
             $courses=CoursePricing::courses((int)$l['id']);
             $packages=CoursePricing::packages((int)$l['id']);
             $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],'label'=>$l['course_label'],'catalog_url'=>$l['catalog_url'],
@@ -67,7 +80,7 @@ class CoursePriceController extends AppController
         $member=$session->read(MEMBER)?:[];
         $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first() : null;
         $boards=[];
-        foreach(CoursePricing::lists(true) as $l) {
+        foreach($this->priceListsForDisplay() as $l) {
             $courses=CoursePricing::courses((int)$l['id'],true);
             $boards[]=['id'=>(int)$l['id'],'name'=>$l['name'],'slug'=>$l['slug'],'kind'=>$l['course_type'],'label'=>$l['course_label'],'catalog_url'=>$l['catalog_url'],
                 'courses'=>array_map('intval',array_column($courses,'id')),

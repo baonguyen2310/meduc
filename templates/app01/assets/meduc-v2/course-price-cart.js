@@ -235,7 +235,7 @@
       for(const board of boards){
         const ids=idsFor(board);if(!ids.length)continue;groups++;
         const group=node('section','mpc-cart-group');group.dataset.cartGroup=String(board.id);
-        const groupHead=node('div','mpc-group-head'), label=node('div');label.append(node('p','mpc-eyebrow',(board.label || {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Khoá trắc nghiệm'}[board.kind] || 'Khoá học').toLocaleUpperCase('vi')),node('h3','',board.name));
+        const groupHead=node('div','mpc-group-head'), label=node('div');label.append(node('p','mpc-eyebrow',(board.label || {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Gói đề thi'}[board.kind] || 'Khoá học').toLocaleUpperCase('vi')),node('h3','',board.name));
         const clear=button('Xóa nhóm','mpc-link-button',()=>api.set(board.id,[]));clear.setAttribute('aria-label',`Xóa nhóm ${board.name}`);groupHead.append(label,clear);group.append(groupHead);
         const courses=new Map((board.course_data||[]).map(c=>[String(c.id),c]));
         ids.forEach(id=>{const course=courses.get(id);if(course)group.append(courseRow(board,course));});
@@ -251,7 +251,7 @@
       }
       if(legacyUnknown){const old=node('div','mpc-legacy');old.append(node('p','',`Bạn còn ${legacyUnknown} mục đã thêm từ giỏ trước đây.`),link('/order/info','Xem các mục này →','mpc-link-button'));body.append(old);}
       if(!groups&&!legacyUnknown){const empty=node('div','mpc-cart-empty');empty.append(node('span','mpc-empty-symbol','+'),node('h3','','Giỏ khóa học đang trống.'),node('p','','Chọn môn phù hợp với chặng đường của bạn.'));
-        const links=node('div','mpc-empty-links');links.append(link('/khoa-hoc','Ôn kiến thức →','mpc-primary'),link('/khoa-chua-de','Chữa đề →','mpc-secondary'),link('/trac-nghiem','Trắc nghiệm →','mpc-secondary'));empty.append(links);body.append(empty);}
+        const links=node('div','mpc-empty-links');links.append(link('/khoa-hoc','Ôn kiến thức →','mpc-primary'),link('/khoa-chua-de','Chữa đề →','mpc-secondary'),link('/trac-nghiem','Đề thi →','mpc-secondary'));empty.append(links);body.append(empty);}
     }
     async function startCheckout(boardId){
       if(busy)return;

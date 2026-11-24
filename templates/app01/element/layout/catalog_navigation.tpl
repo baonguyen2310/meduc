@@ -11,7 +11,7 @@
     'label' => 'MedUC Library', 'icon' => 'journal',
     'items' => [
       'documents' => ['url' => '/tai-lieu-hoc-tap', 'label' => 'Tài liệu', 'icon' => 'document'],
-      'quiz' => ['url' => '/trac-nghiem', 'label' => 'Trắc nghiệm', 'icon' => 'journal'],
+      'quiz' => ['url' => '/trac-nghiem', 'label' => 'Đề thi', 'icon' => 'journal'],
       'blog' => ['url' => '/blog', 'label' => 'Blog', 'icon' => 'book']
     ]
   ],

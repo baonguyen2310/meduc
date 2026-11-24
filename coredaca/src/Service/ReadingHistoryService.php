@@ -79,10 +79,15 @@ class ReadingHistoryService
             $image=(string)(array_values($course['all_images']??[])[0]??'');
             if ($image && !preg_match('~^https?://~i',$image)) $image=rtrim(CDN_URL,'/').'/'.ltrim($image,'/');
             if ($image && !preg_match('~^https?://~i',$image)) $image='';
+            if ($exam) {
+                $previewLabel = $preview ? 'Làm thử đề' : 'Xem lại đề thi';
+            } else {
+                $previewLabel = $preview ? 'Học thử miễn phí' : ($kind === 'solution' ? 'Xem lại khoá chữa đề' : 'Xem lại khoá học');
+            }
             $id=(int)$course['id'];
             $result[$id]=['article_id'=>$id,'kind'=>$kind,'title'=>$name,'image'=>$image,'url'=>$url,
                 'chapters'=>$chapters,'lessons'=>$count,'price'=>$price,'old_price'=>$old,
-                'preview_url'=>$previewUrl,'preview_label'=>$preview?($exam?'Làm thử trắc nghiệm':'Học thử miễn phí'):($kind==='solution'?'Xem lại khoá chữa đề':'Xem lại khoá học')];
+                'preview_url'=>$previewUrl,'preview_label'=>$previewLabel];
         }
         return $result;
     }

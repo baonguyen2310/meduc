@@ -11,7 +11,7 @@
   const copyByKind={
     course:{title:'KHOÁ HỌC VỪA XEM.',eyebrow:'HỌC TỪ CƠ BẢN ĐẾN CHUYÊN SÂU',label:'MEDUC / KHOÁ HỌC'},
     solution:{title:'KHOÁ CHỮA ĐỀ ĐÃ XEM.',eyebrow:'HIỂU CÁCH GIẢI · VỮNG CÁCH LÀM',label:'MEDUC / CHỮA ĐỀ'},
-    exam_course:{title:'TRẮC NGHIỆM ĐÃ XEM.',eyebrow:'TRẮC NGHIỆM THEO MÔN',label:'MEDUC / TRẮC NGHIỆM'}
+    exam_course:{title:'ĐỀ THI ĐÃ XEM.',eyebrow:'ĐỀ THI THEO MÔN',label:'MEDUC / ĐỀ THI'}
   };
   const historyCopy=copyByKind[kind];
   const id=Number(detail?.dataset.mcrProduct)||0;
@@ -46,9 +46,9 @@
       const image=safeURL(course.image,true);
       if(image){const img=node('img');img.src=image;img.alt='';img.loading='lazy';img.decoding='async';img.addEventListener('error',()=>img.remove(),{once:true});cover.append(img);}
       cover.append(node('span','mch-cover-label',historyCopy.label));
-      const body=node('div','mch-copy'),title=node('h3'),link=node('a','',kind==='exam_course'?`Trắc nghiệm ${course.title}`:course.title);link.href=url;title.append(link);body.append(title);
+      const body=node('div','mch-copy'),title=node('h3'),link=node('a','',kind==='exam_course'?`Đề thi ${course.title}`:course.title);link.href=url;title.append(link);body.append(title);
       const meta=node('p','mch-meta'),facts=[];if(course.chapters>0)facts.push(`${course.chapters} chương`);if(course.lessons>0)facts.push(`${course.lessons} bài học`);meta.textContent=facts.join(' · ');if(facts.length)body.append(meta);
-      const go=node('a','mch-action',course.preview_label||'Xem lại khoá học');go.href=url;go.append(node('span','','→'));body.append(go);card.append(cover,body);grid.append(card);
+      const go=node('a','mch-action',course.preview_label||(kind==='exam_course'?'Xem lại đề thi':'Xem lại khoá học'));go.href=url;go.append(node('span','','→'));body.append(go);card.append(cover,body);grid.append(card);
     });
     box.hidden=grid.children.length===0;
   }

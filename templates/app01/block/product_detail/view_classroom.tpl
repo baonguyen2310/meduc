@@ -179,7 +179,7 @@
 {capture name=mcr_quote}
                         <div class="mcr-buy">
                             {if !$licensed}
-                                <div class="mcr-buy-heading"><p class="mcr-buy-eyebrow">{if $quiz_course}Truy cập trắc nghiệm{else}Học phí khoá học{/if}</p>{if $old_price_text != ''}<span class="mcr-discount">−{$discount}%</span>{/if}</div>
+                                <div class="mcr-buy-heading"><p class="mcr-buy-eyebrow">{if $quiz_course}Gói đề thi{else}Học phí khoá học{/if}</p>{if $old_price_text != ''}<span class="mcr-discount">−{$discount}%</span>{/if}</div>
                                 <p class="mcr-price"><strong>{$price_text}</strong>{if $old_price_text != ''}<s>{$old_price_text}</s>{/if}</p>
                                 {if $unit_price > 0}<p class="mcr-unit-cost"><span>Bình quân</span><strong>{$unit_price|number_format:0:',':'.'}đ/{if $exam_prep}bài{else}buổi{/if}</strong></p>{/if}
                             {else}
@@ -204,7 +204,7 @@
                             {if $quiz_course && !$licensed}<p class="mcr-quote-note">Đã có hơn 500 học viên đăng kí học , hãy để Meduc giúp bạn Vững chuyên môn</p>{/if}
                             <div class="mcr-buy-actions">
                                 {if !$licensed}
-                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>{if $quiz_course}Chọn gói trắc nghiệm{else}Đăng ký học ngay{/if}</a>
+                                    <a class="mcr-btn mcr-btn--primary mcr-btn--block" {if $in_cart}href="/order/info"{else}href="javascript:;" nh-btn-action="add-cart" nh-redirect="/order/info"{/if}>{if $quiz_course}Chọn gói đề thi{else}Đăng ký học ngay{/if}</a>
                                     <a class="mcr-btn mcr-btn--ghost mcr-btn--block mcr-btn--zalo" href="{$consult_url|escape}" target="_blank" rel="noopener noreferrer">Tư vấn trên Zalo</a>
                                 {else}
                                     {if $first_open > 0}<a class="mcr-btn mcr-btn--primary mcr-btn--block" href="?bai={$first_open}" data-mcr-start="{$first_open}"><span data-mcr-start-label>Vào học</span><span aria-hidden="true">→</span></a>{/if}
@@ -272,7 +272,7 @@
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}"{if $quiz_course} data-mcr-outline-mode="regular"{/if} data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-access-expires="{$course_access.expires_at|default:0}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <header class="mcr-course-heading">
-            <p class="mcr-course-eyebrow">{if $quiz_course}Khoá trắc nghiệm{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
+            <p class="mcr-course-eyebrow">{if $quiz_course}Đề thi{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
             <h1 id="mcr-course-title">{$product.name|escape}</h1>
         </header>
         <div class="mcr-course-columns{if $quiz_course} mcr-course-columns--quiz{/if}">
@@ -333,13 +333,13 @@
         </section>
 
         {/if}
-        <aside class="mcr-course-price" aria-label="{if $quiz_course}Đăng ký trắc nghiệm{else}Đăng ký khoá học{/if}">{$smarty.capture.mcr_quote}</aside>
+        <aside class="mcr-course-price" aria-label="{if $quiz_course}Đăng ký gói đề thi{else}Đăng ký khoá học{/if}">{$smarty.capture.mcr_quote}</aside>
         <div class="mcr-course-curriculum" id="mcr-learning">
 
         <div class="mcr-curriculum-layout" data-mcr-classroom>
             {* Course outline *}
             <aside class="mcr-sidebar mcr-curriculum" aria-label="Lộ trình học">
-                <div class="mcr-outline-actions{if $quiz_course} mcr-outline-actions--quiz{/if}"{if $quiz_course} role="group" aria-label="Loại đề trắc nghiệm"{/if}>
+                <div class="mcr-outline-actions{if $quiz_course} mcr-outline-actions--quiz{/if}"{if $quiz_course} role="group" aria-label="Loại đề thi"{/if}>
                     {if $quiz_course}
                         <button type="button" class="mcr-mock-exam" data-mcr-lesson-exams aria-pressed="true" aria-controls="mcr-outline">Đề theo bài</button>
                     {else}<h3>Chương trình học</h3>{/if}
