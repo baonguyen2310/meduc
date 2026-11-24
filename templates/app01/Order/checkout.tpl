@@ -19,6 +19,11 @@
         <aside class="mco-sidebar"><section class="mco-panel mco-payment">
           <div class="mco-panel-heading"><h2>Thanh toán</h2></div><p class="mco-order-code">Mã đơn <strong>{$order_info.code|escape}</strong></p>
           {$this->element('../Order/meduc_payment', ['payment_reference'=>$order_info.code, 'payment_purpose'=>'order', 'order_info'=>$order_info, 'allow_cod'=>false])}
+          {if !empty($prices.discounts)}
+            <ul class="mv-applied" aria-label="Ưu đãi đã áp dụng">{foreach $prices.discounts as $line}
+              <li class="mv-applied-line"><span>{$line.label|escape} · {$line.code|escape}</span><strong class="mv-amount">−{$line.amount|number_format:0:',':'.'}đ</strong></li>
+            {/foreach}</ul>
+          {/if}
           <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong>{$prices.amount|number_format:0:',':'.'}đ</strong>{if $prices.original>$prices.amount}<del>{$prices.original|number_format:0:',':'.'}đ</del>{/if}</div></div>
           <p class="mco-payment-note">Sau khi chuyển khoản, nhấn hoàn tất để MedUC kiểm tra và xác nhận thanh toán.</p>
           <p class="mco-error" data-order-payment-error role="alert" hidden></p>

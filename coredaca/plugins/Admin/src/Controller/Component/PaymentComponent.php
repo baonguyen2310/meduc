@@ -120,6 +120,9 @@ class PaymentComponent extends AppComponent
             }
 
             $conn->commit();
+            if ($foreign_type === ORDER && $foreign_id && $data_save['status'] === 1 && (int)$data_save['type'] === 1) {
+                \App\Service\Vouchers::awardAfterPayment((int)$foreign_id);
+            }
             return $this->System->getResponse([CODE => SUCCESS, DATA => $save]);
 
         }catch (Exception $e) {

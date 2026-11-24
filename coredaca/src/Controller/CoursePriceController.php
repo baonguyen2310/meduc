@@ -50,6 +50,7 @@ class CoursePriceController extends AppController
             if (!empty($b['status'])) { $b['data_block']=$this->loadComponent('Block')->getDataBlock($b); $blocks[$code]=$b; }
         }
         $this->set(compact('lists','list','packages','courses','from','member','customer','blocks','recommended_year','catalog_json'));
+        $this->set('voucher_available', $list && \App\Service\Vouchers::available($list['course_type'], time()));
         $this->set('title_for_layout',($list?$list['name']:'Bảng báo giá').' | MedUC');
         $this->set('data_init',['device'=>DEVICE,'member'=>$member,'template'=>['code'=>CODE_TEMPLATE,'url'=>URL_TEMPLATE]]);
         $this->viewBuilder()->setLayout('course_pricing');
@@ -117,7 +118,8 @@ class CoursePriceController extends AppController
             $quote=CoursePricing::quote((int)($data['package_id']??0),is_array($data['course_ids']??null)?$data['course_ids']:[]);
             $customer=TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->enableHydration(false)->first();
             if (!$customer) return $this->json(401,'Tài khoản không còn hoạt động.');
-            $purchase=\App\Service\CommercePurchases::create($customer,$quote,function($payload){return $this->loadComponent('Admin.Order')->saveOrder($payload);});
+            $voucherInput = \App\Service\Vouchers::checkoutInput($data);
+            $purchase=\App\Service\CommercePurchases::create($customer,$quote,function($payload){return $this->loadComponent('Admin.Order')->saveOrder($payload);},[], $voucherInput);
             $url=$purchase['kind']==='document'?'/document-download/payment/'.$purchase['public_code']:'/order/checkout?code='.rawurlencode($purchase['order_code']);
             $done[$token]=['customer_id'=>(int)$member['id'],'redirect'=>$url]; $session->write('CoursePrice.completed',array_slice($done,-10,null,true));
             unset($tokens[$token]);$session->write('CoursePrice.tokens',$tokens);

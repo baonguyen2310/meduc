@@ -3,6 +3,8 @@
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
+use App\Service\CheckoutContact;
+use App\Service\Vouchers;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
 use Cake\Core\Exception\Exception;
@@ -199,30 +201,36 @@ class ContactController extends AppController {
     public function update($id = null)
     {
         $this->request->allowMethod(['post']);
-        
-        // Lấy biến orderStatus từ request
         $orderStatus = $this->request->getData('orderStatus');
-        
-        $table = TableRegistry::get('Contacts');
-        $contact = $table->find()->contain(['ContactsForm'])->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->first();
-        
-        if (!$contact) {
-            throw new NotFoundException(__('Liên hệ không tồn tại.'));
-        }
-        
-        // Bước 1: Parse JSON từ trường value
-        $valueData = json_decode($contact->value, true);
-    
-        // Bước 2: Cập nhật orderStatus
-        $valueData['orderStatus'] = $orderStatus;
-    
-        // Bước 3: Encode lại JSON
-        $contact->value = json_encode($valueData, JSON_UNESCAPED_UNICODE);
-    
-        // Bước 4: Lưu lại
-        if ($table->save($contact)) {
+        $saved = ConnectionManager::get('default')->transactional(function () use ($id, $orderStatus) {
+            $table = TableRegistry::get('Contacts');
+            $contact = $table->find()->contain(['ContactsForm'])
+                ->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->epilog('FOR UPDATE')->first();
+            if (!$contact) {
+                throw new \Cake\Http\Exception\NotFoundException(__('Liên hệ không tồn tại.'));
+            }
+            $valueData = json_decode($contact->value, true) ?: [];
+            $shop = ($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM;
+            $firstSuccess = $shop && $orderStatus === 'success' && ($valueData['orderStatus'] ?? '') !== 'success'
+                && empty($valueData['voucher_paid_at']);
+            if ($firstSuccess) {
+                $valueData['voucher_paid_at'] = time();
+            }
+            $valueData['orderStatus'] = $orderStatus;
+            $contact->value = json_encode($valueData, JSON_UNESCAPED_UNICODE);
+            return $table->save($contact) ? compact('firstSuccess', 'shop', 'valueData') : false;
+        });
+        if ($saved) {
+            ['firstSuccess' => $firstSuccess, 'shop' => $shop, 'valueData' => $valueData] = $saved;
+            if ($firstSuccess && !empty($valueData['voucher_buyer_id'])) {
+                try {
+                    Vouchers::awardLoyalty(CheckoutContact::customer((int)$valueData['voucher_buyer_id']), time());
+                } catch (\Throwable $error) {
+                    $this->log('Could not issue a loyalty voucher for Shop order ' . $id . ': ' . $error->getMessage(), 'error');
+                }
+            }
             // Nếu trạng thái mới là 'success' → cộng tiền hoa hồng
-            if ($orderStatus === 'success') {
+            if ($orderStatus === 'success' && (!$shop || $firstSuccess)) {
                 $affiliateCode = $valueData['affiliateCode'] ?? null;
                 $affiliateAmount = $valueData['affiliateAmount'] ?? 0;
     

@@ -62,7 +62,14 @@
         window.meducAuth?.open('login',trigger);
         return false;
       }
+      const requireVoucher = !!trigger?.hasAttribute('data-price-voucher');
+      if (requireVoucher && !window.MeducVouchers) throw new Error('Chưa tải được ô nhập mã ưu đãi. Vui lòng tải lại trang.');
+      const voucher = window.MeducVouchers
+        ? await window.MeducVouchers.review({source:'package', packageId, courseIds:selection}, trigger, requireVoucher)
+        : {};
+      if (voucher === null) return null;
       const body = new FormData();body.append('package_id',packageId);body.append('token',context.token);
+      Object.entries(voucher).forEach(([name,value]) => body.append(name,value));
       selection.forEach(id=>body.append('course_ids[]',id));
       const order = await fetch('/bang-bao-gia/dang-ky', {method:'POST',credentials:'same-origin',body,
         headers:{'X-CSRF-Token':document.documentElement.getAttribute('csrf-token') || '', 'X-Requested-With':'XMLHttpRequest'}});
@@ -259,7 +266,10 @@
       const ids=idsFor(board),pack=packageFor(board,ids);
       if(!pack||ids.length!==pack.count){showError('Vui lòng chọn đủ số môn của gói.');return;}
       closeDialog(false);busy=true;
-      try { await api.checkout(board.id,pack.id,ids,triggers[0]); }
+      try {
+        const result = await api.checkout(board.id,pack.id,ids,triggers[0]);
+        if (result === null) { ensureOpen(triggers[0]); renderCart(); }
+      }
       catch(error){ensureOpen(triggers[0]);renderCart();showError(error.message);}
       finally{busy=false;}
     }

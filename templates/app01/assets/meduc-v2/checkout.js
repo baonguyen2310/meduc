@@ -64,7 +64,17 @@
  const form=page.querySelector('[data-checkout-form]'),empty=page.querySelector('[data-checkout-empty]'),error=page.querySelector('[data-cart-error]'),list=page.querySelector('[data-cart-products]'),submit=page.querySelector('[data-place-order]');
  const money=value=>new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(value);
  const catalog=JSON.parse(page.querySelector('[data-checkout-catalog]').textContent);
- let cart, owner=0;
+ let cart, owner=0, voucherReady=true, saleTotal=0, unavailableItems=false;
+ const payable=page.querySelector('[data-cart-total]'), charge=page.querySelector('[data-cart-total-input]');
+ const voucherHost=page.querySelector('[data-shop-vouchers]');
+ const voucherPanel=window.MeducVouchers && voucherHost && window.MeducVouchers.panel(voucherHost,(quote,pending,payload)=>{
+   voucherReady=!pending && !!quote;
+   submit.disabled=unavailableItems || !voucherReady;
+   const displayed=quote?.enabled ? quote.total : saleTotal;
+   payable.textContent=money(displayed);
+   charge.value=displayed;
+   window.MeducVouchers.fields(form,quote ? payload : {});
+ });
  function fail(message){error.textContent=message;error.hidden=false;submit.disabled=true;}
  try{cart=JSON.parse(sessionStorage.getItem('cart'));}catch(_){fail('Không thể đọc giỏ hàng. Vui lòng chọn lại sản phẩm từ danh sách sách.');empty.hidden=false;return;}
  if(!cart||!Array.isArray(cart.cartProducts)||!cart.cartProducts.length){empty.hidden=false;return;}
@@ -94,7 +104,14 @@
    page.querySelector('[data-cart-count]').textContent=`(${count})`;page.querySelector('[data-cart-subtotal]').textContent=money(subtotal);page.querySelector('[data-cart-total]').textContent=money(total);page.querySelector('[data-cart-subtotal]').hidden=subtotal<=total;
    page.querySelector('[data-cart-input]').value=JSON.stringify(cart.cartProducts.map(({id,quantity,name})=>({id,quantity,name})));page.querySelector('[data-cart-id-input]').value=cart.cartId;page.querySelector('[data-cart-total-input]').value=total;
    document.querySelectorAll('[nh-mini-cart-book-quantity]').forEach(counter=>{counter.textContent=cart.cartProducts.length;});
-   error.hidden=!unavailable;submit.disabled=unavailable;if(unavailable)fail('Có sản phẩm không còn mở bán. Vui lòng xóa sản phẩm đó để tiếp tục.');save();
+   unavailableItems=unavailable;
+   saleTotal=total;
+   error.hidden=!unavailable;submit.disabled=unavailable;
+   if(unavailable)fail('Có sản phẩm không còn mở bán. Vui lòng xóa sản phẩm đó để tiếp tục.');
+   if(voucherPanel && owner && cart.cartProducts.length && !unavailable) {
+     voucherPanel.refresh({source:'shop',items:cart.cartProducts.map(({id,quantity})=>({id,quantity}))});
+   }
+   save();
  }
  async function authenticate(){
    const data=await window.MeducCheckout.context();
@@ -120,13 +137,13 @@
  submit.addEventListener('click',async event=>{
    if(allowSubmit){allowSubmit=false;return;}
    event.preventDefault();event.stopImmediatePropagation();
-   if(checkingAccount||!form.reportValidity()||!owner||submit.disabled||!cart.cartProducts.length)return;
+   if(checkingAccount||!form.reportValidity()||!owner||submit.disabled||!voucherReady||!cart.cartProducts.length)return;
    checkingAccount=true;
    try{
      const current=await window.MeducCheckout.context();
      if(!current.member){window.MeducCheckout.login(submit,()=>authenticate().catch(e=>fail(e.message)));return;}
      if(current.customer_id!==owner){await authenticate();announce('Tài khoản đã thay đổi. Vui lòng kiểm tra thông tin nhận hàng.');return;}
-     if(save()){allowSubmit=true;submit.click();}
+     if(save() && voucherReady && !submit.disabled){allowSubmit=true;submit.click();}
    }catch(e){fail(e.message);}finally{checkingAccount=false;}
  },true);
  form.addEventListener('submit',event=>event.preventDefault());
