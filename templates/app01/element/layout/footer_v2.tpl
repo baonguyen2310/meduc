@@ -7,20 +7,15 @@
    - "List Social" (mv6ky0z): Facebook, Zalo and YouTube. "Coppyright HTML" (awlj4fk): copyright line and DMCA badge.
    The "Khám phá" links match the header menu. *}
 {assign var = website_info value = $this->Setting->getWebsiteInfo()}
+{include file='./catalog_navigation.tpl' scope=parent}
 {$meduc_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}
 {$footer_blocks = []}
 {if !empty($blocks)}{$footer_blocks = $blocks}{/if}
 
 {$explore_links = [
-    ['label' => 'Khóa học', 'url' => '/khoa-hoc'],
     ['label' => 'Bảng báo giá', 'url' => '/bang-bao-gia'],
     ['label' => 'Phương pháp học', 'url' => '/phuong-phap-hoc'],
-    ['label' => 'Luyện thi', 'url' => '/khoa-chua-de'],
-    ['label' => 'Bảng xếp hạng', 'url' => '/class-rank'],
-    ['label' => 'Sách Y khoa', 'url' => '/sach-y-khoa'],
-    ['label' => 'Tài liệu học tập', 'url' => '/tai-lieu-hoc-tap'],
-    ['label' => 'Blog', 'url' => '/blog'],
-    ['label' => 'Thiết bị y tế', 'url' => '/thiet-bi-y-te']
+    ['label' => 'Bảng xếp hạng', 'url' => '/class-rank']
 ]}
 
 {* Slider items in the old footer blocks store page links without the leading slash, e.g. "gioi-thieu". *}
@@ -54,13 +49,25 @@
 <footer class="mfo">
     <div class="mfo-main">
         <div class="mfo-grid">
-            <div class="mfo-column">
+            <div class="mfo-column mfo-explore">
                 <h2 class="mfo-heading">Khám phá</h2>
-                <nav aria-label="Khám phá">
-                    {foreach from = $explore_links item = link}
-                        <a href="{$link.url}">{$link.label}</a>
+                <div class="mfo-explore-groups">
+                    {foreach from = $meduc_catalog_groups key = group_id item = group}
+                        <section>
+                            <h3 class="mfo-subheading" id="mfo-{$group_id|escape}">{$group.label|escape}</h3>
+                            <nav aria-labelledby="mfo-{$group_id|escape}">
+                                {foreach from = $group.items item = link}
+                                    <a href="{$link.url|escape}">{$link.label|escape}</a>
+                                {/foreach}
+                            </nav>
+                        </section>
                     {/foreach}
-                </nav>
+                    <nav aria-label="Thông tin MedUC">
+                        {foreach from = $explore_links item = link}
+                            <a href="{$link.url|escape}">{$link.label|escape}</a>
+                        {/foreach}
+                    </nav>
+                </div>
             </div>
             {if !empty($about_links)}
                 <div class="mfo-column">

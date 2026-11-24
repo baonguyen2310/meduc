@@ -1,4 +1,4 @@
-/* Bottom action bar (element/layout/action_bar.tpl): slides in after a little scrolling, plus the gift menu. */
+/* Bottom shortcuts and their disclosure menus. */
 (() => {
   "use strict";
   const bar = document.querySelector("#meduc-action-bar");
@@ -11,22 +11,38 @@
   if ("ResizeObserver" in window) new ResizeObserver(() => { setHeight(); scheduleUpdate(); }).observe(bar);
   document.body.classList.add("mhb-ready");
 
-  const giftBox = bar.querySelector(".mhb-gift");
-  const giftButton = giftBox.querySelector("button");
-  const giftMenu = bar.querySelector("#mhb-gift-menu");
-  function setGift(open) {
-    giftMenu.hidden = !open;
-    giftButton.setAttribute("aria-expanded", String(open));
-  }
-  giftButton.addEventListener("click", () => setGift(giftMenu.hidden));
-  document.addEventListener("click", (event) => {
-    if (!giftMenu.hidden && !giftBox.contains(event.target)) setGift(false);
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !giftMenu.hidden) {
-      setGift(false);
-      giftButton.focus();
+  const menus = [...bar.querySelectorAll("[data-mhb-menu]")].map((wrap) => ({
+    wrap,
+    button: wrap.querySelector("button[aria-controls]"),
+    panel: wrap.querySelector(".mhb-menu")
+  }));
+  let openMenu = null;
+  function showMenu(menu) {
+    if (openMenu) {
+      openMenu.panel.hidden = true;
+      openMenu.button.setAttribute("aria-expanded", "false");
     }
+    openMenu = menu;
+    if (openMenu) {
+      openMenu.panel.hidden = false;
+      openMenu.button.setAttribute("aria-expanded", "true");
+    }
+  }
+  menus.forEach((menu) => {
+    menu.button.addEventListener("click", () => showMenu(openMenu === menu ? null : menu));
+  });
+  function closeOutsideMenu(event) {
+    if (openMenu && !openMenu.wrap.contains(event.target)) showMenu(null);
+  }
+  document.addEventListener("click", closeOutsideMenu);
+  document.addEventListener("focusin", closeOutsideMenu);
+  bar.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !openMenu) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const {button} = openMenu;
+    showMenu(null);
+    button.focus();
   });
 
   // A small gap between show/hide thresholds avoids flicker around the boundary.
@@ -40,7 +56,7 @@
     shown = next;
     bar.classList.toggle("is-shown", shown);
     document.body.classList.toggle("mhb-on", shown);
-    if (!shown) setGift(false);
+    if (!shown) showMenu(null);
     document.dispatchEvent(new CustomEvent("meduc:action-bar", {detail:{shown}}));
   }
   function scheduleUpdate() {

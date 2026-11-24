@@ -9,11 +9,7 @@
 {$meduc_brand = !empty($website_info.company_logo) && strpos($website_info.company_logo, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
-{* Each link list is declared once and rendered in both the desktop bars and the mobile menu. *}
-{$nav_courses = [
-  ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
-  ['url' => '/khoa-chua-de', 'label' => 'Khoá chữa đề', 'icon' => 'pulse']
-]}
+{include file='./catalog_navigation.tpl' scope=parent}
 {$nav_secondary = [
   ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
   ['url' => '/doi-ngu-giang-vien', 'label' => 'Giảng viên'],
@@ -32,21 +28,6 @@
   ['url' => '/class-rank', 'label' => 'Xếp hạng']
 ]}
 
-{* Product categories are shared with Admin and the year-filtered catalogue. *}
-{$nav_exam_items = []}
-{$nav_book_items = []}
-{$nav_exam_categories = $this->Category->getListCategories({PRODUCT}, {LANGUAGE}, [{FILTER} => ['parent_id' => 125], {SORT} => [{FIELD} => 'position', {SORT} => 'asc']])}
-{$nav_book_categories = $this->Category->getListCategories({PRODUCT}, {LANGUAGE}, [{FILTER} => ['parent_id' => 79], {SORT} => [{FIELD} => 'position', {SORT} => 'asc']])}
-{foreach from = $nav_exam_categories item = category}{$nav_exam_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
-{foreach from = $nav_book_categories item = category}{if count($nav_book_items) >= 4}{break}{/if}{$nav_book_items[] = ['url' => $this->Utilities->checkInternalUrl($category.url), 'label' => $category.name, 'icon' => 'book']}{/foreach}
-{$nav_main = [
-  ['id' => 'browse', 'label' => 'Khoá học', 'url' => '/khoa-hoc', 'items' => $nav_courses],
-  ['id' => 'practice', 'label' => 'Trắc nghiệm', 'url' => '/trac-nghiem', 'all' => 'Xem tất cả môn trắc nghiệm', 'items' => $nav_exam_items],
-  ['id' => 'books', 'label' => 'Sách', 'url' => '/sach-y-khoa', 'all' => 'Xem tất cả sách', 'items' => $nav_book_items],
-  ['id' => 'blog', 'label' => 'Blog', 'url' => '/blog'],
-  ['id' => 'documents', 'label' => 'Tài liệu', 'url' => '/tai-lieu-hoc-tap']
-]}
-
 <div class="mhi mhi-header-wrap" id="meduc-header">
   <svg class="mhi-icon-sprites" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <symbol id="mhi-icon-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
@@ -55,6 +36,7 @@
     <symbol id="mhi-icon-journal" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 11h10M7 15h6"/></symbol>
     <symbol id="mhi-icon-document" viewBox="0 0 24 24"><path d="M14 2H5v20h14V7l-5-5Zm0 0v5h5M8 12h8M8 16h6"/></symbol>
     <symbol id="mhi-icon-pulse" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5" /></symbol>
+    <symbol id="mhi-icon-coat" viewBox="0 0 24 24"><path d="m8 3 4 3 4-3 4 3 2 9-4 1-1-5 1 10H6l1-10-1 5-4-1 2-9 4-3ZM8 3l4 9 4-9M12 12v9M7 15h3v3H7m7-3h3v3h-3"/></symbol>
     <symbol id="mhi-icon-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M2 21v-3a7 7 0 0 1 14 0v3M17 4a3 3 0 0 1 0 6m2 4a5 5 0 0 1 3 5v2" /></symbol>
     <symbol id="mhi-icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
     <symbol id="mhi-icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol>
@@ -99,22 +81,17 @@
       <nav class="mhi-utility" aria-label="Tài khoản và tiện ích">
         <div class="mhi-nav-swap">
         <div class="mhi-main-nav" data-mhi-primary-nav>
-        {foreach from = $nav_main item = group}
-          {if isset($group.items)}
+        {foreach from = $meduc_catalog_groups key = group_id item = group}
           <div class="mhi-browse-wrap" data-mhi-dropdown>
-            <button class="mhi-browse-button{if $group.id == 'browse'} mhi-course-button{/if}" id="mhi-{$group.id}-button" type="button" aria-expanded="false" aria-controls="mhi-{$group.id}-menu">
+            <button class="mhi-browse-button{if $group_id == 'academy'} mhi-course-button{/if}" id="mhi-{$group_id|escape}-button" type="button" aria-expanded="false" aria-controls="mhi-{$group_id|escape}-menu">
               {$group.label|escape}<svg class="mhi-icon mhi-chevron" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg>
             </button>
-            <nav class="mhi-browse-menu" id="mhi-{$group.id}-menu" aria-label="Danh mục {$group.label|escape}" hidden>
+            <nav class="mhi-browse-menu" id="mhi-{$group_id|escape}-menu" aria-label="Danh mục {$group.label|escape}" hidden>
               {foreach from = $group.items item = link}
                 <a href="{$link.url|escape}"><svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-{$link.icon|escape}" /></svg>{$link.label|escape}<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>
               {/foreach}
-              {if !empty($group.all)}<a class="mhi-browse-all" href="{$group.url|escape}">{$group.all|escape}<svg class="mhi-icon mhi-arrow" aria-hidden="true"><use href="#mhi-icon-arrow" /></svg></a>{/if}
             </nav>
           </div>
-          {else}
-            <a class="mhi-browse-button mhi-main-link" href="{$group.url|escape}">{$group.label|escape}</a>
-          {/if}
         {/foreach}
         </div>
         <div class="mhi-scrolled-nav" data-mhi-info-nav role="navigation" aria-label="Về MedUC" aria-hidden="true" inert>
@@ -151,16 +128,11 @@
         <span class="mhi-drawer-title">Menu</span>
         <button class="mhi-icon-button" type="button" data-mhi-drawer-close aria-label="Đóng menu"><svg class="mhi-icon" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
       </div>
-      {foreach from = $nav_main item = group}
-        {if isset($group.items)}
-        <details class="mhi-drawer-group" data-mhi-main-group="{$group.id}">
+      {foreach from = $meduc_catalog_groups key = group_id item = group}
+        <details class="mhi-drawer-group" data-mhi-main-group="{$group_id|escape}">
           <summary class="mhi-drawer-link">{$group.label|escape}<svg class="mhi-icon" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg></summary>
           {foreach from = $group.items item = link}<a class="mhi-drawer-sublink" href="{$link.url|escape}">{$link.label|escape}</a>{/foreach}
-          {if !empty($group.all)}<a class="mhi-drawer-sublink mhi-drawer-all" href="{$group.url|escape}">{$group.all|escape} →</a>{/if}
         </details>
-        {else}
-          <a class="mhi-drawer-link" href="{$group.url|escape}">{$group.label|escape}</a>
-        {/if}
       {/foreach}
       <p class="mhi-drawer-label">Về MedUC</p>
       {foreach from = $nav_secondary item = link}

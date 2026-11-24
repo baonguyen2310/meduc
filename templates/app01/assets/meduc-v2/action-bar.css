@@ -51,19 +51,21 @@ html[data-meduc-theme="light"] .mhb {
 .mhb-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin: 0; padding: 10px 20px; border: 1px solid transparent; border-radius: 8px; background: none; font: 600 15px/1.2 Inter, Arial, sans-serif; white-space: nowrap; text-decoration: none !important; cursor: pointer; transition: filter .16s, background-color .16s, border-color .16s; }
 .mhb-button:focus-visible { outline: 2px solid var(--mhb-ink); outline-offset: 2px; }
 .mhb-icon { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-/* On desktop only the gift-related buttons show their icon; on phones every button does. */
+/* Keep the desktop triggers compact. */
 .mhb-icon:not(.mhb-icon--always) { display: none; }
 .mhb-button--primary { background: var(--mhb-red); color: #fff !important; }
 .mhb-button--primary:hover { filter: brightness(1.1); }
+.mhb-button--primary[aria-expanded="true"] { filter: brightness(.85); }
 .mhb-button--secondary { background: var(--mhb-secondary); color: var(--mhb-ink) !important; }
 .mhb-button--secondary:hover { background: var(--mhb-secondary-hover); }
 .mhb-button--outline { border-color: var(--mhb-ink); color: var(--mhb-ink); }
 .mhb-button--outline:hover, .mhb-button--outline[aria-expanded="true"] { background: var(--mhb-secondary); }
 
-/* Gift menu: two buttons above the gift button. */
-.mhb-gift { position: relative; }
-.mhb-gift-menu { position: absolute; right: 0; bottom: calc(100% + 12px); display: flex; flex-direction: column; gap: 8px; min-width: 200px; padding: 8px; border: 1px solid var(--mhb-line); border-radius: 10px; background: var(--mhb-menu); box-shadow: 0 14px 48px var(--mhb-shadow); }
-.mhb-gift-menu .mhb-button { justify-content: flex-start; width: 100%; }
+/* Disclosures open above the bar. */
+.mhb-menu-wrap { position: relative; min-width: 0; }
+.mhb-menu { position: absolute; left: 0; bottom: calc(100% + 12px); z-index: 1; display: flex; flex-direction: column; gap: 8px; width: 204px; max-height: calc(100dvh - var(--mhb-h, 80px) - 24px); padding: 8px; overflow-y: auto; border: 1px solid var(--mhb-line); border-radius: 10px; background: var(--mhb-menu); box-shadow: 0 14px 48px var(--mhb-shadow); }
+.mhb-menu-wrap:nth-child(n+3) .mhb-menu { right: 0; left: auto; }
+.mhb-menu .mhb-button { flex: none; justify-content: flex-start; width: 100%; padding-inline: 11px; text-align: left; white-space: normal; }
 
 /* Keep space under the page and lift the floating contact and back-to-top buttons above the bar. */
 body.mhb-ready { padding-bottom: var(--mhb-h, 80px); }
@@ -78,10 +80,11 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
 @media (max-width: 767.98px) {
   .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
   .mhb-info { display: none; }
-  .mhb-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1; gap: 6px; }
-  .mhb-actions > .mhb-button, .mhb-gift > .mhb-button { flex-direction: column; gap: 3px; width: 100%; min-height: 54px; padding: 6px 4px; font-size: clamp(10px, 3.1vw, 12px); }
+  .mhb-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
+  .mhb-menu-wrap > .mhb-button { flex-direction: column; gap: 3px; width: 100%; height: 100%; min-height: 60px; padding: 6px 4px; font-size: clamp(10px, 2.9vw, 12px); text-align: center; white-space: normal; }
   .mhb-icon:not(.mhb-icon--always) { display: block; }
-  .mhb-gift-menu { min-width: 180px; bottom: calc(100% + 10px); }
+  .mhb-menu { width: 192px; bottom: calc(100% + 10px); }
+  .mhb-menu .mhb-button { font-size: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

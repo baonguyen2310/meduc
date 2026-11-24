@@ -25,6 +25,9 @@ html[data-meduc-theme="light"] .mfo {
 .mfo-column { min-width: 0; }
 .mfo .mfo-heading { margin: 0 0 30px; color: var(--mfo-muted); font: 700 16px/1.35 Inter, Arial, sans-serif; letter-spacing: 0; text-transform: none; }
 .mfo-column nav { display: flex; flex-direction: column; align-items: flex-start; gap: 23px; }
+.mfo-explore-groups { display: grid; gap: 18px; }
+.mfo-explore .mfo-explore-groups nav { gap: 5px; }
+.mfo .mfo-subheading { margin: 0 0 5px; color: var(--mfo-ink); font: 700 14px/1.4 Inter, Arial, sans-serif; letter-spacing: 0; text-transform: none; }
 .mfo .mfo-column nav a { display: inline-flex; align-items: center; gap: 14px; min-height: 24px; color: var(--mfo-ink) !important; font: 400 16px/1.5 Inter, Arial, sans-serif; text-decoration: none; overflow-wrap: anywhere; transition: color .18s ease; }
 .mfo .mfo-column nav a:hover, .mfo .mfo-column nav a:focus-visible { color: var(--mfo-red) !important; }
 .mfo a:focus-visible { outline: 2px solid var(--mfo-red); outline-offset: 4px; }
