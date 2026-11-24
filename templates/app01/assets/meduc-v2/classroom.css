@@ -181,6 +181,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-assurance li { position: relative; margin: 0; padding-left: 12px; color: var(--mcr-muted); font: 400 12px/1.65 Inter, Arial, sans-serif; }
 .mcr-assurance li::before { position: absolute; top: .65em; left: 0; width: 4px; height: 4px; background: var(--mcr-red); content: ""; }
 .mcr-assurance strong { color: var(--mcr-ink); font-weight: 700; }
+.mcr-assurance .mc-guarantee-icon { display: none; }
+.mcr-assurance .mc-guarantee-condition { display: block; margin-top: 2px; }
 
 .mcr-specs { margin: 18px 0 0; padding: 0; border-top: 1px solid var(--mcr-line); }
 .mcr-specs div { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--mcr-line); }

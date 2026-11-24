@@ -28,8 +28,7 @@
 .mpr:not([data-course-type=document]) .mpr-lead:empty { display: none; }
 .mpr:not([data-course-type=document]) .mpr-section-head { margin-bottom: 20px; }
 
-.mpr-subject,
-.mpr-course-guarantee {
+.mpr-subject {
   padding: 16px 24px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -48,20 +47,59 @@
 .mpr-subject dd { margin: 0; font-size: 15px; font-weight: 650; overflow-wrap: anywhere; }
 
 .mpr-course-guarantee {
+  display: grid;
+  align-items: start;
+  gap: 12px 24px;
   margin: 0 0 20px;
-  border-inline-start: 3px solid var(--red);
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--soft);
 }
-.mpr-course-guarantee h3 { margin: 0; font-size: 16px; }
+.mpr-course-guarantee h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.4;
+}
 .mpr-course-guarantee ul {
   display: grid;
-  gap: 5px 24px;
-  margin: 8px 0 0;
-  padding-inline-start: 19px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
+  gap: 12px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.mpr-course-guarantee strong { color: var(--ink); }
+.mpr-course-guarantee li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  margin: 0;
+}
+.mpr-course-guarantee .mc-guarantee-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 750;
+}
+.mpr-course-guarantee .mc-guarantee-title {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.35;
+}
+.mpr-course-guarantee .mc-guarantee-condition {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
 
 .mpr:not([data-course-type=document]) .mpr-package .mpr-benefits {
   min-height: 0;
@@ -93,12 +131,18 @@
     gap: 24px;
   }
   .mpr-subject h2 { margin-bottom: 0; }
-  .mpr-course-guarantee ul { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
+  .mpr-course-guarantee { grid-template-columns: max-content minmax(0, 1fr); }
+  .mpr-course-guarantee h3 { padding-top: 4px; }
+}
+
+@media (min-width: 681px) {
+  .mpr-course-guarantee ul { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); }
+  .mpr-course-guarantee li + li { padding-inline-start: 20px; border-inline-start: 1px solid var(--line); }
 }
 
 @media (max-width: 680px) {
-  .mpr-subject,
-  .mpr-course-guarantee { padding: 16px; }
+  .mpr-subject { padding: 16px; }
   .mpr-subject h2 { font-size: 20px; }
   .mpr-subject dl { grid-template-columns: 1fr; }
+  .mpr-course-guarantee li + li { padding-top: 12px; border-top: 1px solid var(--line); }
 }
