@@ -162,6 +162,10 @@ class AppController extends Controller
 
             $url = !empty($page['url']) ? $page['url'] : null;
             $code = !empty($page['code']) ? $page['code'] : null;
+            if ($code === 'h0ra52x') {
+                // The member dashboard includes personal course access and the download balance.
+                $this->setResponse($this->getResponse()->withDisabledCache());
+            }
             $type = !empty($page['type']) ? $page['type'] : null;
             $version = !empty($page['version']) ? $page['version'] : null;
             $page_record_id = !empty($page['page_record_id']) ? intval($page['page_record_id']) : null;
