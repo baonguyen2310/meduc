@@ -1,0 +1,46 @@
+.mbd-equipment .mbd-breadcrumb { font-size: 12px; }
+.mbd-equipment .mbd-stage { height: clamp(350px, 40vw, 510px); padding: 34px 34px 48px; }
+.mbd-equipment .mbd-picture > img { filter: none; }
+.mbd-equipment .mbd-thumbnails > button { width: 64px; height: 64px; }
+.mbd-equipment .mbd-single-thumbnail,
+.mbd-equipment .mbd-store-links:empty { display: none; }
+.mbd-equipment .mbd-eyebrow { font-size: 11px; }
+.mbd-equipment .mbd-equipment-rating { margin: 10px 0 0; color: var(--mbd-muted); font-size: 13px; }
+.mbd-equipment-rating span { color: var(--mbd-red); }
+.mbd-equipment .mbd-lead { display: block; margin-top: 16px; font-size: 14px; }
+.mbd-equipment .mbd-price > strong { color: var(--mbd-red); }
+.mbd-equipment .mbd-order-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mbd-equipment .mbd-quantity-label { font-size: 13px; }
+.mbd-equipment .mbd-quantity { justify-self: end; }
+.mbd-equipment .mbd-order-controls .mbd-button {
+  grid-column: auto;
+  justify-content: center;
+  padding-inline: 12px;
+  text-align: center;
+}
+.mbd-equipment .mbd-section-nav a,
+.mbd-equipment .mbd-tabs button { font-size: 14px; }
+.mbd-equipment .mbd-section-nav { z-index: 20; }
+.mbd-equipment h2,
+.mbd-equipment-comments h2 { font-size: clamp(32px, 3.4vw, 48px); text-transform: uppercase; }
+.mbd-equipment .mbd-rich h2 { margin-block: 20px 12px; font: 600 20px/1.4 Inter, Arial, sans-serif; text-transform: none; }
+.mbd-equipment .mbd-course-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mbd-equipment .mbd-course-card img { height: auto; padding: 16px; object-fit: contain; background: var(--mbd-cover); }
+.mbd-equipment .mbd-course-card h3 { font-size: 15px; }
+.mbd-equipment .mbd-course-card p { color: var(--mbd-red); font-size: 16px; }
+.mbd-equipment .mbd-course-card del { margin-inline-start: 8px; color: var(--mbd-muted); font-size: 12px; font-weight: 400; }
+
+@media (max-width: 991.98px) {
+  .mbd-equipment .mbd-course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767.98px) {
+  .mbd-equipment .mbd-hero { gap: 22px; }
+  .mbd-equipment .mbd-stage { height: clamp(225px, 66vw, 320px); padding: 22px 22px 44px; }
+  .mbd-equipment .mbd-thumbnails > button { width: 54px; height: 54px; }
+  .mbd-equipment .mbd-lead { margin-top: 12px; line-height: 1.65; }
+  .mbd-equipment .mbd-buy-box { margin-top: 16px; padding: 17px; }
+  .mbd-equipment .mbd-section-nav a,
+  .mbd-equipment .mbd-tabs button { font-size: 13px; }
+  .mbd-equipment .mbd-course-card a > div { padding: 14px; }
+  .mbd-equipment .mbd-course-card img { padding: 10px; }
+}
