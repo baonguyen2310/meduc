@@ -583,9 +583,11 @@ class AppController extends Controller
 
             $category_info = TableRegistry::get('Categories')->getDetailCategory($type, $category_id, LANGUAGE);
             $category_info = TableRegistry::get('Categories')->formatDataCategoryDetail($category_info);
-            if ($type === PRODUCT && ($category_info['url'] ?? '') === 'trac-nghiem') {
+            $exam_catalog_urls = ['trac-nghiem', 'khoa-luyen-thi'];
+            if ($type === PRODUCT && in_array($category_info['url'] ?? '', $exam_catalog_urls, true)) {
                 $category_info['name'] = 'Đề thi';
                 $category_info['seo_title'] = 'Đề thi | MedUC';
+                $category_info['url'] = 'trac-nghiem';
             }
 
             // check category has parent id
@@ -595,8 +597,9 @@ class AppController extends Controller
                     $parent_info = TableRegistry::get('Categories')->getDetailCategory($type, $parent_id, LANGUAGE);
                     $parent_info = TableRegistry::get('Categories')->formatDataCategoryDetail($parent_info);
                     if(!empty($parent_info)){
-                        if ($type === PRODUCT && ($parent_info['url'] ?? '') === 'trac-nghiem') {
+                        if ($type === PRODUCT && in_array($parent_info['url'] ?? '', $exam_catalog_urls, true)) {
                             $parent_info['name'] = 'Đề thi';
+                            $parent_info['url'] = 'trac-nghiem';
                         }
                         $breadcrumb[] = [
                             'name' => !empty($parent_info['name']) ? $parent_info['name'] : null,
