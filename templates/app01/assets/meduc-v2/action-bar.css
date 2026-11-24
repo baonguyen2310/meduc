@@ -51,8 +51,6 @@ html[data-meduc-theme="light"] .mhb {
 .mhb-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin: 0; padding: 10px 20px; border: 1px solid transparent; border-radius: 8px; background: none; font: 600 15px/1.2 Inter, Arial, sans-serif; white-space: nowrap; text-decoration: none !important; cursor: pointer; transition: filter .16s, background-color .16s, border-color .16s; }
 .mhb-button:focus-visible { outline: 2px solid var(--mhb-ink); outline-offset: 2px; }
 .mhb-icon { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-/* Keep the desktop triggers compact. */
-.mhb-icon:not(.mhb-icon--always) { display: none; }
 .mhb-button--primary { background: var(--mhb-red); color: #fff !important; }
 .mhb-button--primary:hover { filter: brightness(1.1); }
 .mhb-button--primary[aria-expanded="true"] { filter: brightness(.85); }
@@ -82,7 +80,6 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
   .mhb-info { display: none; }
   .mhb-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
   .mhb-menu-wrap > .mhb-button { flex-direction: column; gap: 3px; width: 100%; height: 100%; min-height: 60px; padding: 6px 4px; font-size: clamp(10px, 2.9vw, 12px); text-align: center; white-space: normal; }
-  .mhb-icon:not(.mhb-icon--always) { display: block; }
   .mhb-menu { width: min(192px, calc(100vw - 16px)); bottom: calc(100% + 10px); }
   .mhb-menu-wrap:nth-child(2) .mhb-menu { left: 50%; transform: translateX(-50%); }
   .mhb-menu .mhb-button { font-size: 14px; }

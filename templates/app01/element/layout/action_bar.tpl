@@ -23,7 +23,7 @@
                     <div class="mhb-menu" id="mhb-{$group_id|escape}-menu" hidden>
                         {foreach from = $group.items item = link}
                             <a class="mhb-button mhb-button--secondary" href="{$link.url|escape}">
-                                <svg class="mhb-icon mhb-icon--always" aria-hidden="true"><use href="#mhi-icon-{$link.icon|escape}" /></svg>
+                                <svg class="mhb-icon" aria-hidden="true"><use href="#mhi-icon-{$link.icon|escape}" /></svg>
                                 <span>{$link.label|escape}</span>
                             </a>
                         {/foreach}

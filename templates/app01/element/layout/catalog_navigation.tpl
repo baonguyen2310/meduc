@@ -1,6 +1,6 @@
 {$meduc_catalog_groups = [
   'shop' => [
-    'label' => 'MedUC Shop', 'icon' => 'book',
+    'label' => 'MedUC Shop', 'icon' => 'store',
     'items' => [
       ['url' => '/sach-y-khoa', 'label' => 'Sách', 'icon' => 'book'],
       ['url' => '/thiet-bi-y-te', 'label' => 'Thiết bị y tế', 'icon' => 'pulse'],
