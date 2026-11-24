@@ -83,7 +83,7 @@
         <div class="mhi-main-nav" data-mhi-primary-nav>
         {foreach from = $meduc_catalog_groups key = group_id item = group}
           <div class="mhi-browse-wrap" data-mhi-dropdown>
-            <button class="mhi-browse-button{if $group_id == 'academy'} mhi-course-button{/if}" id="mhi-{$group_id|escape}-button" type="button" aria-expanded="false" aria-controls="mhi-{$group_id|escape}-menu">
+            <button class="mhi-browse-button" id="mhi-{$group_id|escape}-button" type="button" aria-expanded="false" aria-controls="mhi-{$group_id|escape}-menu">
               {$group.label|escape}<svg class="mhi-icon mhi-chevron" aria-hidden="true"><use href="#mhi-icon-chevron" /></svg>
             </button>
             <nav class="mhi-browse-menu" id="mhi-{$group_id|escape}-menu" aria-label="Danh mục {$group.label|escape}" hidden>
