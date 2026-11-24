@@ -56,9 +56,9 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261124-stable-navigation" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261124-academy-first" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261124-stable-navigation" defer></script>
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261124-bottom-icons" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261124-academy-first" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261124-catalog-groups" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261124-catalog-groups" rel="stylesheet">
     {/if}

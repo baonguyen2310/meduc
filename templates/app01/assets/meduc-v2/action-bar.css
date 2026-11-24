@@ -52,6 +52,7 @@ html[data-meduc-theme="light"] .mhb {
 .mhb-button:focus-visible { outline: 2px solid var(--mhb-ink); outline-offset: 2px; }
 .mhb-icon { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mhb-button--primary { background: var(--mhb-red); color: #fff !important; }
+.mhb-button[aria-controls="mhb-academy-menu"] { font-size: 16px; }
 .mhb-button--primary:hover { filter: brightness(1.1); }
 .mhb-button--primary[aria-expanded="true"] { filter: brightness(.85); }
 .mhb-button--secondary { background: var(--mhb-secondary); color: var(--mhb-ink) !important; }
@@ -74,12 +75,13 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
 @media (max-width: 1100px) {
   .mhb-shell { width: min(92%, 1440px); }
 }
-/* Three equal shortcuts on phones and small tablets. */
+/* Compact shortcuts on phones and small tablets, with more room for Academy. */
 @media (max-width: 767.98px) {
   .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
   .mhb-info { display: none; }
-  .mhb-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
+  .mhb-actions { display: grid; grid-template-columns: minmax(0, 1.12fr) repeat(2, minmax(0, 1fr)); flex: 1; align-items: stretch; gap: 6px; }
   .mhb-menu-wrap > .mhb-button { flex-direction: column; gap: 3px; width: 100%; height: 100%; min-height: 60px; padding: 6px 4px; font-size: clamp(10px, 2.9vw, 12px); text-align: center; white-space: normal; }
+  .mhb-button[aria-controls="mhb-academy-menu"] { font-size: clamp(11px, 3.1vw, 13px); }
   .mhb-menu { width: min(192px, calc(100vw - 16px)); bottom: calc(100% + 10px); }
   .mhb-menu-wrap:nth-child(2) .mhb-menu { left: 50%; transform: translateX(-50%); }
   .mhb-menu .mhb-button { font-size: 14px; }

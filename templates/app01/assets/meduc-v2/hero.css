@@ -76,6 +76,7 @@ html[data-meduc-theme="light"] .mhw {
 .mhw-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .mhw-buttons { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 .mhw-button { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; padding: 12px 20px; border: 0; border-radius: 8px; background: var(--mhw-red); color: #fff; font: 600 16px/1.25 Inter, Arial, sans-serif; cursor: pointer; transition: filter .16s; }
+.mhw-button[aria-controls="mhw-academy-menu"] { min-height: 52px; font-size: clamp(17px, 2.35vw, 18px); }
 .mhw-button:hover { filter: brightness(1.1); }
 .mhw-button[aria-expanded="true"] { filter: brightness(.9); }
 .mhw-chevron { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
