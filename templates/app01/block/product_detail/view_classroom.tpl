@@ -419,24 +419,20 @@
                                             {$visible_tags = []}
                                             {foreach from=$lesson.tags item=tag}
                                                 {$tag_key = $tag|trim|lower}
-                                                {if !in_array($tag_key, ['ít gặp', 'ít ra', 'hiếm gặp', 'hiếm ra', 'rất ít gặp'])}{$visible_tags[] = $tag}{/if}
+                                                {if $tag_key == 'trọng tâm'}
+                                                    {$visible_tags['Trọng tâm'] = 'focus'}
+                                                {elseif $tag_key == 'hay ra'}
+                                                    {$visible_tags['Hay ra'] = 'frequent'}
+                                                {/if}
                                             {/foreach}
                                             {if $lesson.exam || !empty($visible_tags)}
                                                 <span class="mcr-lesson-badges">
                                                     {if $lesson.exam}<span class="mcr-lesson-label mcr-lesson-label--type"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4" /></svg><span>{$lesson_type_labels[$lesson.lesson_type]|escape}</span></span>{/if}
-                                                    {foreach from=$visible_tags item=tag}
-                                                        {$tag_key = $tag|trim|lower}{$tag_style = 'other'}
-                                                        {if in_array($tag_key, ['trọng tâm', 'quan trọng', 'nổi bật', 'trọng điểm'])}{$tag_style = 'focus'}
-                                                        {elseif in_array($tag_key, ['hay ra', 'hay gặp', 'thường gặp', 'thường ra', 'rất hay ra'])}{$tag_style = 'frequent'}
-                                                        {elseif in_array($tag_key, ['ít ra', 'ít gặp'])}{$tag_style = 'occasional'}
-                                                        {elseif in_array($tag_key, ['hiếm gặp', 'hiếm ra', 'rất ít gặp'])}{$tag_style = 'rare'}{/if}
+                                                    {foreach from=$visible_tags key=tag item=tag_style}
                                                         <span class="mcr-lesson-label mcr-lesson-label--{$tag_style}">
                                                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                                                 {if $tag_style == 'focus'}<path class="mcr-badge-fill" d="m12 2 3.1 6.3L22 9.4l-5 4.9 1.2 6.9-6.2-3.3-6.2 3.3L7 14.3 2 9.4l6.9-1.1L12 2Z" />
-                                                                {elseif $tag_style == 'frequent'}<path class="mcr-badge-fill" d="M13 2c1 5-3 6-2 10 2-1 3-3 3-5 4 3 6 6 5 10a7 7 0 0 1-14-1c0-3 2-6 4-8-1 4 0 5 1 6-2-6 3-8 3-12Z" />
-                                                                {elseif $tag_style == 'occasional'}<path d="M4 20h16M7 16v-4m5 4V8m5 8V4" />
-                                                                {elseif $tag_style == 'rare'}<path d="m12 3 8 9-8 9-8-9 8-9Zm-8 9h16M12 3l-4 9 4 9 4-9-4-9Z" />
-                                                                {else}<path d="M3 4h8l10 10-7 7L3 10V4Z"/><circle cx="7" cy="8" r="1" />{/if}
+                                                                {else}<path class="mcr-badge-fill" d="M13 2c1 5-3 6-2 10 2-1 3-3 3-5 4 3 6 6 5 10a7 7 0 0 1-14-1c0-3 2-6 4-8-1 4 0 5 1 6-2-6 3-8 3-12Z" />{/if}
                                                             </svg>
                                                             <span>{$tag|escape}</span>
                                                         </span>
