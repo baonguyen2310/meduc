@@ -31,8 +31,8 @@ WHERE credited_until=0 AND active_minutes>0;
 UPDATE voucher_campaigns SET scope='knowledge' WHERE kind='study' AND scope<>'knowledge';
 INSERT INTO voucher_campaigns (preset_key,kind,name,scope,discount_type,discount_value,starts_at,active,study_minutes)
 VALUES
-    ('study-week-1h','study','Thưởng học 1 giờ','knowledge','fixed',20000,UNIX_TIMESTAMP(),1,60),
-    ('study-week-3h','study','Thưởng học 3 giờ','knowledge','fixed',50000,UNIX_TIMESTAMP(),1,180),
-    ('study-week-5h','study','Thưởng học 5 giờ','knowledge','fixed',100000,UNIX_TIMESTAMP(),1,300)
+    ('study-week-1h','study','Thưởng học 1 giờ','knowledge','fixed',10000,UNIX_TIMESTAMP(),1,60),
+    ('study-week-3h','study','Thưởng học 3 giờ','knowledge','fixed',20000,UNIX_TIMESTAMP(),1,180),
+    ('study-week-5h','study','Thưởng học 5 giờ','knowledge','fixed',30000,UNIX_TIMESTAMP(),1,300)
 ON DUPLICATE KEY UPDATE preset_key=VALUES(preset_key);
 COMMIT;

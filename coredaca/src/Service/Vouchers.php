@@ -99,6 +99,8 @@ final class Vouchers
                         continue;
                     }
                     $offer['code'] = $grant['code'];
+                    $offer['type'] = $grant['discount_type'] ?? $offer['type'];
+                    $offer['value'] = (int)($grant['discount_value'] ?? $offer['value']);
                 } else {
                     $offer['remaining_spend'] = (int)$campaign['required_spend'] - $spend[$from . ':' . $until];
                 }
@@ -283,9 +285,10 @@ final class Vouchers
             return $existing;
         }
         $db->execute(
-            'INSERT INTO voucher_grants (campaign_id,customer_id,period_start,code,expires_at,issued_at)
-             VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id',
-            array_merge($params, ['MV-' . strtoupper(bin2hex(random_bytes(9))), $expires, $now])
+            'INSERT INTO voucher_grants (campaign_id,customer_id,period_start,code,expires_at,issued_at,discount_type,discount_value)
+             VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id',
+            array_merge($params, ['MV-' . strtoupper(bin2hex(random_bytes(9))), $expires, $now,
+                $campaign['discount_type'], $campaign['discount_value']])
         );
         return $db->execute($select . ' LOCK IN SHARE MODE', $params)->fetch('assoc') ?: [];
     }
@@ -365,7 +368,8 @@ final class Vouchers
     {
         $progress = WeeklyOnlineTime::total($customer, $now);
         $campaigns = self::db()->execute(
-            "SELECT c.*, g.code AS grant_code, g.used_at, g.expires_at
+            "SELECT c.*, g.code AS grant_code, g.used_at, g.expires_at,
+                    g.discount_type AS grant_discount_type, g.discount_value AS grant_discount_value
              FROM voucher_campaigns c
              LEFT JOIN voucher_grants g ON g.campaign_id=c.id AND g.customer_id=? AND g.period_start=?
              WHERE c.kind='study' AND c.active=1 AND c.starts_at<=?
@@ -388,8 +392,8 @@ final class Vouchers
                 'id' => (int)$campaign['id'],
                 'name' => $campaign['name'],
                 'target_seconds' => $target,
-                'type' => $campaign['discount_type'],
-                'value' => (int)$campaign['discount_value'],
+                'type' => $campaign['grant_discount_type'] ?? $campaign['discount_type'],
+                'value' => (int)($campaign['grant_discount_value'] ?? $campaign['discount_value']),
                 'code' => $campaign['grant_code'],
                 'claimable' => !$claimed && $progress['seconds'] >= $target,
                 'expires_at' => $claimed ? (int)$campaign['expires_at'] : null,
@@ -420,7 +424,8 @@ final class Vouchers
             if ($grant && $grant['used_at'] === null && ($grant['expires_at'] === null || (int)$grant['expires_at'] > $now)) {
                 $offers[] = [
                     'kind' => $campaign['kind'], 'name' => $campaign['name'], 'code' => $grant['code'],
-                    'value' => (int)$campaign['discount_value'], 'type' => $campaign['discount_type'],
+                    'value' => (int)($grant['discount_value'] ?? $campaign['discount_value']),
+                    'type' => $grant['discount_type'] ?? $campaign['discount_type'],
                     'expires_at' => $grant['expires_at'] === null ? null : (int)$grant['expires_at'],
                 ];
             }
@@ -535,8 +540,9 @@ final class Vouchers
                 continue;
             }
             [$campaign, $grant, $code, $automatic] = $selected[$type];
-            $value = (int)$campaign['discount_value'];
-            $amount = $campaign['discount_type'] === 'percent'
+            $value = (int)($grant['discount_value'] ?? $campaign['discount_value']);
+            $discountType = $grant['discount_type'] ?? $campaign['discount_type'];
+            $amount = $discountType === 'percent'
                 ? intdiv($base, 100) * $value + intdiv(($base % 100) * $value, 100)
                 : $value;
             if ($automatic && ($amount < 1 || $amount >= $result['total'])) {

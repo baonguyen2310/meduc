@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS voucher_grants (
     expires_at BIGINT UNSIGNED NULL,
     issued_at BIGINT UNSIGNED NOT NULL,
     used_at BIGINT UNSIGNED NULL,
+    discount_type VARCHAR(8) CHARACTER SET ascii NULL,
+    discount_value BIGINT UNSIGNED NULL,
     UNIQUE KEY uq_voucher_grant (campaign_id, customer_id, period_start),
     UNIQUE KEY uq_voucher_grant_code (code),
     KEY ix_voucher_grant_customer (customer_id, expires_at),
