@@ -66,24 +66,22 @@ final class CourseRecommendations
         $kind = $source['kind'];
         if ($kind === 'knowledge') {
             $courses = $this->matching('exam_solution', $subject, self::SOLUTION_SUBJECTS);
-            return ['exam_solution' => $this->group('exam_solution', $courses)];
+            return $this->academyCards(['exam_solution' => $courses]);
         }
 
         $groups = [];
         $knowledge = $this->matching('knowledge', $subject, self::KNOWLEDGE_MODULES);
         if ($kind === 'quiz') {
-            $solution = $this->pairedCourse('exam_solution', $source['pair']);
-            $solutions = $solution ? [$solution] : $this->coursesForSubject('exam_solution', $subject);
-            $groups['exam_solution'] = $this->group('exam_solution', $solutions);
-            $paired = $solution;
+            $paired = $this->pairedCourse('exam_solution', $source['pair']);
+            $groups['exam_solution'] = $paired ? [$paired] : $this->coursesForSubject('exam_solution', $subject);
         } else {
             $paired = $this->pairedCourse('quiz', $source['pair']);
         }
         if (!$knowledge && $paired) {
             $knowledge = $this->matching('knowledge', $paired['subject'], self::KNOWLEDGE_MODULES);
         }
-        $groups['knowledge'] = $this->group('knowledge', $knowledge);
-        return $groups;
+        $groups['knowledge'] = $knowledge;
+        return $this->academyCards($groups);
     }
 
     public function forContent(string $title, array $subjects = [], array $configuredIds = []): array
@@ -131,14 +129,24 @@ final class CourseRecommendations
         return ['title' => $title, 'type' => $type, 'courses' => array_slice($courses, 0, 4)];
     }
 
-    private function group(string $kind, array $courses): array
+    private function academyCards(array $groups): array
     {
-        $data = self::ACADEMY[$kind];
-        $browse = ['name' => 'Xem các ' . mb_strtolower($data['title'], 'UTF-8'), 'url' => $data['url']];
-        return [
-            'title' => $data['title'] . ($courses ? ' liên quan' : ''),
-            'courses' => $courses ? array_slice($courses, 0, 3) : [$browse],
-        ];
+        $cards = $browse = [];
+        foreach ($groups as $kind => $courses) {
+            $category = self::ACADEMY[$kind];
+            if (!$courses) {
+                $browse[] = ['name' => 'Xem các ' . mb_strtolower($category['title'], 'UTF-8'), 'url' => $category['url']];
+                continue;
+            }
+            foreach (array_slice($courses, 0, 3) as $course) {
+                $course['kind_label'] = $category['title'];
+                $offer = CoursePricing::startingOffer($course['id']);
+                $course['price'] = (int)($offer['amount'] ?? 0);
+                $course['original_price'] = (int)($offer['price'] ?? 0);
+                $cards[] = $course;
+            }
+        }
+        return ['title' => 'Khoá học liên quan', 'type' => 'academy', 'courses' => $cards, 'browse' => $browse];
     }
 
     private function matching(string $kind, ?string $subject, array $modules): array
@@ -198,14 +206,15 @@ final class CourseRecommendations
 
         $rows = ConnectionManager::get('default')->execute(
             "SELECT p.id, p.course_kind, c.name, l.url,
-                CASE WHEN p.course_kind='knowledge' THEN (
+                CASE WHEN p.course_kind IN ('knowledge','exam_solution') THEN (
                     SELECT JSON_UNQUOTE(JSON_EXTRACT(i.images, '$[0]')) FROM products_item i
                     WHERE i.product_id=p.id AND i.deleted=0 AND i.status=1 AND JSON_VALID(i.images)
                     AND JSON_LENGTH(i.images)>0 ORDER BY i.position DESC,i.id LIMIT 1
-                ) ELSE (
+                ) END image,
+                CASE WHEN p.course_kind IN ('quiz','exam_solution') THEN (
                     SELECT i.code FROM products_item i WHERE i.product_id=p.id AND i.deleted=0
                     AND (i.code LIKE 'MEDUC-32V1-Q-%' OR i.code LIKE 'MEDUC-32V1-S-%') ORDER BY i.id LIMIT 1
-                ) END image_or_code
+                ) END pair_code
              FROM products p
              JOIN products_content c ON c.product_id=p.id AND c.lang=?
              JOIN links l ON l.id=(SELECT MAX(route.id) FROM links route WHERE route.foreign_id=p.id
@@ -223,14 +232,14 @@ final class CourseRecommendations
             if ($name === '' || !preg_match('~^/?[a-z0-9_-]+(?:/[a-z0-9_-]+)*$~iD', $url)) continue;
 
             $label = PurchaseGiftSubjects::courseLabel($name);
-            $asset = (string)$row['image_or_code'];
-            preg_match('/^MEDUC-32V1-[QS]-(.+)$/D', $asset, $pair);
+            $image = (string)$row['image'];
+            preg_match('/^MEDUC-32V1-[QS]-(.+)$/D', (string)$row['pair_code'], $pair);
             $this->catalog[$id] = [
                 'id' => $id,
                 'kind' => $row['course_kind'],
                 'name' => $name,
                 'url' => '/' . ltrim($url, '/'),
-                'image' => strpos($asset, '/media/') === 0 ? $asset : '',
+                'image' => strpos($image, '/media/') === 0 ? $image : '',
                 'term' => Text::slug(mb_strtolower($label, 'UTF-8'), '-'),
                 'subject' => PurchaseGiftSubjects::key($label),
                 'pair' => $pair[1] ?? '',

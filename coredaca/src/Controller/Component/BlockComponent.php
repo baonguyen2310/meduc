@@ -29,6 +29,9 @@ class BlockComponent extends Component
 
         if(empty($code) || empty($type) || $type == HTML) return [];    
 
+        // This view resolves its cards for the current course, independently of the product list.
+        if ($type === PRODUCT && ($block_info['view'] ?? '') === 'view_course_related.tpl') return [];
+
         $page_record_id = defined('PAGE_RECORD_ID') ? intval(PAGE_RECORD_ID) : null;
         $page_type = defined('PAGE_TYPE') ? PAGE_TYPE : null;
 

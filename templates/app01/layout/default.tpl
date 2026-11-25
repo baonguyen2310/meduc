@@ -57,7 +57,7 @@
         {$featured_courses = $course_product_view->getSecondaryPageCourses()}
     {/if}
     {if $featured_courses || PAGE_TYPE == PRODUCT_DETAIL || PAGE_TYPE == ARTICLE_DETAIL}
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-recommendations.css?v=20261125" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-recommendations.css?v=20261125-related-cards" rel="stylesheet">
     {/if}
     {if $use_header_v2}
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261113-account-theme"></script>

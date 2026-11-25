@@ -116,7 +116,7 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-about-preview { margin:0; color:var(--mcr-ink); font:400 16px/1.8 Inter,Arial,sans-serif; }
 .mcr-read-more { display:inline-flex; gap:10px; align-items:center; margin-top:14px; padding:6px 0; border:0; background:none; color:var(--mcr-red); font:700 14px/1.4 Inter,Arial,sans-serif; cursor:pointer; }
 .mcr-read-more:hover { text-decoration:underline; text-underline-offset:4px; }
-.mcr-related-courses { margin-top:40px; padding:28px; border:1px solid var(--mcr-line); border-radius:16px; background:var(--mcr-panel); }
+.mcr-related-courses { margin-top:clamp(24px, 3vw, 40px); }
 .mcr-section { padding: 30px 0; border-bottom: 1px solid var(--mcr-line); scroll-margin-top: 130px; }
 .mcr-section:last-of-type { border-bottom: 0; }
 .mcr-intro-hero { padding-top: 26px; scroll-margin-top: 130px; }
@@ -514,24 +514,6 @@ html[data-meduc-theme="light"] .mcq-explain-option.is-wrong { color: #bf2944; }
 .mfq-item[open] .mfq-icon { transform: rotate(45deg); }
 .mfq-answer { padding: 0 34px 20px 0; color: var(--mcr-muted, #6b6f78); font: 400 15px/1.75 Inter, Arial, sans-serif; }
 
-/* Related courses (block/product/view_course_related.tpl) */
-.mrc { padding-top: 30px; }
-.mrc-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
-.mrc-title { margin: 0; color: var(--mcr-ink, inherit); font: 700 20px/1.3 Inter, Arial, sans-serif; }
-.mrc-controls { display: flex; gap: 8px; }
-.mrc-controls button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--mcr-line, #e5e6ea); border-radius: 50%; background: transparent; color: var(--mcr-ink, inherit); font: 400 18px/1 Inter, Arial, sans-serif; cursor: pointer; }
-.mrc-controls button:disabled { opacity: .35; cursor: default; }
-.mrc-rail { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.mrc-rail::-webkit-scrollbar { display: none; }
-.mrc .mrc-card { flex: 0 0 230px; scroll-snap-align: start; color: var(--mcr-ink, inherit) !important; }
-.mrc-cover { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 10px; background: #1b1d22; }
-.mrc-cover img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
-.mrc-card:hover .mrc-cover img { transform: scale(1.04); }
-.mrc-name { display: -webkit-box; margin-top: 10px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font: 600 14.5px/1.4 Inter, Arial, sans-serif; }
-.mrc-price { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
-.mrc-price strong { color: var(--mcr-red, #d4213d); font: 800 15px/1.2 Inter, Arial, sans-serif; }
-.mrc-price s { color: var(--mcr-muted, #6b6f78); font: 500 12.5px/1.2 Inter, Arial, sans-serif; }
-
 /* The site's rating and question blocks, moved into the introduction: same look as the rest of the classroom. */
 .mcr-slot .course-details-card { margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; }
 .mcr-slot .title-section-2 { margin: 0 0 16px; padding: 0; border: 0; background: none; }
@@ -588,7 +570,6 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-overview-tabs button, .mcr .mcr-overview-jump { font-size:15px; }
   .mcr-about-preview { font-size:15px; }
   .mcr-intro-hero { padding-top:20px; }
-  .mcr-related-courses { padding:18px 14px; }
   .mcr-shell { width: calc(100% - 24px); }
   .mcr-main { padding: 12px 14px 24px; }
   .mcr-layout { border-radius: 12px; }
