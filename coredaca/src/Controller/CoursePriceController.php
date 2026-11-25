@@ -50,7 +50,7 @@ class CoursePriceController extends AppController
             if (!empty($b['status'])) { $b['data_block']=$this->loadComponent('Block')->getDataBlock($b); $blocks[$code]=$b; }
         }
         $this->set(compact('lists','list','packages','courses','from','member','customer','blocks','recommended_year','catalog_json'));
-        $this->set('voucher_available', $list && \App\Service\Vouchers::available($list['course_type'], time()));
+        $this->set('voucher_available', $list && \App\Service\Vouchers::available($list['course_type'], time(), (int)($customer['id'] ?? 0)));
         $this->set('title_for_layout',($list?$list['name']:'Bảng báo giá').' | MedUC');
         $this->set('data_init',['device'=>DEVICE,'member'=>$member,'template'=>['code'=>CODE_TEMPLATE,'url'=>URL_TEMPLATE]]);
         $this->viewBuilder()->setLayout('course_pricing');

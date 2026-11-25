@@ -11,6 +11,8 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Core\Configure;
 use Google;
 use Cake\Http\Client;
+use App\Service\CheckoutContact;
+use App\Service\Vouchers;
 
 class MemberController extends AppController 
 {
@@ -581,8 +583,33 @@ class MemberController extends AppController
         ]);
         $member_info = TableRegistry::get('Customers')->formatDataCustomerDetail($member_info);
 
+        $affiliate = $this->request->getQuery('a', $this->request->getCookie('affiliate'));
+        $offers = Vouchers::memberOffers(
+            CheckoutContact::customer((int)$customer_id),
+            is_string($affiliate) ? $affiliate : '',
+            time()
+        );
+        $timezone = new \DateTimeZone('Asia/Ho_Chi_Minh');
+        $day = static function (int $at) use ($timezone): string {
+            return (new \DateTimeImmutable('@' . $at))->setTimezone($timezone)->format('d/m/Y');
+        };
+        foreach ($offers as &$group) {
+            foreach ($group as &$offer) {
+                $offer['expiry_label'] = $offer['expires_at'] ? $day($offer['expires_at'] - 1) : '';
+                $offer['spend_label'] = !empty($offer['spend_until'])
+                    ? $day($offer['spend_from']) . ' – ' . $day($offer['spend_until'] - 1) : '';
+            }
+            unset($offer);
+        }
+        unset($group);
+        $this->setResponse($this->getResponse()->withHeader('Cache-Control', 'private, no-store'));
+        $this->set('voucher_groups', [
+            ['title' => 'Mã chung', 'offers' => $offers['common'], 'empty' => 'Hiện chưa có mã dùng chung.'],
+            ['title' => 'Khách hàng thân thiết', 'offers' => $offers['loyalty'], 'empty' => 'Hiện chưa có ưu đãi tích lũy.'],
+            ['title' => 'Mã giới thiệu', 'offers' => $offers['referral'], 'empty' => 'Mở link giới thiệu để xem ưu đãi dành cho bạn.'],
+        ]);
         $this->set('member', $member_info);
-        $this->set('title_for_layout', __d('template', 'phieu_giam_gia'));
+        $this->set('title_for_layout', 'Ưu đãi của tôi | MedUC');
         $this->render('promotion');
     }
 

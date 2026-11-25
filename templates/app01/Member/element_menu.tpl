@@ -85,14 +85,12 @@
             </div>
         {/if}
 
-        {if !empty($plugins.promotion)}
-            <li class="{if $get_path == '/member/promotion'}active{/if}">
-                <a href="/member/promotion" class="color-black">
-                    <i class="iconsax isax-2x isax-ticket"></i>
-                    {__d('template', 'phieu_giam_gia')}
-                </a>
-            </li>
-        {/if}
+        <li class="{if $get_path == '/member/promotion'}active{/if}">
+            <a href="/member/promotion" class="color-black">
+                <i class="iconsax isax-2x isax-ticket"></i>
+                Ưu đãi của tôi
+            </a>
+        </li>
 
         {if !empty($plugins.point)}
             <li class="{if $get_path == '/member/attendance'}active{/if}">

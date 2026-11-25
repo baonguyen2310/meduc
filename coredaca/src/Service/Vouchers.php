@@ -14,7 +14,7 @@ final class Vouchers
 {
     public const KINDS = [
         'common' => 'Mã chung',
-        'study' => 'Thưởng thời gian học',
+        'study' => 'Thưởng thời gian online',
         'loyalty' => 'Khách hàng thân thiết',
         'referral' => 'Mã giới thiệu',
     ];
@@ -45,12 +45,15 @@ final class Vouchers
         return $installed;
     }
 
-    public static function available(string $kind, int $now): bool
+    public static function available(string $kind, int $now, int $customer = 0): bool
     {
         return self::installed() && (bool)self::db()->execute(
-            "SELECT 1 FROM voucher_campaigns WHERE scope IN ('all',?,?) AND active=1 AND starts_at<=?
-             AND (ends_at IS NULL OR ends_at>?) AND (kind<>'study' OR ?='knowledge') LIMIT 1",
-            [$kind, self::groupScope($kind), $now, $now, $kind]
+            "SELECT 1 FROM voucher_campaigns c WHERE c.scope IN ('all',?,?) AND c.active=1 AND c.starts_at<=?
+             AND (c.ends_at IS NULL OR c.ends_at>?) AND (c.kind<>'study' OR (?='knowledge' AND ? > 0 AND EXISTS (
+                SELECT 1 FROM voucher_grants g WHERE g.campaign_id=c.id AND g.customer_id=?
+                AND g.period_start=? AND g.used_at IS NULL AND g.expires_at>?
+             ))) LIMIT 1",
+            [$kind, self::groupScope($kind), $now, $now, $kind, $customer, $customer, WeeklyOnlineTime::week($now)[0], $now]
         )->fetchColumn(0);
     }
 
@@ -59,6 +62,50 @@ final class Vouchers
         return self::db()->execute(
             'SELECT v.*, c.code AS partner_code FROM voucher_campaigns v LEFT JOIN customers c ON c.id=v.partner_id ORDER BY v.id DESC'
         )->fetchAll('assoc');
+    }
+
+    public static function memberOffers(array $customer, string $affiliate, int $now): array
+    {
+        $offers = ['common' => [], 'loyalty' => [], 'referral' => []];
+        if (!$customer || (int)$customer['status'] !== 1 || !self::installed()) {
+            return $offers;
+        }
+        $id = (int)$customer['id'];
+        $partner = self::partner($affiliate);
+        $partnerId = $partner && (int)$partner['id'] !== $id ? (int)$partner['id'] : 0;
+        $campaigns = self::db()->execute(
+            "SELECT * FROM voucher_campaigns WHERE active=1 AND starts_at<=? AND (ends_at IS NULL OR ends_at>?)
+             AND (kind IN ('common','loyalty') OR (kind='referral' AND partner_id=?))
+             ORDER BY discount_value DESC,id",
+            [$now, $now, $partnerId]
+        )->fetchAll('assoc');
+        $spend = [];
+        foreach ($campaigns as $campaign) {
+            $kind = $campaign['kind'];
+            $expires = $campaign['ends_at'] === null ? null : (int)$campaign['ends_at'];
+            $offer = [
+                'name' => $campaign['name'], 'scope' => self::SCOPES[$campaign['scope']] ?? $campaign['scope'],
+                'code' => $campaign['code'], 'type' => $campaign['discount_type'],
+                'value' => (int)$campaign['discount_value'], 'expires_at' => $expires, 'remaining_spend' => 0,
+            ];
+            if ($kind === 'loyalty') {
+                $from = (int)$campaign['spend_from'];
+                $until = (int)$campaign['spend_until'];
+                $offer['spend_from'] = $from;
+                $offer['spend_until'] = $until;
+                if (self::reachedLoyaltyThreshold($customer, $campaign, $spend)) {
+                    $grant = self::grant($campaign, $id, 0, $expires, $now);
+                    if (!$grant || $grant['used_at'] !== null || ($grant['expires_at'] !== null && (int)$grant['expires_at'] <= $now)) {
+                        continue;
+                    }
+                    $offer['code'] = $grant['code'];
+                } else {
+                    $offer['remaining_spend'] = (int)$campaign['required_spend'] - $spend[$from . ':' . $until];
+                }
+            }
+            $offers[$kind][] = $offer;
+        }
+        return $offers;
     }
 
     public static function partner(string $code): ?array
@@ -312,9 +359,9 @@ final class Vouchers
             && in_array($campaign['scope'], ['all', $kind, self::groupScope($kind)], true);
     }
 
-    public static function claimStudy(int $customer, int $campaignId, int $week, int $now): string
+    public static function claimOnlineReward(int $customer, int $campaignId, int $week, int $now): string
     {
-        $progress = WeeklyStudyTime::total($customer, $now);
+        $progress = WeeklyOnlineTime::total($customer, $now);
         if ($week !== $progress['week_start']) {
             throw new InvalidArgumentException('Đã sang tuần mới. Hãy kiểm tra lại mốc thưởng.');
         }
@@ -325,7 +372,7 @@ final class Vouchers
             throw new InvalidArgumentException('Mốc thưởng này đã hết hiệu lực.');
         }
         if ($progress['seconds'] < (int)$campaign['study_minutes'] * 60) {
-            throw new InvalidArgumentException('Bạn chưa đủ giờ học để nhận mã này.');
+            throw new InvalidArgumentException('Bạn chưa đủ thời gian online để nhận mã này.');
         }
         $expiry = min((int)($campaign['ends_at'] ?? $progress['resets_at']), $progress['resets_at']);
         $grant = self::grant($campaign, $customer, $week, $expiry, $now);
@@ -335,9 +382,9 @@ final class Vouchers
         return $grant['code'];
     }
 
-    public static function studyProgress(int $customer, int $now): array
+    public static function onlineProgress(int $customer, int $now): array
     {
-        $progress = WeeklyStudyTime::total($customer, $now);
+        $progress = WeeklyOnlineTime::total($customer, $now);
         $campaigns = self::db()->execute(
             "SELECT c.*, g.code AS grant_code, g.used_at, g.expires_at
              FROM voucher_campaigns c
@@ -372,7 +419,7 @@ final class Vouchers
         return $progress + ['enabled' => $goal > 0, 'goal_seconds' => $goal, 'server_at' => $now, 'rewards' => $rewards];
     }
 
-    public static function personalOffers(array $customer, string $kind, int $now, bool $includeClaimable = false): array
+    public static function personalOffers(array $customer, string $kind, int $now): array
     {
         if (!$customer || !self::installed()) {
             return [];
@@ -400,11 +447,13 @@ final class Vouchers
             }
         }
         if ($kind === 'knowledge') {
-            $study = self::studyProgress($id, $now);
-            $includeClaimable = $includeClaimable && WeeklyStudyTime::installed();
-            foreach ($study['rewards'] as $reward) {
-                if ($reward['code'] || ($includeClaimable && $reward['claimable'])) {
-                    $offers[] = ['kind' => 'study', 'week_start' => $study['week_start']] + $reward;
+            $progress = self::onlineProgress($id, $now);
+            foreach ($progress['rewards'] as $reward) {
+                if ($reward['code'] !== null) {
+                    $offers[] = [
+                        'kind' => 'study', 'name' => $reward['name'], 'code' => $reward['code'],
+                        'value' => $reward['value'], 'type' => $reward['type'], 'expires_at' => $reward['expires_at'],
+                    ];
                 }
             }
         }
@@ -468,8 +517,8 @@ final class Vouchers
             if (!$campaign || !self::applies($campaign, $kind, $now)) {
                 throw new InvalidArgumentException('Mã ' . $code . ' đã hết hạn hoặc chưa áp dụng cho đơn này.');
             }
-            if ($campaign['kind'] === 'study' && (int)($grant['period_start'] ?? 0) !== WeeklyStudyTime::week($now)[0]) {
-                throw new InvalidArgumentException('Mã thưởng thời gian học chỉ dùng trong tuần nhận mã.');
+            if ($campaign['kind'] === 'study' && (int)($grant['period_start'] ?? 0) !== WeeklyOnlineTime::week($now)[0]) {
+                throw new InvalidArgumentException('Mã thưởng thời gian online chỉ dùng trong tuần nhận mã.');
             }
             if (isset($selected[$campaign['kind']])) {
                 throw new InvalidArgumentException('Mỗi đơn dùng một mã ' . self::KINDS[$campaign['kind']] . '.');

@@ -35,7 +35,7 @@
                     <div class="form-row">
                         <label class="form-group col-md-4">Mã áp dụng cho mã chung hoặc giới thiệu<input class="form-control" name="code" maxlength="32" value="{$row.code|default:''|escape}"></label>
                         <label class="form-group col-md-4">Mã đối tác giới thiệu<input class="form-control" name="partner_code" maxlength="64" value="{$row.partner_code|default:''|escape}"></label>
-                        <label class="form-group col-md-4">Số phút cần tích lũy mỗi tuần<input class="form-control" name="study_minutes" type="number" min="1" max="10080" value="{$row.study_minutes|default:''|escape}"><small class="form-text text-muted">Mã chỉ dùng cho Khoá ôn kiến thức trong tuần nhận mã.</small></label>
+                        <label class="form-group col-md-4">Số phút online cần tích lũy mỗi tuần<input class="form-control" name="study_minutes" type="number" min="1" max="10080" value="{$row.study_minutes|default:''|escape}"><small class="form-text text-muted">Mã chỉ dùng cho Khoá ôn kiến thức trong tuần nhận mã.</small></label>
                     </div>
                     <fieldset class="border rounded p-3 mb-3">
                         <legend class="w-auto h6 px-2">Điều kiện khách hàng thân thiết</legend>

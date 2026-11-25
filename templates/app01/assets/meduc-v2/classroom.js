@@ -172,14 +172,7 @@
   function showStage(name) {
     Object.entries(stages).forEach(([key, stage]) => { stage.hidden = key !== name; });
   }
-  function trackVideo(playing) {
-    if (!playerHolder || root.dataset.mcrKind !== "knowledge") return;
-    if (playing && current && !studyModal.hidden && studyModal.dataset.mcrContent === "video" && !stages.player?.hidden) {
-      playerHolder.dataset.studyVideo = String(current.number);
-    } else delete playerHolder.dataset.studyVideo;
-  }
   function stopPlayer() {
-    trackVideo(false);
     clearInterval(endTimer);
     endTimer = null;
     if (player && typeof player.stopVideo === "function") {
@@ -210,10 +203,7 @@
         host: "https://www.youtube-nocookie.com",
         playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
         events: {
-          onStateChange: (event) => {
-            trackVideo(event.data === window.YT.PlayerState.PLAYING);
-            if (event.data === window.YT.PlayerState.ENDED) onEnded();
-          },
+          onStateChange: (event) => { if (event.data === window.YT.PlayerState.ENDED) onEnded(); },
           // A private, deleted or non-embeddable video: say so in MedUC's words instead of YouTube's error screen.
           onError: () => showVideoError(),
         },
@@ -244,7 +234,6 @@
     showStage("paywall");
   }
   function showVideoError() {
-    trackVideo(false);
     if (!current) return;
     const quizButton = $("[data-mcr-goto-quiz-error]");
     if (quizButton) quizButton.hidden = !current.quiz;
@@ -387,7 +376,6 @@
     panels.forEach((panel) => { panel.hidden = panel.dataset.mcrPanel !== name; });
     if (focus) studyClose.focus({preventScroll:true});
     if (name !== "video") {
-      trackVideo(false);
       clearInterval(endTimer);
       if (player && typeof player.pauseVideo === "function") {
         try { player.pauseVideo(); } catch (error) { /* not ready */ }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Service\CommercePurchases;
 use App\Service\Vouchers;
-use App\Service\WeeklyStudyTime;
+use App\Service\WeeklyOnlineTime;
 use Cake\Datasource\ConnectionManager;
 
 if (PHP_SAPI !== 'cli' || ($argv[1] ?? '') !== '--fixtures') {
@@ -76,7 +76,7 @@ function shopFixture($db, int $form, array $payload, int $created): int
 }
 
 $db = ConnectionManager::get('default');
-expectVoucher(WeeklyStudyTime::installed() && CommercePurchases::installed(), 'Apply the voucher, study rewards and commerce migrations first.');
+expectVoucher(WeeklyOnlineTime::installed() && CommercePurchases::installed(), 'Apply the voucher, online rewards and commerce migrations first.');
 $db->enableSavePoints(true);
 $db->begin();
 try {
@@ -165,21 +165,28 @@ try {
     expectVoucher((int)$db->execute('SELECT COUNT(*) FROM voucher_grants WHERE customer_id=?', [$buyer['id']])->fetchColumn(0) === 1, 'Loyalty award was duplicated.');
     expectVoucher(!Vouchers::personalOffers($partner, 'knowledge', $now), 'Old attributed Shop order credited the partner.');
     $loyaltyCode = $loyalty[0]['code'];
+    $wallet = Vouchers::memberOffers($buyer, $partner['code'], $now);
+    expectVoucher(in_array($common, array_column($wallet['common'], 'code'), true)
+        && $wallet['loyalty'][0]['code'] === $loyaltyCode && $wallet['referral'][0]['code'] === $referral,
+        'The voucher page did not show the active offers for this member.');
+    expectVoucher(!Vouchers::memberOffers($buyer, '', $now)['referral']
+        && !Vouchers::memberOffers($partner, $partner['code'], $now)['referral'],
+        'A referral-only code was shown without an eligible partner link.');
     $db->update('contacts', ['value' => json_encode(['orderStatus' => 'cancel'] + $paid)], ['id' => $shop]);
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_codes' => [$loyaltyCode]]));
     $db->update('contacts', ['value' => json_encode($paid)], ['id' => $shop]);
 
-    [$week, $nextWeek] = WeeklyStudyTime::week($now);
-    WeeklyStudyTime::record($buyer['id'], $week, $week + 30);
-    WeeklyStudyTime::record($buyer['id'], $week, $week + 30);
-    WeeklyStudyTime::record($buyer['id'], $week + 30, $week + 60);
+    [$week, $nextWeek] = WeeklyOnlineTime::week($now);
+    WeeklyOnlineTime::record($buyer['id'], $week, $week + 30);
+    WeeklyOnlineTime::record($buyer['id'], $week, $week + 30);
+    WeeklyOnlineTime::record($buyer['id'], $week + 30, $week + 60);
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $now)) === 1, 'Concurrent tabs double-counted a study minute.');
-    WeeklyStudyTime::record($buyer['id'], $week + 60, $week + 90);
-    WeeklyStudyTime::record($buyer['id'], $week + 90, $week + 120);
+    WeeklyOnlineTime::record($buyer['id'], $week + 60, $week + 90);
+    WeeklyOnlineTime::record($buyer['id'], $week + 90, $week + 120);
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $now)) === 1, 'The study voucher was issued before it was claimed.');
-    $eligible = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now, true), null, 'kind');
-    expectVoucher(!empty($eligible['study']['claimable']), 'The earned study voucher was not offered for claim.');
-    Vouchers::claimStudy($buyer['id'], $eligible['study']['id'], $week, $now);
+    $eligible = array_column(Vouchers::onlineProgress($buyer['id'], $now)['rewards'], null, 'target_seconds');
+    expectVoucher(!empty($eligible[120]['claimable']), 'The earned online voucher was not offered for claim.');
+    Vouchers::claimOnlineReward($buyer['id'], $eligible[120]['id'], $week, $now);
     $offers = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now), null, 'kind');
     expectVoucher($offers['study']['expires_at'] === $nextWeek, 'Study voucher does not expire on Monday.');
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $nextWeek)) === 1, 'Study minutes leaked into a new week.');
@@ -225,7 +232,8 @@ try {
     expectVoucher($lines === 4 && $paidTotal === 185000 && $attribution === $partner['code'], 'Invoice snapshot, ledger or partner was lost.');
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, $input));
     expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Redeemed personal codes returned as available.');
-    expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now, true), 'A used study voucher was offered for claim again.');
+    expectVoucher(!in_array($eligible[120]['id'], array_column(Vouchers::onlineProgress($buyer['id'], $now)['rewards'], 'id'), true),
+        'A used online voucher was offered for claim again.');
     echo "voucher checkout: 4 types, course scopes, confirmation dates, accurate totals, retry rollback and single use passed\n";
 } finally {
     $db->rollback();

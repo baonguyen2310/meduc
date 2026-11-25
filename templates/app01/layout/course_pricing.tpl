@@ -24,6 +24,7 @@
 {$this->element('layout/header_v2')}
 {$this->fetch('content')}
 {$this->element('layout/footer_v2')}
+{$this->element('layout/online_bonus')}
 {$this->element('layout/modal')}
 <input id="nh-data-init" type="hidden" value="{htmlentities($data_init|@json_encode)}">
 {$this->element('layout/js')}

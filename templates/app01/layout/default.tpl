@@ -176,6 +176,7 @@
     
     
     {$this->element('../Notification/bell')}
+    {$this->element('layout/online_bonus')}
 
 </body>
 </html>

@@ -26,6 +26,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/uu-dai/xem-truoc', ['controller'=>'Voucher','action'=>'preview']);
     $builder->connect('/uu-dai/thoi-gian', ['controller'=>'Voucher','action'=>'study']);
     $builder->connect('/uu-dai/nhan-ma', ['controller'=>'Voucher','action'=>'claimStudy']);
+    $builder->connect('/uu-dai/online', ['controller'=>'Voucher','action'=>'online']);
+    $builder->connect('/uu-dai/online/nhan-ma', ['controller'=>'Voucher','action'=>'claimOnline']);
 
     // Course price lists and quantity packages.
     $builder->connect('/bang-bao-gia/dang-ky', ['controller'=>'CoursePrice','action'=>'create']);

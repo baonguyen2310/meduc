@@ -5,6 +5,7 @@ full_database.sql
 !scripts/faculty_applications.sql
 !scripts/voucher_schema.sql
 !scripts/voucher_study_rewards.sql
+!scripts/voucher_online_time.sql
 !scripts/quiz_question_confidence.sql
 *.sql.gz
 *.zip
