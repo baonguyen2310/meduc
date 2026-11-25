@@ -113,7 +113,9 @@
     const fill = target ? Math.min(100, 100 * data.seconds / target) : 0;
     widget.style.setProperty('--mob-fill', fill + '%');
     widget.setAttribute('aria-label', 'Online tuần này ' + duration(data.seconds) + '. Xem ưu đãi');
-    clock.textContent = duration(data.seconds, true);
+    const compactTime = duration(data.seconds, true);
+    clock.textContent = compactTime;
+    clock.style.setProperty('--mob-clock-length', String(compactTime.length));
     widget.hidden = false;
 
     if (!dashboard) return;

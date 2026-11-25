@@ -9,6 +9,7 @@
   bottom: 100px;
   box-sizing: border-box;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   place-items: stretch;
   width: 60px;
   height: 60px;
@@ -37,7 +38,12 @@ body.mhb-on > .mob-float { bottom: calc(100px + var(--mhb-h, 80px)); }
   font: 600 10px/1.1 Inter, Arial, sans-serif;
 }
 
-.mob-float-face strong { font-size: 13px; font-variant-numeric: tabular-nums; }
+.mob-float-face strong {
+  /* Scale longer totals to the width available near the edge of the circle. */
+  font-size: min(13px, calc(76px / var(--mob-clock-length, 1)));
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 
 .mvp {
   --mvp-ink: #161820;
