@@ -202,6 +202,9 @@
   function render() {
     const attempt = active;
     if (!attempt || view !== "player") return;
+    if (root.dataset.mcrKind === "knowledge" && attempt.state === "doing" && !host.hidden) {
+      host.dataset.studyQuiz = String(attempt.quiz.id);
+    } else delete host.dataset.studyQuiz;
     const total = attempt.quiz.questions.length;
     const count = lessonQuizCount(attempt.lesson.number);
     const place = lessonStarts(attempt.lesson.number).findIndex((startButton) => Number(startButton.dataset.mcrQuizStart) === attempt.quiz.id);
@@ -948,6 +951,7 @@
   function sync() {
     const showing = view !== "list" && selected && selected.lesson.number === lessonNumber;
     if (view !== "player" || !showing) setExpanded(false);
+    if (view !== "player" || !showing) delete host.dataset.studyQuiz;
     host.hidden = !showing;
     if (policy) policy.hidden = !!showing;
     root.querySelectorAll("[data-mcr-quiz]").forEach((card) => {

@@ -4,6 +4,7 @@ full_database.sql
 !scripts/course_contributions.sql
 !scripts/faculty_applications.sql
 !scripts/voucher_schema.sql
+!scripts/voucher_study_rewards.sql
 !scripts/quiz_question_confidence.sql
 *.sql.gz
 *.zip

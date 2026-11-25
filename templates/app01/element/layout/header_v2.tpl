@@ -1,6 +1,6 @@
 {strip}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.css?v=20261124-vouchers" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.js?v=20261124-vouchers" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.js?v=20261125-vouchers" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261113-account-theme" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261113-quiz-five" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261124-exam-label" defer></script>
@@ -20,7 +20,7 @@
   ['url' => '/lo-trinh-hoc', 'label' => 'Lộ trình học']
 ]}
 
-<div class="mhi mhi-header-wrap" id="meduc-header" data-voucher-member="{if !empty($header_member)}1{else}0{/if}">
+<div class="mhi mhi-header-wrap" id="meduc-header">
   <svg class="mhi-icon-sprites" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <symbol id="mhi-icon-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6" /></symbol>
     <symbol id="mhi-icon-store" viewBox="0 0 24 24"><path d="M4 12v8h16v-8M10 20v-5h4v5M3 9l2-5h14l2 5v1a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0V9Zm0 0h18" /></symbol>

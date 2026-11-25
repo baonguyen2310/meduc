@@ -1,0 +1,69 @@
+.mcr-course-heading:has(.mst-panel:not([hidden])) {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.mcr-course-heading:has(.mst-panel:not([hidden])) > div { flex: 1 1 min(440px, 100%); }
+.mst-panel {
+  width: min(100%, 318px);
+  padding: 8px 12px;
+  border: 1px solid var(--mcr-card-line);
+  border-radius: 10px;
+  background: var(--mcr-panel);
+  font-size: 13px;
+}
+.mst-summary, .mst-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mst-action {
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--mcr-card-line);
+  border-radius: 6px;
+  background: var(--mcr-soft-button);
+  color: var(--mcr-ink);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mst-panel progress { display: block; width: 100%; height: 7px; margin: 6px 0; accent-color: var(--mcr-red); }
+.mst-panel p, .mst-dialog > p { margin: 0; color: var(--mcr-muted); }
+.mst-dialog > p + p { margin-top: 6px; }
+.mst-dialog {
+  width: min(420px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--mcr-card-line);
+  border-radius: 12px;
+  background: var(--mcr-panel);
+  color: var(--mcr-ink);
+  font: 400 13px/1.45 Inter, Arial, sans-serif;
+}
+.mst-dialog::backdrop { background: rgb(0 0 0 / .62); }
+.mst-dialog-head { margin-bottom: 8px; }
+.mst-dialog-head h2 { margin: 0; color: inherit; font: 800 18px/1.3 Inter, Arial, sans-serif; }
+.mst-dialog-head .mst-action { min-width: 36px; font-size: 18px; line-height: 1; }
+.mst-dialog ul { list-style: none; margin: 12px 0 0; padding: 0; }
+.mst-dialog li { display: grid; gap: 5px; padding: 8px 0; border-top: 1px solid var(--mcr-line); }
+.mst-dialog li > span { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--mcr-muted); }
+.mst-dialog code { color: var(--mcr-ink); overflow-wrap: anywhere; user-select: all; }
+.mst-toast {
+  position: fixed;
+  z-index: 12100;
+  top: max(70px, calc(env(safe-area-inset-top) + 14px));
+  left: 50%;
+  width: max-content;
+  max-width: calc(100vw - 28px);
+  margin: 0;
+  padding: 8px 12px;
+  transform: translateX(-50%);
+  border: 1px solid var(--mcr-card-line);
+  border-radius: 8px;
+  background: var(--mcr-panel);
+  color: var(--mcr-ink);
+  box-shadow: 0 4px 16px rgb(0 0 0 / .18);
+  pointer-events: none;
+  font-size: 13px;
+}
+.mst-toast:empty { opacity: 0; }

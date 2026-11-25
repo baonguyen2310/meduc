@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Service\CommercePurchases;
 use App\Service\Vouchers;
+use App\Service\WeeklyStudyTime;
 use Cake\Datasource\ConnectionManager;
 
 if (PHP_SAPI !== 'cli' || ($argv[1] ?? '') !== '--fixtures') {
@@ -75,7 +76,7 @@ function shopFixture($db, int $form, array $payload, int $created): int
 }
 
 $db = ConnectionManager::get('default');
-expectVoucher(Vouchers::installed() && CommercePurchases::installed(), 'Apply the voucher and commerce migrations first.');
+expectVoucher(WeeklyStudyTime::installed() && CommercePurchases::installed(), 'Apply the voucher, study rewards and commerce migrations first.');
 $db->enableSavePoints(true);
 $db->begin();
 try {
@@ -168,12 +169,13 @@ try {
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_codes' => [$loyaltyCode]]));
     $db->update('contacts', ['value' => json_encode($paid)], ['id' => $shop]);
 
-    [$week, $nextWeek] = Vouchers::currentWeek($now);
-    $minute = intdiv($week, 60);
-    Vouchers::recordStudyMinute($buyer['id'], $minute);
-    Vouchers::recordStudyMinute($buyer['id'], $minute);
+    [$week, $nextWeek] = WeeklyStudyTime::week($now);
+    WeeklyStudyTime::record($buyer['id'], $week, $week + 30);
+    WeeklyStudyTime::record($buyer['id'], $week, $week + 30);
+    WeeklyStudyTime::record($buyer['id'], $week + 30, $week + 60);
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $now)) === 1, 'Concurrent tabs double-counted a study minute.');
-    Vouchers::recordStudyMinute($buyer['id'], $minute + 1);
+    WeeklyStudyTime::record($buyer['id'], $week + 60, $week + 90);
+    WeeklyStudyTime::record($buyer['id'], $week + 90, $week + 120);
     $offers = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now), null, 'kind');
     expectVoucher($offers['study']['expires_at'] === $nextWeek, 'Study voucher does not expire on Monday.');
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $nextWeek)) === 1, 'Study minutes leaked into a new week.');

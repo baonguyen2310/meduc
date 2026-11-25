@@ -212,30 +212,4 @@
   }
 
   window.MeducVouchers = {panel, review, fields};
-
-  let member = document.getElementById('meduc-header')?.dataset.voucherMember === '1';
-  let studyAvailable = true;
-  let lastActivity = Date.now(), lastPing = 0;
-  function markActivity() {
-    lastActivity = Date.now();
-  }
-  function study() {
-    const now = Date.now();
-    if (!member || !studyAvailable || document.visibilityState !== 'visible' || !document.hasFocus()
-      || now - lastActivity > 120000 || now - lastPing < 29000) return;
-    lastPing = now;
-    fetch('/uu-dai/thoi-gian', {method: 'POST', headers: headers(), credentials: 'same-origin', cache: 'no-store'})
-      .then(response => { if (response.headers.get('X-Meduc-Study') === 'inactive') studyAvailable = false; })
-      .catch(() => {});
-  }
-  ['pointerdown', 'keydown', 'scroll'].forEach(event => window.addEventListener(event, markActivity, {passive: true}));
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      markActivity();
-      study();
-    }
-  });
-  window.addEventListener('meduc:authenticated', () => { member = true; studyAvailable = true; markActivity(); study(); });
-  study();
-  window.setInterval(study, 30000);
 })();

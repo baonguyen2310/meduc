@@ -6,7 +6,9 @@ namespace App\Controller;
 use App\Lib\BookCheckout;
 use App\Service\CheckoutContact;
 use App\Service\CoursePricing;
+use App\Service\CourseTypes;
 use App\Service\Vouchers;
+use App\Service\WeeklyStudyTime;
 use InvalidArgumentException;
 
 class VoucherController extends AppController
@@ -59,29 +61,84 @@ class VoucherController extends AppController
 
     public function study()
     {
-        if (!$this->request->is('post')) {
-            return $this->response->withStatus(405)->withHeader('Allow', 'POST');
-        }
+        $this->request->allowMethod(['get', 'post']);
         $session = $this->request->getSession();
         $member = $session->read(MEMBER) ?: [];
-        $id = (int)($member['id'] ?? 0);
-        if (!$id || !Vouchers::hasStudyCampaign()) {
-            $session->delete('Vouchers.study');
-            return $this->response->withStatus(204)->withHeader('Cache-Control', 'no-store')
-                ->withHeader('X-Meduc-Study', 'inactive');
+        $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
+        if (!$customer || (int)$customer['status'] !== 1) {
+            $session->delete('Vouchers.studyStreams');
+            return $this->json(401, 'Đăng nhập để tích lũy giờ học.');
         }
-
-        // Credits use server time. A stale tab or a new login starts a fresh interval.
+        if (!WeeklyStudyTime::installed()) {
+            return $this->json(200, '', ['enabled' => false]);
+        }
         $now = time();
-        $state = $session->read('Vouchers.study') ?: [];
-        $active = (int)($state['customer'] ?? 0) === $id && $now - (int)($state['seen'] ?? 0) <= 90;
-        $from = $active ? (int)$state['from'] : $now;
-        if ($now - $from >= 60) {
-            Vouchers::recordStudyMinute($id, intdiv($now - 1, 60));
-            $from = max($from + 60, $now - 59);
+        try {
+            if ($this->request->is('post')) {
+                $this->studyHeartbeat($customer, $now);
+            }
+            return $this->json(200, '', Vouchers::studyProgress((int)$customer['id'], $now));
+        } catch (InvalidArgumentException $error) {
+            return $this->json(422, $error->getMessage());
         }
-        $session->write('Vouchers.study', ['customer' => $id, 'from' => $from, 'seen' => $now]);
-        return $this->response->withStatus(204)->withHeader('Cache-Control', 'no-store');
+    }
+
+    private function studyHeartbeat(array $customer, int $now): void
+    {
+        $session = $this->request->getSession();
+        $data = (array)$this->request->getData();
+        $stream = $data['stream'] ?? '';
+        $course = filter_var($data['course_id'] ?? null, FILTER_VALIDATE_INT);
+        $item = filter_var($data['item_id'] ?? null, FILTER_VALIDATE_INT);
+        $activity = $data['activity'] ?? '';
+        $stop = ($data['stop'] ?? '') === '1';
+        if (!is_string($stream) || !preg_match('/^[a-f0-9]{24}$/D', $stream) || $course < 1 || $item < 1
+            || !in_array($activity, ['video', 'quiz'], true)) {
+            throw new InvalidArgumentException('Không xác định được nội dung đang học.');
+        }
+        $id = (int)$customer['id'];
+        $streams = array_filter($session->read('Vouchers.studyStreams') ?: [], static function ($state) use ($id, $now) {
+            return $state['customer'] === $id && $state['seen'] >= $now - 60;
+        });
+        $previous = $streams[$stream] ?? null;
+        if ($stop && !$previous) {
+            return;
+        }
+        if ($previous && ($previous['course'] !== $course || $previous['item'] !== $item || $previous['activity'] !== $activity)) {
+            throw new InvalidArgumentException('Nội dung học đã thay đổi. Hãy mở lại bài học.');
+        }
+        $allowedUntil = $previous['allowed_until'] ?? 0;
+        if ($allowedUntil <= $now) {
+            if (!$this->canRecordStudy($customer, $course, $item, $activity)) {
+                unset($streams[$stream]);
+                $session->write('Vouchers.studyStreams', $streams);
+                throw new InvalidArgumentException('Nội dung này chưa đủ điều kiện tính giờ học.');
+            }
+            $allowedUntil = $now + 120;
+        }
+        if ($previous) {
+            WeeklyStudyTime::record($id, $previous['seen'], $now);
+        }
+        unset($streams[$stream]);
+        if (!$stop) {
+            $streams[$stream] = [
+                'customer' => $id, 'course' => $course, 'item' => $item, 'activity' => $activity,
+                'seen' => max($previous['seen'] ?? 0, $now), 'allowed_until' => $allowedUntil,
+            ];
+        }
+        $session->write('Vouchers.studyStreams', array_slice($streams, -6, null, true));
+    }
+
+    private function canRecordStudy(array $customer, int $course, int $item, string $activity): bool
+    {
+        if (CourseTypes::kind($course) !== 'knowledge' || !CourseTypes::publicCourse($course)) {
+            return false;
+        }
+        if ($activity === 'video') {
+            return WeeklyStudyTime::canWatch($customer, $course, $item);
+        }
+        $access = $this->loadComponent('QuizAnswer')->courseQuizAccess($customer, $course, $item);
+        return !empty($access['allowed']) && ($access['mode'] ?? '') !== 'reference';
     }
 
     private function json(int $status, string $message, array $data = [])

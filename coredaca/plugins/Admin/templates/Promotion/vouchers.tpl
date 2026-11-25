@@ -13,7 +13,7 @@
             <div class="kt-portlet__body">
                 <h4>{if !empty($row.id)}Chỉnh sửa chương trình{else}Tạo chương trình{/if}</h4>
                 {if $error}<p class="alert alert-danger" role="alert">{$error|escape}</p>{/if}
-                <form action="{ADMIN_PATH}/promotion/vouchers" method="post">
+                <form id="meduc-voucher-campaign" action="{ADMIN_PATH}/promotion/vouchers" method="post">
                     <input type="hidden" name="_csrfToken" value="{$this->getRequest()->getAttribute('csrfToken')|escape}">
                     <input type="hidden" name="id" value="{$row.id|default:0|escape}">
                     <div class="form-row">
@@ -35,7 +35,7 @@
                     <div class="form-row">
                         <label class="form-group col-md-4">Mã áp dụng cho mã chung hoặc giới thiệu<input class="form-control" name="code" maxlength="32" value="{$row.code|default:''|escape}"></label>
                         <label class="form-group col-md-4">Mã đối tác giới thiệu<input class="form-control" name="partner_code" maxlength="64" value="{$row.partner_code|default:''|escape}"></label>
-                        <label class="form-group col-md-4">Số phút cần tích lũy mỗi tuần<input class="form-control" name="study_minutes" type="number" min="1" max="10080" value="{$row.study_minutes|default:''|escape}"><small class="form-text text-muted">Mã thời gian học dùng cho cả MedUC Academy hoặc một loại khoá học trong Academy.</small></label>
+                        <label class="form-group col-md-4">Số phút cần tích lũy mỗi tuần<input class="form-control" name="study_minutes" type="number" min="1" max="10080" value="{$row.study_minutes|default:''|escape}"><small class="form-text text-muted">Mã chỉ dùng cho Khoá ôn kiến thức trong tuần nhận mã.</small></label>
                     </div>
                     <fieldset class="border rounded p-3 mb-3">
                         <legend class="w-auto h6 px-2">Điều kiện khách hàng thân thiết</legend>
@@ -50,6 +50,20 @@
                     <button class="btn btn-brand" type="submit">Lưu chương trình</button>
                     {if !empty($row.id)}<a href="{ADMIN_PATH}/promotion/vouchers" class="btn btn-link">Tạo mã mới</a>{/if}
                 </form>
+                {literal}<script>
+                    (() => {
+                        const form = document.getElementById('meduc-voucher-campaign');
+                        const kind = form.querySelector('select[name="kind"]');
+                        const scope = form.elements.scope;
+                        function updateScope() {
+                            const study = kind.value === 'study';
+                            if (study) scope.value = 'knowledge';
+                            for (const option of scope.options) option.disabled = study && option.value !== 'knowledge';
+                        }
+                        kind.addEventListener('change', updateScope);
+                        updateScope();
+                    })();
+                </script>{/literal}
             </div>
         </section>
         <section class="kt-portlet">
