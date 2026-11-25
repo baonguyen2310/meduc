@@ -39,6 +39,7 @@
           {$this->element('course_price/guarantees')}
         </section>
       {/if}
+      {if !empty($voucher_available)}<p><button class="mv-choice-button" type="button" data-price-voucher>Nhập mã ưu đãi</button></p>{/if}
       <div class="mpr-packages">
       {foreach $packages as $p}
         <article class="mpr-package{if $p.recommended} is-recommended{/if}" data-package="{$p.id}" data-count="{$p.course_count}" data-amount="{$p.amount}" data-name="{$p.name|escape}">

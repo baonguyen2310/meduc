@@ -6,6 +6,7 @@
             </h3>
         </div>
         <div class="kt-subheader__toolbar">
+            <a href="{ADMIN_PATH}/promotion/vouchers" class="btn btn-sm btn-outline-brand mr-2">Mã ưu đãi MedUC</a>
             <a href="{ADMIN_PATH}/promotion/add" class="btn btn-sm btn-brand">
                 <i class="la la-plus"></i>
                 {__d('admin', 'them_moi')}

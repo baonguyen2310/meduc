@@ -159,6 +159,10 @@
     }
     page.querySelectorAll('[data-edit-plan]').forEach(b=>b.addEventListener('click',()=>openPicker(b.dataset.editPlan,b)));
     page.querySelectorAll('[data-register-plan]').forEach(b=>b.addEventListener('click',()=>openCheckout(b.dataset.registerPlan,b)));
+    page.querySelector('[data-price-voucher]')?.addEventListener('click', event => {
+      const selected = cart.packageId(listId);
+      openCheckout(plans.has(String(selected)) ? selected : plans.keys().next().value, event.currentTarget);
+    });
     window.addEventListener('meduc:checkout-error',event=>{error.textContent=event.detail.message;});
     updateCards();
   });

@@ -16,9 +16,9 @@
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}{if strpos($website_info.favicon, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}?v=20261112-logo-new{/if}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/checkout-entry.js?v=20261110-commerce-access" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261124-exam-label" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261124-vouchers" defer></script>
   <script src="/bang-bao-gia/lien-ket.js" defer></script>
-  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261110-commerce-access" defer></script>
+  <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.js?v=20261124-vouchers" defer></script>
 </head>
 <body class="meduc-header-v2 mpr-body">
 {$this->element('layout/header_v2')}

@@ -9,6 +9,7 @@ use Cake\Http\Response;
 use Cake\ORM\Query;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
+use App\Service\Vouchers;
 
 
 class PromotionController extends AppController {
@@ -32,6 +33,50 @@ class PromotionController extends AppController {
 
         $this->set('path_menu', 'promotion');
         $this->set('title_for_layout', __d('admin', 'chuong_trinh_khuyen_mai'));
+    }
+
+    public function vouchers()
+    {
+        $this->request->allowMethod(['get', 'post']);
+        $ready = Vouchers::installed();
+        $error = null;
+        $editing = (int)$this->request->getQuery('edit');
+        $row = [];
+        if ($ready && $this->request->is('post')) {
+            $row = (array)$this->request->getData();
+            try {
+                Vouchers::saveCampaign((int)($row['id'] ?? 0), $row);
+                return $this->redirect(ADMIN_PATH . '/promotion/vouchers?saved=1');
+            } catch (\InvalidArgumentException $e) {
+                $error = $e->getMessage();
+            }
+        }
+        $campaigns = $ready ? Vouchers::campaigns() : [];
+        $timezone = new \DateTimeZone('Asia/Ho_Chi_Minh');
+        foreach ($campaigns as &$campaign) {
+            foreach (['starts_at', 'ends_at', 'spend_from', 'spend_until'] as $field) {
+                if ($campaign[$field] === null) {
+                    $campaign[$field] = '';
+                    continue;
+                }
+                $at = (int)$campaign[$field];
+                if ($field === 'ends_at' || $field === 'spend_until') {
+                    $at--;
+                }
+                $campaign[$field] = (new \DateTimeImmutable('@' . $at))->setTimezone($timezone)->format('Y-m-d');
+            }
+            if ($editing === (int)$campaign['id'] && !$row) {
+                $row = $campaign;
+            }
+        }
+        unset($campaign);
+        $row += ['kind' => 'common', 'scope' => 'all', 'discount_type' => 'fixed'];
+        $this->set(compact('ready', 'error', 'campaigns', 'row'));
+        $this->set('saved', !$error && $this->request->getQuery('saved') === '1');
+        $this->set('kinds', Vouchers::KINDS);
+        $this->set('scopes', Vouchers::SCOPES);
+        $this->set('path_menu', 'promotion');
+        $this->set('title_for_layout', 'Mã ưu đãi MedUC');
     }
 
     public function listJson()

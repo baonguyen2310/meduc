@@ -65,7 +65,11 @@
         message('Đang tải. Mỗi lần bấm tải mới dùng 1 lượt. Nếu bị gián đoạn, bạn có thể tiếp tục trong mục Tải xuống của trình duyệt trong 30 phút.');
         [1500,5000,12000].forEach(ms=>setTimeout(()=>refreshDetail().catch(()=>{}),ms));
       }else {
-        const result = await api('purchase', {nonce:file.nonce, expected_customer_id:context.customer_id,package_id:selectedPackage});
+        const voucher = window.MeducVouchers
+          ? await window.MeducVouchers.review({source:'package', packageId:selectedPackage, courseIds:[]}, trigger)
+          : {};
+        if (voucher === null) return;
+        const result = await api('purchase', {nonce:file.nonce, expected_customer_id:context.customer_id,package_id:selectedPackage,...voucher});
         location.assign(result.redirect);
       }
     } catch (error) {
@@ -122,6 +126,17 @@
     const ready = ['available','active'].includes(data.state);
     const credits=data.mode==='credits';
     query('[data-download-amount]').textContent=money(data.amount);
+    query('[data-download-vouchers]')?.replaceChildren(...(data.discounts || []).map(discount => {
+      const line = document.createElement('li');
+      line.className = 'mv-applied-line';
+      const label = document.createElement('span');
+      label.textContent = discount.label + ' · ' + discount.code;
+      const amount = document.createElement('strong');
+      amount.className = 'mv-amount';
+      amount.textContent = '−' + money(discount.amount);
+      line.append(label, amount);
+      return line;
+    }));
     const original=query('[data-download-original]');original.textContent=money(data.original_amount||data.amount);original.hidden=!(data.original_amount>data.amount);
     query('[data-download-package-meta]').textContent=credits?`${data.credit_count} lượt tải · Số dư hiện tại: ${data.balance} lượt`:money(data.amount)+' / lượt tải';
     query('[data-download-file]').hidden = !ready||credits;

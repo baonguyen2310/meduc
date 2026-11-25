@@ -297,20 +297,49 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261124-compact-guarantees" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261115-school-picker-only" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261125-study-rewards" defer></script>
+{if $course_kind == 'knowledge'}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.css?v=20261125-claim" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.js?v=20261125-claim" defer></script>
+{/if}
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.js?v=20261028-2" defer></script>
 {/if}
-{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261115-mobile-submit-timer" defer></script>{/if}
+{if $quiz_count > 0}<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-quiz.js?v=20261125-study-rewards" defer></script>{/if}
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-contribution.js?v=20261114-stacked-modal" defer></script>
 
 <section class="mcr" data-mcr data-mcr-kind="{$course_kind|escape}"{if $quiz_course} data-mcr-outline-mode="regular"{/if} data-mcr-licensed="{if $licensed}1{else}0{/if}" data-mcr-count="{$lesson_count}" data-mcr-product="{$product.id}" data-access-expires="{$course_access.expires_at|default:0}" data-mcr-exam-prep="{if $exam_prep}1{else}0{/if}" data-mcr-member="{if !empty($member_info.id)}{$member_info.id}{/if}" data-mcr-member-code="{$code_member}" data-mcr-class-room="{$class_room_id}" nh-product-detail nh-product="{$product.id}" nh-product-item-id="{if !empty($first_item.id)}{$first_item.id}{/if}" nh-product-attribute-special="{if !empty($product.attributes_item_special)}{htmlentities($product.attributes_item_special|@json_encode)}{/if}">
     <div class="mcr-shell">
         <header class="mcr-course-heading">
-            <p class="mcr-course-eyebrow">{if $quiz_course}Đề thi{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
-            <h1 id="mcr-course-title">{$product.name|escape}</h1>
+            <div>
+                <p class="mcr-course-eyebrow">{if $quiz_course}Đề thi{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
+                <h1 id="mcr-course-title">{$product.name|escape}</h1>
+            </div>
+            {if $course_kind == 'knowledge'}
+            <section class="mst-panel" data-study-rewards aria-label="Giờ học tuần này" hidden>
+                <div class="mst-summary">
+                    <span>Tuần này · <strong data-study-elapsed></strong></span>
+                    <button type="button" class="mst-action" data-study-open>Mốc thưởng</button>
+                </div>
+                <progress data-study-meter aria-label="Tiến độ nhận thưởng tuần này" value="0"></progress>
+                <p data-study-next></p>
+            </section>
+            {/if}
         </header>
+        {if $course_kind == 'knowledge'}
+        <dialog class="mst-dialog" data-study-dialog aria-labelledby="mst-title">
+            <div class="mst-dialog-head">
+                <h2 id="mst-title">Thưởng giờ học</h2>
+                <form method="dialog"><button type="submit" class="mst-action" aria-label="Đóng">×</button></form>
+            </div>
+            <p data-study-reset></p>
+            <p>Thời gian xem video bài học và làm bài tập trong tab đang mở được cộng vào tuần này. Mã dùng cho Khoá ôn kiến thức.</p>
+            <p data-study-claim-status role="status"></p>
+            <ul data-study-milestones></ul>
+        </dialog>
+        <p class="mst-toast" data-study-toast role="status" aria-live="polite"></p>
+        {/if}
         <div class="mcr-course-columns{if $quiz_course} mcr-course-columns--quiz{/if}">
         {if !$quiz_course}
         <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">

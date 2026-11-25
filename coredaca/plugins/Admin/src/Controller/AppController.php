@@ -131,7 +131,17 @@ class AppController extends Controller {
             if ($controller_request === 'ThemeUsage' && $role_id === 1) return;
             if ($controller_request === 'FacultyApplication' && $role_id === 1) return;
             if ($controller_request === 'CoursePrice' && $role_id === 1) return;
+            $voucherAdmin = $controller_request === 'Promotion' && $action_request === 'vouchers';
+            if ($voucherAdmin) {
+                $action_request = 'list';
+                if ($this->request->is('post')) {
+                    $action_request = (int)$this->request->getData('id') ? 'update' : 'add';
+                }
+            }
             $check_permission = TableRegistry::get('Roles')->checkPermissionRequest($role_id, $controller_request, $action_request);
+            if ($voucherAdmin && !$check_permission) {
+                throw new ForbiddenException(__d('admin', 'ban_khong_co_quyen_thuc_hien_hanh_dong_nay'));
+            }
             if(!$check_permission && !$this->request->is('ajax')){
                 $this->showErrorPage('denied');
             }

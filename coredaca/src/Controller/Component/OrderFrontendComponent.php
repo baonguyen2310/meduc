@@ -606,11 +606,14 @@ class OrderFrontendComponent extends Component
 
         $table = TableRegistry::get('Orders');
 
-        $order = $table->findByCode($code)->select(['id', 'total'])->first();     
+        $order = $table->findByCode($code)->select([
+            'id', 'total', 'affiliateCode', 'affiliatePercent', 'affiliateAmount', 'affiliatePaidStatus',
+        ])->first();
         $order_id = !empty($order['id']) ? intval($order['id']) : null;
         if(empty($order_id)){
             return $this->System->getResponse([MESSAGE => __d('template', 'khong_lay_duoc_thong_tin_don_hang')]);
         }
+        $commerce = \App\Service\CommercePurchases::get($order_id);
 
         $order_info = $table->getDetailOrder($order_id, [
             'get_contact' => true
@@ -671,7 +674,12 @@ class OrderFrontendComponent extends Component
                 $app_pay_url = !empty($checkout[DATA]['app_pay_url']) ? $checkout[DATA]['app_pay_url'] : null;
             }
             else{
-                if (isset($data["affiliateCode"]) && $data["affiliateCode"] !== '') {
+                $snapshot = json_decode((string)($commerce['context_json'] ?? ''), true);
+                if (!empty($snapshot['vouchers'])) {
+                    foreach (['affiliateCode', 'affiliatePercent', 'affiliateAmount', 'affiliatePaidStatus'] as $field) {
+                        $data[$field] = $order[$field];
+                    }
+                } elseif (isset($data["affiliateCode"]) && $data["affiliateCode"] !== '') {
                     $affiliate_percent = null;
 
                     // Tìm khách hàng có mã affiliateCode
@@ -728,7 +736,6 @@ class OrderFrontendComponent extends Component
             $conn->commit();
 
             // Purchases notify both buyer and admin after the pending receipt is committed.
-            $commerce=\App\Service\CommercePurchases::get((int)$order_info['id']);
             if($send_email&&$commerce){
                 \App\Service\CommercePurchases::report((int)$order_info['id']);
                 \App\Service\CommerceNotifications::purchase((int)$order_info['id'],'reported',function($p){return $this->Email->sendEmail($p);},$this->controller->getRequest()->host());

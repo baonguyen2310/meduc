@@ -95,6 +95,7 @@ final class DocumentCredits
         return ['mode'=>'credits','code'=>$p['public_code'],'order_code'=>$p['order_code'],'document_title'=>$p['package_name'],
             'document_url'=>$context['document_url']??'/tai-lieu-hoc-tap','file_name'=>'Dùng chung cho mọi tệp trong thư viện tài liệu.',
             'amount'=>(int)$p['amount'],'original_amount'=>(int)$p['original_amount'],'credit_count'=>(int)$p['credit_count'],'balance'=>self::balance((int)$p['customer_id']),
+            'discounts'=>$context['vouchers']['discounts']??[],
             'reported'=>!empty($p['reported_at']),'state'=>$state,'expires_at'=>0,'payment_url'=>'/document-download/payment/'.$p['public_code']];
     }
 }

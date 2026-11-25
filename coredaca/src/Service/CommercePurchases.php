@@ -26,8 +26,18 @@ final class CommercePurchases
     public static function paid(array $p):bool {
         return empty($p['order_deleted'])&&$p['order_status']!==CANCEL&&(int)$p['order_customer']===(int)$p['customer_id']&&(float)$p['confirmed']>=(int)$p['amount'];
     }
-    public static function create(array $customer,array $quote,callable $saveOrder,array $context=[]):array {
-        return self::db()->transactional(function()use($customer,$quote,$saveOrder,$context){
+    public static function create(array $customer,array $quote,callable $saveOrder,array $context=[],array $voucherInput=[]):array {
+        return self::db()->transactional(function()use($customer,$quote,$saveOrder,$context,$voucherInput){
+            $affiliate = [];
+            if ($voucherInput) {
+                $voucher = Vouchers::confirm($customer, $quote['package']['course_type'], (int)$quote['amount'], $voucherInput);
+                $quote['amount'] = $voucher['total'];
+                if ($voucher['discounts'] || $voucher['partner']) {
+                    $quote['vouchers'] = $voucher;
+                    $context['vouchers'] = $voucher;
+                }
+                $affiliate = Vouchers::affiliateTerms($voucher['partner']['code'] ?? '', (int)$customer['id'], $voucher['total']);
+            }
             $p=$quote['package'];$kind=$p['course_type'];$items=[];$count=count($quote['courses']);$remaining=$quote['amount'];
             foreach($quote['courses'] as $i=>$course){$price=$i===$count-1?$remaining:intdiv($quote['amount'],$count);$remaining-=$price;
                 $items[]=['product_id'=>(int)$course['id'],'product_item_id'=>(int)$course['item_id'],'quantity'=>1,'price'=>$price,'vat_value'=>0];}
@@ -40,11 +50,14 @@ final class CommercePurchases
                 'contact'=>['customer_id'=>(int)$customer['id'],'full_name'=>$customer['full_name'],'email'=>$customer['email'],'phone'=>$customer['phone']??null],'items'=>$items]);
             if(($result[CODE]??null)!==SUCCESS)throw new \RuntimeException($result[MESSAGE]??'Chưa tạo được đơn hàng.');
             $order=$result[DATA];$now=time();
-            self::db()->update('orders',['course_price_package_id'=>(int)$p['id'],'course_price_snapshot'=>json_encode($quote,JSON_UNESCAPED_UNICODE)],['id'=>$order['id']]);
+            self::db()->update('orders',['course_price_package_id'=>(int)$p['id'],'course_price_snapshot'=>json_encode($quote,JSON_UNESCAPED_UNICODE)]+$affiliate,['id'=>$order['id']]);
             self::db()->insert('commerce_purchases',['order_id'=>$order['id'],'public_code'=>bin2hex(random_bytes(16)),'customer_id'=>$customer['id'],'kind'=>$kind,
                 'package_id'=>$p['id'],'package_name'=>$p['name'],'product_id'=>$kind==='quiz'?(int)$quote['courses'][0]['id']:null,
                 'duration_months'=>$p['duration_months']?:null,'credit_count'=>(int)$p['credit_count'],'amount'=>$quote['amount'],'original_amount'=>$p['price'],
                 'context_json'=>json_encode($context,JSON_UNESCAPED_UNICODE),'created_at'=>$now,'updated_at'=>$now]);
+            if (!empty($quote['vouchers']['discounts'])) {
+                Vouchers::recordUses('order', (int)$order['id'], (int)$customer['id'], $quote['vouchers']['discounts']);
+            }
             return self::get((int)$order['id']);
         });
     }
@@ -97,7 +110,7 @@ final class CommercePurchases
     }
     public static function approve(string $code,string $signature,callable $savePayment):array {
         $p=self::approval($code,$signature);if(!$p)throw new \InvalidArgumentException('Liên kết duyệt không còn hiệu lực. Vui lòng mở đơn trong admin.');
-        return self::db()->transactional(function()use($p,$savePayment){
+        $approved = self::db()->transactional(function()use($p,$savePayment){
             $p=self::get((int)$p['order_id'],true);
             if($p['order_status']===CANCEL||$p['order_deleted'])throw new \InvalidArgumentException('Đơn hàng đã huỷ.');
             if(!self::paid($p)){
@@ -110,5 +123,7 @@ final class CommercePurchases
             }
             self::syncOrder((int)$p['order_id']);return self::get((int)$p['order_id']);
         });
+        Vouchers::awardAfterPayment((int)$approved['order_id']);
+        return $approved;
     }
 }
