@@ -10,6 +10,8 @@ use RuntimeException;
 /** Store Shop checkout in the same order and payment ledgers as digital purchases. */
 final class ShopOrders
 {
+    public const ARCHIVE_CODE_PREFIX = 'meduc-shop-legacy:';
+
     public static function place(array $customer, array $data, callable $saveOrder, callable $savePayment): array
     {
         $reference = is_string($data['cartId'] ?? null) ? $data['cartId'] : '';
@@ -191,7 +193,7 @@ final class ShopOrders
             if (!is_numeric($recorded) || abs((float)$recorded-(float)$amount)>0.001) {
                 throw new RuntimeException('Tổng tiền đơn Shop cũ không khớp với hồ sơ.');
             }
-            $changes = ['status'=>NEW_ORDER,'orderStatus'=>'initial'];
+            $changes = ['status'=>NEW_ORDER,'orderStatus'=>'initial','created'=>(int)($row['created'] ?: time())];
             $partner = $data['affiliateCode'] ?? '';
             $commission = $data['affiliateAmount'] ?? 0;
             if (is_string($partner) && strlen($partner) <= 64 && $partner !== '' && is_numeric($commission)
@@ -222,7 +224,7 @@ final class ShopOrders
 
     private static function archiveCode(int $contactId): string
     {
-        return substr(hash('sha256', 'meduc-shop-legacy:' . $contactId), 0, 32);
+        return substr(hash('sha256', self::ARCHIVE_CODE_PREFIX . $contactId), 0, 32);
     }
 
     public static function archiveReference(array $purchase): string

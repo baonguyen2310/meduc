@@ -207,6 +207,9 @@ class OrdersTable extends Table
                 'OrdersContact.search_unicode LIKE ' => '%' . $keyword . '%',
                 'Orders.code LIKE' => '%' . Text::slug(strtolower($keyword), ' ') . '%'
             ];
+            if (!empty($params['match_archive_reference'])) {
+                $where['OR'][] = $this->archiveReferenceCondition($keyword, true);
+            }
         }
 
         if(!empty($note)){
@@ -297,7 +300,11 @@ class OrdersTable extends Table
         }
 
         if(!empty($order_code)){
-            $where['Orders.code'] = $order_code;
+            if (!empty($params['match_archive_reference'])) {
+                $where[] = ['OR'=>['Orders.code'=>$order_code, $this->archiveReferenceCondition((string)$order_code, false)]];
+            } else {
+                $where['Orders.code'] = $order_code;
+            }
         }
 
         if(!empty($order_id)){
@@ -345,6 +352,17 @@ class OrdersTable extends Table
         }
 
         return $table->find()->contain($contain)->where($where)->group(['Orders.id'])->order($sort_string);
+    }
+
+    private function archiveReferenceCondition(string $value, bool $partial): \Cake\Database\Expression\QueryExpression
+    {
+        $query = $this->getConnection()->newQuery();
+        $field = $query->newExpr("JSON_UNQUOTE(JSON_EXTRACT(ArchiveMeta.context_json,'$.archive_reference'))");
+        $comparison = $partial ? $query->newExpr()->like($field, '%' . $value . '%', 'string')
+            : $query->newExpr()->eq($field, $value, 'string');
+        $query->select($query->newExpr('1'))->from(['ArchiveMeta'=>'commerce_purchases'])
+            ->where(['ArchiveMeta.kind'=>'shop', 'ArchiveMeta.order_id = Orders.id', $comparison]);
+        return $query->newExpr()->exists($query);
     }
 
     public function getDetailOrder($id = null, $params = [])

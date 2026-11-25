@@ -15,6 +15,7 @@ use App\Lib\Shipping\NhShipping;
 use Cake\Utility\Security;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use App\Service\AdminOrderList;
 use App\Service\AffiliateCommissions;
 use App\Service\CommercePurchases;
 use App\Service\OrderPayments;
@@ -37,7 +38,7 @@ class OrderController extends AppController {
             $this->set($this->shopHistory());
             return $this->render('shop_history');
         }
-        $this->js_page = '/assets/js/pages/list_order.js?v=20261125-shop-orders';
+        $this->js_page = '/assets/js/pages/list_order.js?v=20261125-shop-history-list';
 
         $this->set('path_menu', 'order');  
         $this->set('title_for_layout', __d('admin', 'don_hang'));
@@ -157,8 +158,39 @@ class OrderController extends AppController {
         $params[SORT] = !empty($data[SORT]) ? $data[SORT] : [];
         $sort_field = !empty($params[SORT][FIELD]) ? $params[SORT][FIELD] : null;
         $sort_type = !empty($params[SORT][SORT]) ? $params[SORT][SORT] : null;
-        
-        
+
+        if (AdminOrderList::includesArchive($params[FILTER])) {
+            $params['match_archive_reference'] = true;
+            $mixed = AdminOrderList::page($table->queryListOrders($params), $params[FILTER], $params[SORT],
+                max(1, $page), max(1, min(100, $limit)));
+            $ids = ['order'=>[], 'archive'=>[]];
+            foreach ($mixed['references'] as $reference) {
+                $ids[$reference['record_origin']][] = (int)$reference['record_id'];
+            }
+            $orders = [];
+            if ($ids['order']) {
+                $rows = $table->find()->contain(['OrdersContact'])
+                    ->where(['Orders.id IN'=>$ids['order'], 'Orders.deleted'=>0])->all();
+                $payments = OrderPayments::summaries($ids['order']);
+                foreach ($rows as $row) {
+                    $order = $table->formatDataOrderDetail($row, $this->lang);
+                    $order['payment_summary'] = $payments[$order['id']] ?? [];
+                    $orders[$order['id']] = $order;
+                }
+            }
+            $bySource = ['order'=>$orders, 'archive'=>AdminOrderList::archives($ids['archive'])];
+            $entries = [];
+            foreach ($mixed['references'] as $reference) {
+                $entry = $bySource[$reference['record_origin']][(int)$reference['record_id']] ?? null;
+                if ($entry) $entries[] = $entry;
+            }
+            $this->responseJson([
+                CODE=>SUCCESS, MESSAGE=>__d('admin', 'xu_ly_du_lieu_thanh_cong'),
+                DATA=>$entries, META=>$utilities->formatPaginationInfo($mixed['paging']),
+            ]);
+            return;
+        }
+
         try {
             $query_orders = $this->paginate($table->queryListOrders($params), [
                 'limit' => $limit,

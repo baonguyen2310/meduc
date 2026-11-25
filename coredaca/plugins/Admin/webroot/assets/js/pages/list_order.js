@@ -1,6 +1,11 @@
 "use strict";
 
 var nhListOrder = function() {
+    function escapeText(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function(character) {
+            return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[character];
+        });
+    }
 	var options = {
 		data: {
 			type: 'remote',
@@ -61,15 +66,16 @@ var nhListOrder = function() {
 				width: 170,
 				autoHide: false,
 				template: function(row){
-					var code = typeof(row.code) != _UNDEFINED && row.code != null ? row.code : '';
-					var source = typeof(row.source) != _UNDEFINED && row.source != null ? row.source : '';
-					var created = typeof(row.created) != _UNDEFINED && row.created != null ? row.created : '';
-					var detailUrl = adminPath + '/order/detail/' + row.id;
+                    var code = escapeText(row.code || 'Xem đơn');
+                    var detailUrl = row.archive_id
+                        ? adminPath + '/order?view=shop-history&history_id=' + Number(row.archive_id)
+                        : adminPath + '/order/detail/' + Number(row.id);
+                    var created = row.created ? nhMain.utilities.parseIntToDateTimeString(row.created) : '';
 
 					return '\
 					<div class="code-time nh-weight">\
 						<div> <i class="fas fa-qrcode"></i> <a href="' + detailUrl + '">' + code +'</a></div>\
-						<div> <i class="far fa-clock"></i> '+ nhMain.utilities.parseIntToDateTimeString(row.created) +'</div>\
+						<div> <i class="far fa-clock"></i> '+ created +'</div>\
 					</div>';
 				}
 			},
@@ -80,10 +86,12 @@ var nhListOrder = function() {
                     var payment = row.payment_summary || {};
                     var allowed = {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Đề thi',document:'Tài liệu',shop:'MedUC Shop',fa:'Fa',other:'Khác'};
                     var label = allowed[payment.kind] || allowed.other;
-                    var statuses = ['Đã huỷ', 'Chờ duyệt thanh toán', 'Chờ thu COD'];
+                    var statuses = ['Đã huỷ', 'Chờ duyệt thanh toán', 'Chờ thu COD', 'Cần đối soát'];
                     var status = payment.paid ? 'Đã thanh toán' : (statuses.indexOf(payment.status_label) >= 0 ? payment.status_label : 'Chưa thanh toán');
                     var shipping = '';
-                    if (payment.kind === 'shop' && status !== 'Đã huỷ') {
+                    if (row.archive_id) {
+                        shipping = '<div class="text-muted mt-1">Đơn Shop trước đây</div>';
+                    } else if (payment.kind === 'shop' && status !== 'Đã huỷ') {
                         var shippingLabels = {wait_deliver:'Chờ giao',delivery:'Đang giao',delivered:'Đã giao',cancel_package:'Đã huỷ vận đơn',cancel_delivered:'Giao không thành công'};
                         shipping = '<div class="text-muted mt-1">' + (shippingLabels[payment.shipping_status] || 'Chờ xử lý giao hàng') + '</div>';
                     }
@@ -97,9 +105,10 @@ var nhListOrder = function() {
 				sortable: false,
 				width: 250,
 				template: function(row){
-					var full_name = typeof(row.contact.full_name) != _UNDEFINED && row.contact.full_name != null ? row.contact.full_name : '';
-					var phone = typeof(row.contact.phone) != _UNDEFINED && row.contact.phone != null ? row.contact.phone : '';
-					var email = typeof(row.contact.email) != _UNDEFINED && row.contact.email != null ? row.contact.email : '';
+                    var contact = row.contact || {};
+                    var full_name = escapeText(contact.full_name);
+                    var phone = escapeText(contact.phone);
+                    var email = escapeText(contact.email);
 
 					return '\
 					<div class="contact-order nh-weight">\
@@ -128,7 +137,7 @@ var nhListOrder = function() {
 					var result = "";
 					if(row.affiliateCode) {
 					    result = `
-					        Mã giới thiệu: <b>${row.affiliateCode}</b>
+					        Mã giới thiệu: <b>${escapeText(row.affiliateCode)}</b>
 					        <br />
 					        Hoa hồng: <b>${row.affiliateAmount.toLocaleString()} VND</b>
 				            <br />
@@ -141,7 +150,7 @@ var nhListOrder = function() {
 							success: {'title': "Đã duyệt", 'class': 'kt-badge--success kt-font-bold'},
 							cancel: {'title': "Đã hủy", 'class': 'kt-badge--danger kt-font-bold'},
 						};
-						if(row.orderStatus){
+						if(Object.prototype.hasOwnProperty.call(statusOptions, row.orderStatus)){
 							status = '<span class="kt-badge ' + statusOptions[row.orderStatus].class + ' kt-badge--inline kt-badge--pill">' + statusOptions[row.orderStatus].title + '</span>';
 						}
 						result += `
@@ -161,7 +170,8 @@ var nhListOrder = function() {
 				width: 110,
 				template: function(row){	
 					var result = ``;
-					var total = row.total;
+                    if (row.archive_id) return '<b>' + Number(row.total).toLocaleString() + ' VND</b>';
+                    var total = row.total;
 					
 					if(row.affiliateAmount) {
 					    total = total - row.affiliateAmount;
@@ -285,6 +295,7 @@ var nhListOrder = function() {
 				  	hidden: 'xs'
 				},
 				template: function(row){
+                    if (row.archive_id) return '';
 					var staff_note = typeof(row.staff_note) != _UNDEFINED && row.staff_note != null ? row.staff_note : '';
 
 					var _htmlNoteCustomer = '';
