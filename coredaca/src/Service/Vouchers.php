@@ -312,75 +312,100 @@ final class Vouchers
             && in_array($campaign['scope'], ['all', $kind, self::groupScope($kind)], true);
     }
 
-    private static function studyGrant(array $campaign, int $id, array $progress, int $now): array
+    public static function claimStudy(int $customer, int $campaignId, int $week, int $now): string
     {
+        $progress = WeeklyStudyTime::total($customer, $now);
+        if ($week !== $progress['week_start']) {
+            throw new InvalidArgumentException('Đã sang tuần mới. Hãy kiểm tra lại mốc thưởng.');
+        }
+        $campaign = self::db()->execute(
+            "SELECT * FROM voucher_campaigns WHERE id=? AND kind='study'", [$campaignId]
+        )->fetch('assoc');
+        if (!$campaign || !self::applies($campaign, 'knowledge', $now)) {
+            throw new InvalidArgumentException('Mốc thưởng này đã hết hiệu lực.');
+        }
         if ($progress['seconds'] < (int)$campaign['study_minutes'] * 60) {
-            return [];
+            throw new InvalidArgumentException('Bạn chưa đủ giờ học để nhận mã này.');
         }
         $expiry = min((int)($campaign['ends_at'] ?? $progress['resets_at']), $progress['resets_at']);
-        return self::grant($campaign, $id, $progress['week_start'], $expiry, $now);
+        $grant = self::grant($campaign, $customer, $week, $expiry, $now);
+        if (!$grant || $grant['used_at'] !== null || (int)$grant['expires_at'] <= $now) {
+            throw new InvalidArgumentException('Mã tuần này đã dùng hoặc đã hết hạn.');
+        }
+        return $grant['code'];
     }
 
     public static function studyProgress(int $customer, int $now): array
     {
         $progress = WeeklyStudyTime::total($customer, $now);
         $campaigns = self::db()->execute(
-            "SELECT * FROM voucher_campaigns WHERE kind='study' AND active=1 AND starts_at<=?
-             AND (ends_at IS NULL OR ends_at>?) ORDER BY study_minutes, id", [$now, $now]
+            "SELECT c.*, g.code AS grant_code, g.used_at, g.expires_at
+             FROM voucher_campaigns c
+             LEFT JOIN voucher_grants g ON g.campaign_id=c.id AND g.customer_id=? AND g.period_start=?
+             WHERE c.kind='study' AND c.active=1 AND c.starts_at<=?
+               AND (c.ends_at IS NULL OR c.ends_at>?) ORDER BY c.study_minutes, c.id",
+            [$customer, $progress['week_start'], $now, $now]
         )->fetchAll('assoc');
         $rewards = [];
+        $goal = 0;
         foreach ($campaigns as $campaign) {
             if (!self::applies($campaign, 'knowledge', $now)) {
                 continue;
             }
-            $grant = self::studyGrant($campaign, $customer, $progress, $now);
-            $available = $grant && $grant['used_at'] === null && (int)$grant['expires_at'] > $now;
+            $target = (int)$campaign['study_minutes'] * 60;
+            $goal = max($goal, $target);
+            $claimed = $campaign['grant_code'] !== null;
+            if ($campaign['used_at'] !== null || ($claimed && (int)$campaign['expires_at'] <= $now)) {
+                continue;
+            }
             $rewards[] = [
                 'id' => (int)$campaign['id'],
-                'target_seconds' => (int)$campaign['study_minutes'] * 60,
+                'name' => $campaign['name'],
+                'target_seconds' => $target,
                 'type' => $campaign['discount_type'],
                 'value' => (int)$campaign['discount_value'],
-                'code' => $available ? $grant['code'] : null,
-                'used' => !empty($grant['used_at']),
-                'expires_at' => $available ? (int)$grant['expires_at'] : null,
+                'code' => $campaign['grant_code'],
+                'claimable' => !$claimed && $progress['seconds'] >= $target,
+                'expires_at' => $claimed ? (int)$campaign['expires_at'] : null,
             ];
         }
-        return $progress + ['enabled' => (bool)$rewards, 'server_at' => $now, 'rewards' => $rewards];
+        return $progress + ['enabled' => $goal > 0, 'goal_seconds' => $goal, 'server_at' => $now, 'rewards' => $rewards];
     }
 
-    public static function personalOffers(array $customer, string $kind, int $now): array
+    public static function personalOffers(array $customer, string $kind, int $now, bool $includeClaimable = false): array
     {
         if (!$customer || !self::installed()) {
             return [];
         }
         $id = (int)$customer['id'];
         $campaigns = self::db()->execute(
-            "SELECT * FROM voucher_campaigns WHERE kind IN ('loyalty','study') AND active=1
+            "SELECT * FROM voucher_campaigns WHERE kind='loyalty' AND active=1
              AND starts_at<=? AND (ends_at IS NULL OR ends_at>?) ORDER BY discount_value DESC,id",
             [$now, $now]
         )->fetchAll('assoc');
         $offers = [];
         $spend = [];
-        $study = null;
         foreach ($campaigns as $campaign) {
-            if (!self::applies($campaign, $kind, $now)) {
+            if (!self::applies($campaign, $kind, $now) || !self::reachedLoyaltyThreshold($customer, $campaign, $spend)) {
                 continue;
             }
-            if ($campaign['kind'] === 'study') {
-                $study = $study ?? WeeklyStudyTime::total($id, $now);
-                $grant = self::studyGrant($campaign, $id, $study, $now);
-            } elseif (self::reachedLoyaltyThreshold($customer, $campaign, $spend)) {
-                $expiry = $campaign['ends_at'] === null ? null : (int)$campaign['ends_at'];
-                $grant = self::grant($campaign, $id, 0, $expiry, $now);
-            } else {
-                continue;
-            }
+            $expiry = $campaign['ends_at'] === null ? null : (int)$campaign['ends_at'];
+            $grant = self::grant($campaign, $id, 0, $expiry, $now);
             if ($grant && $grant['used_at'] === null && ($grant['expires_at'] === null || (int)$grant['expires_at'] > $now)) {
                 $offers[] = [
                     'kind' => $campaign['kind'], 'name' => $campaign['name'], 'code' => $grant['code'],
                     'value' => (int)$campaign['discount_value'], 'type' => $campaign['discount_type'],
                     'expires_at' => $grant['expires_at'] === null ? null : (int)$grant['expires_at'],
                 ];
+            }
+        }
+        if ($kind === 'knowledge') {
+            $study = self::studyProgress($id, $now);
+            $includeClaimable = $includeClaimable && WeeklyStudyTime::installed();
+            foreach ($study['rewards'] as $reward) {
+                if ($reward['code'] || ($includeClaimable && $reward['claimable'])) {
+                    $offers[] = ['kind' => 'study', 'week_start' => $study['week_start']] + $reward;
+                }
             }
         }
         return $offers;

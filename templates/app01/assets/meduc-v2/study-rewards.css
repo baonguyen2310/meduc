@@ -26,9 +26,12 @@
   font-weight: 700;
   cursor: pointer;
 }
+.mst-action--claim { border-color: #c9163b; background: #c9163b; color: #fff; }
+.mst-action:disabled { opacity: .55; cursor: default; }
 .mst-panel progress { display: block; width: 100%; height: 7px; margin: 6px 0; accent-color: var(--mcr-red); }
 .mst-panel p, .mst-dialog > p { margin: 0; color: var(--mcr-muted); }
 .mst-dialog > p + p { margin-top: 6px; }
+.mst-dialog [data-study-claim-status]:empty { margin: 0; }
 .mst-dialog {
   width: min(420px, calc(100% - 24px));
   max-height: calc(100dvh - 24px);

@@ -27,6 +27,16 @@ function checkStudy($condition, string $why): void
     }
 }
 
+function rejectedStudy(callable $action, string $why): void
+{
+    try {
+        $action();
+    } catch (InvalidArgumentException $expected) {
+        return;
+    }
+    throw new RuntimeException($why);
+}
+
 $db = ConnectionManager::get('default');
 checkStudy(WeeklyStudyTime::installed(), 'The weekly rewards migration is required.');
 $db->enableSavePoints(true);
@@ -51,27 +61,53 @@ try {
     WeeklyStudyTime::record($customer, $week + 45, $week + 600);
     checkStudy(WeeklyStudyTime::total($customer, $now)['seconds'] === 45, 'Overlapping heartbeats or idle time received excess credit.');
 
-    $codes = [];
+    $rewards = [];
     foreach ([3599 => 0, 3600 => 1, 10800 => 2, 18000 => 3] as $seconds => $count) {
         $db->update('voucher_study_weeks', ['active_seconds' => $seconds], ['customer_id' => $customer, 'week_start' => $week]);
         $progress = Vouchers::studyProgress($customer, $now);
-        $codes = array_values(array_filter(array_column($progress['rewards'], 'code')));
-        checkStudy(count($codes) === $count, 'Reward issued at the wrong duration.');
+        $rewards = $progress['rewards'];
+        checkStudy(count(array_filter(array_column($rewards, 'claimable'))) === $count, 'Reward unlocked at the wrong duration.');
+        checkStudy(!array_filter(array_column($rewards, 'code')), 'Viewing progress auto-issued a reward.');
+        if ($count === 0) {
+            rejectedStudy(fn() => Vouchers::claimStudy($customer, $rewards[0]['id'], $week, $now), 'Claimed the reward before reaching the minimum.');
+        }
     }
-    $freshCodes = array_column(Vouchers::studyProgress($customer, $now)['rewards'], 'code');
-    checkStudy($freshCodes === $codes, 'Rechecking progress created new codes.');
+    $campaign = $rewards[2]['id'];
+    $session = (new ServerRequest())->getSession();
+    $request = static function ($method, array $body = []) use ($session) {
+        return (new ServerRequest(['session' => $session]))->withMethod($method)->withParsedBody($body);
+    };
+    $claim = static function ($campaign, $week) use ($request) {
+        return (new VoucherController($request('POST', ['campaign_id' => $campaign, 'week_start' => $week])))->claimStudy();
+    };
+    checkStudy($claim($campaign, $week)->getStatusCode() === 401, 'A guest was able to claim a study voucher.');
+    $session->write(MEMBER, ['id' => $customer]);
+    $claimResponse = $claim($campaign, $week);
+    $claimed = json_decode((string)$claimResponse->getBody(), true)['data'];
+    $code = $claimed['code'];
+    checkStudy($claimResponse->getStatusCode() === 200 && $code && $claimed['progress']['rewards'][2]['code'] === $code,
+        'The claim endpoint did not return the new voucher.');
+    checkStudy(Vouchers::claimStudy($customer, $campaign, $week, $now) === $code, 'A repeated claim created a new code.');
+    $offers = Vouchers::personalOffers(['id' => $customer], 'knowledge', $now, true);
+    checkStudy(count($offers) === 3 && $offers[2]['code'] === $code && $offers[0]['claimable'], 'Checkout did not expose the correct claimable and claimed vouchers.');
     checkStudy(Vouchers::studyProgress($customer, $nextWeek)['seconds'] === 0
         && !array_filter(array_column(Vouchers::studyProgress($customer, $nextWeek)['rewards'], 'code')), 'The new week inherited old progress or vouchers.');
     WeeklyStudyTime::record($customer, $nextWeek - 18, $nextWeek + 12);
     checkStudy(WeeklyStudyTime::total($customer, $nextWeek - 1)['seconds'] === 18018
         && WeeklyStudyTime::total($customer, $nextWeek)['seconds'] === 12, 'An interval spanning midnight was placed in the wrong week.');
-    $offer = Vouchers::quote(['id' => $customer], 'knowledge', 1000000, ['voucher_codes' => [$codes[2]]]);
+    $offer = Vouchers::quote(['id' => $customer], 'knowledge', 1000000, ['voucher_codes' => [$code]]);
     checkStudy($offer['total'] === 900000, 'The five-hour reward did not apply to a knowledge course.');
-    try {
-        Vouchers::quote(['id' => $customer], 'exam_solution', 1000000, ['voucher_codes' => [$codes[2]]]);
-        throw new RuntimeException('The reward was accepted for an exam course.');
-    } catch (InvalidArgumentException $expected) {
-    }
+    rejectedStudy(fn() => Vouchers::quote(['id' => $customer], 'exam_solution', 1000000, ['voucher_codes' => [$code]]),
+        'The reward was accepted for an exam course.');
+    Vouchers::recordUses('order', $customer, $customer, $offer['discounts']);
+    checkStudy(!in_array($campaign, array_column(Vouchers::studyProgress($customer, $now)['rewards'], 'id'), true)
+        && !in_array($campaign, array_column(Vouchers::personalOffers(['id' => $customer], 'knowledge', $now, true), 'id'), true),
+        'The used voucher still appeared in one of the coupon lists.');
+    rejectedStudy(fn() => Vouchers::claimStudy($customer, $campaign, $week, $now), 'A used voucher could be claimed again in the same week.');
+    rejectedStudy(fn() => Vouchers::claimStudy($customer, $campaign, $week, $nextWeek), 'An old request claimed a reward in the wrong week.');
+    rejectedStudy(fn() => Vouchers::claimStudy($customer, $campaign, $nextWeek, $nextWeek), 'The next week allowed a claim without enough study time.');
+    $db->update('voucher_study_weeks', ['active_seconds' => 18000], ['customer_id' => $customer, 'week_start' => $nextWeek]);
+    checkStudy(Vouchers::claimStudy($customer, $campaign, $nextWeek, $nextWeek) !== $code, 'A new week could not issue a fresh code for an earlier redeemed tier.');
 
     $db->insert('products', ['course_kind' => 'knowledge', 'status' => 1, 'deleted' => 0, 'draft' => 0]);
     $course = (int)$db->execute('SELECT LAST_INSERT_ID()')->fetchColumn(0);
@@ -84,11 +120,10 @@ try {
         ['name_vi' => 'Bài video học thử', 'trial_vi' => 'y', 'youtube_id_vi' => 'abcdefghijk', 'quiz_id_vi' => $quiz],
         ['name_vi' => 'Bài video có phí', 'trial_vi' => 'n', 'youtube_id_vi' => 'abcdefghijl'],
     ])]);
-    $session = (new ServerRequest())->getSession();
-    $study = static function ($method, array $body = []) use ($session) {
-        $request = (new ServerRequest(['session' => $session]))->withMethod($method)->withParsedBody($body);
-        return (new VoucherController($request))->study();
+    $study = static function ($method, array $body = []) use ($request) {
+        return (new VoucherController($request($method, $body)))->study();
     };
+    $session->delete(MEMBER);
     checkStudy($study('GET')->getStatusCode() === 401, 'A guest was able to read a member progress record.');
     $session->write(MEMBER, ['id' => $customer]);
     $db->delete('voucher_study_weeks', ['customer_id' => $customer, 'week_start' => $week]);
@@ -110,7 +145,7 @@ try {
     checkStudy($study('POST', ['activity' => 'quiz', 'item_id' => $quiz, 'stream' => str_repeat('c', 24)] + $pulse)->getStatusCode() === 200, 'The available lesson quiz was not authorized.');
     $db->update('products', ['course_kind' => 'exam_solution'], ['id' => $course]);
     checkStudy($study('POST', ['stream' => str_repeat('d', 24)] + $pulse)->getStatusCode() === 422, 'An exam course counted as study.');
-    echo "study rewards: presets, week boundary, overlaps, trial video and authenticated exercise passed\n";
+    echo "study rewards: claim, single use, weekly renewal, overlaps, trial video and authenticated exercise passed\n";
 } finally {
     $db->rollback();
 }

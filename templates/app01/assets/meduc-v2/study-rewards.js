@@ -8,6 +8,7 @@
   const player = root.querySelector('[data-mcr-player]');
   const quiz = root.querySelector('[data-mcr-quiz-player]');
   const dialog = root.querySelector('[data-study-dialog]');
+  const claimStatus = dialog.querySelector('[data-study-claim-status]');
   const toast = root.querySelector('[data-study-toast]');
   const idleLimit = 120000;
   const money = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'});
@@ -21,6 +22,7 @@
 
   let member = 0, progress = null, active = null, blocked = '', lastQuiz = '', lastAction = 0;
   let requested = 0, applied = 0, resetTimer, toastTimer, idleTimer;
+  let claiming = false;
 
   function announce(text) {
     clearTimeout(toastTimer);
@@ -35,37 +37,48 @@
     clearTimeout(resetTimer);
     if (!data.enabled) {
       active = null;
+      if (dialog.open) dialog.close();
       return;
     }
 
     panel.querySelector('[data-study-elapsed]').textContent = duration(data.seconds);
     const next = data.rewards.find(tier => tier.target_seconds > data.seconds);
+    const ready = data.rewards.filter(tier => tier.claimable);
     const meter = panel.querySelector('[data-study-meter]');
-    meter.max = data.rewards[data.rewards.length - 1].target_seconds;
+    meter.max = data.goal_seconds;
     meter.value = Math.min(data.seconds, meter.max);
     panel.querySelector('[data-study-next]').textContent = next
       ? 'Còn ' + duration(Math.ceil((next.target_seconds - data.seconds) / 60) * 60) + ' để nhận mã giảm ' + discount(next)
       : 'Đã đạt tất cả mốc tuần này';
+    if (ready.length) panel.querySelector('[data-study-next]').textContent = 'Có ' + ready.length + ' mã thưởng chờ nhận';
     dialog.querySelector('[data-study-reset]').textContent =
       'Tính lại từ 0 giờ thứ Hai, ' + date.format(data.resets_at * 1000) + ' (giờ Việt Nam).';
+    if (previous?.week_start !== data.week_start) claimStatus.textContent = '';
     if (dialog.open) renderMilestones();
 
-    const earned = previous?.week_start === data.week_start && data.rewards.filter(tier =>
-      tier.code && tier.target_seconds > previous.seconds && tier.target_seconds <= data.seconds);
-    if (earned?.length) announce('Đã nhận mã giảm ' + discount(earned[earned.length - 1]) + ' cho Khoá ôn kiến thức.');
+    if (previous?.week_start === data.week_start) {
+      const earned = ready.filter(tier => tier.target_seconds > previous.seconds);
+      if (earned.length) announce('Đã đủ giờ học để nhận mã giảm ' + discount(earned[earned.length - 1]) + '.');
+    }
     resetTimer = setTimeout(() => update(), Math.max(200, (data.resets_at - data.server_at) * 1000 + 200));
   }
 
   function renderMilestones() {
     const list = dialog.querySelector('[data-study-milestones]');
     list.replaceChildren();
+    if (!progress.rewards.length) {
+      const empty = document.createElement('li');
+      empty.textContent = 'Tuần này đã hết mã thưởng khả dụng.';
+      list.append(empty);
+      return;
+    }
     for (const tier of progress.rewards) {
       const row = document.createElement('li');
       const name = document.createElement('strong');
       name.textContent = duration(tier.target_seconds) + ' · Giảm ' + discount(tier);
       row.append(name);
       const status = document.createElement('span');
-      status.textContent = tier.used ? 'Đã dùng' : 'Chưa đạt';
+      status.textContent = 'Chưa đạt';
       if (tier.code) {
         const code = document.createElement('code');
         code.textContent = tier.code;
@@ -85,29 +98,47 @@
           });
           status.append(copy);
         }
+      } else if (tier.claimable) {
+        const claim = document.createElement('button');
+        claim.type = 'button';
+        claim.className = 'mst-action mst-action--claim';
+        claim.textContent = 'Nhận mã';
+        claim.addEventListener('click', async () => {
+          if (claiming) return;
+          claiming = true;
+          claim.disabled = true;
+          claimStatus.textContent = '';
+          try {
+            await update(null, false, {campaign_id: tier.id, week_start: progress.week_start});
+          } finally {
+            claiming = false;
+            claim.disabled = false;
+          }
+        });
+        status.replaceChildren(claim);
       }
       row.append(status);
       list.append(row);
     }
   }
 
-  async function update(stream = null, stop = false) {
+  async function update(stream = null, stop = false, claim = null) {
     if (!member) return;
     const owner = member;
     const serial = ++requested;
     const headers = {Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest'};
     const options = {credentials: 'same-origin', cache: 'no-store', headers};
-    if (stream) {
+    if (stream || claim) {
       headers['X-CSRF-Token'] = document.documentElement.getAttribute('csrf-token') || '';
       options.method = 'POST';
       options.keepalive = stop;
-      options.body = new URLSearchParams({
+      options.body = new URLSearchParams(claim || {
         course_id: root.dataset.mcrProduct, item_id: stream.item,
         activity: stream.kind, stream: stream.id, stop: stop ? '1' : '0'
       });
     }
     try {
-      const response = await fetch('/uu-dai/thoi-gian', options);
+      const response = await fetch(claim ? '/uu-dai/nhan-ma' : '/uu-dai/thoi-gian', options);
       const body = await response.json();
       if (member !== owner || serial < applied) return;
       if (response.status === 401) {
@@ -120,11 +151,16 @@
         announce(body.message);
       } else if (response.ok && body.code === 'success') {
         applied = serial;
-        paint(body.data);
+        paint(claim ? body.data.progress : body.data);
+        if (claim) claimStatus.textContent = 'Đã nhận mã. Bạn có thể dùng khi thanh toán.';
         sync();
+      } else if (claim) {
+        claimStatus.textContent = body.message || 'Chưa nhận được mã. Vui lòng thử lại.';
+        update();
       }
     } catch (_) {
       // The next heartbeat starts a new interval if the connection was down.
+      if (claim) claimStatus.textContent = 'Chưa nhận được mã. Vui lòng thử lại.';
     }
   }
 

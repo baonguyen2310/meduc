@@ -51,7 +51,7 @@ class VoucherController extends AppController
             }
             $now = time();
             $enabled = Vouchers::available($kind, $now);
-            $offers = $enabled ? Vouchers::personalOffers($customer, $kind, $now) : [];
+            $offers = $enabled ? Vouchers::personalOffers($customer, $kind, $now, true) : [];
             $quote = Vouchers::quote($customer, $kind, $base, $input);
             return $this->json(200, '', $quote + ['enabled' => $enabled, 'offers' => $offers]);
         } catch (InvalidArgumentException $e) {
@@ -78,6 +78,32 @@ class VoucherController extends AppController
                 $this->studyHeartbeat($customer, $now);
             }
             return $this->json(200, '', Vouchers::studyProgress((int)$customer['id'], $now));
+        } catch (InvalidArgumentException $error) {
+            return $this->json(422, $error->getMessage());
+        }
+    }
+
+    public function claimStudy()
+    {
+        $this->request->allowMethod(['post']);
+        $member = $this->request->getSession()->read(MEMBER) ?: [];
+        $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
+        if (!$customer || (int)$customer['status'] !== 1) {
+            return $this->json(401, 'Đăng nhập để nhận mã thưởng.');
+        }
+        if (!WeeklyStudyTime::installed()) {
+            return $this->json(503, 'Chương trình thưởng giờ học đang được cập nhật.');
+        }
+        $campaign = filter_var($this->request->getData('campaign_id'), FILTER_VALIDATE_INT);
+        $week = filter_var($this->request->getData('week_start'), FILTER_VALIDATE_INT);
+        if ($campaign < 1 || $week < 1) {
+            return $this->json(422, 'Không xác định được mốc thưởng.');
+        }
+        try {
+            $id = (int)$customer['id'];
+            $now = time();
+            $code = Vouchers::claimStudy($id, $campaign, $week, $now);
+            return $this->json(200, 'Đã nhận mã thưởng.', ['code' => $code, 'progress' => Vouchers::studyProgress($id, $now)]);
         } catch (InvalidArgumentException $error) {
             return $this->json(422, $error->getMessage());
         }

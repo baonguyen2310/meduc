@@ -33,7 +33,20 @@
     return element;
   }
 
-  async function request(context, codes = [], skipReferral = false) {
+  async function post(path, body) {
+    const response = await fetch(path, {
+      method: 'POST', credentials: 'same-origin', body, headers: headers(), cache: 'no-store'
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.code !== 'success') {
+      const error = new Error(result?.message || 'Chưa kiểm tra được ưu đãi. Vui lòng thử lại.');
+      error.status = response.status;
+      throw error;
+    }
+    return result.data;
+  }
+
+  function request(context, codes = [], skipReferral = false) {
     const body = new FormData();
     body.set('source', context.source);
     if (context.source === 'shop') {
@@ -45,14 +58,7 @@
     body.set('voucher_codes', JSON.stringify(codes));
     body.set('voucher_referral', referral);
     if (skipReferral) body.set('voucher_skip_referral', '1');
-    const response = await fetch('/uu-dai/xem-truoc', {
-      method: 'POST', credentials: 'same-origin', body, headers: headers(), cache: 'no-store'
-    });
-    const result = await response.json().catch(() => null);
-    if (!response.ok || result?.code !== 'success') {
-      throw new Error(result?.message || 'Chưa kiểm tra được ưu đãi. Vui lòng thử lại.');
-    }
-    return result.data;
+    return post('/uu-dai/xem-truoc', body);
   }
 
   function panel(host, onChange) {
@@ -93,6 +99,7 @@
         const label = node('div');
         label.append(node('strong', '', discount.label), node('small', '', discount.code));
         const remove = button('Bỏ', () => {
+          if (pending) return;
           const next = codes.filter(code => code !== discount.code);
           return refresh(context, next, skipReferral || discount.kind === 'referral', true);
         }, 'mv-remove');
@@ -112,7 +119,10 @@
         if (offer.expires_at) {
           description.append(node('small', '', 'Dùng đến hết ' + date.format((offer.expires_at - 1) * 1000)));
         }
-        choice.append(description, button('Dùng', () => applyCode(offer.code), 'mv-choice-button'));
+        const action = offer.claimable
+          ? button('Nhận mã', event => claimOffer(offer, event.currentTarget), 'mv-choice-button')
+          : button('Dùng', () => applyCode(offer.code), 'mv-choice-button');
+        choice.append(description, action);
         offers.append(choice);
       }
       onChange?.(quote, pending, payload());
@@ -122,6 +132,37 @@
       const code = value.trim().toUpperCase();
       if (!code || pending) return;
       return refresh(context, codes.includes(code) ? codes : [...codes, code], skipReferral, true);
+    }
+
+    async function claimOffer(offer, control) {
+      if (pending) return;
+      const run = ++revision;
+      pending = true;
+      control.disabled = true;
+      apply.disabled = true;
+      message.textContent = '';
+      onChange?.(quote, pending, payload());
+      try {
+        const {code} = await post('/uu-dai/nhan-ma', new URLSearchParams({
+          campaign_id: offer.id, week_start: offer.week_start
+        }));
+        if (run !== revision) return;
+        await refresh(context, codes, skipReferral, true);
+        if (quote?.offers?.some(item => item.code === code)) {
+          message.textContent = 'Đã nhận mã. Bấm Dùng để áp dụng.';
+        }
+      } catch (error) {
+        if (run !== revision) return;
+        if (error.status === 422) {
+          await refresh(context, codes, skipReferral, true);
+          message.textContent = error.message;
+          return;
+        }
+        pending = false;
+        apply.disabled = false;
+        message.textContent = error.message;
+        draw();
+      }
     }
 
     async function refresh(nextContext, nextCodes = codes, nextSkip = skipReferral, editing = false, initial = null) {

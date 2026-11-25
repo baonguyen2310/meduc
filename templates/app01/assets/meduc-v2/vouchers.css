@@ -5,7 +5,7 @@
 .mv-input { box-sizing: border-box; min-width: 0; width: 100%; min-height: 40px; border: 1px solid #a7acb7; background: transparent; color: inherit; padding: 6px 10px; border-radius: 6px; }
 .mv-button, .mv-choice-button, .mv-remove { min-height: 38px; padding: 6px 12px; border-radius: 6px; font: inherit; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; }
 .mv-button { border: 0; color: #fff; background: #c9163b; }
-.mv-button:disabled { opacity: .55; cursor: default; }
+.mv-button:disabled, .mv-choice-button:disabled { opacity: .55; cursor: default; }
 .mv-choice-button, .mv-remove { border: 1px solid currentColor; background: transparent; color: inherit; }
 .mv-remove { border-color: transparent; text-decoration: underline; }
 .mv-message { margin: 6px 0 0; font-size: 13px; }

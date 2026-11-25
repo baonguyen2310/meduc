@@ -176,6 +176,10 @@ try {
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $now)) === 1, 'Concurrent tabs double-counted a study minute.');
     WeeklyStudyTime::record($buyer['id'], $week + 60, $week + 90);
     WeeklyStudyTime::record($buyer['id'], $week + 90, $week + 120);
+    expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $now)) === 1, 'The study voucher was issued before it was claimed.');
+    $eligible = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now, true), null, 'kind');
+    expectVoucher(!empty($eligible['study']['claimable']), 'The earned study voucher was not offered for claim.');
+    Vouchers::claimStudy($buyer['id'], $eligible['study']['id'], $week, $now);
     $offers = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now), null, 'kind');
     expectVoucher($offers['study']['expires_at'] === $nextWeek, 'Study voucher does not expire on Monday.');
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $nextWeek)) === 1, 'Study minutes leaked into a new week.');
@@ -221,6 +225,7 @@ try {
     expectVoucher($lines === 4 && $paidTotal === 185000 && $attribution === $partner['code'], 'Invoice snapshot, ledger or partner was lost.');
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, $input));
     expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Redeemed personal codes returned as available.');
+    expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now, true), 'A used study voucher was offered for claim again.');
     echo "voucher checkout: 4 types, course scopes, confirmation dates, accurate totals, retry rollback and single use passed\n";
 } finally {
     $db->rollback();

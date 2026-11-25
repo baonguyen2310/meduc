@@ -1,6 +1,6 @@
 {strip}
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.css?v=20261124-vouchers" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.js?v=20261125-vouchers" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.css?v=20261125-claim" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.js?v=20261125-claim" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261113-account-theme" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261113-quiz-five" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261124-exam-label" defer></script>

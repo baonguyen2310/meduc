@@ -299,8 +299,8 @@
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.css?v=20261124-price-benefits" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom.js?v=20261125-study-rewards" defer></script>
 {if $course_kind == 'knowledge'}
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.css?v=20261125-1" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.js?v=20261125-1" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.css?v=20261125-claim" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/study-rewards.js?v=20261125-claim" defer></script>
 {/if}
 {if $quiz_count > 0}
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/classroom-confidence.css?v=20261028-1" rel="stylesheet">
@@ -335,6 +335,7 @@
             </div>
             <p data-study-reset></p>
             <p>Thời gian xem video bài học và làm bài tập trong tab đang mở được cộng vào tuần này. Mã dùng cho Khoá ôn kiến thức.</p>
+            <p data-study-claim-status role="status"></p>
             <ul data-study-milestones></ul>
         </dialog>
         <p class="mst-toast" data-study-toast role="status" aria-live="polite"></p>
