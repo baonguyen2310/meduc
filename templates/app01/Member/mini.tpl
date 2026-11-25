@@ -31,10 +31,10 @@
             Tiếp thị liên kết
         </a>
         
-        {*<a class="dropdown-item border-bottom p-10" href="/member/order">
+        <a class="dropdown-item border-bottom p-10" href="/member/order">
             <i class="iconsax isax-lg isax-clipboard-text mr-5"></i>
-            {__d('template', 'quan_ly_don_hang')}
-        </a>*}
+            Đơn hàng của tôi
+        </a>
         
         <a class="dropdown-item border-bottom p-10" href="/member/change-password">
             <i class="iconsax isax-lg isax-lock mr-5"></i>

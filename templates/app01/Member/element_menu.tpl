@@ -57,12 +57,12 @@
         </li>
         
 
-        {*<li class="{if $get_path == '/member/order' || strpos($get_path, '/member/order/detail/') === 0}active{/if}">
+        <li class="{if $get_path == '/member/order' || strpos($get_path, '/member/order/detail/') === 0}active{/if}">
             <a href="/member/order" class="color-black">
                 <i class="iconsax isax-2x isax-clipboard-text"></i>
                 Đơn hàng của tôi
             </a>
-        </li>*}
+        </li>
 
         {*if !empty($plugins.point) || !empty($plugins.affiliate)}
             <div class="customer-support font-weight-bold mb-10">
