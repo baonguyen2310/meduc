@@ -75,8 +75,7 @@ body.meduc-header-v2 .category-topic.form-fixed { top: calc(var(--mhi-header-h, 
 .mhi-search-toggle, .mhi-menu-toggle, .mhi-login-icon { display: none !important; }
 
 .mhi-browse-wrap { position: relative; flex-shrink: 0; }
-.mhi-browse-button { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 9px; border: 0 !important; border-radius: 8px; background: none; color: var(--mhi-ink); font-size: 14px; font-weight: 600 !important; white-space: nowrap; }
-#mhi-academy-button { font-size: clamp(15px, 1.4vw, 16px); }
+.mhi-main-nav .mhi-browse-button { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 9px; border: 0 !important; border-radius: 8px; background: none; color: var(--mhi-ink); font-size: 14px; font-weight: 600 !important; white-space: nowrap; }
 .mhi-browse-button:hover { background: var(--mhi-panel-hover); }
 .mhi-browse-button:focus { outline: none !important; }
 .mhi-browse-button:focus-visible { outline: none !important; box-shadow: inset 0 -2px var(--mhi-red); }
@@ -144,7 +143,6 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
 .mhi-drawer-title { font-size: 16px; font-weight: 700; }
 .mhi-drawer-label { margin: 16px 0 4px; color: var(--mhi-muted); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .mhi-drawer-link { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 8px; border-radius: 6px; color: var(--mhi-ink); font-size: 15px; font-weight: 500; cursor: pointer; }
-.mhi-drawer-group[data-mhi-main-group="academy"] > .mhi-drawer-link { font-size: 17px; }
 .mhi-drawer-link:hover { background: var(--mhi-panel-hover); color: var(--mhi-ink); }
 .mhi-drawer-link > .mhi-icon { width: 20px; height: 20px; color: var(--mhi-muted); }
 .mhi-drawer-all { color: var(--mhi-red) !important; font-weight: 700; }
@@ -165,7 +163,7 @@ html[data-meduc-theme="light"] [data-mhi-theme-toggle] .mhi-moon { display: bloc
   .mhi-shell { width: min(92%,1440px); }
   .mhi-header-main { gap: 6px; }
   .mhi-utility { padding-left: 6px; }
-  .mhi-browse-button { padding-inline: 5px; font-size: 13px; }
+  .mhi-main-nav .mhi-browse-button { padding-inline: 5px; font-size: 13px; }
   .mhi-header-main > .mhi-header-cta { padding-inline: 14px; font-size: 13px; }
   .mhi-member { margin-inline: 4px; }
 }
