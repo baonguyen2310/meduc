@@ -12,13 +12,8 @@
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
 {include file='./catalog_navigation.tpl' scope=parent}
-{$nav_secondary = [
-  ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
-  ['url' => '/doi-ngu-giang-vien', 'label' => 'Giảng viên'],
-  ['url' => '/phuong-phap-hoc', 'label' => 'Phương pháp học'],
-  ['url' => '/phan-hoi-hoc-vien', 'label' => 'Phản hồi'],
-  ['url' => '/lo-trinh-hoc', 'label' => 'Lộ trình học']
-]}
+{$nav_product_view = $this->loadHelper('Product')}
+{$nav_secondary = $nav_product_view->getSecondaryNavigation()}
 
 <div class="mhi mhi-header-wrap" id="meduc-header">
   <svg class="mhi-icon-sprites" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -40,8 +35,8 @@
   <header class="mhi-header">
     <div class="mhi-network">
       <nav class="mhi-shell mhi-network-links" aria-label="Điều hướng MedUC">
-        {foreach from = $nav_secondary item = link}
-          <a href="{$link.url|escape}">{$link.label|escape}</a>
+        {foreach from = $nav_secondary key = url item = label}
+          <a href="{$url|escape}">{$label|escape}</a>
         {/foreach}
       </nav>
     </div>
@@ -124,8 +119,8 @@
       {/foreach}
       <a class="mhi-drawer-link" href="/class-rank" aria-label="BXH – Bảng xếp hạng">BXH</a>
       <p class="mhi-drawer-label">Về MedUC</p>
-      {foreach from = $nav_secondary item = link}
-        <a class="mhi-drawer-link" href="{$link.url|escape}">{$link.label|escape}</a>
+      {foreach from = $nav_secondary key = url item = label}
+        <a class="mhi-drawer-link" href="{$url|escape}">{$label|escape}</a>
       {/foreach}
       <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách &amp; thiết bị</a>
 

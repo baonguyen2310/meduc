@@ -40,16 +40,8 @@
         </div>
     </article>
 
-    {$courses = []}
-    {if !empty($journal.course_ids)}{$courses = $this->Product->getProducts(['filter' => ['ids' => $journal.course_ids, 'draft' => '0'], 'limit' => 3])}{/if}
-    {* Prefer courses selected for this article in the CMS; otherwise suggest current courses from the student-year catalogue. *}
-    {if empty($courses)}{$courses = $this->Product->getProducts(['filter' => ['id_categories' => [102, 72, 103], 'draft' => '0'], 'limit' => 3])}{/if}
-    {if !empty($courses)}
-    <section class="mbj-shell mbj-courses" aria-labelledby="blog-courses-title">
-        <div class="mbj-section-heading"><div><p class="mbj-eyebrow">GỢI Ý TỪ MEDUC</p><h2 id="blog-courses-title">TỪ BÀI VIẾT.<br><span>ĐẾN BÀI GIẢNG.</span></h2></div><a href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div>
-        <div class="mbj-course-grid">{foreach from=$courses item=course}<article><a href="{$this->Utilities->checkInternalUrl($course.url)|escape}"><span class="mbj-course-image">{if !empty($course.all_images[0])}<img src="{CDN_URL}{$this->Utilities->getThumbs($course.all_images[0], 500)}" alt="{$course.name|escape}" loading="lazy" decoding="async">{/if}</span><div class="mbj-course-copy"><h3>{$course.name|escape}</h3><span class="mbj-course-link">Xem khóa học <span aria-hidden="true">→</span></span></div></a></article>{/foreach}</div>
-    </section>
-    {else}<aside class="mbj-next"><div class="mbj-shell mbj-next-inner"><div><p class="mbj-eyebrow">GỢI Ý TỪ MEDUC</p><h2>TỪ BÀI VIẾT.<br><span>ĐẾN BÀI GIẢNG.</span></h2><p>Nối điều vừa đọc với bài giảng và thực hành theo lộ trình học Y của bạn.</p></div><a class="mbj-button" href="/khoa-hoc">Học thử miễn phí <span aria-hidden="true">→</span></a></div></aside>{/if}
+    {$course_recommendations = $this->Product->getContentCourseRecommendations($current.name, [$journal.topic.name], $journal.course_ids)}
+    {$this->element('course/recommendation_cards', ['recommendations' => $course_recommendations, 'section_id' => 'blog-courses'])}
 
     {if !empty($journal.related)}<section class="mbj-related" aria-labelledby="blog-related-title"><div class="mbj-shell"><div class="mbj-section-heading"><div><p class="mbj-eyebrow">TIẾP TỤC KHÁM PHÁ</p><h2 id="blog-related-title">ĐỌC THÊM.<br><span>HIỂU SÂU HƠN.</span></h2></div><a href="/blog">Xem tất cả bài viết <span aria-hidden="true">↗</span></a></div><div class="mbj-related-grid">{foreach from=$journal.related item=item}<article class="mbj-card"><a class="mbj-card-image" href="{$this->Utilities->checkInternalUrl($item.url)|escape}" aria-label="Đọc {$item.name|escape}">{if $item.image}<img src="{CDN_URL}{$item.image|escape}" alt="{$item.name|escape}" loading="lazy" decoding="async">{else}<span>MEDUC JOURNAL</span>{/if}</a><div class="mbj-card-copy"><p class="mbj-eyebrow">{$item.topic_name|escape}</p><h3><a href="{$this->Utilities->checkInternalUrl($item.url)|escape}">{$item.name|escape}</a></h3><p>{$item.summary|escape}</p><div><time datetime="{$item.datetime}">{$item.date}</time><a href="{$this->Utilities->checkInternalUrl($item.url)|escape}">Đọc tiếp <span aria-hidden="true">↗</span></a></div></div></article>{/foreach}</div></div></section>{/if}
 

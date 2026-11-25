@@ -311,6 +311,21 @@
             <p class="mcr-course-eyebrow">{if $quiz_course}Đề thi{elseif $course_kind == 'exam_solution'}Khoá chữa đề{else}Khoá ôn kiến thức{/if}</p>
             <h1 id="mcr-course-title">{$product.name|escape}</h1>
         </header>
+        {$academy_courses = $this->Product->getRelatedAcademyCourses($product.id)}
+        {if $academy_courses}
+            <nav class="meduc-course-links" aria-label="Khoá học gợi ý">
+                {foreach from=$academy_courses key=kind item=group}
+                    <section class="meduc-course-links-group" data-course-recommendation-kind="{$kind|escape}">
+                        <h2 class="meduc-course-links-title">{$group.title|escape}</h2>
+                        <ul>
+                            {foreach from=$group.courses item=course}
+                                <li><a class="meduc-course-link" href="{$course.url|escape}"><span>{$course.name|escape}</span><span aria-hidden="true">→</span></a></li>
+                            {/foreach}
+                        </ul>
+                    </section>
+                {/foreach}
+            </nav>
+        {/if}
         <div class="mcr-course-columns{if $quiz_course} mcr-course-columns--quiz{/if}">
         {if !$quiz_course}
         <section class="mcr-course-overview{if $intro_video == '' && empty($product.all_images[0])} mcr-course-overview--text{/if}" data-mcr-overview aria-labelledby="mcr-course-title">

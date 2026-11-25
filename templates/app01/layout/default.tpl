@@ -51,6 +51,14 @@
 
     {* Every page whose layout has a header gets the new header instead of the database header rows. *}
     {$use_header_v2 = !empty($page_code) && !empty($structure[{HEADER}])}
+    {$featured_courses = []}
+    {if $use_header_v2}
+        {$course_product_view = $this->loadHelper('Product')}
+        {$featured_courses = $course_product_view->getSecondaryPageCourses()}
+    {/if}
+    {if $featured_courses || PAGE_TYPE == PRODUCT_DETAIL || PAGE_TYPE == ARTICLE_DETAIL}
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-recommendations.css?v=20261125" rel="stylesheet">
+    {/if}
     {if $use_header_v2}
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261113-account-theme"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -125,6 +133,14 @@
         {$this->element('layout/page', [
             'structure' => $page_structure
         ], $page_cache_options)}
+    {/if}
+
+    {if !empty($featured_courses.courses)}
+        {$this->element('course/recommendation_cards', ['recommendations' => $featured_courses, 'section_id' => 'featured-courses'])}
+    {elseif PAGE_TYPE == PRODUCT_DETAIL && !empty($schema_data[{PRODUCT_DETAIL}])}
+        {$course_product_view = $this->loadHelper('Product')}
+        {$blouse_courses = $course_product_view->getBlouseCourseRecommendations($schema_data[{PRODUCT_DETAIL}])}
+        {$this->element('course/recommendation_cards', ['recommendations' => $blouse_courses, 'section_id' => 'blouse-courses'])}
     {/if}
 
     {if $use_header_v2}

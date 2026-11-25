@@ -16,13 +16,10 @@
     {foreach from=$product.categories|default:[] item=entry}
         {if $entry.id != 80 && !empty($entry.status)}{$category = $entry}{break}{/if}
     {/foreach}
+    {$course_recommendations = $this->Product->getShopCourseRecommendations($product)}
     {$companion_groups = []}
-    {$links = [
-        'combo_products' => ['title' => 'Thiết bị liên quan', 'id' => 'equipment-related', 'url' => '/thiet-bi-y-te'],
-        'combo_course' => ['title' => 'Khóa học nên mua cùng', 'id' => 'equipment-courses', 'url' => '/khoa-hoc']
-    ]}
-    {foreach from=$links item=group key=attribute}
-        {$ids = json_decode($product.attributes[$attribute].value|default:'', true)}
+    {if !empty($product.attributes.combo_products.value)}
+        {$ids = json_decode($product.attributes.combo_products.value, true)}
         {if is_array($ids) && !empty($ids)}
             {$items = $this->Product->getProducts([
                 'get_item' => true,
@@ -30,11 +27,10 @@
                 'limit' => 12
             ])}
             {if !empty($items)}
-                {$group.items = $shop->asCatalog($items)}
-                {$companion_groups[] = $group}
+                {$companion_groups[] = ['title' => 'Thiết bị liên quan', 'id' => 'equipment-related', 'url' => '/thiet-bi-y-te', 'items' => $shop->asCatalog($items)]}
             {/if}
         {/if}
-    {/foreach}
+    {/if}
     {$video = $product.url_video|default:''}
     {$youtube = $product.type_video == {VIDEO_YOUTUBE} && preg_match('/^[A-Za-z0-9_-]{11}$/D', $video)}
     {$local_video = $product.type_video == {VIDEO_SYSTEM} && !empty($video)}
@@ -133,9 +129,10 @@
             </div>
         </section>
 
-        {if $has_information || !empty($companion_groups)}
+        {if $has_information || !empty($companion_groups) || !empty($course_recommendations.courses)}
             <nav class="mbd-section-nav" aria-label="Nội dung chi tiết thiết bị"><div class="mbd-shell">
                 {if $has_information}<a href="#equipment-information">Thông tin thiết bị</a>{/if}
+                {if !empty($course_recommendations.courses)}<a href="#equipment-courses">{$course_recommendations.title|escape}</a>{/if}
                 {foreach from=$companion_groups item=group}<a href="#{$group.id}">{$group.title}</a>{/foreach}
                 <a href="#equipment-comments">Hỏi đáp</a>
             </div></nav>
@@ -168,6 +165,7 @@
             </section>
         {/if}
 
+        {$this->element('course/recommendation_cards', ['recommendations' => $course_recommendations, 'section_id' => 'equipment-courses'])}
         {foreach from=$companion_groups item=group}
             <section class="mbd-related" id="{$group.id}" aria-labelledby="{$group.id}-title"><div class="mbd-shell">
                 <div class="mbd-section-heading"><h2 id="{$group.id}-title">{$group.title}</h2><a class="mbd-text-link" href="{$group.url}">Xem tất cả →</a></div>
