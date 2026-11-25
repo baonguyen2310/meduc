@@ -21,11 +21,14 @@ final class Vouchers
     public const SCOPES = [
         'all' => 'Tất cả đơn',
         'shop' => 'MedUC Shop',
-        'academy' => 'MedUC Academy',
+        'academy' => 'MedUC Academy · Tất cả khoá học',
+        'knowledge' => CoursePricing::LABELS['knowledge'],
+        'exam_solution' => CoursePricing::LABELS['exam_solution'],
         'quiz' => 'Đề thi',
         'document' => 'Lượt tải tài liệu',
     ];
     public const SHOP_FORM = '61CQ0U3H9I';
+    private const ACADEMY_KINDS = ['knowledge', 'exam_solution'];
 
     private static function db()
     {
@@ -71,8 +74,8 @@ final class Vouchers
     public static function available(string $kind, int $now): bool
     {
         return self::installed() && (bool)self::db()->execute(
-            "SELECT 1 FROM voucher_campaigns WHERE scope IN ('all',?) AND active=1 AND starts_at<=?
-             AND (ends_at IS NULL OR ends_at>?) LIMIT 1", [self::forScope($kind), $now, $now]
+            "SELECT 1 FROM voucher_campaigns WHERE scope IN ('all',?,?) AND active=1 AND starts_at<=?
+             AND (ends_at IS NULL OR ends_at>?) LIMIT 1", [$kind, self::groupScope($kind), $now, $now]
         )->fetchColumn(0);
     }
 
@@ -181,7 +184,7 @@ final class Vouchers
             if (!$minutes || $minutes < 1 || $minutes > 10080) {
                 throw new InvalidArgumentException('Nhập số phút tích lũy trong tuần.');
             }
-            $row['scope'] = 'academy';
+            $row['scope'] = in_array($scope, self::ACADEMY_KINDS, true) ? $scope : 'academy';
             $row['study_minutes'] = $minutes;
         }
         if ($kind === 'loyalty') {
@@ -322,16 +325,16 @@ final class Vouchers
         }
     }
 
-    private static function forScope(string $kind): string
+    private static function groupScope(string $kind): string
     {
-        return in_array($kind, ['knowledge', 'exam_solution'], true) ? 'academy' : $kind;
+        return in_array($kind, self::ACADEMY_KINDS, true) ? 'academy' : $kind;
     }
 
     private static function applies(array $campaign, string $kind, int $now): bool
     {
         return (int)$campaign['active'] === 1 && (int)$campaign['starts_at'] <= $now
             && ($campaign['ends_at'] === null || (int)$campaign['ends_at'] > $now)
-            && in_array($campaign['scope'], ['all', self::forScope($kind)], true);
+            && in_array($campaign['scope'], ['all', $kind, self::groupScope($kind)], true);
     }
 
     public static function personalOffers(array $customer, string $kind, int $now): array
@@ -457,8 +460,8 @@ final class Vouchers
         if (!isset($selected['referral']) && $result['partner'] && empty($data['voucher_skip_referral'])) {
             $campaign = self::db()->execute(
                 "SELECT * FROM voucher_campaigns WHERE kind='referral' AND partner_id=? AND active=1
-                 AND scope IN ('all',?) AND starts_at<=? AND (ends_at IS NULL OR ends_at>?) ORDER BY id DESC LIMIT 1" . $campaignLock,
-                [$result['partner']['id'], self::forScope($kind), $now, $now]
+                 AND scope IN ('all',?,?) AND starts_at<=? AND (ends_at IS NULL OR ends_at>?) ORDER BY id DESC LIMIT 1" . $campaignLock,
+                [$result['partner']['id'], $kind, self::groupScope($kind), $now, $now]
             )->fetch('assoc');
             if ($campaign) {
                 $selected['referral'] = [$campaign, null, $campaign['code'], true];

@@ -96,16 +96,37 @@ try {
         'starts_at' => $today->modify('-1 day')->format('Y-m-d'), 'ends_at' => $today->modify('+8 days')->format('Y-m-d'),
         'active' => 1,
     ];
+    $knowledgeOnly = 'KNOW-' . $suffix;
+    Vouchers::saveCampaign(0, ['kind' => 'common', 'scope' => 'knowledge', 'code' => $knowledgeOnly, 'discount_value' => 10000] + $program);
+    $knowledgeInput = ['voucher_codes' => [$knowledgeOnly], 'voucher_expected_amount' => 290000];
+    expectVoucher(Vouchers::available('knowledge', $now), 'Knowledge-only voucher did not enable the offer.');
+    expectVoucher(Vouchers::confirm($buyer, 'knowledge', 300000, $knowledgeInput)['total'] === 290000, 'Knowledge-only voucher was not honored.');
+    foreach (['exam_solution', 'quiz', 'document', 'shop'] as $otherKind) {
+        expectVoucher(!Vouchers::available($otherKind, $now), 'Knowledge-only campaign was advertised for ' . $otherKind . '.');
+        rejectsVoucher(fn() => Vouchers::confirm($buyer, $otherKind, 300000, $knowledgeInput));
+    }
+    $solutionOnly = 'SOLUTION-' . $suffix;
+    Vouchers::saveCampaign(0, ['kind' => 'common', 'scope' => 'exam_solution', 'code' => $solutionOnly, 'discount_value' => 10000] + $program);
+    expectVoucher(Vouchers::quote($buyer, 'exam_solution', 300000, ['voucher_codes' => [$solutionOnly]])['total'] === 290000,
+        'Exam course voucher was not honored.');
+    rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_codes' => [$solutionOnly]]));
+    $academy = 'ACADEMY-' . $suffix;
+    Vouchers::saveCampaign(0, ['kind' => 'common', 'scope' => 'academy', 'code' => $academy, 'discount_value' => 10000] + $program);
+    foreach (['knowledge', 'exam_solution'] as $courseKind) {
+        expectVoucher(Vouchers::quote($buyer, $courseKind, 300000, ['voucher_codes' => [$academy]])['total'] === 290000,
+            'Academy-wide voucher did not apply to ' . $courseKind . '.');
+    }
+
     Vouchers::saveCampaign(0, ['kind' => 'common', 'code' => $common, 'discount_type' => 'percent',
         'discount_value' => 10] + $program);
     Vouchers::saveCampaign(0, ['kind' => 'common', 'scope' => 'shop', 'code' => $shopOnly, 'discount_value' => 10000] + $program);
-    Vouchers::saveCampaign(0, ['kind' => 'study', 'study_minutes' => 2, 'discount_value' => 20000] + $program);
+    Vouchers::saveCampaign(0, ['kind' => 'study', 'scope' => 'knowledge', 'study_minutes' => 2, 'discount_value' => 20000] + $program);
     Vouchers::saveCampaign(0, [
-        'kind' => 'loyalty', 'discount_value' => 50000, 'required_spend' => 200000,
+        'kind' => 'loyalty', 'scope' => 'knowledge', 'discount_value' => 50000, 'required_spend' => 200000,
         'spend_from' => $today->format('Y-m-d'), 'spend_until' => $today->format('Y-m-d'),
     ] + $program);
     Vouchers::saveCampaign(0, [
-        'kind' => 'referral', 'code' => $referral, 'partner_code' => $partner['code'], 'discount_value' => 15000,
+        'kind' => 'referral', 'scope' => 'knowledge', 'code' => $referral, 'partner_code' => $partner['code'], 'discount_value' => 15000,
     ] + $program);
 
     $invoice = invoiceFixture($db, $buyer, 70000, $old);
@@ -141,7 +162,7 @@ try {
     $loyalty = Vouchers::personalOffers($buyer, 'knowledge', $now);
     expectVoucher(count($loyalty) === 1 && $loyalty[0]['kind'] === 'loyalty', 'Paid threshold was not honored by confirmation date.');
     expectVoucher((int)$db->execute('SELECT COUNT(*) FROM voucher_grants WHERE customer_id=?', [$buyer['id']])->fetchColumn(0) === 1, 'Loyalty award was duplicated.');
-    expectVoucher(!Vouchers::personalOffers($partner, 'shop', $now), 'Old attributed Shop order credited the partner.');
+    expectVoucher(!Vouchers::personalOffers($partner, 'knowledge', $now), 'Old attributed Shop order credited the partner.');
     $loyaltyCode = $loyalty[0]['code'];
     $db->update('contacts', ['value' => json_encode(['orderStatus' => 'cancel'] + $paid)], ['id' => $shop]);
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_codes' => [$loyaltyCode]]));
@@ -156,6 +177,10 @@ try {
     $offers = array_column(Vouchers::personalOffers($buyer, 'knowledge', $now), null, 'kind');
     expectVoucher($offers['study']['expires_at'] === $nextWeek, 'Study voucher does not expire on Monday.');
     expectVoucher(count(Vouchers::personalOffers($buyer, 'knowledge', $nextWeek)) === 1, 'Study minutes leaked into a new week.');
+    expectVoucher(!Vouchers::personalOffers($buyer, 'exam_solution', $now), 'Knowledge-only personal codes appeared on an exam course.');
+    foreach ([$loyaltyCode, $offers['study']['code'], $referral] as $code) {
+        rejectsVoucher(fn() => Vouchers::quote($buyer, 'exam_solution', 300000, ['voucher_codes' => [$code]]));
+    }
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'shop', 300000, ['voucher_codes' => [$offers['study']['code']]]));
     rejectsVoucher(fn() => Vouchers::quote($other, 'knowledge', 300000, ['voucher_codes' => [$loyaltyCode]]));
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'shop', 300000, ['voucher_codes' => [$common, $shopOnly]]));
@@ -167,7 +192,10 @@ try {
     expectVoucher($quote['total'] === 185000 && count($quote['discounts']) === 4, 'Four voucher types did not stack at the advertised amount.');
     $skipped = Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_skip_referral' => true] + $input);
     expectVoucher($skipped['total'] === 200000 && (int)$skipped['partner']['id'] === $partner['id'], 'Opting out removed referral attribution.');
-    $small = Vouchers::quote($buyer, 'shop', 9999, ['voucher_referral' => $partner['code']]);
+    $outsideReferral = Vouchers::quote($buyer, 'exam_solution', 300000, ['voucher_referral' => $partner['code']]);
+    expectVoucher(!$outsideReferral['discounts'] && $outsideReferral['total'] === 300000 && $outsideReferral['partner'],
+        'Following an affiliate link applied a voucher to an out-of-scope course.');
+    $small = Vouchers::quote($buyer, 'knowledge', 9999, ['voucher_referral' => $partner['code']]);
     expectVoucher($small['total'] === 9999 && $small['partner'], 'Automatic referral blocked a smaller order.');
     rejectsVoucher(fn() => Vouchers::quote($partner, 'knowledge', 300000, ['voucher_codes' => [$referral]]));
     rejectsVoucher(fn() => Vouchers::confirm($buyer, 'knowledge', 300000, ['voucher_expected_amount' => 1] + $input));
@@ -191,7 +219,7 @@ try {
     expectVoucher($lines === 4 && $paidTotal === 185000 && $attribution === $partner['code'], 'Invoice snapshot, ledger or partner was lost.');
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, $input));
     expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Redeemed personal codes returned as available.');
-    echo "voucher checkout: 4 types, confirmation dates, accurate totals, retry rollback and single use passed\n";
+    echo "voucher checkout: 4 types, course scopes, confirmation dates, accurate totals, retry rollback and single use passed\n";
 } finally {
     $db->rollback();
 }
