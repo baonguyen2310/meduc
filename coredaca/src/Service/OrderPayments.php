@@ -9,8 +9,9 @@ final class OrderPayments
 {
     public const LABELS = [
         'knowledge'=>'Khoá ôn kiến thức', 'exam_solution'=>'Khoá chữa đề',
-        'quiz'=>'Trắc nghiệm', 'document'=>'Tài liệu', 'fa'=>'Fa', 'other'=>'Sách / Khác'
+        'quiz'=>'Đề thi', 'document'=>'Tài liệu', 'shop'=>'MedUC Shop', 'fa'=>'Fa', 'other'=>'Khác'
     ];
+    private const APPROVABLE = ['knowledge', 'exam_solution', 'quiz', 'document', 'shop'];
 
     public static function kindSql(): string
     {
@@ -25,7 +26,10 @@ final class OrderPayments
         $ids=array_values(array_unique(array_filter(array_map('intval',$ids))));
         if(!$ids)return [];
         $sql="SELECT Orders.id,Orders.total,Orders.status,Orders.deleted,".self::kindSql()." kind,
-            cp.credit_count,cp.package_name,dp.document_title legacy_document_title,
+            cp.credit_count,cp.package_name,
+            CASE WHEN cp.kind='shop' THEN JSON_UNQUOTE(JSON_EXTRACT(cp.context_json,'$.payment_method')) END payment_method,
+            CASE WHEN cp.kind='shop' THEN (SELECT s.status FROM shippings s WHERE s.order_id=Orders.id ORDER BY s.id DESC LIMIT 1) END shipping_status,
+            dp.document_title legacy_document_title,
             COALESCE((SELECT SUM(CASE WHEN r.type=1 THEN r.amount ELSE -r.amount END) FROM payments r
                 WHERE r.foreign_type='order' AND r.foreign_id=Orders.id AND r.status=1),0) confirmed,
             CASE WHEN cp.order_id IS NULL THEN COALESCE(Orders.point_paid,0)+COALESCE(Orders.point_promotion_paid,0) ELSE 0 END points,
@@ -41,8 +45,11 @@ final class OrderPayments
             $result[(int)$row['id']]=[
                 'kind'=>$row['kind'],'label'=>self::LABELS[$row['kind']]??self::LABELS['other'],
                 'amount'=>(float)$row['total'],'remaining'=>$remaining,'paid'=>$paid,
-                'status_label'=>$cancelled?'Đã huỷ':($paid?'Đã thanh toán':($row['pending']?'Chờ duyệt thanh toán':'Chưa thanh toán')),
-                'can_approve'=>!$cancelled&&!$paid&&(float)$row['total']>0&&in_array($row['kind'],['knowledge','exam_solution','quiz','document'],true),
+                'received'=>$paid&&(float)$row['confirmed']>=(float)$row['total'],
+                'status_label'=>$cancelled?'Đã huỷ':($paid?'Đã thanh toán':($row['payment_method']===COD?'Chờ thu COD':($row['pending']?'Chờ duyệt thanh toán':'Chưa thanh toán'))),
+                'can_approve'=>!$cancelled&&!$paid&&(float)$row['total']>0&&in_array($row['kind'],self::APPROVABLE,true),
+                'payment_method'=>$row['payment_method'],
+                'shipping_status'=>$row['shipping_status'],
                 'package_name'=>$row['package_name']??'',
                 'credit_count'=>(int)($row['credit_count']??($row['kind']==='document'?1:0)),
                 'legacy_document_title'=>$row['legacy_document_title']??''
@@ -80,28 +87,39 @@ final class OrderPayments
         return ['title'=>$title,'files'=>array_values($links)];
     }
 
-    public static function approve(int $id,callable $savePayment,int $adminId): array
+    public static function approve(int $id,callable $savePayment,int $adminId,?float $expectedAmount=null): array
     {
-        return CommercePurchases::db()->transactional(function()use($id,$savePayment,$adminId){
+        $summary = CommercePurchases::db()->transactional(function()use($id,$savePayment,$adminId,$expectedAmount){
             $db=CommercePurchases::db();
             $order=$db->execute('SELECT * FROM orders WHERE id=? FOR UPDATE',[$id])->fetch('assoc');
             if(!$order||$order['type']!==ORDER||$order['deleted']||$order['status']===CANCEL)
                 throw new \InvalidArgumentException('Đơn hàng không tồn tại hoặc đã huỷ.');
             $summary=self::summaries([$id])[$id];
-            if(!in_array($summary['kind'],['knowledge','exam_solution','quiz','document'],true))
+            if(!in_array($summary['kind'],self::APPROVABLE,true))
                 throw new \InvalidArgumentException('Loại đơn này không hỗ trợ duyệt tại đây.');
             DocumentCredits::importLegacy($id);
             if(!$summary['paid']){
+                if ($expectedAmount !== null && abs($summary['remaining'] - $expectedAmount) > 0.001) {
+                    throw new \InvalidArgumentException('Số tiền còn phải thu đã thay đổi. Vui lòng tải lại đơn để đối soát.');
+                }
                 $contact=$db->execute('SELECT customer_id,full_name FROM orders_contact WHERE order_id=?',[$id])->fetch('assoc');
-                if(empty($contact['customer_id']))throw new \InvalidArgumentException('Đơn chưa có tài khoản học viên.');
                 $purchase=CommercePurchases::get($id);
-                if($purchase&&((int)$purchase['customer_id']!==(int)$contact['customer_id']||abs((float)$purchase['amount']-(float)$order['total'])>0.001))
+                $archiveReference = $purchase && $purchase['kind'] === 'shop' ? ShopOrders::archiveReference($purchase) : '';
+                if (!$contact || (empty($contact['customer_id']) && !$archiveReference))
+                    throw new \InvalidArgumentException('Đơn chưa có tài khoản người mua.');
+                $expectedTotal = $purchase && $purchase['kind'] === 'shop'
+                    ? (float)$purchase['amount'] + (float)$order['shipping_fee_customer'] : (float)($purchase['amount'] ?? 0);
+                if($purchase&&((int)$purchase['customer_id']!==(int)$contact['customer_id']||abs($expectedTotal-(float)$order['total'])>0.001))
                     throw new \InvalidArgumentException('Thông tin hoặc số tiền đơn đã thay đổi. Vui lòng đối soát trước khi duyệt.');
+                $method = $summary['payment_method'] === COD ? COD : BANK;
                 // Reuse the matching transfer report; repeated clicks must never create a second receipt.
-                $receipt=$db->execute("SELECT id FROM payments WHERE foreign_type='order' AND foreign_id=? AND status=2 AND type=1 AND payment_method=? AND amount=? ORDER BY id LIMIT 1 FOR UPDATE",[$id,BANK,$summary['remaining']])->fetch('assoc');
+                $receiptSql = "SELECT id FROM payments WHERE foreign_type='order' AND foreign_id=? AND status=2 AND type=1 AND payment_method=?";
+                $receipt = $summary['kind'] === 'shop'
+                    ? $db->execute($receiptSql . " ORDER BY (amount=?) DESC,id LIMIT 1 FOR UPDATE", [$id,$method,$summary['remaining']])->fetch('assoc')
+                    : $db->execute($receiptSql . " AND amount=? ORDER BY id LIMIT 1 FOR UPDATE", [$id,$method,$summary['remaining']])->fetch('assoc');
                 $data=['foreign_id'=>$id,'foreign_type'=>ORDER,'object_type'=>CUSTOMER,'object_id'=>(int)$contact['customer_id'],
-                    'full_name'=>$contact['full_name'],'type'=>1,'amount'=>$summary['remaining'],'payment_method'=>BANK,
-                    'reference'=>$order['code'],'description'=>'Admin duyệt thanh toán đơn hàng','created_by'=>$adminId,'status'=>1];
+                    'full_name'=>$contact['full_name'],'type'=>1,'amount'=>$summary['remaining'],'payment_method'=>$method,
+                    'reference'=>$archiveReference ?: $order['code'],'description'=>'Admin duyệt thanh toán đơn hàng','created_by'=>$adminId,'status'=>1];
                 $saved=$savePayment($data,$receipt?(int)$receipt['id']:null);
                 if(($saved[CODE]??null)!==SUCCESS)throw new \RuntimeException('Chưa xác nhận được thanh toán.');
             }
@@ -115,5 +133,7 @@ final class OrderPayments
             if(!$summary['paid'])throw new \RuntimeException('Đơn hàng chưa được thanh toán đủ.');
             return $summary;
         });
+        Vouchers::awardAfterPayment($id);
+        return $summary;
     }
 }

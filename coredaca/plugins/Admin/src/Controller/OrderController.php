@@ -15,7 +15,11 @@ use App\Lib\Shipping\NhShipping;
 use Cake\Utility\Security;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
+use App\Service\AffiliateCommissions;
+use App\Service\CommercePurchases;
 use App\Service\OrderPayments;
+use App\Service\ShopOrders;
+use App\Service\Vouchers;
 use App\Service\CommerceNotifications;
 
 class OrderController extends AppController {
@@ -27,10 +31,88 @@ class OrderController extends AppController {
 
     public function list()
     {
-        $this->js_page = '/assets/js/pages/list_order.js?v=20261111-admin-payment';
+        if ($this->request->getQuery('view') === 'shop-history') {
+            $this->set('path_menu', 'order');
+            $this->set('title_for_layout', 'Đơn Shop trước đây');
+            $this->set($this->shopHistory());
+            return $this->render('shop_history');
+        }
+        $this->js_page = '/assets/js/pages/list_order.js?v=20261125-shop-orders';
 
         $this->set('path_menu', 'order');  
         $this->set('title_for_layout', __d('admin', 'don_hang'));
+    }
+
+    private function shopHistory(): array
+    {
+        $db = CommercePurchases::db();
+        $rawKeyword = $this->request->getQuery('keyword', '');
+        $keyword = is_string($rawKeyword) ? mb_substr(trim($rawKeyword), 0, 100) : '';
+        $where = ' FROM contacts c JOIN contacts_form f ON f.id=c.form_id WHERE c.deleted=0 AND f.code=?';
+        $baseParams = [Vouchers::SHOP_FORM];
+        $params = $baseParams;
+        if ($keyword !== '') {
+            $where .= ' AND (c.search_unicode LIKE ? OR CASE WHEN JSON_VALID(c.value) THEN JSON_UNQUOTE(JSON_EXTRACT(c.value,\'$.cartId\')) END LIKE ?)';
+            $params[] = '%' . strtolower((string)$this->loadComponent('Utilities')->formatSearchUnicode([$keyword])) . '%';
+            $params[] = '%' . $keyword . '%';
+        }
+        $limit = 30;
+        $total = (int)$db->execute('SELECT COUNT(*)' . $where, $params)->fetchColumn(0);
+        $lastPage = max(1, (int)ceil($total / $limit));
+        $page = max(1, min($lastPage, (int)$this->request->getQuery('page', 1)));
+        $offset = ($page - 1) * $limit;
+        $rows = $db->execute('SELECT c.id,c.created,c.value' . $where . " ORDER BY c.id DESC LIMIT $limit OFFSET $offset", $params)->fetchAll('assoc');
+        $selected = (int)$this->request->getQuery('history_id', 0);
+        $detail = null;
+        if ($selected > 0) {
+            $row = $db->execute('SELECT c.id,c.created,c.value FROM contacts c JOIN contacts_form f ON f.id=c.form_id
+                WHERE c.deleted=0 AND f.code=? AND c.id=?', array_merge($baseParams, [$selected]))->fetch('assoc');
+            if ($row) {
+                $detail = $this->formatShopHistory($row);
+                $detail['linked_order_id'] = ShopOrders::linkedArchive($selected);
+            }
+        }
+        return [
+            'history_rows' => array_map([$this, 'formatShopHistory'], $rows),
+            'history_detail' => $detail, 'history_total' => $total, 'history_keyword' => $keyword,
+            'history_url' => ADMIN_PATH . '/order?view=shop-history&keyword=' . rawurlencode($keyword),
+            'history_page' => $page, 'history_pages' => $lastPage,
+            'history_next' => $page < $lastPage ? $page + 1 : null,
+            'history_previous' => $page > 1 ? $page - 1 : null,
+        ];
+    }
+
+    private function formatShopHistory(array $row): array
+    {
+        $data = json_decode((string)$row['value'], true);
+        $data = is_array($data) ? $data : [];
+        $items = $data['cartProducts'] ?? null;
+        if (is_string($items)) $items = json_decode($items, true);
+        $data['items'] = is_array($items) ? array_values(array_filter($items, 'is_array')) : [];
+        $state = is_string($data['orderStatus'] ?? null) ? $data['orderStatus'] : '';
+        $data['archive_status'] = ['success' => 'Đã duyệt', 'cancel' => 'Đã huỷ'][$state] ?? 'Khởi tạo';
+        $data['archive_open'] = in_array($state, ['', 'initial'], true);
+        $data['created_label'] = $row['created'] ? date('d/m/Y H:i', (int)$row['created']) : '';
+        $data['id'] = (int)$row['id'];
+        return $data;
+    }
+
+    public function importShopHistory($id = null)
+    {
+        $this->request->allowMethod(['post']);
+        try {
+            $order = ShopOrders::importOpenArchive((int)$id, function ($payload) {
+                return $this->loadComponent('Admin.Order')->saveOrder($payload);
+            });
+        } catch (\InvalidArgumentException $error) {
+            $this->responseJson([CODE=>ERROR, MESSAGE=>$error->getMessage()]);
+            return;
+        } catch (\Throwable $error) {
+            $this->log('Import Shop history ' . (int)$id . ': ' . $error->getMessage(), 'error');
+            $this->responseJson([CODE=>ERROR, MESSAGE=>'Chưa chuyển được đơn Shop trước đây.']);
+            return;
+        }
+        $this->responseJson([CODE=>SUCCESS, DATA=>['url'=>ADMIN_PATH . '/order/detail/' . $order]]);
     }
 
     public function listJson()
@@ -148,51 +230,21 @@ class OrderController extends AppController {
     public function updateOrderStatus($id = null)
     {
         $this->request->allowMethod(['post']);
-        
-        // Lấy biến orderStatus từ request
-        $orderStatus = $this->request->getData('orderStatus');
-        
-        $table = TableRegistry::get('Orders');
-        $order = $table->find()->where(['Orders.id' => $id, 'Orders.deleted' => 0])->first();
-        
-        if (!$order) {
-            throw new NotFoundException(__('Đơn hàng không tồn tại.'));
+        if ($this->request->getData('orderStatus') !== 'success') {
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Thao tác duyệt hoa hồng không hợp lệ.']);
+            return;
         }
-        
-        $order->orderStatus = $orderStatus;
-    
-        if ($table->save($order)) {
-            // Nếu trạng thái mới là 'success' → cộng tiền hoa hồng
-            if ($orderStatus === 'success') {
-                $affiliateCode = $order['affiliateCode'] ?? null;
-                $affiliateAmount = $order['affiliateAmount'] ?? 0;
-    
-                if (!empty($affiliateCode) && $affiliateAmount > 0) {
-                    $customersTable = TableRegistry::get('Customers');
-                    $customer = $customersTable->find()
-                        ->where(['Customers.code' => $affiliateCode])
-                        ->first();
-    
-                    if ($customer) {
-                        // Cộng thêm tiền hoa hồng
-                        $customer->affiliate_amount = $customer->affiliate_amount + $affiliateAmount;
-                        $customer->affiliate_amount_unpaid = $customer->affiliate_amount_unpaid + $affiliateAmount;
-    
-                        $customersTable->save($customer); // lưu lại
-                    }
-                }
-            }
-            
-            $this->responseJson([
-                CODE => SUCCESS,
-                MESSAGE => 'Cập nhật trạng thái đơn hàng thành công.'
-            ]);
-        } else {
-            $this->responseJson([
-                CODE => ERROR,
-                MESSAGE => 'Không thể cập nhật trạng thái đơn hàng.'
-            ]);
+        try {
+            AffiliateCommissions::approve((int)$id);
+        } catch (\InvalidArgumentException $error) {
+            $this->responseJson([CODE => ERROR, MESSAGE => $error->getMessage()]);
+            return;
+        } catch (\Throwable $error) {
+            $this->log('Affiliate approval for order ' . (int)$id . ': ' . $error->getMessage(), 'error');
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Chưa duyệt được hoa hồng. Vui lòng thử lại.']);
+            return;
         }
+        $this->responseJson([CODE => SUCCESS, MESSAGE => 'Đã ghi nhận hoa hồng của đơn hàng.']);
     }
 
     public function update($id = null)
@@ -350,7 +402,7 @@ class OrderController extends AppController {
             '/assets/js/bill_customer.js',
             '/assets/js/bill_payment_confirm.js',
             '/assets/js/bill_shipping.js',
-            '/assets/js/pages/order_detail.js?v=20261111-admin-payment',
+            '/assets/js/pages/order_detail.js?v=20261125-shop-orders',
         ];
         
         $this->set('id', $id);
@@ -824,9 +876,13 @@ class OrderController extends AppController {
 
         if (($data['approve_order'] ?? '') === '1') {
             try {
+                $expected = $data['expected_amount'] ?? null;
+                if ($expected !== null && !is_numeric($expected)) {
+                    throw new \InvalidArgumentException('Số tiền xác nhận không hợp lệ.');
+                }
                 $summary = OrderPayments::approve((int)$order_id, function($payment, $id) {
                     return $this->loadComponent('Admin.Payment')->savePayment($payment, $id);
-                }, (int)$this->Auth->user('id'));
+                }, (int)$this->Auth->user('id'), $expected === null ? null : (float)$expected);
             } catch (\Throwable $e) {
                 $message = $e instanceof \InvalidArgumentException ? $e->getMessage() : 'Chưa duyệt được thanh toán. Vui lòng thử lại.';
                 $this->log('Admin order approval '.$order_id.': '.$e->getMessage(), 'error');
@@ -835,7 +891,9 @@ class OrderController extends AppController {
             CommerceNotifications::purchase((int)$order_id, 'approved', function($mail) {
                 return $this->loadComponent('Email')->sendEmail($mail);
             }, $this->request->host());
-            $this->responseJson([CODE => SUCCESS, MESSAGE => 'Đã duyệt thanh toán và cập nhật quyền sử dụng.', DATA => $summary]);
+            $message = $summary['kind'] === 'shop'
+                ? 'Đã xác nhận thu đủ tiền đơn Shop.' : 'Đã duyệt thanh toán và cập nhật quyền sử dụng.';
+            $this->responseJson([CODE => SUCCESS, MESSAGE => $message, DATA => $summary]);
         }
 
         $orders_table = TableRegistry::get('Orders');
@@ -1144,6 +1202,8 @@ class OrderController extends AppController {
             $status = DELIVERED;
         }
 
+        $purchase = CommercePurchases::get($order_id);
+        $isShop = $purchase && $purchase['kind'] === 'shop';
         $order_status = null;
         $cancel_shipping_carrier = false;
         switch ($status) {
@@ -1159,13 +1219,13 @@ class OrderController extends AppController {
             case DELIVERED:
                 $order_status = EXPORT;
             
-                if(!empty($payment_wait_cod)){
+                if(!$isShop && !empty($payment_wait_cod)){
                     $payment_entity = $payments_table->patchEntity($payment_wait_cod, [
                         'status' => 1
                     ]);
                 }
 
-                $amount_pending = !empty($payment_wait_cod['amount']) ? floatval($payment_wait_cod['amount']) : 0;
+                $amount_pending = !$isShop && !empty($payment_wait_cod['amount']) ? floatval($payment_wait_cod['amount']) : 0;
 
                 if(($debt - $amount_pending) <= 0){
                     $order_status = DONE;

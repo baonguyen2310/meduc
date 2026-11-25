@@ -244,14 +244,16 @@ final class Vouchers
     private static function paidSpend(array $customer, int $from, int $until): int
     {
         $id = (int)$customer['id'];
-        $approval = CommercePurchases::installed()
-            ? '(SELECT paid.approved_at FROM commerce_purchases paid WHERE paid.order_id=o.id)'
-            : 'NULL';
-        $sold = self::db()->execute(
-            "SELECT COALESCE(SUM(o.total),0) FROM orders o
+        $hasPurchases = CommercePurchases::installed();
+        $join = $hasPurchases ? 'LEFT JOIN commerce_purchases cp ON cp.order_id=o.id' : '';
+        $approval = $hasPurchases ? 'cp.approved_at' : 'NULL';
+        $value = $hasPurchases ? "CASE WHEN cp.kind='shop' THEN cp.amount ELSE o.total END" : 'o.total';
+        $owner = $hasPurchases ? ' AND (cp.order_id IS NULL OR cp.customer_id=c.customer_id)' : '';
+        return (int)self::db()->execute(
+            "SELECT COALESCE(SUM($value),0) FROM orders o $join
              WHERE o.deleted=0 AND o.type='order' AND o.status<>'cancel'
                AND o.total>0
-               AND EXISTS (SELECT 1 FROM orders_contact c WHERE c.order_id=o.id AND c.customer_id=?)
+               AND EXISTS (SELECT 1 FROM orders_contact c WHERE c.order_id=o.id AND c.customer_id=? $owner)
                AND o.total<=(SELECT COALESCE(SUM(CASE WHEN p.type=1 THEN p.amount ELSE -p.amount END),0)
                  FROM payments p WHERE p.foreign_type='order' AND p.foreign_id=o.id AND p.status=1)
                AND COALESCE($approval, (SELECT MAX(COALESCE(NULLIF(r.payment_time,0), r.created))
@@ -260,29 +262,6 @@ final class Vouchers
             [$id, $from, $until - 1]
         )->fetchColumn(0);
 
-        $email = strtolower(trim((string)($customer['email'] ?? '')));
-        // Earlier Shop orders with an affiliate stored the partner's ID. Their
-        // checkout email is the authenticated buyer's email, set on the server.
-        $shop = self::db()->execute(
-            "SELECT COALESCE(SUM(j.total),0) FROM (
-               SELECT CAST(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.totalPrice')) AS DECIMAL(16,0)) total,
-                 NULLIF(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.voucher_buyer_id')), 'null') buyer,
-                 NULLIF(NULLIF(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.customer_id')), 'null'), '') legacy_customer,
-                 NULLIF(NULLIF(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.affiliateCode')), 'null'), '') legacy_partner,
-                 LOWER(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.email'))) email,
-                 JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.orderStatus')) order_status,
-                 COALESCE(NULLIF(CAST(NULLIF(JSON_UNQUOTE(JSON_EXTRACT(c.payload,'$.voucher_paid_at')), 'null') AS UNSIGNED),0),
-                   c.created) paid_at
-               FROM (SELECT CASE WHEN JSON_VALID(r.value) THEN r.value ELSE '{}' END payload, r.created
-                 FROM contacts r JOIN contacts_form f ON f.id=r.form_id WHERE f.code=? AND r.deleted=0) c
-             ) j WHERE j.order_status='success' AND j.total>0 AND j.paid_at BETWEEN ? AND ?
-               AND (j.buyer=? OR (j.buyer IS NULL AND (
-                 (j.legacy_partner IS NULL AND j.legacy_customer=?) OR
-                 ((j.legacy_partner IS NOT NULL OR j.legacy_customer IS NULL) AND ?<>'' AND j.email=?)
-               )))",
-            [self::SHOP_FORM, $from, $until - 1, (string)$id, (string)$id, $email, $email]
-        )->fetchColumn(0);
-        return (int)$sold + (int)$shop;
     }
 
     private static function reachedLoyaltyThreshold(array $customer, array $campaign, array &$totals): bool

@@ -44,7 +44,7 @@
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261028-sticky" rel="stylesheet">
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.css?v=20261015" rel="stylesheet">
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/equipment-detail.css?v=20261124" rel="stylesheet">
-    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261117-catalog" defer></script>
+    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261125-shop-orders" defer></script>
     <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.js?v=20261124-equipment" defer></script>
 
     <main class="mbd mbd-equipment" id="equipment-detail" data-book-items="{$detail.items|json_encode|escape}" data-book-name="{$product.name|escape}" data-product-noun="thiết bị" data-cart-label="giỏ hàng" data-stock-label="Thiết bị này">

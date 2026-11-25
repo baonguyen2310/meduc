@@ -120,6 +120,10 @@ try {
     $receipt=$session->read('MeducBookOrder');
     checkoutExpect($receipt['email']===$email&&(int)$receipt['customer_id']===$id&&$receipt['full_name']==='Người nhận sách'&&$receipt['payment']==='cod'&&
         (int)$receipt['totalQuantity']===2&&(float)$receipt['totalPrice']===(float)$bookData['cartTotal'],'Book receipt lost account email, recipient, quantities or COD.');
+    $shop=App\Service\CommercePurchases::get((int)$receipt['order_id']);
+    checkoutExpect($shop&&$shop['kind']==='shop'&&(int)$shop['confirmed']===0,'Shop checkout did not use the shared order ledger or prepaid COD.');
+    checkoutExpect(App\Service\ShopOrders::byReference($bookData['cartId'],$id)===$receipt,'Receipt could not be opened by the buyer.');
+    checkoutExpect(!App\Service\ShopOrders::byReference($bookData['cartId'],$id+1000000),'Receipt was accessible to another customer.');
     $checks[]='book_guest_blocked_authenticated_cod_order_uses_server_price_and_account_email';
     echo json_encode(['passed'=>$checks,'fixtures'=>'rolled back','external_email_or_payment'=>false],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)."\n";
 }finally{$db->rollback();}

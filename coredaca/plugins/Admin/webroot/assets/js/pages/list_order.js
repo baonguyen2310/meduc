@@ -78,11 +78,17 @@ var nhListOrder = function() {
                 field: 'payment_summary', title: 'Loại đơn / Thanh toán', sortable: false, width: 185,
                 template: function(row) {
                     var payment = row.payment_summary || {};
-                    var allowed = {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Trắc nghiệm',document:'Tài liệu',fa:'Fa',other:'Sách / Khác'};
+                    var allowed = {knowledge:'Khoá ôn kiến thức',exam_solution:'Khoá chữa đề',quiz:'Đề thi',document:'Tài liệu',shop:'MedUC Shop',fa:'Fa',other:'Khác'};
                     var label = allowed[payment.kind] || allowed.other;
-                    var status = payment.paid ? 'Đã thanh toán' : (payment.status_label === 'Đã huỷ' ? 'Đã huỷ' : (payment.status_label === 'Chờ duyệt thanh toán' ? 'Chờ duyệt thanh toán' : 'Chưa thanh toán'));
+                    var statuses = ['Đã huỷ', 'Chờ duyệt thanh toán', 'Chờ thu COD'];
+                    var status = payment.paid ? 'Đã thanh toán' : (statuses.indexOf(payment.status_label) >= 0 ? payment.status_label : 'Chưa thanh toán');
+                    var shipping = '';
+                    if (payment.kind === 'shop' && status !== 'Đã huỷ') {
+                        var shippingLabels = {wait_deliver:'Chờ giao',delivery:'Đang giao',delivered:'Đã giao',cancel_package:'Đã huỷ vận đơn',cancel_delivered:'Giao không thành công'};
+                        shipping = '<div class="text-muted mt-1">' + (shippingLabels[payment.shipping_status] || 'Chờ xử lý giao hàng') + '</div>';
+                    }
                     return '<div class="mb-2"><span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">' + label + '</span></div>' +
-                        '<span class="kt-badge ' + (payment.paid ? 'kt-badge--success' : 'kt-badge--warning') + ' kt-badge--inline kt-badge--pill">' + status + '</span>';
+                        '<span class="kt-badge ' + (payment.paid ? 'kt-badge--success' : 'kt-badge--warning') + ' kt-badge--inline kt-badge--pill">' + status + '</span>' + shipping;
                 }
             },
 			{

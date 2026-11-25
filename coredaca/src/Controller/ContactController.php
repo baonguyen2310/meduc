@@ -7,6 +7,9 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
+use App\Service\CheckoutContact;
+use App\Service\CommerceNotifications;
+use App\Service\ShopOrders;
 use App\Service\Vouchers;
 
 class ContactController extends AppController {
@@ -33,16 +36,10 @@ class ContactController extends AppController {
         $shop = ($data['form_code'] ?? '') === Vouchers::SHOP_FORM;
         if ($shop) {
             $member = $this->request->getSession()->read(MEMBER) ?: [];
-            $customer = \App\Service\CheckoutContact::customer((int)($member['id'] ?? 0));
+            $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
             if (!$customer) {
                 return $this->response->withStatus(401)->withType('application/json')->withHeader('Cache-Control','private, no-store')
                     ->withStringBody(json_encode([CODE=>ERROR,MESSAGE=>'Vui lòng đăng nhập để tiếp tục thanh toán.'],JSON_UNESCAPED_UNICODE));
-            }
-            try {
-                $data = array_merge($data, \App\Service\CheckoutContact::validate($data, $customer, true));
-            } catch (\InvalidArgumentException $e) {
-                $this->responseJson([MESSAGE=>$e->getMessage()]);
-                return;
             }
         }
 
@@ -51,6 +48,11 @@ class ContactController extends AppController {
         $check_recaptcha = $this->loadComponent('ReCaptcha')->check($token);
         if($check_recaptcha[CODE] != SUCCESS){
             $this->responseJson([MESSAGE => $check_recaptcha[MESSAGE]]);
+        }
+
+        if ($shop) {
+            $this->placeShopOrder($customer, $data);
+            return;
         }
 
         $form_code = !empty($data['form_code']) ? $data['form_code'] : null;
@@ -77,59 +79,9 @@ class ContactController extends AppController {
             $data_value[$code] = !empty($data[$code]) ? $data[$code] : null;
         }
 
-        if ($shop) {
-            $items = json_decode((string) ($data_value['cartProducts'] ?? ''), true);
-            try {
-                $data_products = \App\Lib\BookCheckout::quote(is_array($items) ? $items : []);
-            } catch (\InvalidArgumentException $e) {
-                $this->responseJson([MESSAGE => $e->getMessage()]);
-                return;
-            }
-            $totalPrice = array_sum(array_column($data_products, 'total'));
-            $totalQuantity = array_sum(array_column($data_products, 'quantity'));
-            if (!in_array($data_value['payment'] ?? '', ['bank', 'cod'], true)
-                || !preg_match('/^MEDUC[0-9]{6,}$/', (string) ($data_value['cartId'] ?? ''))
-                || empty(trim((string) ($data_value['full_name'] ?? '')))
-                || !filter_var($data_value['email'] ?? '', FILTER_VALIDATE_EMAIL)
-                || !preg_match('/^(?:0|\\+84)[0-9]{9,10}$/', preg_replace('/[ .-]/', '', (string) ($data_value['phone'] ?? '')))
-                || empty(trim((string) ($data_value['address'] ?? '')))) {
-                $this->responseJson([MESSAGE => 'Vui lòng kiểm tra thông tin nhận hàng và phương thức thanh toán.']);
-                return;
-            }
-
-            $data_value["cartProducts"] = json_encode($data_products);
-            $data_value["totalPrice"] = $totalPrice;
-            $data_value["totalQuantity"] = $totalQuantity;
-            
-            $data_value['orderStatus'] = 'initial';
-            $data_value['customer_id'] = (int)$customer['id'];
-            $data_value['voucher_buyer_id'] = (int)$customer['id'];
-        }
-
         $conn = ConnectionManager::get('default');
         try {
             $conn->begin();
-            $voucher = null;
-            if ($shop) {
-                $voucherInput = Vouchers::checkoutInput($data);
-                if ($voucherInput) {
-                    $voucher = Vouchers::confirm($customer, 'shop', (int)round($totalPrice), $voucherInput);
-                    if ($voucher['discounts']) {
-                        $data_value['totalPrice'] = $voucher['total'];
-                        $data_value['voucher_base'] = $voucher['base'];
-                        $data_value['voucher_discounts'] = $voucher['discounts'];
-                    }
-                }
-                if (isset($data['cartTotal']) && abs((float)$data['cartTotal'] - $data_value['totalPrice']) > 0.5) {
-                    throw new \InvalidArgumentException('Giá sản phẩm vừa thay đổi. Vui lòng kiểm tra số tiền trước khi đặt hàng.');
-                }
-
-                $partnerCode = $voucher['partner']['code'] ?? ($data_value['affiliateCode'] ?? '');
-                unset($data_value['affiliateCode'], $data_value['affiliatePercent'], $data_value['affiliateAmount'], $data_value['affiliatePaidStatus']);
-                if (is_string($partnerCode)) {
-                    $data_value += Vouchers::affiliateTerms($partnerCode, (int)$customer['id'], (int)$data_value['totalPrice']);
-                }
-            }
 
             $contact = $table->newEntity([
                 'form_id' => !empty($form_info['id']) ? $form_info['id'] : null,
@@ -141,11 +93,7 @@ class ContactController extends AppController {
             if (empty($save->id)) {
                 throw new Exception();
             }
-            if ($shop && !empty($voucher['discounts'])) {
-                Vouchers::recordUses('shop', (int)$save->id, (int)$customer['id'], $voucher['discounts']);
-            }
-
-            if (!$shop && !empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
+            if (!empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
                 $settings = TableRegistry::get('Settings')->getSettingWebsite();
                 $email_management = !empty($settings['email']['email_administrator']) ? $settings['email']['email_administrator'] : null;
                 $params_email = [
@@ -165,21 +113,10 @@ class ContactController extends AppController {
             if ($conn->inTransaction()) {
                 $conn->rollback();
             }
-            if ($shop) {
-                $this->log('Shop checkout: ' . $e->getMessage(), 'error');
-            }
-            $this->responseJson([MESSAGE => $shop ? 'Chưa tạo được đơn hàng. Vui lòng thử lại.' : $e->getMessage()]);
+            $this->responseJson([MESSAGE => $e->getMessage()]);
             return;
         }
-        if ($shop) {
-            $this->request->getSession()->write('MeducBookOrder', $data_value);
-        }
         try {
-            if ($shop) {
-                \App\Service\CommerceNotifications::book((int)$save['id'], function ($message) {
-                    return $this->loadComponent('Email')->sendEmail($message);
-                }, $this->request->host());
-            }
             $this->loadComponent('SendMessage')->send(CONTACT, $save['id']);
         } catch (\Throwable $error) {
             $this->log('Contact notification: ' . $error->getMessage(), 'error');
@@ -187,30 +124,46 @@ class ContactController extends AppController {
         $this->responseJson([CODE => SUCCESS, MESSAGE => __d('template', 'gui_thong_tin_lien_he_thanh_cong')]);
     }
     
+    private function placeShopOrder(array $customer, array $data): void
+    {
+        try {
+            $receipt = ShopOrders::place(
+                $customer,
+                $data,
+                function ($payload) { return $this->loadComponent('Admin.Order')->saveOrder($payload); },
+                function ($payment) { return $this->loadComponent('Admin.Payment')->savePayment($payment); }
+            );
+        } catch (\InvalidArgumentException $error) {
+            $this->responseJson([MESSAGE => $error->getMessage()]);
+            return;
+        } catch (\Throwable $error) {
+            $this->log('Shop checkout: ' . $error->getMessage(), 'error');
+            $this->responseJson([MESSAGE => 'Chưa tạo được đơn hàng. Vui lòng thử lại.']);
+            return;
+        }
+
+        $this->request->getSession()->write('MeducBookOrder', $receipt);
+        CommerceNotifications::shop($receipt, function ($message) {
+            return $this->loadComponent('Email')->sendEmail($message);
+        }, $this->request->host());
+        $this->responseJson([CODE => SUCCESS, MESSAGE => 'MedUC đã nhận đơn hàng.']);
+    }
+
     public function getInfo()
     {
-        $cartId = $this->request->getQuery('cartId');
-
-        if (!$cartId) {
-            throw new NotFoundException(__('Cart ID không hợp lệ'));
+        $session = $this->request->getSession();
+        $buyer = (int)($session->read(MEMBER)['id'] ?? 0);
+        $reference = $this->request->getQuery('cartId');
+        $data = is_string($reference) ? ShopOrders::byReference($reference, $buyer) : [];
+        if (!$data && $buyer && is_string($reference)) {
+            $old = $session->read('MeducBookOrder');
+            if (is_array($old) && (int)($old['customer_id'] ?? 0) === $buyer && ($old['cartId'] ?? '') === $reference) {
+                $data = $old;
+            }
         }
+        if (!$data) throw new NotFoundException(__('Không tìm thấy đơn hàng'));
 
-        // Lấy instance của bảng contacts qua TableRegistry
-        $contactsTable = TableRegistry::getTableLocator()->get('Contacts');
-
-        // Tìm bản ghi có cartId trong trường value
-        $contact = $contactsTable->find()
-            ->where(["value LIKE" => '%\"cartId\":\"' . $cartId . '\"%'])
-            ->first();
-
-        if (!$contact) {
-            throw new NotFoundException(__('Không tìm thấy đơn hàng'));
-        }
-
-        // Parse JSON trong cột value
-        $data = json_decode($contact->value, true);
-
-        return $this->response->withType('application/json')
+        return $this->response->withType('application/json')->withHeader('Cache-Control', 'private, no-store')
                               ->withStringBody(json_encode($data));
     }
 }

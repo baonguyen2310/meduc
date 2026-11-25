@@ -8,8 +8,9 @@
                             <option value="">Tất cả loại đơn</option>
                             <option value="knowledge">Khoá ôn kiến thức</option>
                             <option value="exam_solution">Khoá chữa đề</option>
-                            <option value="quiz">Trắc nghiệm</option>
+                            <option value="quiz">Đề thi</option>
                             <option value="document">Tài liệu</option>
+                            <option value="shop">MedUC Shop</option>
                         </select>
                     </div>
                     <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">

@@ -22,7 +22,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261015" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.css?v=20261015" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261015" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261125-shop-orders" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.js?v=20261015" defer></script>
 
 <main class="mbd" id="book-detail" data-book-items="{$detail.items|json_encode|escape}" data-book-name="{$product.name|escape}">

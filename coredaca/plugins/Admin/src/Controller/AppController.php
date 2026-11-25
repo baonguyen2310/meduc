@@ -131,6 +131,9 @@ class AppController extends Controller {
             if ($controller_request === 'ThemeUsage' && $role_id === 1) return;
             if ($controller_request === 'FacultyApplication' && $role_id === 1) return;
             if ($controller_request === 'CoursePrice' && $role_id === 1) return;
+            if ($controller_request === 'Order' && $action_request === 'importShopHistory') {
+                $action_request = 'add';
+            }
             $voucherAdmin = $controller_request === 'Promotion' && $action_request === 'vouchers';
             if ($voucherAdmin) {
                 $action_request = 'list';

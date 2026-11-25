@@ -5,6 +5,9 @@
                 {__d('admin', 'danh_sach_don_hang')}
             </h3>
         </div>
+        <div class="kt-subheader__toolbar">
+            <a href="{ADMIN_PATH}/order?view=shop-history" class="btn btn-sm btn-outline-brand">Đơn Shop trước đây</a>
+        </div>
         <div class="kt-subheader__toolbar d-none">
             <a href="{ADMIN_PATH}/order/add" class="btn btn-sm btn-brand">
                 <i class="la la-plus"></i>

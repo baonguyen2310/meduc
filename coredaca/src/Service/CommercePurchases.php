@@ -14,7 +14,7 @@ final class CommercePurchases
     }
     public static function get(int $id,bool $lock=false):?array {
         if(!self::installed())return null;
-        return self::db()->execute('SELECT p.*,o.code order_code,o.status order_status,o.deleted order_deleted,c.full_name,c.phone,c.email,
+        return self::db()->execute('SELECT p.*,o.code order_code,o.status order_status,o.deleted order_deleted,o.total order_total,c.full_name,c.phone,c.email,c.address,
          c.customer_id order_customer,COALESCE((SELECT SUM(CASE WHEN r.type=1 THEN r.amount ELSE -r.amount END) FROM payments r WHERE r.foreign_id=p.order_id AND r.foreign_type=\'order\' AND r.status=1),0) confirmed
          FROM commerce_purchases p JOIN orders o ON o.id=p.order_id JOIN orders_contact c ON c.order_id=o.id WHERE p.order_id=?'.($lock?' FOR UPDATE':''),[$id])->fetch('assoc')?:null;
     }
@@ -24,7 +24,9 @@ final class CommercePurchases
         return $id?self::get((int)$id):null;
     }
     public static function paid(array $p):bool {
-        return empty($p['order_deleted'])&&$p['order_status']!==CANCEL&&(int)$p['order_customer']===(int)$p['customer_id']&&(float)$p['confirmed']>=(int)$p['amount'];
+        $due = $p['kind'] === 'shop' ? (float)$p['order_total'] : (int)$p['amount'];
+        return $due > 0 && empty($p['order_deleted']) && $p['order_status'] !== CANCEL
+            && (int)$p['order_customer'] === (int)$p['customer_id'] && (float)$p['confirmed'] >= $due;
     }
     public static function create(array $customer,array $quote,callable $saveOrder,array $context=[],array $voucherInput=[]):array {
         return self::db()->transactional(function()use($customer,$quote,$saveOrder,$context,$voucherInput){
@@ -75,8 +77,12 @@ final class CommercePurchases
         self::db()->transactional(function()use($id){
             $p=self::get($id,true);$db=self::db();$now=time();
             $db->execute('SELECT id FROM customers WHERE id=? FOR UPDATE',[$p['customer_id']])->fetch();
-            if(self::paid($p))$db->execute('UPDATE commerce_purchases SET approved_at=COALESCE(approved_at,?),fulfilled_at=COALESCE(fulfilled_at,?),updated_at=? WHERE order_id=?',[$now,$now,$now,$id]);
-            if($p['kind']==='document')return;
+            if (self::paid($p)) {
+                $db->execute("UPDATE commerce_purchases SET approved_at=COALESCE(approved_at,?),
+                    fulfilled_at=CASE WHEN kind='shop' THEN fulfilled_at ELSE COALESCE(fulfilled_at,?) END,updated_at=? WHERE order_id=?",
+                    [$now,$now,$now,$id]);
+            }
+            if (in_array($p['kind'], ['document', 'shop'], true)) return;
             $products=$db->execute('SELECT DISTINCT product_id FROM orders_item WHERE order_id=?',[$id])->fetchAll('assoc');
             foreach($products as $product)self::rebuildAccess((int)$p['customer_id'],(int)$product['product_id']);
         });return true;
@@ -87,7 +93,7 @@ final class CommercePurchases
         $current=$table->find()->where(['customer_id'=>$customer,'product_id'=>$product])->enableHydration(false)->first();
         // Keep existing manual and pre-migration lifetime rights intact.
         if($current&&$current['status']==1&&!$current['deleted']&&empty($current['expires_at'])&&($current['source']==='admin'||!self::get((int)$current['order_id'])))return;
-        $rows=$db->execute('SELECT p.order_id FROM commerce_purchases p WHERE p.customer_id=? AND p.kind<>\'document\' AND p.approved_at IS NOT NULL AND EXISTS (SELECT 1 FROM orders_item i WHERE i.order_id=p.order_id AND i.product_id=?) ORDER BY p.approved_at,p.order_id',[$customer,$product])->fetchAll('assoc');
+        $rows=$db->execute("SELECT p.order_id FROM commerce_purchases p WHERE p.customer_id=? AND p.kind IN ('knowledge','exam_solution','quiz') AND p.approved_at IS NOT NULL AND EXISTS (SELECT 1 FROM orders_item i WHERE i.order_id=p.order_id AND i.product_id=?) ORDER BY p.approved_at,p.order_id",[$customer,$product])->fetchAll('assoc');
         $expiry=0;$owner=0;
         foreach($rows as $row){
             $grant=self::get((int)$row['order_id']);if(!self::paid($grant))continue;
@@ -106,7 +112,7 @@ final class CommercePurchases
     public static function approval(string $code,string $signature):?array {
         if(!self::installed()||!preg_match('/^[a-f0-9]{32}$/',$code)||!preg_match('/^[a-f0-9]{64}$/',$signature))return null;
         $id=self::db()->execute('SELECT order_id FROM commerce_purchases WHERE public_code=?',[$code])->fetchColumn(0);$p=$id?self::get((int)$id):null;
-        return $p&&!empty($p['reported_at'])&&(int)$p['reported_at']>=time()-7*86400&&hash_equals(self::approvalSignature($p),$signature)?$p:null;
+        return $p&&$p['kind']!=='shop'&&!empty($p['reported_at'])&&(int)$p['reported_at']>=time()-7*86400&&hash_equals(self::approvalSignature($p),$signature)?$p:null;
     }
     public static function approve(string $code,string $signature,callable $savePayment):array {
         $p=self::approval($code,$signature);if(!$p)throw new \InvalidArgumentException('Liên kết duyệt không còn hiệu lực. Vui lòng mở đơn trong admin.');

@@ -151,7 +151,7 @@
 			</div>
 			
 			<div class="fs-18 font-weight-bold mb-15 color-teal">
-				Danh sách đơn hàng Sách và Thiết bị y tế
+				Đơn Shop trước đây
 			</div>
 			
 			<table class="table responsive-table mb-30 wrap-table">
@@ -241,7 +241,7 @@
         	</table>
         	
         	<div class="fs-18 font-weight-bold mb-15 color-teal">
-				Danh sách đơn hàng Khóa học
+				Đơn hàng Affiliate
 			</div>
 			
 			<table class="table responsive-table mb-30 wrap-table">

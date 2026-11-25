@@ -27,6 +27,10 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
+        if (rtrim($this->request->getUri()->getPath(), '/') === '/dat-hang-thanh-cong') {
+            $this->setResponse($this->getResponse()->withHeader('Cache-Control', 'private, no-store'));
+        }
+
         // Preserve old catalogue bookmarks and their filters after the public URL rename.
         if (rtrim($this->getRequest()->getUri()->getPath(), '/') === '/khoa-luyen-thi') {
             $query = $this->getRequest()->getUri()->getQuery();

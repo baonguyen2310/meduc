@@ -1,13 +1,19 @@
 /* Shared adapter for the original MedUC book/equipment session cart. No order is submitted here. */
 (() => {
   'use strict';
-  function add(product, quantity = 1) {
+  function reference() {
+    const values = crypto.getRandomValues(new Uint32Array(2));
+    return 'MEDUC' + Array.from(values, number => String(number).padStart(10, '0')).join('');
+  }
+  function add(product, quantity = 1, maximum = null) {
     quantity = Math.floor(Number(quantity));
     if (!product || !Number(product.id) || !Number.isFinite(quantity) || quantity < 1) throw new Error('Invalid book or quantity');
     const saved = sessionStorage.getItem('cart');
-    const cart = saved ? JSON.parse(saved) : {cartId:`MEDUC${Math.floor(100000+Math.random()*900000)}`,cartInfo:{},cartProducts:[]};
+    const cart = saved ? JSON.parse(saved) : {cartId:reference(),cartInfo:{},cartProducts:[]};
     if (!cart || !Array.isArray(cart.cartProducts)) throw new Error('Invalid cart');
     const existing = cart.cartProducts.find(item => String(item.id) === String(product.id));
+    const nextQuantity = Math.max(0,Number(existing?.quantity) || 0) + quantity;
+    if (maximum !== null && (!Number.isInteger(maximum) || maximum < 1 || nextQuantity > maximum)) throw new Error('Size áo không đủ số lượng để thêm vào giỏ.');
     if (existing) Object.assign(existing,product,{quantity:Math.max(0,Number(existing.quantity) || 0) + quantity});
     else cart.cartProducts.push({...product,quantity});
     sessionStorage.setItem('cart',JSON.stringify(cart));
@@ -21,15 +27,17 @@
     notice.hidden = false;
   }
   function bindCards(root) {
+    const productNoun = root.dataset.productNoun || 'sách';
+    const cartLabel = root.dataset.cartLabel || 'giỏ sách';
     root.querySelectorAll('[data-book-add]').forEach(button => {
       button.hidden = false;
       button.addEventListener('click',() => {
         try {
           const product = JSON.parse(button.dataset.bookProduct);
           add(product);
-          showNotice(root,`Đã thêm “${product.name}” vào giỏ sách.`);
+          showNotice(root,`Đã thêm “${product.name}” vào ${cartLabel}.`);
         } catch (_) {
-          showNotice(root,'Chưa thể thêm sách vào giỏ. Bạn có thể mở chi tiết sách để tiếp tục chọn mua.',false);
+          showNotice(root,`Chưa thể thêm ${productNoun} vào giỏ. Bạn có thể mở chi tiết ${productNoun} để tiếp tục chọn mua.`,false);
         }
       });
     });

@@ -5,6 +5,7 @@ use Cake\View\Helper;
 use Cake\ORM\TableRegistry;
 use App\Lib\BookCheckout;
 use App\Service\CoursePricing;
+use App\Service\ShopOrders;
 
 class CheckoutHelper extends Helper
 {
@@ -27,9 +28,18 @@ class CheckoutHelper extends Helper
     }
     public function confirmation(): array
     {
-        $order = $this->getView()->getRequest()->getSession()->read('MeducBookOrder');
-        $code = $this->getView()->getRequest()->getQuery('cartId');
-        return is_array($order) && is_string($code) && ($order['cartId'] ?? '') === $code ? $order : [];
+        $request = $this->getView()->getRequest();
+        $session = $request->getSession();
+        $member = $session->read(MEMBER) ?: [];
+        $buyer = (int)($member['id'] ?? 0);
+        $code = $request->getQuery('cartId');
+        if (!$buyer || !is_string($code)) return [];
+        $receipt = ShopOrders::byReference($code, $buyer);
+        if ($receipt) return $receipt;
+
+        $order = $session->read('MeducBookOrder');
+        return is_array($order) && (int)($order['customer_id'] ?? 0) === $buyer
+            && ($order['cartId'] ?? '') === $code ? $order : [];
     }
     public function bank(string $purpose = 'course', array $order = []): array
     {

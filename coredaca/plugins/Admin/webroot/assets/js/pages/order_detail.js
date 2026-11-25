@@ -7,9 +7,10 @@ var nhOrderDetail = (function () {
   var initSubmit = function () {
     $(document).on('click', '[data-payment-approve]', function () {
       var button = $(this);
-      if (button.prop('disabled') || !window.confirm('Xác nhận đã nhận đủ ' + button.attr('data-amount') + 'đ và duyệt thanh toán đơn này?')) return;
+      var reference = button.attr('data-method') === 'cod' ? ' tiền COD' : '';
+      if (button.prop('disabled') || !window.confirm('Xác nhận đã nhận đủ ' + button.attr('data-amount') + 'đ' + reference + ' cho đơn này?')) return;
       button.prop('disabled', true);
-      nhMain.callAjax({url: button.attr('data-link'), data: {approve_order: '1'}})
+      nhMain.callAjax({url: button.attr('data-link'), data: {approve_order: '1', expected_amount: button.attr('data-expected')}})
         .done(function (response) {
           if (response.code === _SUCCESS) location.reload();
           else toastr.error(response.message || 'Chưa duyệt được thanh toán.');

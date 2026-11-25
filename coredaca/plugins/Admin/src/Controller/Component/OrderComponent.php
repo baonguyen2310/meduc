@@ -594,7 +594,7 @@ class OrderComponent extends AppComponent
 
         $orders_item = $order_item_table->find()->where([
             'order_id' => $order_id
-        ])->select(['id', 'product_item_id', 'quantity'])->toList();
+        ])->select(['id', 'product_item_id', 'quantity'])->order(['product_item_id' => 'ASC', 'id' => 'ASC'])->toList();
         if(empty($orders_item)) return false;
 
 
@@ -635,11 +635,12 @@ class OrderComponent extends AppComponent
             $quantity_apply = !empty($order_item_info['quantity_apply']) ? intval($order_item_info['quantity_apply']) : 0;
 
             // nếu quantity_apply > 0 và bằng quantity (tức là số lượng này đã được trừ ở quantity_available của sp rồi) thì ko cập nhật lại số lượng nữa
-            if(!empty($quantity_apply) && $quantity_apply == $quantity && !$clear) return true;
-            if(empty($quantity_apply) && $clear) return true;
+            if(!empty($quantity_apply) && $quantity_apply == $quantity && !$clear) continue;
+            if(empty($quantity_apply) && $clear) continue;
 
             // get info product_item
-            $item_info = $table->find()->where(['id' => $product_item_id, 'deleted' => 0])->select(['id', 'quantity_available'])->first();
+            $item_info = $table->find()->where(['id' => $product_item_id, 'deleted' => 0])
+                ->select(['id', 'quantity_available'])->epilog('FOR UPDATE')->first();
             if(empty($item_info)) return false;
                         
             $quantity_available = !empty($item_info['quantity_available']) ? $item_info['quantity_available'] : 0;
@@ -659,9 +660,7 @@ class OrderComponent extends AppComponent
             $order_item_entity = $table->patchEntity($order_item_info, ['quantity_apply' => $clear ? null : $quantity]);
             
             try{
-                $table->save($item_entity);
-
-                $order_item_table->save($order_item_entity);
+                if (!$table->save($item_entity) || !$order_item_table->save($order_item_entity)) return false;
             }catch (Exception $e) {
                 return false;
             }

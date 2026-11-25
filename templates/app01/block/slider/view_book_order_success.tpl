@@ -14,7 +14,8 @@
             {/if}
             <div class="mco-total"><dt>Tổng tiền sản phẩm</dt><dd>{$order.totalPrice|number_format:0:',':'.'} ₫</dd></div>
           </dl>
-          <p class="mco-help">Phương thức: {if $order.payment == 'bank'}Chuyển khoản / MoMo{else}Thanh toán khi nhận hàng{/if}. Phí vận chuyển được MedUC xác nhận sau.</p>
+          <p class="mco-help">Phương thức: {if $order.payment == 'bank'}Chuyển khoản{else}Thanh toán khi nhận hàng{/if}. Phí vận chuyển được MedUC xác nhận sau.</p>
+          {if !empty($order.cancelled)}<p>Đơn đã huỷ.</p>{elseif !empty($order.paid)}<p>Đã xác nhận thanh toán.</p>{/if}
         </div>
         <script>{literal}try{const cart=JSON.parse(sessionStorage.getItem('cart'));if(cart&&cart.cartId==={/literal}{$order.cartId|json_encode:15 nofilter}{literal}){sessionStorage.removeItem('cart');document.querySelectorAll('[nh-mini-cart-book-quantity]').forEach(counter=>{counter.textContent='0';});}}catch(_){}{/literal}</script>
     {else}<p class="mco-kicker">MEDUC / THÔNG TIN ĐƠN HÀNG</p><h1>MEDUC LUÔN<br><span>SẴN SÀNG HỖ TRỢ.</span></h1><p>Thông tin đơn hàng không có trong phiên trình duyệt này. Liên hệ MedUC và cung cấp mã đơn hàng để được kiểm tra.</p>{/if}

@@ -3,7 +3,6 @@
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
-use App\Service\CheckoutContact;
 use App\Service\Vouchers;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
@@ -146,6 +145,9 @@ class ContactController extends AppController {
         $table = TableRegistry::get('Contacts');
         
         $contact = $table->find()->contain(['ContactsForm'])->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->first();
+        if ($contact && ($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM) {
+            return $this->redirect(ADMIN_PATH . '/order?view=shop-history&history_id=' . (int)$id);
+        }
         $contact_info = $table->formatDataContactDetail($contact);
 
         if (empty($contact_info)) {
@@ -210,27 +212,20 @@ class ContactController extends AppController {
                 throw new \Cake\Http\Exception\NotFoundException(__('Liên hệ không tồn tại.'));
             }
             $valueData = json_decode($contact->value, true) ?: [];
-            $shop = ($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM;
-            $firstSuccess = $shop && $orderStatus === 'success' && ($valueData['orderStatus'] ?? '') !== 'success'
-                && empty($valueData['voucher_paid_at']);
-            if ($firstSuccess) {
-                $valueData['voucher_paid_at'] = time();
+            if (($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM) {
+                return null;
             }
             $valueData['orderStatus'] = $orderStatus;
             $contact->value = json_encode($valueData, JSON_UNESCAPED_UNICODE);
-            return $table->save($contact) ? compact('firstSuccess', 'shop', 'valueData') : false;
+            return $table->save($contact) ? $valueData : false;
         });
-        if ($saved) {
-            ['firstSuccess' => $firstSuccess, 'shop' => $shop, 'valueData' => $valueData] = $saved;
-            if ($firstSuccess && !empty($valueData['voucher_buyer_id'])) {
-                try {
-                    Vouchers::awardLoyalty(CheckoutContact::customer((int)$valueData['voucher_buyer_id']), time());
-                } catch (\Throwable $error) {
-                    $this->log('Could not issue a loyalty voucher for Shop order ' . $id . ': ' . $error->getMessage(), 'error');
-                }
-            }
-            // Nếu trạng thái mới là 'success' → cộng tiền hoa hồng
-            if ($orderStatus === 'success' && (!$shop || $firstSuccess)) {
+        if ($saved === null) {
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Xem và đối soát đơn Shop trước đây trong mục Đơn hàng.']);
+            return;
+        }
+        if ($saved !== false) {
+            $valueData = $saved;
+            if ($orderStatus === 'success') {
                 $affiliateCode = $valueData['affiliateCode'] ?? null;
                 $affiliateAmount = $valueData['affiliateAmount'] ?? 0;
     

@@ -628,6 +628,7 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/order', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'list']);
     $builder->connect('/order/list', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'list']);
     $builder->connect('/order/list/json', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'listJson']);
+    $builder->connect('/order/import-shop-history/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'importShopHistory'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/order/add', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'add']);
     $builder->connect('/order/update/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/order/detail/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);

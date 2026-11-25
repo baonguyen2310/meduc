@@ -28,6 +28,16 @@ final class CommerceNotifications
         $p=CommercePurchases::get($id);if(!$p||(!$p['reported_at']&&$event!=='approved'))return;
         $approved=$event==='approved';$origin=self::origin($host);
         if($approved&&(!$p['approved_at']||!CommercePurchases::paid($p)))return;
+        if ($p['kind'] === 'shop') {
+            if ($approved && $p['customer_id'] && filter_var($p['email'], FILTER_VALIDATE_EMAIL)) {
+                $heading = 'Đã xác nhận thanh toán đơn Shop';
+                $facts = ['Mã đơn'=>$p['order_code'], 'Số tiền đã xác nhận'=>number_format((float)$p['order_total'],0,',','.').'đ'];
+                $url = $origin.'/member/order/detail/'.rawurlencode($p['order_code']);
+                $body = self::html($heading, 'MedUC đã xác nhận đã nhận đủ tiền của đơn hàng.', $facts, 'Xem đơn hàng', $url);
+                self::queue('purchase:'.$id.':approved:buyer', $p['email'], '[MedUC] '.$heading.' · '.$p['order_code'], $body, $send);
+            }
+            return;
+        }
         $names=CommercePurchases::db()->execute("SELECT pc.name FROM orders_item i JOIN products_content pc ON pc.product_id=i.product_id AND pc.lang='vi' WHERE i.order_id=?",[$id])->fetchAll('assoc');
         $facts=['Mã đơn'=>$p['order_code'],'Gói mua'=>$p['package_name'],'Sản phẩm'=>$p['kind']==='document'?'Lượt tải tài liệu':implode(', ',array_column($names,'name')),
             'Người mua'=>$p['full_name'],'Email'=>$p['email'],'Số điện thoại'=>$p['phone'],'Tổng thanh toán'=>number_format((int)$p['amount'],0,',','.').'đ'];
@@ -52,14 +62,31 @@ final class CommerceNotifications
     }
     private static function queueBook(int $id,callable $send,string $host):void {
         $record=TableRegistry::get('Contacts')->find()->where(['id'=>$id])->enableHydration(false)->first();$data=json_decode((string)($record['value']??''),true)?:[];
-        if(empty($data['cartId']))return;
+        self::queueShop($data, 'book:'.$id, '/admin/contact/detail/'.$id, $send, $host);
+    }
+    public static function shop(array $receipt,callable $send,string $host='meduc.vn'):void
+    {
+        $id = (int)$receipt['order_id'];
+        try {
+            self::queueShop($receipt, 'shop:'.$id, '/admin/order/detail/'.$id, $send, $host);
+        } catch (\Throwable $error) {
+            \Cake\Log\Log::error('Commerce email queue failed for Shop order '.$id);
+        }
+    }
+    private static function queueShop(array $data,string $key,string $adminPath,callable $send,string $host):void
+    {
+        if (empty($data['cartId'])) return;
         $facts=['Mã đơn'=>$data['cartId'],'Người nhận'=>$data['full_name'],'Email'=>$data['email'],'Số điện thoại'=>$data['phone'],'Địa chỉ'=>$data['address'],
             'Tổng tiền sản phẩm'=>number_format((float)$data['totalPrice'],0,',','.').'đ','Thanh toán'=>$data['payment']==='cod'?'COD · Thanh toán khi nhận sách':'Chuyển khoản ngân hàng'];
-        foreach(json_decode((string)$data['cartProducts'],true)?:[] as $i=>$product)$facts['Sách '.($i+1)]=($product['name']??'').' × '.($product['quantity']??1);
+        foreach(json_decode((string)$data['cartProducts'],true)?:[] as $i=>$product)$facts['Sản phẩm '.($i+1)]=($product['name']??'').' × '.($product['quantity']??1);
+        $buyerPath = empty($data['order_id'])
+            ? '/dat-hang-thanh-cong?cartId='.rawurlencode($data['cartId'])
+            : '/member/order/detail/'.rawurlencode($data['cartId']);
         foreach(['admin'=>self::adminEmail(),'buyer'=>$data['email']] as $role=>$email){
             if($role==='admin'&&self::suppressAdminForBuyer((string)$data['email']))continue;
-            $url=self::origin($host).($role==='admin'?'/admin/contact/detail/'.$id:'/dat-hang-thanh-cong?cartId='.rawurlencode($data['cartId']));
-            self::queue('book:'.$id.':'.$role,$email,'[MedUC] Đơn sách '.$data['cartId'],self::html('Đã ghi nhận đơn sách','MedUC sẽ liên hệ xác nhận và chuẩn bị giao sách.',$facts,$role==='admin'?'Xem đơn sách':'Xem đơn hàng',$url),$send);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) continue;
+            $url=self::origin($host).($role==='admin'?$adminPath:$buyerPath);
+            self::queue($key.':'.$role,$email,'[MedUC] Đơn Shop '.$data['cartId'],self::html('Đã ghi nhận đơn hàng','MedUC sẽ liên hệ xác nhận và chuẩn bị giao hàng.',$facts,'Xem đơn hàng',$url),$send);
         }
     }
     private static function queue(string $key,string $email,string $subject,string $html,callable $send):void {

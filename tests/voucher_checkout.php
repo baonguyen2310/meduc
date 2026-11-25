@@ -154,10 +154,22 @@ try {
         'totalPrice' => 80000, 'orderStatus' => 'initial', 'voucher_buyer_id' => $buyer['id'],
         'customer_id' => $buyer['id'], 'email' => $buyer['email'],
     ];
-    $shop = shopFixture($db, $form, $pendingShop, $old);
+    $legacyShop = shopFixture($db, $form, $pendingShop, $old);
     expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Unpaid or out-of-window spend awarded a code.');
     $paid = ['orderStatus' => 'success', 'voucher_paid_at' => $now] + $pendingShop;
-    $db->update('contacts', ['value' => json_encode($paid)], ['id' => $shop]);
+    $db->update('contacts', ['value' => json_encode($paid)], ['id' => $legacyShop]);
+    expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Legacy Shop approval counted without a confirmed receipt.');
+    $shop = invoiceFixture($db, $buyer, 140000, $old, NEW_ORDER);
+    $db->insert('commerce_purchases', [
+        'order_id' => $shop, 'public_code' => bin2hex(random_bytes(16)), 'customer_id' => $buyer['id'],
+        'kind' => 'shop', 'package_id' => 0, 'package_name' => 'MedUC Shop',
+        'amount' => 130000, 'original_amount' => 130000, 'context_json' => '{"payment_method":"cod"}',
+        'created_at' => $old, 'updated_at' => $old,
+    ]);
+    paymentFixture($db, $shop, 140000, $now, 2);
+    expectVoucher(!Vouchers::personalOffers($buyer, 'knowledge', $now), 'Pending COD counted toward loyalty.');
+    paymentFixture($db, $shop, 140000, $now);
+    CommercePurchases::syncOrder($shop);
     Vouchers::awardLoyalty($buyer, $now);
     Vouchers::awardLoyalty($buyer, $now);
     $loyalty = Vouchers::personalOffers($buyer, 'knowledge', $now);
@@ -172,9 +184,9 @@ try {
     expectVoucher(!Vouchers::memberOffers($buyer, '', $now)['referral']
         && !Vouchers::memberOffers($partner, $partner['code'], $now)['referral'],
         'A referral-only code was shown without an eligible partner link.');
-    $db->update('contacts', ['value' => json_encode(['orderStatus' => 'cancel'] + $paid)], ['id' => $shop]);
+    $db->update('orders', ['status' => CANCEL], ['id' => $shop]);
     rejectsVoucher(fn() => Vouchers::quote($buyer, 'knowledge', 300000, ['voucher_codes' => [$loyaltyCode]]));
-    $db->update('contacts', ['value' => json_encode($paid)], ['id' => $shop]);
+    $db->update('orders', ['status' => NEW_ORDER], ['id' => $shop]);
 
     [$week, $nextWeek] = WeeklyOnlineTime::week($now);
     WeeklyOnlineTime::record($buyer['id'], $week, $week + 30);

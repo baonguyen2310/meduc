@@ -679,36 +679,18 @@ class OrderFrontendComponent extends Component
                     foreach (['affiliateCode', 'affiliatePercent', 'affiliateAmount', 'affiliatePaidStatus'] as $field) {
                         $data[$field] = $order[$field];
                     }
-                } elseif (isset($data["affiliateCode"]) && $data["affiliateCode"] !== '') {
-                    $affiliate_percent = null;
-
-                    // Tìm khách hàng có mã affiliateCode
-                    $customer = TableRegistry::get('Customers')
-                        ->find()
-                        ->where(['code' => $data['affiliateCode']])
-                        ->first();
-            
-                    if ($customer && !empty($customer->affiliate_percent)) {
-                        $affiliate_percent = (float)$customer->affiliate_percent;
-                    } else {
-                        // Nếu không có thì lấy từ settings
-                        $settings = TableRegistry::get('Settings')->getSettingWebsite();
-                        $affiliate_percent = isset($settings['website_info']['vi_affiliate_percent']) ? (float)$settings['website_info']['vi_affiliate_percent'] : null;
-                    }
-                    
-                    if ($affiliate_percent !== null) {
-                        $affiliate_percent = (float)$affiliate_percent;
-                        $data["affiliatePercent"] = $affiliate_percent;
-                        
-                        // Tính tiền hoa hồng
-                        $total_price = (float)($order['total'] ?? 0);
-                        $affiliate_amount = round($total_price * $affiliate_percent / 100);
-                
-                        $data["affiliateAmount"] = $affiliate_amount;
-                        $data["affiliatePaidStatus"] = 'unpaid';
-                    }
+                } else {
+                    $terms = \App\Service\Vouchers::affiliateTerms(
+                        is_string($data['affiliateCode'] ?? null) ? $data['affiliateCode'] : '',
+                        (int)($order_info['contact']['customer_id'] ?? 0),
+                        (int)round((float)($order['total'] ?? 0))
+                    );
+                    $data = array_replace($data, [
+                        'affiliateCode' => null, 'affiliatePercent' => null,
+                        'affiliateAmount' => null, 'affiliatePaidStatus' => null,
+                    ], $terms);
                 }
-                
+
                 // update status order
                 $entity_order = $table->patchEntity($order, [
                     'status' => NEW_ORDER,
