@@ -7,11 +7,18 @@ use Cake\ORM\TableRegistry;
 /** Public book/equipment prices, using the same special-price dates as the catalogue. */
 final class BookCheckout
 {
-    public static function catalog(): array
+    public static function categoryIds(): array
     {
         $categories = TableRegistry::get('Categories');
-        $categoryIds = array_unique(array_merge([79, 80], $categories->getAllChildCategoryId(79), $categories->getAllChildCategoryId(80)));
-        $productIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => $categoryIds])->all()->extract('product_id')->toList();
+        $roots = [79, 80, 997]; // Sách, thiết bị y tế và áo blouse.
+        $categoryIds = $roots;
+        foreach ($roots as $id) $categoryIds = array_merge($categoryIds, $categories->getAllChildCategoryId($id));
+        return array_unique($categoryIds);
+    }
+
+    public static function catalog(): array
+    {
+        $productIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => self::categoryIds()])->all()->extract('product_id')->toList();
         if (!$productIds) return [];
         $table = TableRegistry::get('ProductsItem');
         $rows = $table->queryListProductsItem(['filter' => ['lang' => LANGUAGE, 'status' => 1, 'display_product' => 1]])

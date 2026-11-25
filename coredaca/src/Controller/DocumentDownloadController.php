@@ -42,7 +42,9 @@ class DocumentDownloadController extends AppController
             }catch(\InvalidArgumentException $e){$files[]=['index'=>$index,'unavailable'=>true];}
         }
         if($owner)$session->write('DocumentDownload.tokens',array_slice(array_filter($tokens,function($t){return $t['expires']>=time();}),-40,null,true));
-        return $this->json(200,'',['customer_id'=>$owner,'price'=>DocumentDownloads::PRICE,'balance'=>DocumentCredits::balance($owner),'packages'=>DocumentCredits::packages(),'files'=>$files]);
+        return $this->json(200,'',['customer_id'=>$owner,'price'=>DocumentDownloads::PRICE,
+            'balance'=>DocumentCredits::balanceForDocument($owner, $a['subject_key']),
+            'packages'=>DocumentCredits::packages(),'files'=>$files]);
     }
     public function purchase()
     {

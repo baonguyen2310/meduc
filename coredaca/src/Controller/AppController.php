@@ -27,7 +27,7 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
-        if (rtrim($this->request->getUri()->getPath(), '/') === '/dat-hang-thanh-cong') {
+        if (in_array(rtrim($this->request->getUri()->getPath(), '/'), ['/dat-hang-thanh-cong', '/khoa-hoc-da-dang-ky'], true)) {
             $this->setResponse($this->getResponse()->withHeader('Cache-Control', 'private, no-store'));
         }
 

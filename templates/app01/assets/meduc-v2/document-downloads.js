@@ -39,7 +39,11 @@
       const file = context?.files.find((item) => item.index === index);
       const state = file?.purchase?.state;
       button.disabled = busy || !!file?.unavailable;
-      button.textContent = file?.unavailable ? 'Chưa hỗ trợ tải tệp này' : ['available','active'].includes(state) ? 'Tải tệp đã mua ↓' : state === 'pending' ? (file.purchase.reported ? 'Xem đơn chờ xác nhận' : 'Tiếp tục thanh toán') : context?.balance>0?`Tải tài liệu · Còn ${context.balance} lượt`:'Mua lượt tải';
+      if (file?.unavailable) button.textContent = 'Chưa hỗ trợ tải tệp này';
+      else if (['available','active'].includes(state)) button.textContent = 'Tải tệp đã mua ↓';
+      else if (context?.balance > 0) button.textContent = `Tải tài liệu · Còn ${context.balance} lượt`;
+      else if (state === 'pending') button.textContent = file.purchase.reported ? 'Xem đơn chờ xác nhận' : 'Tiếp tục thanh toán';
+      else button.textContent = 'Mua lượt tải';
     });
   }
   async function refreshDetail() {
@@ -59,12 +63,13 @@
       if (['available','active'].includes(file.purchase?.state)) {
         const ticket = await api('start/' + file.purchase.code, {}); download(ticket.url);
         message('Đã bắt đầu tải. Bạn có thể thử lại trong 30 phút nếu mạng bị gián đoạn.');
-      } else if (file.purchase?.state === 'pending') location.assign(file.purchase.payment_url);
-      else if(context.balance>0){
+      } else if(context.balance>0){
         const ticket=await api('start-credit',{article:detail.dataset.readingId,index});download(ticket.url);
         message('Đang tải. Mỗi lần bấm tải mới dùng 1 lượt. Nếu bị gián đoạn, bạn có thể tiếp tục trong mục Tải xuống của trình duyệt trong 30 phút.');
         [1500,5000,12000].forEach(ms=>setTimeout(()=>refreshDetail().catch(()=>{}),ms));
-      }else {
+      } else if (file.purchase?.state === 'pending') {
+        location.assign(file.purchase.payment_url);
+      } else {
         const voucher = window.MeducVouchers
           ? await window.MeducVouchers.review({source:'package', packageId:selectedPackage, courseIds:[]}, trigger)
           : {};

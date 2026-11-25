@@ -92,6 +92,7 @@ final class ShopOrders
                 'reported_at' => $method === BANK ? $now : null, 'created_at' => $now, 'updated_at' => $now,
                 'context_json' => json_encode([
                     'payment_method' => $method, 'items' => $items, 'discounts' => $voucher['discounts'],
+                    'purchase_gifts' => PurchaseGifts::shopTerms(),
                 ], JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
             ]);
             Vouchers::recordUses('order', $orderId, $customerId, $voucher['discounts']);
@@ -257,6 +258,7 @@ final class ShopOrders
             'totalQuantity' => array_sum(array_column($context['items'] ?? [], 'quantity')),
             'cartProducts' => json_encode($context['items'] ?? [], JSON_UNESCAPED_UNICODE),
             'voucher_discounts' => $context['discounts'] ?? [],
+            'has_purchase_gift' => !empty($context['purchase_gifts']),
             'paid' => (bool)$order['approved_at'] && CommercePurchases::paid($order),
             'cancelled' => $order['order_status'] === CANCEL || (bool)$order['order_deleted'],
         ];

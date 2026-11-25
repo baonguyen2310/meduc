@@ -51,7 +51,13 @@
           {/capture}
           {if $list.course_type=='document'}{$smarty.capture.mpr_plan_price}{/if}
           {if $video_board && $p.duration_months}<p class="mpr-duration">Quyền học {$p.duration_months} tháng</p>{/if}
-          <ul class="mpr-benefits">{foreach $p.lines as $line}<li><span class="mpr-benefit-check" aria-hidden="true">✓</span><span>{$line|escape}</span></li>{/foreach}</ul>
+          <ul class="mpr-benefits">
+            {foreach $p.lines as $line}<li><span class="mpr-benefit-check" aria-hidden="true">✓</span><span>{$line|escape}</span></li>{/foreach}
+            {if $video_board}
+              <li><span class="mpr-benefit-check" aria-hidden="true">✓</span><span><strong>Tặng {$p.course_count*$gift_downloads} lượt tải</strong>{if $p.course_count > 1} · {$gift_downloads} lượt mỗi môn{else} tài liệu đúng môn{/if}</span></li>
+              <li><span class="mpr-benefit-check" aria-hidden="true">✓</span><span><strong>Tặng {$gift_quiz_months} tháng Đề thi</strong> {if $p.course_count > 1}cho mỗi môn{else}cùng môn{/if}</span></li>
+            {/if}
+          </ul>
           {if $list.course_type!='document'}
             <div class="mpr-choice">
               <div class="mpr-choice-head"><strong data-plan-count aria-live="polite">Đã chọn {if $from}1{else}0{/if}/{$p.course_count} môn</strong><button type="button" data-edit-plan="{$p.id}" aria-haspopup="dialog">Chọn thêm <span aria-hidden="true">+</span></button></div>

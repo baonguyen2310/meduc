@@ -18,7 +18,7 @@ class CheckoutHelper extends Helper
         $snapshot = json_decode((string)($row['course_price_snapshot'] ?? ''), true) ?: [];
         $original = (float)($snapshot['package']['price'] ?? $order['total_origin'] ?? $amount);
         return ['amount'=>$amount, 'original'=>max($original, $amount), 'package'=>$snapshot['package']??[],
-            'discounts'=>$snapshot['vouchers']['discounts']??[]];
+            'discounts'=>$snapshot['vouchers']['discounts']??[], 'gifts'=>$snapshot['purchase_gifts']??[]];
     }
     public function paymentCatalog(array $order): string
     {

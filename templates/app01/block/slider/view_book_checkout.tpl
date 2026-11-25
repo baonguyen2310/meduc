@@ -18,6 +18,7 @@
         <div class="mco-panel-heading"><h2>Thanh toán</h2></div><p class="mco-order-code">Mã đơn <strong data-cart-code></strong></p>
         {$this->element('../Order/meduc_payment', ['payment_purpose'=>'book', 'allow_cod'=>true])}
         <div data-shop-vouchers hidden></div>
+        <p class="mco-payment-note"><strong>Quà mỗi đơn</strong> · 3 lượt tải tài liệu dùng chung và 1 tháng Đề thi môn liên quan.</p>
         <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong data-cart-total></strong><del data-cart-subtotal></del></div></div>
         <p class="mco-help">Phí vận chuyển được MedUC xác nhận khi liên hệ giao hàng.</p>
         <p class="mco-payment-note" data-payment-note></p>

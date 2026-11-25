@@ -41,6 +41,11 @@ final class CommercePurchases
                 $affiliate = Vouchers::affiliateTerms($voucher['partner']['code'] ?? '', (int)$customer['id'], $voucher['total']);
             }
             $p=$quote['package'];$kind=$p['course_type'];$items=[];$count=count($quote['courses']);$remaining=$quote['amount'];
+            $giftTerms = PurchaseGifts::courseTerms($quote);
+            if ($giftTerms) {
+                $quote['purchase_gifts'] = $giftTerms;
+                $context['purchase_gifts'] = $giftTerms;
+            }
             foreach($quote['courses'] as $i=>$course){$price=$i===$count-1?$remaining:intdiv($quote['amount'],$count);$remaining-=$price;
                 $items[]=['product_id'=>(int)$course['id'],'product_item_id'=>(int)$course['item_id'],'quantity'=>1,'price'=>$price,'vat_value'=>0];}
             if($kind==='document'){
@@ -78,6 +83,7 @@ final class CommercePurchases
             $p=self::get($id,true);$db=self::db();$now=time();
             $db->execute('SELECT id FROM customers WHERE id=? FOR UPDATE',[$p['customer_id']])->fetch();
             if (self::paid($p)) {
+                if (!$p['approved_at']) PurchaseGifts::grant($p, $now);
                 $db->execute("UPDATE commerce_purchases SET approved_at=COALESCE(approved_at,?),
                     fulfilled_at=CASE WHEN kind='shop' THEN fulfilled_at ELSE COALESCE(fulfilled_at,?) END,updated_at=? WHERE order_id=?",
                     [$now,$now,$now,$id]);

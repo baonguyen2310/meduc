@@ -14,6 +14,9 @@
           <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn</h2><a href="/bang-bao-gia">Chọn thêm</a></div>
             {if !empty($prices.package.name)}<p class="mco-payment-note"><strong>{$prices.package.name|escape}</strong>{if !empty($prices.package.duration_months)} · Quyền học {$prices.package.duration_months} tháng, tính từ khi được duyệt.{/if}</p>{/if}
             {$this->element('../Order/meduc_products')}
+            {if $prices.gifts}
+              <p class="mco-payment-note"><strong>Quà theo môn</strong> · Mỗi môn được tặng {$prices.gifts[0].download_credits} lượt tải tài liệu và {$prices.gifts[0].quiz_months} tháng Đề thi cùng môn.</p>
+            {/if}
           </section>
         </div>
         <aside class="mco-sidebar"><section class="mco-panel mco-payment">

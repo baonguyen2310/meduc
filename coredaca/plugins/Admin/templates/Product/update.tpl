@@ -360,6 +360,13 @@
                     </select>
                     <small class="form-text text-muted">Áp dụng cho sản phẩm thuộc danh mục khoá học. Hai loại video không có bài tập. Trắc nghiệm tự tạo 2 bài tập cho mỗi bài khi lưu: bài 1 miễn phí (30 câu), bài 2 trả phí một lần theo môn. Đề Fa giữ riêng trong admin.</small>
                 </div>
+                {if isset($shop_gift_options)}
+                    <div class="form-group">
+                        <label for="purchase-gift-quiz">Môn Đề thi tặng kèm</label>
+                        {$this->Form->select('purchase_gift_quiz_id', $shop_gift_options, ['id'=>'purchase-gift-quiz','empty'=>'Chưa gắn môn','default'=>$shop_gift_quiz_id,'class'=>'form-control'])}
+                        <small class="form-text text-muted">Đơn Shop đã thanh toán đủ được tặng 3 lượt tải và 1 tháng Đề thi. Chọn môn liên quan đến sản phẩm này.</small>
+                    </div>
+                {/if}
                 {if !empty($show_teacher_assignment)}
                     <div class="form-group"><label for="course-price-list">Bảng báo giá</label><input type="hidden" name="course_price_assignment" value="1">{$this->Form->select('course_price_list_id', $course_price_options, ['id'=>'course-price-list','empty'=>'Chưa gán bảng báo giá','default'=>$course_price_list_id,'class'=>'form-control'])}<small class="form-text text-muted">Mỗi môn thuộc một bảng báo giá. <a href="{ADMIN_PATH}/course-prices">Quản lý bảng báo giá</a></small></div>
                     <div class="row">

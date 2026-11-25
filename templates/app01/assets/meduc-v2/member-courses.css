@@ -54,6 +54,23 @@ html[data-meduc-theme="light"] .member-courses { --member-courses-hero: #f6f4f0;
   font-weight: 600;
 }
 .member-courses-credits a:hover { text-decoration: underline; }
+.member-course-credit-breakdown { margin: 7px 0 0; padding: 0; list-style: none; color: var(--mcl-muted); font-size: 13px; }
+.member-course-gifts {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  border: 1px solid var(--mcl-line);
+  border-radius: 10px;
+  background: var(--mcl-surface);
+}
+.member-course-gifts h2 { margin: 0; font: 650 18px/1.4 Inter, Arial, sans-serif; }
+.member-course-gift { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding-top: 12px; border-top: 1px solid var(--mcl-line); }
+.member-course-gift p, .member-course-gift-notice, .member-course-expiry { margin: 0; color: var(--mcl-muted); font-size: 13px; }
+.member-course-gift-notice.is-error { color: var(--mcl-red); }
+.member-course-gift form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; max-width: 100%; }
+.member-course-gift select { min-height: 40px; max-width: 100%; padding: 6px 8px; border: 1px solid var(--mcl-line); border-radius: 6px; background: var(--mcl-input); color: var(--mcl-ink); }
+.member-course-gifts .mcl-register { min-height: 40px; padding: 7px 11px; }
 .member-courses-nav { border-block: 1px solid var(--mcl-line); }
 .member-courses-tabs { display: flex; gap: clamp(22px, 4vw, 55px); }
 .member-courses-tabs a {

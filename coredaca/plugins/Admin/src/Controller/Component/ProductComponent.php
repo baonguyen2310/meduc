@@ -22,6 +22,8 @@ class ProductComponent extends Component
 
     public function saveProduct($data_save = [], $id = null, $product_old = [])
     {
+        $giftQuiz = $data_save['purchase_gift_quiz_id'] ?? null;
+        unset($data_save['purchase_gift_quiz_id']);
         $result = [];
         $products_table = TableRegistry::get('Products');
         $products_item_table = TableRegistry::get('ProductsItem');        
@@ -141,6 +143,7 @@ class ProductComponent extends Component
             }
 
             \App\Service\CourseTypes::syncLessons((int)$save->id);
+            if ($giftQuiz !== null) \App\Service\PurchaseGiftSubjects::assignShopProduct((int)$save->id, $giftQuiz);
             $conn->commit();            
             return $this->System->getResponse([
                 CODE => SUCCESS, 

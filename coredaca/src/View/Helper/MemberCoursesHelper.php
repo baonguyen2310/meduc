@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use App\Service\DocumentCredits;
+use App\Service\PurchaseGifts;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\View\Helper;
@@ -32,15 +33,26 @@ class MemberCoursesHelper extends Helper
             }, self::GROUPS),
             'active_kind' => $selected ?? 'knowledge',
             'credits' => null,
+            'credit_balances' => null,
+            'pending_gifts' => [],
+            'gift_notice' => null,
             'courses_unavailable' => false,
         ];
 
         if (!$result['signed_in']) return $result;
 
+        $session = $this->getView()->getRequest()->getSession();
+        $result['gift_notice'] = $session->consume('PurchaseGifts.notice');
         try {
-            $result['credits'] = DocumentCredits::balance($customerId);
+            $result['credit_balances'] = DocumentCredits::balances($customerId);
+            $result['credits'] = $result['credit_balances']['total'];
         } catch (Throwable $exception) {
             Log::error('Member courses document balance: ' . $exception->getMessage());
+        }
+        try {
+            $result['pending_gifts'] = PurchaseGifts::pendingQuizGifts($customerId);
+        } catch (Throwable $exception) {
+            Log::error('Member courses purchase gifts: ' . $exception->getMessage());
         }
 
         try {
@@ -65,7 +77,8 @@ class MemberCoursesHelper extends Helper
 
     private function courseCards(): array
     {
-        $ids = array_keys($this->Member->getCourseAccessList());
+        $access = $this->Member->getCourseAccessList();
+        $ids = array_keys($access);
         if (!$ids) return [];
 
         $products = TableRegistry::get('Products');
@@ -88,11 +101,15 @@ class MemberCoursesHelper extends Helper
 
             $product = $products->formatDataProductDetail($row, LANGUAGE);
             if (empty($product['name']) || empty($product['url'])) continue;
+            $rights = $access[(int)$product['id']];
+            $expiry = empty($rights['class_room_id']) ? (int)$rights['expires_at'] : 0;
             $groups[$kind][] = [
                 'id' => $product['id'],
                 'name' => $product['name'],
                 'url' => $product['url'],
                 'image' => $product['all_images'][0] ?? null,
+                'expiry' => $expiry ? (new \DateTimeImmutable('@' . $expiry))
+                    ->setTimezone(new \DateTimeZone('Asia/Ho_Chi_Minh'))->format('d/m/Y') : '',
             ];
         }
         return $groups;
