@@ -63,7 +63,7 @@ final class ShopOrders
                     'product_id' => $item['product_id'],
                     'product_item_id' => $item['id'],
                     'quantity' => $item['quantity'],
-                    'price' => $item['price_special'],
+                    'price' => $item['unit_price'] ?? $item['price_special'],
                     'vat_value' => 0,
                 ];
             }
@@ -239,6 +239,28 @@ final class ShopOrders
         $order = CommercePurchases::get($orderId);
         return $order && $order['kind'] === 'shop' && (int)$order['order_customer'] === $customerId
             && (int)$order['customer_id'] === $customerId ? self::formatReceipt($order) : [];
+    }
+
+    /** Names to embroider on a Shop order, from the cart saved with the order. */
+    public static function embroidery(int $orderId): array
+    {
+        if ($orderId < 1 || !CommercePurchases::installed()) return [];
+        $json = CommercePurchases::db()->execute(
+            "SELECT context_json FROM commerce_purchases WHERE order_id=? AND kind='shop'", [$orderId]
+        )->fetchColumn(0);
+        $context = is_string($json) ? json_decode($json, true) : null;
+        $lines = [];
+        foreach ((array)($context['items'] ?? []) as $item) {
+            if (!is_array($item) || !is_string($item['embroidery'] ?? null) || $item['embroidery'] === '') continue;
+            $name = (string)($item['name'] ?? '');
+            $suffix = ' · Thêu tên “' . $item['embroidery'] . '”';
+            if (substr($name, -strlen($suffix)) === $suffix) $name = substr($name, 0, -strlen($suffix));
+            $lines[] = [
+                'name' => $name, 'text' => $item['embroidery'], 'quantity' => (int)($item['quantity'] ?? 0),
+                'fee' => (float)($item['embroidery_fee'] ?? 0),
+            ];
+        }
+        return $lines;
     }
 
     public static function method(array $purchase): string

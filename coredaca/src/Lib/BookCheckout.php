@@ -18,10 +18,11 @@ final class BookCheckout
         $categoryIds = self::categoryIds();
         $blouseIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => $categories->getAllChildCategoryId(BlouseProducts::CATEGORY_ID)])->all()->extract('product_id')->toList();
         $blouseIds = array_fill_keys(array_map('intval', $blouseIds), true);
-        $sizeDefinitions = $sizeOptions = [];
+        $sizeDefinitions = $sizeOptions = $embroideryFees = [];
         if ($blouseIds) {
             foreach (TableRegistry::get('Attributes')->getAll(LANGUAGE) as $attribute) $sizeDefinitions[(int)$attribute['id']] = $attribute;
             $sizeOptions = TableRegistry::get('AttributesOptions')->getAll(LANGUAGE);
+            $embroideryFees = BlouseProducts::embroideryFees(array_keys($blouseIds));
         }
         $productIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => $categoryIds])->all()->extract('product_id')->toList();
         if (!$productIds) return [];
@@ -35,9 +36,9 @@ final class BookCheckout
             $current = !empty($item['apply_special']) ? (float) $item['price_special'] : $price;
             if ($current <= 0 || empty($item['url'])) continue;
             if (isset($blouseIds[(int)$item['product_id']])) {
-                $size = BlouseProducts::size((array)($row['ProductsItemAttribute'] ?? []), $sizeOptions, $sizeDefinitions);
-                if ($size === '') continue;
-                $variant = BlouseProducts::variant($item, (string)$item['name'], (string)$item['url'], '', $size);
+                $described = BlouseProducts::describe((array)($row['ProductsItemAttribute'] ?? []), $sizeOptions, $sizeDefinitions);
+                if (!$described) continue;
+                $variant = BlouseProducts::variant($item, (string)$item['name'], (string)$item['url'], '', $described['label'], $embroideryFees[(int)$item['product_id']] ?? 0.0);
                 $result[$item['id']] = array_merge($variant['cart'], ['product_id'=>(int)$item['product_id'], 'maximum'=>$variant['maximum'], 'discount_percent'=>$variant['discount']]);
                 continue;
             }
@@ -55,19 +56,35 @@ final class BookCheckout
     {
         if (!$items || count($items) > 100) throw new \InvalidArgumentException('Vui lòng kiểm tra lại giỏ hàng.');
         $catalog = self::catalog();
-        $result = [];
+        $result = $ordered = [];
         foreach ($items as $item) {
             if (!is_array($item)) throw new \InvalidArgumentException('Dữ liệu sản phẩm không hợp lệ.');
             $id = filter_var($item['id'] ?? null, FILTER_VALIDATE_INT);
             $quantity = filter_var($item['quantity'] ?? null, FILTER_VALIDATE_INT);
-            if (!$id || !$quantity || $quantity < 1 || $quantity > 999 || empty($catalog[$id]) || isset($result[$id])) {
+            // One SKU may appear on several lines, one per name to embroider.
+            $embroidery = BlouseProducts::embroideryText($item['embroidery'] ?? '');
+            $line = $id . "\n" . $embroidery;
+            if (!$id || !$quantity || $quantity < 1 || $quantity > 999 || empty($catalog[$id]) || isset($result[$line])) {
                 throw new \InvalidArgumentException('Sản phẩm hoặc số lượng không hợp lệ. Vui lòng tải lại giỏ hàng.');
             }
             $product = $catalog[$id];
-            BlouseProducts::assertQuantity($product, $quantity);
+            $fee = (float)($product['embroidery_fee'] ?? 0);
+            if ($embroidery !== '' && $fee <= 0) {
+                throw new \InvalidArgumentException('Mẫu áo đã chọn chưa nhận thêu tên. Vui lòng xoá tên thêu trong giỏ hàng.');
+            }
+            $ordered[$id] = ($ordered[$id] ?? 0) + $quantity;
+            BlouseProducts::assertQuantity($product, $ordered[$id]);
             $product['quantity'] = $quantity;
-            $product['total'] = $product['price_special'] * $quantity;
-            $result[$id] = $product;
+            if ($embroidery !== '') {
+                $product['name'] .= ' · Thêu tên “' . $embroidery . '”';
+                $product['embroidery'] = $embroidery;
+            } else {
+                $fee = 0.0;
+            }
+            $product['embroidery_fee'] = $fee;
+            $product['unit_price'] = $product['price_special'] + $fee;
+            $product['total'] = $product['unit_price'] * $quantity;
+            $result[$line] = $product;
         }
         return array_values($result);
     }

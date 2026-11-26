@@ -1,0 +1,70 @@
+/* Shared MedUC book-store visual language, with explicit size selection for clothing. */
+.mbl .mbc-hero-inner { gap:55px; }
+.mbl h1 { font-size:clamp(48px,4.8vw,72px); }
+.mbl-illustration { position:relative; display:grid; place-items:center; height:380px; isolation:isolate; }
+.mbl-illustration-disc { position:absolute; inset:15px 0; z-index:-1; border-radius:50%; background:#5c4535; }
+html[data-meduc-theme="light"] .mbl-illustration-disc { background:#eae0d0; }
+.mbl-illustration>svg { height:100%; width:100%; max-width:350px; filter:drop-shadow(0 12px 12px #0002); transform:rotate(-5deg); }
+.mbl-art-caption { position:absolute; right:0; bottom:15px; border:1px solid var(--mbc-line); border-radius:8px; padding:14px 20px; background:var(--mbc-surface); font-size:10px; font-weight:700; letter-spacing:.08em; box-shadow:0 8px 22px #0001; }
+.mbl-products { margin-top:35px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.mbl-empty { margin-top:35px; background:var(--mbc-soft); border-style:solid; }
+.mbl .mbc-cover { height:330px; }
+.mbl-detail [hidden] { display:none !important; }
+.mbl-detail .mbd-stage { padding:0; background:#fff; }
+.mbl-detail .mbd-picture img { object-fit:contain; filter:none; }
+.mbl-detail .mbd-thumbnails>button { background:#fff; padding:2px; }
+.mbl-size-picker { border:0; padding:0; margin:0 0 22px; }
+.mbl-size-picker legend { font:600 13px/1.5 Inter,Arial,sans-serif; margin:0 0 12px; padding:0; color:var(--mbd-ink); }
+.mbl-size-picker legend>span { color:var(--mbd-red); }
+.mbl-sizes { display:flex; flex-wrap:wrap; gap:10px; }
+.mbl-sizes button { min-width:56px; min-height:46px; padding:10px 14px; border:1px solid var(--mbd-line); border-radius:6px; background:var(--mbd-surface); color:var(--mbd-ink); font:600 14px/1.4 Inter,Arial,sans-serif; cursor:pointer; }
+.mbl-sizes button[aria-pressed="true"] { border-color:var(--mbd-red); background:var(--mbd-red); color:#fff; box-shadow:0 4px 14px #bd263a22; }
+.mbl-sizes button:disabled { opacity:.5; cursor:default; }
+.mbl-sizes button small { display:block; margin-top:3px; font-size:9px; font-weight:400; }
+.mbl-size-help { color:var(--mbd-muted); font:400 12px/1.8 Inter,Arial,sans-serif; margin-top:20px; }
+.mbl-information { padding-block:0 60px; }
+.mbl-detail .mbd-stock { font-size:12px; }
+@media(max-width:991.98px) { .mbl-illustration { height:310px; } .mbl h1 { font-size:clamp(44px,5vw,60px); } .mbl-products { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:767.98px) { .mbl .mbc-hero-inner { gap:24px; } .mbl h1 { font-size:clamp(43px,10vw,62px); } .mbl-illustration { width:min(100%,400px); height:300px; margin:auto; } .mbl-art-caption { font-size:9px; padding:12px 16px; } .mbl .mbc-cover { height:270px; } .mbl-information { padding-bottom:40px; } }
+@media(max-width:479.98px) { .mbl-products { grid-template-columns:1fr; } }
+
+.mbl-image-note { margin:0 0 10px; color:var(--mbc-muted); font:400 11px/1.5 Inter,Arial,sans-serif; }
+
+/* Variant picker: Kiểu dáng · Màu · Size, then the optional name embroidery. */
+.mbl-detail .mbl-price { margin-top:16px; }
+.mbl-detail .mbl-price-extra { margin:4px 0 0; color:var(--mbd-muted); font-size:12px; }
+.mbl-detail .mbl-buy-box { margin-top:22px; }
+.mbl-option { min-width:0; border:0; padding:0; margin:0 0 22px; }
+.mbl-option legend { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; width:100%; margin:0 0 11px; padding:0; color:var(--mbd-ink); font:700 11px/1.5 Inter,Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.mbl-option legend strong { color:var(--mbd-muted); font-weight:500; letter-spacing:0; text-transform:none; font-size:13px; }
+.mbl-option legend a { margin-left:auto; color:var(--mbd-red); font-weight:600; letter-spacing:.04em; text-decoration:underline; text-underline-offset:3px; }
+.mbl-choices { display:flex; flex-wrap:wrap; gap:10px; }
+.mbl-option--choice .mbl-choices { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); }
+.mbl-option--size .mbl-choices { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; }
+.mbl-choice { min-height:44px; padding:8px 10px; border:1px solid var(--mbd-line); border-radius:6px; background:var(--mbd-surface); color:var(--mbd-ink); font:600 14px/1.3 Inter,Arial,sans-serif; cursor:pointer; }
+.mbl-choice:hover:not(:disabled) { border-color:var(--mbd-red); }
+.mbl-choice[aria-pressed="true"] { border-color:var(--mbd-red); background:var(--mbd-red); color:#fff; box-shadow:0 4px 14px #bd263a22; }
+.mbl-choice:disabled { opacity:.45; cursor:default; text-decoration:line-through; }
+.mbl-choice small { display:block; margin-top:2px; font-size:9px; font-weight:400; text-decoration:none; }
+.mbl-choice small:empty { display:none; }
+.mbl-swatch { position:relative; width:36px; height:36px; padding:0; border:1px solid var(--mbd-line); border-radius:50%; background:transparent; cursor:pointer; }
+.mbl-swatch>span { position:absolute; inset:4px; border-radius:50%; background:var(--mbl-swatch,#999); box-shadow:inset 0 0 0 1px #0002; }
+.mbl-swatch[aria-pressed="true"] { border:2px solid var(--mbd-ink); }
+.mbl-swatch:disabled { opacity:.35; cursor:default; }
+.mbl-swatch:disabled::after { content:""; position:absolute; top:50%; left:4px; right:4px; height:1px; background:var(--mbd-ink); transform:rotate(-45deg); }
+.mbl-embroidery { margin:0 0 20px; }
+.mbl-embroidery label { display:block; margin:0 0 10px; color:var(--mbd-ink); font:700 11px/1.5 Inter,Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.mbl-embroidery label span { color:var(--mbd-muted); font-weight:500; letter-spacing:0; text-transform:none; }
+.mbl-embroidery input { width:100%; min-height:46px; padding:10px 14px; border:1px solid var(--mbd-line); border-radius:6px; background:var(--mbd-bg); color:var(--mbd-ink); font:400 15px/1.5 Inter,Arial,sans-serif; }
+.mbl-embroidery input:focus { outline:none; border-color:var(--mbd-red); }
+.mbl-embroidery input[aria-invalid="true"] { border-color:var(--mbd-red); }
+.mbl-embroidery p { margin:7px 0 0; color:var(--mbd-muted); font-size:12px; }
+.mbl-detail .mbl-embroidery .mbl-embroidery-error { color:var(--mbd-red); }
+.mbl-detail .mbl-size-help a { color:var(--mbd-red); text-decoration:underline; }
+@media(max-width:479.98px) { .mbl-option--size .mbl-choices { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+/* Size charts for women and men side by side. */
+.mbl-detail #blouse-size-guide { scroll-margin-top:calc(var(--mhi-header-h,66px) + 20px); }
+.mbl-detail #blouse-size-guide .mbd-rich { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px 18px; }
+@media(max-width:640px) { .mbl-detail #blouse-size-guide .mbd-rich { grid-template-columns:1fr; } }
+.mbl-detail #blouse-size-guide .mbd-rich>:not(:has(img)) { grid-column:1 / -1; }
+.mbl-detail #blouse-size-guide img { display:block; width:100%; max-width:560px; height:auto; margin:0 auto; border-radius:6px; }

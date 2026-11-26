@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261028-sticky" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/equipment-catalog.css?v=20261117" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261117-catalog" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart-20261126.js" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.js?v=20261117-catalog" defer></script>
 
 <main class="mbc mec" id="equipment-catalog-page" data-shop-catalog data-product-label="thiết bị" data-product-noun="thiết bị" data-cart-label="giỏ hàng">
