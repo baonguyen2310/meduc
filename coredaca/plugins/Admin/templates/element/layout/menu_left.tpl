@@ -358,6 +358,8 @@
                     </li>
                 {/if}
 
+                {if $access_product || $access_product_add}<li class="kt-menu__item kt-menu__item--submenu"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-icon"><i class="fas fa-tshirt"></i></span><span class="kt-menu__link-text">Áo blouse</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a><div class="kt-menu__submenu"><ul class="kt-menu__subnav">{if $access_product_add}<li class="kt-menu__item"><a href="{$link_product_add}?cate=997" class="kt-menu__link"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Thêm mới</span></a></li>{/if}{if $access_product}<li class="kt-menu__item"><a href="{$link_product}?cate=997" class="kt-menu__link"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Danh sách</span></a></li>{/if}</ul></div></li>{/if}
+
                 {* menu đơn hàng *}
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">

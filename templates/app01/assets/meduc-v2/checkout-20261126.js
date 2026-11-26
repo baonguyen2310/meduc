@@ -88,32 +88,47 @@
  function url(value){const path=String(value||'');return /^\/?[a-z0-9][a-z0-9_/-]*(?:\.html)?$/i.test(path)?'/'+path.replace(/^\/+/,''):'/sach-y-khoa';}
  function render(){
    const fragments=document.createDocumentFragment();let total=0,subtotal=0,count=0,unavailable=false;
-   cart.cartProducts=cart.cartProducts.filter(stored=>stored&&typeof stored==='object').map(stored=>{const item=catalog[stored.id],maximum=item?.maximum===undefined?999:Math.max(0,Math.min(999,Number(item.maximum))),quantity=Math.max(1,Math.min(maximum||1,Math.floor(Number(stored.quantity)||1)));return item?{...item,quantity,unavailable:maximum===0}:{id:stored.id,name:'Sản phẩm không còn được mở bán',quantity,unavailable:true};});
+   const ordered={};
+   cart.cartProducts=cart.cartProducts.filter(stored=>stored&&typeof stored==='object').map(stored=>{
+     const item=catalog[stored.id],embroidery=typeof stored.embroidery==='string'?stored.embroidery:'';
+     const stock=item?.maximum===undefined?999:Math.max(0,Math.min(999,Number(item.maximum))),used=ordered[stored.id]||0;
+     const maximum=Math.max(0,stock-used),quantity=Math.max(1,Math.min(maximum||1,Math.floor(Number(stored.quantity)||1)));
+     ordered[stored.id]=used+quantity;
+     if(!item)return {id:stored.id,name:'Sản phẩm không còn được mở bán',quantity,embroidery,unavailable:true};
+     const fee=embroidery?Math.max(0,Number(item.embroidery_fee)||0):0;
+     const line={...item,quantity,stock,embroidery_fee:fee,unavailable:maximum===0||(!!embroidery&&!fee)};
+     if(embroidery)line.embroidery=embroidery;else delete line.embroidery;
+     if(embroidery&&!fee)line.notice='Mẫu này không còn nhận thêu tên. Vui lòng xóa và chọn lại.';
+     return line;
+   });
+   // Lines of one SKU share its stock: each line may grow into what the other lines leave.
+   for(const line of cart.cartProducts)if(line.stock!==undefined)line.maximum=Math.max(0,line.stock-((ordered[line.id]||0)-line.quantity));
+   const keyOf=item=>window.MeducBookCart?.lineKey?window.MeducBookCart.lineKey(item):String(item.id)+'\n'+(item.embroidery||'');
    for(const item of cart.cartProducts){
-     const row=element('article','mco-cart-item');row.dataset.itemId=String(item.id);const picture=element('a','mco-cart-picture');picture.href=url(item.url);picture.tabIndex=-1;picture.setAttribute('aria-hidden','true');
+     const row=element('article','mco-cart-item');row.dataset.itemId=String(item.id);row.dataset.lineKey=keyOf(item);const picture=element('a','mco-cart-picture');picture.href=url(item.url);picture.tabIndex=-1;picture.setAttribute('aria-hidden','true');
      if(item.image){const img=element('img');img.src=String(item.image).startsWith('/')?page.dataset.cdn+item.image:item.image;img.alt='';picture.append(img);}else picture.textContent='MedUC';
-     const copy=element('div','mco-cart-copy'),title=element('h3'),link=element('a',null,item.name);link.href=url(item.url);title.append(link);copy.append(title);
+     const copy=element('div','mco-cart-copy'),title=element('h3'),link=element('a',null,item.name);link.href=url(item.url);title.append(link);copy.append(title);if(item.embroidery){const note=element('p','mco-item-note');note.append('Thêu tên: ',element('strong',null,`“${item.embroidery}”`),item.embroidery_fee?` · +${money(item.embroidery_fee)}/áo`:'');copy.append(note);}
      const bottom=element('div','mco-item-bottom'),controls=element('div','mco-item-controls'),qty=element('div','mco-quantity');
-     const maximum=item.maximum===undefined?999:Math.max(0,Math.min(999,Number(item.maximum)));
+     const maximum=Math.max(0,Math.min(999,Number(item.maximum??999)));
      const minus=element('button',null,'−'),plus=element('button',null,'+'),input=element('input');minus.type=plus.type='button';minus.setAttribute('aria-label','Giảm số lượng '+item.name);plus.setAttribute('aria-label','Tăng số lượng '+item.name);minus.disabled=item.quantity<=1;plus.disabled=item.quantity>=maximum;
      input.type='number';input.min=1;input.max=maximum||1;input.disabled=!!item.unavailable;input.step=1;input.value=item.quantity;input.setAttribute('aria-label','Số lượng '+item.name);
-     function update(quantity,source){item.quantity=Math.max(1,Math.min(maximum||1,Math.floor(Number(quantity)||1)));if(save()){render();const current=[...list.querySelectorAll('.mco-cart-item')].find(row=>row.dataset.itemId===String(item.id));if(current){const target=current.querySelector(source);if(target&&!target.disabled)target.focus();}}}
+     function update(quantity,source){item.quantity=Math.max(1,Math.min(maximum||1,Math.floor(Number(quantity)||1)));if(save()){render();const current=[...list.querySelectorAll('.mco-cart-item')].find(row=>row.dataset.lineKey===keyOf(item));if(current){const target=current.querySelector(source);if(target&&!target.disabled)target.focus();}}}
      minus.addEventListener('click',()=>update(item.quantity-1,'.mco-quantity>button:first-child'));plus.addEventListener('click',()=>update(item.quantity+1,'.mco-quantity>button:last-child'));input.addEventListener('change',()=>update(input.value,'.mco-quantity>input'));qty.append(minus,input,plus);
-     const remove=element('button','mco-remove','Xóa');remove.type='button';remove.setAttribute('aria-label','Xóa '+item.name);remove.addEventListener('click',()=>{cart.cartProducts=cart.cartProducts.filter(product=>String(product.id)!==String(item.id));if(save()){render();announce('Đã xóa sản phẩm khỏi giỏ hàng.');}});controls.append(qty,remove);bottom.append(controls);
-     const prices=element('div','mco-item-prices');if(item.unavailable){unavailable=true;prices.append(element('span',null,'Vui lòng xóa sản phẩm này.'));}else{total+=item.price_special*item.quantity;subtotal+=item.price*item.quantity;count+=item.quantity;prices.append(element('strong',null,money(item.price_special*item.quantity)));if(item.price>item.price_special)prices.append(element('del',null,money(item.price*item.quantity)));}
+     const remove=element('button','mco-remove','Xóa');remove.type='button';remove.setAttribute('aria-label','Xóa '+item.name);remove.addEventListener('click',()=>{cart.cartProducts=cart.cartProducts.filter(product=>keyOf(product)!==keyOf(item));if(save()){render();announce('Đã xóa sản phẩm khỏi giỏ hàng.');}});controls.append(qty,remove);bottom.append(controls);
+     const prices=element('div','mco-item-prices');if(item.unavailable){unavailable=true;prices.append(element('span',null,item.notice||'Vui lòng xóa sản phẩm này.'));}else{const extra=Number(item.embroidery_fee)||0,unit=item.price_special+extra,listed=item.price+extra;total+=unit*item.quantity;subtotal+=listed*item.quantity;count+=item.quantity;prices.append(element('strong',null,money(unit*item.quantity)));if(listed>unit)prices.append(element("del",null,money(listed*item.quantity)));}
      bottom.append(prices);copy.append(bottom);row.append(picture,copy);fragments.append(row);
    }
    list.replaceChildren(fragments);form.hidden=!cart.cartProducts.length||!owner;empty.hidden=cart.cartProducts.length>0;
    page.querySelector('[data-cart-code]').textContent=cart.cartId;page.querySelector('[data-payment-reference]').textContent=cart.cartId;
    page.querySelector('[data-cart-count]').textContent=`(${count})`;page.querySelector('[data-cart-subtotal]').textContent=money(subtotal);page.querySelector('[data-cart-total]').textContent=money(total);page.querySelector('[data-cart-subtotal]').hidden=subtotal<=total;
-   page.querySelector('[data-cart-input]').value=JSON.stringify(cart.cartProducts.map(({id,quantity,name})=>({id,quantity,name})));page.querySelector('[data-cart-id-input]').value=cart.cartId;page.querySelector('[data-cart-total-input]').value=total;
+   page.querySelector('[data-cart-input]').value=JSON.stringify(cart.cartProducts.map(({id,quantity,name,embroidery})=>embroidery?{id,quantity,name,embroidery}:{id,quantity,name}));page.querySelector('[data-cart-id-input]').value=cart.cartId;page.querySelector('[data-cart-total-input]').value=total;
    document.querySelectorAll('[nh-mini-cart-book-quantity]').forEach(counter=>{counter.textContent=cart.cartProducts.length;});
    unavailableItems=unavailable;
    saleTotal=total;
    error.hidden=!unavailable;submit.disabled=unavailable;
    if(unavailable)fail('Có sản phẩm không còn mở bán. Vui lòng xóa sản phẩm đó để tiếp tục.');
    if(voucherPanel && owner && cart.cartProducts.length && !unavailable) {
-     voucherPanel.refresh({source:'shop',items:cart.cartProducts.map(({id,quantity})=>({id,quantity}))});
+     voucherPanel.refresh({source:'shop',items:cart.cartProducts.map(({id,quantity,embroidery})=>embroidery?{id,quantity,embroidery}:{id,quantity})});
    }
    save();
  }

@@ -81,7 +81,7 @@ class CheckoutHelper extends Helper
         }
         if (!$physical) return true;
         $categories = TableRegistry::get('Categories');
-        $categoryIds = array_unique(array_merge([79, 80], $categories->getAllChildCategoryId(79), $categories->getAllChildCategoryId(80)));
+        $categoryIds = \App\Lib\BlouseProducts::physicalCategoryIds();
         $bookIds = TableRegistry::get('CategoriesProduct')->find()
             ->where(['product_id IN' => $physical, 'category_id IN' => $categoryIds])
             ->all()->extract('product_id')->toList();

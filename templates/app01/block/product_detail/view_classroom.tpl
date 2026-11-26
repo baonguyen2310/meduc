@@ -577,6 +577,7 @@
                                                     <p class="mcr-quiz-kicker">{if $quiz_course && !$lesson.exam}Phần{elseif $lesson.exam}Đề thi thử{else}Bài tập trắc nghiệm{/if}{if $quiz_total > 1} {$quiz@iteration}/{$quiz_total}{/if}{if !$licensed && $quiz.free}<span class="mcr-quiz-free">Làm thử miễn phí</span>{/if}</p>
                                                     <h3>{if $quiz_course && !$lesson.exam}Phần {$quiz@iteration} · {$lesson.title|escape}{else}{$quiz_info.name|escape}{/if}</h3>
                                                     {if $quiz_info.school}<p class="mcr-quiz-school">{$quiz_info.school|escape}</p>{/if}
+                                                    {if !empty($quiz_info.display_update)}<p class="mcr-quiz-updated">Thời gian cập nhật: <time datetime="{$quiz_info.display_update.iso_date|escape}">{$quiz_info.display_update.date|escape}</time></p>{/if}
                                                     <p>{if !$quiz.ready}Đang biên soạn{else}{$quiz_info.count} câu{/if}{if $quiz_info.minutes > 0 && !$quiz_info.read_only} · {$quiz_info.minutes} phút{/if} · {if $quiz.open}{if $quiz_info.read_only}Xem hình, đáp án và giải thích; không cần nộp bài.{elseif $quiz_course && !$lesson.exam}Làm từng câu, xem đáp án và lời giải ngay.{else}Nộp bài để xem điểm và lời giải.{/if}{else}{if $quiz_course}Đăng ký môn để mở các đề trả phí.{else}Đăng ký khoá học để làm bài tập này.{/if}{/if}</p>
                                                 </div>
                                                 <div class="mcr-quiz-actions">

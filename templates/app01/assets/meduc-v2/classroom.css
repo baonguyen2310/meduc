@@ -260,6 +260,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-quiz-card { display: flex; flex-wrap:wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 24px; border: 1.5px solid var(--mcr-card-line); border-radius: 14px; background: var(--mcr-panel); }
 .mcr .mcr-quiz-card h3 { margin: 0; color: var(--mcr-ink); font: 700 18px/1.35 Inter, Arial, sans-serif; }
 .mcr-quiz-card p { margin: 6px 0 0; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
+.mcr .mcr-quiz-updated { margin-top:7px; font-size:12px; }
+.mcr-quiz-updated time { color:var(--mcr-ink); font-weight:600; font-variant-numeric:tabular-nums; }
 .mcr-quiz-card .mcr-btn { flex: none; }
 .mcr-quiz-card > div:first-child { flex:1; min-width:0; }
 .mcr-quiz-actions { display:flex; flex:none; align-items:center; gap:10px; }

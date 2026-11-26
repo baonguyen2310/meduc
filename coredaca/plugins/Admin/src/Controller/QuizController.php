@@ -10,6 +10,7 @@ use Cake\ORM\Query;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
 use App\Service\QuizExamMetadata;
+use App\Service\QuizUpdateDates;
 
 
 class QuizController extends AppController {
@@ -517,6 +518,7 @@ class QuizController extends AppController {
                 }
             }
 
+            if (!empty($id)) QuizUpdateDates::markManualUpdate((int)$save->id);
             $conn->commit();
 
             // dich tự động các ngôn ngữ khác khi thêm mới bản ghi

@@ -38,7 +38,8 @@
     function persist() { cart?.set(listId,chosen); }
     persist();
     window.addEventListener('meduc:course-cart', () => {
-      const next=stored();if (JSON.stringify(next)===JSON.stringify(chosen)) return;
+      const next=stored();
+      if (JSON.stringify(next)===JSON.stringify(chosen)) {updateCards();return;}
       chosen=next;updateCards();
       if (picker.open) {draft=[...chosen];renderCourses();}
     });
@@ -67,7 +68,11 @@
     });
 
     function updateCards() {
+      const selectedId = String(cart?.packageId(listId) || '');
       plans.forEach(p => {
+        const selected = p.id === selectedId;
+        p.el.classList.toggle('is-selected', selected);
+        p.el.querySelector('[data-register-plan]').setAttribute('aria-pressed', String(selected));
         if(kind==='document')return;
         const overflow=chosen.length>p.count;
         p.el.querySelector('[data-plan-count]').textContent = kind==='quiz'?(chosen.length?'Môn đã chọn':'Chọn 1 môn để luyện đề'):overflow ? `Đã chọn ${chosen.length} môn` : `Đã chọn ${chosen.length}/${p.count} môn`;
@@ -90,6 +95,11 @@
         });
         if (!chosen.length) { const hint = document.createElement('p'); hint.textContent = 'Thêm môn bạn muốn học.'; area.append(hint); }
       });
+    }
+    function selectPlan(id) {
+      if (!plans.has(String(id))) return;
+      cart?.choosePackage(listId, id);
+      updateCards();
     }
     function updateDraftCount() {
       picker.querySelector('[data-dialog-error]').textContent='';
@@ -142,6 +152,7 @@
     function openPicker(id, trigger) {
       plan = plans.get(String(id)); if (!plan) return;
       draft = [...chosen]; search.value = ''; year.value = preferredYear;cart?.activate(listId,plan.id);
+      updateCards();
       picker.querySelector('#mpr-dialog-title').textContent = `Chọn môn · ${plan.name}`;
       picker.querySelector('[data-dialog-error]').textContent = '';
       renderCourses(); openDialog(picker, trigger);
@@ -151,6 +162,7 @@
 
     async function openCheckout(id, trigger) {
       const p=plans.get(String(id));if(!p||busy)return;
+      selectPlan(id);
       if(chosen.length!==p.count){openPicker(id,trigger);return;}
       busy=true;error.textContent='';trigger && (trigger.disabled=true);
       try {await cart.checkout(listId,p.id,[...chosen],trigger);}

@@ -360,6 +360,7 @@ class MemberController extends AppController
         $this->set('member', $member_info);
         $this->set('order', $order_info);
         $this->set('order_discounts', OrderDiscounts::forMember($order_info, (int)$customer_id, $order['course_price_snapshot'] ?? null));
+        $this->set('order_embroidery', \App\Service\ShopOrders::embroidery((int)($order_info['id'] ?? 0)));
         $this->setResponse($this->getResponse()->withHeader('Cache-Control', 'private, no-store'));
         $this->set('title_for_layout', __d('template', 'thong_tin_don_hang'));
     }

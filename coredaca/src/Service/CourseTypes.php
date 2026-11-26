@@ -93,6 +93,7 @@ final class CourseTypes
                     $now=time();$name='Bài tập '.($i+1).' · '.trim((string)($lesson['name_vi']??'Bài học'));
                     $db->execute('INSERT INTO quizs (created,updated,status,draft,deleted,fa_only) VALUES (:now,:now,1,0,0,0)',['now'=>$now]);
                     $id=(int)$db->execute('SELECT LAST_INSERT_ID()')->fetchColumn(0);
+                    QuizUpdateDates::seed($id);
                     $db->execute("INSERT INTO quizs_content (quiz_id,name,lang,search_unicode) VALUES (:id,:name,'vi',:name)",['id'=>$id,'name'=>$name]);
                     $db->execute("INSERT INTO quizs_attribute (quiz_id,attribute_id,value) VALUES (:id,18,'[]'),(:id,19,'30')",['id'=>$id]);
                     $db->execute("INSERT INTO links (foreign_id,type,url,lang,created,updated,deleted) VALUES (:id,'quiz_detail',:url,'vi',:now,:now,0)",['id'=>$id,'url'=>'bai-tap-'.$productId.'-'.$id,'now'=>$now]);

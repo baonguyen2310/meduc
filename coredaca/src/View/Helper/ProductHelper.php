@@ -411,7 +411,7 @@ class ProductHelper extends Helper
 
         $rows = ConnectionManager::get('default')->execute(
             "SELECT q.id, c.name, JSON_LENGTH(questions.value) AS count, minutes.value AS minutes,
-                    m.school_name, m.source_quiz_type
+                    m.school_name, m.source_quiz_type, q.display_seed_date, q.content_updated_at
              FROM quizs q
              LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
@@ -427,7 +427,8 @@ class ProductHelper extends Helper
             // Empty draft slots remain visible with a disabled start button.
             $id = (int) $row['id'];
             $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes'],
-                'school' => trim((string)($row['school_name'] ?? '')), 'read_only' => ($row['source_quiz_type'] ?? '') === 'TULUAN'];
+                'school' => trim((string)($row['school_name'] ?? '')), 'read_only' => ($row['source_quiz_type'] ?? '') === 'TULUAN',
+                'display_update' => \App\Service\QuizUpdateDates::display($row)];
         }
         return $result;
     }

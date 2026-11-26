@@ -85,7 +85,7 @@
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
           <span data-course-cart-count class="mhi-cart-count">{$header_course_cart.total_quantity|default:0}</span>
         </a>
-        <a class="mhi-cart mhi-cart-book" nh-mini-cart-book href="/dat-hang" title="Giỏ hàng sách và thiết bị" aria-label="Giỏ hàng sách và thiết bị">
+        <a class="mhi-cart mhi-cart-book" nh-mini-cart-book href="/dat-hang" title="Giỏ hàng sách, thiết bị và áo blouse" aria-label="Giỏ hàng sách, thiết bị và áo blouse">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 4h2.3l2.4 11h10.6l2-8H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
           <span nh-mini-cart-book-quantity class="mhi-cart-count">0</span>
         </a>
@@ -122,7 +122,7 @@
       {foreach from = $nav_secondary key = url item = label}
         <a class="mhi-drawer-link" href="{$url|escape}">{$label|escape}</a>
       {/foreach}
-      <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách &amp; thiết bị</a>
+      <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách, thiết bị &amp; áo blouse</a>
 
       <div class="mhi-drawer-foot">
         <button class="mhi-drawer-theme" data-mhi-theme-toggle type="button" aria-label="Chuyển sang chế độ sáng" aria-pressed="true">

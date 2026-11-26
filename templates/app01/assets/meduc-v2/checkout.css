@@ -104,3 +104,4 @@ html[data-meduc-theme="light"] .mco{--co-bg:#fff;--co-panel:#fff;--co-soft:#f5f5
 .mco-payment-confirmation .mco-payment-confirmation-code strong{color:var(--co-ink)}
 .mco-payment-confirmation .mco-button{display:inline-flex;min-width:144px;max-width:100%;min-height:48px;justify-content:center;border-radius:8px;font-size:15px}
 @media(max-width:575.98px){.mco-payment-confirmation{padding:28px 22px}.mco-payment-confirmation h2{font-size:22px}}
+.mco .mco-item-note{margin:-4px 0 12px;color:var(--co-muted);font-size:12px;line-height:1.6}.mco .mco-item-note strong{color:var(--co-ink);font-weight:600}

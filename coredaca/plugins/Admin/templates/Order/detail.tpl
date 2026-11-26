@@ -169,6 +169,20 @@
                                         </span>
                                     </div>
                                 </div>
+
+                                {if !empty($order_embroidery)}
+                                    <div class="form-group form-group-xs row">
+                                        <label class="col-lg-4 col-xl-4 col-form-label">Thêu tên</label>
+                                        <div class="col-lg-8 col-xl-8">
+                                            {foreach from=$order_embroidery item=line}
+                                                <div class="form-control-plaintext">
+                                                    <span class="kt-font-bolder kt-font-danger">“{$line.text|escape}”</span>
+                                                    <span class="kt-font-muted"> · {$line.name|escape} × {$line.quantity}{if $line.fee > 0} · +{$line.fee|number_format:0:',':'.'}đ/áo{/if}</span>
+                                                </div>
+                                            {/foreach}
+                                        </div>
+                                    </div>
+                                {/if}
                                 
                                 {if !empty($order.value.number_items)}
                                     <div class="form-group form-group-xs row">

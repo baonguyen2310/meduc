@@ -773,7 +773,7 @@ class ProductController extends AppController {
     {        
         $categoryId = (int)$this->request->getQuery('cate');
         $this->set('show_teacher_assignment', in_array($categoryId, [50, 125], true));
-        $this->set('initial_category_id', in_array($categoryId,[50,125],true) ? $categoryId : null);
+        $this->set('initial_category_id', in_array($categoryId,[50,125,79,80,\App\Lib\BlouseProducts::CATEGORY_ID],true) ? $categoryId : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
         $this->set('course_price_options', \App\Service\CoursePricing::options());
@@ -809,7 +809,8 @@ class ProductController extends AppController {
         $this->set('length_unit', Configure::read('LENGTH_UNIT'));
         $this->set('weight_unit', Configure::read('WEIGTH_UNIT'));
         $this->set('position', !empty($max_record->id) ? $max_record->id + 1 : 1);
-        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khoá trắc nghiệm'] : ($categoryId === 50 ? [50 => 'Khoá học'] : []));
+        $physicalLabels = [79=>'Sách Y khoa',80=>'Thiết bị y tế',\App\Lib\BlouseProducts::CATEGORY_ID=>'Áo blouse'];
+        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khoá trắc nghiệm'] : ($categoryId === 50 ? [50 => 'Khoá học'] : (isset($physicalLabels[$categoryId]) ? [$categoryId=>$physicalLabels[$categoryId]] : [])));
 
         $this->css_page = [
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css',

@@ -187,7 +187,7 @@ class BlockComponent extends Component
         ];
 
         // Public catalogues must not list draft products, even if their status is still enabled.
-        if (in_array($block_info['view'] ?? '', ['view_course_catalog.tpl', 'view_book_catalog.tpl'], true)) {
+        if (in_array($block_info['view'] ?? '', ['view_course_catalog.tpl', 'view_book_catalog.tpl', 'view_equipment_catalog.tpl', 'view_blouse_catalog.tpl'], true)) {
             $params[FILTER]['draft'] = '0';
         }
 

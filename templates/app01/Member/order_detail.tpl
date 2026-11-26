@@ -125,6 +125,23 @@
 						        </tr>
 							{/foreach}
 						{/if}
+						{if !empty($order_embroidery)}
+							<tr>
+								<td colspan="4">
+									<section aria-labelledby="order-embroidery-heading">
+										<h2 id="order-embroidery-heading" class="fs-16 font-weight-bold mb-5">Thêu tên</h2>
+										<ul class="list-unstyled mb-0">
+											{foreach from=$order_embroidery item=line}
+												<li class="py-5 text-break">
+													<span class="fs-14 font-weight-bold">“{$line.text|escape}”</span>
+													<small class="d-block text-muted">{$line.name|escape} × {$line.quantity}{if $line.fee > 0} · +{$line.fee|number_format:0:".":","} {CURRENCY_UNIT_DEFAULT}/áo{/if}</small>
+												</li>
+											{/foreach}
+										</ul>
+									</section>
+								</td>
+							</tr>
+						{/if}
 					</tbody>
 					<tfoot>
 						{if !empty($order.shipping_fee_customer)}

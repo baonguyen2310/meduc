@@ -351,7 +351,7 @@
                     </div>
                 </div>
                                   
-                <div class="form-group"><label for="course-kind">Loại khoá học</label>
+                {if !in_array(997, $categories_selected)}<div class="form-group"><label for="course-kind">Loại khoá học</label>
                     <select id="course-kind" name="course_kind" class="form-control">
                         <option value="knowledge"{if empty($product.course_kind) || $product.course_kind == 'knowledge'} selected{/if}>Khoá ôn kiến thức</option>
                         <option value="exam_solution"{if !empty($product.course_kind) && $product.course_kind == 'exam_solution'} selected{/if}>Khoá chữa đề</option>
@@ -360,6 +360,8 @@
                     </select>
                     <small class="form-text text-muted">Áp dụng cho sản phẩm thuộc danh mục khoá học. Hai loại video không có bài tập. Trắc nghiệm tự tạo 2 bài tập cho mỗi bài khi lưu: bài 1 miễn phí (30 câu), bài 2 trả phí một lần theo môn. Đề Fa giữ riêng trong admin.</small>
                 </div>
+                {/if}
+                {if in_array(997, $categories_selected)}<div class="alert alert-info">Áo blouse: trong mục <strong>Ảnh và giá</strong>, chọn thuộc tính <strong>Size áo blouse</strong> rồi áp dụng. Tạo các size đang bán, nhập mã hàng, giá và tồn kho riêng cho mỗi size. Size không có giá hoặc hết tồn kho sẽ không mua được. Nhập bảng size của nhà cung cấp trong phần nội dung sản phẩm.</div>{/if}
                 {if isset($shop_gift_options)}
                     <div class="form-group">
                         <label for="purchase-gift-quiz">Môn Đề thi tặng kèm</label>
