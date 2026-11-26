@@ -46,15 +46,16 @@ try{
  commerceExpect(!isset(TableRegistry::get('CourseEnrollments')->activeCourses($cid)[$qb]),'Partial payment granted access.');
  commerceExpect((int)CoursePricing::startingOffer($qa)['amount']===9999,'Quiz detail advertises a legacy SKU price.');
  $checks[]='partial_payment_requires_admin_reconciliation_entry_price_matches_package';
- $docs=Credits::packages();commerceExpect(array_map('intval',array_column($docs,'credit_count'))===[1,3,5]&&array_map('intval',array_column($docs,'amount'))===[9999,19999,29999],'Credit packages incorrect.');
- $credit=$report($make($docs[2]));commerceExpect(Credits::balance($cid)===0,'Unconfirmed credits appeared in wallet.');$credit=$approve($credit);commerceExpect(Credits::balance($cid)===5,'Approved credit bundle not added.');$approve($credit);commerceExpect(Credits::balance($cid)===5,'Approval added credits twice.');
+ $docs=Credits::packages();commerceExpect(array_map('intval',array_column($docs,'credit_count'))===[3,6,10]&&array_map('intval',array_column($docs,'amount'))===[9999,19999,29999],'Credit packages incorrect.');
+ $bundleCredits=10;
+ $credit=$report($make($docs[2]));commerceExpect(Credits::balance($cid)===0,'Unconfirmed credits appeared in wallet.');$credit=$approve($credit);commerceExpect(Credits::balance($cid)===$bundleCredits,'Approved credit bundle not added.');$approve($credit);commerceExpect(Credits::balance($cid)===$bundleCredits,'Approval added credits twice.');
  $file=['article_id'=>1,'file_index'=>0,'file_key'=>hash('sha256','commerce-test-0'),'file_name'=>'fixture.pdf','file_url'=>'https://meduc.vn/media/fixture.pdf'];
- $issued=Credits::issue($cid,$file);$token=basename($issued['url']);commerceExpect(Credits::balance($cid)===5,'Ticket creation charged before file was opened.');
- Credits::consume($token,$cid);commerceExpect(Credits::balance($cid)===4,'First download not charged exactly once.');Credits::consume($token,$cid);commerceExpect(Credits::balance($cid)===4,'Range/retry charged twice.');
+ $issued=Credits::issue($cid,$file);$token=basename($issued['url']);commerceExpect(Credits::balance($cid)===$bundleCredits,'Ticket creation charged before file was opened.');
+ Credits::consume($token,$cid);commerceExpect(Credits::balance($cid)===$bundleCredits-1,'First download not charged exactly once.');Credits::consume($token,$cid);commerceExpect(Credits::balance($cid)===$bundleCredits-1,'Range/retry charged twice.');
  commerceExpect(!Credits::ticket($token,$cid+1000000),'Credit ticket accepted another owner.');
- $tokens=[];for($i=1;$i<=5;$i++){$file['file_key']=hash('sha256','commerce-test-'.$i);$t=Credits::issue($cid,$file);$tokens[]=basename($t['url']);}
- for($i=0;$i<4;$i++)Credits::consume($tokens[$i],$cid);
- try{Credits::consume($tokens[4],$cid);throw new RuntimeException('Credit balance overdrew');}catch(InvalidArgumentException $e){}
+ $tokens=[];for($i=1;$i<=$bundleCredits;$i++){$file['file_key']=hash('sha256','commerce-test-'.$i);$t=Credits::issue($cid,$file);$tokens[]=basename($t['url']);}
+ for($i=0;$i<$bundleCredits-1;$i++)Credits::consume($tokens[$i],$cid);
+ try{Credits::consume($tokens[$bundleCredits-1],$cid);throw new RuntimeException('Credit balance overdrew');}catch(InvalidArgumentException $e){}
  commerceExpect(Credits::balance($cid)===0,'Empty wallet incorrect.');
  $checks[]='credit_wallet_manual_grant_shared_balance_one_charge_retries_no_overdraft_owner_bound';
  $delivered=[];$send=function($data)use(&$delivered){$delivered[]=$data;return [CODE=>SUCCESS,DATA=>['provider_id'=>'fixture-provider']];};

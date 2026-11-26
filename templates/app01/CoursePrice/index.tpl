@@ -46,17 +46,17 @@
           <div class="mpr-package-top"><span>{$p.name|escape}</span>{if $p.recommended}<span class="mpr-tag">{if $p.bonus_count}ƯU ĐÃI TỐT NHẤT{else}TIẾT KIỆM NHẤT{/if}</span>{/if}</div>
           <h3>{if $list.course_type=='quiz'}{if $p.duration_months==12}1 <span>năm</span>{else}{$p.duration_months} <span>tháng</span>{/if}{elseif $list.course_type=='document'}{$p.credit_count} <span>lượt tải</span>{elseif $p.bonus_count}{$p.course_count-$p.bonus_count}<span class="mpr-bonus"> + {$p.bonus_count}</span> <span>môn học</span>{else}{$p.course_count} <span>môn học</span>{/if}</h3>
           {capture name=mpr_plan_price}
-            {$show_price_term = $list.course_type=='quiz' && $p.duration_months > 0}
+            {$show_price_term = isset($p.unit_amount)}
             <div class="mpr-price{if $show_price_term} mpr-price--with-term{/if}">
               <span>{$p.amount|number_format:0:',':'.'}{if $show_price_term} {/if}<small>đ</small></span>
-              {if $show_price_term}<span class="mpr-price-term">/ {$p.duration_months} tháng</span>{/if}
+              {if $show_price_term}<span class="mpr-price-term">/ {if $list.course_type=='quiz'}{$p.duration_months} tháng{else}{$p.credit_count} lượt{/if}</span>{/if}
             </div>
-            {if isset($p.unit_amount)}
+            <div class="mpr-price-meta">{if $p.saving}<del>{$p.price|number_format:0:',':'.'}đ</del><span class="mpr-saving">Tiết kiệm {$p.saving}%</span>{else}<span>{if $list.course_type=='document'}Thanh toán một lần{elseif $list.course_type=='quiz'}Trọn thời hạn đã chọn{else}Học phí trọn gói{/if}</span>{/if}</div>
+            {if $show_price_term}
               <p class="mpr-unit-price">
                 Bình quân: <strong>{$p.unit_amount|number_format:0:',':'.'} đ / {if $list.course_type=='quiz'}tháng{else}lượt{/if}</strong>
               </p>
             {/if}
-            <div class="mpr-price-meta">{if $p.saving}<del>{$p.price|number_format:0:',':'.'}đ</del><span class="mpr-saving">Tiết kiệm {$p.saving}%</span>{else}<span>{if $list.course_type=='document'}Thanh toán một lần{elseif $list.course_type=='quiz'}Trọn thời hạn đã chọn{else}Học phí trọn gói{/if}</span>{/if}</div>
           {/capture}
           {if $list.course_type=='document'}{$smarty.capture.mpr_plan_price}{/if}
           {if $video_board && $p.duration_months}<p class="mpr-duration">Quyền học {$p.duration_months} tháng</p>{/if}

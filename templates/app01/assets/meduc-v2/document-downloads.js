@@ -104,8 +104,20 @@
       for(const p of context.packages||[]){
         const card=document.createElement('article');card.className=Number(p.recommended)===1?'is-recommended':'';
         const name=document.createElement('h3');name.textContent=p.credit_count+' lượt tải';
-        const price=document.createElement('strong');price.textContent=money(p.amount);
+        const price = document.createElement('strong');
+        price.className = 'mds-price-total';
+        const amount = document.createElement('span');
+        amount.textContent = numberFormat.format(p.amount) + ' đ';
+        const term = document.createElement('span');
+        term.className = 'mds-price-term';
+        term.textContent = `/ ${p.credit_count} lượt`;
+        price.append(amount, ' ', term);
         card.append(name,price);
+        if (p.price > p.amount) {
+          const original = document.createElement('del');
+          original.textContent = money(p.price);
+          card.append(original);
+        }
         if (Number.isFinite(p.unit_amount)) {
           const average = document.createElement('p');
           average.className = 'mds-unit-price';
@@ -114,7 +126,6 @@
           average.append('Bình quân: ', unitPrice);
           card.append(average);
         }
-        if(p.price>p.amount){const old=document.createElement('del');old.textContent=money(p.price);card.append(old);}
         const per=document.createElement('p');per.textContent='Dùng cho mọi tài liệu';card.append(per);
         const button=document.createElement('button');button.type='button';button.className='mds-buy';button.textContent='Chọn mua';
         button.addEventListener('click',()=>{selectedPackage=p.id;priceDialog.close();buy(selectedOffer,offerOpener);});card.append(button);plans.append(card);

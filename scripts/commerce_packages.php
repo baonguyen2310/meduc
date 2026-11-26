@@ -52,8 +52,8 @@ if(!$db->execute("SELECT 1 FROM commerce_migrations WHERE name='packages-v1'")->
    }
    foreach(array_slice($old,3) as $r)$db->update('course_price_packages',['status'=>0,'updated'=>$now],['id'=>$r['id']]);
   }
-  foreach([[1,9999,null],[3,29997,19999],[5,49995,29999]] as $i=>$p){[$credits,$price,$sale]=$p;
-   $db->insert('course_price_packages',['price_list_id'=>$doc,'name'=>$credits.' lượt tải','course_count'=>0,'credit_count'=>$credits,'price'=>$price,'sale_price'=>$sale,'recommended'=>$credits===5?1:0,'benefits'=>"Dùng cho mọi tài liệu trong thư viện\nKhông giới hạn thời gian dùng lượt\nTrừ 1 lượt khi bắt đầu tải một tệp",'position'=>$i+1,'status'=>1,'created'=>$now,'updated'=>$now]);
+  foreach([[3,9999,null],[6,29997,19999],[10,49995,29999]] as $i=>$p){[$credits,$price,$sale]=$p;
+   $db->insert('course_price_packages',['price_list_id'=>$doc,'name'=>$credits.' lượt tải','course_count'=>0,'credit_count'=>$credits,'price'=>$price,'sale_price'=>$sale,'recommended'=>$credits===10?1:0,'benefits'=>"Dùng cho mọi tài liệu trong thư viện\nKhông giới hạn thời gian dùng lượt\nTrừ 1 lượt khi bắt đầu tải một tệp",'position'=>$i+1,'status'=>1,'created'=>$now,'updated'=>$now]);
   }
   $db->update('settings',['value'=>'baonguyencoder97@gmail.com'],['group_setting'=>'email','code'=>'email_administrator']);
   $db->insert('commerce_migrations',['name'=>'packages-v1','created_at'=>$now]);
