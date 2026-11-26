@@ -38,10 +38,13 @@ class CoursePricing
     public static function packages(int $id, bool $active = true): array
     {
         $rows = self::db()->execute('SELECT * FROM course_price_packages WHERE price_list_id=:id ' . ($active ? 'AND status=1 ' : '') . 'ORDER BY position,id', ['id'=>$id])->fetchAll('assoc');
+        $kind = $rows ? (self::get($id)['course_type'] ?? '') : '';
         foreach ($rows as &$r) {
             $r['amount'] = $r['sale_price'] !== null ? (int)$r['sale_price'] : (int)$r['price'];
             $r['saving'] = (int)$r['price'] > $r['amount'] ? (int)round(100 * (1 - $r['amount'] / (int)$r['price'])) : 0;
-            $r['unit_label'] = !empty($r['credit_count']) ? $r['credit_count'].' lượt tải' : (!empty($r['duration_months']) && self::get($id)['course_type']==='quiz' ? ($r['duration_months']==12?'1 năm':$r['duration_months'].' tháng') : (!empty($r['bonus_count']) ? ((int)$r['course_count']-(int)$r['bonus_count']).' + '.$r['bonus_count'].' môn' : $r['course_count'].' môn'));
+            $quantity = (int)(['quiz' => $r['duration_months'] ?? 0, 'document' => $r['credit_count'] ?? 0][$kind] ?? 0);
+            $r['unit_amount'] = $quantity > 0 ? (int)round($r['amount'] / $quantity) : null;
+            $r['unit_label'] = !empty($r['credit_count']) ? $r['credit_count'].' lượt tải' : (!empty($r['duration_months']) && $kind==='quiz' ? ($r['duration_months']==12?'1 năm':$r['duration_months'].' tháng') : (!empty($r['bonus_count']) ? ((int)$r['course_count']-(int)$r['bonus_count']).' + '.$r['bonus_count'].' môn' : $r['course_count'].' môn'));
             $r['lines'] = self::benefitLines((string)$r['benefits']);
         }
         return $rows;

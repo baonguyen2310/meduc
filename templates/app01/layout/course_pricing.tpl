@@ -11,7 +11,7 @@
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261124-catalog-groups" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.css?v=20261110-google-profile" rel="stylesheet">
   <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
-  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261124-compact-guarantees" rel="stylesheet">
+  <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-pricing.css?v=20261126-price-term" rel="stylesheet">
   {assign website_info value=$this->Setting->getWebsiteInfo()}
   <link rel="icon" href="{$this->Utilities->getWebsiteImageUrl($website_info.favicon)|escape}{if strpos($website_info.favicon, '/templates/app01/assets/meduc-v2/brand/meduc-') === 0}?v=20261112-logo-new{/if}">
   <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/auth.js?v=20261110-google-profile" defer></script>

@@ -4,7 +4,8 @@
   const payment = document.querySelector('[data-document-payment]');
   if (!detail && !payment) return;
   let context = null, busy = false, loginIntent = null, requestSerial = 0, selectedPackage=null;
-  const money=n=>new Intl.NumberFormat('vi-VN').format(n)+'đ';
+  const numberFormat = new Intl.NumberFormat('vi-VN');
+  const money = amount => numberFormat.format(amount) + 'đ';
   const query = (selector) => (payment || detail).querySelector(selector);
   const message = (text, error = false) => {
     (payment || detail).querySelectorAll('[data-download-message]').forEach((node) => { node.textContent = text; node.hidden = !text; node.toggleAttribute('data-error', error); });
@@ -105,6 +106,14 @@
         const name=document.createElement('h3');name.textContent=p.credit_count+' lượt tải';
         const price=document.createElement('strong');price.textContent=money(p.amount);
         card.append(name,price);
+        if (Number.isFinite(p.unit_amount)) {
+          const average = document.createElement('p');
+          average.className = 'mds-unit-price';
+          const unitPrice = document.createElement('strong');
+          unitPrice.textContent = `${numberFormat.format(p.unit_amount)} đ / lượt`;
+          average.append('Bình quân: ', unitPrice);
+          card.append(average);
+        }
         if(p.price>p.amount){const old=document.createElement('del');old.textContent=money(p.price);card.append(old);}
         const per=document.createElement('p');per.textContent='Dùng cho mọi tài liệu';card.append(per);
         const button=document.createElement('button');button.type='button';button.className='mds-buy';button.textContent='Chọn mua';
