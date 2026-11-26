@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Lib\LessonQuizzes;
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\TableRegistry;
 use InvalidArgumentException;
 
 /** Course type is independent of year/subject categories and pricing packages. */
@@ -27,6 +28,26 @@ final class CourseTypes
     public static function publicCourse(int $id): bool
     {
         return (bool)ConnectionManager::get('default')->execute("SELECT 1 FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0 AND COALESCE(course_kind,'')<>'fa'",['id'=>$id])->fetchColumn(0);
+    }
+
+    public static function isArchivedCourse(?string $kind, int $status): bool
+    {
+        return $status === STOP_BUSSINEUS && in_array($kind, ['quiz', 'exam_solution'], true);
+    }
+
+    /** A stopped course is available only through a current enrollment. */
+    public static function canStudy(int $id, int $customerId): bool
+    {
+        if (self::publicCourse($id)) return true;
+        if ($customerId <= 0) return false;
+
+        $product = ConnectionManager::get('default')->execute(
+            'SELECT course_kind, status FROM products WHERE id=:id AND deleted=0 AND COALESCE(draft,0)=0',
+            ['id' => $id]
+        )->fetch('assoc');
+
+        return $product && self::isArchivedCourse($product['course_kind'], (int)$product['status'])
+            && isset(TableRegistry::get('CourseEnrollments')->activeCourses($customerId)[$id]);
     }
     /** Regular quiz lessons use two slots. Exam lessons retain all attached exams and their access flags. */
     public static function quizzes(array $lesson, ?string $kind): array

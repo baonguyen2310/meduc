@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
+use App\Service\CourseTypes;
 use App\Service\DocumentCredits;
 use App\Service\PurchaseGifts;
 use Cake\Log\Log;
@@ -84,10 +85,14 @@ class MemberCoursesHelper extends Helper
         $products = TableRegistry::get('Products');
         // A withdrawn sales variant does not remove an existing learning entitlement.
         $rows = $products->queryListProducts([
-            'get_item' => true,
-            FILTER => [LANG => LANGUAGE, STATUS => 1, 'ids' => $ids],
+            FILTER => [LANG => LANGUAGE, 'ids' => $ids],
             SORT => [FIELD => 'position', SORT => DESC],
-        ])->where(['OR' => ['Products.draft' => 0, 'Products.draft IS' => null]])->all();
+        ])->contain(['ProductsItem'])
+            ->where(['OR' => ['Products.draft' => 0, 'Products.draft IS' => null]])
+            ->where(['OR' => [
+                ['Products.status' => ENABLE],
+                ['Products.status' => STOP_BUSSINEUS, 'Products.course_kind IN' => ['quiz', 'exam_solution']],
+            ]])->all();
 
         $groups = [];
         $legacyIds = null;
@@ -98,10 +103,11 @@ class MemberCoursesHelper extends Helper
                 if (isset($legacyIds[(int) $row['id']])) $kind = 'knowledge';
             }
             if (!isset(self::GROUPS[$kind])) continue;
+            $rights = $access[(int)$row['id']];
+            if (CourseTypes::isArchivedCourse($kind, (int)$row['status']) && empty($rights['enrollment_id'])) continue;
 
             $product = $products->formatDataProductDetail($row, LANGUAGE);
             if (empty($product['name']) || empty($product['url'])) continue;
-            $rights = $access[(int)$product['id']];
             $expiry = empty($rights['class_room_id']) ? (int)$rights['expires_at'] : 0;
             $groups[$kind][] = [
                 'id' => $product['id'],
