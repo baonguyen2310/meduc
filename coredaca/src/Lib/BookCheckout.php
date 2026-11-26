@@ -4,13 +4,25 @@ namespace App\Lib;
 
 use Cake\ORM\TableRegistry;
 
-/** Public book/equipment prices, using the same special-price dates as the catalogue. */
+/** Public physical-product prices, using the same special-price dates as the catalogue. */
 final class BookCheckout
 {
+    public static function categoryIds(): array
+    {
+        return BlouseProducts::physicalCategoryIds();
+    }
+
     public static function catalog(): array
     {
         $categories = TableRegistry::get('Categories');
-        $categoryIds = array_unique(array_merge([79, 80], $categories->getAllChildCategoryId(79), $categories->getAllChildCategoryId(80)));
+        $categoryIds = self::categoryIds();
+        $blouseIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => $categories->getAllChildCategoryId(BlouseProducts::CATEGORY_ID)])->all()->extract('product_id')->toList();
+        $blouseIds = array_fill_keys(array_map('intval', $blouseIds), true);
+        $sizeDefinitions = $sizeOptions = [];
+        if ($blouseIds) {
+            foreach (TableRegistry::get('Attributes')->getAll(LANGUAGE) as $attribute) $sizeDefinitions[(int)$attribute['id']] = $attribute;
+            $sizeOptions = TableRegistry::get('AttributesOptions')->getAll(LANGUAGE);
+        }
         $productIds = TableRegistry::get('CategoriesProduct')->find()->where(['category_id IN' => $categoryIds])->all()->extract('product_id')->toList();
         if (!$productIds) return [];
         $table = TableRegistry::get('ProductsItem');
@@ -22,6 +34,13 @@ final class BookCheckout
             $price = (float) ($item['price'] ?? 0);
             $current = !empty($item['apply_special']) ? (float) $item['price_special'] : $price;
             if ($current <= 0 || empty($item['url'])) continue;
+            if (isset($blouseIds[(int)$item['product_id']])) {
+                $size = BlouseProducts::size((array)($row['ProductsItemAttribute'] ?? []), $sizeOptions, $sizeDefinitions);
+                if ($size === '') continue;
+                $variant = BlouseProducts::variant($item, (string)$item['name'], (string)$item['url'], '', $size);
+                $result[$item['id']] = array_merge($variant['cart'], ['product_id'=>(int)$item['product_id'], 'maximum'=>$variant['maximum'], 'discount_percent'=>$variant['discount']]);
+                continue;
+            }
             $result[$item['id']] = [
                 'id' => (int) $item['id'], 'product_id' => (int) $item['product_id'],
                 'name' => $item['name_extend'], 'image' => $item['images'][0] ?? '',
@@ -45,6 +64,7 @@ final class BookCheckout
                 throw new \InvalidArgumentException('Sản phẩm hoặc số lượng không hợp lệ. Vui lòng tải lại giỏ hàng.');
             }
             $product = $catalog[$id];
+            BlouseProducts::assertQuantity($product, $quantity);
             $product['quantity'] = $quantity;
             $product['total'] = $product['price_special'] * $quantity;
             $result[$id] = $product;

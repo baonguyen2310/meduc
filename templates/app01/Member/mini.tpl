@@ -26,25 +26,15 @@
             Khóa học đang tham gia
         </a>
         
-        <a class="dropdown-item border-bottom p-10" href="/cac-khoa-hoc-nen-mua">
-            <i class="iconsax isax-lg isax-video-square mr-5"></i>
-            Các khoá học nên mua
-        </a>
-        
-        <a class="dropdown-item border-bottom p-10" href="/lich-su-lam-bai-tap">
-            <i class="iconsax isax-lg isax-archive-book mr-5"></i>
-            Lịch sử làm bài tập
-        </a>
-        
         <a class="dropdown-item border-bottom p-10" href="/member/aff/dashboard">
             <i class="iconsax isax-lg isax-note-2 mr-5"></i>
             Tiếp thị liên kết
         </a>
         
-        {*<a class="dropdown-item border-bottom p-10" href="/member/order">
+        <a class="dropdown-item border-bottom p-10" href="/member/order">
             <i class="iconsax isax-lg isax-clipboard-text mr-5"></i>
-            {__d('template', 'quan_ly_don_hang')}
-        </a>*}
+            Đơn hàng của tôi
+        </a>
         
         <a class="dropdown-item border-bottom p-10" href="/member/change-password">
             <i class="iconsax isax-lg isax-lock mr-5"></i>

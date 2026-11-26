@@ -36,6 +36,7 @@ class DocumentDownloads
         if(!$a||$index<0||!$file)throw new \InvalidArgumentException('Tệp tài liệu không còn khả dụng.');
         self::validateSource($file['url']);
         return ['article_id'=>$article,'file_index'=>$index,'file_key'=>hash('sha256',$file['url']),
+            'subject_key'=>$a['subject_key'],
             'document_title'=>mb_substr($a['title'],0,255),'document_url'=>$a['url'],
             'file_name'=>mb_substr(str_replace(["\r","\n"],'',rawurldecode(basename((string)parse_url($file['url'],PHP_URL_PATH)))),0,512),
             'file_url'=>$file['url'],'amount'=>self::PRICE];

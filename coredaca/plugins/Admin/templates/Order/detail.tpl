@@ -12,13 +12,15 @@
 
          <div class="kt-subheader__toolbar">
             {if !empty($order_payment.can_approve)}
-                <button data-payment-approve data-link="{ADMIN_PATH}/order/payment-confirm/{$order.id}" data-amount="{$order_payment.remaining|number_format:0:'.':','}" type="button" class="btn btn-sm btn-brand">
-                    <i class="la la-check-circle"></i> Duyệt thanh toán
+                <button data-payment-approve data-link="{ADMIN_PATH}/order/payment-confirm/{$order.id}"
+                    data-amount="{$order_payment.remaining|number_format:0:',':'.'}" data-expected="{$order_payment.remaining|escape}"
+                    data-method="{$order_payment.payment_method|default:''|escape}" type="button" class="btn btn-sm btn-brand">
+                    <i class="la la-check-circle"></i> {if $order_payment.payment_method == 'cod'}Xác nhận đã thu COD{else}Duyệt thanh toán{/if}
                 </button>
             {elseif !empty($order_payment.paid)}
                 <span class="btn btn-sm btn-light-success disabled"><i class="la la-check-circle"></i> Đã thanh toán</span>
             {/if}
-            {if !empty($order.affiliateCode) && !empty($order.affiliateAmount) && $order.orderStatus != "success"}
+            {if !empty($order_payment.received) && !empty($order.affiliateCode) && !empty($order.affiliateAmount) && $order.orderStatus != "success"}
                 <button button-update-order data-link="/admin/order/update-order-status/{$order.id}" data-order-status="success" type="button" class="btn btn-sm btn-brand btn-success">
                     Duyệt hoa hồng Affiliate
                 </button>

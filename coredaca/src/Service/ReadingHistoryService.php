@@ -30,6 +30,7 @@ class ReadingHistoryService
             $topic=$kind==='blog'?'Góc học tập':'Tài liệu Y khoa';
             foreach ($a['categories']??[] as $cat) {
                 if (in_array((int)$cat['id'],[45,48,113],true)) continue;
+                if ($kind==='document' && in_array((int)$cat['id'], [75,122,123,124], true)) continue;
                 $topic=preg_replace('/^(?:Blog|Tài liệu)\s+/iu','',$this->plain((string)$cat['name']));break;
             }
             $title=$name;
@@ -40,6 +41,7 @@ class ReadingHistoryService
             if ($image && !preg_match('~^https?://~i',$image)) $image=rtrim(CDN_URL,'/').'/'.ltrim($image,'/');
             if ($image && !preg_match('~^https?://~i',$image)) $image='';
             $result[(int)$a['id']]=['article_id'=>(int)$a['id'],'kind'=>$kind,'title'=>$title,'topic'=>$topic,'image'=>$image,'url'=>'/'.ltrim($url,'/'),'files'=>$this->files($a)];
+            if ($kind==='document') $result[(int)$a['id']]['subject_key'] = PurchaseGiftSubjects::key($topic);
         }
         return $result;
     }

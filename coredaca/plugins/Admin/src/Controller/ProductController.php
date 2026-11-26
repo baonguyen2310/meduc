@@ -17,6 +17,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Admin\Service\TeacherCourseAccess;
 use Admin\Service\CourseExamLibrary;
 use Cake\Http\Exception\ForbiddenException;
+use App\Lib\BookCheckout;
+use App\Service\PurchaseGifts;
+use App\Service\PurchaseGiftSubjects;
 
 class ProductController extends AppController {
 
@@ -755,15 +758,30 @@ class ProductController extends AppController {
         }
     }
 
+    private function setShopGiftOptions(int $product): void
+    {
+        $options = array_column(PurchaseGiftSubjects::quizCatalog(false), 'name', 'id');
+        $configured = $product ? PurchaseGiftSubjects::forShopProduct($product) : 0;
+        if ($configured && !isset($options[$configured]) && \App\Service\CourseTypes::kind($configured) === 'quiz') {
+            $options[$configured] = 'Môn đã gắn · đang ẩn';
+        }
+        $this->set('shop_gift_options', $options);
+        $this->set('shop_gift_quiz_id', $configured);
+    }
+
     public function add()
     {        
         $categoryId = (int)$this->request->getQuery('cate');
         $this->set('show_teacher_assignment', in_array($categoryId, [50, 125], true));
-        $this->set('initial_category_id', in_array($categoryId,[50,125],true) ? $categoryId : null);
+        $this->set('initial_category_id', in_array($categoryId,[50,125,79,80,\App\Lib\BlouseProducts::CATEGORY_ID],true) ? $categoryId : null);
         $this->set('teacher_options', TeacherCourseAccess::teacherOptions());
         $this->set('selected_teacher_ids', []);
         $this->set('course_price_options', \App\Service\CoursePricing::options());
         $this->set('course_price_list_id', 0);
+        if (PurchaseGifts::installed() && in_array($categoryId, BookCheckout::categoryIds())) {
+            $this->setShopGiftOptions(0);
+            $this->set('initial_category_id', $categoryId);
+        }
         $all_attributes = Hash::combine(TableRegistry::get('Attributes')->getAll($this->lang), '{n}.id', '{n}', '{n}.attribute_type');
         $attributes_product = !empty($all_attributes[PRODUCT]) ? $all_attributes[PRODUCT] : [];
 
@@ -791,7 +809,8 @@ class ProductController extends AppController {
         $this->set('length_unit', Configure::read('LENGTH_UNIT'));
         $this->set('weight_unit', Configure::read('WEIGTH_UNIT'));
         $this->set('position', !empty($max_record->id) ? $max_record->id + 1 : 1);
-        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khoá trắc nghiệm'] : ($categoryId === 50 ? [50 => 'Khoá học'] : []));
+        $physicalLabels = [79=>'Sách Y khoa',80=>'Thiết bị y tế',\App\Lib\BlouseProducts::CATEGORY_ID=>'Áo blouse'];
+        $this->set('list_category_main', $categoryId === 125 ? [125 => 'Khoá trắc nghiệm'] : ($categoryId === 50 ? [50 => 'Khoá học'] : (isset($physicalLabels[$categoryId]) ? [$categoryId=>$physicalLabels[$categoryId]] : [])));
 
         $this->css_page = [
             '/assets/plugins/custom/jquery-ui/jquery-ui.bundle.css',
@@ -849,6 +868,10 @@ class ProductController extends AppController {
                 if(empty($category_main['id']) || empty($category_main['name'])) continue;
                 $list_category_main[$category_id] = $category_main['name'];
             }
+        }
+
+        if (!$is_course && PurchaseGifts::installed() && array_intersect(array_keys($list_category_main), BookCheckout::categoryIds())) {
+            $this->setShopGiftOptions((int)$id);
         }
 
         if(empty($product)){
@@ -1142,6 +1165,16 @@ class ProductController extends AppController {
             $price_list_id = (int)($data['course_price_list_id'] ?? 0);
             if ($price_list_id && (!TeacherCourseAccess::hasCourseCategory($category_ids) || !\App\Service\CoursePricing::acceptsCourseKind($price_list_id, $course_kind))) {
                 $this->responseJson([MESSAGE => 'Bảng báo giá không hợp lệ hoặc sản phẩm không phải khóa học.']);
+            }
+        }
+        $giftQuiz = null;
+        if (array_key_exists('purchase_gift_quiz_id', $data)) {
+            $rawGiftQuiz = $data['purchase_gift_quiz_id'];
+            $giftQuiz = $rawGiftQuiz === '' ? 0 : filter_var($rawGiftQuiz, FILTER_VALIDATE_INT, ['options'=>['min_range'=>0]]);
+            if (!PurchaseGifts::installed() || $giftQuiz === false ||
+                ($giftQuiz && ($course_kind || !array_intersect($category_ids, BookCheckout::categoryIds()) ||
+                    \App\Service\CourseTypes::kind($giftQuiz) !== 'quiz'))) {
+                $this->responseJson([MESSAGE=>'Vui lòng chọn môn Đề thi hợp lệ cho sản phẩm MedUC Shop.']);
             }
         }
         $data['categories'] = $category_ids;
@@ -1450,6 +1483,7 @@ class ProductController extends AppController {
         $seo_description = !empty($data['seo_description']) ? trim(strip_tags($data['seo_description'])) : null;
 
         if (isset($data['course_price_assignment'])) $data_save['course_price_list_id'] = $price_list_id ?: null;
+        if ($giftQuiz !== null) $data_save['purchase_gift_quiz_id'] = $giftQuiz;
         $data_save['ProductsContent'] = [
             'name' => $name,
             'description' => !empty($data['description']) ? trim($data['description']) : null,

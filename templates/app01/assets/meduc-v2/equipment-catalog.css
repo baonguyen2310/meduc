@@ -1,0 +1,23 @@
+/* Equipment uses the same typography, theme tokens and shopping controls as the book catalogue. */
+.mec .mbc-hero-inner { gap:50px; }
+.mec h1 { font-size:clamp(49px,4.7vw,71px); }
+.mec .mbc-hero-art { height:365px; }
+.mec .mbc-art-backdrop { inset:15px 0 25px; border-radius:50% 50% 12px 12px; }
+.mec .mec-hero-device { width:43%; height:61%; padding:14px; border-radius:12px; box-shadow:0 16px 30px #0002; }
+.mec .mec-hero-device:nth-of-type(1) { left:0; bottom:55px; height:57%; transform:rotate(-10deg); }
+.mec .mec-hero-device:nth-of-type(2) { left:29%; bottom:85px; height:65%; transform:rotate(3deg); }
+.mec .mec-hero-device:nth-of-type(3) { right:-2%; bottom:36px; height:57%; transform:rotate(11deg); }
+.mec .mbc-art-note { right:0; bottom:0; }
+.mec .mbc-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.mec .mbc-cover { height:300px; padding:35px 28px; background:#fafafa; }
+.mec .mbc-cover img { filter:none; }
+.mec .mbc-card-body { padding:23px; }
+.mec .mbc-card h3 a { min-height:3em; -webkit-line-clamp:3; }
+.mec .mbc-subject { font-size:10px; }
+.mec .mbc-prices strong { color:var(--mbc-red); font-size:26px; }
+.mec .mbc-prices del { font-size:13px; }
+.mec .mbc-add { min-height:46px; font-size:13px; }
+@media(max-width:1100px) { .mec .mbc-hero-inner { gap:30px; } .mec .mbc-hero-art { height:320px; } .mec .mbc-grid { gap:18px; } .mec .mbc-cover { height:255px; padding:30px 20px; } .mec .mbc-card-body { padding:19px; } }
+@media(max-width:991.98px) { .mec h1 { font-size:clamp(44px,5.2vw,54px); } .mec .mbc-hero-art { height:285px; } .mec .mbc-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .mec .mbc-card h3 a { min-height:4.5em; } }
+@media(max-width:767.98px) { .mec h1 { font-size:clamp(43px,10vw,62px); } .mec .mbc-hero-art { height:300px; } .mec .mbc-art-note { left:auto; right:0; font-size:8px; } .mec .mbc-grid { gap:16px; } .mec .mbc-cover { height:245px; padding:32px 20px; } .mec .mbc-card-body { padding:19px; } }
+@media(max-width:479.98px) { .mec .mbc-grid { grid-template-columns:1fr; } .mec .mbc-hero-art { height:270px; } .mec .mbc-cover { height:270px; padding:35px; } .mec .mbc-card h3 { font-size:17px; } .mec .mbc-card h3 a { min-height:0; } .mec .mbc-add { font-size:13px; } .mec .mbc-detail { font-size:12px; } }

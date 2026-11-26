@@ -5,8 +5,7 @@
 {$detail = $document_view->getDetail($article, $categories, {LANGUAGE})}
 {if !empty($detail)}
 {$document = $detail.document}
-{$courses = []}
-{if !empty($article.attributes.combo_course_in_doc.value)}{$course_ids = json_decode($article.attributes.combo_course_in_doc.value, true)}{if is_array($course_ids) && !empty($course_ids)}{$courses = $this->Product->getProducts(['filter' => ['ids' => $course_ids], 'limit' => 3])}{/if}{/if}
+{$course_recommendations = $this->Product->getContentCourseRecommendations($document.title, [$document.subject], $article.attributes.combo_course_in_doc.value|default:'')}
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-catalog.css?v=20261015" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.css?v=20261110-reader-actions" rel="stylesheet">
@@ -14,8 +13,8 @@
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/reading-history.js?v=20261028-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/pdf-reader.js?v=20261028-scroll-2" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-detail.js?v=20261110-reader-actions" defer></script>
-<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261110-commerce-access" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261112-credit-counter" defer></script>
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.css?v=20261126-package-display" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261126-package-display" defer></script>
 <main class="mdd" id="document-detail-page" data-reading-item="document" data-reading-id="{$document.id}" data-reading-title="{$document.title|escape}" data-reading-topic="{$document.subject|escape}" data-reading-image="{if !empty($document.image)}{CDN_URL}{$document.image|escape}{/if}">
     <svg class="mdd-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="mdd-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="mdd-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 13h8m-8 4h6"/></symbol><symbol id="mdd-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="mdd-expand" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol><symbol id="mdd-link" viewBox="0 0 24 24"><path d="m10 7 3-3a5 5 0 0 1 7 7l-3 3M14 17l-3 3a5 5 0 0 1-7-7l3-3m1 6 8-8"/></symbol></svg>
     <div class="mdd-hero"><div class="mdd-shell">
@@ -53,7 +52,7 @@
         </div>
     </div></section>
 
-    {if !empty($courses)}<section class="mdd-shell mdd-courses" aria-labelledby="document-courses-title"><div class="mdd-heading"><div><p class="mdd-eyebrow">GỢI Ý TỪ MEDUC</p><h2 id="document-courses-title">TỪ TRANG SÁCH.<br><span>ĐẾN BÀI GIẢNG.</span></h2></div><a class="mdd-text-link" href="/khoa-hoc">Học thử miễn phí →</a></div><div class="mdd-course-grid">{foreach from=$courses item=course}<article class="mdd-course"><a href="{$this->Utilities->checkInternalUrl($course.url)|escape}">{if !empty($course.all_images[0])}<img src="{CDN_URL}{$this->Utilities->getThumbs($course.all_images[0], 500)}" alt="{$course.name|escape}" loading="lazy">{/if}<div><h3>{$course.name|escape}</h3><span>Xem khóa học <svg aria-hidden="true"><use href="#mdd-arrow"/></svg></span></div></a></article>{/foreach}</div></section>{/if}
+    {$this->element('course/recommendation_cards', ['recommendations' => $course_recommendations, 'section_id' => 'document-courses'])}
 
     {if !empty($detail.related)}<section class="mdd-related" id="document-related" aria-labelledby="document-related-title"><div class="mdd-shell"><div class="mdd-heading"><div><p class="mdd-eyebrow">TIẾP TỤC KHÁM PHÁ / {$document.subject|escape}</p><h2 id="document-related-title">CÙNG CHỦ ĐỀ.<br><span>THÊM GÓC NHÌN.</span></h2></div><a class="mdd-text-link" href="/tai-lieu-hoc-tap">Xem thư viện tài liệu →</a></div><div class="mdc"><div class="mdc-grid">{foreach from=$detail.related item=related}<article class="mdc-card"><a class="mdc-cover" href="{$this->Utilities->checkInternalUrl($related.url)|escape}" aria-label="Xem {$related.name|escape}">{if !empty($related.image)}<img src="{CDN_URL}{$this->Utilities->getThumbs($related.image, 500)}" alt="{$related.name|escape}" loading="lazy">{/if}<span class="mdc-year-badge">{$related.year_label|escape}</span><span class="mdc-format">{$related.formats|escape}</span></a><div class="mdc-card-body"><p class="mdc-card-subject">{$related.subject|escape}</p><h3><a href="{$this->Utilities->checkInternalUrl($related.url)|escape}">{$related.title|escape}</a></h3><p class="mdc-summary">{$related.summary|escape}</p><a class="mdc-card-link" href="{$this->Utilities->checkInternalUrl($related.url)|escape}">Xem tài liệu <svg aria-hidden="true"><use href="#mdd-arrow"/></svg></a></div></article>{/foreach}</div></div></div></section>{/if}
 </main>

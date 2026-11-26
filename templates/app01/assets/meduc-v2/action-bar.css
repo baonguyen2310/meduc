@@ -74,7 +74,7 @@ body.mhb-on .rn-progress-parent { bottom: calc(30px + var(--mhb-h, 80px)) !impor
 @media (max-width: 1100px) {
   .mhb-shell { width: min(92%, 1440px); }
 }
-/* Three equal shortcuts on phones and small tablets. */
+/* Compact shortcuts on phones and small tablets. */
 @media (max-width: 767.98px) {
   .mhb-shell { width: 100%; min-height: 0; padding: 8px; }
   .mhb-info { display: none; }

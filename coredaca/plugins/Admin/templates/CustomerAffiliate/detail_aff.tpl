@@ -111,7 +111,15 @@
                                         {$customer.affiliate_amount_unpaid|number_format:0:".":","} VNĐ
                                     {/if}
                                 </span>
-                                <button class="btn btn-info" button-accept-payment-affiliate data-link="/admin/customer/aff/accept-payment/{$customer.id}">Duyệt thanh toán</button>
+                                {if $affiliate_payable > 0}
+                                    <button class="btn btn-info" type="button" button-accept-payment-affiliate
+                                        data-amount="{$affiliate_payable|escape}" data-link="{ADMIN_PATH}/customer/aff/accept-payment/{$customer.id}">
+                                        Xác nhận đã chi {$affiliate_payable|number_format:0:',':'.'} đ
+                                    </button>
+                                {/if}
+                                {if $customer.affiliate_amount_unpaid > $affiliate_payable}
+                                    <p class="text-muted mb-0">Phần số dư còn lại đang chờ đối soát phiếu thu.</p>
+                                {/if}
                             </div>
                         </div>
                         
@@ -122,7 +130,7 @@
                         
                             <div class="col-lg-8 col-xl-9">
                                 <span class="form-control-plaintext kt-font-bolder">
-                                    {if !empty($customer.affiliate_amount) && !empty($customer.affiliate_amount_unpaid)}
+                                    {if !empty($customer.affiliate_amount)}
                                         {math 
                                             equation="a - b" 
                                             a=$customer.affiliate_amount+0 
@@ -137,6 +145,17 @@
                             </div>
                         </div>
                         
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-lg-4 col-form-label">Nhận hoa hồng Affiliate</label>
+                            <div class="col-lg-8 col-xl-9">
+                                <span class="form-control-plaintext">{if $customer.is_partner_affiliate == 1}Đang bật{else}Chưa bật{/if}</span>
+                                <button type="button" class="btn btn-outline-brand" data-affiliate-enable
+                                    data-link="{ADMIN_PATH}/customer/aff/change-affiliate-percent/{$customer.id}"
+                                    data-value="{if $customer.is_partner_affiliate == 1}0{else}1{/if}">
+                                    {if $customer.is_partner_affiliate == 1}Tắt mã giới thiệu{else}Bật mã giới thiệu{/if}
+                                </button>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-4 col-form-label">
                                 % Hoa hồng của đối tác
@@ -217,7 +236,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Sách và TBYT (Danh sách đơn hàng Affiliate)
+                        Đơn Shop trước đây
                     </h3>
                 </div>
             </div>
@@ -321,7 +340,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Khóa học (Danh sách đơn hàng Affiliate)
+                        Đơn hàng Affiliate
                     </h3>
                 </div>
             </div>

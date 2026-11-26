@@ -38,13 +38,21 @@ class CoursePricing
     public static function packages(int $id, bool $active = true): array
     {
         $rows = self::db()->execute('SELECT * FROM course_price_packages WHERE price_list_id=:id ' . ($active ? 'AND status=1 ' : '') . 'ORDER BY position,id', ['id'=>$id])->fetchAll('assoc');
+        $kind = $rows ? (self::get($id)['course_type'] ?? '') : '';
         foreach ($rows as &$r) {
             $r['amount'] = $r['sale_price'] !== null ? (int)$r['sale_price'] : (int)$r['price'];
             $r['saving'] = (int)$r['price'] > $r['amount'] ? (int)round(100 * (1 - $r['amount'] / (int)$r['price'])) : 0;
-            $r['unit_label'] = !empty($r['credit_count']) ? $r['credit_count'].' lượt tải' : (!empty($r['duration_months']) && self::get($id)['course_type']==='quiz' ? ($r['duration_months']==12?'1 năm':$r['duration_months'].' tháng') : (!empty($r['bonus_count']) ? ((int)$r['course_count']-(int)$r['bonus_count']).' + '.$r['bonus_count'].' môn' : $r['course_count'].' môn'));
-            $r['lines'] = array_values(array_filter(array_map('trim', preg_split('/\r?\n/', (string)$r['benefits']))));
+            $quantity = (int)(['quiz' => $r['duration_months'] ?? 0, 'document' => $r['credit_count'] ?? 0][$kind] ?? 0);
+            $r['unit_amount'] = $quantity > 0 ? (int)round($r['amount'] / $quantity) : null;
+            $r['unit_label'] = !empty($r['credit_count']) ? $r['credit_count'].' lượt tải' : (!empty($r['duration_months']) && $kind==='quiz' ? ($r['duration_months']==12?'1 năm':$r['duration_months'].' tháng') : (!empty($r['bonus_count']) ? ((int)$r['course_count']-(int)$r['bonus_count']).' + '.$r['bonus_count'].' môn' : $r['course_count'].' môn'));
+            $r['lines'] = self::benefitLines((string)$r['benefits']);
         }
         return $rows;
+    }
+
+    private static function benefitLines(string $benefits): array
+    {
+        return array_values(array_filter(array_map('trim', preg_split('/\r?\n/', $benefits))));
     }
 
     public static function courses(int $id, bool $presentation=false): array
@@ -110,11 +118,14 @@ class CoursePricing
     /** Advertise the single-subject package instead of the legacy SKU price. */
     public static function startingOffer(int $product): ?array
     {
-        return self::db()->execute("SELECT k.*,COALESCE(k.sale_price,k.price) amount FROM products p
+        $offer = self::db()->execute("SELECT k.*,COALESCE(k.sale_price,k.price) amount FROM products p
             JOIN course_price_lists l ON l.id=p.course_price_list_id AND l.status=1 AND l.course_type=p.course_kind
             JOIN course_price_packages k ON k.price_list_id=l.id AND k.status=1 AND k.course_count=1
             WHERE p.id=? AND p.deleted=0 AND p.status=1 AND COALESCE(p.draft,0)=0
-            ORDER BY COALESCE(k.sale_price,k.price),k.position,k.id LIMIT 1",[$product])->fetch('assoc')?:null;
+            ORDER BY COALESCE(k.sale_price,k.price),k.position,k.id LIMIT 1",[$product])->fetch('assoc');
+        if (!$offer) return null;
+        $offer['lines'] = self::benefitLines((string)$offer['benefits']);
+        return $offer;
     }
 
     /** Validate the selected distinct courses and compute prices exclusively on the server. */

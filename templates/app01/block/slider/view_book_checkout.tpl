@@ -5,18 +5,20 @@
 <main class="mco mco-unified" id="meduc-checkout" data-book-checkout data-cdn="{CDN_URL}">
   <div class="mco-shell">
     <nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/sach-y-khoa">Sách Y khoa</a><span>/</span><span>Thanh toán</span></nav>
-    <header class="mco-checkout-heading"><p class="mco-kicker">MEDUC / THANH TOÁN</p><h1>Hoàn tất đặt sách.</h1></header>
-    <div class="mco-empty" data-checkout-empty hidden><h2>Giỏ sách đang trống.</h2><p>Chọn sách để bắt đầu đặt hàng.</p><a class="mco-button mco-button--primary" href="/sach-y-khoa">Khám phá sách</a></div>
-    <div class="mco-panel mco-auth-gate" data-checkout-login hidden><p>Đăng nhập để tiếp tục đặt sách. Các sản phẩm đã chọn vẫn được giữ trong giỏ.</p><button class="mco-button mco-button--primary" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
+    <header class="mco-checkout-heading"><p class="mco-kicker">MEDUC / THANH TOÁN</p><h1>Hoàn tất đặt hàng.</h1></header>
+    <div class="mco-empty" data-checkout-empty hidden><h2>Giỏ hàng đang trống.</h2><p>Chọn sách, thiết bị y tế hoặc áo blouse để bắt đầu đặt hàng.</p><a class="mco-button mco-button--primary" href="/sach-y-khoa">Khám phá sách</a><a class="mco-button" href="/ao-blouse">Xem áo blouse</a></div>
+    <div class="mco-panel mco-auth-gate" data-checkout-login hidden><p>Đăng nhập để tiếp tục đặt hàng. Các sản phẩm đã chọn vẫn được giữ trong giỏ.</p><button class="mco-button mco-button--primary" type="button" data-ma-open="login">Đăng nhập / Đăng ký</button></div>
     <p class="mco-error" role="alert" data-cart-error hidden></p>
     <form class="mco-layout" nh-form-contact="61CQ0U3H9I" action="/contact/send-info" method="post" data-checkout-form hidden>
       <div class="mco-main">
         <section class="mco-panel"><div class="mco-panel-heading"><h2>Thông tin nhận hàng</h2></div>{$this->element('../Order/meduc_contact', ['shipping_contact'=>true])}</section>
-        <section class="mco-panel"><div class="mco-panel-heading"><h2>Sách đã chọn <span data-cart-count></span></h2><a href="/sach-y-khoa">Chọn thêm sách</a></div><div data-cart-products></div></section>
+        <section class="mco-panel"><div class="mco-panel-heading"><h2>Sản phẩm đã chọn <span data-cart-count></span></h2><a href="/sach-y-khoa">Chọn thêm sản phẩm</a></div><div data-cart-products></div></section>
       </div>
       <aside class="mco-sidebar"><section class="mco-panel mco-payment">
         <div class="mco-panel-heading"><h2>Thanh toán</h2></div><p class="mco-order-code">Mã đơn <strong data-cart-code></strong></p>
         {$this->element('../Order/meduc_payment', ['payment_purpose'=>'book', 'allow_cod'=>true])}
+        <div data-shop-vouchers hidden></div>
+        <p class="mco-payment-note"><strong>Quà mỗi đơn</strong> · 3 lượt tải tài liệu dùng chung và 1 tháng Đề thi môn liên quan.</p>
         <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong data-cart-total></strong><del data-cart-subtotal></del></div></div>
         <p class="mco-help">Phí vận chuyển được MedUC xác nhận khi liên hệ giao hàng.</p>
         <p class="mco-payment-note" data-payment-note></p>

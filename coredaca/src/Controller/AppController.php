@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use App\Service\CourseTypes;
 use Cake\Core\Configure;
 use Cake\Controller\Controller;
 use Cake\Event\EventInterface;
@@ -26,6 +27,10 @@ class AppController extends Controller
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
+
+        if (in_array(rtrim($this->request->getUri()->getPath(), '/'), ['/dat-hang-thanh-cong', '/khoa-hoc-da-dang-ky'], true)) {
+            $this->setResponse($this->getResponse()->withHeader('Cache-Control', 'private, no-store'));
+        }
 
         // Preserve old catalogue bookmarks and their filters after the public URL rename.
         if (rtrim($this->getRequest()->getUri()->getPath(), '/') === '/khoa-luyen-thi') {
@@ -159,9 +164,19 @@ class AppController extends Controller
             $error = null;
     
             $page = $this->getPageByUrl();
+            $archived_course = !empty($page['archived_course']);
+            if ($archived_course) {
+                $this->setResponse($this->getResponse()
+                    ->withHeader('Cache-Control', 'private, no-store')
+                    ->withHeader('X-Robots-Tag', 'noindex'));
+            }
 
             $url = !empty($page['url']) ? $page['url'] : null;
             $code = !empty($page['code']) ? $page['code'] : null;
+            if ($code === 'h0ra52x') {
+                // The member dashboard includes personal course access and the download balance.
+                $this->setResponse($this->getResponse()->withDisabledCache());
+            }
             $type = !empty($page['type']) ? $page['type'] : null;
             $version = !empty($page['version']) ? $page['version'] : null;
             $page_record_id = !empty($page['page_record_id']) ? intval($page['page_record_id']) : null;
@@ -204,7 +219,7 @@ class AppController extends Controller
                 $structure_page = $this->getDataForTemplate();
                 $blocks = !empty($structure_page['blocks']) ? $structure_page['blocks'] : [];
                 $structure = !empty($structure_page['structure']) ? $structure_page['structure'] : [];
-                $cache_page = !empty($structure_page['cache']) ? true :  false;
+                $cache_page = !$archived_course && !empty($structure_page['cache']);
 
 
                 //seo info
@@ -399,6 +414,7 @@ class AppController extends Controller
         $page_info = TableRegistry::get('TemplatesPage')->getInfoPage($page_params);
 
         $page_record_id = $category_id = $brand_id = $article_id = $quiz_id = $product_id = $tag_id = null;
+        $archived_course = false;
         if(!empty($page_info['type']) && in_array($page_info['type'], [PRODUCT, ARTICLE, QUIZ])){
             $category_id = !empty($page_info['category_id']) ? intval($page_info['category_id']) : null;
         }
@@ -448,8 +464,15 @@ class AppController extends Controller
                     'id' => $product_id,
                     'status <>' => 0,
                     'deleted' => 0
-                ])->select(['id', 'main_category_id'])->first();
+                ])->select(['id', 'main_category_id', 'course_kind', 'status'])->first();
                 if(empty($product)) return $result;
+                $archived_course = CourseTypes::isArchivedCourse($product['course_kind'], (int)$product['status']);
+                if ($archived_course) {
+                    $member = $this->request->getSession()->read(MEMBER) ?: [];
+                    if (!CourseTypes::canStudy($product_id, (int)($member['id'] ?? 0))) {
+                        return $result;
+                    }
+                }
                 $main_category_id = !empty($product['main_category_id']) ? intval($product['main_category_id']) : null;
 
                 $related_category = TableRegistry::get('CategoriesProduct')->find()->where([
@@ -523,6 +546,7 @@ class AppController extends Controller
             'article_id' => $article_id,
             'quiz_id' => $quiz_id,
             'product_id' => $product_id,
+            'archived_course' => $archived_course,
             'tag_id' => $tag_id,
             'category_id' => $category_id,
             'brand_id' => $brand_id,

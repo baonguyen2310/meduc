@@ -1,77 +1,14 @@
-<div nh-promotion>
-    {assign var = list_coupon value = $this->Promotion->getPublicPromotions()}
-    {if !empty($list_coupon)}
-        {foreach from = $list_coupon item = item}
-            {assign var = value value = $item.value}
-            {assign var = type_discount value = ''}
-            {if !empty($value.type_value_discount)}
-                {assign var = type_discount value = $value.type_value_discount}
-            {/if}
-
-            {assign var = value_discount value = ''}
-            {assign var = unit_discount value = ''}
-            {assign var = max_value value = ''}
-
-            {if !empty($item.max_value)}
-                {math assign = max_value equation = 'x/y' x = $value.max_value y = 1000} 
-            {/if}
-
-            {if !empty($type_discount) && !empty($value.value_discount) && $type_discount == 'percent'}
-                {assign var = value_discount value = $value.value_discount}
-                {assign var = unit_discount value = '%'}
-            {/if}
-
-            {if !empty($type_discount) && !empty($value.value_discount) && $type_discount == 'money'}
-                {assign var = value_discount value = $value.value_discount} 
-                {math assign = value_discount equation = 'x/y' x = $value.value_discount y = 1000} 
-                {assign var = unit_discount value = 'K'}
-            {/if}
-
-            <div class="coupon-plan">
-                <div class="row space-5">
-                    <div class="col-md-3 col-lg-2">
-                        <div class="coupon-plan-price">
-                            <span>
-                                {if !empty($value_discount)}
-                                    {$value_discount}{$unit_discount}
-                                {/if}
-                            </span>
-                        
-                            {if !empty($item.code)}
-                                {__d('template', 'ma')}: 
-                                <strong>
-                                	{$item.code}
-                                </strong>
-                            {/if}
-                        </div>
-                    </div>
-                    <div class="col-md-7 col-lg-8">
-                        <div class="coupon-plan-description">
-                            {if !empty($item.name)}
-                                <h4 class="mb-0">
-                                    {$item.name}
-                                </h4>
-                            {/if}
-
-                            {if !empty($item.condition_description)}
-                                {foreach from = $item.condition_description item = condition_description}
-                                    <p class="mb-0">- {$condition_description}</p>
-                                {/foreach}
-                            {/if}
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <div class="coupon-plan-button mt-5">
-                            {if !empty($max_value)}
-                                <br />
-                                {__d('template', 'giam_toi_da')}: {$max_value}K
-                            {/if}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {/foreach}
-    {else}
-        {__d('template', 'hien_khong_co_phieu_giam_gia_nao_duoc_ap_dung')}
-    {/if}
-</div>
+{foreach $legacy_offers as $offer}
+    <li class="mvp-offer">
+        {if !empty($offer.value.value_discount) && !empty($offer.value.type_value_discount)}
+            <strong class="mvp-discount">Giảm {if $offer.value.type_value_discount == 'percent'}{$offer.value.value_discount|escape}%{else}{$offer.value.value_discount|number_format:0:',':'.'}đ{/if}</strong>
+        {/if}
+        <h3>{$offer.name|default:''|escape}</h3>
+        {if !empty($offer.condition_description)}
+            {foreach $offer.condition_description as $condition}<p>{$condition|escape}</p>{/foreach}
+        {/if}
+        {if !empty($offer.code)}
+            <div class="mvp-code"><code>{$offer.code|escape}</code><button type="button" data-copy-voucher="{$offer.code|escape}">Sao chép</button></div>
+        {/if}
+    </li>
+{/foreach}

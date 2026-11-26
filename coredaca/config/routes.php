@@ -23,6 +23,12 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/duyet-thanh-toan/:code/:signature', ['controller'=>'PurchaseApproval','action'=>'review'], ['pass'=>['code','signature'],'code'=>'[a-f0-9]{32}','signature'=>'[a-f0-9]{64}']);
     $builder->connect('/document-download/start-credit', ['controller'=>'DocumentDownload','action'=>'startCredit']);
     $builder->connect('/checkout/customer', ['controller'=>'Checkout','action'=>'customer']);
+    $builder->connect('/uu-dai/xem-truoc', ['controller'=>'Voucher','action'=>'preview']);
+    $builder->connect('/uu-dai/thoi-gian', ['controller'=>'Voucher','action'=>'study']);
+    $builder->connect('/uu-dai/nhan-ma', ['controller'=>'Voucher','action'=>'claimStudy']);
+    $builder->connect('/uu-dai/online', ['controller'=>'Voucher','action'=>'online']);
+    $builder->connect('/uu-dai/online/nhan-ma', ['controller'=>'Voucher','action'=>'claimOnline']);
+    $builder->post('/uu-dai/nhan-qua-mua-hang', ['controller'=>'PurchaseGift','action'=>'activate']);
 
     // Course price lists and quantity packages.
     $builder->connect('/bang-bao-gia/dang-ky', ['controller'=>'CoursePrice','action'=>'create']);
@@ -623,6 +629,7 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     $builder->connect('/order', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'list']);
     $builder->connect('/order/list', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'list']);
     $builder->connect('/order/list/json', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'listJson']);
+    $builder->connect('/order/import-shop-history/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'importShopHistory'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/order/add', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'add']);
     $builder->connect('/order/update/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);
     $builder->connect('/order/detail/:id', ['plugin' => 'Admin', 'controller' => 'Order', 'action' => 'detail'], ['pass' => ['id'], 'id' => '[0-9]+']);
@@ -1157,6 +1164,7 @@ $routes->scope(ADMIN_PATH, function (RouteBuilder $builder) {
     // promotion
     $builder->connect('/promotion', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'list']);
     $builder->connect('/promotion/list', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'list']);
+    $builder->connect('/promotion/vouchers', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'vouchers']);
     $builder->connect('/promotion/list/json', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'listJson']);
     $builder->connect('/promotion/add', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'add']);
     $builder->connect('/promotion/update/:id', ['plugin' => 'Admin', 'controller' => 'Promotion', 'action' => 'update'], ['pass' => ['id'], 'id' => '[0-9]+']);

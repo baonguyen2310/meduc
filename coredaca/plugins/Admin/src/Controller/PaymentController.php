@@ -235,6 +235,9 @@ class PaymentController extends AppController {
             }
             
             $conn->commit();
+            if ($foreign_type === ORDER && $foreign_id && $status === 1) {
+                \App\Service\Vouchers::awardAfterPayment((int)$foreign_id);
+            }
             if($foreign_type==ORDER&&$status==1)\App\Service\CommerceNotifications::purchase((int)$foreign_id,'approved',function($p){return $this->loadComponent('Email')->sendEmail($p);},$this->request->host());
             $this->responseJson([CODE => SUCCESS, MESSAGE => __d('admin', 'cap_nhat_thanh_cong')]);
 

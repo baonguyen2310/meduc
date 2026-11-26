@@ -7,12 +7,67 @@ use Cake\View\Helper;
 use Cake\ORM\TableRegistry;
 use App\Lib\LessonQuizzes;
 use App\Lib\QuizQuestions;
+use App\Service\CourseRecommendations;
 use Cake\Datasource\ConnectionManager;
 
 class ProductHelper extends Helper
 {
     public function courseKind($id) { return \App\Service\CourseTypes::kind((int)$id); }
     public function startingCourseOffer($id) { return \App\Service\CoursePricing::startingOffer((int)$id); }
+
+    private $courseRecommendations;
+
+    public function getSecondaryNavigation(): array
+    {
+        return CourseRecommendations::SECONDARY_NAVIGATION;
+    }
+
+    public function getSecondaryPageCourses(): array
+    {
+        $path = rtrim($this->getView()->getRequest()->getUri()->getPath(), '/');
+        return isset(CourseRecommendations::SECONDARY_NAVIGATION[$path]) ? $this->courseRecommendations()->featured() : [];
+    }
+
+    public function getRelatedAcademyCourses(int $id): array
+    {
+        return $this->courseRecommendations()->forCourse($id);
+    }
+
+    public function getContentCourseRecommendations(string $title, array $subjects, $configured): array
+    {
+        return $this->courseRecommendations()->forContent($title, $subjects, $this->courseRecommendationIds($configured));
+    }
+
+    public function getShopCourseRecommendations(array $product, array $subjects = []): array
+    {
+        $ids = $this->courseRecommendationIds($product['attributes']['combo_course']['value'] ?? '');
+        return $this->courseRecommendations()->forShop($product, $ids, $subjects);
+    }
+
+    public function getBlouseCourseRecommendations(array $summary): array
+    {
+        if ((int)($summary['main_category_id'] ?? 0) !== 997 || empty($summary['status']) || !empty($summary['draft'])) return [];
+
+        // Áo blouse has its own product detail block. Use its configured pairings when present.
+        $products = TableRegistry::get('Products');
+        $detail = $products->getDetailProduct($summary['id'], LANGUAGE, ['get_attributes' => true, 'status' => 1]);
+        $product = $products->formatDataProductDetail($detail, LANGUAGE);
+        return $product ? $this->getShopCourseRecommendations($product, ['Tiền lâm sàng']) : [];
+    }
+
+    private function courseRecommendations(): CourseRecommendations
+    {
+        return $this->courseRecommendations ?? ($this->courseRecommendations = new CourseRecommendations(LANGUAGE));
+    }
+
+    private function courseRecommendationIds($configured): array
+    {
+        $ids = is_string($configured) ? json_decode($configured, true) : $configured;
+        if (!is_array($ids)) return [];
+        return array_values(array_filter($ids, static function ($id): bool {
+            return (is_int($id) || (is_string($id) && ctype_digit($id))) && (int)$id > 0;
+        }));
+    }
 
     // Khóa học > Khóa luyện thi (scripts/production_exam_prep_category.php): listed on its own page, /trac-nghiem.
     const EXAM_PREP_CATEGORY_ID = 125;
@@ -356,7 +411,7 @@ class ProductHelper extends Helper
 
         $rows = ConnectionManager::get('default')->execute(
             "SELECT q.id, c.name, JSON_LENGTH(questions.value) AS count, minutes.value AS minutes,
-                    m.school_name, m.source_quiz_type
+                    m.school_name, m.source_quiz_type, q.display_seed_date, q.content_updated_at
              FROM quizs q
              LEFT JOIN quizs_content c ON c.quiz_id = q.id AND c.lang = :lang
              JOIN quizs_attribute questions ON questions.quiz_id = q.id AND questions.attribute_id = :questions AND JSON_VALID(questions.value)
@@ -372,7 +427,8 @@ class ProductHelper extends Helper
             // Empty draft slots remain visible with a disabled start button.
             $id = (int) $row['id'];
             $result['info'][$id] = ['id' => $id, 'name' => trim((string) $row['name']), 'count' => (int) $row['count'], 'minutes' => (int) $row['minutes'],
-                'school' => trim((string)($row['school_name'] ?? '')), 'read_only' => ($row['source_quiz_type'] ?? '') === 'TULUAN'];
+                'school' => trim((string)($row['school_name'] ?? '')), 'read_only' => ($row['source_quiz_type'] ?? '') === 'TULUAN',
+                'display_update' => \App\Service\QuizUpdateDates::display($row)];
         }
         return $result;
     }

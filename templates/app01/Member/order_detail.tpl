@@ -142,38 +142,43 @@
 								</td>
 							</tr>
 						{/if}
-						{if !empty($order.total_coupon)}
+						{if !empty($order_discounts.lines)}
+							{if $order_discounts.subtotal !== null}
+								<tr>
+									<td colspan="3"><strong class="fs-14">Tiền hàng trước ưu đãi</strong></td>
+									<td class="text-right">
+										<span class="fs-16">{$order_discounts.subtotal|number_format:0:".":","} <span class="currency-symbol">{CURRENCY_UNIT_DEFAULT}</span></span>
+									</td>
+								</tr>
+							{/if}
 							<tr>
-								<td colspan="3">
-									<strong class="fs-14">
-										{__d('template', 'phieu_giam_gia')}
-									</strong>
-								</td>
-								<td class="text-right">
-									<span class="fs-16">
-					            		- {$order.total_coupon|number_format:0:".":","}
-						            	<span class="currency-symbol">{CURRENCY_UNIT_DEFAULT}</span>
-					            	</span>
+								<td colspan="4">
+									<section aria-labelledby="order-discounts-heading">
+										<h2 id="order-discounts-heading" class="fs-16 font-weight-bold mb-5">Ưu đãi đã áp dụng</h2>
+										<ul class="list-unstyled mb-0">
+											{foreach from=$order_discounts.lines item=discount}
+												<li class="d-flex justify-content-between align-items-baseline py-5">
+													<div class="mr-10 text-break">
+														<span class="fs-14 font-weight-bold">{$discount.label|escape}</span>
+														{if $discount.name && $discount.name != $discount.label}
+															<small class="d-block text-muted">{$discount.name|escape}</small>
+														{/if}
+														{if $discount.code}<code class="d-block">{$discount.code|escape}</code>{/if}
+													</div>
+													<strong class="fs-16 text-nowrap color-hover">−{$discount.amount|number_format:0:".":","} <span class="currency-symbol">{CURRENCY_UNIT_DEFAULT}</span></strong>
+												</li>
+											{/foreach}
+										</ul>
+										{if count($order_discounts.lines) > 1}
+											<div class="d-flex justify-content-between align-items-baseline border-top pt-10">
+												<strong class="fs-14">Tổng giảm</strong>
+												<strong class="fs-16 text-nowrap color-hover">−{$order_discounts.total|number_format:0:".":","} <span class="currency-symbol">{CURRENCY_UNIT_DEFAULT}</span></strong>
+											</div>
+										{/if}
+									</section>
 								</td>
 							</tr>
 						{/if}
-						
-						{if !empty($order.total_affiliate)}
-							<tr>
-								<td colspan="3">
-									<strong class="fs-14">
-										{__d('template', 'ma_gioi_thieu')}
-									</strong>
-								</td>
-								<td class="text-right">
-									<span class="fs-16">
-					            		- {$order.total_affiliate|number_format:0:".":","}
-						            	<span class="currency-symbol">{CURRENCY_UNIT_DEFAULT}</span>
-					            	</span>
-								</td>
-							</tr>
-						{/if}
-
 						{if !empty($order.total_vat)}
 							<tr>
 								<td colspan="3">

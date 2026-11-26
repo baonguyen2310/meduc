@@ -1,8 +1,9 @@
-/* The server supplies the live book catalogue. Purchases use MedUC's existing sessionStorage book cart. */
+/* Live book and equipment catalogues share the original MedUC shopping cart. */
 (() => {
   'use strict';
-  const page = document.querySelector('#book-catalog-page');
+  const page = document.querySelector('[data-shop-catalog],#book-catalog-page');
   if (!page) return;
+  const productLabel = page.dataset.productLabel || 'đầu sách';
   const grid = page.querySelector('[data-book-grid]');
   const cards = [...grid.querySelectorAll('[data-book-card]')];
   const input = page.querySelector('#book-search');
@@ -30,7 +31,7 @@
     });
     cards.forEach(card => { card.hidden = true; });
     filtered.forEach((card,index) => { card.hidden = index >= visibleCount; grid.append(card); });
-    status.textContent = `Hiển thị ${Math.min(visibleCount,filtered.length)} / ${filtered.length} đầu sách`;
+    status.textContent = `Hiển thị ${Math.min(visibleCount,filtered.length)} / ${filtered.length} ${productLabel}`;
     empty.hidden = filtered.length > 0;
     more.hidden = visibleCount >= filtered.length;
     clear.hidden = input.value.length === 0;

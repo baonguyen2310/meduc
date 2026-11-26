@@ -7,6 +7,10 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
+use App\Service\CheckoutContact;
+use App\Service\CommerceNotifications;
+use App\Service\ShopOrders;
+use App\Service\Vouchers;
 
 class ContactController extends AppController {
 
@@ -29,18 +33,13 @@ class ContactController extends AppController {
             $this->responseJson([MESSAGE => __d('template', 'du_lieu_khong_hop_le')]);
         }
 
-        if (($data['form_code'] ?? '') === '61CQ0U3H9I') {
+        $shop = ($data['form_code'] ?? '') === Vouchers::SHOP_FORM;
+        if ($shop) {
             $member = $this->request->getSession()->read(MEMBER) ?: [];
-            $customer = \App\Service\CheckoutContact::customer((int)($member['id'] ?? 0));
+            $customer = CheckoutContact::customer((int)($member['id'] ?? 0));
             if (!$customer) {
                 return $this->response->withStatus(401)->withType('application/json')->withHeader('Cache-Control','private, no-store')
                     ->withStringBody(json_encode([CODE=>ERROR,MESSAGE=>'Vui lòng đăng nhập để tiếp tục thanh toán.'],JSON_UNESCAPED_UNICODE));
-            }
-            try {
-                $data = array_merge($data, \App\Service\CheckoutContact::validate($data, $customer, true));
-            } catch (\InvalidArgumentException $e) {
-                $this->responseJson([MESSAGE=>$e->getMessage()]);
-                return;
             }
         }
 
@@ -49,6 +48,11 @@ class ContactController extends AppController {
         $check_recaptcha = $this->loadComponent('ReCaptcha')->check($token);
         if($check_recaptcha[CODE] != SUCCESS){
             $this->responseJson([MESSAGE => $check_recaptcha[MESSAGE]]);
+        }
+
+        if ($shop) {
+            $this->placeShopOrder($customer, $data);
+            return;
         }
 
         $form_code = !empty($data['form_code']) ? $data['form_code'] : null;
@@ -75,88 +79,21 @@ class ContactController extends AppController {
             $data_value[$code] = !empty($data[$code]) ? $data[$code] : null;
         }
 
-        if($form_code == "61CQ0U3H9I") {
-            $items = json_decode((string) ($data_value['cartProducts'] ?? ''), true);
-            try {
-                $data_products = \App\Lib\BookCheckout::quote(is_array($items) ? $items : []);
-            } catch (\InvalidArgumentException $e) {
-                $this->responseJson([MESSAGE => $e->getMessage()]);
-                return;
-            }
-            $totalPrice = array_sum(array_column($data_products, 'total'));
-            $totalQuantity = array_sum(array_column($data_products, 'quantity'));
-            if (isset($data['cartTotal']) && abs((float) $data['cartTotal'] - $totalPrice) > 0.5) {
-                $this->responseJson([MESSAGE => 'Giá sản phẩm vừa thay đổi. Vui lòng tải lại trang để kiểm tra số tiền trước khi đặt hàng.']);
-                return;
-            }
-            if (!in_array($data_value['payment'] ?? '', ['bank', 'cod'], true)
-                || !preg_match('/^MEDUC[0-9]{6,}$/', (string) ($data_value['cartId'] ?? ''))
-                || empty(trim((string) ($data_value['full_name'] ?? '')))
-                || !filter_var($data_value['email'] ?? '', FILTER_VALIDATE_EMAIL)
-                || !preg_match('/^(?:0|\\+84)[0-9]{9,10}$/', preg_replace('/[ .-]/', '', (string) ($data_value['phone'] ?? '')))
-                || empty(trim((string) ($data_value['address'] ?? '')))) {
-                $this->responseJson([MESSAGE => 'Vui lòng kiểm tra thông tin nhận hàng và phương thức thanh toán.']);
-                return;
-            }
-
-            $data_value["cartProducts"] = json_encode($data_products);
-            $data_value["totalPrice"] = $totalPrice;
-            $data_value["totalQuantity"] = $totalQuantity;
-            
-            if (isset($data_value["affiliateCode"]) && $data_value["affiliateCode"] !== '') {
-                $affiliate_percent = null;
-
-                // Tìm khách hàng có mã affiliateCode
-                $customer = TableRegistry::get('Customers')
-                    ->find()
-                    ->where(['code' => $data_value["affiliateCode"]])
-                    ->first();
-        
-                if ($customer && !empty($customer->affiliate_percent)) {
-                    $affiliate_percent = (float)$customer->affiliate_percent;
-                } else {
-                    // Nếu không có thì lấy từ settings
-                    $settings = TableRegistry::get('Settings')->getSettingWebsite();
-                    $affiliate_percent = isset($settings['website_info']['vi_affiliate_percent']) ? (float)$settings['website_info']['vi_affiliate_percent'] : null;
-                }
-                
-                if ($affiliate_percent !== null) {
-                    $data_value["affiliatePercent"] = $affiliate_percent;
-        
-                    // Tính tiền hoa hồng
-                    $total_price = (float)($data_value["totalPrice"] ?? 0);
-                    $affiliate_amount = round($total_price * $affiliate_percent / 100);
-        
-                    $data_value["affiliateAmount"] = $affiliate_amount;
-                    $data_value["affiliatePaidStatus"] = 'unpaid';
-                }
-            }
-            
-            // Trạng thái đơn hàng mặc định
-            $data_value["orderStatus"] = 'initial';
-            $data_value['customer_id'] = (int)$customer['id'];
-        }
-
-        $data_save = [
-            'form_id' => !empty($form_info['id']) ? $form_info['id'] : null,
-            'value' => !empty($data_value) ? json_encode($data_value) : null,
-            'status' => 2,
-            'search_unicode' => strtolower($this->loadComponent('Utilities')->formatSearchUnicode($data_value))
-        ];
-
-        $contact = $table->newEntity($data_save);
-
         $conn = ConnectionManager::get('default');
-        try{
+        try {
             $conn->begin();
-                        
-            $save = $table->save($contact);
 
-            if (empty($save->id)){
+            $contact = $table->newEntity([
+                'form_id' => !empty($form_info['id']) ? $form_info['id'] : null,
+                'value' => !empty($data_value) ? json_encode($data_value) : null,
+                'status' => 2,
+                'search_unicode' => strtolower($this->loadComponent('Utilities')->formatSearchUnicode(array_filter($data_value, 'is_scalar'))),
+            ]);
+            $save = $table->save($contact);
+            if (empty($save->id)) {
                 throw new Exception();
             }
-
-            if($form_code!=='61CQ0U3H9I' && !empty($save) && !empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
+            if (!empty($form_info['send_email']) && !empty($form_info['template_email_code'])) {
                 $settings = TableRegistry::get('Settings')->getSettingWebsite();
                 $email_management = !empty($settings['email']['email_administrator']) ? $settings['email']['email_administrator'] : null;
                 $params_email = [
@@ -165,66 +102,68 @@ class ContactController extends AppController {
                     'id_record' => $save['id']
                 ];
   
-                $send = $this->loadComponent('Email')->send($params_email);
-                
-                if($form_code == "61CQ0U3H9I") {
-                    // Gửi email cho khách hàng
-                    $customer_email = !empty($data_value['email']) ? $data_value['email'] : null;
-                    if (!empty($customer_email)) {
-                        $params_email_customer = [
-                            'to_email' => $customer_email,
-                            'code' => $form_info['template_email_code'],
-                            'id_record' => $save['id']
-                        ];
-                        $this->loadComponent('Email')->send($params_email_customer);
-                    }
-                }
+                $this->loadComponent('Email')->send($params_email);
             }
-            
             $conn->commit();
-
-            if ($form_code === '61CQ0U3H9I') {
-                // The confirmation page reads only this browser session's successfully saved order.
-                $this->request->getSession()->write('MeducBookOrder', $data_value);
-            }
-            if($form_code==='61CQ0U3H9I')\App\Service\CommerceNotifications::book((int)$save['id'],function($p){return $this->loadComponent('Email')->sendEmail($p);},$this->request->host());
-            $this->loadComponent('SendMessage')->send(CONTACT, $save['id']);
-            
-            $this->responseJson([
-                CODE => SUCCESS, 
-                MESSAGE => __d('template', 'gui_thong_tin_lien_he_thanh_cong')
-            ]);
-
-        }catch (Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $conn->rollback();
-            $this->responseJson([MESSAGE => $e->getMessage()]);  
+            $this->responseJson([MESSAGE => $e->getMessage()]);
+            return;
+        } catch (\Throwable $e) {
+            if ($conn->inTransaction()) {
+                $conn->rollback();
+            }
+            $this->responseJson([MESSAGE => $e->getMessage()]);
+            return;
         }
+        try {
+            $this->loadComponent('SendMessage')->send(CONTACT, $save['id']);
+        } catch (\Throwable $error) {
+            $this->log('Contact notification: ' . $error->getMessage(), 'error');
+        }
+        $this->responseJson([CODE => SUCCESS, MESSAGE => __d('template', 'gui_thong_tin_lien_he_thanh_cong')]);
     }
     
+    private function placeShopOrder(array $customer, array $data): void
+    {
+        try {
+            $receipt = ShopOrders::place(
+                $customer,
+                $data,
+                function ($payload) { return $this->loadComponent('Admin.Order')->saveOrder($payload); },
+                function ($payment) { return $this->loadComponent('Admin.Payment')->savePayment($payment); }
+            );
+        } catch (\InvalidArgumentException $error) {
+            $this->responseJson([MESSAGE => $error->getMessage()]);
+            return;
+        } catch (\Throwable $error) {
+            $this->log('Shop checkout: ' . $error->getMessage(), 'error');
+            $this->responseJson([MESSAGE => 'Chưa tạo được đơn hàng. Vui lòng thử lại.']);
+            return;
+        }
+
+        $this->request->getSession()->write('MeducBookOrder', $receipt);
+        CommerceNotifications::shop($receipt, function ($message) {
+            return $this->loadComponent('Email')->sendEmail($message);
+        }, $this->request->host());
+        $this->responseJson([CODE => SUCCESS, MESSAGE => 'MedUC đã nhận đơn hàng.']);
+    }
+
     public function getInfo()
     {
-        $cartId = $this->request->getQuery('cartId');
-
-        if (!$cartId) {
-            throw new NotFoundException(__('Cart ID không hợp lệ'));
+        $session = $this->request->getSession();
+        $buyer = (int)($session->read(MEMBER)['id'] ?? 0);
+        $reference = $this->request->getQuery('cartId');
+        $data = is_string($reference) ? ShopOrders::byReference($reference, $buyer) : [];
+        if (!$data && $buyer && is_string($reference)) {
+            $old = $session->read('MeducBookOrder');
+            if (is_array($old) && (int)($old['customer_id'] ?? 0) === $buyer && ($old['cartId'] ?? '') === $reference) {
+                $data = $old;
+            }
         }
+        if (!$data) throw new NotFoundException(__('Không tìm thấy đơn hàng'));
 
-        // Lấy instance của bảng contacts qua TableRegistry
-        $contactsTable = TableRegistry::getTableLocator()->get('Contacts');
-
-        // Tìm bản ghi có cartId trong trường value
-        $contact = $contactsTable->find()
-            ->where(["value LIKE" => '%\"cartId\":\"' . $cartId . '\"%'])
-            ->first();
-
-        if (!$contact) {
-            throw new NotFoundException(__('Không tìm thấy đơn hàng'));
-        }
-
-        // Parse JSON trong cột value
-        $data = json_decode($contact->value, true);
-
-        return $this->response->withType('application/json')
+        return $this->response->withType('application/json')->withHeader('Cache-Control', 'private, no-store')
                               ->withStringBody(json_encode($data));
     }
 }

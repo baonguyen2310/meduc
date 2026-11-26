@@ -1,10 +1,9 @@
 {$meduc_catalog_groups = [
-  'shop' => [
-    'label' => 'MedUC Shop', 'icon' => 'store',
+  'academy' => [
+    'label' => 'MedUC Academy', 'icon' => 'users',
     'items' => [
-      ['url' => '/sach-y-khoa', 'label' => 'Sách', 'icon' => 'book'],
-      ['url' => '/thiet-bi-y-te', 'label' => 'Thiết bị y tế', 'icon' => 'pulse'],
-      ['url' => '/ao-blouse', 'label' => 'Áo blouse', 'icon' => 'coat']
+      ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
+      ['url' => '/khoa-chua-de', 'label' => 'Khoá luyện thi', 'icon' => 'pulse']
     ]
   ],
   'library' => [
@@ -15,11 +14,12 @@
       'blog' => ['url' => '/blog', 'label' => 'Blog', 'icon' => 'book']
     ]
   ],
-  'academy' => [
-    'label' => 'MedUC Academy', 'icon' => 'users',
+  'shop' => [
+    'label' => 'MedUC Shop', 'icon' => 'store',
     'items' => [
-      ['url' => '/khoa-hoc', 'label' => 'Khoá ôn kiến thức', 'icon' => 'book'],
-      ['url' => '/khoa-chua-de', 'label' => 'Khoá luyện thi', 'icon' => 'pulse']
+      ['url' => '/sach-y-khoa', 'label' => 'Sách', 'icon' => 'book'],
+      ['url' => '/thiet-bi-y-te', 'label' => 'Thiết bị y tế', 'icon' => 'pulse'],
+      ['url' => '/ao-blouse', 'label' => 'Áo blouse', 'icon' => 'coat']
     ]
   ]
 ]}

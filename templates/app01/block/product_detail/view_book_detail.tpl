@@ -13,16 +13,13 @@
 {if !empty($combo_books)}{$recommend_filter = ['ids' => $combo_books, 'not_ids' => [$product.id], 'draft' => '0']}{/if}
 {$related_books = $this->Product->getProducts(['get_item' => true, 'get_categories' => true, {FILTER} => $recommend_filter, {SORT} => [{FIELD} => 'position', {SORT} => 'DESC'], 'limit' => 4])}
 {$related_books = $book_view->asCatalog($related_books)}
-{$course_ids = json_decode($product.attributes.combo_course.value|default:'', true)|default:[]}
-{$courses = []}
-{if !empty($course_ids)}{$courses = $this->Product->getProducts(['get_item' => true, {FILTER} => ['ids' => $course_ids, 'draft' => '0'], 'limit' => 12])}{/if}
-{$courses = $book_view->asCatalog($courses)}
+{$course_recommendations = $this->Product->getShopCourseRecommendations($product)}
 {$website = $this->Setting->getWebsiteInfo()}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-catalog.css?v=20261015" rel="stylesheet">
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.css?v=20261015" rel="stylesheet">
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261015" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-cart.js?v=20261125-shop-orders" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/book-detail.js?v=20261015" defer></script>
 
 <main class="mbd" id="book-detail" data-book-items="{$detail.items|json_encode|escape}" data-book-name="{$product.name|escape}">
@@ -65,7 +62,7 @@
     </section>
 
     <nav class="mbd-section-nav" aria-label="Nội dung chi tiết sách"><div class="mbd-shell">
-        <a href="#book-information">Thông tin sách</a>{if count($images)>1}<a href="#book-photos">Ảnh sách</a>{/if}{if !empty($courses)}<a href="#book-courses">Khóa học nên mua cùng</a>{/if}{if !empty($related_books)}<a href="#book-related">{if !empty($combo_books)}Sách nên mua cùng{else}Sách cùng chủ đề{/if}</a>{/if}<a href="#book-comments">Hỏi đáp</a>
+        <a href="#book-information">Thông tin sách</a>{if count($images)>1}<a href="#book-photos">Ảnh sách</a>{/if}{if !empty($course_recommendations.courses)}<a href="#book-courses">{$course_recommendations.title|escape}</a>{/if}{if !empty($related_books)}<a href="#book-related">{if !empty($combo_books)}Sách nên mua cùng{else}Sách cùng chủ đề{/if}</a>{/if}<a href="#book-comments">Hỏi đáp</a>
     </div></nav>
 
     <section class="mbd-shell mbd-information" id="book-information" aria-labelledby="book-information-title">
@@ -78,7 +75,7 @@
 
     {if count($images)>1}<section class="mbd-photos" id="book-photos" aria-labelledby="book-photos-title"><div class="mbd-shell"><div class="mbd-section-heading"><div><p class="mbd-eyebrow">NHÌN GẦN HƠN</p><h2 id="book-photos-title">LẬT XEM.<br><span>TRƯỚC KHI CHỌN.</span></h2></div><p>Bìa sách, các góc chụp và trang bên trong qua hình ảnh từ MedUC.</p></div><div class="mbd-photo-grid">{foreach from = $images item = image key = index}{if $index>0 && $index<=6}<button type="button" class="mbd-photo" data-book-zoom="{$index}" aria-label="Phóng to ảnh sách {$index+1}"><span><img src="{CDN_URL}{$this->Utilities->getThumbs($image, 500)}" alt="Ảnh {$index+1} của {$product.name|escape}" loading="lazy" decoding="async"></span><strong>Ảnh {$index+1|string_format:'%02d'} <span aria-hidden="true">↗</span></strong></button>{/if}{/foreach}</div>{if count($images)>7}<button type="button" class="mbd-all-images" data-book-zoom="0">Xem toàn bộ {count($images)} ảnh →</button>{/if}</div></section>{/if}
 
-    {if !empty($courses)}<section class="mbd-shell mbd-courses" id="book-courses" aria-labelledby="book-courses-title"><div class="mbd-section-heading"><div><p class="mbd-eyebrow">GỢI Ý TỪ MEDUC</p><h2 id="book-courses-title">KHÓA HỌC<br><span>NÊN MUA CÙNG.</span></h2></div><a class="mbd-text-link" href="/khoa-hoc">Xem tất cả khóa học →</a></div><div class="mbd-course-grid">{foreach from = $courses item = course}{$course_price=$course.price|default:0}{if !empty($course.apply_special) && !empty($course.price_special)}{$course_price=$course.price_special}{/if}<article class="mbd-course-card"><a href="{$this->Utilities->checkInternalUrl($course.url)|escape}">{if !empty($course.all_images[0])}<img src="{CDN_URL}{$this->Utilities->getThumbs($course.all_images[0], 500)}" alt="Ảnh khóa học {$course.name|escape}" loading="lazy">{/if}<div><h3>{$course.name|escape}</h3>{if $course_price>0}<p>{$course_price|number_format:0:',':'.'}đ</p>{/if}<span>Xem khóa học <span aria-hidden="true">→</span></span></div></a></article>{/foreach}</div></section>{/if}
+    {$this->element('course/recommendation_cards', ['recommendations' => $course_recommendations, 'section_id' => 'book-courses'])}
 
     {if !empty($related_books)}<section class="mbd-related" id="book-related" aria-labelledby="book-related-title"><div class="mbd-shell"><div class="mbd-section-heading"><div><p class="mbd-eyebrow">TIẾP TỤC KHÁM PHÁ</p><h2 id="book-related-title">{if !empty($combo_books)}SÁCH<br><span>NÊN MUA CÙNG.</span>{else}CÙNG CHỦ ĐỀ.<br><span>THÊM GÓC NHÌN.</span>{/if}</h2></div><a class="mbd-text-link" href="/sach-y-khoa">Xem tất cả sách →</a></div><div class="mbc mbd-related-books"><div class="mbc-grid">{foreach from=$related_books item=book key=book_index}{$this->element('../block/product/item_book_catalog', ['book'=>$book,'book_index'=>$book_index,'subject_ids'=>[81,82,83,84,85,86]])}{/foreach}</div></div></div></section>{/if}
 

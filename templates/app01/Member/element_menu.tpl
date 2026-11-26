@@ -56,26 +56,13 @@
             </a>
         </li>
         
-        <li>
-            <a href="/cac-khoa-hoc-nen-mua" class="color-black">
-                <i class="iconsax isax-2x isax-video-square"></i>
-                Các khoá học nên mua
-            </a>
-        </li>
-        
-        <li>
-            <a href="/lich-su-lam-bai-tap" class="color-black">
-                <i class="iconsax isax-2x isax-archive-book"></i>
-                Lịch sử làm bài tập
-            </a>
-        </li>
 
-        {*<li class="{if $get_path == '/member/order' || strpos($get_path, '/member/order/detail/') === 0}active{/if}">
+        <li class="{if $get_path == '/member/order' || strpos($get_path, '/member/order/detail/') === 0}active{/if}">
             <a href="/member/order" class="color-black">
                 <i class="iconsax isax-2x isax-clipboard-text"></i>
                 Đơn hàng của tôi
             </a>
-        </li>*}
+        </li>
 
         {*if !empty($plugins.point) || !empty($plugins.affiliate)}
             <div class="customer-support font-weight-bold mb-10">
@@ -98,14 +85,12 @@
             </div>
         {/if}
 
-        {if !empty($plugins.promotion)}
-            <li class="{if $get_path == '/member/promotion'}active{/if}">
-                <a href="/member/promotion" class="color-black">
-                    <i class="iconsax isax-2x isax-ticket"></i>
-                    {__d('template', 'phieu_giam_gia')}
-                </a>
-            </li>
-        {/if}
+        <li class="{if $get_path == '/member/promotion'}active{/if}">
+            <a href="/member/promotion" class="color-black">
+                <i class="iconsax isax-2x isax-ticket"></i>
+                Ưu đãi của tôi
+            </a>
+        </li>
 
         {if !empty($plugins.point)}
             <li class="{if $get_path == '/member/attendance'}active{/if}">

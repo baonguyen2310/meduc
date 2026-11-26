@@ -1,4 +1,6 @@
 {strip}
+<link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.css?v=20261125-claim" rel="stylesheet">
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/vouchers.js?v=20261125-codes" defer></script>
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-usage.js?v=20261113-account-theme" defer></script>
 <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.css?v=20261113-quiz-five" rel="stylesheet">
 <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-history.js?v=20261124-exam-label" defer></script>
@@ -10,13 +12,8 @@
 {assign var = website_name value = "{if !empty($website_info.website_name)}{$website_info.website_name}{else}MedUC{/if}"}
 
 {include file='./catalog_navigation.tpl' scope=parent}
-{$nav_secondary = [
-  ['url' => '/gioi-thieu', 'label' => 'Giới thiệu'],
-  ['url' => '/doi-ngu-giang-vien', 'label' => 'Giảng viên'],
-  ['url' => '/phuong-phap-hoc', 'label' => 'Phương pháp học'],
-  ['url' => '/phan-hoi-hoc-vien', 'label' => 'Phản hồi'],
-  ['url' => '/lo-trinh-hoc', 'label' => 'Lộ trình học']
-]}
+{$nav_product_view = $this->loadHelper('Product')}
+{$nav_secondary = $nav_product_view->getSecondaryNavigation()}
 
 <div class="mhi mhi-header-wrap" id="meduc-header">
   <svg class="mhi-icon-sprites" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -38,8 +35,8 @@
   <header class="mhi-header">
     <div class="mhi-network">
       <nav class="mhi-shell mhi-network-links" aria-label="Điều hướng MedUC">
-        {foreach from = $nav_secondary item = link}
-          <a href="{$link.url|escape}">{$link.label|escape}</a>
+        {foreach from = $nav_secondary key = url item = label}
+          <a href="{$url|escape}">{$label|escape}</a>
         {/foreach}
       </nav>
     </div>
@@ -88,7 +85,7 @@
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11L5.5 8Z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg>
           <span data-course-cart-count class="mhi-cart-count">{$header_course_cart.total_quantity|default:0}</span>
         </a>
-        <a class="mhi-cart mhi-cart-book" nh-mini-cart-book href="/dat-hang" title="Giỏ hàng sách và thiết bị" aria-label="Giỏ hàng sách và thiết bị">
+        <a class="mhi-cart mhi-cart-book" nh-mini-cart-book href="/dat-hang" title="Giỏ hàng sách, thiết bị và áo blouse" aria-label="Giỏ hàng sách, thiết bị và áo blouse">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 4h2.3l2.4 11h10.6l2-8H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
           <span nh-mini-cart-book-quantity class="mhi-cart-count">0</span>
         </a>
@@ -122,10 +119,10 @@
       {/foreach}
       <a class="mhi-drawer-link" href="/class-rank" aria-label="BXH – Bảng xếp hạng">BXH</a>
       <p class="mhi-drawer-label">Về MedUC</p>
-      {foreach from = $nav_secondary item = link}
-        <a class="mhi-drawer-link" href="{$link.url|escape}">{$link.label|escape}</a>
+      {foreach from = $nav_secondary key = url item = label}
+        <a class="mhi-drawer-link" href="{$url|escape}">{$label|escape}</a>
       {/foreach}
-      <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách &amp; thiết bị</a>
+      <a class="mhi-drawer-link" href="/dat-hang">Giỏ sách, thiết bị &amp; áo blouse</a>
 
       <div class="mhi-drawer-foot">
         <button class="mhi-drawer-theme" data-mhi-theme-toggle type="button" aria-label="Chuyển sang chế độ sáng" aria-pressed="true">

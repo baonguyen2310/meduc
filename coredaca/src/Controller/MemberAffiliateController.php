@@ -93,6 +93,7 @@ class MemberAffiliateController extends AppController
             
         $contactsList = [];
         foreach ($contacts as $contact) {
+            if (\App\Service\ShopOrders::linkedArchive((int)$contact->id)) continue;
             $decoded = json_decode($contact->value, true);
         
             // Chỉ lấy đơn hàng có orderStatus là "success" và "affiliatePaidStatus" = "paid"

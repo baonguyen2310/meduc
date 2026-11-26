@@ -5,6 +5,7 @@ use Cake\View\Helper;
 use Cake\ORM\TableRegistry;
 use App\Lib\BookCheckout;
 use App\Service\CoursePricing;
+use App\Service\ShopOrders;
 
 class CheckoutHelper extends Helper
 {
@@ -16,7 +17,8 @@ class CheckoutHelper extends Helper
             ->where(['id'=>(int)$order['id']])->enableHydration(false)->first();
         $snapshot = json_decode((string)($row['course_price_snapshot'] ?? ''), true) ?: [];
         $original = (float)($snapshot['package']['price'] ?? $order['total_origin'] ?? $amount);
-        return ['amount'=>$amount, 'original'=>max($original, $amount), 'package'=>$snapshot['package']??[]];
+        return ['amount'=>$amount, 'original'=>max($original, $amount), 'package'=>$snapshot['package']??[],
+            'discounts'=>$snapshot['vouchers']['discounts']??[], 'gifts'=>$snapshot['purchase_gifts']??[]];
     }
     public function paymentCatalog(array $order): string
     {
@@ -26,9 +28,18 @@ class CheckoutHelper extends Helper
     }
     public function confirmation(): array
     {
-        $order = $this->getView()->getRequest()->getSession()->read('MeducBookOrder');
-        $code = $this->getView()->getRequest()->getQuery('cartId');
-        return is_array($order) && is_string($code) && ($order['cartId'] ?? '') === $code ? $order : [];
+        $request = $this->getView()->getRequest();
+        $session = $request->getSession();
+        $member = $session->read(MEMBER) ?: [];
+        $buyer = (int)($member['id'] ?? 0);
+        $code = $request->getQuery('cartId');
+        if (!$buyer || !is_string($code)) return [];
+        $receipt = ShopOrders::byReference($code, $buyer);
+        if ($receipt) return $receipt;
+
+        $order = $session->read('MeducBookOrder');
+        return is_array($order) && (int)($order['customer_id'] ?? 0) === $buyer
+            && ($order['cartId'] ?? '') === $code ? $order : [];
     }
     public function bank(string $purpose = 'course', array $order = []): array
     {
@@ -70,7 +81,7 @@ class CheckoutHelper extends Helper
         }
         if (!$physical) return true;
         $categories = TableRegistry::get('Categories');
-        $categoryIds = array_unique(array_merge([79, 80], $categories->getAllChildCategoryId(79), $categories->getAllChildCategoryId(80)));
+        $categoryIds = \App\Lib\BlouseProducts::physicalCategoryIds();
         $bookIds = TableRegistry::get('CategoriesProduct')->find()
             ->where(['product_id IN' => $physical, 'category_id IN' => $categoryIds])
             ->all()->extract('product_id')->toList();

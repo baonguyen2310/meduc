@@ -51,20 +51,28 @@
 
     {* Every page whose layout has a header gets the new header instead of the database header rows. *}
     {$use_header_v2 = !empty($page_code) && !empty($structure[{HEADER}])}
+    {$featured_courses = []}
+    {if $use_header_v2}
+        {$course_product_view = $this->loadHelper('Product')}
+        {$featured_courses = $course_product_view->getSecondaryPageCourses()}
+    {/if}
+    {if $featured_courses || PAGE_TYPE == PRODUCT_DETAIL || PAGE_TYPE == ARTICLE_DETAIL}
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-recommendations.css?v=20261125-related-cards" rel="stylesheet">
+    {/if}
     {if $use_header_v2}
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/theme-init.js?v=20261113-account-theme"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261124-stable-navigation" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.css?v=20261125-uniform-nav-type" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/header.js?v=20261124-stable-navigation" defer></script>
-        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261124-bottom-icons" rel="stylesheet">
+        <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.css?v=20261125-uniform-shortcuts" rel="stylesheet">
         <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/action-bar.js?v=20261124-catalog-groups" defer></script>
         <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/footer.css?v=20261124-catalog-groups" rel="stylesheet">
     {/if}
 
     <link href="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.css?v=20261022-8" rel="stylesheet">
-    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261124-exam-label" defer></script>
+    <script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/course-price-cart.js?v=20261124-vouchers" defer></script>
     <script src="/bang-bao-gia/lien-ket.js" defer></script>
 
     {* The sign-in dialog is present on every page, so its styles are shared. *}
@@ -127,6 +135,14 @@
         ], $page_cache_options)}
     {/if}
 
+    {if !empty($featured_courses.courses)}
+        {$this->element('course/recommendation_cards', ['recommendations' => $featured_courses, 'section_id' => 'featured-courses'])}
+    {elseif PAGE_TYPE == PRODUCT_DETAIL && !empty($schema_data[{PRODUCT_DETAIL}])}
+        {$course_product_view = $this->loadHelper('Product')}
+        {$blouse_courses = $course_product_view->getBlouseCourseRecommendations($schema_data[{PRODUCT_DETAIL}])}
+        {$this->element('course/recommendation_cards', ['recommendations' => $blouse_courses, 'section_id' => 'blouse-courses'])}
+    {/if}
+
     {if $use_header_v2}
         {$this->element('layout/footer_v2')}
         {foreach from = $kept_footer_rows item = row}
@@ -176,6 +192,7 @@
     
     
     {$this->element('../Notification/bell')}
+    {$this->element('layout/online_bonus')}
 
 </body>
 </html>

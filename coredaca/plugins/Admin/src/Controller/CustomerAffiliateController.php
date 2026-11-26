@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
+use App\Service\AffiliateCommissions;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
 use Cake\Http\Response;
@@ -804,7 +805,7 @@ class CustomerAffiliateController extends AppController {
         }
 
         $this->js_page = [
-            '/assets/js/pages/customer_aff_detail.js'
+            '/assets/js/pages/customer_aff_detail.js?v=20261125-shop-orders'
         ];
         
         
@@ -822,6 +823,7 @@ class CustomerAffiliateController extends AppController {
             
         $contactsList = [];
         foreach ($contacts as $contact) {
+            if (\App\Service\ShopOrders::linkedArchive((int)$contact->id)) continue;
             $decoded = json_decode($contact->value, true);
         
             // Chỉ lấy đơn hàng có orderStatus là "success"
@@ -847,6 +849,7 @@ class CustomerAffiliateController extends AppController {
         $this->set('id', $id);
         $this->set('customer', $customer);
         $this->set('affiliate_percent_default', $affiliate_percent_default);
+        $this->set('affiliate_payable', AffiliateCommissions::payable((string)$affiliateCode));
         $this->set('contacts', $contactsList);
         $this->set('orders', $orders);
         $this->set('title_for_layout', "Chi tiết đối tác");
@@ -855,99 +858,53 @@ class CustomerAffiliateController extends AppController {
     public function updateAff($id = null)
     {
         $this->request->allowMethod(['post']);
-        
-        // Lấy biến affiliate_percent từ request
-        $affiliate_percent = $this->request->getData('affiliate_percent');
-        
+        $rate = $this->request->getData('affiliate_percent');
+        $enabled = $this->request->getData('affiliate_enabled');
         $table = TableRegistry::get('Customers');
         $customer = $table->find()->where(['Customers.id' => $id, 'Customers.deleted' => 0])->first();
-        
         if (!$customer) {
-            throw new NotFoundException(__('Người dùng không tồn tại.'));
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Không tìm thấy tài khoản.']);
+            return;
         }
-        
-        $customer->affiliate_percent = $affiliate_percent;
-    
-        // Bước 4: Lưu lại
-        if ($table->save($customer)) {
-            $this->responseJson([
-                CODE => SUCCESS,
-                MESSAGE => 'Cập nhật hoa hồng thành công.'
-            ]);
-        } else {
-            $this->responseJson([
-                CODE => ERROR,
-                MESSAGE => 'Không thể cập nhật hoa hồng.'
-            ]);
+        if ($rate !== null) {
+            if (!is_numeric($rate) || (float)$rate < 0 || (float)$rate > 100) {
+                $this->responseJson([CODE => ERROR, MESSAGE => 'Tỷ lệ hoa hồng phải từ 0 đến 100%.']);
+                return;
+            }
+            $customer->affiliate_percent = (float)$rate;
         }
+        if ($enabled !== null) {
+            if (!is_scalar($enabled) || !in_array((string)$enabled, ['0', '1'], true) ||
+                ((int)$enabled === 1 && ((int)$customer->status !== 1 || !$customer->code))) {
+                $this->responseJson([CODE => ERROR, MESSAGE => 'Chỉ bật Affiliate cho tài khoản đang hoạt động và có mã.']);
+                return;
+            }
+            $customer->is_partner_affiliate = (int)$enabled;
+        }
+        if (!$table->save($customer)) {
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Chưa cập nhật được đối tác.']);
+            return;
+        }
+        $this->responseJson([CODE => SUCCESS, MESSAGE => 'Đã cập nhật đối tác Affiliate.']);
     }
-    
+
     public function acceptPayment($id = null)
     {
         $this->request->allowMethod(['post']);
-        
-        $table = TableRegistry::get('Customers');
-        $customer = $table->find()->where(['Customers.id' => $id, 'Customers.deleted' => 0])->first();
-        
-        if (!$customer) {
-            throw new NotFoundException(__('Người dùng không tồn tại.'));
-        }
-        
-        $customer->affiliate_amount_unpaid = 0;
-    
-        if ($table->save($customer)) {
-            $affiliateCode = $customer["code"];
-            
-            // Cập nhật trạng thái của các bản ghi Contacts
-            // Truy vấn contacts chứa affiliateCode của customer->code
-            $contactsTable = TableRegistry::get('Contacts');
-        
-            $contacts = $contactsTable->find()
-                ->where([
-                    'value LIKE' => '%"affiliateCode":"' . $affiliateCode . '"%'
-                ])
-                ->order(['id' => 'DESC'])
-                ->all();
-                
-            foreach ($contacts as $contact) {
-                $decoded = json_decode($contact->value, true);
-                if (!empty($decoded['orderStatus']) && $decoded['orderStatus'] === 'success') {
-                    $decoded['affiliatePaidStatus'] = 'paid';
-
-                    // Encode lại JSON
-                    $contact->value = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-                    $contactsTable->save($contact);
-                }
+        $expected = $this->request->getData('expected_amount');
+        try {
+            if (!is_numeric($expected)) {
+                throw new \InvalidArgumentException('Tải lại hồ sơ để xác nhận đúng số tiền hoa hồng đã chi.');
             }
-            // Hết Cập nhật trạng thái của các bản ghi Contacts
-            
-            // Cập nhật trạng thái của các bản ghi Orders
-            // Truy vấn orders chứa affiliateCode của customer->code
-            $ordersTable = TableRegistry::get('Orders');
-
-            $orders = $ordersTable->find()
-                ->where([
-                    'Orders.affiliateCode' => $affiliateCode,
-                    'Orders.orderStatus' => 'success',
-                ])
-                ->order(['id' => 'DESC'])
-                ->all();
-                
-            foreach ($orders as $order) {
-                $order->affiliatePaidStatus = 'paid';
-                $ordersTable->save($order);
-            }
-            // Hết Cập nhật trạng thái của các bản ghi Orders
-            
-            $this->responseJson([
-                CODE => SUCCESS,
-                MESSAGE => 'Cập nhật thành công.'
-            ]);
-        } else {
-            $this->responseJson([
-                CODE => ERROR,
-                MESSAGE => 'Không thể cập nhật.'
-            ]);
+            AffiliateCommissions::settle((int)$id, (float)$expected);
+        } catch (\InvalidArgumentException $error) {
+            $this->responseJson([CODE => ERROR, MESSAGE => $error->getMessage()]);
+            return;
+        } catch (\Throwable $error) {
+            $this->log('Affiliate payout confirmation for customer ' . (int)$id . ': ' . $error->getMessage(), 'error');
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Chưa ghi nhận được khoản hoa hồng đã chi.']);
+            return;
         }
+        $this->responseJson([CODE => SUCCESS, MESSAGE => 'Đã ghi nhận khoản hoa hồng đã chi.']);
     }
 }

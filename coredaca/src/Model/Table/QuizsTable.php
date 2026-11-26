@@ -8,6 +8,9 @@ use Cake\Validation\Validator;
 use App\Model\Behavior\UnixTimestampBehavior;
 use Cake\Utility\Text;
 use Cake\Utility\Hash;
+use Cake\Event\Event;
+use Cake\Datasource\EntityInterface;
+use App\Service\QuizUpdateDates;
 
 class QuizsTable extends AppTable
 {
@@ -111,6 +114,14 @@ class QuizsTable extends AppTable
             'joinType' => 'LEFT',
             'propertyName' => 'TagQuiz'
         ]);
+    }
+
+    public function afterSave(Event $event, EntityInterface $entity)
+    {
+        if ($entity->isNew() && !empty($entity['id']) && empty($entity['fa_only'])) {
+            QuizUpdateDates::seed((int)$entity['id']);
+        }
+        parent::afterSave($event, $entity);
     }
 
     public function validationDefault(Validator $validator): Validator

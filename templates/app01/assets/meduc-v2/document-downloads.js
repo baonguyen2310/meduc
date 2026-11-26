@@ -4,7 +4,8 @@
   const payment = document.querySelector('[data-document-payment]');
   if (!detail && !payment) return;
   let context = null, busy = false, loginIntent = null, requestSerial = 0, selectedPackage=null;
-  const money=n=>new Intl.NumberFormat('vi-VN').format(n)+'đ';
+  const numberFormat = new Intl.NumberFormat('vi-VN');
+  const money = amount => numberFormat.format(amount) + 'đ';
   const query = (selector) => (payment || detail).querySelector(selector);
   const message = (text, error = false) => {
     (payment || detail).querySelectorAll('[data-download-message]').forEach((node) => { node.textContent = text; node.hidden = !text; node.toggleAttribute('data-error', error); });
@@ -39,7 +40,11 @@
       const file = context?.files.find((item) => item.index === index);
       const state = file?.purchase?.state;
       button.disabled = busy || !!file?.unavailable;
-      button.textContent = file?.unavailable ? 'Chưa hỗ trợ tải tệp này' : ['available','active'].includes(state) ? 'Tải tệp đã mua ↓' : state === 'pending' ? (file.purchase.reported ? 'Xem đơn chờ xác nhận' : 'Tiếp tục thanh toán') : context?.balance>0?`Tải tài liệu · Còn ${context.balance} lượt`:'Mua lượt tải';
+      if (file?.unavailable) button.textContent = 'Chưa hỗ trợ tải tệp này';
+      else if (['available','active'].includes(state)) button.textContent = 'Tải tệp đã mua ↓';
+      else if (context?.balance > 0) button.textContent = `Tải tài liệu · Còn ${context.balance} lượt`;
+      else if (state === 'pending') button.textContent = file.purchase.reported ? 'Xem đơn chờ xác nhận' : 'Tiếp tục thanh toán';
+      else button.textContent = 'Mua lượt tải';
     });
   }
   async function refreshDetail() {
@@ -59,13 +64,18 @@
       if (['available','active'].includes(file.purchase?.state)) {
         const ticket = await api('start/' + file.purchase.code, {}); download(ticket.url);
         message('Đã bắt đầu tải. Bạn có thể thử lại trong 30 phút nếu mạng bị gián đoạn.');
-      } else if (file.purchase?.state === 'pending') location.assign(file.purchase.payment_url);
-      else if(context.balance>0){
+      } else if(context.balance>0){
         const ticket=await api('start-credit',{article:detail.dataset.readingId,index});download(ticket.url);
         message('Đang tải. Mỗi lần bấm tải mới dùng 1 lượt. Nếu bị gián đoạn, bạn có thể tiếp tục trong mục Tải xuống của trình duyệt trong 30 phút.');
         [1500,5000,12000].forEach(ms=>setTimeout(()=>refreshDetail().catch(()=>{}),ms));
-      }else {
-        const result = await api('purchase', {nonce:file.nonce, expected_customer_id:context.customer_id,package_id:selectedPackage});
+      } else if (file.purchase?.state === 'pending') {
+        location.assign(file.purchase.payment_url);
+      } else {
+        const voucher = window.MeducVouchers
+          ? await window.MeducVouchers.review({source:'package', packageId:selectedPackage, courseIds:[]}, trigger)
+          : {};
+        if (voucher === null) return;
+        const result = await api('purchase', {nonce:file.nonce, expected_customer_id:context.customer_id,package_id:selectedPackage,...voucher});
         location.assign(result.redirect);
       }
     } catch (error) {
@@ -94,9 +104,28 @@
       for(const p of context.packages||[]){
         const card=document.createElement('article');card.className=Number(p.recommended)===1?'is-recommended':'';
         const name=document.createElement('h3');name.textContent=p.credit_count+' lượt tải';
-        const price=document.createElement('strong');price.textContent=money(p.amount);
+        const price = document.createElement('strong');
+        price.className = 'mds-price-total';
+        const amount = document.createElement('span');
+        amount.textContent = numberFormat.format(p.amount) + ' đ';
+        const term = document.createElement('span');
+        term.className = 'mds-price-term';
+        term.textContent = `/ ${p.credit_count} lượt`;
+        price.append(amount, ' ', term);
         card.append(name,price);
-        if(p.price>p.amount){const old=document.createElement('del');old.textContent=money(p.price);card.append(old);}
+        if (p.price > p.amount) {
+          const original = document.createElement('del');
+          original.textContent = money(p.price);
+          card.append(original);
+        }
+        if (Number.isFinite(p.unit_amount)) {
+          const average = document.createElement('p');
+          average.className = 'mds-unit-price';
+          const unitPrice = document.createElement('strong');
+          unitPrice.textContent = `${numberFormat.format(p.unit_amount)} đ / lượt`;
+          average.append('Bình quân: ', unitPrice);
+          card.append(average);
+        }
         const per=document.createElement('p');per.textContent='Dùng cho mọi tài liệu';card.append(per);
         const button=document.createElement('button');button.type='button';button.className='mds-buy';button.textContent='Chọn mua';
         button.addEventListener('click',()=>{selectedPackage=p.id;priceDialog.close();buy(selectedOffer,offerOpener);});card.append(button);plans.append(card);
@@ -122,6 +151,17 @@
     const ready = ['available','active'].includes(data.state);
     const credits=data.mode==='credits';
     query('[data-download-amount]').textContent=money(data.amount);
+    query('[data-download-vouchers]')?.replaceChildren(...(data.discounts || []).map(discount => {
+      const line = document.createElement('li');
+      line.className = 'mv-applied-line';
+      const label = document.createElement('span');
+      label.textContent = discount.label + ' · ' + discount.code;
+      const amount = document.createElement('strong');
+      amount.className = 'mv-amount';
+      amount.textContent = '−' + money(discount.amount);
+      line.append(label, amount);
+      return line;
+    }));
     const original=query('[data-download-original]');original.textContent=money(data.original_amount||data.amount);original.hidden=!(data.original_amount>data.amount);
     query('[data-download-package-meta]').textContent=credits?`${data.credit_count} lượt tải · Số dư hiện tại: ${data.balance} lượt`:money(data.amount)+' / lượt tải';
     query('[data-download-file]').hidden = !ready||credits;

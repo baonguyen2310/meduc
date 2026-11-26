@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const page = document.querySelector('#book-detail');
+  const page = document.querySelector('#book-detail, #equipment-detail');
   if (!page) return;
   const cart = window.MeducBookCart;
   cart.bindCards(page);
@@ -81,6 +81,9 @@
   const controls=page.querySelector('[data-book-order-controls]');
   const edition=page.querySelector('#book-edition');
   const quantity=page.querySelector('#book-quantity');
+  const cartLabel = page.dataset.cartLabel || 'giỏ sách';
+  const productNoun = page.dataset.productNoun || 'sách';
+  const stockLabel = page.dataset.stockLabel || 'Ấn bản này';
   const money=value=>`${Number(value).toLocaleString('vi-VN')}đ`;
   let selected=0;
   function normalizeQuantity() {
@@ -96,7 +99,7 @@
     page.querySelector('[data-book-current-price]').textContent=item.current>0?money(item.current):'Liên hệ tư vấn';
     const old=page.querySelector('[data-book-old-price]'); old.textContent=money(item.price); old.hidden=!item.discount;
     const discount=page.querySelector('[data-book-discount]'); discount.textContent=`Giảm ${item.discount}%`; discount.hidden=!item.discount;
-    const stock=page.querySelector('[data-book-stock]'); stock.textContent=item.maximum===0?'Ấn bản này tạm hết hàng.':''; stock.hidden=item.maximum!==0;
+    const stock=page.querySelector('[data-book-stock]'); stock.textContent=item.maximum===0?`${stockLabel} tạm hết hàng.`:''; stock.hidden=item.maximum!==0;
     page.querySelectorAll('[data-book-purchase]').forEach(button=>{ button.disabled=!item.available; });
     if (item.maximum!==null && item.maximum>0) quantity.max=item.maximum; else quantity.removeAttribute('max');
     normalizeQuantity();
@@ -114,8 +117,8 @@
       try {
         cart.add(item.cart,normalizeQuantity());
         if (button.dataset.bookPurchase==='buy') { window.location.href='/dat-hang'; return; }
-        cart.showNotice(page,`Đã thêm “${item.cart.name}” vào giỏ sách.`);
-      } catch (_) { cart.showNotice(page,'Chưa thể thêm sách vào giỏ. Vui lòng thử lại hoặc liên hệ MedUC để được hỗ trợ.',false); }
+        cart.showNotice(page,`Đã thêm “${item.cart.name}” vào ${cartLabel}.`);
+      } catch (_) { cart.showNotice(page,`Chưa thể thêm ${productNoun} vào giỏ. Vui lòng thử lại hoặc liên hệ MedUC để được hỗ trợ.`,false); }
     }));
   }
 })();

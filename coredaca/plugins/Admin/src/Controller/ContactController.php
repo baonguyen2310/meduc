@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use Admin\Controller\AppController;
+use App\Service\Vouchers;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Response;
 use Cake\Core\Exception\Exception;
@@ -144,6 +145,9 @@ class ContactController extends AppController {
         $table = TableRegistry::get('Contacts');
         
         $contact = $table->find()->contain(['ContactsForm'])->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->first();
+        if ($contact && ($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM) {
+            return $this->redirect(ADMIN_PATH . '/order?view=shop-history&history_id=' . (int)$id);
+        }
         $contact_info = $table->formatDataContactDetail($contact);
 
         if (empty($contact_info)) {
@@ -199,29 +203,28 @@ class ContactController extends AppController {
     public function update($id = null)
     {
         $this->request->allowMethod(['post']);
-        
-        // Lấy biến orderStatus từ request
         $orderStatus = $this->request->getData('orderStatus');
-        
-        $table = TableRegistry::get('Contacts');
-        $contact = $table->find()->contain(['ContactsForm'])->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->first();
-        
-        if (!$contact) {
-            throw new NotFoundException(__('Liên hệ không tồn tại.'));
+        $saved = ConnectionManager::get('default')->transactional(function () use ($id, $orderStatus) {
+            $table = TableRegistry::get('Contacts');
+            $contact = $table->find()->contain(['ContactsForm'])
+                ->where(['Contacts.id' => $id, 'Contacts.deleted' => 0])->epilog('FOR UPDATE')->first();
+            if (!$contact) {
+                throw new \Cake\Http\Exception\NotFoundException(__('Liên hệ không tồn tại.'));
+            }
+            $valueData = json_decode($contact->value, true) ?: [];
+            if (($contact->get('ContactsForm')->code ?? '') === Vouchers::SHOP_FORM) {
+                return null;
+            }
+            $valueData['orderStatus'] = $orderStatus;
+            $contact->value = json_encode($valueData, JSON_UNESCAPED_UNICODE);
+            return $table->save($contact) ? $valueData : false;
+        });
+        if ($saved === null) {
+            $this->responseJson([CODE => ERROR, MESSAGE => 'Xem và đối soát đơn Shop trước đây trong mục Đơn hàng.']);
+            return;
         }
-        
-        // Bước 1: Parse JSON từ trường value
-        $valueData = json_decode($contact->value, true);
-    
-        // Bước 2: Cập nhật orderStatus
-        $valueData['orderStatus'] = $orderStatus;
-    
-        // Bước 3: Encode lại JSON
-        $contact->value = json_encode($valueData, JSON_UNESCAPED_UNICODE);
-    
-        // Bước 4: Lưu lại
-        if ($table->save($contact)) {
-            // Nếu trạng thái mới là 'success' → cộng tiền hoa hồng
+        if ($saved !== false) {
+            $valueData = $saved;
             if ($orderStatus === 'success') {
                 $affiliateCode = $valueData['affiliateCode'] ?? null;
                 $affiliateAmount = $valueData['affiliateAmount'] ?? 0;

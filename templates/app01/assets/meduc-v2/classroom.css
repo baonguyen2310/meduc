@@ -116,7 +116,7 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-about-preview { margin:0; color:var(--mcr-ink); font:400 16px/1.8 Inter,Arial,sans-serif; }
 .mcr-read-more { display:inline-flex; gap:10px; align-items:center; margin-top:14px; padding:6px 0; border:0; background:none; color:var(--mcr-red); font:700 14px/1.4 Inter,Arial,sans-serif; cursor:pointer; }
 .mcr-read-more:hover { text-decoration:underline; text-underline-offset:4px; }
-.mcr-related-courses { margin-top:40px; padding:28px; border:1px solid var(--mcr-line); border-radius:16px; background:var(--mcr-panel); }
+.mcr-related-courses { margin-top:clamp(24px, 3vw, 40px); }
 .mcr-section { padding: 30px 0; border-bottom: 1px solid var(--mcr-line); scroll-margin-top: 130px; }
 .mcr-section:last-of-type { border-bottom: 0; }
 .mcr-intro-hero { padding-top: 26px; scroll-margin-top: 130px; }
@@ -139,6 +139,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-poster:hover .mcr-play { transform: translate(-50%, -50%) scale(1.06); }
 .mcr-poster-label { position: absolute; z-index: 1; bottom: 16px; left: 18px; font: 700 11px/1.3 Inter, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
 .mcr-buy { padding:26px 24px 24px; border:1px solid var(--mcr-line); border-top:3px solid var(--mcr-red); border-radius:16px; background:var(--mcr-panel); box-shadow:0 10px 36px rgb(0 0 0 / .06); }
+.mcr .mcr-buy-title { margin:0 0 4px; color:var(--mcr-ink); font:750 20px/1.3 Inter,Arial,sans-serif; letter-spacing:-.025em; }
+.mcr-buy-payment { border-top:1px solid var(--mcr-line); margin-top:18px; padding-top:16px; }
 .mcr-buy-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
 .mcr-buy-eyebrow { margin:0; color:var(--mcr-muted); font:700 11px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
 .mcr-buy .mcr-price { flex-wrap:nowrap; justify-content:space-between; gap:10px; }
@@ -148,11 +150,13 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-buy .mcr-unit-cost { display:flex; justify-content:space-between; align-items:baseline; gap:8px 12px; margin:18px 0 8px; padding:12px 14px; border:1px solid var(--mcr-line); border-radius:9px; background:var(--mcr-side); font-size:13px; }
 .mcr-buy .mcr-unit-cost strong { color:var(--mcr-ink); font-size:17px; }
 .mcr-buy .mcr-specs { margin:8px 0 0; border-top:0; }
-.mcr-buy .mcr-specs div { display:grid; grid-template-columns:max-content minmax(0,1fr); align-items:center; gap:12px; padding:15px 0; }
-.mcr-buy .mcr-specs div:last-child { padding-bottom:15px; border-bottom:1px solid var(--mcr-line); }
+.mcr-buy .mcr-specs div { display:grid; grid-template-columns:max-content minmax(0,1fr); align-items:baseline; gap:12px; padding:9px 0; }
 .mcr-buy .mcr-specs dt { display:flex; align-items:center; gap:8px; margin:0; font-size:13px; font-weight:500; }
-.mcr-buy .mcr-specs dt svg, .mcr-owned svg { flex:none; width:17px; height:17px; fill:none; stroke:var(--mcr-red); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.mcr-owned svg { flex:none; width:17px; height:17px; fill:none; stroke:var(--mcr-red); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
 .mcr-buy .mcr-specs dd { min-width:0; margin:0; font-size:13px; font-weight:650; overflow-wrap:break-word; text-wrap:balance; }
+.mcr-plan-benefits { display:grid; gap:7px; margin:12px 0 0; padding:0; list-style:none; }
+.mcr-plan-benefits li { display:flex; align-items:baseline; gap:8px; margin:0; color:var(--mcr-ink); font-size:13px; line-height:1.5; }
+.mcr-plan-benefits li span { flex:none; color:var(--mcr-success, #159963); font-weight:800; }
 .mcr-buy .mcr-buy-note { margin:18px 0 0; color:var(--mcr-muted); font-size:13px; font-weight:500; line-height:1.7; text-align:center; }
 .mcr-buy-actions { display:grid; gap:10px; margin-top:20px; }
 .mcr-buy-actions .mcr-btn { justify-content:center; min-height:49px; margin:0; padding:14px 18px; font-size:15px; }
@@ -177,6 +181,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-assurance li { position: relative; margin: 0; padding-left: 12px; color: var(--mcr-muted); font: 400 12px/1.65 Inter, Arial, sans-serif; }
 .mcr-assurance li::before { position: absolute; top: .65em; left: 0; width: 4px; height: 4px; background: var(--mcr-red); content: ""; }
 .mcr-assurance strong { color: var(--mcr-ink); font-weight: 700; }
+.mcr-assurance .mc-guarantee-icon { display: none; }
+.mcr-assurance .mc-guarantee-condition { display: block; margin-top: 2px; }
 
 .mcr-specs { margin: 18px 0 0; padding: 0; border-top: 1px solid var(--mcr-line); }
 .mcr-specs div { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--mcr-line); }
@@ -254,6 +260,8 @@ body:has([data-mcr]) [nh-block="6a5tyhf"], body:has([data-mcr]) [nh-block="zdi3r
 .mcr-quiz-card { display: flex; flex-wrap:wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 24px; border: 1.5px solid var(--mcr-card-line); border-radius: 14px; background: var(--mcr-panel); }
 .mcr .mcr-quiz-card h3 { margin: 0; color: var(--mcr-ink); font: 700 18px/1.35 Inter, Arial, sans-serif; }
 .mcr-quiz-card p { margin: 6px 0 0; color: var(--mcr-muted); font: 400 14px/1.55 Inter, Arial, sans-serif; }
+.mcr .mcr-quiz-updated { margin-top:7px; font-size:12px; }
+.mcr-quiz-updated time { color:var(--mcr-ink); font-weight:600; font-variant-numeric:tabular-nums; }
 .mcr-quiz-card .mcr-btn { flex: none; }
 .mcr-quiz-card > div:first-child { flex:1; min-width:0; }
 .mcr-quiz-actions { display:flex; flex:none; align-items:center; gap:10px; }
@@ -508,24 +516,6 @@ html[data-meduc-theme="light"] .mcq-explain-option.is-wrong { color: #bf2944; }
 .mfq-item[open] .mfq-icon { transform: rotate(45deg); }
 .mfq-answer { padding: 0 34px 20px 0; color: var(--mcr-muted, #6b6f78); font: 400 15px/1.75 Inter, Arial, sans-serif; }
 
-/* Related courses (block/product/view_course_related.tpl) */
-.mrc { padding-top: 30px; }
-.mrc-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
-.mrc-title { margin: 0; color: var(--mcr-ink, inherit); font: 700 20px/1.3 Inter, Arial, sans-serif; }
-.mrc-controls { display: flex; gap: 8px; }
-.mrc-controls button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--mcr-line, #e5e6ea); border-radius: 50%; background: transparent; color: var(--mcr-ink, inherit); font: 400 18px/1 Inter, Arial, sans-serif; cursor: pointer; }
-.mrc-controls button:disabled { opacity: .35; cursor: default; }
-.mrc-rail { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.mrc-rail::-webkit-scrollbar { display: none; }
-.mrc .mrc-card { flex: 0 0 230px; scroll-snap-align: start; color: var(--mcr-ink, inherit) !important; }
-.mrc-cover { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 10px; background: #1b1d22; }
-.mrc-cover img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
-.mrc-card:hover .mrc-cover img { transform: scale(1.04); }
-.mrc-name { display: -webkit-box; margin-top: 10px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font: 600 14.5px/1.4 Inter, Arial, sans-serif; }
-.mrc-price { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
-.mrc-price strong { color: var(--mcr-red, #d4213d); font: 800 15px/1.2 Inter, Arial, sans-serif; }
-.mrc-price s { color: var(--mcr-muted, #6b6f78); font: 500 12.5px/1.2 Inter, Arial, sans-serif; }
-
 /* The site's rating and question blocks, moved into the introduction: same look as the rest of the classroom. */
 .mcr-slot .course-details-card { margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; }
 .mcr-slot .title-section-2 { margin: 0 0 16px; padding: 0; border: 0; background: none; }
@@ -582,7 +572,6 @@ body.mhb-ready:has(.mcr) { padding-bottom: 0; }
   .mcr-overview-tabs button, .mcr .mcr-overview-jump { font-size:15px; }
   .mcr-about-preview { font-size:15px; }
   .mcr-intro-hero { padding-top:20px; }
-  .mcr-related-courses { padding:18px 14px; }
   .mcr-shell { width: calc(100% - 24px); }
   .mcr-main { padding: 12px 14px 24px; }
   .mcr-layout { border-radius: 12px; }

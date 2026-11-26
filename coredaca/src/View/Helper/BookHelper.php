@@ -22,7 +22,7 @@ class BookHelper extends Helper
     }
 
     /** Presentation data only; product content, prices and catalogue memberships remain in the original CMS. */
-    public function prepareDetail(array $product, bool $checkQuantity = false): array
+    public function prepareDetail(array $product, bool $checkQuantity = false, array $sectionLabels = []): array
     {
         $name = (string) ($product['name'] ?? '');
         $facts = [];
@@ -35,7 +35,7 @@ class BookHelper extends Helper
         if (preg_match('/\b([AB][3456])\b/iu', $name, $match)) $facts['Khổ sách'] = strtoupper($match[1]);
 
         $attributes = $product['attributes'] ?? [];
-        $labels = ['motangan' => 'Giới thiệu', 'thongtinchitiet' => 'Review sách', 'videoreview' => 'Video review', 'thongtinsach' => 'Thông tin sách', 'huongdansudung' => 'Hướng dẫn', 'thongsokythuat' => 'Thông số'];
+        $labels = $sectionLabels ?: ['motangan' => 'Giới thiệu', 'thongtinchitiet' => 'Review sách', 'videoreview' => 'Video review', 'thongtinsach' => 'Thông tin sách', 'huongdansudung' => 'Hướng dẫn', 'thongsokythuat' => 'Thông số'];
         $sections = [];
         foreach ($labels as $code => $label) {
             $html = $this->cleanContent((string) ($attributes[$code]['value'] ?? ''));

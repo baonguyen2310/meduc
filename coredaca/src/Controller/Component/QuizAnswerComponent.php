@@ -110,7 +110,7 @@ class QuizAnswerComponent extends Component
         if (empty($product_id) || empty($quiz_id)) return $result;
         $kind = \App\Service\CourseTypes::kind((int)$product_id);
         if (!in_array($kind, ['knowledge', 'exam_solution', 'quiz'], true)
-            || !\App\Service\CourseTypes::publicCourse((int)$product_id)
+            || !\App\Service\CourseTypes::canStudy((int)$product_id, (int)($member['id'] ?? 0))
             || \App\Service\CourseTypes::privateQuiz((int)$quiz_id)) return $result;
         $slot = null;
         if ($kind === 'quiz') {

@@ -162,14 +162,16 @@ if(inputChangePercent) {
 const buttonAcceptPaymentAffiliate = document.querySelector("[button-accept-payment-affiliate]");
 if(buttonAcceptPaymentAffiliate) {
     buttonAcceptPaymentAffiliate.addEventListener("click", () => {
-        const isConfirm = confirm("Bạn có chắc muốn duyệt thanh toán?");
+        const amount = Number(buttonAcceptPaymentAffiliate.dataset.amount);
+        const isConfirm = Number.isFinite(amount) && amount > 0 &&
+            confirm("Xác nhận MedUC đã chuyển " + amount.toLocaleString('vi-VN') + " đ cho đối tác?");
         if(isConfirm) {
+            buttonAcceptPaymentAffiliate.disabled = true;
             const link = buttonAcceptPaymentAffiliate.getAttribute("data-link");
             nhMain
                 .callAjax({
-                  async: false,
                   url: link,
-                  data: {},
+                  data: {expected_amount: buttonAcceptPaymentAffiliate.dataset.amount},
                 })
                 .done(function (response) {
                   if (response.code == _SUCCESS) {
@@ -178,8 +180,24 @@ if(buttonAcceptPaymentAffiliate) {
                   } else {
                     toastr.error(response.message);
                   }
-                });
+                })
+                .always(() => { buttonAcceptPaymentAffiliate.disabled = false; });
         }
     })
 }
 // Hết Cập nhật duyệt trả hoa hồng cho từng đối tác
+
+const affiliateToggle = document.querySelector('[data-affiliate-enable]');
+if (affiliateToggle) {
+    affiliateToggle.addEventListener('click', () => {
+        const enabling = affiliateToggle.dataset.value === '1';
+        if (!confirm(enabling ? 'Bật mã giới thiệu cho đối tác này?' : 'Tắt mã giới thiệu của đối tác này?')) return;
+        affiliateToggle.disabled = true;
+        nhMain.callAjax({url: affiliateToggle.dataset.link, data: {affiliate_enabled: affiliateToggle.dataset.value}})
+            .done(response => {
+                if (response.code === _SUCCESS) window.location.reload();
+                else toastr.error(response.message);
+            })
+            .always(() => { affiliateToggle.disabled = false; });
+    });
+}

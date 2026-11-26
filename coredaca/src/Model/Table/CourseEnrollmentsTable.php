@@ -59,7 +59,7 @@ class CourseEnrollmentsTable extends AppTable
         foreach ($rows as $row) {
             $result[intval($row['product_id'])] = $row;
         }
-        return $result;
+        return \App\Service\PurchaseGifts::mergeQuizAccess((int)$customer_id, $result);
     }
 
     /** Ids of every course, for the admin's course list and to tell courses from books in an order. */

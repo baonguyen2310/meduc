@@ -1,5 +1,5 @@
 {include file='../Order/meduc_assets.tpl'}
-<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261112-unified-confirmation" defer></script>
+<script src="/templates/{CODE_TEMPLATE}/assets/meduc-v2/document-downloads.js?v=20261126-package-display" defer></script>
 <main class="mco mco-unified" data-document-payment="{$purchase_code|escape}">
   <div class="mco-shell">
     <nav class="mco-breadcrumb" aria-label="Đường dẫn"><a href="/tai-lieu-hoc-tap">Tài liệu học tập</a><span>/</span><span>Thanh toán</span></nav>
@@ -21,6 +21,7 @@
         <div class="mco-panel-heading"><h2>Thanh toán</h2></div>
         {$order_info = ['total'=>9999,'debt'=>9999]}{$payment_reference = '—'}
         {include file='../Order/meduc_payment.tpl' payment_purpose='document' allow_cod=false}
+        <ul class="mv-applied" data-download-vouchers></ul>
         <div class="mco-checkout-total"><span>Tổng thanh toán</span><div><strong data-download-amount></strong><del data-download-original hidden></del></div></div>
         <p class="mco-payment-note">Sau khi chuyển khoản, nhấn hoàn tất để MedUC kiểm tra và xác nhận thanh toán.</p>
         <button class="mco-button mco-button--primary mco-complete" type="submit" data-download-transfer>Hoàn tất thanh toán</button>

@@ -8,13 +8,14 @@
                             <option value="">Tất cả loại đơn</option>
                             <option value="knowledge">Khoá ôn kiến thức</option>
                             <option value="exam_solution">Khoá chữa đề</option>
-                            <option value="quiz">Trắc nghiệm</option>
+                            <option value="quiz">Đề thi</option>
                             <option value="document">Tài liệu</option>
+                            <option value="shop">MedUC Shop</option>
                         </select>
                     </div>
                     <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
                         <div class="kt-input-icon kt-input-icon--left">
-                            <input id="nh-keyword" name="keyword" type="text" class="form-control form-control-sm" placeholder="{__d('admin', 'khach_hang')}, {__d('admin', 'so_dien_thoai')}, {__d('admin', 'email')} ..." autocomplete="off">
+                            <input id="nh-keyword" name="keyword" type="text" class="form-control form-control-sm" placeholder="Mã đơn, khách hàng, điện thoại, email" autocomplete="off">
                             <span class="kt-input-icon__icon kt-input-icon__icon--left">
                                 <span><i class="la la-search"></i></span>
                             </span>

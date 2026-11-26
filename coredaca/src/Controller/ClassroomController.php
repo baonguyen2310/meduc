@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Controller;
 
-use Cake\Datasource\ConnectionManager;
+use App\Service\CourseTypes;
 use Cake\ORM\TableRegistry;
 
 /** Refresh the signed-in student's existing course access without reloading the classroom. */
@@ -19,10 +19,12 @@ class ClassroomController extends AppController
         $this->autoRender=false;
         if (!$this->request->is('get')) return $this->json(405,[],'Phương thức không hợp lệ.');
         $productId=(int)$productId;
-        $product=ConnectionManager::get('default')->execute('SELECT id FROM products WHERE id=:id AND deleted=0 AND status=1 AND COALESCE(draft,0)=0 AND COALESCE(course_kind,"")<>"fa"',['id'=>$productId])->fetch('assoc');
-        if (!$product || !in_array($productId,TableRegistry::get('CourseEnrollments')->courseIds(),true)) return $this->json(404,[],'Không tìm thấy khóa học.');
         $member=$this->request->getSession()->read(MEMBER)?:[];
         $customer=!empty($member['id']) ? TableRegistry::get('Customers')->find()->where(['id'=>(int)$member['id'],'deleted'=>0])->select(['id','code'])->enableHydration(false)->first() : null;
+        if (!CourseTypes::canStudy($productId, (int)($customer['id'] ?? 0))
+            || !in_array($productId, TableRegistry::get('CourseEnrollments')->courseIds(), true)) {
+            return $this->json(404, [], 'Không tìm thấy khóa học.');
+        }
         $data=['member_id'=>0,'member_code'=>'','licensed'=>false,'class_room_id'=>0];
         if ($customer) {
             $data['member_id']=(int)$customer['id'];$data['member_code']=(string)$customer['code'];
